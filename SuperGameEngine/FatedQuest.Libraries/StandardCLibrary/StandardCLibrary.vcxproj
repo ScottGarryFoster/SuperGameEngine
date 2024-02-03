@@ -127,9 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="File\File.h" />
     <ClInclude Include="Text/FString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Text/FString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,6 @@
-#include "pch.h"
 #include "File.h"
+
+using namespace StandardCLibrary;
 
 /// <summary>
 /// Detirmines if the file path exists.
@@ -17,8 +18,8 @@ bool File::Exists(const std::string& filepath)
 /// </summary>
 /// <param name="filepath">File path to test. </param>
 /// <returns>True means exists. </returns>
-bool File::Exists(const StandardCLibrary::FString& filepath)
+bool File::Exists(const FString& filepath)
 {
-    StandardCLibrary::FString convert = filepath;
+    FString convert = filepath;
     return File::Exists(convert.AsStdString());
 }

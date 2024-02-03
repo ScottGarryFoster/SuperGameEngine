@@ -1,5 +1,7 @@
 #include "Texture.h"
 
+using namespace StandardCLibrary;
+
 Texture::Texture(SDL_Renderer* renderer)
 {
     if (renderer == nullptr)

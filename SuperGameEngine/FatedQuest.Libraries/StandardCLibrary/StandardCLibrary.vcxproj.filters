@@ -8,18 +8,33 @@
     <Filter Include="Project Files">
       <UniqueIdentifier>{a8429d07-411b-4d31-845a-656c98474a87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\API">
+    <Filter Include="Project Files\Text">
+      <UniqueIdentifier>{b97d5711-4037-4fc0-9f00-bcc804d03247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Text\API">
       <UniqueIdentifier>{3fc4d212-1727-4e10-b141-e5e047e538c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\File">
+      <UniqueIdentifier>{ffa6d126-2a97-41e5-9496-4c59718b5004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\File\API">
+      <UniqueIdentifier>{d8f1f09c-0ec3-4163-a6fb-76cbd24a3426}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Text/FString.cpp">
-      <Filter>Project Files</Filter>
-    </ClCompile>
+    <ClInclude Include="Text/FString.h">
+      <Filter>Project Files\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="File\File.h">
+      <Filter>Project Files\File\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Text/FString.h">
-      <Filter>Project Files\API</Filter>
-    </ClInclude>
+    <ClCompile Include="Text/FString.cpp">
+      <Filter>Project Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="File\File.cpp">
+      <Filter>Project Files\File</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
