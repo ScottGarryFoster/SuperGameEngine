@@ -24,6 +24,7 @@
     <ProjectGuid>{21959e22-589a-43f2-be89-86f89584b762}</ProjectGuid>
     <RootNamespace>SuperGameEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>EngineEntry</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -129,18 +130,18 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SuperGameEngine.h" />
+    <ClInclude Include="EngineEntry.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SuperGameEngine.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="SuperGameEngine.rc" />
+    <ResourceCompile Include="EngineEntry.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico" />
-    <Image Include="SuperGameEngine.ico" />
+    <Image Include="EngineEntry.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
