@@ -1,5 +1,5 @@
 #pragma once
-#include "../StandardCLibrary/FString.h"
+#include "../StandardCLibrary/Text/FString.h"
 using namespace StandardCLibrary;
 
 class Logger

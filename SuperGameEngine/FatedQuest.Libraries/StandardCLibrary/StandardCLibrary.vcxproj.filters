@@ -13,13 +13,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FString.h">
-      <Filter>Project Files\API</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="FString.cpp">
+    <ClCompile Include="Text/FString.cpp">
       <Filter>Project Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Text/FString.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

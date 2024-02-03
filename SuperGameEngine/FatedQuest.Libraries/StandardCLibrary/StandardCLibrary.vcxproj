@@ -127,10 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FString.h" />
+    <ClInclude Include="Text/FString.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FString.cpp" />
+    <ClCompile Include="Text/FString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

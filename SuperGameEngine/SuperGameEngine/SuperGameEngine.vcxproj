@@ -128,12 +128,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="LibraryIncludes.h" />
+    <ClInclude Include="Native\Basic\GameTime.h" />
     <ClInclude Include="Native\Graphics\Texture.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
+    <ClInclude Include="Structural\Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Native\Graphics\Texture.cpp" />
     <ClCompile Include="Structural\Scene\GrandScene.cpp" />
+    <ClCompile Include="Structural\Scene\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

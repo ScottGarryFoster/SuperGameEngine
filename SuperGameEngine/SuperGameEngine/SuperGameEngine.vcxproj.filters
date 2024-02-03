@@ -26,12 +26,18 @@
     <Filter Include="Project Files\Structural\Scene\API">
       <UniqueIdentifier>{98fa3ba9-3f10-444f-a014-1dd5f4343076}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Native\Basic">
+      <UniqueIdentifier>{54243b29-21b3-4537-9398-700a39f8e9e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Native\Graphics\Texture.cpp">
       <Filter>Project Files\Native\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
+      <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\Scene.cpp">
       <Filter>Project Files\Structural\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="LibraryIncludes.h">
       <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\Scene.h">
+      <Filter>Project Files\Structural\Scene\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Native\Basic\GameTime.h">
+      <Filter>Project Files\Native\Basic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

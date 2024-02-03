@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../StandardCLibrary/FString.h"
+#include "../StandardCLibrary/Text/FString.h"
 
 class File
 {
