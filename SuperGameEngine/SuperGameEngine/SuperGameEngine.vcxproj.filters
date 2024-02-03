@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Native">
+      <UniqueIdentifier>{21ffa9f7-c789-4759-912f-dfd7014a9514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Native\Graphics">
+      <UniqueIdentifier>{6703a968-58e8-4af5-90d8-8bc0be8ed3b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Native">
+      <UniqueIdentifier>{70ce70e0-472b-47fc-80f6-9f2bd504ecd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Native\Graphics">
+      <UniqueIdentifier>{a820dfd4-0496-4bff-9760-0a658e9b16ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Native\Graphics\Texture.cpp">
+      <Filter>Source Files\Native\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Native\Graphics\Texture.h">
+      <Filter>Header Files\Native\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
