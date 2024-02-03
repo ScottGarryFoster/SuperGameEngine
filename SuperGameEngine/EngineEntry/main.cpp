@@ -1,6 +1,13 @@
 #include <SDL.h>
 #include <Windows.h>
 #include <iostream>
+#include <string>
+#include <vector>
+#include "../StandardCLibrary/FString.h"
+#include "../Logging/Logger.h"
+#include "../SuperGameEngine/Native/Graphics/Texture.h"
+
+using namespace StandardCLibrary;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -65,8 +72,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Event handler
     SDL_Event e;
 
+    Texture* texture = nullptr;
+
     // Main loop
-    while (!quit) {
+    while (!quit)
+    {
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
@@ -79,11 +89,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
 
+
         // Clear the renderer
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
         SDL_RenderClear(renderer);
 
-        // Render objects and update game state here
+        if (texture == nullptr)
+        {
+            std::vector<FString>* errors = new std::vector<FString>();
+            texture = new Texture(renderer);
+            if (!texture->LoadImageFromFile(FString("E:/Development/SuperGameEngine-SDL/A_pressed.png"), *errors))
+            {
+                for (const FString str : *errors)
+                {
+                    Logger::Info(StandardCLibrary::FString(str));
+                } 
+            }
+
+            delete errors;
+        }
+
+        if (texture != nullptr)
+        {
+            texture->Draw();
+        }
 
         // Update screen
         SDL_RenderPresent(renderer);
