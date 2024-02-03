@@ -156,15 +156,6 @@
     <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\FileHandling\FileHandling.vcxproj">
-      <Project>{85fc6110-8bac-4a93-9798-4d1261d58a18}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Logging\Logging.vcxproj">
-      <Project>{fbd9a5d9-bb38-479b-8dd7-1ebd2382a035}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
-      <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\SuperGameEngine\SuperGameEngine.vcxproj">
       <Project>{2b453e94-c63c-4311-a0c4-23c6512675aa}</Project>
     </ProjectReference>

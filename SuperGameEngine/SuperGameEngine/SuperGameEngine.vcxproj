@@ -129,18 +129,17 @@
   <ItemGroup>
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Native\Graphics\Texture.h" />
+    <ClInclude Include="Structural\Scene\GrandScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Native\Graphics\Texture.cpp" />
+    <ClCompile Include="Structural\Scene\GrandScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
-      <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>
   </ItemGroup>
