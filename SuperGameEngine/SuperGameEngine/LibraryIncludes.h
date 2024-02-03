@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../StandardCLibrary/FString.h"
-#include "../../../Logging/Logger.h"
-#include "../FileHandling/File.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/FString.h"
+#include "../../../FatedQuest.Libraries/Logging/Logger.h"
+#include "../FatedQuest.Libraries/FileHandling/File.h"

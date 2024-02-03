@@ -9,13 +9,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperGameEngine", "SuperGam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FatedQuest.Libraries", "FatedQuest.Libraries", "{C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardCLibrary", "StandardCLibrary\StandardCLibrary.vcxproj", "{3964752B-73C2-4C0E-8BFE-3C42DBEF2E03}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardCLibrary", "FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj", "{3964752B-73C2-4C0E-8BFE-3C42DBEF2E03}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logging", "Logging\Logging.vcxproj", "{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logging", "FatedQuest.Libraries\Logging\Logging.vcxproj", "{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandling", "FileHandling\FileHandling.vcxproj", "{85FC6110-8BAC-4A93-9798-4D1261D58A18}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandling", "FatedQuest.Libraries\FileHandling\FileHandling.vcxproj", "{85FC6110-8BAC-4A93-9798-4D1261D58A18}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathHelpers", "MathHelpers\MathHelpers.vcxproj", "{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathHelpers", "FatedQuest.Libraries\MathHelpers\MathHelpers.vcxproj", "{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../StandardCLibrary/FString.h"
-#include "../Logging/Logger.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/FString.h"
+#include "../FatedQuest.Libraries/Logging/Logger.h"
 #include "../SuperGameEngine/Native/Graphics/Texture.h"
 
 using namespace StandardCLibrary;

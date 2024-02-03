@@ -137,6 +137,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
+      <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>
