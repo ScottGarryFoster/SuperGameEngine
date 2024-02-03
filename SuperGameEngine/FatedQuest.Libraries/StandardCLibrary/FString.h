@@ -32,42 +32,6 @@ namespace StandardCLibrary
         FString operator+(const std::string& str) const;
         FString operator+(const FString& str) const;
 
-        //FString(FString& str1);
-
-        //// 2s
-        //FString(const std::string str1, FString& str2);
-        //FString(FString& str1, const std::string str2);
-        //FString(FString& str1, FString& str2);
-
-        //// 3s
-        //FString(FString& str1, FString& str2, FString& str3);
-        //FString(FString& str1, const std::string str2, const std::string str3);
-        //FString(const std::string str1, FString& str2, const std::string str3);
-        //FString(const std::string str1, const std::string str2, FString& str3);
-        //FString(FString& str1, FString& str2, const std::string str3);
-        //FString(const std::string str1, FString& str2, FString& str3);
-        //FString(FString& str1, const std::string str2, FString& str3);
-
-        //// 4s
-        //FString(FString& str1, const std::string str2, const std::string str3, const std::string str4);
-        //FString(const std::string str1, FString& str2, const std::string str3, const std::string str4);
-        //FString(const std::string str1, const std::string str2, FString& str3, const std::string str4);
-        //FString(const std::string str1, const std::string str2, const std::string str3, FString& str4);
-
-        //FString(FString& str1, FString& str2, const std::string str3, const std::string str4);
-        //FString(const std::string str1, FString& str2, FString& str3, const std::string str4);
-        //FString(const std::string str1, const std::string str2, FString& str3, FString& str4);
-        //FString(FString& str1, const std::string str2, FString& str3, const std::string str4);
-        //FString(const std::string str1, FString& str2, const std::string str3, FString& str4);
-        //FString(FString& str1, const std::string str2, const std::string str3, FString& str4);
-
-        //FString(const std::string str1, FString& str2, FString& str3, FString& str4);
-        //FString(FString& str1, const std::string str2, FString& str3, FString& str4);
-        //FString(FString& str1, FString& str2, const std::string str3, FString& str4);
-        //FString(FString& str1, FString& str2, FString& str3, const std::string str4);
-
-        //FString(FString& str1, FString& str2, FString& str3, FString& str4);
-
 
         const std::string AsStdString();
         const char* AsCharArr();
