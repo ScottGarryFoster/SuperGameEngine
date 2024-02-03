@@ -10,6 +10,7 @@ namespace StandardCLibrary
     class FString
     {
     public:
+        FString();
         FString(const std::vector<std::string> contents);
         
         // As much as I like the va macro, it does not work well with strings.
@@ -31,10 +32,38 @@ namespace StandardCLibrary
 
         FString operator+(const std::string& str) const;
         FString operator+(const FString& str) const;
+        FString operator+(const int str) const;
+        FString operator+(const long int str) const;
+        FString operator+(const unsigned long int str) const;
+
+        bool operator==(const std::string& other) const;
+        bool operator==(const FString& other) const;
 
 
         const std::string AsStdString();
         const char* AsCharArr();
+
+        /// <summary>
+        /// Reverts this FString to lowercase.
+        /// </summary>
+        /// <returns>Lowercase version of this FString in lowercase. </returns>
+        FString ToLower();
+
+        /// <summary>
+        /// Converts this FString to Lowercase.
+        /// </summary>
+        void ConvertToLower();
+
+        /// <summary>
+        /// Reverts this FString to uppercase.
+        /// </summary>
+        /// <returns>uppercase version of this FString in uppercase. </returns>
+        FString ToUpper();
+
+        /// <summary>
+        /// Converts this FString to uppercase.
+        /// </summary>
+        void ConvertToUpper();
 
     private:
 

@@ -1,6 +1,7 @@
 #include "Texture.h"
 
 using namespace StandardCLibrary;
+using namespace SuperGameEngine;
 
 Texture::Texture(SDL_Renderer* renderer)
 {
@@ -55,6 +56,7 @@ bool Texture::LoadImageFromFile(FString filePath, std::vector<FString>& errors)
         return false;
     }
 
+    m_filePath = filePath;
     return true;
 }
 
@@ -88,4 +90,13 @@ void Texture::Draw()
 
     double rotation = 0;
     SDL_RenderCopyEx(m_renderer, m_texture, NULL, &dest, rotation, NULL, SDL_FLIP_NONE);
+}
+
+/// <summary>
+/// Get the Filepath of the loaded texture.
+/// </summary>
+/// <returns>The filepath of the texture loaded. </returns>
+FString Texture::GetLoadedFilePath()
+{
+    return m_filePath;
 }

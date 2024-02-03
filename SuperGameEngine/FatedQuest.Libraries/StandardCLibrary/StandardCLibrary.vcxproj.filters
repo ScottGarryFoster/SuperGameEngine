@@ -20,6 +20,12 @@
     <Filter Include="Project Files\File\API">
       <UniqueIdentifier>{d8f1f09c-0ec3-4163-a6fb-76cbd24a3426}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Time">
+      <UniqueIdentifier>{f8651a2d-9070-4c5b-9f27-c2e9f171eaeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Time\API">
+      <UniqueIdentifier>{94dfcdd2-b591-441d-b81b-57c7abed830f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -28,6 +34,9 @@
     <ClInclude Include="File\File.h">
       <Filter>Project Files\File\API</Filter>
     </ClInclude>
+    <ClInclude Include="Time\Timespan.h">
+      <Filter>Project Files\Time\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -35,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="File\File.cpp">
       <Filter>Project Files\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Timespan.cpp">
+      <Filter>Project Files\Time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

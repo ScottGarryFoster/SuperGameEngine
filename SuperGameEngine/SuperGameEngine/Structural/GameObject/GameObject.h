@@ -3,9 +3,18 @@
 
 namespace SuperGameEngine
 {
-    class Scene
+    /// <summary>
+    /// Core object in the Engine holding Components with Logic and
+    /// managing how these components move around and collide.
+    /// </summary>
+    class GameObject
     {
     public:
+        /// <summary>
+        /// Sets up the GameObject.
+        /// </summary>
+        void Setup();
+
         /// <summary>
         /// Entry point for the entire game.
         /// </summary>

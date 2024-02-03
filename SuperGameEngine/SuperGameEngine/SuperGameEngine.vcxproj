@@ -127,16 +127,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Content\ContentManager.h" />
+    <ClInclude Include="Engine\Graphics\SuperTexture.h" />
     <ClInclude Include="LibraryIncludes.h" />
-    <ClInclude Include="Native\Basic\GameTime.h" />
-    <ClInclude Include="Native\Graphics\Texture.h" />
+    <ClInclude Include="Engine\Basic\GameTime.h" />
+    <ClInclude Include="Engine\Graphics\Texture.h" />
+    <ClInclude Include="Structural\GameObject\GameObject.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
     <ClInclude Include="Structural\Scene\Scene.h" />
+    <ClInclude Include="Structural\Scene\SceneLoadPackage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Native\Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\Content\ContentManager.cpp" />
+    <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
+    <ClCompile Include="Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="Structural\GameObject\GameObject.cpp" />
     <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Scene\Scene.cpp" />
+    <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

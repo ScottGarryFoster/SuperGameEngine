@@ -5,9 +5,11 @@
 #include <vector>
 #include "../FatedQuest.Libraries/StandardCLibrary/Text/FString.h"
 #include "../FatedQuest.Libraries/Logging/Logger.h"
-#include "../SuperGameEngine/Native/Graphics/Texture.h"
+#include "../SuperGameEngine/Engine/Graphics/Texture.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/Time/Timespan.h"
 
 using namespace StandardCLibrary;
+using namespace SuperGameEngine;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -73,6 +75,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SDL_Event e;
 
     Texture* texture = nullptr;
+
+    FString test = FString("UpperCase");
+    FString test2 = FString("UpperCase");
+    test2.ConvertToLower();
+    FString test3 = test.ToLower();
+    Logger::Info(FString("Test: ") + test);
+    Logger::Info(FString("Test2: ") + test2);
+    Logger::Info(FString("Test3: ") + test3);
 
     // Main loop
     while (!quit)

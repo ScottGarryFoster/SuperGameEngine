@@ -129,10 +129,12 @@
   <ItemGroup>
     <ClInclude Include="File\File.h" />
     <ClInclude Include="Text/FString.h" />
+    <ClInclude Include="Time\Timespan.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Text/FString.cpp" />
+    <ClCompile Include="Time\Timespan.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

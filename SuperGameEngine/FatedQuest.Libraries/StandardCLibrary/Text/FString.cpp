@@ -6,6 +6,11 @@
 
 using namespace StandardCLibrary;
 
+FString::FString()
+{
+    m_storage = "";
+}
+
 FString::FString(const std::vector<std::string> contents)
 {
     std::stringstream content;
@@ -108,4 +113,80 @@ FString FString::operator+(const std::string& str) const
 FString FString::operator+(const FString& str) const
 {
     return FString(m_storage.c_str(), str.m_storage.c_str());
+}
+
+FString FString::operator+(const int str) const
+{
+    return FString(std::to_string(str));
+}
+
+FString FString::operator+(const long int str) const
+{
+    return FString(std::to_string(str));
+}
+
+FString FString::operator+(const unsigned long int str) const
+{
+    return FString(std::to_string(str));
+}
+
+bool FString::operator==(const std::string& other) const
+{
+    return m_storage.compare(other);
+}
+
+bool FString::operator==(const FString& other) const
+{
+    return m_storage.compare(other.m_storage);
+}
+
+FString FString::ToLower()
+{
+    std::string toLower = m_storage.c_str();
+    for (char& c : toLower)
+    {
+        if (c >= 'A' && c <= 'Z')
+        {
+            c = c - 'A' + 'a';
+        }
+    }
+
+    return FString(toLower);
+}
+
+void FString::ConvertToLower()
+{
+    for (char& c : m_storage)
+    {
+        if (c >= 'A' && c <= 'Z')
+        {
+            c = c - 'A' + 'a';
+        }
+    }
+}
+
+FString FString::ToUpper()
+{
+    std::string toUpper = m_storage.c_str();
+    for (char& c : toUpper)
+    {
+        if (c >= 'a' && c <= 'z')
+        {
+            c = c - 'a' + 'A';
+        }
+    }
+
+    return FString(toUpper);
+}
+
+
+void FString::ConvertToUpper()
+{
+    for (char& c : m_storage)
+    {
+        if (c >= 'a' && c <= 'z')
+        {
+            c = c - 'a' + 'A';
+        }
+    }
 }
