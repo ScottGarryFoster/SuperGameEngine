@@ -8,6 +8,7 @@ namespace StandardCLibrary
     /// </summary>
     class VectorHelpers
     {
+    public:
         /// <summary>
         /// Removes the given value from the vector.
         /// </summary>
