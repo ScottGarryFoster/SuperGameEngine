@@ -1,4 +1,7 @@
 #pragma once
+#include "../../LibraryIncludes.h"
+using namespace StandardCLibrary;
+
 namespace SuperGameEngine
 {
     class Texture;

@@ -1,11 +1,15 @@
 #pragma once
 #include "../../Engine/Basic/GameTime.h"
+#include "SceneLoadPackage.h"
 
 namespace SuperGameEngine
 {
     class Scene
     {
     public:
+        Scene(SceneLoadPackage* sceneLoadPackage);
+        ~Scene();
+
         /// <summary>
         /// Entry point for the entire game.
         /// </summary>
@@ -17,5 +21,13 @@ namespace SuperGameEngine
         /// Draw everything in the game.
         /// </summary>
         void Draw();
+
+    private:
+
+        bool m_intialised;
+
+        SceneLoadPackage* m_sceneLoadPackage;
+
+        SuperTexture* m_texture;
     };
 }

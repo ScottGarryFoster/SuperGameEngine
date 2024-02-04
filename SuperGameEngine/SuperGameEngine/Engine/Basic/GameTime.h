@@ -7,6 +7,7 @@ namespace SuperGameEngine
     /// </summary>
     struct GameTime
     {
+    public:
         /// <summary>
         /// The ticks since the last non-physics based updated loop.
         /// </summary>

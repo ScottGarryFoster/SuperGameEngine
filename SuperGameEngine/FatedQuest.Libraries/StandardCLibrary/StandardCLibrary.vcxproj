@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collection\Vector\VectorHelpers.h" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="Text/FString.h" />
     <ClInclude Include="Time\Timespan.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collection\Vector\VectorHelpers.cpp" />
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Text/FString.cpp" />
     <ClCompile Include="Time\Timespan.cpp" />

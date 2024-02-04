@@ -1,5 +1,5 @@
 #include "ContentManager.h"
-
+#include "../../Engine/Graphics/Texture.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -54,9 +54,13 @@ SuperTexture* ContentManager::GetTexture(FString filePath)
 
     if (!foundTexture)
     {
-        // Make texture
-
-        // Add it to vector.
+        Texture* newTexture = new Texture(m_renderer);
+        std::vector<FString> errors = std::vector<FString>();
+        if (newTexture->LoadImageFromFile(filePath, errors))
+        {
+            returnTexture = new SuperTexture(newTexture);
+            m_textureLibrary.push_back(returnTexture);
+        }
     }
 
     return returnTexture;

@@ -1,6 +1,7 @@
 #pragma once
+#include "../../Engine/Content/ContentManager.h"
 
-namespace SuperGameObject
+namespace SuperGameEngine
 {
     /// <summary>
     /// Contains all the objects a GameObject needs to opperate.
@@ -8,6 +9,15 @@ namespace SuperGameObject
     /// </summary>
     class SceneLoadPackage
     {
+    public:
 
+        SceneLoadPackage(ContentManager* contentManager);
+
+
+        ContentManager* GetContentManager() const;
+
+    private:
+
+        ContentManager* m_contentManager;
     };
 }
