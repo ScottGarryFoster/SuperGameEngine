@@ -1,5 +1,8 @@
 #pragma once
+#include <type_traits>
+
 #include "../../Engine/Basic/GameTime.h"
+#include "GameComponent.h"
 
 namespace SuperGameEngine
 {
@@ -10,6 +13,9 @@ namespace SuperGameEngine
     class GameObject
     {
     public:
+        GameObject();
+        virtual ~GameObject();
+
         /// <summary>
         /// Sets up the GameObject.
         /// </summary>
@@ -26,5 +32,9 @@ namespace SuperGameEngine
         /// Draw everything in the game.
         /// </summary>
         void Draw();
+
+        template<typename T> 
+        typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
+        AddComponent();
     };
 }

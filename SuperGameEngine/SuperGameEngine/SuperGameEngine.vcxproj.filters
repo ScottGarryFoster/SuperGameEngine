@@ -44,6 +44,15 @@
     <Filter Include="Project Files\Engine\Content\API">
       <UniqueIdentifier>{104ce86b-707b-4e7d-b495-a9cfed3f9402}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Components">
+      <UniqueIdentifier>{77bde5b3-37e9-4f0e-bf80-8022a4fb0b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Spatial">
+      <UniqueIdentifier>{4a369c47-c565-4395-98b7-d14aa883b2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Spatial\API">
+      <UniqueIdentifier>{7137dd1a-250f-4003-91e1-b73065d09e5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -66,6 +75,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Content\ContentManager.cpp">
       <Filter>Project Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\GameComponent.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Spatial\Transform.cpp">
+      <Filter>Project Files\Structural\Components\Spatial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +110,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Content\ContentManager.h">
       <Filter>Project Files\Engine\Content\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\GameComponent.h">
+      <Filter>Project Files\Structural\GameObject\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Spatial\Transform.h">
+      <Filter>Project Files\Structural\Components\Spatial\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

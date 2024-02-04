@@ -18,7 +18,7 @@ GrandScene::~GrandScene()
 bool GrandScene::Update(Uint64 tick)
 {
     SuperGameEngine::GameTime gameTime;
-    gameTime.TicksSinceLastFrame = tick;
+    gameTime.TicksSinceLastFrame = (int)tick;
 
     for (Scene* scene : m_scenes)
     {

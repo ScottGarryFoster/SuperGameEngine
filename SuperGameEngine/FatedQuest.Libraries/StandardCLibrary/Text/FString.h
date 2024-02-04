@@ -35,6 +35,8 @@ namespace StandardCLibrary
         FString operator+(const int str) const;
         FString operator+(const long int str) const;
         FString operator+(const unsigned long int str) const;
+        FString operator+(const double str) const;
+        FString operator+(const float str) const;
 
         bool operator==(const std::string& other) const;
         bool operator==(const FString& other) const;

@@ -35,6 +35,12 @@
     <Filter Include="Project Files\Collection\Vector\API">
       <UniqueIdentifier>{9f01c763-b563-44a6-b61a-22d7bd3bb821}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural">
+      <UniqueIdentifier>{da1810af-655e-423c-b0c4-ce13da75a599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\API">
+      <UniqueIdentifier>{74cabb18-0aa0-404b-9620-d7cad635be42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -49,6 +55,12 @@
     <ClInclude Include="Collection\Vector\VectorHelpers.h">
       <Filter>Project Files\Collection\Vector\API</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\FPoint.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\FVector2D.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -62,6 +74,12 @@
     </ClCompile>
     <ClCompile Include="Collection\Vector\VectorHelpers.cpp">
       <Filter>Project Files\Collection\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FPoint.cpp">
+      <Filter>Project Files\Structural</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FVector2D.cpp">
+      <Filter>Project Files\Structural</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

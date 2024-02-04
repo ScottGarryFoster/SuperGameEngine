@@ -115,6 +115,16 @@ FString FString::operator+(const FString& str) const
     return FString(m_storage.c_str(), str.m_storage.c_str());
 }
 
+FString FString::operator+(const float str) const
+{
+    return FString(std::to_string(str));
+}
+
+FString FString::operator+(const double str) const
+{
+    return FString(std::to_string(str));
+}
+
 FString FString::operator+(const int str) const
 {
     return FString(std::to_string(str));
