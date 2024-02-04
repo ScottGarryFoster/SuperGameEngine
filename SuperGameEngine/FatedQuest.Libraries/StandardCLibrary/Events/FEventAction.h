@@ -1,5 +1,5 @@
 #pragma once
-class FEventArguments;
+#include "FEventArguments.h"
 
 namespace StandardCLibrary
 {
@@ -12,6 +12,6 @@ namespace StandardCLibrary
         /// Invoke the event on all observers.
         /// </summary>
         /// <param name="arguments">Arguments to send to all observers. </param>
-        virtual void Invoke(FEventArguments arguments) = 0;
+        virtual void Invoke(FEventArguments* arguments) = 0;
     };
 }

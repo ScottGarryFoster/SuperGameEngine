@@ -8,7 +8,7 @@
 namespace StandardCLibrary
 {
     /// <summary>
-    /// 
+    /// An event which can be subscribed to and can invoke a message to observers.
     /// </summary>
     class FEvent : public FEventSubscriptions, FEventAction
     {
@@ -31,7 +31,7 @@ namespace StandardCLibrary
         /// Invoke the event on all observers.
         /// </summary>
         /// <param name="arguments">Arguments to send to all observers. </param>
-        virtual void Invoke(FEventArguments arguments) override;
+        virtual void Invoke(FEventArguments* arguments) override;
 
     private:
 

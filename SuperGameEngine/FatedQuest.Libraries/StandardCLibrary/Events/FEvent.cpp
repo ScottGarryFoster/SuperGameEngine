@@ -18,7 +18,7 @@ void FEvent::Unsubscribe(FEventObserver* observer)
     VectorHelpers::RemoveValue(m_observers, observer);
 }
 
-void FEvent::Invoke(FEventArguments arguments) 
+void FEvent::Invoke(FEventArguments* arguments) 
 {
     for (FEventObserver* observer : m_observers)
     {

@@ -128,6 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Collection\Vector\VectorHelpers.h" />
+    <ClInclude Include="Events\FEvent.h" />
+    <ClInclude Include="Events\FEventAction.h" />
+    <ClInclude Include="Events\FEventArguments.h" />
+    <ClInclude Include="Events\FEventObserver.h" />
+    <ClInclude Include="Events\FEventSubscriptions.h" />
+    <ClInclude Include="Events\Observer.h" />
+    <ClInclude Include="Events\Subject.h" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="Structural\FPoint.h" />
     <ClInclude Include="Structural\FVector2D.h" />
@@ -136,9 +143,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collection\Vector\VectorHelpers.cpp" />
+    <ClCompile Include="Events\FEvent.cpp" />
+    <ClCompile Include="Events\Observer.cpp" />
+    <ClCompile Include="Events\Subject.cpp" />
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Structural\FPoint.cpp" />
+    <ClCompile Include="Structural\FPointLocationEventArguments.h" />
     <ClCompile Include="Structural\FVector2D.cpp" />
+    <ClCompile Include="Structural\FVectorLocationEventArguments.h" />
     <ClCompile Include="Text/FString.cpp" />
     <ClCompile Include="Time\Timespan.cpp" />
   </ItemGroup>

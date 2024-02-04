@@ -1,5 +1,5 @@
 #pragma once
-class FEventObserver;
+#include "FEventObserver.h"
 
 namespace StandardCLibrary
 {

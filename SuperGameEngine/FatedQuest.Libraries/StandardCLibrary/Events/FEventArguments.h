@@ -7,5 +7,8 @@ namespace StandardCLibrary
     /// </summary>
     class FEventArguments
     {
+    public:
+        FEventArguments(){}
+        virtual ~FEventArguments() {}
     };
 }

@@ -41,6 +41,12 @@
     <Filter Include="Project Files\Structural\API">
       <UniqueIdentifier>{74cabb18-0aa0-404b-9620-d7cad635be42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Events">
+      <UniqueIdentifier>{217acc43-3a1c-4ac8-b528-5ad0b2e3a014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Events\API">
+      <UniqueIdentifier>{aaa9d523-3d44-436d-ac1a-d8e4cb94c729}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -61,6 +67,27 @@
     <ClInclude Include="Structural\FVector2D.h">
       <Filter>Project Files\Structural\API</Filter>
     </ClInclude>
+    <ClInclude Include="Events\Observer.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\Subject.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEvent.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventObserver.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventAction.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventSubscriptions.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventArguments.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -80,6 +107,21 @@
     </ClCompile>
     <ClCompile Include="Structural\FVector2D.cpp">
       <Filter>Project Files\Structural</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\Observer.cpp">
+      <Filter>Project Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\Subject.cpp">
+      <Filter>Project Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\FEvent.cpp">
+      <Filter>Project Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FVectorLocationEventArguments.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FPointLocationEventArguments.h">
+      <Filter>Project Files\Structural\API</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
