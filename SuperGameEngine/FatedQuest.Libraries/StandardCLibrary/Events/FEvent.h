@@ -13,6 +13,8 @@ namespace StandardCLibrary
     class FEvent : public FEventSubscriptions, FEventAction
     {
     public:
+        FEvent();
+
         /// <summary>
         /// Subscribes to the event.
         /// </summary>
