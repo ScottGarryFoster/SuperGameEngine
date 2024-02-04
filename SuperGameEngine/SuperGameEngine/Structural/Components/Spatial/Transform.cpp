@@ -27,11 +27,5 @@ FEventSubscriptions* Transform::OnLocationChanged()
 
 void Transform::Invoke(FEventArguments* arguments)
 {
-    if (TypeHelpers::IsDerivedFrom<FEventArguments, FVectorLocationEventArguments>())
-    {
-        FVectorLocationEventArguments* locationArguments = 
-            dynamic_cast<FVectorLocationEventArguments*>(arguments);
-
-        m_onLocationChanged->Invoke(locationArguments);
-    }
+    m_onLocationChanged->Invoke(arguments);
 }
