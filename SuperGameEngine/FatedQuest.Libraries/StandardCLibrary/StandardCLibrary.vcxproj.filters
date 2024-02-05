@@ -47,6 +47,12 @@
     <Filter Include="Project Files\Events\API">
       <UniqueIdentifier>{aaa9d523-3d44-436d-ac1a-d8e4cb94c729}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Object">
+      <UniqueIdentifier>{bfa33416-d968-4c7d-9266-cf978f4f0eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\API">
+      <UniqueIdentifier>{c4fec2d4-ce29-403c-91a1-6306e0f66f37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -88,6 +94,9 @@
     <ClInclude Include="Events\FEventArguments.h">
       <Filter>Project Files\Events\API</Filter>
     </ClInclude>
+    <ClInclude Include="Object\TypeHelpers.h">
+      <Filter>Project Files\Object\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -122,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="Structural\FPointLocationEventArguments.h">
       <Filter>Project Files\Structural\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TypeHelpers.cpp">
+      <Filter>Project Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

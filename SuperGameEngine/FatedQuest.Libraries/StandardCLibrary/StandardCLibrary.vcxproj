@@ -136,6 +136,7 @@
     <ClInclude Include="Events\Observer.h" />
     <ClInclude Include="Events\Subject.h" />
     <ClInclude Include="File\File.h" />
+    <ClInclude Include="Object\TypeHelpers.h" />
     <ClInclude Include="Structural\FPoint.h" />
     <ClInclude Include="Structural\FVector2D.h" />
     <ClInclude Include="Text/FString.h" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Events\Observer.cpp" />
     <ClCompile Include="Events\Subject.cpp" />
     <ClCompile Include="File\File.cpp" />
+    <ClCompile Include="Object\TypeHelpers.cpp" />
     <ClCompile Include="Structural\FPoint.cpp" />
     <ClCompile Include="Structural\FPointLocationEventArguments.h" />
     <ClCompile Include="Structural\FVector2D.cpp" />
