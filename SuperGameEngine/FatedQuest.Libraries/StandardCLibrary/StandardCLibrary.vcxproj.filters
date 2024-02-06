@@ -97,6 +97,9 @@
     <ClInclude Include="Object\TypeHelpers.h">
       <Filter>Project Files\Object\API</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Project Files\Object\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -133,6 +136,9 @@
       <Filter>Project Files\Structural\API</Filter>
     </ClCompile>
     <ClCompile Include="Object\TypeHelpers.cpp">
+      <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
       <Filter>Project Files\Object</Filter>
     </ClCompile>
   </ItemGroup>

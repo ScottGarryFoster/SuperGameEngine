@@ -20,9 +20,6 @@
     <Filter Include="Project Files\Structural\GameObject">
       <UniqueIdentifier>{b811bbc6-4392-42d3-b64b-0a1d2a8555b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\Structural\GameObject\API">
-      <UniqueIdentifier>{15ce3be7-61c3-4c17-9acb-1a6cbb0bbb28}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Project Files\Engine">
       <UniqueIdentifier>{a22b249e-709c-434e-9e8a-b7e296771c0c}</UniqueIdentifier>
     </Filter>
@@ -53,6 +50,9 @@
     <Filter Include="Project Files\Structural\Components\Spatial\API">
       <UniqueIdentifier>{7137dd1a-250f-4003-91e1-b73065d09e5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\GameObject\API">
+      <UniqueIdentifier>{15ce3be7-61c3-4c17-9acb-1a6cbb0bbb28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -60,9 +60,6 @@
     </ClCompile>
     <ClCompile Include="Structural\Scene\Scene.cpp">
       <Filter>Project Files\Structural\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Structural\GameObject\GameObject.cpp">
-      <Filter>Project Files\Structural\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Graphics\Texture.cpp">
       <Filter>Project Files\Engine\Graphics</Filter>
@@ -76,11 +73,17 @@
     <ClCompile Include="Engine\Content\ContentManager.cpp">
       <Filter>Project Files\Engine\Content</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Components\Spatial\Transform.cpp">
+      <Filter>Project Files\Structural\Components\Spatial</Filter>
+    </ClCompile>
     <ClCompile Include="Structural\GameObject\GameComponent.cpp">
       <Filter>Project Files\Structural\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Structural\Components\Spatial\Transform.cpp">
-      <Filter>Project Files\Structural\Components\Spatial</Filter>
+    <ClCompile Include="Structural\GameObject\GameObject.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\TestComponent.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="Structural\Components\Spatial\Transform.h">
       <Filter>Project Files\Structural\Components\Spatial\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\TestComponent.h">
+      <Filter>Project Files\Structural\GameObject\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

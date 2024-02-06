@@ -1,9 +1,13 @@
+#pragma once
 #include "GameObject.h"
+#include "GameComponent.h"
+#include "../../LibraryIncludes.h"
 using namespace SuperGameEngine;
+using namespace StandardCLibrary;
 
 GameObject::GameObject()
 {
-
+    m_loadPackage = nullptr;
 }
 
 GameObject::~GameObject()
@@ -11,9 +15,15 @@ GameObject::~GameObject()
 
 }
 
-void GameObject::Setup()
+void GameObject::Setup(SceneLoadPackage* loadPackage)
 {
-
+    m_loadPackage = loadPackage;
+    if (!m_loadPackage)
+    {
+        Logger::Error(FString("ARGUMENTNULLEXCEPTION: ") + FString("GameObject::Setup: ")
+            + FString(" loadPackage was null. "));
+        return;
+    }
 }
 
 bool GameObject::Update(GameTime gameTime)
@@ -26,14 +36,20 @@ void GameObject::Draw()
 
 }
 
-template<typename T>
-typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
-GameObject::AddComponent()
+bool GameObject::AddActualComponentFromObject(Object* newObject)
 {
-    T* newComponent = new T();
-    GameComponent* componentPtr = static_cast<GameComponent*>(newComponent);
+    bool typeIsCorrect = TypeHelpers::IsBaseOf<GameComponent, Object>();
+    if (typeIsCorrect)
+    {
+        GameComponent* componentPtr = dynamic_cast<GameComponent*>(newObject);
+        AddActualComponent(componentPtr);
+    }
 
-    componentPtr->Test();
+    return typeIsCorrect;
+}
 
-    return newComponent;
+void GameObject::AddActualComponent(GameComponent* newComponent)
+{
+    newComponent->Test();
+    m_gameComponents.push_back(newComponent);
 }

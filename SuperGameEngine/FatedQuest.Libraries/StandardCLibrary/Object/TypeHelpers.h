@@ -1,4 +1,5 @@
 #pragma once
+#include <type_traits>
 
 namespace StandardCLibrary
 {
@@ -16,7 +17,10 @@ namespace StandardCLibrary
         /// <typeparam name="Derived">Test derived class. </typeparam>
         /// <returns>True means is derived. </returns>
         template <typename Base, typename Derived>
-        static bool IsDerivedFrom();
+        inline static bool IsDerivedFrom()
+        {
+            return std::is_base_of<Base, Derived>::value;
+        }
 
         /// <summary>
         /// Determines if the second type is the base of the given type.
@@ -25,6 +29,9 @@ namespace StandardCLibrary
         /// <typeparam name="Base">Base class to test. </typeparam>
         /// <returns>True means is a base class. </returns>
         template <typename Derived, typename Base>
-        static bool IsBaseOf();
+        inline static bool IsBaseOf()
+        {
+            return std::is_base_of<Base, Derived>::value;
+        }
     };
 }

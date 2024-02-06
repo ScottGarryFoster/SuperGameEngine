@@ -4,7 +4,7 @@
 
 namespace SuperGameEngine
 {
-    class Scene
+    class Scene : public Object
     {
     public:
         Scene(SceneLoadPackage* sceneLoadPackage);
