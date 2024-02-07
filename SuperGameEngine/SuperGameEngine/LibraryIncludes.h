@@ -10,5 +10,7 @@
 #include "../FatedQuest.Libraries/StandardCLibrary/Events/FEventArguments.h"
 #include "../FatedQuest.Libraries/StandardCLibrary/Object/TypeHelpers.h"
 #include "../FatedQuest.Libraries/StandardCLibrary/Object/Object.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/Object/Exceptions/ArgumentNullException.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/Object/Exceptions/SystemNullReference.h"
 #include "../FatedQuest.Libraries/StandardCLibrary/Structural/FVectorLocationEventArguments.h"
 #include "../FatedQuest.Libraries/StandardCLibrary/Structural/FPointLocationEventArguments.h"

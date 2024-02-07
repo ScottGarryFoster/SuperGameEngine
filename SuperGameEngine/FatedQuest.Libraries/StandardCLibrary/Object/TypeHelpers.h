@@ -25,13 +25,13 @@ namespace StandardCLibrary
         /// <summary>
         /// Determines if the second type is the base of the given type.
         /// </summary>
-        /// <typeparam name="Derived">Derived class. </typeparam>
         /// <typeparam name="Base">Base class to test. </typeparam>
+        /// <typeparam name="Derived">Derived class. </typeparam>
         /// <returns>True means is a base class. </returns>
-        template <typename Derived, typename Base>
+        template <typename Base, typename Derived>
         inline static bool IsBaseOf()
         {
-            return std::is_base_of<Base, Derived>::value;
+            return std::is_base_of<Derived, Base>::value;
         }
     };
 }

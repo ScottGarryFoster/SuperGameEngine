@@ -7,11 +7,11 @@ namespace SuperGameEngine
     /// <summary>
     /// Location and size in space.
     /// </summary>
-    class Transform : public FEventObserver
+    class TransformComponent : public FEventObserver
     {
     public:
-        Transform();
-        virtual ~Transform();
+        TransformComponent();
+        virtual ~TransformComponent();
 
         /// <summary>
         /// Gets the location of the transform.

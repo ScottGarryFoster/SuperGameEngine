@@ -1,4 +1,5 @@
 #pragma once
+#include "../Text/FString.h"
 
 namespace StandardCLibrary
 {
@@ -9,5 +10,12 @@ namespace StandardCLibrary
     {
     public:
         virtual ~Object(){}
+
+        /// <summary>
+        /// The name of the type.
+        /// This is the most derived name.
+        /// </summary>
+        /// <returns>Type as a string. </returns>
+        FString GetTypeName();
     };
 }

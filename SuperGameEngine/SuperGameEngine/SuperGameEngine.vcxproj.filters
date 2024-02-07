@@ -53,6 +53,12 @@
     <Filter Include="Project Files\Structural\GameObject\API">
       <UniqueIdentifier>{15ce3be7-61c3-4c17-9acb-1a6cbb0bbb28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Components\Visual">
+      <UniqueIdentifier>{21e758e4-62b0-4083-9f6e-e606856f8bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Visual\API">
+      <UniqueIdentifier>{0b38ca89-fa38-4c23-a5f3-6b1522f667a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -73,7 +79,7 @@
     <ClCompile Include="Engine\Content\ContentManager.cpp">
       <Filter>Project Files\Engine\Content</Filter>
     </ClCompile>
-    <ClCompile Include="Structural\Components\Spatial\Transform.cpp">
+    <ClCompile Include="Structural\Components\Spatial\TransformComponent.cpp">
       <Filter>Project Files\Structural\Components\Spatial</Filter>
     </ClCompile>
     <ClCompile Include="Structural\GameObject\GameComponent.cpp">
@@ -84,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="Structural\GameObject\TestComponent.cpp">
       <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp">
+      <Filter>Project Files\Structural\Components\Visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,11 +126,14 @@
     <ClInclude Include="Structural\GameObject\GameComponent.h">
       <Filter>Project Files\Structural\GameObject\API</Filter>
     </ClInclude>
-    <ClInclude Include="Structural\Components\Spatial\Transform.h">
+    <ClInclude Include="Structural\Components\Spatial\TransformComponent.h">
       <Filter>Project Files\Structural\Components\Spatial\API</Filter>
     </ClInclude>
     <ClInclude Include="Structural\GameObject\TestComponent.h">
       <Filter>Project Files\Structural\GameObject\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Visual\SpriteComponent.h">
+      <Filter>Project Files\Structural\Components\Visual\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

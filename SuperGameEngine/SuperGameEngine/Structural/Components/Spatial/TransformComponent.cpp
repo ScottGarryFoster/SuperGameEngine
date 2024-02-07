@@ -1,31 +1,31 @@
-#include "Transform.h"
+#include "TransformComponent.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-Transform::Transform()
+TransformComponent::TransformComponent()
 {
     m_location = new FVector2D();
     m_onLocationChanged = new FEvent();
 }
 
-Transform::~Transform()
+TransformComponent::~TransformComponent()
 {
     delete m_location;
     delete m_onLocationChanged;
 }
 
-FVector2D* Transform::GetLocation()
+FVector2D* TransformComponent::GetLocation()
 {
     return m_location;
 }
 
-FEventSubscriptions* Transform::OnLocationChanged()
+FEventSubscriptions* TransformComponent::OnLocationChanged()
 {
     return m_onLocationChanged;
 }
 
-void Transform::Invoke(FEventArguments* arguments)
+void TransformComponent::Invoke(FEventArguments* arguments)
 {
     m_onLocationChanged->Invoke(arguments);
 }

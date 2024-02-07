@@ -1,13 +1,16 @@
 #include "Scene.h"
 #include "../GameObject/GameObject.h"
 #include "../GameObject/TestComponent.h"
+#include "../Components/Visual/SpriteComponent.h"
 using namespace SuperGameEngine;
 
-Scene::Scene(SceneLoadPackage* sceneLoadPackage)
+Scene::Scene()
 {
-    m_sceneLoadPackage = sceneLoadPackage;
-    m_intialised = false;
+    m_sceneLoadPackage = nullptr;
+    m_loaded = false;
     m_texture = nullptr;
+
+    m_gameObjects = std::vector<GameObject*>();
 }
 
 Scene::~Scene()
@@ -15,18 +18,36 @@ Scene::~Scene()
 
 }
 
+void Scene::Setup(SceneLoadPackage* sceneLoadPackage)
+{
+    if (!sceneLoadPackage)
+    {
+        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("sceneLoadPackage is null"));
+        return;
+    }
+    m_sceneLoadPackage = sceneLoadPackage;
+
+    GameObject* go = new GameObject();
+    go->Setup(m_sceneLoadPackage);
+    go->AddComponent<SpriteComponent>();
+    m_gameObjects.push_back(go);
+    m_loaded = true;
+}
+
 bool Scene::Update(GameTime gameTime)
 {
-    if (!m_intialised)
+    if (!m_loaded)
     {
-        GameObject* go = new GameObject();
-        //go->Update(gameTime);
-        go->AddComponent<TestComponent>();
-        //go->AddActualComponent(new TestComponent());
-        m_intialised = true;
+        return true;
+    }
 
-        //ContentManager* content = m_sceneLoadPackage->GetContentManager();
-        //m_texture = content->GetTexture(FString("E:/Development/SuperGameEngine-SDL/collideCircle.png"));
+    for (size_t i = 0; i < m_gameObjects.size(); ++i)
+    {
+        GameObject* gameObject = m_gameObjects[i];
+        if (m_gameObjects[i] != nullptr)
+        {
+            gameObject->Update(gameTime);
+        }
     }
 
     return true;
@@ -34,8 +55,17 @@ bool Scene::Update(GameTime gameTime)
 
 void Scene::Draw()
 {
-    if (m_texture != nullptr)
+    if (!m_loaded)
     {
-        m_texture->Draw();
+        return;
+    }
+
+    for (size_t i = 0; i < m_gameObjects.size(); ++i)
+    {
+        GameObject* gameObject = m_gameObjects[i];
+        if (m_gameObjects[i] != nullptr)
+        {
+            gameObject->Draw();
+        }
     }
 }

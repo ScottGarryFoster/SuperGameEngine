@@ -15,6 +15,7 @@ GameComponent::~GameComponent()
 
 void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
+    Test();
 }
 
 bool GameComponent::Update(GameTime gameTime)
@@ -24,6 +25,11 @@ bool GameComponent::Update(GameTime gameTime)
 
 void GameComponent::Draw()
 {
+}
+
+GameObject* GameComponent::GetParent()
+{
+    return m_parent;
 }
 
 void GameComponent::Test()

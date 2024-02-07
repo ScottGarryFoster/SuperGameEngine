@@ -7,7 +7,10 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
 {
     m_sceneLoadPackage = new SceneLoadPackage(new ContentManager(renderer));
     m_scenes = std::vector<Scene*>();
-    m_scenes.push_back(new Scene(m_sceneLoadPackage));
+
+    Scene* scene = new Scene();
+    scene->Setup(m_sceneLoadPackage);
+    m_scenes.push_back(scene);
 }
 
 GrandScene::~GrandScene()
@@ -17,7 +20,7 @@ GrandScene::~GrandScene()
 
 bool GrandScene::Update(Uint64 tick)
 {
-    SuperGameEngine::GameTime gameTime;
+    GameTime gameTime = GameTime();
     gameTime.TicksSinceLastFrame = (int)tick;
 
     for (Scene* scene : m_scenes)

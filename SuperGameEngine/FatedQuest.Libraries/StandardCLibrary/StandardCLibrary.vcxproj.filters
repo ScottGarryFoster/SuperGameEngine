@@ -53,6 +53,12 @@
     <Filter Include="Project Files\Object\API">
       <UniqueIdentifier>{c4fec2d4-ce29-403c-91a1-6306e0f66f37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Object\Exceptions">
+      <UniqueIdentifier>{3eab4343-931c-4fbc-b093-678c0bda818d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\Exceptions\API">
+      <UniqueIdentifier>{53b82d5a-1968-4e4f-a1a4-d96711e16c03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -100,6 +106,15 @@
     <ClInclude Include="Object\Object.h">
       <Filter>Project Files\Object\API</Filter>
     </ClInclude>
+    <ClInclude Include="Object\FException.h">
+      <Filter>Project Files\Object\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Exceptions\SystemNullReference.h">
+      <Filter>Project Files\Object\Exceptions\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Exceptions\ArgumentNullException.h">
+      <Filter>Project Files\Object\Exceptions\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -140,6 +155,15 @@
     </ClCompile>
     <ClCompile Include="Object\Object.cpp">
       <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\FException.cpp">
+      <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Exceptions\ArgumentNullException.cpp">
+      <Filter>Project Files\Object\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Exceptions\SystemNullReference.cpp">
+      <Filter>Project Files\Object\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

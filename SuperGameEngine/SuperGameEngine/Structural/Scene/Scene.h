@@ -4,11 +4,18 @@
 
 namespace SuperGameEngine
 {
+    class GameObject;
     class Scene : public Object
     {
     public:
-        Scene(SceneLoadPackage* sceneLoadPackage);
+        Scene();
         ~Scene();
+
+        /// <summary>
+        /// Sets up the scene.
+        /// </summary>
+        /// <param name="sceneLoadPackage">Contains all the objects a GameObject needs to opperate. </param>
+        void Setup(SceneLoadPackage* sceneLoadPackage);
 
         /// <summary>
         /// Entry point for the entire game.
@@ -24,9 +31,17 @@ namespace SuperGameEngine
 
     private:
 
-        bool m_intialised;
+        /// <summary>
+        /// Has setup run successfully?
+        /// </summary>
+        bool m_loaded;
 
         SceneLoadPackage* m_sceneLoadPackage;
+
+        /// <summary>
+        /// All game objects currently loaded.
+        /// </summary>
+        std::vector<GameObject*> m_gameObjects;
 
         SuperTexture* m_texture;
     };

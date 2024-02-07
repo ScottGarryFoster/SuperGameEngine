@@ -33,7 +33,18 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw();
 
+        /// <summary>
+        /// Gets the parent GameObject.
+        /// </summary>
+        /// <returns>The GameObject which owns us. </returns>
+        GameObject* GetParent();
+
         void Test();
     private:
+
+        /// <summary>
+        /// Parent owning object.
+        /// </summary>
+        GameObject* m_parent;
     };
 }
