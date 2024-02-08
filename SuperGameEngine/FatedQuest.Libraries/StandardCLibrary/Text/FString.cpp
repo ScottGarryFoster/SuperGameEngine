@@ -95,12 +95,12 @@ FString::FString(const std::string str1, const std::string str2, const std::stri
     m_storage = content.str();
 }
 
-const std::string FString::AsStdString()
+const std::string FString::AsStdString() const
 {
     return m_storage;
 }
 
-const char* FString::AsCharArr()
+const char* FString::AsCharArr() const
 {
     return m_storage.c_str();
 }
@@ -150,7 +150,7 @@ bool FString::operator==(const FString& other) const
     return m_storage.compare(other.m_storage);
 }
 
-FString FString::ToLower()
+FString FString::ToLower() const
 {
     std::string toLower = m_storage.c_str();
     for (char& c : toLower)
@@ -175,7 +175,7 @@ void FString::ConvertToLower()
     }
 }
 
-FString FString::ToUpper()
+FString FString::ToUpper() const
 {
     std::string toUpper = m_storage.c_str();
     for (char& c : toUpper)

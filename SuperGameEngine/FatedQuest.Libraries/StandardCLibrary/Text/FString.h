@@ -42,14 +42,14 @@ namespace StandardCLibrary
         bool operator==(const FString& other) const;
 
 
-        const std::string AsStdString();
-        const char* AsCharArr();
+        const std::string AsStdString() const;
+        const char* AsCharArr() const;
 
         /// <summary>
         /// Reverts this FString to lowercase.
         /// </summary>
         /// <returns>Lowercase version of this FString in lowercase. </returns>
-        FString ToLower();
+        FString ToLower() const;
 
         /// <summary>
         /// Converts this FString to Lowercase.
@@ -60,7 +60,7 @@ namespace StandardCLibrary
         /// Reverts this FString to uppercase.
         /// </summary>
         /// <returns>uppercase version of this FString in uppercase. </returns>
-        FString ToUpper();
+        FString ToUpper() const;
 
         /// <summary>
         /// Converts this FString to uppercase.
