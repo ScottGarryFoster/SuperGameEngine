@@ -13,10 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardCLibrary", "FatedQu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logging", "FatedQuest.Libraries\Logging\Logging.vcxproj", "{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandling", "FatedQuest.Libraries\FileHandling\FileHandling.vcxproj", "{85FC6110-8BAC-4A93-9798-4D1261D58A18}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathHelpers", "FatedQuest.Libraries\MathHelpers\MathHelpers.vcxproj", "{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -57,22 +53,6 @@ Global
 		{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035}.Release|x64.Build.0 = Release|x64
 		{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035}.Release|x86.ActiveCfg = Release|Win32
 		{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035}.Release|x86.Build.0 = Release|Win32
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Debug|x64.ActiveCfg = Debug|x64
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Debug|x64.Build.0 = Debug|x64
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Debug|x86.ActiveCfg = Debug|Win32
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Debug|x86.Build.0 = Debug|Win32
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Release|x64.ActiveCfg = Release|x64
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Release|x64.Build.0 = Release|x64
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Release|x86.ActiveCfg = Release|Win32
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18}.Release|x86.Build.0 = Release|Win32
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Debug|x64.ActiveCfg = Debug|x64
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Debug|x64.Build.0 = Debug|x64
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Debug|x86.ActiveCfg = Debug|Win32
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Debug|x86.Build.0 = Debug|Win32
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Release|x64.ActiveCfg = Release|x64
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Release|x64.Build.0 = Release|x64
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Release|x86.ActiveCfg = Release|Win32
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,8 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3964752B-73C2-4C0E-8BFE-3C42DBEF2E03} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
 		{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
-		{85FC6110-8BAC-4A93-9798-4D1261D58A18} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
-		{B479F439-82D2-4BF1-94D4-F9B3D615BAE6} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEE90C3C-7E45-4340-A20A-250D28E875BC}

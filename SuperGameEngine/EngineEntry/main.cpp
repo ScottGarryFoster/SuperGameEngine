@@ -3,11 +3,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../FatedQuest.Libraries/StandardCLibrary/FString.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/Text/FString.h"
 #include "../FatedQuest.Libraries/Logging/Logger.h"
-#include "../SuperGameEngine/Native/Graphics/Texture.h"
+#include "../SuperGameEngine/Engine/Graphics/Texture.h"
+#include "../FatedQuest.Libraries/StandardCLibrary/Time/Timespan.h"
+#include "../SuperGameEngine/Structural/Scene/GrandScene.h"
 
 using namespace StandardCLibrary;
+using namespace SuperGameEngine;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -72,7 +75,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Event handler
     SDL_Event e;
 
-    Texture* texture = nullptr;
+    GrandScene* grandScene = new GrandScene(renderer);
+    Uint64 ticksLastFrame = 0;
 
     // Main loop
     while (!quit)
@@ -89,36 +93,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
 
+        Uint64 ticksThisFrame = SDL_GetTicks64();
+        grandScene->Update(ticksLastFrame - ticksThisFrame);
 
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
         SDL_RenderClear(renderer);
 
-        if (texture == nullptr)
-        {
-            std::vector<FString>* errors = new std::vector<FString>();
-            texture = new Texture(renderer);
-            if (!texture->LoadImageFromFile(FString("E:/Development/SuperGameEngine-SDL/A_pressed.png"), *errors))
-            {
-                for (const FString str : *errors)
-                {
-                    Logger::Info(StandardCLibrary::FString(str));
-                } 
-            }
-
-            delete errors;
-        }
-
-        if (texture != nullptr)
-        {
-            texture->Draw();
-        }
+        grandScene->Draw();
 
         // Update screen
         SDL_RenderPresent(renderer);
 
         // Add a small delay to avoid 100% CPU usage
         SDL_Delay(10);
+
+        ticksLastFrame = ticksThisFrame;
     }
 
     // Wait

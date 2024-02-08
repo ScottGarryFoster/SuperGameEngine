@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,20 +128,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Content\ContentManager.h" />
+    <ClInclude Include="Engine\Graphics\SuperTexture.h" />
     <ClInclude Include="LibraryIncludes.h" />
-    <ClInclude Include="Native\Graphics\Texture.h" />
+    <ClInclude Include="Engine\Basic\GameTime.h" />
+    <ClInclude Include="Engine\Graphics\Texture.h" />
+    <ClInclude Include="Structural\Components\Spatial\TransformComponent.h" />
+    <ClInclude Include="Structural\Components\Visual\SpriteComponent.h" />
+    <ClInclude Include="Structural\GameObject\GameComponent.h" />
+    <ClInclude Include="Structural\GameObject\GameObject.h" />
+    <ClInclude Include="Structural\GameObject\TestComponent.h" />
+    <ClInclude Include="Structural\Scene\GrandScene.h" />
+    <ClInclude Include="Structural\Scene\Scene.h" />
+    <ClInclude Include="Structural\Scene\SceneLoadPackage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Native\Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\Content\ContentManager.cpp" />
+    <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
+    <ClCompile Include="Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="Structural\Components\Spatial\TransformComponent.cpp" />
+    <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp" />
+    <ClCompile Include="Structural\GameObject\GameComponent.cpp" />
+    <ClCompile Include="Structural\GameObject\GameObject.cpp" />
+    <ClCompile Include="Structural\GameObject\TestComponent.cpp" />
+    <ClCompile Include="Structural\Scene\GrandScene.cpp" />
+    <ClCompile Include="Structural\Scene\Scene.cpp" />
+    <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
-      <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>
   </ItemGroup>

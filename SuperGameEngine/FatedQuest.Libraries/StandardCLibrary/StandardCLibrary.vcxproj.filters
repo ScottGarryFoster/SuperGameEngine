@@ -1,27 +1,169 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Project Files">
+      <UniqueIdentifier>{a8429d07-411b-4d31-845a-656c98474a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Text">
+      <UniqueIdentifier>{b97d5711-4037-4fc0-9f00-bcc804d03247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Text\API">
+      <UniqueIdentifier>{3fc4d212-1727-4e10-b141-e5e047e538c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\File">
+      <UniqueIdentifier>{ffa6d126-2a97-41e5-9496-4c59718b5004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\File\API">
+      <UniqueIdentifier>{d8f1f09c-0ec3-4163-a6fb-76cbd24a3426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Time">
+      <UniqueIdentifier>{f8651a2d-9070-4c5b-9f27-c2e9f171eaeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Time\API">
+      <UniqueIdentifier>{94dfcdd2-b591-441d-b81b-57c7abed830f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Collection">
+      <UniqueIdentifier>{d794e331-05e1-4e7c-ad34-045b5db77c26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Collection\Vector">
+      <UniqueIdentifier>{ea0440d1-6477-487c-89a8-37fab36051da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Collection\Vector\API">
+      <UniqueIdentifier>{9f01c763-b563-44a6-b61a-22d7bd3bb821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural">
+      <UniqueIdentifier>{da1810af-655e-423c-b0c4-ce13da75a599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\API">
+      <UniqueIdentifier>{74cabb18-0aa0-404b-9620-d7cad635be42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Events">
+      <UniqueIdentifier>{217acc43-3a1c-4ac8-b528-5ad0b2e3a014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Events\API">
+      <UniqueIdentifier>{aaa9d523-3d44-436d-ac1a-d8e4cb94c729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object">
+      <UniqueIdentifier>{bfa33416-d968-4c7d-9266-cf978f4f0eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\API">
+      <UniqueIdentifier>{c4fec2d4-ce29-403c-91a1-6306e0f66f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\Exceptions">
+      <UniqueIdentifier>{3eab4343-931c-4fbc-b093-678c0bda818d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\Exceptions\API">
+      <UniqueIdentifier>{53b82d5a-1968-4e4f-a1a4-d96711e16c03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FString.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Text/FString.h">
+      <Filter>Project Files\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="File\File.h">
+      <Filter>Project Files\File\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Time\Timespan.h">
+      <Filter>Project Files\Time\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection\Vector\VectorHelpers.h">
+      <Filter>Project Files\Collection\Vector\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\FPoint.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\FVector2D.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\Observer.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\Subject.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEvent.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventObserver.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventAction.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventSubscriptions.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\FEventArguments.h">
+      <Filter>Project Files\Events\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TypeHelpers.h">
+      <Filter>Project Files\Object\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Project Files\Object\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\FException.h">
+      <Filter>Project Files\Object\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Exceptions\SystemNullReference.h">
+      <Filter>Project Files\Object\Exceptions\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Exceptions\ArgumentNullException.h">
+      <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FString.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Text/FString.cpp">
+      <Filter>Project Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="File\File.cpp">
+      <Filter>Project Files\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Timespan.cpp">
+      <Filter>Project Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Collection\Vector\VectorHelpers.cpp">
+      <Filter>Project Files\Collection\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FPoint.cpp">
+      <Filter>Project Files\Structural</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FVector2D.cpp">
+      <Filter>Project Files\Structural</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\Observer.cpp">
+      <Filter>Project Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\Subject.cpp">
+      <Filter>Project Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\FEvent.cpp">
+      <Filter>Project Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FVectorLocationEventArguments.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FPointLocationEventArguments.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TypeHelpers.cpp">
+      <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\FException.cpp">
+      <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Exceptions\ArgumentNullException.cpp">
+      <Filter>Project Files\Object\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Exceptions\SystemNullReference.cpp">
+      <Filter>Project Files\Object\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

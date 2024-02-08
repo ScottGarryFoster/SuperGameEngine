@@ -1,42 +1,139 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Native">
-      <UniqueIdentifier>{21ffa9f7-c789-4759-912f-dfd7014a9514}</UniqueIdentifier>
+    <Filter Include="Project Files">
+      <UniqueIdentifier>{23faad6a-9996-46c2-97d6-3252a09c99d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Native\Graphics">
-      <UniqueIdentifier>{6703a968-58e8-4af5-90d8-8bc0be8ed3b0}</UniqueIdentifier>
+    <Filter Include="Project Files\Structural">
+      <UniqueIdentifier>{1304aec7-3d3b-4bb4-843d-cd76a48c1099}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Native">
-      <UniqueIdentifier>{70ce70e0-472b-47fc-80f6-9f2bd504ecd3}</UniqueIdentifier>
+    <Filter Include="Project Files\Structural\Scene">
+      <UniqueIdentifier>{70fe1487-d485-41b7-969e-19044611b783}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Native\Graphics">
-      <UniqueIdentifier>{a820dfd4-0496-4bff-9760-0a658e9b16ca}</UniqueIdentifier>
+    <Filter Include="Project Files\Structural\Scene\API">
+      <UniqueIdentifier>{98fa3ba9-3f10-444f-a014-1dd5f4343076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\GameObject">
+      <UniqueIdentifier>{b811bbc6-4392-42d3-b64b-0a1d2a8555b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine">
+      <UniqueIdentifier>{a22b249e-709c-434e-9e8a-b7e296771c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Graphics">
+      <UniqueIdentifier>{d048ad31-d572-4390-b9a8-eb1b3e5a3ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Graphics\API">
+      <UniqueIdentifier>{10c9ad40-1aa5-4cf7-9b01-b7f7199dd71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Basic">
+      <UniqueIdentifier>{54243b29-21b3-4537-9398-700a39f8e9e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Basic\API">
+      <UniqueIdentifier>{b18da3ef-35fd-4885-9c6f-b16268cf1497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Content">
+      <UniqueIdentifier>{99ad6c37-35bd-487b-9a14-959b37296d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Content\API">
+      <UniqueIdentifier>{104ce86b-707b-4e7d-b495-a9cfed3f9402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components">
+      <UniqueIdentifier>{77bde5b3-37e9-4f0e-bf80-8022a4fb0b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Spatial">
+      <UniqueIdentifier>{4a369c47-c565-4395-98b7-d14aa883b2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Spatial\API">
+      <UniqueIdentifier>{7137dd1a-250f-4003-91e1-b73065d09e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\GameObject\API">
+      <UniqueIdentifier>{15ce3be7-61c3-4c17-9acb-1a6cbb0bbb28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Visual">
+      <UniqueIdentifier>{21e758e4-62b0-4083-9f6e-e606856f8bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Visual\API">
+      <UniqueIdentifier>{0b38ca89-fa38-4c23-a5f3-6b1522f667a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Native\Graphics\Texture.cpp">
-      <Filter>Source Files\Native\Graphics</Filter>
+    <ClCompile Include="Structural\Scene\GrandScene.cpp">
+      <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\Scene.cpp">
+      <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp">
+      <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SuperTexture.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\ContentManager.cpp">
+      <Filter>Project Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Spatial\TransformComponent.cpp">
+      <Filter>Project Files\Structural\Components\Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\GameComponent.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\GameObject.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\TestComponent.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp">
+      <Filter>Project Files\Structural\Components\Visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Native\Graphics\Texture.h">
-      <Filter>Header Files\Native\Graphics</Filter>
+    <ClInclude Include="Structural\Scene\GrandScene.h">
+      <Filter>Project Files\Structural\Scene\API</Filter>
     </ClInclude>
     <ClInclude Include="LibraryIncludes.h">
-      <Filter>Header Files</Filter>
+      <Filter>Project Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\Scene.h">
+      <Filter>Project Files\Structural\Scene\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\GameObject.h">
+      <Filter>Project Files\Structural\GameObject\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SceneLoadPackage.h">
+      <Filter>Project Files\Structural\Scene\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\GameTime.h">
+      <Filter>Project Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SuperTexture.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\ContentManager.h">
+      <Filter>Project Files\Engine\Content\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\GameComponent.h">
+      <Filter>Project Files\Structural\GameObject\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Spatial\TransformComponent.h">
+      <Filter>Project Files\Structural\Components\Spatial\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\TestComponent.h">
+      <Filter>Project Files\Structural\GameObject\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Visual\SpriteComponent.h">
+      <Filter>Project Files\Structural\Components\Visual\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
