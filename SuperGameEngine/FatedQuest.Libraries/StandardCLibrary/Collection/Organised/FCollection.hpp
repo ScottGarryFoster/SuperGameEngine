@@ -81,6 +81,37 @@ namespace StandardCLibrary
             return returnCollection;
         }
 
+        /// <summary>
+        /// From the items in the collection extract the given Type.
+        /// </summary>
+        /// <typeparam name="TResult">Type of the result to extract. </typeparam>
+        /// <param name="predicate">
+        /// A lamda to take the Type and return the Result.
+        /// Imagine it is run upon each element in the collection.
+        /// </param>
+        /// <returns>A collection of your results. </returns>
+        /// <example>
+        /// To extract return the actual element you want.
+        /// <code>
+        ///     FCollection<std::string> selectedSquares = 
+        ///         collection.Select<std::string>
+        ///         ([](const FString& num){ return num.AsStdString(); });
+        /// </code>
+        /// You can select an item in say a class to extract them all.
+        /// </example>
+        template<typename TResult>
+        FCollection<TResult> Select(std::function<TResult(const T&)> predicate) const
+        {
+            std::vector<TResult> selectedItems;
+            selectedItems.reserve(m_actualData.size());
+            for (const auto& item : m_actualData)
+            {
+                selectedItems.push_back(predicate(item));
+            }
+
+            return FCollection<TResult>(selectedItems);
+        }
+
     protected:
 
         /// <summary>

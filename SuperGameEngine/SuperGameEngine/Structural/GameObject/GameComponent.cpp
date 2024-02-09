@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 #include "../../../FatedQuest.Libraries/Logging/Logger.h"
-#include "../../../FatedQuest.Libraries/StandardCLibrary/Collection/Organised/FList.h"
+#include "../../../FatedQuest.Libraries/StandardCLibrary/Collection/Organised/FList.hpp"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -11,6 +11,8 @@ GameComponent::GameComponent()
     FList<FString> collection(FString("Insde"));
     collection.Add(FString("Something else"));
     collection.Add(FString("Pokemon 2"));
+    collection.Add(FString("Bulbasaur"));
+    collection.Add(FString("Bayleef"));
 
     Logger::Info(FString("=============="));
 
@@ -27,6 +29,14 @@ GameComponent::GameComponent()
     }
 
     Logger::Info(FString("=============="));
+
+    FCollection<std::string> selectedSquares = collection.Select<std::string>([](const FString& num){ return num.AsStdString(); });
+
+    Logger::Info(FString("As string::"));
+    for (std::string val : selectedSquares)
+    {
+        Logger::Info(FString(val));
+    }
 }
 
 GameComponent::~GameComponent()

@@ -62,9 +62,6 @@
     <Filter Include="Project Files\Collection\Organised">
       <UniqueIdentifier>{a785f6d0-9027-4fd0-b680-4123f4d5e1ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\Collection\Organised\API">
-      <UniqueIdentifier>{5324aed0-019f-465a-9443-9eea3fce8731}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -121,11 +118,11 @@
     <ClInclude Include="Object\Exceptions\ArgumentNullException.h">
       <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
-    <ClInclude Include="Collection\Organised\FCollection.h">
-      <Filter>Project Files\Collection\Organised\API</Filter>
+    <ClInclude Include="Collection\Organised\FCollection.hpp">
+      <Filter>Project Files\Collection\Organised</Filter>
     </ClInclude>
-    <ClInclude Include="Collection\Organised\FList.h">
-      <Filter>Project Files\Collection\Organised\API</Filter>
+    <ClInclude Include="Collection\Organised\FList.hpp">
+      <Filter>Project Files\Collection\Organised</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
