@@ -107,37 +107,37 @@ const char* FString::AsCharArr() const
 
 FString FString::operator+(const std::string& str) const
 {
-    return FString(m_storage.c_str(), str.c_str());
+    return FString(m_storage + str.c_str());
 }
 
 FString FString::operator+(const FString& str) const
 {
-    return FString(m_storage.c_str(), str.m_storage.c_str());
+    return FString(m_storage + str.m_storage);
 }
 
 FString FString::operator+(const float str) const
 {
-    return FString(m_storage.c_str(), std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const double str) const
 {
-    return FString(m_storage.c_str(), std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const int str) const
 {
-    return FString(m_storage.c_str(), std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const long int str) const
 {
-    return FString(m_storage.c_str(), std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const unsigned long int str) const
 {
-    return FString(m_storage.c_str(), std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 bool FString::operator==(const std::string& other) const

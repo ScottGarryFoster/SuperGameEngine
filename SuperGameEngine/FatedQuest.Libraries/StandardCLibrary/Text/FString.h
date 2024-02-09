@@ -32,6 +32,7 @@ namespace StandardCLibrary
         FString(const std::string str1, const std::string str2, const std::string str3, const std::string str4, const std::string str5,
             const std::string str6, const std::string str7, const std::string str8, const std::string str9, const std::string str10);
 
+
         FString operator+(const std::string& str) const;
         FString operator+(const FString& str) const;
         FString operator+(const int str) const;
@@ -44,7 +45,6 @@ namespace StandardCLibrary
         bool operator==(const FString& other) const;
 
         friend std::ostream& operator<<(std::ostream& os, const FString& obj);
-
 
         const std::string AsStdString() const;
         const char* AsCharArr() const;

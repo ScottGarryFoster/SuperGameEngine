@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "../LibraryIncludes.h"
 #include "../../StandardCLibrary/Text/FString.h"
 
@@ -177,11 +179,78 @@ namespace StandardCLibraryTests_Text
 
         const char* actual = given.AsCharArr();
 
-        for (unsigned int c = 0; c < 3; ++c)
+        EXPECT_EQ(std::strlen(expected), std::strlen(actual));
+        for (unsigned int c = 0; c < std::strlen(actual); ++c)
         {
             EXPECT_EQ(expected[c], actual[c])
                 << "Character: " << c << " was not equal. Expected: " << expected[c] << " Actual: " << actual[c];
         }
+    }
+#pragma endregion
+
+#pragma region ToLower
+    TEST(FStringTest, ToLower_ReturnsAllLowerCase_WhenGivenAnUpperCaseString)
+    {
+        FString given = FString("UpperCase String");
+        FString expected = FString("uppercase string");
+
+        FString actual = given.ToLower();
+
+        EXPECT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
+    }
+
+    TEST(FStringTest, ToLower_DoesNotAffectOriginalString_WhenPerformed)
+    {
+        FString given = FString("UpperCase String");
+        FString expected = FString("UpperCase String");
+
+        given.ToLower();
+
+        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+    }
+#pragma endregion
+
+#pragma region ToUpper
+    TEST(FStringTest, ToUpper_ReturnsAllUpperCase_WhenGivenAnUpperCaseString)
+    {
+        FString given = FString("UpperCase String");
+        FString expected = FString("UPPERCASE STRING");
+
+        FString actual = given.ToUpper();
+
+        EXPECT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
+    }
+
+    TEST(FStringTest, ToUpper_DoesNotAffectOriginalString_WhenPerformed)
+    {
+        FString given = FString("UpperCase String");
+        FString expected = FString("UpperCase String");
+
+        given.ToUpper();
+
+        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+    }
+#pragma endregion
+
+#pragma region ConvertToLowerAndUpper
+    TEST(FStringTest, ConvertToLower_ChangesValueToLowerCase)
+    {
+        FString given = FString("UpperCase String");
+        FString expected = FString("uppercase string");
+
+        given.ConvertToLower();
+
+        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+    }
+
+    TEST(FStringTest, ConvertToUpper_ChangesValueToUpperCase)
+    {
+        FString given = FString("UpperCase String");
+        FString expected = FString("UPPERCASE STRING");
+
+        given.ConvertToUpper();
+
+        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
     }
 #pragma endregion
 
