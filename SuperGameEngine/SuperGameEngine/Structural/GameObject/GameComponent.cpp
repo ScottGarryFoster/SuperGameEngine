@@ -1,14 +1,16 @@
 #include "GameComponent.h"
 #include "GameObject.h"
 
-#include "../../../FatedQuest.Libraries/Logging/Logger.h"
-#include "../../../FatedQuest.Libraries/StandardCLibrary/Collection/Organised/FList.hpp"
+#include "../../LibraryIncludes.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
 GameComponent::GameComponent()
 {
-    FList<FString> collection(FString("Insde"));
+    m_parent = nullptr;
+
+    FString s = FString("Insde");
+    FList<FString> collection(s);
     collection.Add(FString("Something else"));
     collection.Add(FString("Pokemon 2"));
     collection.Add(FString("Bulbasaur"));

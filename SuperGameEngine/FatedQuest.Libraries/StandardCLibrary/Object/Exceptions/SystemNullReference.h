@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../FException.h"
 
 namespace StandardCLibrary

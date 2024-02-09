@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Text\FStringTests.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Text">
+      <UniqueIdentifier>{85c69d54-b033-4515-b834-274864c1e1ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Package Files">
+      <UniqueIdentifier>{abc4bd17-ee61-4f51-af54-1f3ed033a298}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Package Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LibraryIncludes.h">
+      <Filter>Package Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

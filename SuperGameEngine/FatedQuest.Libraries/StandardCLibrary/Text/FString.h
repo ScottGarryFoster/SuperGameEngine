@@ -1,6 +1,8 @@
 #pragma once
+
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace StandardCLibrary
 {
@@ -40,6 +42,8 @@ namespace StandardCLibrary
 
         bool operator==(const std::string& other) const;
         bool operator==(const FString& other) const;
+
+        friend std::ostream& operator<<(std::ostream& os, const FString& obj);
 
 
         const std::string AsStdString() const;

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "FCollection.hpp"
 
 namespace StandardCLibrary
@@ -10,6 +11,10 @@ namespace StandardCLibrary
     class FList : public FCollection<T>
     {
     public:
+        FList() : FCollection<T>() {}
+        FList(const T& value) : FCollection<T>(value) {}
+        FList(const std::vector<T> values) : FCollection<T>(values) {}
+
         /// <summary>
         /// Adds a new element to the end of the collection
         /// </summary>

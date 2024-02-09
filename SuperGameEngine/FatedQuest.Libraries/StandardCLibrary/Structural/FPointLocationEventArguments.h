@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../Events/FEventArguments.h"
 
 namespace StandardCLibrary

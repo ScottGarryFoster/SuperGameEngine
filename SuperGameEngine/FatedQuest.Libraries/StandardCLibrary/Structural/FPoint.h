@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../Text/FString.h"
 #include "../Events/FEvent.h"
 

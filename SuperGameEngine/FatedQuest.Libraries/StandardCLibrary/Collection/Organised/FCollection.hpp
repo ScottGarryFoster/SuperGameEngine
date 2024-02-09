@@ -1,4 +1,6 @@
 #pragma once
+
+#include "../../Object/Object.h"
 #include <vector>
 #include <algorithm>
 #include <functional>
@@ -9,9 +11,13 @@ namespace StandardCLibrary
     /// Data stored as a set.
     /// </summary>
     template<typename T>
-    class FCollection
+    class FCollection : public Object
     {
     public:
+        FCollection()
+        {
+        }
+
         /// <summary>
         /// Constructor with a single value.
         /// </summary>

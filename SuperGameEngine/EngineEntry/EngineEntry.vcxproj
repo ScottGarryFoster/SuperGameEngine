@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="RemoveWarnings.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="EngineEntry.h" />
     <ClInclude Include="targetver.h" />
