@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collection\Organised\FCollectionSharedTestHelpers.hpp" />
     <ClInclude Include="LibraryIncludes.h" />
   </ItemGroup>
   <ItemGroup>

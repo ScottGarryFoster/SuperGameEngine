@@ -31,5 +31,8 @@
     <ClInclude Include="LibraryIncludes.h">
       <Filter>Package Files</Filter>
     </ClInclude>
+    <ClInclude Include="Collection\Organised\FCollectionSharedTestHelpers.hpp">
+      <Filter>Collection\Organised</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
