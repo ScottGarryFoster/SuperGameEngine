@@ -8,37 +8,7 @@ using namespace SuperGameEngine;
 GameComponent::GameComponent()
 {
     m_parent = nullptr;
-
-    FString s = FString("Insde");
-    FList<FString> collection(s);
-    collection.Add(FString("Something else"));
-    collection.Add(FString("Pokemon 2"));
-    collection.Add(FString("Bulbasaur"));
-    collection.Add(FString("Bayleef"));
-
-    Logger::Info(FString("=============="));
-
-    for (FString val : collection)
-    {
-        Logger::Info(val.AsStdString());
-    }
-
-    Logger::Info(FString("=============="));
-
-    for (FString val : collection.Where([](const FString& c) { return c.ToLower().AsStdString() == "something else"; }))
-    {
-        Logger::Info(val.AsStdString());
-    }
-
-    Logger::Info(FString("=============="));
-
-    FCollection<std::string> selectedSquares = collection.Select<std::string>([](const FString& num){ return num.AsStdString(); });
-
-    Logger::Info(FString("As string::"));
-    for (std::string val : selectedSquares)
-    {
-        Logger::Info(FString(val));
-    }
+    m_doRender = false;
 }
 
 GameComponent::~GameComponent()
@@ -47,7 +17,7 @@ GameComponent::~GameComponent()
 
 void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
-    Test();
+    m_doRender = false;
 }
 
 bool GameComponent::Update(GameTime gameTime)
@@ -64,7 +34,12 @@ GameObject* GameComponent::GetParent()
     return m_parent;
 }
 
-void GameComponent::Test()
+bool SuperGameEngine::GameComponent::DoRender() const
 {
-    Logger::Info(FString("Hello"));
+    return m_doRender;
+}
+
+void SuperGameEngine::GameComponent::SetDoRender(bool newValue)
+{
+    m_doRender = newValue;
 }
