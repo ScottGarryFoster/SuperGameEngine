@@ -54,7 +54,7 @@ namespace StandardCLibrary
         /// <summary>
         /// Invokes when value has changed.
         /// </summary>
-        //FEventSubscriptions* GetOnValueChanged();
+        FEventSubscriptions* GetOnValueChanged();
 
     private:
 
@@ -71,11 +71,11 @@ namespace StandardCLibrary
         /// <summary>
         /// Event subject for OnValueChanged.
         /// </summary>
-        //FEvent* m_onValueChangedEvent;
+        FEvent* m_onValueChangedEvent;
 
         /// <summary>
         /// Invokes changed for all observers.
         /// </summary>
-        //void InvokeOnValueChanged();
+        void InvokeOnValueChanged();
     };
 }

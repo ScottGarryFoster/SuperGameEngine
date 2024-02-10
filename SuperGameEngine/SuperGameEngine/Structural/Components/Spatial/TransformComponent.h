@@ -8,7 +8,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Location and size in space.
     /// </summary>
-    class TransformComponent : public GameComponent//, public FEventObserver
+    class TransformComponent : public GameComponent, public FEventObserver
     {
     public:
         TransformComponent();
@@ -32,13 +32,13 @@ namespace SuperGameEngine
         /// Invoked when location has changed.
         /// </summary>
         /// <returns>Subscribe to this to gain access to this event. </returns>
-        //FEventSubscriptions* OnLocationChanged();
+        FEventSubscriptions* OnLocationChanged();
 
         /// <summary>
         /// Called when observations have been made and now we should react.
         /// </summary>
         /// <param name="arguments">Arguments to react to. </param>
-        //virtual void Invoke(FEventArguments* arguments) override;
+        virtual void Invoke(FEventArguments* arguments) override;
 
     private:
 
@@ -50,6 +50,6 @@ namespace SuperGameEngine
         /// <summary>
         /// Invokes on location changed.
         /// </summary>
-        //FEvent* m_onLocationChanged;
+        FEvent* m_onLocationChanged;
     };
 }
