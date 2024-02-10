@@ -168,5 +168,37 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 #pragma endregion
 #pragma endregion
 
+#pragma region Count
 
+    TEST(FCollectionTests, Count_ReturnsZero_WhenConstructingAnEmptyCollection)
+    {
+        FCollection<int> testClass;
+        int expected = CountCollection(testClass);
+
+        int actual = testClass.Count();
+
+        EXPECT_EQ(expected, actual);
+    }
+
+    TEST(FCollectionTests, Count_ReturnsOne_WhenConstructingACollectionWithOneElement)
+    {
+        FCollection<int> testClass(42);
+        int expected = CountCollection(testClass);
+
+        int actual = testClass.Count();
+
+        EXPECT_EQ(expected, actual);
+    }
+
+    TEST(FCollectionTests, Count_ReturnsFour_WhenConstructingACollectionWithManyElements)
+    {
+        std::vector<int> given{ 42, 56, 78, 1 };
+        FCollection<int> testClass(given);
+        int expected = CountCollection(testClass);
+
+        int actual = testClass.Count();
+
+        EXPECT_EQ(expected, actual);
+    }
+#pragma endregion
 }

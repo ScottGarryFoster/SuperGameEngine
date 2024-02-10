@@ -179,6 +179,15 @@ namespace StandardCLibrary
             return FCollection<TResult>(selectedItems);
         }
 
+        /// <summary>
+        /// Counts all elements in the collection.
+        /// </summary>
+        /// <returns>The number of elements in the collection. </returns>
+        size_t Count()
+        {
+            return m_actualData.size();
+        }
+
     protected:
 
         /// <summary>
