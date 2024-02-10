@@ -3,7 +3,7 @@
 
 using namespace StandardCLibrary;
 
-FString StandardCLibrary::Object::GetTypeName()
+FString StandardCLibrary::Object::GetTypeName() const
 {
     return FString(typeid(*this).name());
 }

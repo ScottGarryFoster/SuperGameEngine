@@ -10,10 +10,9 @@ namespace SuperGameEngine
     /// <summary>
     /// Contains a renderable 2D Texture.
     /// </summary>
-    class Texture
+    class Texture : public Object
     {
     public:
-
         Texture(SDL_Renderer* renderer);
 
         /// <summary>
@@ -35,6 +34,12 @@ namespace SuperGameEngine
         /// <returns>The filepath of the texture loaded. </returns>
         FString GetLoadedFilePath();
 
+        /// <summary>
+        /// Get the size of the Texture in Pixels.
+        /// </summary>
+        /// <returns>Returns the size of the Texture. </returns>
+        FPoint Size() const;
+
     private:
         /// <summary>
         /// Allows us to render to the screen.
@@ -50,6 +55,17 @@ namespace SuperGameEngine
         /// File path of the texture loaded.
         /// </summary>
         FString m_filePath;
+
+        /// <summary>
+        /// The size of the Texture.
+        /// </summary>
+        FPoint m_textureSize;
+
+        /// <summary>
+        /// Extracts the meta data from the texture.
+        /// </summary>
+        /// <param name="texture">Texture to extract metadata. </param>
+        void UpdateTextureMetaData(SDL_Texture* texture);
     };
 
 }

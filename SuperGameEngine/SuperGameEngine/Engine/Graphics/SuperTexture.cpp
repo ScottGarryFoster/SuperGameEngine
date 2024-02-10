@@ -56,3 +56,8 @@ bool SuperTexture::RepresentSameImage(FString filePath)
     FString self = m_actualTexture->GetLoadedFilePath().ToLower();
     return self == filePath;
 }
+
+FPoint SuperGameEngine::SuperTexture::Size() const
+{
+    return m_actualTexture->Size();
+}

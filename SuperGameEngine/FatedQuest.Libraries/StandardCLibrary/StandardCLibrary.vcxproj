@@ -130,7 +130,7 @@
   <ItemGroup>
     <ClInclude Include="Collection\Organised\FCollection.hpp" />
     <ClInclude Include="Collection\Organised\FList.hpp" />
-    <ClInclude Include="Collection\Vector\VectorHelpers.h" />
+    <ClInclude Include="Collection\Vector\VectorHelpers.hpp" />
     <ClInclude Include="Events\FEvent.h" />
     <ClInclude Include="Events\FEventAction.h" />
     <ClInclude Include="Events\FEventArguments.h" />
@@ -150,7 +150,6 @@
     <ClInclude Include="Time\Timespan.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collection\Vector\VectorHelpers.cpp" />
     <ClCompile Include="Events\FEvent.cpp" />
     <ClCompile Include="Events\Observer.cpp" />
     <ClCompile Include="Events\Subject.cpp" />

@@ -2,12 +2,14 @@
 #include "GameObject.h"
 #include "GameComponent.h"
 #include "../../LibraryIncludes.h"
+#include "../Components/Spatial/TransformComponent.h"
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
 GameObject::GameObject()
 {
     m_loadPackage = nullptr;
+    m_transform = nullptr;
 }
 
 GameObject::~GameObject()
@@ -23,6 +25,8 @@ void GameObject::Setup(SceneLoadPackage* loadPackage)
         return;
     }
     m_loadPackage = loadPackage;
+
+    EnsureTransformIsOnGameObject();
 }
 
 bool GameObject::Update(GameTime gameTime)
@@ -53,6 +57,11 @@ void GameObject::Draw()
     }
 }
 
+TransformComponent* SuperGameEngine::GameObject::GetTransform()
+{
+    return m_transform;
+}
+
 bool GameObject::AddActualComponentFromObject(Object* newObject)
 {
     bool typeIsCorrect = TypeHelpers::IsDerivedFrom<Object, GameComponent>();
@@ -76,4 +85,20 @@ void GameObject::AddActualComponent(GameComponent* newComponent)
     newComponent->Setup(m_loadPackage, this);
     newComponent->SetDoRender(true);
     m_gameComponents.Add(newComponent);
+}
+
+void GameObject::EnsureTransformIsOnGameObject()
+{
+    if (m_transform != nullptr)
+    {
+        return;
+    }
+
+    TransformComponent* transform = GetGameComponent<TransformComponent>();
+    if (transform == nullptr)
+    {
+        transform = AddComponent<TransformComponent>();
+    }
+
+    m_transform = transform;
 }

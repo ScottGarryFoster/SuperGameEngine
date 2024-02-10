@@ -17,6 +17,6 @@ namespace StandardCLibrary
         /// This is the most derived name.
         /// </summary>
         /// <returns>Type as a string. </returns>
-        FString GetTypeName();
+        FString GetTypeName() const;
     };
 }

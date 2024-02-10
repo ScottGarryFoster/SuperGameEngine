@@ -13,6 +13,7 @@ Texture::Texture(SDL_Renderer* renderer)
 
     m_renderer = renderer;
     m_texture = nullptr;
+    m_textureSize = FPoint();
 }
 
 /// <summary>
@@ -56,6 +57,8 @@ bool Texture::LoadImageFromFile(FString filePath, std::vector<FString>& errors)
         return false;
     }
 
+
+
     m_filePath = filePath;
     return true;
 }
@@ -67,15 +70,13 @@ void Texture::Draw()
 {
     if (m_renderer == nullptr)
     {
-        FString error = FString("ARGUMENTNULLEXPCETION: ", "Texture::Draw(): ", "m_renderer is null.");
-        Logger::Error(error);
+        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_renderer is null."));
         return;
     }
 
     if (m_renderer == nullptr)
     {
-        FString error = FString("ARGUMENTNULLEXPCETION: ", "Texture::Draw(): ", "m_texture is null.");
-        Logger::Error(error);
+        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_texture is null."));
         return;
     }
 
@@ -83,10 +84,10 @@ void Texture::Draw()
     SDL_Rect dest;
 
     // Render texture
-    dest.x = 240;
-    dest.y = 180;
-    dest.w = 160;
-    dest.h = 120;
+    dest.x = 0;
+    dest.y = 0;
+    dest.w = m_textureSize.GetX();
+    dest.h = m_textureSize.GetY();
 
     double rotation = 0;
     SDL_RenderCopyEx(m_renderer, m_texture, NULL, &dest, rotation, NULL, SDL_FLIP_NONE);
@@ -99,4 +100,22 @@ void Texture::Draw()
 FString Texture::GetLoadedFilePath()
 {
     return m_filePath;
+}
+
+FPoint SuperGameEngine::Texture::Size() const
+{
+    if (m_renderer == nullptr)
+    {
+        Logger::Exception(SystemNullReference(), GetTypeName(), FString("Size"), FString("Size is called without a Texture."));
+        return m_textureSize;
+    }
+
+    return m_textureSize;
+}
+
+void Texture::UpdateTextureMetaData(SDL_Texture* texture)
+{
+    int textureWidth, textureHeight;
+    SDL_QueryTexture(texture, NULL, NULL, &textureWidth, &textureHeight);
+    m_textureSize.SetXYValue(textureWidth, textureHeight);
 }

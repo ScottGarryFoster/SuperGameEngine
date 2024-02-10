@@ -9,6 +9,7 @@ using namespace StandardCLibrary;
 namespace SuperGameEngine
 {
     class GameComponent;
+    class TransformComponent;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -65,9 +66,9 @@ namespace SuperGameEngine
         typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
         GetGameComponent()
         {
-            for (GameComponent component : m_gameComponents)
+            for (auto component : m_gameComponents)
             {
-                if (TypeHelpers::TypeEquals<typeid(component), T>())
+                if (typeid(component) == typeid(T))
                 {
                     return dynamic_cast<T*>(component);
                 }
@@ -75,6 +76,8 @@ namespace SuperGameEngine
 
             return nullptr;
         }
+
+        TransformComponent* GetTransform();
         
     private:
 
@@ -87,6 +90,11 @@ namespace SuperGameEngine
         /// All components currently loaded.
         /// </summary>
         FList<GameComponent*> m_gameComponents;
+
+        /// <summary>
+        /// Cached Transform component.
+        /// </summary>
+        TransformComponent* m_transform;
 
         /// <summary>
         /// Introduction into the system from the outside world.
@@ -105,5 +113,11 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newComponent">The new component.</param>
         void AddActualComponent(GameComponent* newComponent);
+
+        /// <summary>
+        /// Ensures Transform is on the GameObject.
+        /// This is apart of the setup.
+        /// </summary>
+        void EnsureTransformIsOnGameObject();
     };
 }

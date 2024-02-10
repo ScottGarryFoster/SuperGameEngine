@@ -30,6 +30,12 @@ namespace SuperGameEngine
         /// <returns>True means this uses the same file path. </returns>
         bool RepresentSameImage(FString filePath);
 
+        /// <summary>
+        /// Get the size of the Texture in Pixels.
+        /// </summary>
+        /// <returns>Returns the size of the Texture. </returns>
+        FPoint Size() const;
+
     private:
 
         Texture* m_actualTexture;

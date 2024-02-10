@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../LibraryIncludes.h"
+#include "../../GameObject/GameComponent.h"
 using namespace StandardCLibrary;
 
 namespace SuperGameEngine
@@ -7,7 +8,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Location and size in space.
     /// </summary>
-    class TransformComponent : public FEventObserver
+    class TransformComponent : public GameComponent, public FEventObserver
     {
     public:
         TransformComponent();

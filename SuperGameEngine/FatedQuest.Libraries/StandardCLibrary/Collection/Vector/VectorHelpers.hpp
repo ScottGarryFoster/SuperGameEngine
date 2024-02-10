@@ -17,7 +17,17 @@ namespace StandardCLibrary
         /// <param name="valueToRemove">Value to remove from Vector. </param>
         /// <return>True means value found and removed. </return>
         template<typename T>
-        static bool RemoveValue(std::vector<T>& vector, const T& valueToRemove);
+        static bool RemoveValue(std::vector<T>& vector, const T& valueToRemove)
+        {
+            auto it = std::find(vector.begin(), vector.end(), valueToRemove);
+            if (it != vector.end())
+            {
+                vector.erase(it);
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Removes value at the given index.
@@ -27,6 +37,15 @@ namespace StandardCLibrary
         /// <param name="index">Index to remove. </param>
         /// <returns>True means the index was found and removed. </returns>
         template<typename T>
-        static bool RemoveAt(std::vector<T>& vector, size_t index);
+        static bool RemoveAt(std::vector<T>& vector, size_t index)
+        {
+            if (index < vector.size())
+            {
+                vector.erase(vector.begin() + index);
+                return true;
+            }
+
+            return false;
+        }
     };
 }
