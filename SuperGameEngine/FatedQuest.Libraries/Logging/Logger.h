@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../StandardCLibrary/Text/FString.h"
 #include "../StandardCLibrary/Object/FException.h"
 using namespace StandardCLibrary;

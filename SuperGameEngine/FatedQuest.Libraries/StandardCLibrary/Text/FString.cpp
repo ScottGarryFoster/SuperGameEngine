@@ -95,62 +95,62 @@ FString::FString(const std::string str1, const std::string str2, const std::stri
     m_storage = content.str();
 }
 
-const std::string FString::AsStdString()
+const std::string FString::AsStdString() const
 {
     return m_storage;
 }
 
-const char* FString::AsCharArr()
+const char* FString::AsCharArr() const
 {
     return m_storage.c_str();
 }
 
 FString FString::operator+(const std::string& str) const
 {
-    return FString(m_storage.c_str(), str.c_str());
+    return FString(m_storage + str.c_str());
 }
 
 FString FString::operator+(const FString& str) const
 {
-    return FString(m_storage.c_str(), str.m_storage.c_str());
+    return FString(m_storage + str.m_storage);
 }
 
 FString FString::operator+(const float str) const
 {
-    return FString(std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const double str) const
 {
-    return FString(std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const int str) const
 {
-    return FString(std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const long int str) const
 {
-    return FString(std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 FString FString::operator+(const unsigned long int str) const
 {
-    return FString(std::to_string(str));
+    return FString(m_storage.c_str() + std::to_string(str));
 }
 
 bool FString::operator==(const std::string& other) const
 {
-    return m_storage.compare(other);
+    return m_storage == other;
 }
 
 bool FString::operator==(const FString& other) const
 {
-    return m_storage.compare(other.m_storage);
+    return m_storage == other.m_storage;
 }
 
-FString FString::ToLower()
+FString FString::ToLower() const
 {
     std::string toLower = m_storage.c_str();
     for (char& c : toLower)
@@ -175,7 +175,7 @@ void FString::ConvertToLower()
     }
 }
 
-FString FString::ToUpper()
+FString FString::ToUpper() const
 {
     std::string toUpper = m_storage.c_str();
     for (char& c : toUpper)
@@ -199,4 +199,9 @@ void FString::ConvertToUpper()
             c = c - 'a' + 'A';
         }
     }
+}
+
+std::ostream& StandardCLibrary::operator<<(std::ostream& os, const FString& obj)
+{
+    return os << obj.AsStdString();
 }

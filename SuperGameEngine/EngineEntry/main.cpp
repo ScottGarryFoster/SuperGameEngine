@@ -1,3 +1,4 @@
+#include "RemoveWarnings.h"
 #include <SDL.h>
 #include <Windows.h>
 #include <iostream>

@@ -27,6 +27,9 @@
     <ClInclude Include="EngineEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RemoveWarnings.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

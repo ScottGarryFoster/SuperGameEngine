@@ -128,6 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collection\Organised\FCollection.hpp" />
+    <ClInclude Include="Collection\Organised\FList.hpp" />
     <ClInclude Include="Collection\Vector\VectorHelpers.h" />
     <ClInclude Include="Events\FEvent.h" />
     <ClInclude Include="Events\FEventAction.h" />

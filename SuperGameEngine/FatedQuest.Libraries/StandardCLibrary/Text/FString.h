@@ -1,6 +1,8 @@
 #pragma once
+
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace StandardCLibrary
 {
@@ -30,6 +32,7 @@ namespace StandardCLibrary
         FString(const std::string str1, const std::string str2, const std::string str3, const std::string str4, const std::string str5,
             const std::string str6, const std::string str7, const std::string str8, const std::string str9, const std::string str10);
 
+
         FString operator+(const std::string& str) const;
         FString operator+(const FString& str) const;
         FString operator+(const int str) const;
@@ -41,15 +44,16 @@ namespace StandardCLibrary
         bool operator==(const std::string& other) const;
         bool operator==(const FString& other) const;
 
+        friend std::ostream& operator<<(std::ostream& os, const FString& obj);
 
-        const std::string AsStdString();
-        const char* AsCharArr();
+        const std::string AsStdString() const;
+        const char* AsCharArr() const;
 
         /// <summary>
         /// Reverts this FString to lowercase.
         /// </summary>
         /// <returns>Lowercase version of this FString in lowercase. </returns>
-        FString ToLower();
+        FString ToLower() const;
 
         /// <summary>
         /// Converts this FString to Lowercase.
@@ -60,7 +64,7 @@ namespace StandardCLibrary
         /// Reverts this FString to uppercase.
         /// </summary>
         /// <returns>uppercase version of this FString in uppercase. </returns>
-        FString ToUpper();
+        FString ToUpper() const;
 
         /// <summary>
         /// Converts this FString to uppercase.

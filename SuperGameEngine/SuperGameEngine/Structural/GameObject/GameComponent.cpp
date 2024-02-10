@@ -1,12 +1,14 @@
 #include "GameComponent.h"
 #include "GameObject.h"
 
-#include "../../../FatedQuest.Libraries/Logging/Logger.h"
+#include "../../LibraryIncludes.h"
 
+using namespace StandardCLibrary;
 using namespace SuperGameEngine;
 GameComponent::GameComponent()
 {
-
+    m_parent = nullptr;
+    m_doRender = false;
 }
 
 GameComponent::~GameComponent()
@@ -15,7 +17,7 @@ GameComponent::~GameComponent()
 
 void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
-    Test();
+    m_doRender = false;
 }
 
 bool GameComponent::Update(GameTime gameTime)
@@ -32,7 +34,12 @@ GameObject* GameComponent::GetParent()
     return m_parent;
 }
 
-void GameComponent::Test()
+bool SuperGameEngine::GameComponent::DoRender() const
 {
-    Logger::Info(FString("Hello"));
+    return m_doRender;
+}
+
+void SuperGameEngine::GameComponent::SetDoRender(bool newValue)
+{
+    m_doRender = newValue;
 }

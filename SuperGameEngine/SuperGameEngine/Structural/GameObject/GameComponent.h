@@ -9,6 +9,9 @@ namespace SuperGameEngine
     class SceneLoadPackage;
     class GameObject;
 
+    /// <summary>
+    /// A logical element attached to GameObjects.
+    /// </summary>
     class GameComponent : public Object
     {
     public:
@@ -39,12 +42,32 @@ namespace SuperGameEngine
         /// <returns>The GameObject which owns us. </returns>
         GameObject* GetParent();
 
-        void Test();
+        /// <summary>
+        /// True means run a draw loop.
+        /// By default this is to false as most Components will not need to draw anything
+        /// and will instead use a Sprite Component to draw.
+        /// </summary>
+        /// <returns>Whether this Component does render. </returns>
+        bool DoRender() const;
+
+        /// <summary>
+        /// Make this Component run Draw.
+        /// Keep in mind that is just this Component not the whole GameObject!
+        /// </summary>
+        /// <param name="newValue">True means the draw loop will run.</param>
+        void SetDoRender(bool newValue);
     private:
 
         /// <summary>
         /// Parent owning object.
         /// </summary>
         GameObject* m_parent;
+
+        /// <summary>
+        /// True means run a draw loop.
+        /// By default this is to false as most Components will not need to draw anything
+        /// and will instead use a Sprite Component to draw.
+        /// </summary>
+        bool m_doRender;
     };
 }
