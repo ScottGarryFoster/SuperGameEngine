@@ -99,6 +99,7 @@
     <ClInclude Include="LibraryIncludes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collection\Organised\FCollectionTests.cpp" />
     <ClCompile Include="Text\FStringTests.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 #include "../../StandardCLibrary/Text/FString.h"
 
 using namespace StandardCLibrary;
-namespace StandardCLibraryTests_Text
+namespace StandardCLibraryTests_Text_FStringTests
 {
     std::string CutStringToSize(std::string toCut, size_t size);
 

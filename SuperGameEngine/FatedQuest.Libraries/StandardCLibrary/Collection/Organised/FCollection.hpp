@@ -88,6 +88,36 @@ namespace StandardCLibrary
         }
 
         /// <summary>
+        /// Returns a Collection for which the items all match the predicate.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>FCollection which matches or one with zero elements. </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Where(
+        ///         [](const FString* c) { return c->ToLower()->AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        FCollection<T> Where(std::function<bool(const T*)> predicate)
+        {
+            std::vector<T> filteredComponents;
+            for (const auto& component : m_actualData)
+            {
+                if (predicate(component))
+                {
+                    filteredComponents.push_back(component);
+                }
+            }
+
+            FCollection<T> returnCollection(filteredComponents);
+            return returnCollection;
+        }
+
+        /// <summary>
         /// From the items in the collection extract the given Type.
         /// </summary>
         /// <typeparam name="TResult">Type of the result to extract. </typeparam>
@@ -107,6 +137,37 @@ namespace StandardCLibrary
         /// </example>
         template<typename TResult>
         FCollection<TResult> Select(std::function<TResult(const T&)> predicate) const
+        {
+            std::vector<TResult> selectedItems;
+            selectedItems.reserve(m_actualData.size());
+            for (const auto& item : m_actualData)
+            {
+                selectedItems.push_back(predicate(item));
+            }
+
+            return FCollection<TResult>(selectedItems);
+        }
+
+        /// <summary>
+        /// From the items in the collection extract the given Type.
+        /// </summary>
+        /// <typeparam name="TResult">Type of the result to extract. </typeparam>
+        /// <param name="predicate">
+        /// A lamda to take the Type and return the Result.
+        /// Imagine it is run upon each element in the collection.
+        /// </param>
+        /// <returns>A collection of your results. </returns>
+        /// <example>
+        /// To extract return the actual element you want.
+        /// <code>
+        ///     FCollection<std::string> selectedSquares = 
+        ///         collection.Select<std::string>
+        ///         ([](const FString* num){ return num->AsStdString(); });
+        /// </code>
+        /// You can select an item in say a class to extract them all.
+        /// </example>
+        template<typename TResult>
+        FCollection<TResult> Select(std::function<TResult(const T*)> predicate) const
         {
             std::vector<TResult> selectedItems;
             selectedItems.reserve(m_actualData.size());
