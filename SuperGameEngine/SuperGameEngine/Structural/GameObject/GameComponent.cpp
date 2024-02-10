@@ -9,6 +9,7 @@ GameComponent::GameComponent()
 {
     m_parent = nullptr;
     m_doRender = false;
+    m_loadPackage = nullptr;
 }
 
 GameComponent::~GameComponent()
@@ -17,6 +18,14 @@ GameComponent::~GameComponent()
 
 void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
+    if (!loadPackage)
+    {
+        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
+        return;
+    }
+
+    m_loadPackage = loadPackage;
+    m_parent = parent;
     m_doRender = false;
 }
 

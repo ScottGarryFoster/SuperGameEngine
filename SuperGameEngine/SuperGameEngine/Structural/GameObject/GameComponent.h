@@ -56,6 +56,13 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newValue">True means the draw loop will run.</param>
         void SetDoRender(bool newValue);
+
+    protected:
+        /// <summary>
+        /// Allows us to operate.
+        /// </summary>
+        SceneLoadPackage* m_loadPackage;
+
     private:
 
         /// <summary>

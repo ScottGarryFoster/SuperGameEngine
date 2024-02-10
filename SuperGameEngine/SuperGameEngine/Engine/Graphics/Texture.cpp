@@ -13,7 +13,15 @@ Texture::Texture(SDL_Renderer* renderer)
 
     m_renderer = renderer;
     m_texture = nullptr;
-    m_textureSize = FPoint();
+    m_textureSize = new FPoint();
+    m_screenRect = new SDL_Rect();
+}
+
+Texture::~Texture()
+{
+    delete m_textureSize;
+    delete m_screenRect;
+    SDL_DestroyTexture(m_texture);
 }
 
 /// <summary>
@@ -22,7 +30,7 @@ Texture::Texture(SDL_Renderer* renderer)
 /// <param name="filePath">File path to the texture. </param>
 /// <param name="errors">If there are errors this is the reason why the texture could not be created. </param>
 /// <returns>True means created, false means not. </returns>
-bool Texture::LoadImageFromFile(FString filePath, std::vector<FString>& errors)
+bool Texture::LoadImageFromFile(const FString& filePath, std::vector<FString>& errors)
 {
     errors.clear();
     if (!File::Exists(filePath))
@@ -57,7 +65,7 @@ bool Texture::LoadImageFromFile(FString filePath, std::vector<FString>& errors)
         return false;
     }
 
-
+    UpdateTextureMetaData(m_texture);
 
     m_filePath = filePath;
     return true;
@@ -67,6 +75,16 @@ bool Texture::LoadImageFromFile(FString filePath, std::vector<FString>& errors)
 /// Draws to screen.
 /// </summary>
 void Texture::Draw()
+{
+    Draw(FPoint());
+}
+
+void Texture::Draw(const FPoint& location)
+{
+    Draw(location, *m_textureSize);
+}
+
+void Texture::Draw(const FPoint& location, const FPoint& size)
 {
     if (m_renderer == nullptr)
     {
@@ -81,16 +99,14 @@ void Texture::Draw()
     }
 
 
-    SDL_Rect dest;
-
     // Render texture
-    dest.x = 0;
-    dest.y = 0;
-    dest.w = m_textureSize.GetX();
-    dest.h = m_textureSize.GetY();
+    m_screenRect->x = location.GetX();
+    m_screenRect->y = location.GetY();
+    m_screenRect->w = size.GetX();
+    m_screenRect->h = size.GetY();
 
     double rotation = 0;
-    SDL_RenderCopyEx(m_renderer, m_texture, NULL, &dest, rotation, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(m_renderer, m_texture, NULL, m_screenRect, rotation, NULL, SDL_FLIP_NONE);
 }
 
 /// <summary>
@@ -104,18 +120,18 @@ FString Texture::GetLoadedFilePath()
 
 FPoint SuperGameEngine::Texture::Size() const
 {
-    if (m_renderer == nullptr)
+    if (m_textureSize == nullptr)
     {
         Logger::Exception(SystemNullReference(), GetTypeName(), FString("Size"), FString("Size is called without a Texture."));
-        return m_textureSize;
+        return FPoint();
     }
 
-    return m_textureSize;
+    return FPoint(m_textureSize->GetX(), m_textureSize->GetY());
 }
 
 void Texture::UpdateTextureMetaData(SDL_Texture* texture)
 {
     int textureWidth, textureHeight;
     SDL_QueryTexture(texture, NULL, NULL, &textureWidth, &textureHeight);
-    m_textureSize.SetXYValue(textureWidth, textureHeight);
+    m_textureSize->SetXYValue(textureWidth, textureHeight);
 }

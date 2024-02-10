@@ -12,6 +12,7 @@ namespace StandardCLibrary
     {
     public:
         FPoint();
+        FPoint(int x, int y);
         virtual ~FPoint();
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace StandardCLibrary
         /// <summary>
         /// Invokes when value has changed.
         /// </summary>
-        FEventSubscriptions* GetOnValueChanged();
+        //FEventSubscriptions* GetOnValueChanged();
 
     private:
 
