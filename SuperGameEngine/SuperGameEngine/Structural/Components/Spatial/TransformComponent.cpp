@@ -7,6 +7,7 @@ TransformComponent::TransformComponent()
 {
     m_location = new FVector2D();
     m_onLocationChanged = new FEvent();
+    m_onLocationChanged->Subscribe(this);
 }
 
 TransformComponent::~TransformComponent()
