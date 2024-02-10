@@ -10,6 +10,13 @@ FPoint::FPoint()
     m_onValueChangedEvent = new FEvent();
 }
 
+StandardCLibrary::FPoint::FPoint(int x, int y)
+{
+    m_x = x;
+    m_y = y;
+    m_onValueChangedEvent = new FEvent();
+}
+
 FPoint::~FPoint()
 {
     delete m_onValueChangedEvent;

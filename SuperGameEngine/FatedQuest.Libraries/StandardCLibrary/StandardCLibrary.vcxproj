@@ -130,7 +130,7 @@
   <ItemGroup>
     <ClInclude Include="Collection\Organised\FCollection.hpp" />
     <ClInclude Include="Collection\Organised\FList.hpp" />
-    <ClInclude Include="Collection\Vector\VectorHelpers.h" />
+    <ClInclude Include="Collection\Vector\VectorHelpers.hpp" />
     <ClInclude Include="Events\FEvent.h" />
     <ClInclude Include="Events\FEventAction.h" />
     <ClInclude Include="Events\FEventArguments.h" />
@@ -143,14 +143,13 @@
     <ClInclude Include="Object\Exceptions\SystemNullReference.h" />
     <ClInclude Include="Object\FException.h" />
     <ClInclude Include="Object\Object.h" />
-    <ClInclude Include="Object\TypeHelpers.h" />
+    <ClInclude Include="Object\TypeHelpers.hpp" />
     <ClInclude Include="Structural\FPoint.h" />
     <ClInclude Include="Structural\FVector2D.h" />
     <ClInclude Include="Text/FString.h" />
     <ClInclude Include="Time\Timespan.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collection\Vector\VectorHelpers.cpp" />
     <ClCompile Include="Events\FEvent.cpp" />
     <ClCompile Include="Events\Observer.cpp" />
     <ClCompile Include="Events\Subject.cpp" />
@@ -159,7 +158,6 @@
     <ClCompile Include="Object\Exceptions\SystemNullReference.cpp" />
     <ClCompile Include="Object\FException.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Object\TypeHelpers.cpp" />
     <ClCompile Include="Structural\FPoint.cpp" />
     <ClCompile Include="Structural\FPointLocationEventArguments.h" />
     <ClCompile Include="Structural\FVector2D.cpp" />

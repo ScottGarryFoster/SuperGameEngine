@@ -32,9 +32,6 @@
     <Filter Include="Project Files\Collection\Vector">
       <UniqueIdentifier>{ea0440d1-6477-487c-89a8-37fab36051da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\Collection\Vector\API">
-      <UniqueIdentifier>{9f01c763-b563-44a6-b61a-22d7bd3bb821}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Project Files\Structural">
       <UniqueIdentifier>{da1810af-655e-423c-b0c4-ce13da75a599}</UniqueIdentifier>
     </Filter>
@@ -73,9 +70,6 @@
     <ClInclude Include="Time\Timespan.h">
       <Filter>Project Files\Time\API</Filter>
     </ClInclude>
-    <ClInclude Include="Collection\Vector\VectorHelpers.h">
-      <Filter>Project Files\Collection\Vector\API</Filter>
-    </ClInclude>
     <ClInclude Include="Structural\FPoint.h">
       <Filter>Project Files\Structural\API</Filter>
     </ClInclude>
@@ -103,9 +97,6 @@
     <ClInclude Include="Events\FEventArguments.h">
       <Filter>Project Files\Events\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\TypeHelpers.h">
-      <Filter>Project Files\Object\API</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Object.h">
       <Filter>Project Files\Object\API</Filter>
     </ClInclude>
@@ -124,6 +115,12 @@
     <ClInclude Include="Collection\Organised\FList.hpp">
       <Filter>Project Files\Collection\Organised</Filter>
     </ClInclude>
+    <ClInclude Include="Object\TypeHelpers.hpp">
+      <Filter>Project Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection\Vector\VectorHelpers.hpp">
+      <Filter>Project Files\Collection\Vector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -134,9 +131,6 @@
     </ClCompile>
     <ClCompile Include="Time\Timespan.cpp">
       <Filter>Project Files\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="Collection\Vector\VectorHelpers.cpp">
-      <Filter>Project Files\Collection\Vector</Filter>
     </ClCompile>
     <ClCompile Include="Structural\FPoint.cpp">
       <Filter>Project Files\Structural</Filter>
@@ -158,9 +152,6 @@
     </ClCompile>
     <ClCompile Include="Structural\FPointLocationEventArguments.h">
       <Filter>Project Files\Structural\API</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\TypeHelpers.cpp">
-      <Filter>Project Files\Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\Object.cpp">
       <Filter>Project Files\Object</Filter>

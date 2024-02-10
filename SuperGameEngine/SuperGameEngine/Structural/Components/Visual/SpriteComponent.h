@@ -30,11 +30,6 @@ namespace SuperGameEngine
 
     private:
         /// <summary>
-        /// Allows us to operate.
-        /// </summary>
-        SceneLoadPackage* m_loadPackage;
-
-        /// <summary>
         /// A texture stored in the content manager.
         /// </summary>
         SuperTexture* m_superTexture;

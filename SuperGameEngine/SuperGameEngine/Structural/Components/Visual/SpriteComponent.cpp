@@ -1,5 +1,7 @@
 #include "SpriteComponent.h"
 #include "../../../LibraryIncludes.h"
+#include "../Spatial/TransformComponent.h"
+#include "../../GameObject/GameObject.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -8,15 +10,8 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
     GameComponent::Setup(loadPackage, parent);
 
-    if (!loadPackage)
-    {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
-        return;
-    }
-
-    m_loadPackage = loadPackage;
-
-    m_superTexture = m_loadPackage->GetContentManager()->GetTexture(FString("E:/Development/SuperGameEngine-SDL/collideCircle.png"));
+    FString filePath = FString("E:/Development/SuperGameEngine-SDL/collideCircle.png");
+    m_superTexture = m_loadPackage->GetContentManager()->GetTexture(filePath);
     if (!m_superTexture)
     {
         Logger::Exception(SystemNullReference(), GetTypeName(), FString("Setup"), FString("m_superTexture is null"));
@@ -37,7 +32,13 @@ void SpriteComponent::Draw()
 
     if (m_superTexture)
     {
-        m_superTexture->Draw();
+        FPoint textureSize = m_superTexture->Size();
+        TransformComponent* transform = GetParent()->GetTransform();
+        FPoint drawLocation = FPoint(
+            (int)transform->GetLocation()->GetX() - (textureSize.GetX() / 2),
+            (int)transform->GetLocation()->GetY() - (textureSize.GetY() / 2));
+
+        m_superTexture->Draw(drawLocation);
     }
 
 }

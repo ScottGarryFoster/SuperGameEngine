@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../LibraryIncludes.h"
+#include "../../GameObject/GameComponent.h"
 using namespace StandardCLibrary;
 
 namespace SuperGameEngine
@@ -7,7 +8,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Location and size in space.
     /// </summary>
-    class TransformComponent : public FEventObserver
+    class TransformComponent : public GameComponent, public FEventObserver
     {
     public:
         TransformComponent();
@@ -19,6 +20,13 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>The location of the GameObject. </returns>
         FVector2D* GetLocation();
+
+        /// <summary>
+        /// Gets the location of the transform.
+        /// This is the center of the GameObject.
+        /// </summary>
+        /// <returns>The location of the GameObject. </returns>
+        void SetLocation(float x, float y);
 
         /// <summary>
         /// Invoked when location has changed.

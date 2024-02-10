@@ -13,6 +13,16 @@ void SuperTexture::Draw()
     m_actualTexture->Draw();
 }
 
+void SuperTexture::Draw(const FPoint& location)
+{
+    m_actualTexture->Draw(location);
+}
+
+void SuperTexture::Draw(FPoint location, FPoint size)
+{
+    m_actualTexture->Draw(location, size);
+}
+
 /// <summary>
 /// Detirmines if the two textures are the same image.
 /// </summary>
@@ -55,4 +65,9 @@ bool SuperTexture::RepresentSameImage(FString filePath)
 
     FString self = m_actualTexture->GetLoadedFilePath().ToLower();
     return self == filePath;
+}
+
+FPoint SuperGameEngine::SuperTexture::Size() const
+{
+    return m_actualTexture->Size();
 }

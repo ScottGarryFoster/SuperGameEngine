@@ -34,5 +34,17 @@ namespace StandardCLibrary
         {
             return std::is_base_of<Derived, Base>::value;
         }
+
+        /// <summary>
+        /// Determines if the two types equal one another.
+        /// </summary>
+        /// <typeparam name="Left">First type to try. </typeparam>
+        /// <typeparam name="Right">Second type to try. </typeparam>
+        /// <returns>True means are equal. </returns>
+        template <typename Left, typename Right>
+        inline static bool TypeEquals()
+        {
+            return typeid(Left) == typeid(Right);
+        }
     };
 }

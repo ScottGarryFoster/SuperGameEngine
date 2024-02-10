@@ -7,6 +7,7 @@ TransformComponent::TransformComponent()
 {
     m_location = new FVector2D();
     m_onLocationChanged = new FEvent();
+    m_onLocationChanged->Subscribe(this);
 }
 
 TransformComponent::~TransformComponent()
@@ -18,6 +19,11 @@ TransformComponent::~TransformComponent()
 FVector2D* TransformComponent::GetLocation()
 {
     return m_location;
+}
+
+void SuperGameEngine::TransformComponent::SetLocation(float x, float y)
+{
+    m_location->SetXYValue(x, y);
 }
 
 FEventSubscriptions* TransformComponent::OnLocationChanged()

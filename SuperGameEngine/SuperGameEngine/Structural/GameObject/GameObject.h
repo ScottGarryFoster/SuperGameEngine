@@ -9,6 +9,7 @@ using namespace StandardCLibrary;
 namespace SuperGameEngine
 {
     class GameComponent;
+    class TransformComponent;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -38,6 +39,13 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw();
 
+        /// <summary>
+        /// Adds the GameComponent to the GameObject.
+        /// Will run Setup on the GameComponent and add it to any
+        /// services such as the Collision.
+        /// </summary>
+        /// <typeparam name="T">The type of Component to add. </typeparam>
+        /// <returns>The new Component. </returns>
         template<typename T>
         typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
         AddComponent()
@@ -47,6 +55,29 @@ namespace SuperGameEngine
             AddActualComponentFromObject(componentPtr);
             return newComponent;
         }
+
+        /// <summary>
+        /// Gets the first component it finds of the given type.
+        /// Is not particualarly efficient at the moment,
+        /// use when needed and cache results! 
+        /// </summary>
+        /// <returns>GameComponent of the type. </returns>
+        template<typename T>
+        typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
+        GetGameComponent()
+        {
+            for (auto component : m_gameComponents)
+            {
+                if (typeid(component) == typeid(T))
+                {
+                    return dynamic_cast<T*>(component);
+                }
+            }
+
+            return nullptr;
+        }
+
+        TransformComponent* GetTransform();
         
     private:
 
@@ -59,6 +90,11 @@ namespace SuperGameEngine
         /// All components currently loaded.
         /// </summary>
         FList<GameComponent*> m_gameComponents;
+
+        /// <summary>
+        /// Cached Transform component.
+        /// </summary>
+        TransformComponent* m_transform;
 
         /// <summary>
         /// Introduction into the system from the outside world.
@@ -77,5 +113,11 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newComponent">The new component.</param>
         void AddActualComponent(GameComponent* newComponent);
+
+        /// <summary>
+        /// Ensures Transform is on the GameObject.
+        /// This is apart of the setup.
+        /// </summary>
+        void EnsureTransformIsOnGameObject();
     };
 }

@@ -12,6 +12,7 @@ namespace StandardCLibrary
     {
     public:
         FPoint();
+        FPoint(int x, int y);
         virtual ~FPoint();
 
         /// <summary>
