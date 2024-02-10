@@ -175,7 +175,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         FCollection<int> testClass;
         int expected = CountCollection(testClass);
 
-        int actual = testClass.Count();
+        size_t actual = testClass.Count();
 
         EXPECT_EQ(expected, actual);
     }
@@ -185,7 +185,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         FCollection<int> testClass(42);
         int expected = CountCollection(testClass);
 
-        int actual = testClass.Count();
+        size_t actual = testClass.Count();
 
         EXPECT_EQ(expected, actual);
     }
@@ -196,7 +196,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         FCollection<int> testClass(given);
         int expected = CountCollection(testClass);
 
-        int actual = testClass.Count();
+        size_t actual = testClass.Count();
 
         EXPECT_EQ(expected, actual);
     }

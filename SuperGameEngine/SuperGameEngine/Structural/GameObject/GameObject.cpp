@@ -27,7 +27,7 @@ void GameObject::Setup(SceneLoadPackage* loadPackage)
 
 bool GameObject::Update(GameTime gameTime)
 {
-    for (size_t i = 0; i < m_gameComponents.size(); ++i)
+    for (size_t i = 0; i < m_gameComponents.Count(); ++i)
     {
         GameComponent* component = m_gameComponents[i];
         if (m_gameComponents[i] != nullptr)
@@ -41,10 +41,12 @@ bool GameObject::Update(GameTime gameTime)
 
 void GameObject::Draw()
 {
-    for (size_t i = 0; i < m_gameComponents.size(); ++i)
+    FList<GameComponent*> componentsToDraw = m_gameComponents
+        .Where([](const GameComponent* c) { return c->DoRender(); });
+    for (size_t i = 0; i < componentsToDraw.Count(); ++i)
     {
-        GameComponent* component = m_gameComponents[i];
-        if (m_gameComponents[i] != nullptr)
+        GameComponent* component = componentsToDraw[i];
+        if (componentsToDraw[i] != nullptr)
         {
             component->Draw();
         }
@@ -72,5 +74,6 @@ void GameObject::AddActualComponent(GameComponent* newComponent)
         return;
     }
     newComponent->Setup(m_loadPackage, this);
-    m_gameComponents.push_back(newComponent);
+    newComponent->SetDoRender(true);
+    m_gameComponents.Add(newComponent);
 }

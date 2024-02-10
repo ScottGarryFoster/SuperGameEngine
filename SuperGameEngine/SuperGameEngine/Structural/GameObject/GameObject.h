@@ -58,7 +58,7 @@ namespace SuperGameEngine
         /// <summary>
         /// All components currently loaded.
         /// </summary>
-        std::vector<GameComponent*> m_gameComponents;
+        FList<GameComponent*> m_gameComponents;
 
         /// <summary>
         /// Introduction into the system from the outside world.

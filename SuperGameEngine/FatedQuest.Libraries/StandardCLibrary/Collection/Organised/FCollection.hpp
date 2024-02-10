@@ -21,7 +21,7 @@ namespace StandardCLibrary
         /// <summary>
         /// Constructor with a single value.
         /// </summary>
-        /// <param name="value">Single value to add</param>
+        /// <param name="value">Single value to add. </param>
         FCollection(const T& value)
         {
             m_actualData.push_back(value);
@@ -30,8 +30,22 @@ namespace StandardCLibrary
         /// <summary>
         /// Constructor with many values.
         /// </summary>
-        /// <param name="values">Many values to add.</param>
+        /// <param name="values">Many values to add. </param>
         FCollection(const std::vector<T> values)
+        {
+            for (T value : values)
+            {
+                m_actualData.push_back(value);
+            }
+        }
+
+        /// <summary>
+        /// Constructor with many values.
+        /// Explict copy to recreate the FCollection.
+        /// </summary>
+        /// <param name="overload">Ignored. Send into explictly call this constructor. </param>
+        /// <param name="values">Many values to add. </param>
+        FCollection(bool overload, const FCollection<T> values)
         {
             for (T value : values)
             {
