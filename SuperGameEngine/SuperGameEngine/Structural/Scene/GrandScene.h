@@ -27,9 +27,15 @@ namespace SuperGameEngine
         void Draw();
 
     private:
-
+        /// <summary>
+        /// Contains all the objects a GameObject needs to opperate.
+        /// Can be given to other GameObjets freely.
+        /// </summary>
         SceneLoadPackage* m_sceneLoadPackage;
 
+        /// <summary>
+        /// All the Scenes loaded.
+        /// </summary>
         std::vector<Scene*> m_scenes;
     };
 }
