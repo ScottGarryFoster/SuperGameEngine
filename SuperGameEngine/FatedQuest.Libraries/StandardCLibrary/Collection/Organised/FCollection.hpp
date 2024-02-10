@@ -113,7 +113,7 @@ namespace StandardCLibrary
                 }
             }
 
-            FCollection<T> returnCollection(filteredComponents);
+            FCollection<T*> returnCollection(filteredComponents);
             return returnCollection;
         }
 

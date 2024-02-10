@@ -21,6 +21,9 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
     T ReturnItemInCollection(FCollection<T> collection, int index);
 
     template<typename T>
+    T* ReturnItemInCollectionPointers(FCollection<T*> collection, int index);
+
+    template<typename T>
     std::vector<T> ToVector(FCollection<T> collection);
 
     template<typename T>
@@ -28,6 +31,12 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
     template<typename T>
     bool Equals(std::vector<T*> first, std::vector<T*> second, std::string& errors);
+
+    template<typename T>
+    bool CleanUp(std::vector<T*> collection);
+
+    template<typename T>
+    bool CleanUp(FCollection<T*> collection);
 
 #pragma region OnConstruction
     TEST(FCollectionTests, OnConstruction_ReturnsEmptyCollection_WhenGivenNoEntries)
@@ -49,6 +58,25 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         EXPECT_EQ(given, ReturnItemInCollection<int>(collection, 0));
     }
 
+    TEST(FCollectionTests, OnConstruction_ReturnsCollectionWithPointItem_WhenGivenPointer)
+    {
+        int* given = new int(42);
+
+        FCollection<int*> collection = FCollection<int*>(given);
+
+        // Values we will test against. Dereferenced because we clean up.
+        int count = CountCollection(collection);
+        int* actual = ReturnItemInCollectionPointers<int>(collection, 0);
+        bool actualFound = actual != NULL;
+        int actualDereferenced = *given;
+        int givenDereferenced = *given;
+
+        delete given;
+        EXPECT_EQ(1, count);
+        EXPECT_TRUE(actualFound) << "Actual was not found";
+        EXPECT_EQ(givenDereferenced, actualDereferenced);
+    }
+
     TEST(FCollectionTests, OnConstruction_ReturnsAllItemGiven_WhenGivenVectorOfItems)
     {
         std::vector<int> given = { 42, 52, 75, 86 };
@@ -58,6 +86,19 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         std::vector<int> actual = ToVector<int>(collection);
         std::string errors = "";
         bool areEqual = Equals(given, actual, errors);
+        EXPECT_TRUE(areEqual) << errors;
+    }
+
+    TEST(FCollectionTests, OnConstruction_ReturnsAllPointers_WhenGivenVectorOfPointers)
+    {
+        std::vector<int*> given = { new int(42), new int(52), new int(75), new int(86) };
+
+        FCollection<int*> collection = FCollection<int*>(given);
+
+        std::vector<int*> actual = ToVector<int*>(collection);
+        std::string errors = "";
+        bool areEqual = Equals(given, actual, errors);
+        CleanUp(given);
         EXPECT_TRUE(areEqual) << errors;
     }
 #pragma endregion
@@ -104,6 +145,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         std::vector<int*> actualV = ToVector<int*>(actual);
         std::string errors = "";
         bool areEqual = Equals(expected, actualV, errors);
+        CleanUp(collection);
         EXPECT_TRUE(areEqual) << errors;
     }
 
@@ -117,7 +159,9 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         FCollection<int*> actual = collection.Where([](const int* x) { return *x > 100; });
 
-        EXPECT_EQ(expected, CountCollection(actual));
+        int count = CountCollection(actual);
+        CleanUp(collection);
+        EXPECT_EQ(expected, count);
     }
 #pragma endregion
 #pragma endregion
@@ -148,6 +192,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         FCollection<int> actual =
             collection.Select<int>([](const TestClassContainingSomething* x) { return x->Value; });
+        CleanUp(collection);
 
         EXPECT_EQ(1, CountCollection(actual));
         EXPECT_EQ(given, ReturnItemInCollection(actual, 0));
@@ -185,6 +230,21 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
     {
         int count = 0;
         for (T value : collection)
+        {
+            if (index == count++)
+            {
+                return value;
+            }
+        }
+
+        return NULL;
+    }
+
+    template<typename T>
+    T* ReturnItemInCollectionPointers(FCollection<T*> collection, int index)
+    {
+        int count = 0;
+        for (T* value : collection)
         {
             if (index == count++)
             {
@@ -260,6 +320,26 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
             ++i;
         }
 
+        return true;
+    }
+
+    template<typename T>
+    bool CleanUp(std::vector<T*> collection)
+    {
+        for (T* value : collection)
+        {
+            delete value;
+        }
+        return true;
+    }
+
+    template<typename T>
+    bool CleanUp(FCollection<T*> collection)
+    {
+        for (T* value : collection)
+        {
+            delete value;
+        }
         return true;
     }
 
