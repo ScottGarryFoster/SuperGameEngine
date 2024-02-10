@@ -55,7 +55,7 @@ namespace StandardCLibrary
         /// <summary>
         /// Invokes when value has changed.
         /// </summary>
-        //FEventSubscriptions* GetOnValueChanged();
+        FEventSubscriptions* GetOnValueChanged();
 
     private:
 

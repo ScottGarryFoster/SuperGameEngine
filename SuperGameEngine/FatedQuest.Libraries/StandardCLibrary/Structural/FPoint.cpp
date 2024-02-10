@@ -37,7 +37,7 @@ void FPoint::SetX(int newValue)
     if (newValue != m_x)
     {
         m_x = newValue;
-        //InvokeOnValueChanged();
+        InvokeOnValueChanged();
     }
 }
 
@@ -46,7 +46,7 @@ void FPoint::SetY(int newValue)
     if (newValue != m_y)
     {
         m_y = newValue;
-        //InvokeOnValueChanged();
+        InvokeOnValueChanged();
     }
 }
 
@@ -56,7 +56,7 @@ void FPoint::SetXYValue(int x, int y)
     {
         m_x = x;
         m_y = y;
-        //InvokeOnValueChanged();
+        InvokeOnValueChanged();
     }
 }
 
@@ -65,17 +65,17 @@ const FString FPoint::Print() const
     return FString(FString("X: ") + m_x + FString(" Y:") + m_y);
 }
 
-//FEventSubscriptions* StandardCLibrary::FPoint::GetOnValueChanged()
-//{
-//    return m_onValueChangedEvent;
-//}
-//
-//void FPoint::InvokeOnValueChanged()
-//{
-//    FPointLocationEventArguments* arguments = new FPointLocationEventArguments();
-//    arguments->X = m_x;
-//    arguments->Y = m_y;
-//    m_onValueChangedEvent->Invoke(arguments);
-//
-//    delete arguments;
-//}
+FEventSubscriptions* StandardCLibrary::FPoint::GetOnValueChanged()
+{
+    return m_onValueChangedEvent;
+}
+
+void FPoint::InvokeOnValueChanged()
+{
+    FPointLocationEventArguments* arguments = new FPointLocationEventArguments();
+    arguments->X = m_x;
+    arguments->Y = m_y;
+    m_onValueChangedEvent->Invoke(arguments);
+
+    delete arguments;
+}
