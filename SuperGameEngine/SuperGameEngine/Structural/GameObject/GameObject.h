@@ -38,6 +38,13 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw();
 
+        /// <summary>
+        /// Adds the GameComponent to the GameObject.
+        /// Will run Setup on the GameComponent and add it to any
+        /// services such as the Collision.
+        /// </summary>
+        /// <typeparam name="T">The type of Component to add. </typeparam>
+        /// <returns>The new Component. </returns>
         template<typename T>
         typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
         AddComponent()
@@ -46,6 +53,27 @@ namespace SuperGameEngine
             Object* componentPtr = static_cast<Object*>(newComponent);
             AddActualComponentFromObject(componentPtr);
             return newComponent;
+        }
+
+        /// <summary>
+        /// Gets the first component it finds of the given type.
+        /// Is not particualarly efficient at the moment,
+        /// use when needed and cache results! 
+        /// </summary>
+        /// <returns>GameComponent of the type. </returns>
+        template<typename T>
+        typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
+        GetGameComponent()
+        {
+            for (GameComponent component : m_gameComponents)
+            {
+                if (TypeHelpers::TypeEquals<typeid(component), T>())
+                {
+                    return dynamic_cast<T*>(component);
+                }
+            }
+
+            return nullptr;
         }
         
     private:

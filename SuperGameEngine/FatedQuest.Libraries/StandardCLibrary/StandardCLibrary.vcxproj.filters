@@ -103,9 +103,6 @@
     <ClInclude Include="Events\FEventArguments.h">
       <Filter>Project Files\Events\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\TypeHelpers.h">
-      <Filter>Project Files\Object\API</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Object.h">
       <Filter>Project Files\Object\API</Filter>
     </ClInclude>
@@ -123,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="Collection\Organised\FList.hpp">
       <Filter>Project Files\Collection\Organised</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TypeHelpers.hpp">
+      <Filter>Project Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="Structural\FPointLocationEventArguments.h">
       <Filter>Project Files\Structural\API</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\TypeHelpers.cpp">
-      <Filter>Project Files\Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\Object.cpp">
       <Filter>Project Files\Object</Filter>
