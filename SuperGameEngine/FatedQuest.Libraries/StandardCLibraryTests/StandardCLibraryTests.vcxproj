@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collection\Organised\FCollectionTests.cpp" />
+    <ClCompile Include="Collection\Organised\FListTests.cpp" />
     <ClCompile Include="Text\FStringTests.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,9 @@
     <ClCompile Include="Collection\Organised\FCollectionTests.cpp">
       <Filter>Collection\Organised</Filter>
     </ClCompile>
+    <ClCompile Include="Collection\Organised\FListTests.cpp">
+      <Filter>Collection\Organised</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Text">
