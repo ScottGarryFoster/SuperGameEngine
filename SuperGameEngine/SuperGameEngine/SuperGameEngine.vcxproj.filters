@@ -59,6 +59,18 @@
     <Filter Include="Project Files\Structural\Components\Visual\API">
       <UniqueIdentifier>{0b38ca89-fa38-4c23-a5f3-6b1522f667a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Engine\Input">
+      <UniqueIdentifier>{d214d8c2-8df5-4f43-baca-ce5f9ad06906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Input\API">
+      <UniqueIdentifier>{946006fe-f270-49d9-ab52-3e132ae26ead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Examples">
+      <UniqueIdentifier>{7fac29f0-f648-4f88-b86d-485b1b35b888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Examples\API">
+      <UniqueIdentifier>{0b943776-f5b8-41c5-9376-42ea5f69d861}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -93,6 +105,15 @@
     </ClCompile>
     <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp">
       <Filter>Project Files\Structural\Components\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\DirectKeyInput.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\DirectInput.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp">
+      <Filter>Project Files\Structural\Components\Examples</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +155,21 @@
     </ClInclude>
     <ClInclude Include="Structural\Components\Visual\SpriteComponent.h">
       <Filter>Project Files\Structural\Components\Visual\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\DirectKeyInput.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\DirectInput.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\InputKeyCode.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\KeyState.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Example\UserInputTestComponent.h">
+      <Filter>Project Files\Structural\Components\Examples\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

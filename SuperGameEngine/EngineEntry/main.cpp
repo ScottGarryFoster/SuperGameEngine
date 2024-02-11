@@ -94,6 +94,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
 
+        grandScene->EventUpdate(e);
         Uint64 ticksThisFrame = SDL_GetTicks64();
         grandScene->Update(ticksLastFrame - ticksThisFrame);
 

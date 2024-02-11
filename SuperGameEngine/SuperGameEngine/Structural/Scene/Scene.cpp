@@ -3,6 +3,7 @@
 #include "../GameObject/TestComponent.h"
 #include "../Components/Visual/SpriteComponent.h"
 #include "../Components/Spatial/TransformComponent.h"
+#include "../Components/Example/UserInputTestComponent.h"
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -31,6 +32,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage)
     GameObject* go = new GameObject();
     go->Setup(m_sceneLoadPackage);
     go->GetTransform()->SetLocation(0, 0);
+    go->AddComponent<UserInputTestComponent>();
     go->AddComponent<SpriteComponent>();
     m_gameObjects.push_back(go);
     m_loaded = true;

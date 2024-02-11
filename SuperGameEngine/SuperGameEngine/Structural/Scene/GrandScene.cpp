@@ -5,7 +5,8 @@ using namespace SuperGameEngine;
 
 GrandScene::GrandScene(SDL_Renderer* renderer)
 {
-    m_sceneLoadPackage = new SceneLoadPackage(new ContentManager(renderer));
+    m_directInput = new DirectInput();
+    m_sceneLoadPackage = new SceneLoadPackage(new ContentManager(renderer), m_directInput);
     m_scenes = std::vector<Scene*>();
 
     Scene* scene = new Scene();
@@ -16,6 +17,7 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
 GrandScene::~GrandScene()
 {
     delete m_sceneLoadPackage;
+    delete m_directInput;
 }
 
 bool GrandScene::Update(Uint64 tick)
@@ -44,4 +46,9 @@ void GrandScene::Draw()
             scene->Draw();
         }
     }
+}
+
+void GrandScene::EventUpdate(SDL_Event& e)
+{
+    m_directInput->EventUpdate(e);
 }
