@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "SceneLoadPackage.h"
 #include "Scene.h"
+#include "../../Engine/Input/DirectInput.h"
 
 namespace SuperGameEngine
 {
@@ -26,6 +27,14 @@ namespace SuperGameEngine
         /// </summary>
         void Draw();
 
+        /// <summary>
+        /// Updates all the objects which require knowleadge from an SDL level.
+        /// This would be Key Input for instance.
+        /// This is sent directly before the GrandScene Update.
+        /// </summary>
+        /// <param name="e">Event last sent from the update loop.</param>
+        void EventUpdate(SDL_Event& e);
+
     private:
         /// <summary>
         /// Contains all the objects a GameObject needs to opperate.
@@ -37,5 +46,10 @@ namespace SuperGameEngine
         /// All the Scenes loaded.
         /// </summary>
         std::vector<Scene*> m_scenes;
+
+        /// <summary>
+        /// Manages user input directly.
+        /// </summary>
+        DirectInput* m_directInput;
     };
 }

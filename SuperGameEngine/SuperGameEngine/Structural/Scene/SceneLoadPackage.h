@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Engine/Content/ContentManager.h"
+#include "../../Engine/Input/DirectInput.h"
 
 namespace SuperGameEngine
 {
@@ -13,8 +14,9 @@ namespace SuperGameEngine
         /// <summary>
         /// Constructs a package.
         /// </summary>
-        /// <param name="contentManager"></param>
-        SceneLoadPackage(ContentManager* contentManager);
+        /// <param name="contentManager">Access to resources. </param>
+        /// <param name="directInput">Access to direct input from the User. ></param>
+        SceneLoadPackage(ContentManager* contentManager, const DirectInput* directInput);
 
         /// <summary>
         /// Allows you to gain access to textures.
@@ -22,10 +24,20 @@ namespace SuperGameEngine
         /// <returns>Gives you a reference to the content manager. </returns>
         ContentManager* GetContentManager() const;
 
+        /// <summary>
+        /// Access to direct input from the User.
+        /// </summary>
+        const DirectInput* GetDirectInput() const;
+
     private:
         /// <summary>
         /// Allows you to gain access to textures.
         /// </summary>
         ContentManager* m_contentManager;
+
+        /// <summary>
+        /// Access to direct input from the User.
+        /// </summary>
+        const DirectInput* m_directInput;
     };
 }

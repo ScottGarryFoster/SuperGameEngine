@@ -6,6 +6,11 @@
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
 
+SpriteComponent::SpriteComponent() : GameComponent()
+{
+    m_superTexture = nullptr;
+}
+
 void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
     GameComponent::Setup(loadPackage, parent);

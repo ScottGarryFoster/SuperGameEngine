@@ -1,16 +1,15 @@
 #pragma once
+#include "../../../LibraryIncludes.h"
 #include "../../GameObject/GameComponent.h"
-#include "../../Scene/SceneLoadPackage.h"
 
 namespace SuperGameEngine
 {
     /// <summary>
-    /// Renders a texture.
+    /// Tests user input.
     /// </summary>
-    class SpriteComponent : public GameComponent
+    class UserInputTestComponent : public GameComponent
     {
     public:
-        SpriteComponent();
 
         /// <summary>
         /// Sets up the Component.
@@ -24,16 +23,7 @@ namespace SuperGameEngine
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
         virtual bool Update(GameTime gameTime) override;
-
-        /// <summary>
-        /// Draw everything in the game.
-        /// </summary>
-        virtual void Draw() override;
-
-    private:
-        /// <summary>
-        /// A texture stored in the content manager.
-        /// </summary>
-        SuperTexture* m_superTexture;
     };
 }
+
+
