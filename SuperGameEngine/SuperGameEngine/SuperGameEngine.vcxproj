@@ -130,10 +130,16 @@
   <ItemGroup>
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
+    <ClInclude Include="Engine\Input\Controller.hpp" />
+    <ClInclude Include="Engine\Input\ControllerMapper.h" />
+    <ClInclude Include="Engine\Input\ControllerResolver.h" />
     <ClInclude Include="Engine\Input\DirectInput.h" />
     <ClInclude Include="Engine\Input\DirectKeyInput.h" />
+    <ClInclude Include="Engine\Input\DirectXButton.hpp" />
+    <ClInclude Include="Engine\Input\DirectControllerInput.h" />
     <ClInclude Include="Engine\Input\InputKeyCode.hpp" />
     <ClInclude Include="Engine\Input\KeyState.hpp" />
+    <ClInclude Include="Engine\Input\UniversalControllerButton.hpp" />
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Engine\Basic\GameTime.h" />
     <ClInclude Include="Engine\Graphics\Texture.h" />
@@ -151,8 +157,11 @@
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
     <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
     <ClCompile Include="Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\Input\ControllerMapper.cpp" />
+    <ClCompile Include="Engine\Input\ControllerResolver.cpp" />
     <ClCompile Include="Engine\Input\DirectInput.cpp" />
     <ClCompile Include="Engine\Input\DirectKeyInput.cpp" />
+    <ClCompile Include="Engine\Input\DirectControllerInput.cpp" />
     <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp" />
     <ClCompile Include="Structural\Components\Spatial\TransformComponent.cpp" />
     <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp" />

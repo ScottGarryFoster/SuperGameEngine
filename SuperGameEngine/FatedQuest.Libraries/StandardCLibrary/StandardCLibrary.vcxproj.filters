@@ -103,10 +103,10 @@
     <ClInclude Include="Object\FException.h">
       <Filter>Project Files\Object\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Exceptions\SystemNullReference.h">
+    <ClInclude Include="Object\Exceptions\SystemNullReference.hpp">
       <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Exceptions\ArgumentNullException.h">
+    <ClInclude Include="Object\Exceptions\ArgumentNullException.hpp">
       <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
     <ClInclude Include="Collection\Organised\FCollection.hpp">
@@ -120,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="Collection\Vector\VectorHelpers.hpp">
       <Filter>Project Files\Collection\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Exceptions\NotImplementedException.hpp">
+      <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,12 +161,6 @@
     </ClCompile>
     <ClCompile Include="Object\FException.cpp">
       <Filter>Project Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Exceptions\ArgumentNullException.cpp">
-      <Filter>Project Files\Object\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Exceptions\SystemNullReference.cpp">
-      <Filter>Project Files\Object\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

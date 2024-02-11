@@ -33,7 +33,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SDL_Window* window = NULL;
     
     // Initialize SDL. SDL_Init will return -1 if it fails.
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0)
     {
 #ifdef _DEBUG
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;

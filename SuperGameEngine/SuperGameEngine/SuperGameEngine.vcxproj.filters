@@ -115,6 +115,15 @@
     <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp">
       <Filter>Project Files\Structural\Components\Examples</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Input\DirectControllerInput.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerResolver.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerMapper.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -170,6 +179,24 @@
     </ClInclude>
     <ClInclude Include="Structural\Components\Example\UserInputTestComponent.h">
       <Filter>Project Files\Structural\Components\Examples\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\DirectControllerInput.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\DirectXButton.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\Controller.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerResolver.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\UniversalControllerButton.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerMapper.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
