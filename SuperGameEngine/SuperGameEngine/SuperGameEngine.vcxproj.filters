@@ -71,6 +71,12 @@
     <Filter Include="Project Files\Structural\Components\Examples\API">
       <UniqueIdentifier>{0b943776-f5b8-41c5-9376-42ea5f69d861}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Components\Gameplay">
+      <UniqueIdentifier>{b3e87bd3-73c7-4a59-99cb-250fdf7225d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Gameplay\API">
+      <UniqueIdentifier>{ec8e2ce2-e636-4371-8dac-ef213b8d6f7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -114,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp">
       <Filter>Project Files\Structural\Components\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp">
+      <Filter>Project Files\Structural\Components\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Structural\Components\Example\UserInputTestComponent.h">
       <Filter>Project Files\Structural\Components\Examples\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Gameplay\PlayerControllerComponent.h">
+      <Filter>Project Files\Structural\Components\Gameplay\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

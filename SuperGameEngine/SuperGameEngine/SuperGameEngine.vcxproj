@@ -138,6 +138,7 @@
     <ClInclude Include="Engine\Basic\GameTime.h" />
     <ClInclude Include="Engine\Graphics\Texture.h" />
     <ClInclude Include="Structural\Components\Example\UserInputTestComponent.h" />
+    <ClInclude Include="Structural\Components\Gameplay\PlayerControllerComponent.h" />
     <ClInclude Include="Structural\Components\Spatial\TransformComponent.h" />
     <ClInclude Include="Structural\Components\Visual\SpriteComponent.h" />
     <ClInclude Include="Structural\GameObject\GameComponent.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="Engine\Input\DirectInput.cpp" />
     <ClCompile Include="Engine\Input\DirectKeyInput.cpp" />
     <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp" />
+    <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp" />
     <ClCompile Include="Structural\Components\Spatial\TransformComponent.cpp" />
     <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp" />
     <ClCompile Include="Structural\GameObject\GameComponent.cpp" />

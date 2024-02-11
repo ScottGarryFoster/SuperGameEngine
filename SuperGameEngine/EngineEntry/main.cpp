@@ -43,6 +43,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 1;
     }
 
+    // Set SDL hint to enable VSync
+    if (!SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1"))
+    {
+#ifdef _DEBUG
+        std::cout << "Warning: VSync not enabled!" << std::endl;
+#endif
+    }
+
     // Create our window
     window = SDL_CreateWindow("Example", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
@@ -77,7 +85,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SDL_Event e;
 
     GrandScene* grandScene = new GrandScene(renderer);
-    Uint64 ticksLastFrame = 0;
+    Uint64 startTime = SDL_GetTicks64();
 
     // Main loop
     while (!quit)
@@ -94,9 +102,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
 
+        Uint64 currentTime = SDL_GetTicks64();
+        Uint64 ticksThisFrame = currentTime - startTime;
+        startTime = currentTime;
+
         grandScene->EventUpdate(e);
-        Uint64 ticksThisFrame = SDL_GetTicks64();
-        grandScene->Update(ticksLastFrame - ticksThisFrame);
+        grandScene->Update(ticksThisFrame);
 
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
@@ -109,8 +120,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         // Add a small delay to avoid 100% CPU usage
         SDL_Delay(10);
-
-        ticksLastFrame = ticksThisFrame;
     }
 
     // Wait
