@@ -2,6 +2,17 @@
 
 using namespace SuperGameEngine;
 
+ControllerMapper::ControllerMapper(ControllerLayoutCollection* controllerCollection)
+{
+    if (!controllerCollection)
+    {
+        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Construction"),
+            FString("controllerCollection is nullptr. Ensure this is given."));
+    }
+
+    m_controllerCollection = controllerCollection;
+}
+
 UniversalControllerButton ControllerMapper::GetUniversalControllerButtonFromSDLButton(Controller controller, int SDLButton) const
 {
     if (controller == Controller::Xbox360Controller ||
@@ -22,11 +33,12 @@ UniversalControllerButton ControllerMapper::GetUniversalControllerButtonFromSDLB
 
 int SuperGameEngine::ControllerMapper::GetSDLButtonsOnController(Controller controller) const
 {
-    switch (controller)
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Count() > 0)
     {
-        case Controller::Xbox360Controller: return 11;
-        case Controller::XboxSeriesController: return 16;
-        case Controller::NintendoSwitchProController: return 20;
+        return found[0]->Buttons;
     }
 
     Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetSDLButtonsOnController"),

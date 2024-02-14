@@ -127,7 +127,29 @@ namespace StandardCLibraryTests_Text_FStringTests
     }
 #pragma endregion
 
-#pragma region Operator Equals
+#pragma region Operator Condition Equals
+    TEST(FStringTest, OperatorEquals_ReturnsGiven_WhenGivenStringValueViaEqualsOperator)
+    {
+        FString given = FString("foo");
+        std::string expected = "bar";
+
+        given = expected;
+
+        EXPECT_TRUE(given == expected) << "Expected: " << expected << " Actual: " << given;
+    }
+
+    TEST(FStringTest, OperatorEquals_ReturnsGiven_WhenGivenFStringValueViaEqualsOperator)
+    {
+        FString given = FString("foo");
+        FString expected = "bar";
+
+        given = expected;
+
+        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+    }
+#pragma endregion
+
+#pragma region Operator Condition Equals
     TEST(FStringTest, OperatorEquals_ReturnsFalse_WhenTwoFStringDoNotEqual)
     {
         FString left = FString("foo");

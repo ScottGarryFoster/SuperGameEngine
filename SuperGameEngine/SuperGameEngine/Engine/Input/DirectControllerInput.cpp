@@ -14,8 +14,9 @@ DirectControllerInput::DirectControllerInput()
         m_currentState->insert(std::make_pair(key, KeyState::Unpressed));
     }
 
-    m_controllerResolver = new ControllerResolver();
-    m_controllerMapper = new ControllerMapper();
+    m_controllerLayoutCollection = new ControllerLayoutCollection();
+    m_controllerResolver = new ControllerResolver(m_controllerLayoutCollection);
+    m_controllerMapper = new ControllerMapper(m_controllerLayoutCollection);
 }
 
 DirectControllerInput::~DirectControllerInput()
@@ -25,6 +26,7 @@ DirectControllerInput::~DirectControllerInput()
     delete m_currentState;
     delete m_controllerResolver;
     delete m_controllerMapper;
+    delete m_controllerLayoutCollection;
 }
 
 void DirectControllerInput::Update()

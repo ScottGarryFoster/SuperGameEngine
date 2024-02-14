@@ -1,15 +1,18 @@
 #pragma once
 #include <SDL.h>
 #include "Controller.hpp"
+#include "ControllerLayoutCollection.h"
 
 namespace SuperGameEngine
 {
     /// <summary>
     /// Figures out what controller an SDL Joystick is likely to be.
     /// </summary>
-    class ControllerResolver
+    class ControllerResolver : public Object
     {
     public:
+        ControllerResolver(ControllerLayoutCollection* controllerCollection);
+
         /// <summary>
         /// Get what we believe the joystick is.
         /// This might fail because controllers are difficult.
@@ -19,25 +22,10 @@ namespace SuperGameEngine
         Controller GetControllerFromJoyStick(SDL_Joystick* joystick) const;
 
     private:
-        /// <summary>
-        /// Detirmines if Joystick is Xbox 360.
-        /// </summary>
-        /// <param name="joystick">Joystick to test. </param>
-        /// <returns>True means it is. </returns>
-        bool JoystickIsXbox360Controller(SDL_Joystick* joystick) const;
 
         /// <summary>
-        /// Detirmines if Joystick is Xbox Series Controller.
+        /// Contains the Controller Layouts for the game.
         /// </summary>
-        /// <param name="joystick">Joystick to test. </param>
-        /// <returns>True means it is. </returns>
-        bool JoystickIsXboxSeriesController(SDL_Joystick* joystick) const;
-        
-        /// <summary>
-        /// Detirmines if Joystick is Nintendo Switch Pro Controller.
-        /// </summary>
-        /// <param name="joystick">Joystick to Test. </param>
-        /// <returns>True means it is. </returns>
-        bool JoystickIsNintendoSwitchProController(SDL_Joystick* joystick) const;
+        ControllerLayoutCollection* m_controllerCollection;
     };
 }

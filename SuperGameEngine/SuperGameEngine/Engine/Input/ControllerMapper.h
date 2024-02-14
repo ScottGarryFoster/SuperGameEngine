@@ -2,6 +2,7 @@
 #include "../../LibraryIncludes.h"
 #include "Controller.hpp"
 #include "UniversalControllerButton.hpp"
+#include "ControllerLayoutCollection.h"
 
 namespace SuperGameEngine
 {
@@ -11,6 +12,8 @@ namespace SuperGameEngine
     class ControllerMapper : public Object
     {
     public:
+        ControllerMapper(ControllerLayoutCollection* controllerCollection);
+
         /// <summary>
         /// Attempts to map the SDL button code to the corisponding Universal controller button.
         /// This can fail if you are attempting to find a button which is not on the controller.
@@ -64,6 +67,12 @@ namespace SuperGameEngine
         /// </returns>
         bool IsGivenAxisValueAPressedValueForButton(Controller controller, UniversalControllerButton button, int SDLAxis, int axisValue) const;
     private:
+
+        /// <summary>
+        /// Gives access to the controllers loaded in the session.
+        /// </summary>
+        ControllerLayoutCollection* m_controllerCollection;
+
         /// <summary>
         /// Gets the Universal Button for an Xbox Controller.
         /// </summary>

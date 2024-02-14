@@ -64,6 +64,8 @@ namespace SuperGameEngine
         /// </summary>
         ControllerMapper* m_controllerMapper;
 
+        ControllerLayoutCollection* m_controllerLayoutCollection;
+
         /// <summary>
         /// Update the Keystate for the given Dictionary.
         /// </summary>
