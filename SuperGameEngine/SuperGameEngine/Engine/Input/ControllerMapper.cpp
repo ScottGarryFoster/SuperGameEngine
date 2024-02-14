@@ -60,11 +60,12 @@ std::vector<std::pair<int, UniversalControllerButton>> SuperGameEngine::Controll
 
 int SuperGameEngine::ControllerMapper::GetSDLAxisOnController(Controller controller) const
 {
-    switch (controller)
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Count() > 0)
     {
-    case Controller::Xbox360Controller: return 6;
-    case Controller::XboxSeriesController: return 6;
-    case Controller::NintendoSwitchProController: return 6;
+        return found[0]->Axis;
     }
 
     Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetSDLAxisOnController"),
