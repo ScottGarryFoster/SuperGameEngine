@@ -15,15 +15,21 @@ ControllerMapper::ControllerMapper(ControllerLayoutCollection* controllerCollect
 
 UniversalControllerButton ControllerMapper::GetUniversalControllerButtonFromSDLButton(Controller controller, int SDLButton) const
 {
-    if (controller == Controller::Xbox360Controller ||
-        controller == Controller::XboxSeriesController)
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Any())
     {
-        return GetButtonForXbox360Controller(SDLButton);
-    }
+        // Controller Layout found.
+        FList<std::pair<int, UniversalControllerButton>> buttons = found[0]->SDLToUniversalButton.Where(
+            [SDLButton](const std::pair<int, UniversalControllerButton> p) { return p.first == SDLButton; });
+        if (buttons.Any())
+        {
+            // Button found
+            return buttons[0].second;
+        }
 
-    if (controller == Controller::NintendoSwitchProController)
-    {
-        return GetButtonForNintendoSwitchProController(SDLButton);
+        return UniversalControllerButton::Unknown;
     }
 
     Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetUniversalControllerButtonFromSDLButton"),
@@ -31,7 +37,7 @@ UniversalControllerButton ControllerMapper::GetUniversalControllerButtonFromSDLB
     return UniversalControllerButton::Unknown;
 }
 
-int SuperGameEngine::ControllerMapper::GetSDLButtonsOnController(Controller controller) const
+int ControllerMapper::GetSDLButtonsOnController(Controller controller) const
 {
     FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
     FList<ControllerLayout*> found =
@@ -46,24 +52,33 @@ int SuperGameEngine::ControllerMapper::GetSDLButtonsOnController(Controller cont
     return -1;
 }
 
-std::vector<std::pair<int, UniversalControllerButton>> SuperGameEngine::ControllerMapper::GetUniversalControllerButtonMappedToAxis(Controller controller) const
+std::vector<std::pair<int, UniversalControllerButton>> 
+    ControllerMapper::GetUniversalControllerButtonMappedToAxis(Controller controller) const
 {
-    switch (controller)
+    std::vector<std::pair<int, UniversalControllerButton>> returnVector;
+
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Any())
     {
-    case Controller::Xbox360Controller: return GetButtonsForXboxControllerMappedToAxis();
-    case Controller::XboxSeriesController: return GetButtonsForXboxControllerMappedToAxis();
-    case Controller::NintendoSwitchProController: return GetButtonsForXboxControllerMappedToAxis();
+        for (ControllerAxisMappedToButton axisToButton : found[0]->AxisToButton)
+        {
+            returnVector.push_back(
+                std::pair<int, UniversalControllerButton>(
+                    axisToButton.Axis, axisToButton.Button));
+        }
     }
 
-    return std::vector<std::pair<int, UniversalControllerButton>>();
+    return returnVector;
 }
 
-int SuperGameEngine::ControllerMapper::GetSDLAxisOnController(Controller controller) const
+int ControllerMapper::GetSDLAxisOnController(Controller controller) const
 {
     FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
     FList<ControllerLayout*> found =
         collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
-    if (found.Count() > 0)
+    if (found.Any())
     {
         return found[0]->Axis;
     }
@@ -73,103 +88,27 @@ int SuperGameEngine::ControllerMapper::GetSDLAxisOnController(Controller control
     return -1;
 }
 
-bool SuperGameEngine::ControllerMapper::IsGivenAxisValueAPressedValueForButton(Controller controller, UniversalControllerButton button, int SDLAxis, int axisValue) const
+bool ControllerMapper::IsGivenAxisValueAPressedValueForButton(
+        Controller controller, UniversalControllerButton button, int SDLAxis, int axisValue) const
 {
-    if (controller == Controller::Xbox360Controller || controller == Controller::XboxSeriesController)
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Any())
     {
-        return IsGivenAxisValueAPressedValueForButtonForXboxController(button, SDLAxis, axisValue);
-    }
-
-    if (controller == Controller::NintendoSwitchProController)
-    {
-        return UsePureAxisValueForTriggerButtons(button, SDLAxis, axisValue);
-    }
-
-    return false;
-}
-
-UniversalControllerButton ControllerMapper::GetButtonForXbox360Controller(int SDLButton) const
-{
-    switch (SDLButton)
-    {
-        case 0: return UniversalControllerButton::FaceButtonDown;
-        case 1: return UniversalControllerButton::FaceButtonRight;
-        case 2: return UniversalControllerButton::FaceButtonLeft;
-        case 3: return UniversalControllerButton::FaceButtonUp;
-        case 4: return UniversalControllerButton::LeftShoulder;
-        case 5: return UniversalControllerButton::RightShoulder;
-        case 6: return UniversalControllerButton::Select;
-        case 7: return UniversalControllerButton::Start;
-        case 8: return UniversalControllerButton::LeftStickClick;
-        case 9: return UniversalControllerButton::RightStickClick;
-    }
-
-    //Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetUniversalControllerButtonFromSDLButton"),
-    //    FString("No button mapping found ") + EController::ToString(Controller::Xbox360Controller) + 
-    //    FString(" SDLButton: ") + SDLButton);
-    return UniversalControllerButton::Unknown;
-}
-
-std::vector<std::pair<int, UniversalControllerButton>> ControllerMapper::GetButtonsForXboxControllerMappedToAxis() const
-{
-    std::vector<std::pair<int, UniversalControllerButton>> returnVector =
-    {
-        std::pair<int, UniversalControllerButton>(4, UniversalControllerButton::LeftTrigger),
-        std::pair<int, UniversalControllerButton>(5, UniversalControllerButton::RightTrigger),
-    };
-    return returnVector;
-}
-
-UniversalControllerButton ControllerMapper::GetButtonForNintendoSwitchProController(int SDLButton) const
-{
-    switch (SDLButton)
-    {
-    case 0: return UniversalControllerButton::FaceButtonRight;
-    case 1: return UniversalControllerButton::FaceButtonDown;
-    case 2: return UniversalControllerButton::FaceButtonUp;
-    case 3: return UniversalControllerButton::FaceButtonLeft;
-    case 4: return UniversalControllerButton::Select;
-        // Resolves to the Screenshot button.
-    case 5: return UniversalControllerButton::Unknown;
-    case 6: return UniversalControllerButton::Start;
-    case 7: return UniversalControllerButton::LeftStickClick;
-    case 8: return UniversalControllerButton::RightStickClick;
-    case 9: return UniversalControllerButton::LeftShoulder;
-    case 10: return UniversalControllerButton::RightShoulder;
-    case 11: return UniversalControllerButton::LeftTrigger;
-    case 12: return UniversalControllerButton::RightTrigger;
-    case 13: return UniversalControllerButton::DPadUp;
-    case 14: return UniversalControllerButton::DPadDown;
-    case 15: return UniversalControllerButton::DPadLeft;
-    case 16: return UniversalControllerButton::DPadRight;
-    }
-
-    return UniversalControllerButton::Unknown;
-}
-
-bool SuperGameEngine::ControllerMapper::IsGivenAxisValueAPressedValueForButtonForXboxController(UniversalControllerButton button, int SDLAxis, int axisValue) const
-{
-    if (SDLAxis == 4 && button == UniversalControllerButton::LeftTrigger)
-    {
-        return axisValue > -30000;
-    }
-    else if (SDLAxis == 5 && button == UniversalControllerButton::RightTrigger)
-    {
-        return axisValue > -30000;
-    }
-
-    return false;
-}
-
-bool SuperGameEngine::ControllerMapper::UsePureAxisValueForTriggerButtons(UniversalControllerButton button, int SDLAxis, int axisValue) const
-{
-    if (SDLAxis == 4 && button == UniversalControllerButton::LeftTrigger)
-    {
-        return axisValue == 32767;
-    }
-    else if (SDLAxis == 5 && button == UniversalControllerButton::RightTrigger)
-    {
-        return axisValue == 32767;
+        FList<ControllerAxisMappedToButton> axisMapped = found[0]->AxisToButton.Where(
+            [SDLAxis, button](const ControllerAxisMappedToButton& c)
+            { return c.Axis == SDLAxis && c.Button == button; });
+        if (axisMapped.Any())
+        {
+            ControllerAxisMappingEvaluation evaluation = axisMapped[0].Evaluation;
+            switch (evaluation.Comparison)
+            {
+                case ControllerComparisonType::Equals: return axisValue == evaluation.Value;
+                case ControllerComparisonType::Greater: return axisValue > evaluation.Value;
+                case ControllerComparisonType::Less: return axisValue < evaluation.Value;
+            }
+        }
     }
 
     return false;

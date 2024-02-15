@@ -201,4 +201,24 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         EXPECT_EQ(expected, actual);
     }
 #pragma endregion
+
+#pragma region Any
+    TEST(FCollectionTests, Any_ReturnsFalse_WhenConstructedEmpty)
+    {
+        FCollection<int> testClass;
+
+        bool actual = testClass.Any();
+
+        EXPECT_FALSE(actual);
+    }
+
+    TEST(FCollectionTests, Any_ReturnsTrue_WhenConstructedWithEntries)
+    {
+        FCollection<int> testClass(42);
+
+        bool actual = testClass.Any();
+
+        EXPECT_TRUE(actual);
+    }
+#pragma endregion
 }

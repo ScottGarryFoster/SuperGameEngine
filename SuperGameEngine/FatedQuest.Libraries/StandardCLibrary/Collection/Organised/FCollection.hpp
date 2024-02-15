@@ -202,6 +202,15 @@ namespace StandardCLibrary
             return m_actualData.size();
         }
 
+        /// <summary>
+        /// Determines if there are any entries in the collection.
+        /// </summary>
+        /// <returns>True means there are entries.</returns>
+        bool Any()
+        {
+            return m_actualData.size() > 0;
+        }
+
     protected:
 
         /// <summary>
