@@ -143,6 +143,7 @@
     <ClInclude Include="Engine\Input\DirectControllerInput.h" />
     <ClInclude Include="Engine\Input\InputKeyCode.hpp" />
     <ClInclude Include="Engine\Input\KeyState.hpp" />
+    <ClInclude Include="Engine\Input\UniversalControllerAxis.hpp" />
     <ClInclude Include="Engine\Input\UniversalControllerButton.hpp" />
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Engine\Basic\GameTime.h" />

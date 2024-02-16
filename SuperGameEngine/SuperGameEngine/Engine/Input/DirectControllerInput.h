@@ -29,13 +29,15 @@ namespace SuperGameEngine
 
         bool ButtonPressed(UniversalControllerButton button) const;
 
+        int AxisValue(UniversalControllerAxis axis) const;
+
         /// <summary>
         /// Gets the controller plugged in.
         /// Will get the first controller found which is not 'unknown'.
         /// The first not 'Unknown' controller is the one which is used
         /// for input for the Buttons.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Gets a Valid controller plugged in or 'Unknown' if none found (or recognised). </returns>
         Controller GetCurrentController() const;
     private:
         /// <summary>
@@ -53,6 +55,12 @@ namespace SuperGameEngine
         /// The evaluated state of the key.
         /// </summary>
         std::unordered_map<UniversalControllerButton, KeyState>* m_currentState;
+
+        /// <summary>
+        /// The current axis value on the given controller.
+        /// </summary>
+        //std::map<int, std::pair<UniversalControllerAxis, int>>* m_axisValueOnController;
+        std::map<int, std::map<UniversalControllerAxis, int>>* m_axisValueOnController;
 
         /// <summary>
         /// Helps figure out what controller we are dealing with.
@@ -75,5 +83,10 @@ namespace SuperGameEngine
         /// True will be pressed and false will be not pressed.
         /// </param>
         void UpdateKeyState(std::unordered_map<UniversalControllerButton, bool>* statesToUpdate);
+
+        /// <summary>
+        /// Update the Axis Values.
+        /// </summary>
+        void UpdateAxisValue();
     };
 }

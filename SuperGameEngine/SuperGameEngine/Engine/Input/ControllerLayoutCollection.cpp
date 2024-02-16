@@ -36,6 +36,7 @@ ControllerLayout* ControllerLayoutCollection::ReturnXboxPadLayout(bool xboxOne)
         xbox360->Name = FString("Controller (Xbox One For Windows)");
         xbox360->Buttons = 16;
         xbox360->Axis = 6;
+        xbox360->Hats = 1;
     }
     else
     {
@@ -43,6 +44,7 @@ ControllerLayout* ControllerLayoutCollection::ReturnXboxPadLayout(bool xboxOne)
         xbox360->Name = FString("Xbox 360 Controller");
         xbox360->Buttons = 11;
         xbox360->Axis = 6;
+        xbox360->Hats = 1;
     }
 
 
@@ -84,6 +86,22 @@ ControllerLayout* ControllerLayoutCollection::ReturnXboxPadLayout(bool xboxOne)
     xbox360->AxisToButton.Add(leftTrigger);
     xbox360->AxisToButton.Add(rightTrigger);
 
+    xbox360->HatMappedToDpad = 0;
+
+    xbox360->SDLAxisToUniversalAxis = FList<std::pair<int, UniversalControllerAxis>>();
+    xbox360->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(0, UniversalControllerAxis::LeftStickX));
+    xbox360->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(1, UniversalControllerAxis::LeftStickY));
+    xbox360->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(2, UniversalControllerAxis::RightStickX));
+    xbox360->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(3, UniversalControllerAxis::RightStickY));
+    xbox360->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(4, UniversalControllerAxis::LeftTrigger));
+    xbox360->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(5, UniversalControllerAxis::RightTrigger));
+
     return xbox360;
 }
 
@@ -94,6 +112,7 @@ ControllerLayout* ControllerLayoutCollection::ReturnSwitchProLayout()
     controller->Name = FString("Nintendo Switch Pro Controller");
     controller->Buttons = 20;
     controller->Axis = 6;
+    controller->Hats = 1;
 
     controller->SDLToUniversalButton.Add(std::pair<int, UniversalControllerButton>
         (0, UniversalControllerButton::FaceButtonRight));
@@ -115,6 +134,14 @@ ControllerLayout* ControllerLayoutCollection::ReturnSwitchProLayout()
         (9, UniversalControllerButton::LeftShoulder));
     controller->SDLToUniversalButton.Add(std::pair<int, UniversalControllerButton>
         (10, UniversalControllerButton::RightShoulder));
+    controller->SDLToUniversalButton.Add(std::pair<int, UniversalControllerButton>
+        (11, UniversalControllerButton::DPadUp));
+    controller->SDLToUniversalButton.Add(std::pair<int, UniversalControllerButton>
+        (12, UniversalControllerButton::DPadDown));
+    controller->SDLToUniversalButton.Add(std::pair<int, UniversalControllerButton>
+        (13, UniversalControllerButton::DPadLeft));
+    controller->SDLToUniversalButton.Add(std::pair<int, UniversalControllerButton>
+        (14, UniversalControllerButton::DPadRight));
 
     ControllerAxisMappedToButton leftTrigger = ControllerAxisMappedToButton();
     leftTrigger.Axis = 4;
@@ -132,6 +159,18 @@ ControllerLayout* ControllerLayoutCollection::ReturnSwitchProLayout()
 
     controller->AxisToButton.Add(leftTrigger);
     controller->AxisToButton.Add(rightTrigger);
+
+    controller->HatMappedToDpad = -1;
+
+    controller->SDLAxisToUniversalAxis = FList<std::pair<int, UniversalControllerAxis>>();
+    controller->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(0, UniversalControllerAxis::LeftStickX));
+    controller->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(1, UniversalControllerAxis::LeftStickY));
+    controller->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(2, UniversalControllerAxis::RightStickX));
+    controller->SDLAxisToUniversalAxis.Add(
+        std::pair<int, UniversalControllerAxis>(3, UniversalControllerAxis::RightStickY));
 
     return controller;
 }

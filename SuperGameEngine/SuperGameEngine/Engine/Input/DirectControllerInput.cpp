@@ -17,6 +17,8 @@ DirectControllerInput::DirectControllerInput()
     m_controllerLayoutCollection = new ControllerLayoutCollection();
     m_controllerResolver = new ControllerResolver(m_controllerLayoutCollection);
     m_controllerMapper = new ControllerMapper(m_controllerLayoutCollection);
+
+    m_axisValueOnController = new std::map<int, std::map<UniversalControllerAxis, int>>();
 }
 
 DirectControllerInput::~DirectControllerInput()
@@ -31,6 +33,7 @@ DirectControllerInput::~DirectControllerInput()
 
 void DirectControllerInput::Update()
 {
+    UpdateAxisValue();
     UpdateKeyState(m_keyState);
 
     for (UniversalControllerButton button : EUniversalControllerButton::ToVector())
@@ -115,6 +118,32 @@ void DirectControllerInput::Update()
     {
         Logger::Info(FString("Axis 5 : RightTrigger"));
     }
+
+    if (ButtonPressed(UniversalControllerButton::DPadDown))
+    {
+        Logger::Info(FString("DPadDown"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadLeft))
+    {
+        Logger::Info(FString("DPadLeft"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadRight))
+    {
+        Logger::Info(FString("DPadRight"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadUp))
+    {
+        Logger::Info(FString("DPadUp"));
+    }
+
+    
+    //{
+    //    int axis = AxisValue(UniversalControllerAxis::RightTrigger);
+    //    Logger::Info(FString("RightTriggerX: ") + axis);
+    //}
 }
 
 bool DirectControllerInput::ButtonDown(UniversalControllerButton button) const
@@ -130,6 +159,24 @@ bool DirectControllerInput::ButtonUp(UniversalControllerButton button) const
 bool DirectControllerInput::ButtonPressed(UniversalControllerButton button) const
 {
     return m_currentState->at(button) == (KeyState::Down | KeyState::Pressed);
+}
+
+int DirectControllerInput::AxisValue(UniversalControllerAxis axis) const
+{
+    auto controllerValues = m_axisValueOnController->find(0);
+    if (controllerValues == m_axisValueOnController->end())
+    {
+        return 0;
+    }
+
+    std::map<UniversalControllerAxis, int> axisMap = controllerValues->second;
+    auto axisValue = axisMap.find(axis);
+    if (axisValue != axisMap.end())
+    {
+        return axisValue->second;
+    }
+
+    return 0;
 }
 
 Controller SuperGameEngine::DirectControllerInput::GetCurrentController() const
@@ -171,7 +218,7 @@ void DirectControllerInput::UpdateKeyState(std::unordered_map<UniversalControlle
         int numberOfButtons = m_controllerMapper->GetSDLButtonsOnController(controller);
         for (int b = 0; b < numberOfButtons; ++b)
         {
-            UniversalControllerButton universalButton = 
+            UniversalControllerButton universalButton =
                 m_controllerMapper->GetUniversalControllerButtonFromSDLButton(controller, b);
             if (SDL_JoystickGetButton(joystick, b))
             {
@@ -184,28 +231,95 @@ void DirectControllerInput::UpdateKeyState(std::unordered_map<UniversalControlle
                     m_keyState->at(universalButton) = true;
                 }
             }
+        }
 
-            //int numberOfAxis = m_controllerMapper->GetSDLAxisOnController(controller);
-            //int axisValue = SDL_JoystickGetAxis(joystick, 5);
-            //Logger::Info(FString("5: ") + axisValue);
-            //for (int a = 0; a < numberOfAxis; ++a)
-            //{
-
-            //}
-
-            std::vector<std::pair<int, UniversalControllerButton>> buttonsToAxis = 
-                m_controllerMapper->GetUniversalControllerButtonMappedToAxis(controller);
-            for (std::pair<int, UniversalControllerButton> buttonToAxis : buttonsToAxis)
+        std::vector<std::pair<int, UniversalControllerButton>> buttonsToAxis = 
+            m_controllerMapper->GetUniversalControllerButtonMappedToAxis(controller);
+        for (std::pair<int, UniversalControllerButton> buttonToAxis : buttonsToAxis)
+        {
+            int axisValue = SDL_JoystickGetAxis(joystick, buttonToAxis.first);
+            if (m_controllerMapper->IsGivenAxisValueAPressedValueForButton(
+                controller, buttonToAxis.second, buttonToAxis.first, axisValue))
             {
-                int axisValue = SDL_JoystickGetAxis(joystick, buttonToAxis.first);
-                if (m_controllerMapper->IsGivenAxisValueAPressedValueForButton(controller, buttonToAxis.second, buttonToAxis.first, axisValue))
-                {
-                    m_keyState->at(buttonToAxis.second) = true;
-               }
+                m_keyState->at(buttonToAxis.second) = true;
             }
         }
 
+        int hat = m_controllerMapper->GetSDLHatMappedToDPad(controller);
+        if (hat > -1)
+        {
+            UniversalControllerButton dpadButton =
+                m_controllerMapper->GetHatStateMappedToDPad(SDL_JoystickGetHat(joystick, hat));
+                
+            // It is important that we only claim these as release if a hat is mapped
+            // as sometimes buttons are mapped not hats.
+            m_keyState->at(UniversalControllerButton::DPadDown) = false;
+            m_keyState->at(UniversalControllerButton::DPadLeft) = false;
+            m_keyState->at(UniversalControllerButton::DPadRight) = false;
+            m_keyState->at(UniversalControllerButton::DPadUp) = false;
+
+            if (dpadButton != UniversalControllerButton::Unknown)
+            {
+                m_keyState->at(dpadButton) = true;
+            }
+        }
+
+
         // Do not run for other controllers
         break;
+    }
+}
+
+void DirectControllerInput::UpdateAxisValue()
+{
+    int foundController = -1;
+    int numJoysticks = SDL_NumJoysticks();
+    for (int j = 0; j < numJoysticks; ++j)
+    {
+        SDL_Joystick* joystick = SDL_JoystickOpen(j);
+        Controller controller = m_controllerResolver->GetControllerFromJoyStick(joystick);
+        if (controller == Controller::Unknown)
+        {
+            continue;
+        }
+        ++foundController;
+
+        for (unsigned int axis = 0; axis < m_controllerMapper->GetSDLAxisOnController(controller); ++axis)
+        {
+            UniversalControllerAxis universalAxis = 
+                m_controllerMapper->GetUniversalAxisFromSDLAxis(controller, axis);
+            if (universalAxis != UniversalControllerAxis::Unknown)
+            {
+                int axisValue = SDL_JoystickGetAxis(joystick, axis);
+                auto foundAxis = m_axisValueOnController->find(foundController);
+                if (foundAxis == m_axisValueOnController->end())
+                {
+                    auto newMap = std::map<UniversalControllerAxis, int>();
+                    newMap.insert(std::make_pair(universalAxis, axisValue));
+
+                    m_axisValueOnController->insert(std::make_pair(foundController, newMap));
+                }
+                else
+                {
+                    int key = foundAxis->first;
+                    std::map<UniversalControllerAxis, int> axisMap = foundAxis->second;
+                    auto foundExactAxis = axisMap.find(universalAxis);
+                    if (foundExactAxis == axisMap.end())
+                    {
+                        foundAxis->second.insert(std::make_pair(universalAxis, axisValue));
+                    }
+                    else
+                    {
+                        foundAxis->second[universalAxis] = axisValue;
+                    }
+                }
+
+                // This method is an example of why I need a wrapper for Dictionaries like FList
+                // To make things cleaner.
+                // TODO: [#27] Make a Dictionary / Keypair collection structure
+            }
+        }
+
+        
     }
 }

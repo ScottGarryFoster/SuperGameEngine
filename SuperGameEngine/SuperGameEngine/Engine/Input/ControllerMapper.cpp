@@ -1,4 +1,5 @@
 #include "ControllerMapper.h"
+#include <SDL.h>
 
 using namespace SuperGameEngine;
 
@@ -15,26 +16,29 @@ ControllerMapper::ControllerMapper(ControllerLayoutCollection* controllerCollect
 
 UniversalControllerButton ControllerMapper::GetUniversalControllerButtonFromSDLButton(Controller controller, int SDLButton) const
 {
+    UniversalControllerButton returnButton = UniversalControllerButton::Unknown;
+
     FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
     FList<ControllerLayout*> found =
         collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
     if (found.Any())
     {
-        // Controller Layout found.
-        FList<std::pair<int, UniversalControllerButton>> buttons = found[0]->SDLToUniversalButton.Where(
-            [SDLButton](const std::pair<int, UniversalControllerButton> p) { return p.first == SDLButton; });
+        FList<std::pair<int, UniversalControllerButton>> buttons =
+            found[0]->SDLToUniversalButton.Where(
+                [SDLButton](const std::pair<int, UniversalControllerButton> p)
+                { return p.first == SDLButton; });
         if (buttons.Any())
         {
-            // Button found
             return buttons[0].second;
         }
-
-        return UniversalControllerButton::Unknown;
+    }
+    else
+    {
+        Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetUniversalControllerButtonFromSDLButton"),
+            FString("Controller mapping not found for ") + EController::ToString(controller));
     }
 
-    Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetUniversalControllerButtonFromSDLButton"),
-        FString("Controller mapping not found for ") + EController::ToString(controller));
-    return UniversalControllerButton::Unknown;
+    return returnButton;
 }
 
 int ControllerMapper::GetSDLButtonsOnController(Controller controller) const
@@ -88,6 +92,67 @@ int ControllerMapper::GetSDLAxisOnController(Controller controller) const
     return -1;
 }
 
+UniversalControllerAxis ControllerMapper::GetUniversalAxisFromSDLAxis(Controller controller, int SDLAxis) const
+{
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Any())
+    {
+        FList<std::pair<int, UniversalControllerAxis>> axis = found[0]->SDLAxisToUniversalAxis.Where(
+            [SDLAxis](const std::pair<int, UniversalControllerAxis>& c) { return c.first == SDLAxis; });
+        if (axis.Any())
+        {
+            return axis[0].second;
+        }
+    }
+
+    return UniversalControllerAxis::Unknown;
+}
+
+int ControllerMapper::GetSDLHatMappedToDPad(Controller controller) const
+{
+    FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
+    FList<ControllerLayout*> found =
+        collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
+    if (found.Any())
+    {
+        return found[0]->HatMappedToDpad;
+    }
+
+    Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetSDLAxisOnController"),
+        FString("Controller requested which was not valid. Requested: ") + EController::ToString(controller));
+    return -1;
+}
+
+UniversalControllerButton ControllerMapper::GetHatStateMappedToDPad(int hatState)
+{
+    UniversalControllerButton pressed = UniversalControllerButton::Unknown;
+    if (hatState == SDL_HAT_CENTERED)
+    {
+        // Included for completeness.
+        pressed = UniversalControllerButton::Unknown;
+    }
+    else if (hatState & SDL_HAT_UP)
+    {
+        pressed = UniversalControllerButton::DPadUp;
+    }
+    else if (hatState & SDL_HAT_DOWN)
+    {
+        pressed = UniversalControllerButton::DPadDown;
+    }
+    else if (hatState & SDL_HAT_LEFT)
+    {
+        pressed = UniversalControllerButton::DPadLeft;
+    }
+    else if (hatState & SDL_HAT_RIGHT)
+    {
+        pressed = UniversalControllerButton::DPadRight;
+    }
+
+    return pressed;
+}
+
 bool ControllerMapper::IsGivenAxisValueAPressedValueForButton(
         Controller controller, UniversalControllerButton button, int SDLAxis, int axisValue) const
 {
@@ -96,6 +161,7 @@ bool ControllerMapper::IsGivenAxisValueAPressedValueForButton(
         collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
     if (found.Any())
     {
+
         FList<ControllerAxisMappedToButton> axisMapped = found[0]->AxisToButton.Where(
             [SDLAxis, button](const ControllerAxisMappedToButton& c)
             { return c.Axis == SDLAxis && c.Button == button; });

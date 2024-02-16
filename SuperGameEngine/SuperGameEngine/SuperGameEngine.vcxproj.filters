@@ -219,6 +219,9 @@
     <ClInclude Include="Engine\Input\ControllerLayoutCollection.h">
       <Filter>Project Files\Engine\Input\API</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Input\UniversalControllerAxis.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -2,6 +2,7 @@
 #include "../../LibraryIncludes.h"
 #include "Controller.hpp"
 #include "UniversalControllerButton.hpp"
+#include "UniversalControllerAxis.hpp"
 #include "ControllerLayoutCollection.h"
 
 namespace SuperGameEngine
@@ -53,6 +54,22 @@ namespace SuperGameEngine
         /// </returns>
         int GetSDLAxisOnController(Controller controller) const;
 
+        UniversalControllerAxis GetUniversalAxisFromSDLAxis(Controller controller, int SDLAxis) const;
+
+        /// <summary>
+        /// Get the Hat Mapped to DPad.
+        /// </summary>
+        /// <param name="controller">Controller to check. </param>
+        /// <returns>The hat mapped to DPad. -1 means no hat is mapped. </returns>
+        int GetSDLHatMappedToDPad(Controller controller) const;
+
+        /// <summary>
+        /// Uses the input from an SDL Hat and converts it to a DPad button.
+        /// </summary>
+        /// <param name="hatState">State of the given hat. </param>
+        /// <returns>The universal button for the dpad or unknown if unpressed.</returns>
+        UniversalControllerButton GetHatStateMappedToDPad(int hatState);
+
         /// <summary>
         /// Detirmines if the given value from an axis on the controller should be considered
         /// a 'pressed' value.
@@ -72,25 +89,5 @@ namespace SuperGameEngine
         /// Gives access to the controllers loaded in the session.
         /// </summary>
         ControllerLayoutCollection* m_controllerCollection;
-
-        /// <summary>
-        /// Gets the Universal Button for an Xbox Controller.
-        /// </summary>
-        /// <param name="SDLButton">SDL button to check. </param>
-        /// <returns>Universal Button we believe might work or Unknown if there is no clear answer. </returns>
-        UniversalControllerButton GetButtonForXbox360Controller(int SDLButton) const;
-
-        std::vector<std::pair<int, UniversalControllerButton>> GetButtonsForXboxControllerMappedToAxis() const;
-
-        /// <summary>
-        /// Gets the Universal Button for an Xbox Controller.
-        /// </summary>
-        /// <param name="SDLButton">SDL button to check. </param>
-        /// <returns>Universal Button we believe might work or Unknown if there is no clear answer. </returns>
-        UniversalControllerButton GetButtonForNintendoSwitchProController(int SDLButton) const;
-
-        bool IsGivenAxisValueAPressedValueForButtonForXboxController(UniversalControllerButton button, int SDLAxis, int axisValue) const;
-
-        bool UsePureAxisValueForTriggerButtons(UniversalControllerButton button, int SDLAxis, int axisValue) const;
     };
 }
