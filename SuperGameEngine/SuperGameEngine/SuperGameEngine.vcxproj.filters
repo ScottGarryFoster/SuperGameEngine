@@ -133,6 +133,9 @@
     <ClCompile Include="Engine\Input\ControllerLayoutCollection.cpp">
       <Filter>Project Files\Engine\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -220,6 +223,9 @@
       <Filter>Project Files\Engine\Input\API</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Input\UniversalControllerAxis.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerLayoutFromXML.h">
       <Filter>Project Files\Engine\Input\API</Filter>
     </ClInclude>
   </ItemGroup>

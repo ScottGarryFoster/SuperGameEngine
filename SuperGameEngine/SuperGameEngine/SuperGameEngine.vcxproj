@@ -135,6 +135,7 @@
     <ClInclude Include="Engine\Input\ControllerAxisMappingEvaluation.h" />
     <ClInclude Include="Engine\Input\ControllerComparisonType.hpp" />
     <ClInclude Include="Engine\Input\ControllerLayoutCollection.h" />
+    <ClInclude Include="Engine\Input\ControllerLayoutFromXML.h" />
     <ClInclude Include="Engine\Input\ControllerMapper.h" />
     <ClInclude Include="Engine\Input\ControllerResolver.h" />
     <ClInclude Include="Engine\Input\DirectInput.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Engine\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayout.h" />
     <ClCompile Include="Engine\Input\ControllerLayoutCollection.cpp" />
+    <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp" />
     <ClCompile Include="Engine\Input\ControllerMapper.cpp" />
     <ClCompile Include="Engine\Input\ControllerResolver.cpp" />
     <ClCompile Include="Engine\Input\DirectInput.cpp" />
