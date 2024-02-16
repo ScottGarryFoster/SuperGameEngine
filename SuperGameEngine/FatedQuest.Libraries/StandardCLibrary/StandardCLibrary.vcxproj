@@ -139,6 +139,7 @@
     <ClInclude Include="Events\Observer.h" />
     <ClInclude Include="Events\Subject.h" />
     <ClInclude Include="File\File.h" />
+    <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Object\Exceptions\ArgumentNullException.hpp" />
     <ClInclude Include="Object\Exceptions\NotImplementedException.hpp" />
     <ClInclude Include="Object\Exceptions\SystemNullReference.hpp" />

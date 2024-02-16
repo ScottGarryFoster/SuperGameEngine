@@ -124,6 +124,7 @@
     <ClInclude Include="Object\Exceptions\NotImplementedException.hpp">
       <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
+    <ClInclude Include="LibraryIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
