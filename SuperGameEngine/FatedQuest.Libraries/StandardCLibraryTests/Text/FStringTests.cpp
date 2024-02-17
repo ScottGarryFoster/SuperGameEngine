@@ -202,7 +202,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         unsigned long int right = 42;
         FString expected = FString("foo42");
 
-        left += left + right;
+        left += right;
 
         EXPECT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
     }
