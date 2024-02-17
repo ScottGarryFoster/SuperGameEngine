@@ -18,3 +18,4 @@
 #include "Object/Exceptions/SystemNullReference.hpp"
 #include "Structural/FVectorLocationEventArguments.h"
 #include "Structural/FPointLocationEventArguments.h"
+#include "Extentions/IntHelpers.hpp"

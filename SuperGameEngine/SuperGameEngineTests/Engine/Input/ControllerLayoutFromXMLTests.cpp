@@ -124,5 +124,141 @@ namespace SuperGameEngine_Engine_Input_ControllerLayoutFromXMLTests
             << "Expected NOT: " << ""
             << " Actual: " << errors;
     }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_ReturnsDefault_WhenNotGivenController)
+    {
+        Controller expected = Controller::Unknown;
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata />");
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        Controller controllerType = m_controllerLayout->Controller;
+        EXPECT_EQ(expected, controllerType)
+            << "Expected: " << EController::ToString(expected)
+            << " Actual: " << EController::ToString(controllerType)
+            << " Errors: " << errors;
+    }
+#pragma endregion
+
+#pragma region MetaTag Axis
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_SetsAxis_WhenGivenAValidNumber)
+    {
+        int expected = 1;
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata Axis=\"") + expected + "\" />";
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        int actual = m_controllerLayout->Axis;
+        EXPECT_EQ(expected, actual)
+            << "Expected: " << expected
+            << " Actual: " << actual
+            << " Errors: " << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotSetAxis_WhenNumberGivenIsInvalid)
+    {
+        int expected = -1;
+        FString givenNumber = "NOTANUMBER";
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata Axis=\"") + givenNumber + "\" />";
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        int actual = m_controllerLayout->Axis;
+        EXPECT_EQ(expected, actual)
+            << "Expected: " << expected
+            << " Actual: " << actual
+            << " Errors: " << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_AxisReturnsDefault_WhenNotSet)
+    {
+        int expected = -1;
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata />");
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        int actual = m_controllerLayout->Axis;
+        EXPECT_EQ(expected, actual)
+            << "Expected: " << expected
+            << " Actual: " << actual
+            << " Errors: " << errors;
+    }
+
+#pragma endregion
+
+#pragma region MetaTag Buttons
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_SetsButtons_WhenGivenAValidNumber)
+    {
+        int expected = 1;
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata Buttons=\"") + expected + "\" />";
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        int actual = m_controllerLayout->Buttons;
+        EXPECT_EQ(expected, actual)
+            << "Expected: " << expected
+            << " Actual: " << actual
+            << " Errors: " << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotSetButtons_WhenNumberGivenIsInvalid)
+    {
+        int expected = -1;
+        FString givenNumber = "NOTANUMBER";
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata Buttons=\"") + givenNumber + "\" />";
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        int actual = m_controllerLayout->Buttons;
+        EXPECT_EQ(expected, actual)
+            << "Expected: " << expected
+            << " Actual: " << actual
+            << " Errors: " << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_ButtonsReturnsDefault_WhenNotSet)
+    {
+        int expected = -1;
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata />");
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        EXPECT_NE(m_controllerLayout, nullptr);
+        int actual = m_controllerLayout->Buttons;
+        EXPECT_EQ(expected, actual)
+            << "Expected: " << expected
+            << " Actual: " << actual
+            << " Errors: " << errors;
+    }
+
 #pragma endregion
 }

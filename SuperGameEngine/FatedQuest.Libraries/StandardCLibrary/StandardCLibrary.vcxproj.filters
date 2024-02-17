@@ -59,6 +59,9 @@
     <Filter Include="Project Files\Collection\Organised">
       <UniqueIdentifier>{a785f6d0-9027-4fd0-b680-4123f4d5e1ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Extentions">
+      <UniqueIdentifier>{f1bc8a98-b8fa-4dad-b8d6-6ad931d00ebd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -125,6 +128,9 @@
       <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
     <ClInclude Include="LibraryIncludes.h" />
+    <ClInclude Include="Extentions\IntHelpers.hpp">
+      <Filter>Project Files\Extentions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">

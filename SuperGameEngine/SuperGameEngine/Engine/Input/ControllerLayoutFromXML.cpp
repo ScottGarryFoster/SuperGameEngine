@@ -109,6 +109,32 @@ bool ControllerLayoutFromXML::ParseMetaTag(
                 controllerLayout->Controller = foundValue;
             }
         }
+        else if (FString(attribute->name()).ToLower() == "axis")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                controllerLayout->Axis = result;
+            }
+            else
+            {
+                error += FString("Could not parse axis value: ") + attribute->value() + ". ";
+            }
+        }
+        else if (FString(attribute->name()).ToLower() == "buttons")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                controllerLayout->Buttons = result;
+            }
+            else
+            {
+                error += FString("Could not parse buttons value: ") + attribute->value() + ". ";
+            }
+        }
     }
 
     return false;

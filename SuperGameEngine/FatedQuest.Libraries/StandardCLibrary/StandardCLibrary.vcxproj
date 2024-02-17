@@ -138,6 +138,7 @@
     <ClInclude Include="Events\FEventSubscriptions.h" />
     <ClInclude Include="Events\Observer.h" />
     <ClInclude Include="Events\Subject.h" />
+    <ClInclude Include="Extentions\IntHelpers.hpp" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Object\Exceptions\ArgumentNullException.hpp" />
