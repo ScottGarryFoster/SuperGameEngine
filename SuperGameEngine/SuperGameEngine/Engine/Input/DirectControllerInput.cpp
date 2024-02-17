@@ -284,7 +284,7 @@ void DirectControllerInput::UpdateAxisValue()
         }
         ++foundController;
 
-        for (unsigned int axis = 0; axis < m_controllerMapper->GetSDLAxisOnController(controller); ++axis)
+        for (int axis = 0; axis < m_controllerMapper->GetSDLAxisOnController(controller); ++axis)
         {
             UniversalControllerAxis universalAxis = 
                 m_controllerMapper->GetUniversalAxisFromSDLAxis(controller, axis);

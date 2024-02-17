@@ -120,6 +120,48 @@ FString FString::operator+(const float str) const
     return FString(m_storage.c_str() + std::to_string(str));
 }
 
+FString& FString::operator+=(const std::string& str)
+{
+    m_storage += str.c_str();
+    return *this;
+}
+
+FString& FString::operator+=(const FString& str)
+{
+    m_storage += str.m_storage;
+    return *this;
+}
+
+FString& FString::operator+=(const int str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const long int str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const unsigned long int str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const double str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const float str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
 FString FString::operator+(const double str) const
 {
     return FString(m_storage.c_str() + std::to_string(str));

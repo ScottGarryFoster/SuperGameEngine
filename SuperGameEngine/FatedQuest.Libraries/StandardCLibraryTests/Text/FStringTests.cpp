@@ -127,6 +127,87 @@ namespace StandardCLibraryTests_Text_FStringTests
     }
 #pragma endregion
 
+#pragma region Operator Plus Equals
+    TEST(FStringTest, OperatorPlus_JoinsTogetherTwoFStrings_WhenRightHandIsAnFStringWithPlusEquals)
+    {
+        FString left = FString("foo");
+        FString right = "bar";
+        FString expected = FString("foobar");
+
+        left += right;
+
+        EXPECT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
+    }
+
+    TEST(FStringTest, OperatorPlus_JoinsTogetherFStringAndString_WhenRightHandIsAStringWithPlusEquals)
+    {
+        FString left = FString("foo");
+        std::string right = "bar";
+        FString expected = FString("foobar");
+
+        left += right;
+
+        EXPECT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
+    }
+
+    TEST(FStringTest, OperatorPlus_JoinsTogetherInt_WhenRightHandIsAnIntWithPlusEquals)
+    {
+        FString left = FString("foo");
+        int right = 42;
+        FString expected = FString("foo42");
+
+        left += right;
+
+        EXPECT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
+    }
+
+    TEST(FStringTest, OperatorPlus_JoinsTogetherFloat_WhenRightHandIsAnFloatWithPlusEquals)
+    {
+        FString left = FString("foo");
+        float right = 42.421f;
+        FString expected = FString("foo42.42");
+
+        left += right;
+
+        std::string cutActual = CutStringToSize(left.AsStdString(), expected.AsStdString().size());
+        EXPECT_TRUE(expected == cutActual) << "Expected: " << expected.AsStdString() << " Actual: " << cutActual;
+    }
+
+    TEST(FStringTest, OperatorPlus_JoinsTogetherDouble_WhenRightHandIsAnDoubleWithPlusEquals)
+    {
+        FString left = FString("foo");
+        double right = 42.421;
+        FString expected = FString("foo42.42");
+
+        left += right;
+
+        std::string cutActual = CutStringToSize(left.AsStdString(), expected.AsStdString().size());
+        EXPECT_TRUE(expected == cutActual) << "Expected: " << expected << " Actual: " << cutActual;
+    }
+
+    TEST(FStringTest, OperatorPlus_JoinsTogetherLongInt_WhenRightHandIsAnLongIntWithPlusEquals)
+    {
+        FString left = FString("foo");
+        long int right = 42;
+        FString expected = FString("foo42");
+
+        left += right;
+
+        EXPECT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
+    }
+
+    TEST(FStringTest, OperatorPlus_JoinsTogetherUnsignedLongInt_WhenRightHandIsAnUnsignedLongIntWithPlusEquals)
+    {
+        FString left = FString("foo");
+        unsigned long int right = 42;
+        FString expected = FString("foo42");
+
+        left += left + right;
+
+        EXPECT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
+    }
+#pragma endregion
+
 #pragma region Operator Condition Equals
     TEST(FStringTest, OperatorEquals_ReturnsGiven_WhenGivenStringValueViaEqualsOperator)
     {
