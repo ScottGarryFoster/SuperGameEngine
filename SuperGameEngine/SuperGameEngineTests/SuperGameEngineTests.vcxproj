@@ -99,6 +99,9 @@
     <ClCompile Include="Engine\Input\ControllerLayoutFromXMLTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FatedQuest.Libraries\Logging\Logging.vcxproj">
+      <Project>{fbd9a5d9-bb38-479b-8dd7-1ebd2382a035}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>
@@ -115,11 +118,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
+    <Import Project="..\packages\rapidxml.1.13\build\native\rapidxml.targets" Condition="Exists('..\packages\rapidxml.1.13\build\native\rapidxml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.7\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
+    <Error Condition="!Exists('..\packages\rapidxml.1.13\build\native\rapidxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\rapidxml.1.13\build\native\rapidxml.targets'))" />
   </Target>
 </Project>

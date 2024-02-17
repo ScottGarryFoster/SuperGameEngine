@@ -1,5 +1,6 @@
 #pragma once
 #include "../../LibraryIncludes.h"
+#include "../../../FatedQuest.Libraries/Logging/Logger.h"
 
 namespace SuperGameEngine
 {
@@ -68,8 +69,31 @@ namespace SuperGameEngine
                 case Controller::NintendoSwitchProController: return "NintendoSwitchProController";
             }
 
-            Logger::Exception(NotImplementedException(), FString("EController"), FString("ToString"), FString("No string value for a controller requested."));
+            Logger::Exception(NotImplementedException(), FString("EController"), FString("ToString"), 
+                FString("No string value for a controller requested."));
             return "Unknown";
+        }
+
+        static Controller FromString(std::string value, bool checkCase = true)
+        {
+            if (checkCase)
+            {
+                if (FString(value) == "Unknown") return Controller::Unknown;
+                if (FString(value) == "Xbox360Controller") return Controller::Xbox360Controller;
+                if (FString(value) == "XboxSeriesController") return Controller::XboxSeriesController;
+                if (FString(value) == "NintendoSwitchProController") return Controller::NintendoSwitchProController;
+            }
+            else
+            {
+                if (FString(value).ToLower() == FString("Unknown").ToLower()) return Controller::Unknown;
+                if (FString(value).ToLower() == FString("Xbox360Controller").ToLower()) return Controller::Xbox360Controller;
+                if (FString(value).ToLower() == FString("XboxSeriesController").ToLower()) return Controller::XboxSeriesController;
+                if (FString(value).ToLower() == FString("NintendoSwitchProController").ToLower()) return Controller::NintendoSwitchProController;
+            }
+
+            Logger::Exception(NotImplementedException(), FString("EController"), FString("FromString"), 
+                FString("No Controller value for a controller requested."));
+            return Controller::Unknown;
         }
     };
 }
