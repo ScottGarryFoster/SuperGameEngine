@@ -4,7 +4,7 @@
 #include "../../StandardCLibrary/Text/FString.h"
 
 using namespace StandardCLibrary;
-namespace StandardCLibraryTests_Text_FStringTests
+namespace StandardCLibraryTests_Text
 {
     std::string CutStringToSize(std::string toCut, size_t size);
 
@@ -14,7 +14,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = FString();
         
-        EXPECT_TRUE(actual == expected) << "Expected: " << expected << " Actual: " << actual.AsStdString();
+        ASSERT_TRUE(actual == expected) << "Expected: " << expected << " Actual: " << actual.AsStdString();
     }
 
     TEST(FStringTest, OnConstruction_ReturnsAMatching_WhenGivenAnInput)
@@ -23,7 +23,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = FString(expected);
 
-        EXPECT_TRUE(actual == expected) << "Expected: " << expected << " Actual: " << actual.AsStdString();
+        ASSERT_TRUE(actual == expected) << "Expected: " << expected << " Actual: " << actual.AsStdString();
     }
 
     TEST(FStringTest, OnConstruction_ReturnsAFlattenedString_WhenGivenAVectorInput)
@@ -43,7 +43,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString actual = FString(given);
 
         // Assert
-        EXPECT_TRUE(actual == expected) << "Expected: " << expected << " Actual: " << actual.AsStdString();
+        ASSERT_TRUE(actual == expected) << "Expected: " << expected << " Actual: " << actual.AsStdString();
     }
 
 #pragma region Operator Plus
@@ -55,7 +55,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         
         FString actual = left + right;
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected.AsStdString() << " Actual: " << actual.AsStdString();
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected.AsStdString() << " Actual: " << actual.AsStdString();
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherFStringAndString_WhenRightHandIsAString)
@@ -66,7 +66,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = left + right;
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected.AsStdString() << " Actual: " << actual.AsStdString();
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected.AsStdString() << " Actual: " << actual.AsStdString();
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherInt_WhenRightHandIsAnInt)
@@ -77,7 +77,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = left + right;
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected.AsStdString() << " Actual: " << actual.AsStdString();
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected.AsStdString() << " Actual: " << actual.AsStdString();
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherFloat_WhenRightHandIsAnFloat)
@@ -89,7 +89,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString actual = left + right; 
 
         std::string cutActual = CutStringToSize(actual.AsStdString(), expected.AsStdString().size());
-        EXPECT_TRUE(expected == cutActual) << "Expected: " << expected.AsStdString() << " Actual: " << cutActual;
+        ASSERT_TRUE(expected == cutActual) << "Expected: " << expected.AsStdString() << " Actual: " << cutActual;
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherDouble_WhenRightHandIsAnDouble)
@@ -101,7 +101,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString actual = left + right;
 
         std::string cutActual = CutStringToSize(actual.AsStdString(), expected.AsStdString().size());
-        EXPECT_TRUE(expected == cutActual) << "Expected: " << expected << " Actual: " << cutActual;
+        ASSERT_TRUE(expected == cutActual) << "Expected: " << expected << " Actual: " << cutActual;
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherLongInt_WhenRightHandIsAnLongInt)
@@ -112,7 +112,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = left + right;
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherUnsignedLongInt_WhenRightHandIsAnUnsignedLongInt)
@@ -123,7 +123,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = left + right;
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
     }
 #pragma endregion
 
@@ -136,7 +136,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         left += right;
 
-        EXPECT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
+        ASSERT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherFStringAndString_WhenRightHandIsAStringWithPlusEquals)
@@ -147,7 +147,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         left += right;
 
-        EXPECT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
+        ASSERT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherInt_WhenRightHandIsAnIntWithPlusEquals)
@@ -158,7 +158,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         left += right;
 
-        EXPECT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
+        ASSERT_TRUE(expected == left) << "Expected: " << expected.AsStdString() << " Actual: " << left.AsStdString();
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherFloat_WhenRightHandIsAnFloatWithPlusEquals)
@@ -170,7 +170,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         left += right;
 
         std::string cutActual = CutStringToSize(left.AsStdString(), expected.AsStdString().size());
-        EXPECT_TRUE(expected == cutActual) << "Expected: " << expected.AsStdString() << " Actual: " << cutActual;
+        ASSERT_TRUE(expected == cutActual) << "Expected: " << expected.AsStdString() << " Actual: " << cutActual;
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherDouble_WhenRightHandIsAnDoubleWithPlusEquals)
@@ -182,7 +182,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         left += right;
 
         std::string cutActual = CutStringToSize(left.AsStdString(), expected.AsStdString().size());
-        EXPECT_TRUE(expected == cutActual) << "Expected: " << expected << " Actual: " << cutActual;
+        ASSERT_TRUE(expected == cutActual) << "Expected: " << expected << " Actual: " << cutActual;
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherLongInt_WhenRightHandIsAnLongIntWithPlusEquals)
@@ -193,7 +193,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         left += right;
 
-        EXPECT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
+        ASSERT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
     }
 
     TEST(FStringTest, OperatorPlus_JoinsTogetherUnsignedLongInt_WhenRightHandIsAnUnsignedLongIntWithPlusEquals)
@@ -204,7 +204,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         left += right;
 
-        EXPECT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
+        ASSERT_TRUE(expected == left) << "Expected: " << expected << " Actual: " << left;
     }
 #pragma endregion
 
@@ -216,7 +216,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         given = expected;
 
-        EXPECT_TRUE(given == expected) << "Expected: " << expected << " Actual: " << given;
+        ASSERT_TRUE(given == expected) << "Expected: " << expected << " Actual: " << given;
     }
 
     TEST(FStringTest, OperatorEquals_ReturnsGiven_WhenGivenFStringValueViaEqualsOperator)
@@ -226,7 +226,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         given = expected;
 
-        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+        ASSERT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
     }
 #pragma endregion
 
@@ -236,7 +236,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString left = FString("foo");
         FString right = FString("bar");
 
-        EXPECT_FALSE(left == right) << "Condition: " << left << " == " << right;
+        ASSERT_FALSE(left == right) << "Condition: " << left << " == " << right;
     }
 
     TEST(FStringTest, OperatorEquals_ReturnsTrue_WhenTwoFStringEqual)
@@ -244,7 +244,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString left = FString("foo");
         FString right = FString("foo");
 
-        EXPECT_TRUE(left == right) << "Condition: " << left << " == " << right;
+        ASSERT_TRUE(left == right) << "Condition: " << left << " == " << right;
     }
 
     TEST(FStringTest, OperatorEquals_ReturnsFalse_WhenStringComparedAndAreNotEqual)
@@ -252,7 +252,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString left = FString("foo");
         std::string right = "bar";
 
-        EXPECT_FALSE(left == right) << "Condition: " << left << " == " << right;
+        ASSERT_FALSE(left == right) << "Condition: " << left << " == " << right;
     }
 
     TEST(FStringTest, OperatorEquals_ReturnsTrue_WhenStringComparedAndEqual)
@@ -260,7 +260,7 @@ namespace StandardCLibraryTests_Text_FStringTests
         FString left = FString("foo");
         std::string right = "foo";
 
-        EXPECT_TRUE(left == right) << "Condition: " << left << " == " << right;
+        ASSERT_TRUE(left == right) << "Condition: " << left << " == " << right;
     }
 #pragma endregion
 
@@ -272,7 +272,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         std::string actual = given.AsStdString();
 
-        EXPECT_EQ(expected, actual);
+        ASSERT_EQ(expected, actual);
     }
 
     TEST(FStringTest, AsCharArr_ReturnsAnEqualCharArr)
@@ -282,10 +282,10 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         const char* actual = given.AsCharArr();
 
-        EXPECT_EQ(std::strlen(expected), std::strlen(actual));
+        ASSERT_EQ(std::strlen(expected), std::strlen(actual));
         for (unsigned int c = 0; c < std::strlen(actual); ++c)
         {
-            EXPECT_EQ(expected[c], actual[c])
+            ASSERT_EQ(expected[c], actual[c])
                 << "Character: " << c << " was not equal. Expected: " << expected[c] << " Actual: " << actual[c];
         }
     }
@@ -299,7 +299,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = given.ToLower();
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
     }
 
     TEST(FStringTest, ToLower_DoesNotAffectOriginalString_WhenPerformed)
@@ -309,7 +309,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         given.ToLower();
 
-        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+        ASSERT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
     }
 #pragma endregion
 
@@ -321,7 +321,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         FString actual = given.ToUpper();
 
-        EXPECT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
+        ASSERT_TRUE(expected == actual) << "Expected: " << expected << " Actual: " << actual;
     }
 
     TEST(FStringTest, ToUpper_DoesNotAffectOriginalString_WhenPerformed)
@@ -331,7 +331,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         given.ToUpper();
 
-        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+        ASSERT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
     }
 #pragma endregion
 
@@ -343,7 +343,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         given.ConvertToLower();
 
-        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+        ASSERT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
     }
 
     TEST(FStringTest, ConvertToUpper_ChangesValueToUpperCase)
@@ -353,7 +353,7 @@ namespace StandardCLibraryTests_Text_FStringTests
 
         given.ConvertToUpper();
 
-        EXPECT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
+        ASSERT_TRUE(expected == given) << "Expected: " << expected << " Actual: " << given;
     }
 #pragma endregion
 

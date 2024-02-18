@@ -16,8 +16,8 @@ ControllerLayout* ControllerLayoutFromXML::CreateFromXML(FString xml, FString& e
 {
     ControllerLayout* finalLayout = nullptr;
 
-    XMLDocument* document = nullptr;
-    if (TryParseXMLDocument(xml, &document))
+    XMLDocument* document = TryParseXMLDocument(xml);
+    if (document != nullptr)
     {
         XMLNode *rootNode = document->first_node();
         FString name = FString(rootNode->name());
@@ -37,6 +37,11 @@ ControllerLayout* ControllerLayoutFromXML::CreateFromXML(FString xml, FString& e
             {
                 ParseMetaTag(metaNode, finalLayout, error);
             }
+
+            if (sdlToUniversalButtons != nullptr)
+            {
+                ParseSdlToUniversalButtonsTag(sdlToUniversalButtons, finalLayout, error);
+            }
         }
 
     }
@@ -55,7 +60,7 @@ void ControllerLayoutFromXML::ExtractTopLevelNodes(
     XMLNode** sdlToUniversalButtons,
     XMLNode** axisToButtons,
     XMLNode** sdlHatToDpad,
-    XMLNode** sdlAxisToUniversalAxis)
+    XMLNode** sdlAxisToUniversalAxis) const
 {
     XMLNode* rootNode = document->first_node();
     for (XMLNode* childNode = rootNode->first_node(); childNode; childNode = childNode->next_sibling())
@@ -75,21 +80,20 @@ void ControllerLayoutFromXML::ExtractTopLevelNodes(
     }
 }
 
-bool ControllerLayoutFromXML::TryParseXMLDocument(FString& xml, XMLDocument** document)
+XMLDocument* ControllerLayoutFromXML::TryParseXMLDocument(FString& xml)
 {
-    XMLDocument* doc = new XMLDocument();
-    *document = doc;
+    XMLDocument* document = new XMLDocument();
     try 
     {
-        doc->parse<0>(const_cast<char*>(xml.AsCharArr()));
+        document->parse<0>(const_cast<char*>(xml.AsCharArr()));
     }
     catch (rapidxml::parse_error e)
     {
-        delete* document;
-        *document = nullptr;
+        delete document;
+        document = nullptr;
     }
 
-    return *document != nullptr;
+    return document;
 }
 
 bool ControllerLayoutFromXML::ParseMetaTag(
@@ -137,5 +141,70 @@ bool ControllerLayoutFromXML::ParseMetaTag(
         }
     }
 
-    return false;
+    return true;
+}
+
+bool ControllerLayoutFromXML::ParseSdlToUniversalButtonsTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    for (XMLNode* childNode = node->first_node(); childNode; childNode = childNode->next_sibling())
+    {
+        if (FString(childNode->name()) != ButtonTagSingularName)
+        {
+            continue;
+        }
+
+        ParseSdlToUniversalButtonTag(childNode, controllerLayout, error);
+    }
+    return true;
+}
+
+bool ControllerLayoutFromXML::ParseSdlToUniversalButtonTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    // Let's create a pair here
+    std::pair<int, UniversalControllerButton> extractedData;
+    extractedData.first = -1;
+    extractedData.second = UniversalControllerButton::Unknown;
+    for (XMLAttribute* attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
+    {
+        if (FString(attribute->name()).ToLower() == "sdlbutton")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                extractedData.first = result;
+            }
+            else
+            {
+                error += FString("Could not parse sdl buttons value: ")
+                    + attribute->value() + ". ";
+            }
+        }
+        else if (FString(attribute->name()).ToLower() == "universalcontrollerbutton")
+        {
+            UniversalControllerButton foundValue = EUniversalControllerButton::FromString(attribute->value());
+            if (foundValue == UniversalControllerButton::Unknown)
+            {
+                error += FString("Could not parse universal controller button value: ")
+                    + attribute->value() + ". ";
+            }
+            else
+            {
+                extractedData.second = foundValue;
+            }
+        }
+    }
+
+    if (!controllerLayout->SDLToUniversalButton.Any(
+        [extractedData](const std::pair<int, UniversalControllerButton>& x)
+        {
+            return x.first == extractedData.first || x.second == extractedData.second;
+        }))
+    {
+        controllerLayout->SDLToUniversalButton.Add(extractedData);
+    }
+
+    return true;
 }

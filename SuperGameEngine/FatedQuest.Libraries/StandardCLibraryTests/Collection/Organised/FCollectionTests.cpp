@@ -12,7 +12,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         FCollection<int> collection = FCollection<int>();
 
         int count = CountCollection<int>(collection);
-        EXPECT_EQ(0, count);
+        ASSERT_EQ(0, count);
     }
 
     TEST(FCollectionTests, OnConstruction_ReturnsCollectionWithItem_WhenGivenEntry)
@@ -22,8 +22,8 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         FCollection<int> collection = FCollection<int>(given);
 
         int count = CountCollection(collection);
-        EXPECT_EQ(1, count);
-        EXPECT_EQ(given, ReturnItemInCollection<int>(collection, 0));
+        ASSERT_EQ(1, count);
+        ASSERT_EQ(given, ReturnItemInCollection<int>(collection, 0));
     }
 
     TEST(FCollectionTests, OnConstruction_ReturnsCollectionWithPointItem_WhenGivenPointer)
@@ -40,9 +40,9 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         int givenDereferenced = *given;
 
         delete given;
-        EXPECT_EQ(1, count);
-        EXPECT_TRUE(actualFound) << "Actual was not found";
-        EXPECT_EQ(givenDereferenced, actualDereferenced);
+        ASSERT_EQ(1, count);
+        ASSERT_TRUE(actualFound) << "Actual was not found";
+        ASSERT_EQ(givenDereferenced, actualDereferenced);
     }
 
     TEST(FCollectionTests, OnConstruction_ReturnsAllItemGiven_WhenGivenVectorOfItems)
@@ -54,7 +54,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         std::vector<int> actual = ToVector<int>(collection);
         std::string errors = "";
         bool areEqual = Equals(given, actual, errors);
-        EXPECT_TRUE(areEqual) << errors;
+        ASSERT_TRUE(areEqual) << errors;
     }
 
     TEST(FCollectionTests, OnConstruction_ReturnsAllPointers_WhenGivenVectorOfPointers)
@@ -67,7 +67,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         std::string errors = "";
         bool areEqual = Equals(given, actual, errors);
         CleanUp(given);
-        EXPECT_TRUE(areEqual) << errors;
+        ASSERT_TRUE(areEqual) << errors;
     }
 #pragma endregion
 
@@ -83,7 +83,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         std::vector<int> actualV = ToVector<int>(actual);
         std::string errors = "";
         bool areEqual = Equals(expected, actualV, errors);
-        EXPECT_TRUE(areEqual) << errors;
+        ASSERT_TRUE(areEqual) << errors;
     }
 
     TEST(FCollectionTests, Where_ReturnsEmptyCollection_WhenNothingMatches)
@@ -94,7 +94,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         FCollection<int> actual = collection.Where([](const int& x) { return x > 100; });
 
-        EXPECT_EQ(expected, CountCollection(actual));
+        ASSERT_EQ(expected, CountCollection(actual));
     }
 
 // Pointer method is different code (signature)
@@ -114,7 +114,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         std::string errors = "";
         bool areEqual = Equals(expected, actualV, errors);
         CleanUp(collection);
-        EXPECT_TRUE(areEqual) << errors;
+        ASSERT_TRUE(areEqual) << errors;
     }
 
     TEST(FCollectionTests, Where_ReturnsEmptyCollectionFromPointer_WhenNothingMatches)
@@ -129,7 +129,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         int count = CountCollection(actual);
         CleanUp(collection);
-        EXPECT_EQ(expected, count);
+        ASSERT_EQ(expected, count);
     }
 #pragma endregion
 #pragma endregion
@@ -145,8 +145,8 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
         FCollection<int> actual = 
             collection.Select<int>([](const TestClassContainingSomething& x) { return x.Value; });
 
-        EXPECT_EQ(1, CountCollection(actual));
-        EXPECT_EQ(given, ReturnItemInCollection(actual,0));
+        ASSERT_EQ(1, CountCollection(actual));
+        ASSERT_EQ(given, ReturnItemInCollection(actual,0));
     }
 
 // Pointer method is different code (signature)
@@ -162,8 +162,8 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
             collection.Select<int>([](const TestClassContainingSomething* x) { return x->Value; });
         CleanUp(collection);
 
-        EXPECT_EQ(1, CountCollection(actual));
-        EXPECT_EQ(given, ReturnItemInCollection(actual, 0));
+        ASSERT_EQ(1, CountCollection(actual));
+        ASSERT_EQ(given, ReturnItemInCollection(actual, 0));
     }
 #pragma endregion
 #pragma endregion
@@ -177,7 +177,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         size_t actual = testClass.Count();
 
-        EXPECT_EQ(expected, actual);
+        ASSERT_EQ(expected, actual);
     }
 
     TEST(FCollectionTests, Count_ReturnsOne_WhenConstructingACollectionWithOneElement)
@@ -187,7 +187,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         size_t actual = testClass.Count();
 
-        EXPECT_EQ(expected, actual);
+        ASSERT_EQ(expected, actual);
     }
 
     TEST(FCollectionTests, Count_ReturnsFour_WhenConstructingACollectionWithManyElements)
@@ -198,7 +198,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         size_t actual = testClass.Count();
 
-        EXPECT_EQ(expected, actual);
+        ASSERT_EQ(expected, actual);
     }
 #pragma endregion
 
@@ -209,7 +209,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         bool actual = testClass.Any();
 
-        EXPECT_FALSE(actual);
+        ASSERT_FALSE(actual);
     }
 
     TEST(FCollectionTests, Any_ReturnsTrue_WhenConstructedWithEntries)
@@ -218,7 +218,7 @@ namespace StandardCLibraryTests_Collection_Organised_CollectionTests
 
         bool actual = testClass.Any();
 
-        EXPECT_TRUE(actual);
+        ASSERT_TRUE(actual);
     }
 #pragma endregion
 }

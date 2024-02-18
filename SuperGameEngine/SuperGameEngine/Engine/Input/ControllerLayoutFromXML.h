@@ -18,6 +18,7 @@ namespace SuperGameEngine
         const std::string MainTagName = "ControllerLayout";
         const std::string MetaTagName = "Metadata";
         const std::string ButtonTagName = "SDLToUniversalButtons";
+        const std::string ButtonTagSingularName = "SDLToUniversalButton";
         const std::string AxisToButtonTagName = "AxisToButtons";
 
         /// <summary>
@@ -30,14 +31,17 @@ namespace SuperGameEngine
         ControllerLayout* CreateFromXML(FString xml, FString& error);
 
     private:
+        
         /// <summary>
         /// Tries to parse the document into XML.
         /// You need to clean up the Document pointer from this!
         /// </summary>
-        /// <param name="xml">XML form of Controller Layout.</param>
-        /// <param name="document">If parsed this is the parsed document out.</param>
-        /// <returns>True means did parse.</returns>
-        bool TryParseXMLDocument(FString& xml, XMLDocument** document);
+        /// <param name="xml">Data as XML. </param>
+        /// <returns>
+        /// Document pointer if parsed or nullptr if not parsed.
+        /// YOU NEED TO CLEAN UP THE DATA FOR THIS POINTER.
+        /// </returns>
+        XMLDocument* TryParseXMLDocument(FString& xml);
 
         /// <summary>
         /// Extracts the child nodes
@@ -49,7 +53,7 @@ namespace SuperGameEngine
             XMLNode** sdlToUniversalButtons,
             XMLNode** axisToButtons,
             XMLNode** sdlHatToDpad,
-            XMLNode** sdlAxisToUniversalAxis);
+            XMLNode** sdlAxisToUniversalAxis) const;
 
         /// <summary>
         /// Extracts data from the meta tag section of the document.
@@ -59,5 +63,9 @@ namespace SuperGameEngine
         /// <param name="error">If you fail to parse data, write an error in here. </param>
         /// <returns>True means data was in the correct format. </returns>
         bool ParseMetaTag(XMLNode* metaNode, ControllerLayout* controllerLayout, FString& error);
+
+        bool ParseSdlToUniversalButtonsTag(XMLNode* metaNode, ControllerLayout* controllerLayout, FString& error);
+
+        bool ParseSdlToUniversalButtonTag(XMLNode* metaNode, ControllerLayout* controllerLayout, FString& error);
     };
 }
