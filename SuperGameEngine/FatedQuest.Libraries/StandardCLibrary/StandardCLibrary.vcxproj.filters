@@ -131,6 +131,9 @@
     <ClInclude Include="Extentions\IntHelpers.hpp">
       <Filter>Project Files\Extentions</Filter>
     </ClInclude>
+    <ClInclude Include="File\Directory.h">
+      <Filter>Project Files\File\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -168,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="Object\FException.cpp">
       <Filter>Project Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="File\Directory.cpp">
+      <Filter>Project Files\File</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

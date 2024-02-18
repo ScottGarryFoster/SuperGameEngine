@@ -5,6 +5,9 @@
 
 namespace StandardCLibrary
 {
+    /// <summary>
+    /// Gives access to Files.
+    /// </summary>
     class File
     {
     public:

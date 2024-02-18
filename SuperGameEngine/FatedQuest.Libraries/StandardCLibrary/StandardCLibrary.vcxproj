@@ -139,6 +139,7 @@
     <ClInclude Include="Events\Observer.h" />
     <ClInclude Include="Events\Subject.h" />
     <ClInclude Include="Extentions\IntHelpers.hpp" />
+    <ClInclude Include="File\Directory.h" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Object\Exceptions\ArgumentNullException.hpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Events\FEvent.cpp" />
     <ClCompile Include="Events\Observer.cpp" />
     <ClCompile Include="Events\Subject.cpp" />
+    <ClCompile Include="File\Directory.cpp" />
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Object\FException.cpp" />
     <ClCompile Include="Object\Object.cpp" />
