@@ -84,6 +84,23 @@ namespace StandardCLibrary
         /// <returns>True if the string is considered to have no significant value. </returns>
         bool IsEmptyOrWhitespace() const;
 
+        /// <summary>
+        /// Splits a string into pieces, by the given delimiter.
+        /// </summary>
+        /// <param name="toSplit">String to split. </param>
+        /// <param name="by">Delimiter to split by. </param>
+        /// <returns>A split string. </returns>
+        /// <remark>This needed to not be a FList or FCollection due to Object using FString. </remark>
+        static std::vector<FString> Split(FString& toSplit, FString by);
+
+        /// <summary>
+        /// Splits a string into pieces, by the given delimiter.
+        /// </summary>
+        /// <param name="toSplit">String to split. </param>
+        /// <param name="by">Delimiter to split by. </param>
+        /// <returns>A split string. </returns>
+        /// <remark>This needed to not be a FList or FCollection due to Object using FString. </remark>
+        static std::vector<std::string> Split(std::string& toSplit, std::string by);
     private:
 
         /// <summary>

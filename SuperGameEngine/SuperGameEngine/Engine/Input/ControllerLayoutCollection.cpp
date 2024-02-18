@@ -1,7 +1,13 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
 #include "../../LibraryIncludes.h"
 
 #include "ControllerLayoutCollection.h"
 #include "ControllerLayoutFromXML.h"
+#include "../../Engine/Basic/FilesAndFolders.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -11,13 +17,14 @@ ControllerLayoutCollection::ControllerLayoutCollection()
     m_controllerLayout = new FList<ControllerLayout*>();
 
     ControllerLayoutFromXML* fromXML = new ControllerLayoutFromXML();
-    FString directory = FString("Resources\\ControllerMappings");
+    FString directory = FString(FilesAndFolders::GetProductsFolder()) + "\\Engine\\Input\\ControllerMappings";
     if (Directory::Exists(directory))
     {
-        FList<FString> paths = Directory::GetFiles(directory);
+        FList<FString> paths = Directory::GetFilepaths(directory);
         for (FString filePath : paths)
         {
             Logger::Info(filePath);
+            
         }
     }
     delete fromXML;

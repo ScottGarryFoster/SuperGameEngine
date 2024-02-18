@@ -71,14 +71,8 @@
     <Filter Include="Project Files\Structural\Components\Examples\API">
       <UniqueIdentifier>{0b943776-f5b8-41c5-9376-42ea5f69d861}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\Engine\Input\Resources">
-      <UniqueIdentifier>{da1c21a8-eb5b-4b66-ac0a-c753c3506a98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Package Files">
       <UniqueIdentifier>{56c5e8d6-cd1c-4b98-9dd0-32ae580d4396}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project Files\Engine\Input\Resources\ControllerMappings">
-      <UniqueIdentifier>{00d4429a-935d-4032-b87f-654f8338015a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +136,9 @@
     <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp">
       <Filter>Project Files\Engine\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Basic\FilesAndFolders.cpp">
+      <Filter>Project Files\Engine\Basic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -158,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="Structural\Scene\SceneLoadPackage.h">
       <Filter>Project Files\Structural\Scene\API</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Basic\GameTime.h">
-      <Filter>Project Files\Engine\Basic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SuperTexture.h">
       <Filter>Project Files\Engine\Graphics\API</Filter>
@@ -237,13 +231,14 @@
     <ClInclude Include="RapidXML.h">
       <Filter>Package Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Basic\FilesAndFolders.h">
+      <Filter>Project Files\Engine\Basic\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\GameTime.h">
+      <Filter>Project Files\Engine\Basic\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="Engine\Input\Resources\ControllerMappings\Xbox360.xml">
-      <Filter>Project Files\Engine\Input\Resources\ControllerMappings</Filter>
-    </Xml>
   </ItemGroup>
 </Project>

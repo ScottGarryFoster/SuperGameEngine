@@ -357,7 +357,7 @@ namespace StandardCLibraryTests_Text
     }
 #pragma endregion
 
-#pragma
+#pragma region IsEmptyOrWhitespace
     TEST(FStringTest, IsEmptyOrWhitespace_ReturnsTrue_WhenFStringConstructedEmpty)
     {
         FString given = FString();
