@@ -124,7 +124,15 @@ bool ControllerLayoutFromXML::ParseMetaTag(
 {
     for (XMLAttribute* attribute = metaNode->first_attribute(); attribute; attribute = attribute->next_attribute())
     {
-        if (FString(attribute->name()).ToLower() == "controller")
+        if (FString(attribute->name()).ToLower() == "name")
+        {
+            FString name = FString(attribute->value());
+            if (!name.IsEmptyOrWhitespace())
+            {
+                controllerLayout->Name = name;
+            }
+        }
+        else if (FString(attribute->name()).ToLower() == "controller")
         {
             Controller foundValue = EController::FromString(attribute->value());
             if (foundValue == Controller::Unknown)

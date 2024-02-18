@@ -15,7 +15,9 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
     GameComponent::Setup(loadPackage, parent);
 
-    FString filePath = FString("E:/Development/SuperGameEngine-SDL/collideCircle.png");
+    //FString filePath = FString("E:/Development/SuperGameEngine-SDL/collideCircle.png");
+    // Test for internally added file into resources.
+    FString filePath = FString("../../A_pressed.png");
     m_superTexture = m_loadPackage->GetContentManager()->GetTexture(filePath);
     if (!m_superTexture)
     {

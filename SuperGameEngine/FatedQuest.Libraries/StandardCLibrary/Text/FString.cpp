@@ -243,6 +243,20 @@ void FString::ConvertToUpper()
     }
 }
 
+bool StandardCLibrary::FString::IsEmptyOrWhitespace() const
+{
+    std::string empty;
+    for (const char& c : m_storage)
+    {
+        if (c != ' ')
+        {
+            empty += c;
+        }
+    }
+
+    return empty.length() == 0;
+}
+
 std::ostream& StandardCLibrary::operator<<(std::ostream& os, const FString& obj)
 {
     return os << obj.AsStdString();

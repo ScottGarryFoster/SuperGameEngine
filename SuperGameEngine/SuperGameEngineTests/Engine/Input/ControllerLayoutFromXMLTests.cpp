@@ -63,6 +63,45 @@ namespace SuperGameEngine_Engine_Input
     }
 
 #pragma region MetaTag Controller
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_SetsName_WhenGivenValidName)
+    {
+        FString expected = "Controller::Xbox360Controller";
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata Name=\"") + expected + "\" />";
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FString controllerType = m_controllerLayout->Name;
+        ASSERT_EQ(expected, controllerType)
+            << "Expected: " << expected
+            << " Actual: " << controllerType
+            << " Errors: " << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotSetName_WhenGivenNameIsWhitespace)
+    {
+        FString givenName = "    ";
+        FString expected;
+        FString given = "<ControllerLayout>";
+        given += FString("<Metadata Name=\"") + givenName + "\" />";
+        given += "</ControllerLayout>";
+        FString errors;
+
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FString controllerType = m_controllerLayout->Name;
+        ASSERT_EQ(expected, controllerType)
+            << "Expected: " << expected
+            << " Actual: " << controllerType
+            << " Errors: " << errors;
+    }
+#pragma endregion
+
+#pragma region MetaTag Controller
 
     TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_SetsController_WhenGivenAValidController)
     {

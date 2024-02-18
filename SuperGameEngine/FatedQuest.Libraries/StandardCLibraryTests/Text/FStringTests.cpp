@@ -357,6 +357,54 @@ namespace StandardCLibraryTests_Text
     }
 #pragma endregion
 
+#pragma
+    TEST(FStringTest, IsEmptyOrWhitespace_ReturnsTrue_WhenFStringConstructedEmpty)
+    {
+        FString given = FString();
+
+        bool actual = given.IsEmptyOrWhitespace();
+
+        ASSERT_TRUE(actual);
+    }
+
+    TEST(FStringTest, IsEmptyOrWhitespace_ReturnsTrue_WhenFStringSetToNothing)
+    {
+        FString given = FString("Something");
+        given = FString("");
+
+        bool actual = given.IsEmptyOrWhitespace();
+
+        ASSERT_TRUE(actual);
+    }
+
+    TEST(FStringTest, IsEmptyOrWhitespace_ReturnsTrue_WhenFStringContainsASingleSpace)
+    {
+        FString given = FString(" ");
+
+        bool actual = given.IsEmptyOrWhitespace();
+
+        ASSERT_TRUE(actual);
+    }
+
+    TEST(FStringTest, IsEmptyOrWhitespace_ReturnsTrue_WhenFStringContainsAManySpace)
+    {
+        FString given = FString("    ");
+
+        bool actual = given.IsEmptyOrWhitespace();
+
+        ASSERT_TRUE(actual);
+    }
+
+    TEST(FStringTest, IsEmptyOrWhitespace_ReturnsFalse_WhenFStringContainsACharacterNotASpace)
+    {
+        FString given = FString("   t   ");
+
+        bool actual = given.IsEmptyOrWhitespace();
+
+        ASSERT_FALSE(actual);
+    }
+#pragma endregion
+
     std::string CutStringToSize(std::string toCut, size_t size)
     {
         std::string cutActual;

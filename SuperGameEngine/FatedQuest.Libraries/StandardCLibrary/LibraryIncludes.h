@@ -5,6 +5,7 @@
 
 #include "Text/FString.h"
 #include "File/File.h"
+#include "File/Directory.h"
 #include "Collection/Organised/FList.hpp";
 #include "Structural/FVector2D.h"
 #include "Structural/FPoint.h"

@@ -1,6 +1,7 @@
 #include "../../LibraryIncludes.h"
 
 #include "ControllerLayoutCollection.h"
+#include "ControllerLayoutFromXML.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -8,9 +9,18 @@ using namespace StandardCLibrary;
 ControllerLayoutCollection::ControllerLayoutCollection()
 {
     m_controllerLayout = new FList<ControllerLayout*>();
-    m_controllerLayout->Add(ReturnXboxPadLayout());
-    m_controllerLayout->Add(ReturnXboxPadLayout(true));
-    m_controllerLayout->Add(ReturnSwitchProLayout());
+
+    ControllerLayoutFromXML* fromXML = new ControllerLayoutFromXML();
+    FString directory = FString("Resources\\ControllerMappings");
+    if (Directory::Exists(directory))
+    {
+        FList<FString> paths = Directory::GetFiles(directory);
+        for (FString filePath : paths)
+        {
+            Logger::Info(filePath);
+        }
+    }
+    delete fromXML;
 }
 
 ControllerLayoutCollection::~ControllerLayoutCollection()

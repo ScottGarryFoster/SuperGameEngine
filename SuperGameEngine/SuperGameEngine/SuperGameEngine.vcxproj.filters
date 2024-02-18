@@ -77,6 +77,9 @@
     <Filter Include="Package Files">
       <UniqueIdentifier>{56c5e8d6-cd1c-4b98-9dd0-32ae580d4396}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Engine\Input\Resources\ControllerMappings">
+      <UniqueIdentifier>{00d4429a-935d-4032-b87f-654f8338015a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -237,5 +240,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Engine\Input\Resources\ControllerMappings\Xbox360.xml">
+      <Filter>Project Files\Engine\Input\Resources\ControllerMappings</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

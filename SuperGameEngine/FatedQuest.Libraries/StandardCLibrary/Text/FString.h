@@ -78,6 +78,12 @@ namespace StandardCLibrary
         /// </summary>
         void ConvertToUpper();
 
+        /// <summary>
+        /// Returns true if the string is considered to have no significant value.
+        /// </summary>
+        /// <returns>True if the string is considered to have no significant value. </returns>
+        bool IsEmptyOrWhitespace() const;
+
     private:
 
         /// <summary>

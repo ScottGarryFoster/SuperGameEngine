@@ -27,7 +27,9 @@ bool Directory::Exists(FString path)
     std::string sPath = path.AsStdString();
     try
     {
-        return FileSystem::exists(sPath) && FileSystem::is_directory(sPath);
+        bool exists = FileSystem::exists(sPath);
+        bool isDirectory = FileSystem::is_directory(sPath);
+        return exists && isDirectory;
     }
     catch (const FileSystem::filesystem_error e)
     {
