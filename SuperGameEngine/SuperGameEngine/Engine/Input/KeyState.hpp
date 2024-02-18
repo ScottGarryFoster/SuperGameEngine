@@ -9,6 +9,11 @@ namespace SuperGameEngine
     enum class KeyState
     {
         /// <summary>
+        /// Only used for error states
+        /// </summary>
+        Unknown = -1,
+
+        /// <summary>
         /// Key is not pressed at all.
         /// Default state.
         /// </summary>
@@ -72,6 +77,46 @@ namespace SuperGameEngine
                 KeyState::Up,
             };
             return returnVector;
+        }
+
+        static std::string ToString(KeyState value)
+        {
+            switch (value)
+            {
+            case KeyState::Unknown: return "Unknown";
+            case KeyState::Unpressed: return "Unpressed";
+            case KeyState::Pressed: return "Pressed";
+            case KeyState::Down: return "Down";
+            case KeyState::Up: return "Up";
+            }
+
+            Logger::Assert(NotImplementedException(), FString("EKeyState"), FString("ToString"),
+                FString("No string value for a Key State requested."));
+            return "Unknown";
+        }
+
+        static KeyState FromString(std::string value, bool checkCase = true)
+        {
+            if (checkCase)
+            {
+                if (FString(value) == "Unknown") return KeyState::Unknown;
+                if (FString(value) == "Unpressed") return KeyState::Unpressed;
+                if (FString(value) == "Pressed") return KeyState::Pressed;
+                if (FString(value) == "Down") return KeyState::Down;
+                if (FString(value) == "Up") return KeyState::Up;
+            }
+            else
+            {
+                if (FString(value).ToLower() == FString("Unknown").ToLower()) return KeyState::Unknown;
+                if (FString(value).ToLower() == FString("Unpressed").ToLower()) return KeyState::Unpressed;
+                if (FString(value).ToLower() == FString("Pressed").ToLower()) return KeyState::Pressed;
+                if (FString(value).ToLower() == FString("Down").ToLower()) return KeyState::Down;
+                if (FString(value).ToLower() == FString("Up").ToLower()) return KeyState::Up;
+            }
+
+            Logger::Assert(NotImplementedException(), FString("EKeyState"), FString("FromString"),
+                FString("No Controller value for a Key State requested."));
+            return KeyState::Unknown;
         }
     };
 }
