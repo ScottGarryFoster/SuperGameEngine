@@ -47,6 +47,16 @@ ControllerLayout* ControllerLayoutFromXML::CreateFromXML(FString xml, FString& e
             {
                 ParseAxisToButtonsTag(axisToButtons, finalLayout, error);
             }
+
+            if (sdlHatToDpad != nullptr)
+            {
+                ParseSDLHatToDpadTag(sdlHatToDpad, finalLayout, error);
+            }
+
+            if (sdlAxisToUniversalAxis != nullptr)
+            {
+                ParseSDLToUniversalAxesTag(sdlAxisToUniversalAxis, finalLayout, error);
+            }
         }
 
     }
@@ -81,6 +91,14 @@ void ControllerLayoutFromXML::ExtractTopLevelNodes(
         else if (*axisToButtons == nullptr && FString(childNode->name()) == AxisToButtonTagName)
         {
             *axisToButtons = childNode;
+        }
+        else if (*axisToButtons == nullptr && FString(childNode->name()) == HatSDLMappingName)
+        {
+            *sdlHatToDpad = childNode;
+        }
+        else if (*axisToButtons == nullptr && FString(childNode->name()) == SDLToUniversalAxesName)
+        {
+            *sdlAxisToUniversalAxis = childNode;
         }
     }
 }
@@ -167,7 +185,6 @@ bool ControllerLayoutFromXML::ParseSdlToUniversalButtonsTag(
 bool ControllerLayoutFromXML::ParseSdlToUniversalButtonTag(
         XMLNode* node, ControllerLayout* controllerLayout, FString& error)
 {
-    // Let's create a pair here
     std::pair<int, UniversalControllerButton> extractedData;
     extractedData.first = -1;
     extractedData.second = UniversalControllerButton::Unknown;
@@ -236,6 +253,7 @@ bool ControllerLayoutFromXML::ParseAxisToButtonsTag(
 
         ParseAxisToButtonTag(childNode, controllerLayout, error);
     }
+
     return true;
 }
 
@@ -319,16 +337,129 @@ bool ControllerLayoutFromXML::ParseAxisToButtonTag(
     }
     else if (!didParseComparisonValue)
     {
-        // As any int value is technically 'valid' we need explictly keep track of successful parses
-        // for this value.
+        // As any int value is technically 'valid' we need explictly keep 
+        // track of successful parses for this value.
         isValid = false;
     }
 
-    if (isValid)
+    if (isValid == true && !controllerLayout->AxisToButton.Any(
+        [extractedData](const ControllerAxisMappedToButton& x)
+        {
+            return x.Axis == extractedData.Axis || x.Button == extractedData.Button;
+        }))
     {
         controllerLayout->AxisToButton.Add(extractedData);
     }
 
 
     return false;
+}
+
+bool ControllerLayoutFromXML::ParseSDLHatToDpadTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    int extractedValue = -1;
+    bool didExtract = false;
+    for (XMLAttribute* attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
+    {
+        FString name = FString(attribute->name()).ToLower();
+        if (name == "sdltobuttonvalue")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                extractedValue = result;
+                didExtract = true;
+                //extractedData.Axis = result;
+            }
+            else
+            {
+                error += FString("Could not parse axis value: ")
+                    + attribute->value() + ". ";
+            }
+        }
+    }
+
+    if (didExtract && extractedValue > -1)
+    {
+        controllerLayout->HatMappedToDpad = extractedValue;
+    }
+
+    return didExtract;
+}
+
+bool ControllerLayoutFromXML::ParseSDLToUniversalAxesTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    for (XMLNode* childNode = node->first_node(); childNode; childNode = childNode->next_sibling())
+    {
+        if (FString(childNode->name()) != SDLToUniversalAxesSingularName)
+        {
+            continue;
+        }
+
+        ParseSDLToUniversalAxisTag(childNode, controllerLayout, error);
+    }
+    return true;
+}
+
+bool ControllerLayoutFromXML::ParseSDLToUniversalAxisTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    std::pair<int, UniversalControllerAxis> extractedValue;
+    extractedValue.first = -1;
+    extractedValue.second = UniversalControllerAxis::Unknown;
+    for (XMLAttribute* attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
+    {
+        FString name = FString(attribute->name()).ToLower();
+        if (name == "sdlaxis")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                extractedValue.first = result;
+            }
+            else
+            {
+                error += FString("Could not parse axis value: ")
+                    + attribute->value() + ". ";
+            }
+        }
+        else if (name == "universalcontrolleraxis")
+        {
+            UniversalControllerAxis foundValue = EUniversalControllerAxis::FromString(attribute->value());
+            if (foundValue == UniversalControllerAxis::Unknown)
+            {
+                error += FString("Could not parse universal controller axis value: ")
+                    + attribute->value() + ". ";
+            }
+            else
+            {
+                extractedValue.second = foundValue;
+            }
+        }
+    }
+
+    bool isValid = true;
+    if (extractedValue.first <= -1)
+    {
+        isValid = false;
+    }
+    else if (extractedValue.second == UniversalControllerAxis::Unknown)
+    {
+        isValid = false;
+    }
+
+    if (isValid == true && !controllerLayout->SDLAxisToUniversalAxis.Any(
+        [extractedValue](const std::pair<int, UniversalControllerAxis>& x)
+        {
+            return x.first == extractedValue.first || x.second == extractedValue.second;
+        }))
+    {
+        controllerLayout->SDLAxisToUniversalAxis.Add(extractedValue);
+    }
+
+    return isValid;
 }

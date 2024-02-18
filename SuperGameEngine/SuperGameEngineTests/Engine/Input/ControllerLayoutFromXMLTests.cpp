@@ -515,8 +515,8 @@ namespace SuperGameEngine_Engine_Input
         ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
         int givenCompareValue = 42;
 
-        int givenSecondAxis = 0;
-        UniversalControllerButton givenSecondButton = UniversalControllerButton::DPadDown;
+        int givenSecondAxis = 1;
+        UniversalControllerButton givenSecondButton = UniversalControllerButton::DPadLeft;
         ControllerComparisonType givenSecondComparison = ControllerComparisonType::Greater;
         int givenSecondCompareValue = 42;
 
@@ -685,5 +685,368 @@ namespace SuperGameEngine_Engine_Input
         ASSERT_EQ(0, actual.Count());
     }
 
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_OnlyAddsUniqueAxisToButton_WhenGivenDuplicateAxis)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerButton givenButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
+        int givenCompareValue = 42;
+
+        int givenSecondAxis = 0;
+        UniversalControllerButton givenSecondButton = UniversalControllerButton::DPadLeft;
+        ControllerComparisonType givenSecondComparison = ControllerComparisonType::Greater;
+        int givenSecondCompareValue = 42;
+
+        ASSERT_EQ(givenAxis, givenSecondAxis);
+        ASSERT_NE(givenButton, givenSecondButton);
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<AxisToButtons>\n");
+
+        given += FString("<AxisToButton Axis=\"") + givenAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + "\"";
+        given += FString(" />\n");
+
+        given += FString("<AxisToButton Axis=\"") + givenSecondAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenSecondButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenSecondComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenSecondCompareValue + "\"";
+        given += FString(" />\n");
+
+        given += FString("</AxisToButtons>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(1, actual.Count());
+
+        int axis = actual[0].Axis;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerButton button = actual[0].Button;
+        ASSERT_EQ(givenButton, button) << errors;
+
+        ControllerComparisonType comparison = actual[0].Evaluation.Comparison;
+        ASSERT_EQ(givenComparison, comparison) << errors;
+
+        int comparisonValue = actual[0].Evaluation.Value;
+        ASSERT_EQ(givenCompareValue, comparisonValue) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_OnlyAddsUniqueAxisToButton_WhenGivenDuplicateButton)
+    {
+        // Arrange
+        int givenAxis = 1;
+        UniversalControllerButton givenButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
+        int givenCompareValue = 42;
+
+        int givenSecondAxis = 0;
+        UniversalControllerButton givenSecondButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenSecondComparison = ControllerComparisonType::Greater;
+        int givenSecondCompareValue = 42;
+
+        ASSERT_NE(givenAxis, givenSecondAxis);
+        ASSERT_EQ(givenButton, givenSecondButton);
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<AxisToButtons>\n");
+
+        given += FString("<AxisToButton Axis=\"") + givenAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + "\"";
+        given += FString(" />\n");
+
+        given += FString("<AxisToButton Axis=\"") + givenSecondAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenSecondButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenSecondComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenSecondCompareValue + "\"";
+        given += FString(" />\n");
+
+        given += FString("</AxisToButtons>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(1, actual.Count());
+
+        int axis = actual[0].Axis;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerButton button = actual[0].Button;
+        ASSERT_EQ(givenButton, button) << errors;
+
+        ControllerComparisonType comparison = actual[0].Evaluation.Comparison;
+        ASSERT_EQ(givenComparison, comparison) << errors;
+
+        int comparisonValue = actual[0].Evaluation.Value;
+        ASSERT_EQ(givenCompareValue, comparisonValue) << errors;
+    }
 #pragma endregion
+
+#pragma region HatSDLMapping 
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_SetsHatSDLMapping_WhenGivenValidValue)
+    {
+        // Arrange
+        int givenValue = 0;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<HatSDLMapping SDLToButtonValue=\"") + givenValue;
+        given += FString("\" />\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+
+        int actual = m_controllerLayout->HatMappedToDpad;
+        ASSERT_EQ(givenValue, actual);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotSetMapping_WhenGivenInvalidValue)
+    {
+        // Arrange
+        int givenValue = -45;
+        int expectedValue = -1;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<HatSDLMapping SDLToButtonValue=\"") + givenValue;
+        given += FString("\" />\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+
+        int actual = m_controllerLayout->HatMappedToDpad;
+        ASSERT_EQ(expectedValue, actual);
+    }
+#pragma endregion
+
+#pragma region SDLToUniversalAxes
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_AddsSDLToUniversalAxes_WhenGivenValidValue)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, actual.Count()) << errors;
+
+        int axis = actual[0].first;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerAxis universalAxis = actual[0].second;
+        ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_AddsMultipleSDLToUniversalAxes_WhenGivenMultipleValidEntries)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        int givenSecondAxis = 1;
+        UniversalControllerAxis givenSecondUniversalAxis = UniversalControllerAxis::LeftStickY;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenSecondAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenSecondUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(2, actual.Count()) << errors;
+
+        int axis = actual[0].first;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerAxis universalAxis = actual[0].second;
+        ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
+
+        axis = actual[1].first;
+        ASSERT_EQ(givenSecondAxis, axis) << errors;
+
+        universalAxis = actual[1].second;
+        ASSERT_EQ(givenSecondUniversalAxis, universalAxis) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddSDLtoUniversalAxisEntry_WhenGivenInvalidAxis)
+    {
+        // Arrange
+        int givenAxis = -1;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, actual.Count()) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddEntry_WhenGivenInvalidController)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::Unknown;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, actual.Count()) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddDuplicates_WhenGivenAnEntryMatchingSDLAxis)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        int givenSecondAxis = 0;
+        UniversalControllerAxis givenSecondUniversalAxis = UniversalControllerAxis::LeftStickY;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenSecondAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenSecondUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, actual.Count()) << errors;
+
+        int axis = actual[0].first;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerAxis universalAxis = actual[0].second;
+        ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddDuplicates_WhenGivenAnEntryMatchingUniversalAxis)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        int givenSecondAxis = 1;
+        UniversalControllerAxis givenSecondUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenSecondAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenSecondUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, actual.Count()) << errors;
+
+        int axis = actual[0].first;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerAxis universalAxis = actual[0].second;
+        ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
+    }
+#pragma endregion
+
 }

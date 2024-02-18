@@ -77,5 +77,36 @@ namespace SuperGameEngine
                 FString("No string value for a UniversalControllerAxis requested."));
             return "Unknown";
         }
+
+        static UniversalControllerAxis FromString(std::string value, bool checkCase = true)
+        {
+            if (checkCase)
+            {
+                FString stringValue = value;
+                if (stringValue == "Unknown") return UniversalControllerAxis::Unknown;
+                if (stringValue == "LeftStickX") return UniversalControllerAxis::LeftStickX;
+                if (stringValue == "LeftStickY") return UniversalControllerAxis::LeftStickY;
+                if (stringValue == "RightStickX") return UniversalControllerAxis::RightStickX;
+                if (stringValue == "RightStickY") return UniversalControllerAxis::RightStickY;
+                if (stringValue == "LeftTrigger") return UniversalControllerAxis::LeftTrigger;
+                if (stringValue == "RightTrigger") return UniversalControllerAxis::RightTrigger;
+            }
+            else
+            {
+                FString stringValueLower = value;
+                stringValueLower.ConvertToLower();
+                if (stringValueLower == FString("Unknown").ToLower()) return UniversalControllerAxis::Unknown;
+                if (stringValueLower == FString("LeftStickX").ToLower()) return UniversalControllerAxis::LeftStickX;
+                if (stringValueLower == FString("LeftStickY").ToLower()) return UniversalControllerAxis::LeftStickY;
+                if (stringValueLower == FString("RightStickX").ToLower()) return UniversalControllerAxis::RightStickX;
+                if (stringValueLower == FString("RightStickY").ToLower()) return UniversalControllerAxis::RightStickY;
+                if (stringValueLower == FString("LeftTrigger").ToLower()) return UniversalControllerAxis::LeftTrigger;
+                if (stringValueLower == FString("RightTrigger").ToLower()) return UniversalControllerAxis::RightTrigger;
+            }
+
+            Logger::Exception(NotImplementedException(), FString("EUniversalControllerAxis"), FString("FromString"),
+                FString("No Universal Controller Axis value for a button requested: ") + value);
+            return UniversalControllerAxis::Unknown;
+        }
     };
 }
