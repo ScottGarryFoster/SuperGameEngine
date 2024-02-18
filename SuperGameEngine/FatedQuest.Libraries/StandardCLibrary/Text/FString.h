@@ -32,7 +32,6 @@ namespace StandardCLibrary
         FString(const std::string str1, const std::string str2, const std::string str3, const std::string str4, const std::string str5,
             const std::string str6, const std::string str7, const std::string str8, const std::string str9, const std::string str10);
 
-
         FString operator+(const std::string& str) const;
         FString operator+(const FString& str) const;
         FString operator+(const int str) const;
@@ -41,10 +40,21 @@ namespace StandardCLibrary
         FString operator+(const double str) const;
         FString operator+(const float str) const;
 
+        FString& operator+=(const std::string& str);
+        FString& operator+=(const FString& str);
+        FString& operator+=(const int str);
+        FString& operator+=(const long int str);
+        FString& operator+=(const unsigned long int str);
+        FString& operator+=(const double str);
+        FString& operator+=(const float str);
+
         bool operator==(const std::string& other) const;
         bool operator==(const FString& other) const;
 
-        friend std::ostream& operator<<(std::ostream& os, const FString& obj);
+        inline friend std::ostream& operator<<(std::ostream& os, const FString& obj)
+        {
+            return os << obj.AsStdString();
+        }
 
         const std::string AsStdString() const;
         const char* AsCharArr() const;
@@ -71,6 +81,29 @@ namespace StandardCLibrary
         /// </summary>
         void ConvertToUpper();
 
+        /// <summary>
+        /// Returns true if the string is considered to have no significant value.
+        /// </summary>
+        /// <returns>True if the string is considered to have no significant value. </returns>
+        bool IsEmptyOrWhitespace() const;
+
+        /// <summary>
+        /// Splits a string into pieces, by the given delimiter.
+        /// </summary>
+        /// <param name="toSplit">String to split. </param>
+        /// <param name="by">Delimiter to split by. </param>
+        /// <returns>A split string. </returns>
+        /// <remark>This needed to not be a FList or FCollection due to Object using FString. </remark>
+        static std::vector<FString> Split(FString& toSplit, FString by);
+
+        /// <summary>
+        /// Splits a string into pieces, by the given delimiter.
+        /// </summary>
+        /// <param name="toSplit">String to split. </param>
+        /// <param name="by">Delimiter to split by. </param>
+        /// <returns>A split string. </returns>
+        /// <remark>This needed to not be a FList or FCollection due to Object using FString. </remark>
+        static std::vector<std::string> Split(std::string& toSplit, std::string by);
     private:
 
         /// <summary>

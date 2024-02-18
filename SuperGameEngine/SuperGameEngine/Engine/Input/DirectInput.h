@@ -2,6 +2,7 @@
 #include "../../LibraryIncludes.h"
 #include "DirectKeyInput.h"
 #include <SDL.h>
+#include "DirectControllerInput.h"
 
 namespace SuperGameEngine
 {
@@ -28,11 +29,22 @@ namespace SuperGameEngine
         /// <returns>Instance of DirectKeyInput. </returns>
         const DirectKeyInput* GetDirectKeyInput() const;
 
+        /// <summary>
+        /// Access to input on a XInput controller.
+        /// </summary>
+        /// <returns>Instance of DirectXInput. </returns>
+        const DirectControllerInput* GetDirectXInput() const;
+
     private:
         /// <summary>
         /// Gives access to the current state of Key Inputs.
         /// </summary>
         DirectKeyInput* m_directKeyInput;
+
+        /// <summary>
+        /// Access to input on a XInput controller.
+        /// </summary>
+        DirectControllerInput* m_directXInput;
     };
 }
 

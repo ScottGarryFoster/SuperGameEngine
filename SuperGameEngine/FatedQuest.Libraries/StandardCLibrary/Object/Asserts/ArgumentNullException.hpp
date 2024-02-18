@@ -1,32 +1,32 @@
 #pragma once
 
-#include "../FException.h"
+#include "../FAsserts.h"
 
 namespace StandardCLibrary
 {
     /// <summary>
-    /// A reference is null and it should not be.
+    /// The given arguments are null or nullptr.
     /// </summary>
-    class SystemNullReference : public FException
+    class ArgumentNullException : public FAsserts
     {
     public:
         /// <summary>
-        /// Gets a unique key for this exception.
+        /// Gets a unique key for this assert.
         /// Ensure nothing else uses it so we may filter exceptions.
         /// </summary>
         /// <returns>A unique text key. </returns>
         FString GetKey() final
         {
-            return FString("SystemNullReference");
+            return FString("ArgumentNullException");
         };
 
         /// <summary>
-        /// The name of the exception as displayed to the user.
+        /// The name of the assert as displayed to the user.
         /// </summary>
         /// <returns>A display name. </returns>
         FString GetDisplayKey() final
         {
-            return FString("SystemNullReference");
+            return FString("ArgumentNullException");
         };
     };
 }

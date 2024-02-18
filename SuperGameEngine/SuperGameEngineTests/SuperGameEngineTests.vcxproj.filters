@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Engine\Input\ControllerLayoutFromXMLTests.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Project Files">
+      <UniqueIdentifier>{82f34a53-2f09-4a16-a9d8-bf35a280f565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Package Files">
+      <UniqueIdentifier>{00f4f50b-624e-494a-81a9-337dbda439c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine">
+      <UniqueIdentifier>{de3c89fd-2d34-4c64-b28c-156de61e7a05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Input">
+      <UniqueIdentifier>{2d2aa0b9-46e4-4e1e-bee5-81a5784d9b0e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LibraryIncludes.h">
+      <Filter>Package Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Package Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

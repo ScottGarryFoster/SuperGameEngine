@@ -24,7 +24,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage)
 {
     if (!sceneLoadPackage)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("sceneLoadPackage is null"));
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("sceneLoadPackage is null"));
         return;
     }
     m_sceneLoadPackage = sceneLoadPackage;
