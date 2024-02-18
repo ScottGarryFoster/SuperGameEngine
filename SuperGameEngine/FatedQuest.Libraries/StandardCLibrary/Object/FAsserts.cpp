@@ -1,13 +1,13 @@
-#include "FException.h"
+#include "FAsserts.h"
 using namespace StandardCLibrary;
 
-FString FException::GetKey()
+FString FAsserts::GetKey()
 {
     return FString("");
 }
 
 
-FString FException::GetDisplayKey()
+FString FAsserts::GetDisplayKey()
 {
     return FString("");
 }
