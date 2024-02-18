@@ -92,11 +92,11 @@ void ControllerLayoutFromXML::ExtractTopLevelNodes(
         {
             *axisToButtons = childNode;
         }
-        else if (*axisToButtons == nullptr && FString(childNode->name()) == HatSDLMappingName)
+        else if (*sdlHatToDpad == nullptr && FString(childNode->name()) == HatSDLMappingName)
         {
             *sdlHatToDpad = childNode;
         }
-        else if (*axisToButtons == nullptr && FString(childNode->name()) == SDLToUniversalAxesName)
+        else if (*sdlAxisToUniversalAxis == nullptr && FString(childNode->name()) == SDLToUniversalAxesName)
         {
             *sdlAxisToUniversalAxis = childNode;
         }

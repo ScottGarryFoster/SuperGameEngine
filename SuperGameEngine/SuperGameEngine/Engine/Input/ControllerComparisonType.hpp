@@ -59,7 +59,7 @@ namespace SuperGameEngine
                 case ControllerComparisonType::Equals: return "Equals";
             }
 
-            Logger::Exception(NotImplementedException(), FString("EControllerComparisonType"), FString("ToString"),
+            Logger::Assert(NotImplementedException(), FString("EControllerComparisonType"), FString("ToString"),
                 FString("No string value for a ControllerComparisonType requested."));
             return "Unknown";
         }
@@ -82,7 +82,7 @@ namespace SuperGameEngine
                 if (stringValueLower == FString("Equals").ToLower()) return ControllerComparisonType::Equals;
             }
 
-            Logger::Exception(NotImplementedException(), FString("EControllerComparisonType"), FString("FromString"),
+            Logger::Assert(NotImplementedException(), FString("EControllerComparisonType"), FString("FromString"),
                 FString("No enum value for a ControllerComparisonType requested: ") + value);
             return ControllerComparisonType::Unknown;
         }

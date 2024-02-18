@@ -21,7 +21,7 @@ void GameObject::Setup(SceneLoadPackage* loadPackage)
 {
     if (!loadPackage)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
         return;
     }
     m_loadPackage = loadPackage;
@@ -78,7 +78,7 @@ void GameObject::AddActualComponent(GameComponent* newComponent)
 {
     if (m_loadPackage == nullptr)
     {
-        Logger::Exception(SystemNullReference(), GetTypeName(), FString("AddActualComponent"),
+        Logger::Assert(SystemNullReference(), GetTypeName(), FString("AddActualComponent"),
             FString("Cannot add Component because do not have scene load package."));
         return;
     }

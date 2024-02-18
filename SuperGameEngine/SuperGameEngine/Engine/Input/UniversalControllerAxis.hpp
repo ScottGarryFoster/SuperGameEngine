@@ -73,7 +73,7 @@ namespace SuperGameEngine
                 case UniversalControllerAxis::RightTrigger: return "RightTrigger";
             }
 
-            Logger::Exception(NotImplementedException(), FString("EUniversalControllerAxis"), FString("ToString"),
+            Logger::Assert(NotImplementedException(), FString("EUniversalControllerAxis"), FString("ToString"),
                 FString("No string value for a UniversalControllerAxis requested."));
             return "Unknown";
         }
@@ -104,7 +104,7 @@ namespace SuperGameEngine
                 if (stringValueLower == FString("RightTrigger").ToLower()) return UniversalControllerAxis::RightTrigger;
             }
 
-            Logger::Exception(NotImplementedException(), FString("EUniversalControllerAxis"), FString("FromString"),
+            Logger::Assert(NotImplementedException(), FString("EUniversalControllerAxis"), FString("FromString"),
                 FString("No Universal Controller Axis value for a button requested: ") + value);
             return UniversalControllerAxis::Unknown;
         }

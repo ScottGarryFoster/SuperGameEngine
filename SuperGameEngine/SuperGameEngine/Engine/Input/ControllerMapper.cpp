@@ -7,7 +7,7 @@ ControllerMapper::ControllerMapper(ControllerLayoutCollection* controllerCollect
 {
     if (!controllerCollection)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Construction"),
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Construction"),
             FString("controllerCollection is nullptr. Ensure this is given."));
     }
 
@@ -34,7 +34,7 @@ UniversalControllerButton ControllerMapper::GetUniversalControllerButtonFromSDLB
     }
     else
     {
-        Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetUniversalControllerButtonFromSDLButton"),
+        Logger::Assert(NotImplementedException(), GetTypeName(), FString("GetUniversalControllerButtonFromSDLButton"),
             FString("Controller mapping not found for ") + EController::ToString(controller));
     }
 
@@ -51,7 +51,7 @@ int ControllerMapper::GetSDLButtonsOnController(Controller controller) const
         return found[0]->Buttons;
     }
 
-    Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetSDLButtonsOnController"),
+    Logger::Assert(NotImplementedException(), GetTypeName(), FString("GetSDLButtonsOnController"),
         FString("Controller requested which was not valid. Requested: ") + EController::ToString(controller));
     return -1;
 }
@@ -87,7 +87,7 @@ int ControllerMapper::GetSDLAxisOnController(Controller controller) const
         return found[0]->Axis;
     }
 
-    Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetSDLAxisOnController"),
+    Logger::Assert(NotImplementedException(), GetTypeName(), FString("GetSDLAxisOnController"),
         FString("Controller requested which was not valid. Requested: ") + EController::ToString(controller));
     return -1;
 }
@@ -120,7 +120,7 @@ int ControllerMapper::GetSDLHatMappedToDPad(Controller controller) const
         return found[0]->HatMappedToDpad;
     }
 
-    Logger::Exception(NotImplementedException(), GetTypeName(), FString("GetSDLAxisOnController"),
+    Logger::Assert(NotImplementedException(), GetTypeName(), FString("GetSDLAxisOnController"),
         FString("Controller requested which was not valid. Requested: ") + EController::ToString(controller));
     return -1;
 }

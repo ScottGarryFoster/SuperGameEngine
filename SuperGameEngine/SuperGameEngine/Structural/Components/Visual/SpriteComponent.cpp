@@ -21,7 +21,7 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     m_superTexture = m_loadPackage->GetContentManager()->GetTexture(filePath);
     if (!m_superTexture)
     {
-        Logger::Exception(SystemNullReference(), GetTypeName(), FString("Setup"), FString("m_superTexture is null"));
+        Logger::Assert(SystemNullReference(), GetTypeName(), FString("Setup"), FString("m_superTexture is null"));
         return;
     }
 }

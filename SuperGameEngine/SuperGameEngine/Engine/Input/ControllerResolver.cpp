@@ -6,7 +6,7 @@ ControllerResolver::ControllerResolver(ControllerLayoutCollection* controllerCol
 {
     if (!controllerCollection)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Construction"),
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Construction"),
             FString("controllerCollection is nullptr. Ensure this is given."));
     }
 
@@ -17,7 +17,7 @@ Controller ControllerResolver::GetControllerFromJoyStick(SDL_Joystick* joystick)
 {
     if (!m_controllerCollection)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Construction"),
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Construction"),
             FString("controllerCollection is nullptr. Ensure this is given."));
         return Controller::Unknown;
     }

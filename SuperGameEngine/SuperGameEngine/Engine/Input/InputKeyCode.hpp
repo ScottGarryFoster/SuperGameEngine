@@ -702,7 +702,7 @@ namespace SuperGameEngine
             case InputKeyCode::Power: return SDLK_POWER;
             }
 
-            Logger::Exception(ArgumentNullException(), FString("EInputKeyCode"), FString("ToSDLKeycode"), FString("Fell out of enum. Type: ") + (int)code);
+            Logger::Assert(ArgumentNullException(), FString("EInputKeyCode"), FString("ToSDLKeycode"), FString("Fell out of enum. Type: ") + (int)code);
             return SDLK_BACKSPACE;
         };
     };

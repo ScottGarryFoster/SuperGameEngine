@@ -27,6 +27,12 @@ namespace SuperGameEngine
         XboxSeriesController,
 
         NintendoSwitchProController,
+
+        /// <summary>
+        /// This is an Official N64 Controller from the 
+        /// Nintendo Online Switch Subscription.
+        /// </summary>
+        NintendoN64Controller,
     };
 
     /// <summary>
@@ -36,7 +42,7 @@ namespace SuperGameEngine
     {
     public:
         static Controller Min() { return Controller::Xbox360Controller; }
-        static Controller Max() { return Controller::NintendoSwitchProController; }
+        static Controller Max() { return Controller::NintendoN64Controller; }
         static Controller* ToArray()
         {
             static Controller arr[] =
@@ -44,6 +50,7 @@ namespace SuperGameEngine
                 Controller::Xbox360Controller,
                 Controller::XboxSeriesController,
                 Controller::NintendoSwitchProController,
+                Controller::NintendoN64Controller,
             };
             return arr;
         }
@@ -55,6 +62,7 @@ namespace SuperGameEngine
                 Controller::Xbox360Controller,
                 Controller::XboxSeriesController,
                 Controller::NintendoSwitchProController,
+                Controller::NintendoN64Controller,
             };
             return returnVector;
         }
@@ -67,9 +75,10 @@ namespace SuperGameEngine
                 case Controller::Xbox360Controller: return "Xbox360Controller";
                 case Controller::XboxSeriesController: return "XboxSeriesController";
                 case Controller::NintendoSwitchProController: return "NintendoSwitchProController";
+                case Controller::NintendoN64Controller: return "NintendoN64Controller";
             }
 
-            Logger::Exception(NotImplementedException(), FString("EController"), FString("ToString"), 
+            Logger::Assert(NotImplementedException(), FString("EController"), FString("ToString"), 
                 FString("No string value for a controller requested."));
             return "Unknown";
         }
@@ -82,6 +91,7 @@ namespace SuperGameEngine
                 if (FString(value) == "Xbox360Controller") return Controller::Xbox360Controller;
                 if (FString(value) == "XboxSeriesController") return Controller::XboxSeriesController;
                 if (FString(value) == "NintendoSwitchProController") return Controller::NintendoSwitchProController;
+                if (FString(value) == "NintendoN64Controller") return Controller::NintendoN64Controller;
             }
             else
             {
@@ -89,9 +99,10 @@ namespace SuperGameEngine
                 if (FString(value).ToLower() == FString("Xbox360Controller").ToLower()) return Controller::Xbox360Controller;
                 if (FString(value).ToLower() == FString("XboxSeriesController").ToLower()) return Controller::XboxSeriesController;
                 if (FString(value).ToLower() == FString("NintendoSwitchProController").ToLower()) return Controller::NintendoSwitchProController;
+                if (FString(value).ToLower() == FString("NintendoN64Controller").ToLower()) return Controller::NintendoN64Controller;
             }
 
-            Logger::Exception(NotImplementedException(), FString("EController"), FString("FromString"), 
+            Logger::Assert(NotImplementedException(), FString("EController"), FString("FromString"), 
                 FString("No Controller value for a controller requested."));
             return Controller::Unknown;
         }

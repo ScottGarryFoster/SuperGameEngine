@@ -134,6 +134,9 @@
     <ClInclude Include="Object\Asserts\SystemNullReference.hpp">
       <Filter>Project Files\Object\Asserts</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Asserts\FileOpenAssert.hpp">
+      <Filter>Project Files\Object\Asserts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">

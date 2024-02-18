@@ -20,7 +20,7 @@ void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
     if (!loadPackage)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
         return;
     }
 

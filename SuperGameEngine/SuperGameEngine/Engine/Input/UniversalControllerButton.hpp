@@ -111,7 +111,7 @@ namespace SuperGameEngine
             case UniversalControllerButton::RightStickClick: return "RightStickClick";
             }
 
-            Logger::Exception(NotImplementedException(), FString("EUniversalControllerButton"), FString("ToString"),
+            Logger::Assert(NotImplementedException(), FString("EUniversalControllerButton"), FString("ToString"),
                 FString("No string value for a UniversalControllerButton requested."));
             return "Unknown";
         }
@@ -162,7 +162,7 @@ namespace SuperGameEngine
                 if (stringValueLower == FString("RightStickClick").ToLower()) return UniversalControllerButton::RightStickClick;
             }
 
-            Logger::Exception(NotImplementedException(), FString("EUniversalControllerButton"), FString("FromString"),
+            Logger::Assert(NotImplementedException(), FString("EUniversalControllerButton"), FString("FromString"),
                 FString("No Universal Controller Button value for a button requested: ") + value);
             return UniversalControllerButton::Unknown;
         }

@@ -22,9 +22,9 @@ std::cout << "ERROR: " << message << std::endl;
 #endif
 }
 
-void Logger::Exception(FAsserts exception, FString classType, FString method, FString message)
+void Logger::Assert(FAsserts exception, FString classType, FString method, FString message)
 {
 #ifdef _DEBUG
-std::cout << "EXCEPTION " << exception.GetDisplayKey() << ": ["  << classType << "::" << method  << "] " << message << std::endl;
+std::cout << "ASSERT " << exception.GetDisplayKey() << ": ["  << classType << "::" << method  << "] " << message << std::endl;
 #endif
 }

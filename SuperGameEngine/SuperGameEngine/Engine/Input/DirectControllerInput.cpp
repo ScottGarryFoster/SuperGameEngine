@@ -59,91 +59,8 @@ void DirectControllerInput::Update()
 
     UpdateKeyState(m_keyStateLastFrame);
 
-    if (ButtonPressed(UniversalControllerButton::FaceButtonDown))
-    {
-        Logger::Info(FString("0 A FaceButtonDown"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::FaceButtonRight))
-    {
-        Logger::Info(FString("1 B FaceButtonRight"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::FaceButtonLeft))
-    {
-        Logger::Info(FString("2 X FaceButtonLeft"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::FaceButtonUp))
-    {
-        Logger::Info(FString("3 Y FaceButtonUp"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::LeftShoulder))
-    {
-        Logger::Info(FString("4 LeftShoulder LeftShoulder"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::RightShoulder))
-    {
-        Logger::Info(FString("5 RightShoulder RightShoulder"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::Select))
-    {
-        Logger::Info(FString("6 Back Select"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::Start))
-    {
-        Logger::Info(FString("7 Start Start"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::LeftStickClick))
-    {
-        Logger::Info(FString("8 LeftThumb LeftStickClick"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::RightStickClick))
-    {
-        Logger::Info(FString("9 RightThumb RightStickClick"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::LeftTrigger))
-    {
-        Logger::Info(FString("Axis 4 : LeftTrigger"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::RightTrigger))
-    {
-        Logger::Info(FString("Axis 5 : RightTrigger"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::DPadDown))
-    {
-        Logger::Info(FString("DPadDown"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::DPadLeft))
-    {
-        Logger::Info(FString("DPadLeft"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::DPadRight))
-    {
-        Logger::Info(FString("DPadRight"));
-    }
-
-    if (ButtonPressed(UniversalControllerButton::DPadUp))
-    {
-        Logger::Info(FString("DPadUp"));
-    }
-
-    
-    //{
-    //    int axis = AxisValue(UniversalControllerAxis::RightTrigger);
-    //    Logger::Info(FString("RightTriggerX: ") + axis);
-    //}
+    // Used for testing.
+    //Tester();
 }
 
 bool DirectControllerInput::ButtonDown(UniversalControllerButton button) const
@@ -264,7 +181,6 @@ void DirectControllerInput::UpdateKeyState(std::unordered_map<UniversalControlle
             }
         }
 
-
         // Do not run for other controllers
         break;
     }
@@ -319,7 +235,99 @@ void DirectControllerInput::UpdateAxisValue()
                 // TODO: [#27] Make a Dictionary / Keypair collection structure
             }
         }
+    }
+}
 
-        
+void DirectControllerInput::Tester()
+{
+    if (ButtonPressed(UniversalControllerButton::FaceButtonRight))
+    {
+        Logger::Info(FString("0 A FaceButtonRight"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::FaceButtonDown))
+    {
+        Logger::Info(FString("1 B FaceButtonDown"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::FaceButtonUp))
+    {
+        Logger::Info(FString("2 X FaceButtonUp"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::FaceButtonLeft))
+    {
+        Logger::Info(FString("3 Y FaceButtonLeft"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::Select))
+    {
+        Logger::Info(FString("4 LeftShoulder Select"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::Start))
+    {
+        Logger::Info(FString("6 RightShoulder Start"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::LeftStickClick))
+    {
+        Logger::Info(FString("7 Back LeftStickClick"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::RightStickClick))
+    {
+        Logger::Info(FString("8 Start RightStickClick"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::LeftShoulder))
+    {
+        Logger::Info(FString("9 LeftThumb LeftShoulder"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::RightShoulder))
+    {
+        Logger::Info(FString("10 RightThumb RightShoulder"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadUp))
+    {
+        Logger::Info(FString("11 : DPadUp"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadDown))
+    {
+        Logger::Info(FString("12 : DPadDown"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadLeft))
+    {
+        Logger::Info(FString("13: DPadLeft"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::DPadRight))
+    {
+        Logger::Info(FString("5: DPadRight"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::LeftTrigger))
+    {
+        Logger::Info(FString("4: LeftTrigger"));
+    }
+
+    if (ButtonPressed(UniversalControllerButton::RightTrigger))
+    {
+        Logger::Info(FString("5: RightTrigger"));
+    }
+
+
+    {
+        int axisX = AxisValue(UniversalControllerAxis::LeftStickX);
+        int axisY = AxisValue(UniversalControllerAxis::LeftStickY);
+        int axisXRight = AxisValue(UniversalControllerAxis::RightStickX);
+        int axisYRight = AxisValue(UniversalControllerAxis::RightStickY);
+        Logger::Info(
+            FString("L(") + axisX + FString(",") + axisY + FString(")") +
+            FString(" R(") + axisXRight + FString(",") + axisYRight + FString(")"));
     }
 }

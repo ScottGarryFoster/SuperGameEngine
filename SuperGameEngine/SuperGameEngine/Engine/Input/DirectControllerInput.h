@@ -21,14 +21,41 @@ namespace SuperGameEngine
         DirectControllerInput();
         virtual ~DirectControllerInput();
 
+        /// <summary>
+        /// Updates button presses.
+        /// </summary>
         virtual void Update();
 
+        /// <summary>
+        /// Determines if button is down.
+        /// Fires every frame the buttons is pressed.
+        /// </summary>
+        /// <param name="button">Universal Controller Button. </param>
+        /// <returns>True means button is down this frame. </returns>
         bool ButtonDown(UniversalControllerButton button) const;
 
+        /// <summary>
+        /// Determines if button is pressed.
+        /// Fires the first frame button is pressed.
+        /// </summary>
+        /// <param name="button">Universal Controller Button. </param>
+        /// <returns>True means button was just pressed. </returns>
         bool ButtonUp(UniversalControllerButton button) const;
 
+        /// <summary>
+        /// Determines if button is was just released.
+        /// Fires the first frame a button was released.
+        /// </summary>
+        /// <param name="button">button to test. </param>
+        /// <returns>True means button was down and now is released. </returns>
         bool ButtonPressed(UniversalControllerButton button) const;
 
+        /// <summary>
+        /// Gets the values on the given Axis.
+        /// This is a value -32767 to 32767 with 0 in the middle.
+        /// </summary>
+        /// <param name="axis">Axis to get the value of. </param>
+        /// <returns>Axix value. </returns>
         int AxisValue(UniversalControllerAxis axis) const;
 
         /// <summary>
@@ -72,6 +99,9 @@ namespace SuperGameEngine
         /// </summary>
         ControllerMapper* m_controllerMapper;
 
+        /// <summary>
+        /// Contains the Controller Layouts for the game.
+        /// </summary>
         ControllerLayoutCollection* m_controllerLayoutCollection;
 
         /// <summary>
@@ -88,5 +118,10 @@ namespace SuperGameEngine
         /// Update the Axis Values.
         /// </summary>
         void UpdateAxisValue();
+
+        /// <summary>
+        /// Little method which just outputs Controller outputs for testing.
+        /// </summary>
+        void Tester();
     };
 }
