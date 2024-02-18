@@ -8,6 +8,11 @@ namespace SuperGameEngine
     /// </summary>
     enum class ControllerComparisonType
     {
+        /// <summary>
+        /// Only used for unsuccessful parsing.
+        /// </summary>
+        Unknown = -1,
+
         Greater,
 
         Less,
@@ -59,15 +64,27 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static ControllerComparisonType FromString(std::string value)
+        static ControllerComparisonType FromString(std::string value, bool checkCase = true)
         {
-            if (value == "Greater") return ControllerComparisonType::Greater;
-            if (value == "Less") return ControllerComparisonType::Less;
-            if (value == "Equals") return ControllerComparisonType::Equals;
+            if (checkCase)
+            {
+                FString stringValue = value;
+                if (stringValue == "Greater") return ControllerComparisonType::Greater;
+                if (stringValue == "Less") return ControllerComparisonType::Less;
+                if (stringValue == "Equals") return ControllerComparisonType::Equals;
+            }
+            else
+            {
+                FString stringValueLower = value;
+                stringValueLower.ConvertToLower();
+                if (stringValueLower == FString("Greater").ToLower()) return ControllerComparisonType::Greater;
+                if (stringValueLower == FString("Less").ToLower()) return ControllerComparisonType::Less;
+                if (stringValueLower == FString("Equals").ToLower()) return ControllerComparisonType::Equals;
+            }
 
             Logger::Exception(NotImplementedException(), FString("EControllerComparisonType"), FString("FromString"),
                 FString("No enum value for a ControllerComparisonType requested: ") + value);
-            return ControllerComparisonType::Greater;
+            return ControllerComparisonType::Unknown;
         }
     };
 }

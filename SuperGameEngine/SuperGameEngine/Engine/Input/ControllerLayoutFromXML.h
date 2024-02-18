@@ -20,6 +20,7 @@ namespace SuperGameEngine
         const std::string ButtonTagName = "SDLToUniversalButtons";
         const std::string ButtonTagSingularName = "SDLToUniversalButton";
         const std::string AxisToButtonTagName = "AxisToButtons";
+        const std::string AxisToButtonTagSingularName = "AxisToButton";
 
         /// <summary>
         /// Creates a Controller Layout from XML format.
@@ -64,8 +65,12 @@ namespace SuperGameEngine
         /// <returns>True means data was in the correct format. </returns>
         bool ParseMetaTag(XMLNode* metaNode, ControllerLayout* controllerLayout, FString& error);
 
-        bool ParseSdlToUniversalButtonsTag(XMLNode* metaNode, ControllerLayout* controllerLayout, FString& error);
+        bool ParseSdlToUniversalButtonsTag(XMLNode* node, ControllerLayout* controllerLayout, FString& error);
 
-        bool ParseSdlToUniversalButtonTag(XMLNode* metaNode, ControllerLayout* controllerLayout, FString& error);
+        bool ParseSdlToUniversalButtonTag(XMLNode* node, ControllerLayout* controllerLayout, FString& error);
+
+        bool ParseAxisToButtonsTag(XMLNode* node, ControllerLayout* controllerLayout, FString& error);
+
+        bool ParseAxisToButtonTag(XMLNode* node, ControllerLayout* controllerLayout, FString& error);
     };
 }

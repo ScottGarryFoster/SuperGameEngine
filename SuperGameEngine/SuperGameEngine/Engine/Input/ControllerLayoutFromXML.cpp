@@ -42,6 +42,11 @@ ControllerLayout* ControllerLayoutFromXML::CreateFromXML(FString xml, FString& e
             {
                 ParseSdlToUniversalButtonsTag(sdlToUniversalButtons, finalLayout, error);
             }
+
+            if (axisToButtons != nullptr)
+            {
+                ParseAxisToButtonsTag(axisToButtons, finalLayout, error);
+            }
         }
 
     }
@@ -197,7 +202,17 @@ bool ControllerLayoutFromXML::ParseSdlToUniversalButtonTag(
         }
     }
 
-    if (!controllerLayout->SDLToUniversalButton.Any(
+    bool isValid = true;
+    if (extractedData.first == -1)
+    {
+        isValid = false;
+    }
+    else if (extractedData.second == UniversalControllerButton::Unknown)
+    {
+        isValid = false;
+    }
+
+    if (isValid == true && !controllerLayout->SDLToUniversalButton.Any(
         [extractedData](const std::pair<int, UniversalControllerButton>& x)
         {
             return x.first == extractedData.first || x.second == extractedData.second;
@@ -206,5 +221,114 @@ bool ControllerLayoutFromXML::ParseSdlToUniversalButtonTag(
         controllerLayout->SDLToUniversalButton.Add(extractedData);
     }
 
+    return isValid;
+}
+
+bool ControllerLayoutFromXML::ParseAxisToButtonsTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    for (XMLNode* childNode = node->first_node(); childNode; childNode = childNode->next_sibling())
+    {
+        if (FString(childNode->name()) != AxisToButtonTagSingularName)
+        {
+            continue;
+        }
+
+        ParseAxisToButtonTag(childNode, controllerLayout, error);
+    }
     return true;
+}
+
+bool ControllerLayoutFromXML::ParseAxisToButtonTag(
+        XMLNode* node, ControllerLayout* controllerLayout, FString& error)
+{
+    ControllerAxisMappedToButton extractedData;
+    bool didParseComparisonValue = false;
+    for (XMLAttribute* attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
+    {
+        FString name = FString(attribute->name()).ToLower();
+        if (name == "axis")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                extractedData.Axis = result;
+            }
+            else
+            {
+                error += FString("Could not parse axis value: ")
+                    + attribute->value() + ". ";
+            }
+        }
+        else if (name == "universalcontrollerbutton")
+        {
+            UniversalControllerButton foundValue = EUniversalControllerButton::FromString(attribute->value());
+            if (foundValue == UniversalControllerButton::Unknown)
+            {
+                error += FString("Could not parse universal controller button value: ")
+                    + attribute->value() + ". ";
+            }
+            else
+            {
+                extractedData.Button = foundValue;
+            }
+        }
+        else if (name == "evaluationvalue")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                extractedData.Evaluation.Value = result;
+                didParseComparisonValue = true;
+            }
+            else
+            {
+                error += FString("Could not parse Evaluation Value value: ")
+                    + attribute->value() + ". ";
+            }
+        }
+        else if (name == "evaluationcomparison")
+        {
+            ControllerComparisonType foundValue = EControllerComparisonType::FromString(attribute->value());
+            if (foundValue == ControllerComparisonType::Unknown)
+            {
+                error += FString("Could not parse universal controller button value: ")
+                    + attribute->value() + ". ";
+            }
+            else
+            {
+                extractedData.Evaluation.Comparison = foundValue;
+            }
+        }
+    }
+
+    bool isValid = true;
+    if (extractedData.Axis <= -1)
+    {
+        isValid = false;
+    }
+    else if (extractedData.Button == UniversalControllerButton::Unknown)
+    {
+        isValid = false;
+    }
+    else if (extractedData.Evaluation.Comparison == ControllerComparisonType::Unknown)
+    {
+        isValid = false;
+    }
+    else if (!didParseComparisonValue)
+    {
+        // As any int value is technically 'valid' we need explictly keep track of successful parses
+        // for this value.
+        isValid = false;
+    }
+
+    if (isValid)
+    {
+        controllerLayout->AxisToButton.Add(extractedData);
+    }
+
+
+    return false;
 }

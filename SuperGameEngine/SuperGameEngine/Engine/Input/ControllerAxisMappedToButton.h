@@ -7,8 +7,8 @@ namespace SuperGameEngine
 
     struct ControllerAxisMappedToButton
     {
-        int Axis;
-        UniversalControllerButton Button;
+        int Axis = -1;
+        UniversalControllerButton Button = UniversalControllerButton::Unknown;
         ControllerAxisMappingEvaluation Evaluation;
     };
 }

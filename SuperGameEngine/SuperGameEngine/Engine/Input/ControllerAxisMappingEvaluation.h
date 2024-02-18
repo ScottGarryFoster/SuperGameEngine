@@ -11,7 +11,7 @@ namespace SuperGameEngine
     /// </summary>
     struct ControllerAxisMappingEvaluation
     {
-        ControllerComparisonType Comparison;
-        int Value;
+        ControllerComparisonType Comparison = ControllerComparisonType::Unknown;
+        int Value = 0;
     };
 }

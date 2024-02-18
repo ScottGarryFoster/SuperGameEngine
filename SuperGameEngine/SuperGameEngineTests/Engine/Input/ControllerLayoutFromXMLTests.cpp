@@ -43,7 +43,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_EQ(m_controllerLayout, nullptr);
+        ASSERT_EQ(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
     }
 
     TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_ReturnsEmptyControllerLayout_WhenGivenEmptyTagsTest)
@@ -54,7 +54,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         Controller controllerType = m_controllerLayout->Controller;
         ASSERT_EQ(expected, controllerType)
             << "Expected: " << EController::ToString(expected)
@@ -75,7 +75,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         Controller controllerType = m_controllerLayout->Controller;
         ASSERT_EQ(expected, controllerType) 
             << "Expected: " << EController::ToString(expected)
@@ -93,7 +93,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         Controller controllerType = m_controllerLayout->Controller;
         ASSERT_EQ(expected, controllerType)
             << "Expected: " << EController::ToString(expected)
@@ -114,7 +114,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         Controller controllerType = m_controllerLayout->Controller;
         ASSERT_EQ(expected, controllerType)
             << "Expected: " << EController::ToString(expected)
@@ -135,7 +135,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         Controller controllerType = m_controllerLayout->Controller;
         ASSERT_EQ(expected, controllerType)
             << "Expected: " << EController::ToString(expected)
@@ -156,7 +156,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         int actual = m_controllerLayout->Axis;
         ASSERT_EQ(expected, actual)
             << "Expected: " << expected
@@ -175,7 +175,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         int actual = m_controllerLayout->Axis;
         ASSERT_EQ(expected, actual)
             << "Expected: " << expected
@@ -193,7 +193,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         int actual = m_controllerLayout->Axis;
         ASSERT_EQ(expected, actual)
             << "Expected: " << expected
@@ -215,7 +215,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         int actual = m_controllerLayout->Buttons;
         ASSERT_EQ(expected, actual)
             << "Expected: " << expected
@@ -234,7 +234,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         int actual = m_controllerLayout->Buttons;
         ASSERT_EQ(expected, actual)
             << "Expected: " << expected
@@ -252,7 +252,7 @@ namespace SuperGameEngine_Engine_Input
 
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         int actual = m_controllerLayout->Buttons;
         ASSERT_EQ(expected, actual)
             << "Expected: " << expected
@@ -282,7 +282,7 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         // Assert
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         FList<std::pair<int, UniversalControllerButton>> actual = m_controllerLayout->SDLToUniversalButton;
         ASSERT_EQ(1, actual.Count());
 
@@ -325,7 +325,7 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         // Assert
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         FList<std::pair<int, UniversalControllerButton>> actual = m_controllerLayout->SDLToUniversalButton;
         ASSERT_EQ(1, actual.Count());
     }
@@ -356,7 +356,7 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         // Assert
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         FList<std::pair<int, UniversalControllerButton>> actual = m_controllerLayout->SDLToUniversalButton;
         ASSERT_EQ(1, actual.Count());
     }
@@ -388,7 +388,7 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         // Assert
-        ASSERT_NE(m_controllerLayout, nullptr);
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
         FList<std::pair<int, UniversalControllerButton>> actual = m_controllerLayout->SDLToUniversalButton;
         ASSERT_EQ(2, actual.Count());
 
@@ -416,5 +416,274 @@ namespace SuperGameEngine_Engine_Input
             << " Actual: " << EUniversalControllerButton::ToString(secondActualButton)
             << " Errors: " << errors;
     }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddInvalidSDLButton_WhenGivenOne)
+    {
+        // Arrange
+        int invalidButton = -1;
+        UniversalControllerButton expectedUniversalButton = UniversalControllerButton::FaceButtonDown;
+
+        FString given = "<ControllerLayout>";
+        given += FString("<SDLToUniversalButtons>");
+        given += FString("<SDLToUniversalButton SDLButton=\"") + invalidButton;
+        given += FString("\" UniversalControllerButton=\"") +
+            EUniversalControllerButton::ToString(expectedUniversalButton) + FString("\" />");
+        given += FString("</SDLToUniversalButtons>");
+        given += "</ControllerLayout>";
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        // Assert
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerButton>> actual = m_controllerLayout->SDLToUniversalButton;
+        ASSERT_EQ(0, actual.Count());
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddInvalidUniversalButton_WhenGivenOne)
+    {
+        // Arrange
+        int validButton = 0;
+        UniversalControllerButton invalidUniversalButton = UniversalControllerButton::Unknown;
+
+        FString given = "<ControllerLayout>";
+        given += FString("<SDLToUniversalButtons>");
+        given += FString("<SDLToUniversalButton SDLButton=\"") + validButton;
+        given += FString("\" UniversalControllerButton=\"") +
+            EUniversalControllerButton::ToString(invalidUniversalButton) + FString("\" />");
+        given += FString("</SDLToUniversalButtons>");
+        given += "</ControllerLayout>";
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        // Assert
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<std::pair<int, UniversalControllerButton>> actual = m_controllerLayout->SDLToUniversalButton;
+        ASSERT_EQ(0, actual.Count());
+    }
+#pragma endregion
+
+#pragma region AxisToButtons
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_AddsAAxisToButton_WhenGivenAValidEntry)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerButton givenButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
+        int givenCompareValue = 42;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<AxisToButtons>\n");
+        given += FString("<AxisToButton Axis=\"") + givenAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + "\"";
+        given += FString(" />\n");
+        given += FString("</AxisToButtons>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(1, actual.Count());
+
+        int axis = actual[0].Axis;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerButton button = actual[0].Button;
+        ASSERT_EQ(givenButton, button) << errors;
+
+        ControllerComparisonType comparison = actual[0].Evaluation.Comparison;
+        ASSERT_EQ(givenComparison, comparison) << errors;
+
+        int comparisonValue = actual[0].Evaluation.Value;
+        ASSERT_EQ(givenCompareValue, comparisonValue) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_AddsMultiEntries_WhenGivenMultipleUniqueEntries)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerButton givenButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
+        int givenCompareValue = 42;
+
+        int givenSecondAxis = 0;
+        UniversalControllerButton givenSecondButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenSecondComparison = ControllerComparisonType::Greater;
+        int givenSecondCompareValue = 42;
+
+        FString given = "<ControllerLayout>";
+        given += FString("<AxisToButtons>");
+
+        given += FString("<AxisToButton Axis=\"") + givenAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + "\"";
+        given += FString(" />");
+
+        given += FString("<AxisToButton Axis=\"") + givenSecondAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenSecondButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenSecondComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenSecondCompareValue + "\"";
+        given += FString(" />");
+
+        given += FString("</AxisToButtons>");
+        given += FString("</ControllerLayout>");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(2, actual.Count());
+
+        int axis = actual[0].Axis;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerButton button = actual[0].Button;
+        ASSERT_EQ(givenButton, button) << errors;
+
+        ControllerComparisonType comparison = actual[0].Evaluation.Comparison;
+        ASSERT_EQ(givenComparison, comparison) << errors;
+
+        int comparisonValue = actual[0].Evaluation.Value;
+        ASSERT_EQ(givenCompareValue, comparisonValue) << errors;
+
+        axis = actual[1].Axis;
+        ASSERT_EQ(givenSecondAxis, axis) << errors;
+
+        button = actual[1].Button;
+        ASSERT_EQ(givenSecondButton, button) << errors;
+
+        comparison = actual[1].Evaluation.Comparison;
+        ASSERT_EQ(givenSecondComparison, comparison) << errors;
+
+        comparisonValue = actual[1].Evaluation.Value;
+        ASSERT_EQ(givenSecondCompareValue, comparisonValue) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddEntry_WhenGivenInvalidAxis)
+    {
+        // Arrange
+        int invalidAxis = -1;
+        UniversalControllerButton givenButton = UniversalControllerButton::DPadDown;
+        ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
+        int givenCompareValue = 42;
+
+        FString given = "<ControllerLayout>";
+        given += FString("<AxisToButtons>");
+        given += FString("<AxisToButton Axis=\"") + invalidAxis;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(givenButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + FString("\"");
+        given += FString(" />");
+        given += FString("</AxisToButtons>");
+        given += FString("</ControllerLayout>");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(0, actual.Count());
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddEntry_WhenGivenInvalidButton)
+    {
+        // Arrange
+        int validButton = 0;
+        UniversalControllerButton invalidButton = UniversalControllerButton::Unknown;
+        ControllerComparisonType givenComparison = ControllerComparisonType::Greater;
+        int givenCompareValue = 42;
+
+        FString given = "<ControllerLayout>";
+        given += FString("<AxisToButtons>");
+        given += FString("<AxisToButton Axis=\"") + validButton;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(invalidButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(givenComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + FString("\"");
+        given += FString(" />");
+        given += FString("</AxisToButtons>");
+        given += FString("</ControllerLayout>");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(0, actual.Count());
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddEntry_WhenGivenInvalidComparison)
+    {
+        // Arrange
+        int validButton = 0;
+        UniversalControllerButton validUniversalButton = UniversalControllerButton::DPadLeft;
+        ControllerComparisonType invalidComparison = ControllerComparisonType::Unknown;
+        int givenCompareValue = 42;
+
+        FString given = "<ControllerLayout>";
+        given += FString("<AxisToButtons>");
+        given += FString("<AxisToButton Axis=\"") + validButton;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(validUniversalButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(invalidComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + givenCompareValue + FString("\"");
+        given += FString(" />");
+        given += FString("</AxisToButtons>");
+        given += FString("</ControllerLayout>");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(0, actual.Count());
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DoesNotAddEntry_WhenGivenInvalidComparisonValue)
+    {
+        // Arrange
+        int validButton = 0;
+        UniversalControllerButton validUniversalButton = UniversalControllerButton::DPadLeft;
+        ControllerComparisonType validComparison = ControllerComparisonType::Unknown;
+        FString invalidComparisonValue = FString("NOTANUMBER");
+
+        FString given = "<ControllerLayout>";
+        given += FString("<AxisToButtons>");
+        given += FString("<AxisToButton Axis=\"") + validButton;
+        given += FString("\" UniversalControllerButton=\"");
+        given += FString(EUniversalControllerButton::ToString(validUniversalButton)) + "\" ";
+        given += FString("EvaluationComparison=\"") + FString(EControllerComparisonType::ToString(validComparison)) + "\" ";
+        given += FString("EvaluationValue=\"") + invalidComparisonValue + "\"";
+        given += FString(" />");
+        given += FString("</AxisToButtons>");
+        given += FString("</ControllerLayout>");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<ControllerAxisMappedToButton> actual = m_controllerLayout->AxisToButton;
+        ASSERT_EQ(0, actual.Count());
+    }
+
 #pragma endregion
 }
