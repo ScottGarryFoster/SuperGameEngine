@@ -51,7 +51,10 @@ namespace StandardCLibrary
         bool operator==(const std::string& other) const;
         bool operator==(const FString& other) const;
 
-        friend std::ostream& operator<<(std::ostream& os, const FString& obj);
+        inline friend std::ostream& operator<<(std::ostream& os, const FString& obj)
+        {
+            return os << obj.AsStdString();
+        }
 
         const std::string AsStdString() const;
         const char* AsCharArr() const;

@@ -289,8 +289,3 @@ std::vector<std::string> FString::Split(std::string& toSplit, std::string by)
 
     return newList;
 }
-
-std::ostream& operator<<(std::ostream& os, const FString& obj)
-{
-    return os << obj.AsStdString();
-}
