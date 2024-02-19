@@ -71,11 +71,8 @@
     <Filter Include="Project Files\Structural\Components\Examples\API">
       <UniqueIdentifier>{0b943776-f5b8-41c5-9376-42ea5f69d861}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\Structural\Components\Gameplay">
-      <UniqueIdentifier>{b3e87bd3-73c7-4a59-99cb-250fdf7225d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project Files\Structural\Components\Gameplay\API">
-      <UniqueIdentifier>{ec8e2ce2-e636-4371-8dac-ef213b8d6f7b}</UniqueIdentifier>
+    <Filter Include="Package Files">
+      <UniqueIdentifier>{56c5e8d6-cd1c-4b98-9dd0-32ae580d4396}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,16 +118,31 @@
     <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp">
       <Filter>Project Files\Structural\Components\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp">
-      <Filter>Project Files\Structural\Components\Gameplay</Filter>
+    <ClCompile Include="Engine\Input\DirectControllerInput.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerResolver.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerMapper.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerLayout.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerLayoutCollection.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp">
+      <Filter>Project Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Basic\FilesAndFolders.cpp">
+      <Filter>Project Files\Engine\Basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
       <Filter>Project Files\Structural\Scene\API</Filter>
-    </ClInclude>
-    <ClInclude Include="LibraryIncludes.h">
-      <Filter>Project Files</Filter>
     </ClInclude>
     <ClInclude Include="Structural\Scene\Scene.h">
       <Filter>Project Files\Structural\Scene\API</Filter>
@@ -143,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="Structural\Scene\SceneLoadPackage.h">
       <Filter>Project Files\Structural\Scene\API</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Basic\GameTime.h">
-      <Filter>Project Files\Engine\Basic</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SuperTexture.h">
       <Filter>Project Files\Engine\Graphics\API</Filter>
@@ -180,8 +189,53 @@
     <ClInclude Include="Structural\Components\Example\UserInputTestComponent.h">
       <Filter>Project Files\Structural\Components\Examples\API</Filter>
     </ClInclude>
-    <ClInclude Include="Structural\Components\Gameplay\PlayerControllerComponent.h">
-      <Filter>Project Files\Structural\Components\Gameplay\API</Filter>
+    <ClInclude Include="Engine\Input\DirectControllerInput.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\DirectXButton.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\Controller.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerResolver.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\UniversalControllerButton.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerMapper.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerAxisMappedToButton.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerAxisMappingEvaluation.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerComparisonType.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerLayoutCollection.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\UniversalControllerAxis.hpp">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\ControllerLayoutFromXML.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryIncludes.h">
+      <Filter>Package Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidXML.h">
+      <Filter>Package Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\FilesAndFolders.h">
+      <Filter>Project Files\Engine\Basic\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\GameTime.h">
+      <Filter>Project Files\Engine\Basic\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

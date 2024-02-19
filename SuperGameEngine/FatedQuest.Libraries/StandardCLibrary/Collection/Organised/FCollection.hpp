@@ -202,6 +202,77 @@ namespace StandardCLibrary
             return m_actualData.size();
         }
 
+        /// <summary>
+        /// Determines if there are any entries in the collection.
+        /// </summary>
+        /// <returns>True means there are entries.</returns>
+        bool Any()
+        {
+            return m_actualData.size() > 0;
+        }
+
+        /// <summary>
+        /// Returns true if a single instance matches the predicate.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>
+        /// True means at least one instance matches the predicate.
+        /// False means none of them do.
+        /// </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Any(
+        ///         [](const FString& c) { return c.ToLower().AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        bool Any(std::function<bool(const T&)> predicate)
+        {
+            for (const auto& component : m_actualData)
+            {
+                if (predicate(component))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if a single instance matches the predicate.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>
+        /// True means at least one instance matches the predicate.
+        /// False means none of them do.
+        /// </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Any(
+        ///         [](const FString* c) { return c->ToLower()->AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        bool Any(std::function<bool(const T*)> predicate)
+        {
+            for (const auto& component : m_actualData)
+            {
+                if (predicate(component))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     protected:
 
         /// <summary>

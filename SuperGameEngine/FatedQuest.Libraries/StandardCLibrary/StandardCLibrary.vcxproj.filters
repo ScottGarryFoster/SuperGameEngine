@@ -50,14 +50,17 @@
     <Filter Include="Project Files\Object\API">
       <UniqueIdentifier>{c4fec2d4-ce29-403c-91a1-6306e0f66f37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project Files\Object\Exceptions">
-      <UniqueIdentifier>{3eab4343-931c-4fbc-b093-678c0bda818d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project Files\Object\Exceptions\API">
-      <UniqueIdentifier>{53b82d5a-1968-4e4f-a1a4-d96711e16c03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Project Files\Collection\Organised">
       <UniqueIdentifier>{a785f6d0-9027-4fd0-b680-4123f4d5e1ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Extentions">
+      <UniqueIdentifier>{f1bc8a98-b8fa-4dad-b8d6-6ad931d00ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\Asserts">
+      <UniqueIdentifier>{3eab4343-931c-4fbc-b093-678c0bda818d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\Asserts\API">
+      <UniqueIdentifier>{53b82d5a-1968-4e4f-a1a4-d96711e16c03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,14 +103,8 @@
     <ClInclude Include="Object\Object.h">
       <Filter>Project Files\Object\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\FException.h">
+    <ClInclude Include="Object\FAsserts.h">
       <Filter>Project Files\Object\API</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Exceptions\SystemNullReference.h">
-      <Filter>Project Files\Object\Exceptions\API</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Exceptions\ArgumentNullException.h">
-      <Filter>Project Files\Object\Exceptions\API</Filter>
     </ClInclude>
     <ClInclude Include="Collection\Organised\FCollection.hpp">
       <Filter>Project Files\Collection\Organised</Filter>
@@ -120,6 +117,25 @@
     </ClInclude>
     <ClInclude Include="Collection\Vector\VectorHelpers.hpp">
       <Filter>Project Files\Collection\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryIncludes.h" />
+    <ClInclude Include="Extentions\IntHelpers.hpp">
+      <Filter>Project Files\Extentions</Filter>
+    </ClInclude>
+    <ClInclude Include="File\Directory.h">
+      <Filter>Project Files\File\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Asserts\ArgumentNullException.hpp">
+      <Filter>Project Files\Object\Asserts</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Asserts\NotImplementedException.hpp">
+      <Filter>Project Files\Object\Asserts</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Asserts\SystemNullReference.hpp">
+      <Filter>Project Files\Object\Asserts</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Asserts\FileOpenAssert.hpp">
+      <Filter>Project Files\Object\Asserts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,14 +172,11 @@
     <ClCompile Include="Object\Object.cpp">
       <Filter>Project Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\FException.cpp">
+    <ClCompile Include="Object\FAsserts.cpp">
       <Filter>Project Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Exceptions\ArgumentNullException.cpp">
-      <Filter>Project Files\Object\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Exceptions\SystemNullReference.cpp">
-      <Filter>Project Files\Object\Exceptions</Filter>
+    <ClCompile Include="File\Directory.cpp">
+      <Filter>Project Files\File</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

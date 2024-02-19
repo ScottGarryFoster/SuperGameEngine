@@ -88,13 +88,13 @@ void Texture::Draw(const FPoint& location, const FPoint& size)
 {
     if (m_renderer == nullptr)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_renderer is null."));
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_renderer is null."));
         return;
     }
 
     if (m_renderer == nullptr)
     {
-        Logger::Exception(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_texture is null."));
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_texture is null."));
         return;
     }
 
@@ -122,7 +122,7 @@ FPoint SuperGameEngine::Texture::Size() const
 {
     if (m_textureSize == nullptr)
     {
-        Logger::Exception(SystemNullReference(), GetTypeName(), FString("Size"), FString("Size is called without a Texture."));
+        Logger::Assert(SystemNullReference(), GetTypeName(), FString("Size"), FString("Size is called without a Texture."));
         return FPoint();
     }
 

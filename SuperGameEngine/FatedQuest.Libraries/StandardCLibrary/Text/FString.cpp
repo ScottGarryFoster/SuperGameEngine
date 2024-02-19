@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <cstdarg>
-
 using namespace StandardCLibrary;
 
 FString::FString()
@@ -120,6 +119,48 @@ FString FString::operator+(const float str) const
     return FString(m_storage.c_str() + std::to_string(str));
 }
 
+FString& FString::operator+=(const std::string& str)
+{
+    m_storage += str.c_str();
+    return *this;
+}
+
+FString& FString::operator+=(const FString& str)
+{
+    m_storage += str.m_storage;
+    return *this;
+}
+
+FString& FString::operator+=(const int str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const long int str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const unsigned long int str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const double str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
+FString& FString::operator+=(const float str)
+{
+    m_storage += std::to_string(str);
+    return *this;
+}
+
 FString FString::operator+(const double str) const
 {
     return FString(m_storage.c_str() + std::to_string(str));
@@ -201,7 +242,50 @@ void FString::ConvertToUpper()
     }
 }
 
-std::ostream& StandardCLibrary::operator<<(std::ostream& os, const FString& obj)
+bool StandardCLibrary::FString::IsEmptyOrWhitespace() const
 {
-    return os << obj.AsStdString();
+    std::string empty;
+    for (const char& c : m_storage)
+    {
+        if (c != ' ')
+        {
+            empty += c;
+        }
+    }
+
+    return empty.length() == 0;
+}
+
+std::vector<FString> FString::Split(FString& toSplit, FString by)
+{
+    std::string toSplitAsString = toSplit.AsStdString();
+    std::string splitByAsString = by.AsStdString();
+    std::vector<FString> newList;
+
+    size_t start = 0, end = 0;
+    while ((end = toSplitAsString.find(splitByAsString, start)) != std::string::npos)
+    {
+        newList.push_back(
+            FString(toSplitAsString.substr(start, end - start))
+        );
+        start = end + splitByAsString.length();
+    }
+    newList.push_back(toSplitAsString.substr(start));
+
+    return newList;
+}
+
+std::vector<std::string> FString::Split(std::string& toSplit, std::string by)
+{
+    std::vector<std::string> newList;
+
+    size_t start = 0, end = 0;
+    while ((end = toSplit.find(by, start)) != std::string::npos)
+    {
+        newList.push_back(toSplit.substr(start, end - start));
+        start = end + by.length();
+    }
+    newList.push_back(toSplit.substr(start));
+
+    return newList;
 }

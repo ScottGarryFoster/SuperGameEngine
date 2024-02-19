@@ -22,6 +22,7 @@ DirectKeyInput::~DirectKeyInput()
 {
     delete m_keyState;
     delete m_keyStateLastFrame;
+    delete m_currentState;
 }
 
 void DirectKeyInput::EventUpdate(SDL_Event& e)

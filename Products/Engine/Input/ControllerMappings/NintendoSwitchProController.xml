@@ -1,0 +1,29 @@
+<ControllerLayout>
+  <Metadata Name="Nintendo Switch Pro Controller" Controller="NintendoSwitchProController" Axis="6" Buttons="20" />
+  <SDLToUniversalButtons>
+    <SDLToUniversalButton SDLButton="0" UniversalControllerButton="FaceButtonRight" />
+    <SDLToUniversalButton SDLButton="1" UniversalControllerButton="FaceButtonDown" />
+    <SDLToUniversalButton SDLButton="2" UniversalControllerButton="FaceButtonUp" />
+    <SDLToUniversalButton SDLButton="3" UniversalControllerButton="FaceButtonLeft" />
+    <SDLToUniversalButton SDLButton="4" UniversalControllerButton="Select" />
+    <SDLToUniversalButton SDLButton="6" UniversalControllerButton="Start" />
+    <SDLToUniversalButton SDLButton="7" UniversalControllerButton="LeftStickClick" />
+    <SDLToUniversalButton SDLButton="8" UniversalControllerButton="RightStickClick" />
+    <SDLToUniversalButton SDLButton="9" UniversalControllerButton="LeftShoulder" />
+    <SDLToUniversalButton SDLButton="10" UniversalControllerButton="RightShoulder" />
+    <SDLToUniversalButton SDLButton="11" UniversalControllerButton="DPadUp" />
+    <SDLToUniversalButton SDLButton="12" UniversalControllerButton="DPadDown" />
+    <SDLToUniversalButton SDLButton="13" UniversalControllerButton="DPadLeft" />
+    <SDLToUniversalButton SDLButton="14" UniversalControllerButton="DPadRight" />
+  </SDLToUniversalButtons>
+  <AxisToButtons>
+    <AxisToButton Axis="4" UniversalControllerButton="LeftTrigger" EvaluationComparison="Equals" EvaluationValue="32767" />
+    <AxisToButton Axis="5" UniversalControllerButton="RightTrigger" EvaluationComparison="Equals" EvaluationValue="32767" />
+  </AxisToButtons>
+  <SDLToUniversalAxes>
+    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" />
+    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" />
+    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickX" />
+    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickY" />
+  </SDLToUniversalAxes>
+</ControllerLayout>

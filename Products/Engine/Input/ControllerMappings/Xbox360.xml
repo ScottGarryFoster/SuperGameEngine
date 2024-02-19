@@ -1,0 +1,28 @@
+<ControllerLayout>
+  <Metadata Name="Xbox 360 Controller" Controller="Xbox360Controller" Axis="6" Buttons="11" />
+  <SDLToUniversalButtons>
+    <SDLToUniversalButton SDLButton="0" UniversalControllerButton="FaceButtonDown" />
+    <SDLToUniversalButton SDLButton="1" UniversalControllerButton="FaceButtonRight" />
+    <SDLToUniversalButton SDLButton="2" UniversalControllerButton="FaceButtonLeft" />
+    <SDLToUniversalButton SDLButton="3" UniversalControllerButton="FaceButtonUp" />
+    <SDLToUniversalButton SDLButton="4" UniversalControllerButton="LeftShoulder" />
+    <SDLToUniversalButton SDLButton="5" UniversalControllerButton="RightShoulder" />
+    <SDLToUniversalButton SDLButton="6" UniversalControllerButton="Select" />
+    <SDLToUniversalButton SDLButton="7" UniversalControllerButton="Start" />
+    <SDLToUniversalButton SDLButton="8" UniversalControllerButton="LeftStickClick" />
+    <SDLToUniversalButton SDLButton="9" UniversalControllerButton="RightStickClick" />
+  </SDLToUniversalButtons>
+  <AxisToButtons>
+    <AxisToButton Axis="4" UniversalControllerButton="LeftTrigger" EvaluationComparison="Greater" EvaluationValue="-30000" />
+    <AxisToButton Axis="5" UniversalControllerButton="RightTrigger" EvaluationComparison="Greater" EvaluationValue="-30000" />
+  </AxisToButtons>
+  <HatSDLMapping SDLToButtonValue="0" />
+  <SDLToUniversalAxes>
+    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" />
+    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" />
+    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickX" />
+    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickY" />
+    <SDLToUniversalAxis SDLAxis="3" UniversalControllerAxis="LeftTrigger" />
+    <SDLToUniversalAxis SDLAxis="4" UniversalControllerAxis="RightTrigger" />
+  </SDLToUniversalAxes>
+</ControllerLayout>

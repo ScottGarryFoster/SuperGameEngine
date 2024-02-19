@@ -1,0 +1,25 @@
+<ControllerLayout>
+  <Metadata Name="Nintendo N64 Controller" Controller="NintendoN64Controller" Axis="6" Buttons="20" />
+  <SDLToUniversalButtons>
+    <SDLToUniversalButton SDLButton="0" UniversalControllerButton="FaceButtonDown" /> <!-- A Button -->
+    <SDLToUniversalButton SDLButton="1" UniversalControllerButton="FaceButtonLeft" /> <!-- B Button -->
+    <SDLToUniversalButton SDLButton="2" UniversalControllerButton="LeftStickClick" /> <!-- C Left -->
+    <SDLToUniversalButton SDLButton="3" UniversalControllerButton="RightStickClick" /> <!-- C Up -->
+    <SDLToUniversalButton SDLButton="4" UniversalControllerButton="FaceButtonUp" /> <!-- C Right -->
+    <SDLToUniversalButton SDLButton="6" UniversalControllerButton="Start" /> <!-- Middle Start -->
+    <SDLToUniversalButton SDLButton="9" UniversalControllerButton="LeftShoulder" /> <!-- L Button -->
+    <SDLToUniversalButton SDLButton="10" UniversalControllerButton="RightShoulder" /> <!-- R Button -->
+    <SDLToUniversalButton SDLButton="11" UniversalControllerButton="DPadUp" />
+    <SDLToUniversalButton SDLButton="12" UniversalControllerButton="DPadDown" />
+    <SDLToUniversalButton SDLButton="13" UniversalControllerButton="DPadLeft" />
+    <SDLToUniversalButton SDLButton="14" UniversalControllerButton="DPadRight" />
+  </SDLToUniversalButtons>
+  <AxisToButtons>
+    <AxisToButton Axis="4" UniversalControllerButton="LeftTrigger" EvaluationComparison="Equals" EvaluationValue="32767" /> <!-- Z Button -->
+    <AxisToButton Axis="5" UniversalControllerButton="FaceButtonRight" EvaluationComparison="Equals" EvaluationValue="32767" /> <!-- C Down -->
+  </AxisToButtons>
+  <SDLToUniversalAxes>
+    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" />
+    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" />
+  </SDLToUniversalAxes>
+</ControllerLayout>

@@ -5,7 +5,7 @@
 
 using namespace StandardCLibraryTests_Collection_Organised;
 using namespace StandardCLibrary;
-namespace StandardCLibraryTests_Collection_Organised_ListTests
+namespace StandardCLibraryTests_Collection_Organised
 {
 #pragma region Add
     TEST(FListTests, Add_ReturnsACollectionOneBigger_WhenNewEmptyCollectionCreatedWithAddCalled)
@@ -16,8 +16,8 @@ namespace StandardCLibraryTests_Collection_Organised_ListTests
         collection.Add(given);
 
         int count = CountCollection<int>(collection);
-        EXPECT_EQ(1, count);
-        EXPECT_EQ(given, ReturnItemInCollection(collection, 0));
+        ASSERT_EQ(1, count);
+        ASSERT_EQ(given, ReturnItemInCollection(collection, 0));
     }
 
     TEST(FListTests, Add_PushesItemToEnd_WhenACollectionWithItemWithAddCalled)
@@ -29,8 +29,8 @@ namespace StandardCLibraryTests_Collection_Organised_ListTests
         collection.Add(given);
 
         int count = CountCollection<int>(collection);
-        EXPECT_EQ(2, count);
-        EXPECT_EQ(given, ReturnItemInCollection(collection, 1));
+        ASSERT_EQ(2, count);
+        ASSERT_EQ(given, ReturnItemInCollection(collection, 1));
     }
 
     TEST(FListTests, Add_AddsAPointerToList_WhenGivenAPointer)
@@ -46,8 +46,8 @@ namespace StandardCLibraryTests_Collection_Organised_ListTests
         int actual = *ReturnItemInCollection(collection, 0);
         
         delete given;
-        EXPECT_EQ(1, count);
-        EXPECT_EQ(givenDerefered, actual);
+        ASSERT_EQ(1, count);
+        ASSERT_EQ(givenDerefered, actual);
     }
 #pragma endregion
 
@@ -61,9 +61,9 @@ namespace StandardCLibraryTests_Collection_Organised_ListTests
         int actualOne = collection[1];
         int actualTwo = collection[2];
 
-        EXPECT_EQ(given[0], actualZero);
-        EXPECT_EQ(given[1], actualOne);
-        EXPECT_EQ(given[2], actualTwo);
+        ASSERT_EQ(given[0], actualZero);
+        ASSERT_EQ(given[1], actualOne);
+        ASSERT_EQ(given[2], actualTwo);
     }
 
     TEST(FListTests, OperatorBrackets_ReturnsElementsInOrderGiven_WhenGivenThreeElementsInOrderWithConst)
@@ -75,9 +75,9 @@ namespace StandardCLibraryTests_Collection_Organised_ListTests
         int actualOne = collection[1];
         int actualTwo = collection[2];
 
-        EXPECT_EQ(given[0], actualZero);
-        EXPECT_EQ(given[1], actualOne);
-        EXPECT_EQ(given[2], actualTwo);
+        ASSERT_EQ(given[0], actualZero);
+        ASSERT_EQ(given[1], actualOne);
+        ASSERT_EQ(given[2], actualTwo);
     }
 
     TEST(FListTests, OperatorBrackets_ReturnsElementsInOrderGivenAsPointers_WhenGivenThreeElementsInOrder)
@@ -91,9 +91,9 @@ namespace StandardCLibraryTests_Collection_Organised_ListTests
         int actualTwo = *collection[2];
 
         CleanUp(given);
-        EXPECT_EQ(givenDeref[0], actualZero);
-        EXPECT_EQ(givenDeref[1], actualOne);
-        EXPECT_EQ(givenDeref[2], actualTwo);
+        ASSERT_EQ(givenDeref[0], actualZero);
+        ASSERT_EQ(givenDeref[1], actualOne);
+        ASSERT_EQ(givenDeref[2], actualTwo);
     }
 #pragma endregion
 }
