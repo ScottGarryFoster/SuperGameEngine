@@ -80,7 +80,7 @@ void PlayerControllerComponent::MoveByController(FVector2D* location, float spee
 
     int stickX = controllerInput->AxisValue(UniversalControllerAxis::LeftStickX);
     int stickY = controllerInput->AxisValue(UniversalControllerAxis::LeftStickY);
-    FVector2D stick = FVector2D(stickX, stickY);
+    FVector2D stick = FVector2D((float)stickX, (float)stickY);
 
     FVector2D difference = stick - *location;
     FVector2D direction = difference.Normalize();

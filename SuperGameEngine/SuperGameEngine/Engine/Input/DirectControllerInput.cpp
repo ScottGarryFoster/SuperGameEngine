@@ -238,7 +238,7 @@ void DirectControllerInput::UpdateAxisValue()
     }
 }
 
-void DirectControllerInput::Tester()
+void DirectControllerInput::Tester() const
 {
     if (ButtonPressed(UniversalControllerButton::FaceButtonRight))
     {

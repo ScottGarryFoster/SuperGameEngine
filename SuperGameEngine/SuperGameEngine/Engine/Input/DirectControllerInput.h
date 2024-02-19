@@ -122,6 +122,6 @@ namespace SuperGameEngine
         /// <summary>
         /// Little method which just outputs Controller outputs for testing.
         /// </summary>
-        void Tester();
+        void Tester() const;
     };
 }
