@@ -45,7 +45,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Location of the transform.
         /// </summary>
-        FVector2D* m_location;
+        FObservableVector2D* m_location;
 
         /// <summary>
         /// Invokes on location changed.

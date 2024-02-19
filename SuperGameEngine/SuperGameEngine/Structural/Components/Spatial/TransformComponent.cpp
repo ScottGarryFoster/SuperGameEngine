@@ -5,9 +5,9 @@ using namespace StandardCLibrary;
 
 TransformComponent::TransformComponent()
 {
-    m_location = new FVector2D();
+    m_location = new FObservableVector2D();
+    m_location->GetOnValueChanged()->Subscribe(this);
     m_onLocationChanged = new FEvent();
-    m_onLocationChanged->Subscribe(this);
 }
 
 TransformComponent::~TransformComponent()
