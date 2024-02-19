@@ -415,9 +415,7 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalAxesTag(
 bool ControllerLayoutFromXML::ParseSDLToUniversalAxisTag(
         XMLNode* node, ControllerLayout* controllerLayout, FString& error)
 {
-    std::pair<int, UniversalControllerAxis> extractedValue;
-    extractedValue.first = -1;
-    extractedValue.second = UniversalControllerAxis::Unknown;
+    AxisToUniversalAxis extractedValue;
     for (XMLAttribute* attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
     {
         FString name = FString(attribute->name()).ToLower();
@@ -427,7 +425,7 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalAxisTag(
             FString input = FString(attribute->value());
             if (IntHelpers::TryParse(input, result))
             {
-                extractedValue.first = result;
+                extractedValue.SDLAxis = result;
             }
             else
             {
@@ -445,25 +443,40 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalAxisTag(
             }
             else
             {
-                extractedValue.second = foundValue;
+                extractedValue.UniversalAxis = foundValue;
+            }
+        }
+        else if (name == "deadzone")
+        {
+            int result = -1;
+            FString input = FString(attribute->value());
+            if (IntHelpers::TryParse(input, result))
+            {
+                extractedValue.Deadzone = result;
+                extractedValue.HasDeadzone = true;
+            }
+            else
+            {
+                error += FString("Could not parse deadzone value: ")
+                    + attribute->value() + ". ";
             }
         }
     }
 
     bool isValid = true;
-    if (extractedValue.first <= -1)
+    if (extractedValue.SDLAxis <= -1)
     {
         isValid = false;
     }
-    else if (extractedValue.second == UniversalControllerAxis::Unknown)
+    else if (extractedValue.UniversalAxis == UniversalControllerAxis::Unknown)
     {
         isValid = false;
     }
 
     if (isValid == true && !controllerLayout->SDLAxisToUniversalAxis.Any(
-        [extractedValue](const std::pair<int, UniversalControllerAxis>& x)
+        [extractedValue](const AxisToUniversalAxis& x)
         {
-            return x.first == extractedValue.first || x.second == extractedValue.second;
+            return x.SDLAxis == extractedValue.SDLAxis || x.UniversalAxis == extractedValue.UniversalAxis;
         }))
     {
         controllerLayout->SDLAxisToUniversalAxis.Add(extractedValue);

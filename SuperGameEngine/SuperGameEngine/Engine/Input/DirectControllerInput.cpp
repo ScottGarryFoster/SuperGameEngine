@@ -202,16 +202,22 @@ void DirectControllerInput::UpdateAxisValue()
 
         for (int axis = 0; axis < m_controllerMapper->GetSDLAxisOnController(controller); ++axis)
         {
-            UniversalControllerAxis universalAxis = 
-                m_controllerMapper->GetUniversalAxisFromSDLAxis(controller, axis);
-            if (universalAxis != UniversalControllerAxis::Unknown)
+            AxisToUniversalAxis axisMapping =
+                m_controllerMapper->GetUniversalAxisMapping(controller, axis);
+            if (axisMapping.UniversalAxis != UniversalControllerAxis::Unknown)
             {
                 int axisValue = SDL_JoystickGetAxis(joystick, axis);
+                if (axisMapping.HasDeadzone && 
+                    AxisValueIsInDeadzone(axisValue, axisMapping.Deadzone))
+                {
+                    axisValue = 0;
+                }
+
                 auto foundAxis = m_axisValueOnController->find(foundController);
                 if (foundAxis == m_axisValueOnController->end())
                 {
                     auto newMap = std::map<UniversalControllerAxis, int>();
-                    newMap.insert(std::make_pair(universalAxis, axisValue));
+                    newMap.insert(std::make_pair(axisMapping.UniversalAxis, axisValue));
 
                     m_axisValueOnController->insert(std::make_pair(foundController, newMap));
                 }
@@ -219,14 +225,14 @@ void DirectControllerInput::UpdateAxisValue()
                 {
                     int key = foundAxis->first;
                     std::map<UniversalControllerAxis, int> axisMap = foundAxis->second;
-                    auto foundExactAxis = axisMap.find(universalAxis);
+                    auto foundExactAxis = axisMap.find(axisMapping.UniversalAxis);
                     if (foundExactAxis == axisMap.end())
                     {
-                        foundAxis->second.insert(std::make_pair(universalAxis, axisValue));
+                        foundAxis->second.insert(std::make_pair(axisMapping.UniversalAxis, axisValue));
                     }
                     else
                     {
-                        foundAxis->second[universalAxis] = axisValue;
+                        foundAxis->second[axisMapping.UniversalAxis] = axisValue;
                     }
                 }
 
@@ -236,6 +242,11 @@ void DirectControllerInput::UpdateAxisValue()
             }
         }
     }
+}
+
+bool DirectControllerInput::AxisValueIsInDeadzone(int axisValue, int deadzone) const
+{
+    return std::abs(axisValue) <= deadzone;
 }
 
 void DirectControllerInput::Tester() const

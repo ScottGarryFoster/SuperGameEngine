@@ -120,6 +120,15 @@ namespace SuperGameEngine
         void UpdateAxisValue();
 
         /// <summary>
+        /// Returns true if in the deadzone.
+        /// Deadzone meaning the area to disregard as too minor to be a considered position.
+        /// </summary>
+        /// <param name="axisValue">Axis value to test. </param>
+        /// <param name="deadzone">Deadzone to use. </param>
+        /// <returns>True means in deadzone. </returns>
+        bool AxisValueIsInDeadzone(int axisValue, int deadzone) const;
+
+        /// <summary>
         /// Little method which just outputs Controller outputs for testing.
         /// </summary>
         void Tester() const;

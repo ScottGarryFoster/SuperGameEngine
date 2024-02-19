@@ -92,22 +92,22 @@ int ControllerMapper::GetSDLAxisOnController(Controller controller) const
     return -1;
 }
 
-UniversalControllerAxis ControllerMapper::GetUniversalAxisFromSDLAxis(Controller controller, int SDLAxis) const
+AxisToUniversalAxis ControllerMapper::GetUniversalAxisMapping(Controller controller, int SDLAxis) const
 {
     FList<ControllerLayout*>* collection = m_controllerCollection->GetControllerLayouts();
     FList<ControllerLayout*> found =
         collection->Where([controller](const ControllerLayout* c) { return c->Controller == controller; });
     if (found.Any())
     {
-        FList<std::pair<int, UniversalControllerAxis>> axis = found[0]->SDLAxisToUniversalAxis.Where(
-            [SDLAxis](const std::pair<int, UniversalControllerAxis>& c) { return c.first == SDLAxis; });
+        FList<AxisToUniversalAxis> axis = found[0]->SDLAxisToUniversalAxis.Where(
+            [SDLAxis](const AxisToUniversalAxis& c) { return c.SDLAxis == SDLAxis; });
         if (axis.Any())
         {
-            return axis[0].second;
+            return axis[0];
         }
     }
 
-    return UniversalControllerAxis::Unknown;
+    return AxisToUniversalAxis();
 }
 
 int ControllerMapper::GetSDLHatMappedToDPad(Controller controller) const

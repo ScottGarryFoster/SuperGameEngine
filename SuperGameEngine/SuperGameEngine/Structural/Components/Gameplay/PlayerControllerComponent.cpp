@@ -14,7 +14,7 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
-    float speed = 2;
+    float speed = (2 * gameTime.TicksSinceLastFrame);
     TransformComponent* transform = GameComponent::GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
     MoveByKeyboard(speed, gameTime, location);
@@ -34,23 +34,23 @@ void PlayerControllerComponent::MoveByKeyboard(float speed, GameTime& gameTime, 
     float movementY = 0;
     if (input->KeyDown(InputKeyCode::D))
     {
-        movementX = speed * gameTime.TicksSinceLastFrame;
+        movementX = speed;
         haveMovedX = true;
     }
     else if (input->KeyDown(InputKeyCode::A))
     {
-        movementX = -(speed * gameTime.TicksSinceLastFrame);
+        movementX = -speed;
         haveMovedX = true;
     }
 
     if (input->KeyDown(InputKeyCode::W))
     {
-        movementY = -(speed * gameTime.TicksSinceLastFrame);
+        movementY = -speed;
         haveMovedY = true;
     }
     else if (input->KeyDown(InputKeyCode::S))
     {
-        movementY = (speed * gameTime.TicksSinceLastFrame);
+        movementY = speed;
         haveMovedY = true;
     }
 
@@ -89,7 +89,7 @@ void PlayerControllerComponent::MoveByController(FVector2D* location, float spee
 
     FVector2D difference = stick - *location;
     FVector2D direction = difference.Normalize();
-    FVector2D velocity = direction * (speed * 10);
+    FVector2D velocity = direction * speed;
     FVector2D newPosition = *location + velocity;
 
     location->SetXYValue(newPosition.GetX(), newPosition.GetY());

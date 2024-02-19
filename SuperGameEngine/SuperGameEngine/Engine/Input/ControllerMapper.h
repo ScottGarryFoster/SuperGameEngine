@@ -54,7 +54,13 @@ namespace SuperGameEngine
         /// </returns>
         int GetSDLAxisOnController(Controller controller) const;
 
-        UniversalControllerAxis GetUniversalAxisFromSDLAxis(Controller controller, int SDLAxis) const;
+        /// <summary>
+        /// Gets a Universal Axis Mapping from the SDL Mapping.
+        /// </summary>
+        /// <param name="controller">Controller to look for the mapping of. </param>
+        /// <param name="SDLAxis">SDL Axis to get context for. </param>
+        /// <returns>Axis mapping information. </returns>
+        AxisToUniversalAxis GetUniversalAxisMapping(Controller controller, int SDLAxis) const;
 
         /// <summary>
         /// Get the Hat Mapped to DPad.
