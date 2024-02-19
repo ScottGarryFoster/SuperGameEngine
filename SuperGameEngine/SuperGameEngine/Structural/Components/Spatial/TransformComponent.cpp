@@ -16,7 +16,7 @@ TransformComponent::~TransformComponent()
     delete m_onLocationChanged;
 }
 
-FVector2D* TransformComponent::GetLocation()
+FVector2D* TransformComponent::GetLocation() const
 {
     return m_location;
 }

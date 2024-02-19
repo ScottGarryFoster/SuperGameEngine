@@ -19,7 +19,7 @@ namespace SuperGameEngine
         /// This is the center of the GameObject.
         /// </summary>
         /// <returns>The location of the GameObject. </returns>
-        FVector2D* GetLocation();
+        FVector2D* GetLocation() const;
 
         /// <summary>
         /// Gets the location of the transform.

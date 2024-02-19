@@ -74,6 +74,12 @@
     <Filter Include="Package Files">
       <UniqueIdentifier>{56c5e8d6-cd1c-4b98-9dd0-32ae580d4396}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Components\Gameplay">
+      <UniqueIdentifier>{3c9ae933-a3c0-4027-85cd-8d2de7500435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Gameplay\API">
+      <UniqueIdentifier>{ab4ae1c7-9006-42dc-8e66-da6dbcf2e5b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -138,6 +144,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp">
       <Filter>Project Files\Engine\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp">
+      <Filter>Project Files\Structural\Components\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Basic\GameTime.h">
       <Filter>Project Files\Engine\Basic\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Gameplay\PlayerControllerComponent.h">
+      <Filter>Project Files\Structural\Components\Gameplay\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
