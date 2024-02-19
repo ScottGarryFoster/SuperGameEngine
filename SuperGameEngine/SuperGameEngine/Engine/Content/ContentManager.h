@@ -35,5 +35,10 @@ namespace SuperGameEngine
         /// All the textures currently loaded.
         /// </summary>
         std::vector<SuperTexture*> m_textureLibrary;
+
+        /// <summary>
+        /// The directory products are stored.
+        /// </summary>
+        FString m_productsDirectory;
     };
 }

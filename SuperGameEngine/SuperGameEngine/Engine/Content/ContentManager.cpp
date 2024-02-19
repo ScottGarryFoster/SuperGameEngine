@@ -1,5 +1,6 @@
 #include "ContentManager.h"
 #include "../../Engine/Graphics/Texture.h"
+#include "../Basic/FilesAndFolders.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -14,6 +15,7 @@ ContentManager::ContentManager(SDL_Renderer* renderer)
 
     m_renderer = renderer;
     m_textureLibrary = std::vector<SuperTexture*>();
+    m_productsDirectory = FString(FilesAndFolders::GetProductsFolder());
 }
 
 ContentManager::~ContentManager()
@@ -39,6 +41,7 @@ SuperTexture* ContentManager::GetTexture(FString filePath)
     }
 
     filePath.ConvertToLower();
+    filePath = m_productsDirectory + "\\" + filePath;
 
     bool foundTexture = false;
     SuperTexture* returnTexture = nullptr;

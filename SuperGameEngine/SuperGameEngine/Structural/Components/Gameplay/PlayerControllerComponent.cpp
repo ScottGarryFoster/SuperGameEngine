@@ -80,6 +80,11 @@ void PlayerControllerComponent::MoveByController(FVector2D* location, float spee
 
     int stickX = controllerInput->AxisValue(UniversalControllerAxis::LeftStickX);
     int stickY = controllerInput->AxisValue(UniversalControllerAxis::LeftStickY);
+    if (stickX == 0 && stickY == 0)
+    {
+        return;
+    }
+
     FVector2D stick = FVector2D((float)stickX, (float)stickY);
 
     FVector2D difference = stick - *location;
