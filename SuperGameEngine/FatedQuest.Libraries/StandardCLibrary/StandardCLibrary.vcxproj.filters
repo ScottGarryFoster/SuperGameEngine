@@ -137,6 +137,9 @@
     <ClInclude Include="Object\Asserts\FileOpenAssert.hpp">
       <Filter>Project Files\Object\Asserts</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\FObservableVector2D.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -177,6 +180,9 @@
     </ClCompile>
     <ClCompile Include="File\Directory.cpp">
       <Filter>Project Files\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FObservableVector2D.cpp">
+      <Filter>Project Files\Structural</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

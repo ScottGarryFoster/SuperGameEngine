@@ -10,6 +10,9 @@
     <ClCompile Include="Collection\Organised\FListTests.cpp">
       <Filter>Collection\Organised</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\FVector2DTests.cpp">
+      <Filter>Structural</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Text">
@@ -23,6 +26,9 @@
     </Filter>
     <Filter Include="Collection\Organised">
       <UniqueIdentifier>{85c695e8-f55d-4a7a-be28-de27225f525f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structural">
+      <UniqueIdentifier>{ef815f2f-fcdd-4c50-8150-3d79d0c4095d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

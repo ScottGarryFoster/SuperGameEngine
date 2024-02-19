@@ -8,6 +8,7 @@
 #include "File/Directory.h"
 #include "Collection/Organised/FList.hpp";
 #include "Structural/FVector2D.h"
+#include "Structural/FObservableVector2D.h"
 #include "Structural/FPoint.h"
 #include "Events/FEvent.h"
 #include "Events/FEventObserver.h"
