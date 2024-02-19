@@ -18,10 +18,10 @@
   </AxisToButtons>
   <HatSDLMapping SDLToButtonValue="0" />
   <SDLToUniversalAxes>
-    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" />
-    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" />
-    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickX" />
-    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickY" />
+    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" Deadzone="2000" />
+    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" Deadzone="2000" />
+    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickX" Deadzone="2000" />
+    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickY" Deadzone="2000" />
     <SDLToUniversalAxis SDLAxis="3" UniversalControllerAxis="LeftTrigger" />
     <SDLToUniversalAxis SDLAxis="4" UniversalControllerAxis="RightTrigger" />
   </SDLToUniversalAxes>

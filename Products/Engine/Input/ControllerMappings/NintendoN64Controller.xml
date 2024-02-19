@@ -19,7 +19,7 @@
     <AxisToButton Axis="5" UniversalControllerButton="FaceButtonRight" EvaluationComparison="Equals" EvaluationValue="32767" /> <!-- C Down -->
   </AxisToButtons>
   <SDLToUniversalAxes>
-    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" />
-    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" />
+    <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" Deadzone="10000" />
+    <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" Deadzone="10000" />
   </SDLToUniversalAxes>
 </ControllerLayout>

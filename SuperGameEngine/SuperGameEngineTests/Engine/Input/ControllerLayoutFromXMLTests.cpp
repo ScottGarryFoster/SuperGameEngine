@@ -903,13 +903,13 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
-        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
         ASSERT_EQ(1, actual.Count()) << errors;
 
-        int axis = actual[0].first;
+        int axis = actual[0].SDLAxis;
         ASSERT_EQ(givenAxis, axis) << errors;
 
-        UniversalControllerAxis universalAxis = actual[0].second;
+        UniversalControllerAxis universalAxis = actual[0].UniversalAxis;
         ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
     }
 
@@ -943,19 +943,19 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
-        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
         ASSERT_EQ(2, actual.Count()) << errors;
 
-        int axis = actual[0].first;
+        int axis = actual[0].SDLAxis;
         ASSERT_EQ(givenAxis, axis) << errors;
 
-        UniversalControllerAxis universalAxis = actual[0].second;
+        UniversalControllerAxis universalAxis = actual[0].UniversalAxis;
         ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
 
-        axis = actual[1].first;
+        axis = actual[1].SDLAxis;
         ASSERT_EQ(givenSecondAxis, axis) << errors;
 
-        universalAxis = actual[1].second;
+        universalAxis = actual[1].UniversalAxis;
         ASSERT_EQ(givenSecondUniversalAxis, universalAxis) << errors;
     }
 
@@ -979,7 +979,7 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
-        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
         ASSERT_EQ(0, actual.Count()) << errors;
     }
 
@@ -1003,7 +1003,7 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
-        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
         ASSERT_EQ(0, actual.Count()) << errors;
     }
 
@@ -1037,13 +1037,13 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
-        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
         ASSERT_EQ(1, actual.Count()) << errors;
 
-        int axis = actual[0].first;
+        int axis = actual[0].SDLAxis;
         ASSERT_EQ(givenAxis, axis) << errors;
 
-        UniversalControllerAxis universalAxis = actual[0].second;
+        UniversalControllerAxis universalAxis = actual[0].UniversalAxis;
         ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
     }
 
@@ -1077,14 +1077,105 @@ namespace SuperGameEngine_Engine_Input
         m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
 
         ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
-        FList<std::pair<int, UniversalControllerAxis>> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
         ASSERT_EQ(1, actual.Count()) << errors;
 
-        int axis = actual[0].first;
+        int axis = actual[0].SDLAxis;
         ASSERT_EQ(givenAxis, axis) << errors;
 
-        UniversalControllerAxis universalAxis = actual[0].second;
+        UniversalControllerAxis universalAxis = actual[0].UniversalAxis;
         ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_AddsDeadzoneToAxis_WhenGivenADeadzone)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+        int givenDeadzone = 42;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString("Deadzone=\"") + givenDeadzone + "\" ";
+        given += FString(" />\n");
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, actual.Count()) << errors;
+
+        int axis = actual[0].SDLAxis;
+        ASSERT_EQ(givenAxis, axis) << errors;
+
+        UniversalControllerAxis universalAxis = actual[0].UniversalAxis;
+        ASSERT_EQ(givenUniversalAxis, universalAxis) << errors;
+
+        ASSERT_TRUE(actual[0].HasDeadzone) << errors;
+
+        int deadzone = actual[0].Deadzone;
+        ASSERT_EQ(deadzone, givenDeadzone) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DeadzoneReturnsFalse_WhenNotGivenDeadzone)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString(" />\n");
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, actual.Count()) << errors;
+
+        ASSERT_FALSE(actual[0].HasDeadzone) << errors;
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromXML_DeadzoneReturnsFalse_WhenDeadzoneIsNotANumber)
+    {
+        // Arrange
+        int givenAxis = 0;
+        UniversalControllerAxis givenUniversalAxis = UniversalControllerAxis::LeftStickX;
+        FString givenDeadzone = "gdgdfgfd";
+
+        FString given = "<ControllerLayout>\n";
+        given += FString("<SDLToUniversalAxes>\n");
+        given += FString("<SDLToUniversalAxis SDLAxis=\"") + givenAxis;
+        given += FString("\" UniversalControllerAxis=\"");
+        given += FString(EUniversalControllerAxis::ToString(givenUniversalAxis)) + "\" ";
+        given += FString("Deadzone=\"") + givenDeadzone + "\" ";
+        given += FString(" />\n");
+        given += FString("</SDLToUniversalAxes>\n");
+        given += FString("</ControllerLayout>\n");
+        FString errors;
+
+        // Act
+        m_controllerLayout = m_controllerLayoutFromXML->CreateFromXML(given, errors);
+
+        ASSERT_NE(m_controllerLayout, nullptr) << "Could not parse XML: " << errors;
+        FList<AxisToUniversalAxis> actual = m_controllerLayout->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, actual.Count()) << errors;
+
+        ASSERT_FALSE(actual[0].HasDeadzone) << errors;
     }
 #pragma endregion
 

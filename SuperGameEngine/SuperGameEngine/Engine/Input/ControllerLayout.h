@@ -6,6 +6,7 @@
 #include "ControllerAxisMappedToButton.h"
 #include "Controller.hpp"
 #include "UniversalControllerAxis.hpp"
+#include "AxisToUniversalAxis.h"
 
 namespace SuperGameEngine
 {
@@ -61,6 +62,6 @@ namespace SuperGameEngine
         /// <summary>
         /// Maps an SDL Axis to a Universal one.
         /// </summary>
-        FList<std::pair<int, UniversalControllerAxis>> SDLAxisToUniversalAxis;
+        FList<AxisToUniversalAxis> SDLAxisToUniversalAxis;
     };
 }

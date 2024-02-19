@@ -249,6 +249,9 @@
     <ClInclude Include="Structural\Components\Gameplay\PlayerControllerComponent.h">
       <Filter>Project Files\Structural\Components\Gameplay\API</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Input\AxisToUniversalAxis.h">
+      <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
