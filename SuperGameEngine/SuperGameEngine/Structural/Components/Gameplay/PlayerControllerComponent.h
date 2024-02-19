@@ -21,5 +21,8 @@ namespace SuperGameEngine
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
         virtual bool Update(GameTime gameTime) override;
+    private:
+        void MoveByKeyboard(float speed, SuperGameEngine::GameTime& gameTime, StandardCLibrary::FVector2D* location);
+        void MoveByController(StandardCLibrary::FVector2D* location, float speed);
     };
 }
