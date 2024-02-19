@@ -14,10 +14,19 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
-    float speed = 0.5f;
+    float speed = 2;
     TransformComponent* transform = GameComponent::GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
-    const DirectKeyInput* input = GameComponent::m_loadPackage->GetDirectInput()->GetDirectKeyInput();
+    MoveByKeyboard(speed, gameTime, location);
+    MoveByController(location, speed);
+
+    return true;
+}
+
+void PlayerControllerComponent::MoveByKeyboard(float speed, GameTime& gameTime, FVector2D* location)
+{
+    const DirectKeyInput* input = 
+        GameComponent::m_loadPackage->GetDirectInput()->GetDirectKeyInput();
 
     bool haveMovedX = false;
     bool haveMovedY = false;
@@ -63,6 +72,20 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
     {
         location->SetXYValue(newX, newY);
     }
+}
 
-    return true;
+void PlayerControllerComponent::MoveByController(FVector2D* location, float speed)
+{
+    const DirectControllerInput* controllerInput = GameComponent::m_loadPackage->GetDirectInput()->GetDirectXInput();
+
+    int stickX = controllerInput->AxisValue(UniversalControllerAxis::LeftStickX);
+    int stickY = controllerInput->AxisValue(UniversalControllerAxis::LeftStickY);
+    FVector2D stick = FVector2D(stickX, stickY);
+
+    FVector2D difference = stick - *location;
+    FVector2D direction = difference.Normalize();
+    FVector2D velocity = direction * (speed * 10);
+    FVector2D newPosition = *location + velocity;
+
+    location->SetXYValue(newPosition.GetX(), newPosition.GetY());
 }
