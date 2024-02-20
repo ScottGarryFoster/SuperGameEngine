@@ -23,7 +23,7 @@ ControllerLayoutCollection::ControllerLayoutCollection()
         FList<FString> paths = Directory::GetFilepaths(directory);
         for (FString filePath : paths)
         {
-            Logger::Info(filePath);
+            Logger::Info(FString("Loading Controller CONFIG: ") + filePath);
             FString fileContents = File::ReadFileContents(filePath);
             FString error;
 
