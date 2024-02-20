@@ -149,6 +149,7 @@
     <ClInclude Include="Object\FAsserts.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\TypeHelpers.hpp" />
+    <ClInclude Include="Structural\FObservablePoint.h" />
     <ClInclude Include="Structural\FObservableVector2D.h" />
     <ClInclude Include="Structural\FPoint.h" />
     <ClInclude Include="Structural\FVector2D.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Object\FAsserts.cpp" />
     <ClCompile Include="Object\Object.cpp" />
+    <ClCompile Include="Structural\FObservablePoint.cpp" />
     <ClCompile Include="Structural\FObservableVector2D.cpp" />
     <ClCompile Include="Structural\FPoint.cpp" />
     <ClCompile Include="Structural\FPointLocationEventArguments.h" />

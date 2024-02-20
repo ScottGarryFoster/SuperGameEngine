@@ -1,36 +1,37 @@
 #pragma once
-#include "FVector2D.h"
+#include "FPoint.h"
 #include "../Events/FEvent.h"
 
 namespace StandardCLibrary
 {
     /// <summary>
-    /// A Vector which you can passively observe when it updates.
+    /// A point you can passively observe changes to.
     /// </summary>
-    class FObservableVector2D : public FVector2D
+    class FObservablePoint : FPoint
     {
     public:
-        FObservableVector2D();
-        virtual ~FObservableVector2D();
+        FObservablePoint();
+        FObservablePoint(int x, int y);
+        virtual ~FObservablePoint();
 
         /// <summary>
         /// Sets the X Value.
         /// </summary>
         /// <param name="newValue">The new X value. </param>
-        virtual void SetX(float newValue) override;
+        virtual void SetX(int newValue) override;
 
         /// <summary>
         /// Sets the Y Value.
         /// </summary>
         /// <param name="newValue">The new Y value. </param>
-        virtual void SetY(float newValue) override;
+        virtual void SetY(int newValue) override;
 
         /// <summary>
         /// Sets both the x and y values.
         /// </summary>
         /// <param name="x">New X value. </param>
         /// <param name="y">New Y value. </param>
-        virtual void SetXYValue(float x, float y) override;
+        virtual void SetXYValue(int x, int y) override;
 
         /// <summary>
         /// Invokes when value has changed.
@@ -48,5 +49,4 @@ namespace StandardCLibrary
         /// </summary>
         void InvokeOnValueChanged();
     };
-
 }

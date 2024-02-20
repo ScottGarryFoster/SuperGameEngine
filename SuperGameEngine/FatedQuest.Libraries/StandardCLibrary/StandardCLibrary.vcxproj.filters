@@ -140,6 +140,9 @@
     <ClInclude Include="Structural\FObservableVector2D.h">
       <Filter>Project Files\Structural\API</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\FObservablePoint.h">
+      <Filter>Project Files\Structural\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -182,6 +185,9 @@
       <Filter>Project Files\File</Filter>
     </ClCompile>
     <ClCompile Include="Structural\FObservableVector2D.cpp">
+      <Filter>Project Files\Structural</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\FObservablePoint.cpp">
       <Filter>Project Files\Structural</Filter>
     </ClCompile>
   </ItemGroup>
