@@ -101,6 +101,12 @@
     <Filter Include="Project Files\Engine\Graphics\Technique\API">
       <UniqueIdentifier>{60f2c34f-436b-4387-98a5-b9469c6c56b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Collision">
+      <UniqueIdentifier>{6ae9418f-f51a-4c86-b4c4-8642705c2e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Collision\API">
+      <UniqueIdentifier>{85648a4f-88e0-4916-8b97-af2fe417316d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -190,6 +196,13 @@
     <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp">
       <Filter>Project Files\Engine\Graphics\Technique</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp">
+      <Filter>Project Files\Structural\Spatial\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Collision\Collision.cpp">
+      <Filter>Project Files\Structural\Spatial\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -318,6 +331,13 @@
     <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h">
       <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Spatial\Collision\CollisionDectection.h">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Collision\Collision.h">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

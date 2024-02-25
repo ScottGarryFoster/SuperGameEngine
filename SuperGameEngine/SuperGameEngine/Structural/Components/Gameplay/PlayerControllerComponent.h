@@ -9,6 +9,9 @@ namespace SuperGameEngine
     class PlayerControllerComponent : public GameComponent
     {
     public:
+        PlayerControllerComponent();
+        virtual ~PlayerControllerComponent();
+
         /// <summary>
         /// Sets up the Component.
         /// </summary>
@@ -21,8 +24,17 @@ namespace SuperGameEngine
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
         virtual bool Update(GameTime gameTime) override;
+
+        /// <summary>
+        /// Temp method to make player use only keyboard.
+        inline void UseKeyboard(bool trueToUseKeyboard)
+        {
+            m_useKeyboard = trueToUseKeyboard;
+        }
     private:
         void MoveByKeyboard(float speed, SuperGameEngine::GameTime& gameTime, StandardCLibrary::FVector2D* location);
         void MoveByController(StandardCLibrary::FVector2D* location, float speed);
+
+        bool m_useKeyboard;
     };
 }

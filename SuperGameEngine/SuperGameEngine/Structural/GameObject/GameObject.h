@@ -4,12 +4,14 @@
 #include "../../Engine/Basic/GameTime.h"
 #include <vector>
 #include "../Scene/SceneLoadPackage.h"
+#include "../Scene/SceneToGameObjectPackage.h"
 using namespace StandardCLibrary;
 
 namespace SuperGameEngine
 {
     class GameComponent;
     class TransformComponent;
+    class Collision;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -24,8 +26,9 @@ namespace SuperGameEngine
         /// <summary>
         /// Sets up the GameObject.
         /// </summary>
-        /// <param name="loadPackage">Everything a GameObject needs to be a game object. </param>
-        virtual void Setup(SceneLoadPackage* loadPackage);
+        /// <param name="sceneLoadPackage">Contains all the objects a GameObject needs to opperate. </param>
+        /// <param name="sceneToGameObjectPackage">Contains gameObject specfic loading items.</param>
+        void Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* gameObjectPackage);
 
         /// <summary>
         /// Entry point for the entire game.
@@ -77,6 +80,31 @@ namespace SuperGameEngine
             return nullptr;
         }
 
+        /// <summary>
+        /// A collision with something else has begin.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionBegin(Collision& collision);
+
+        /// <summary>
+        /// A collision is on going with another object.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionOccuring(Collision& collision);
+
+        /// <summary>
+        /// A collision has ended with something.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionEnd(Collision& collision);
+
+        /// <summary>
+        /// Gets the transform on this GameObject.
+        /// MUST CALL DURING/AFTER SETUP not on construction.
+        /// Never fails after setup.
+        /// Every gameobject has transform.
+        /// </summary>
+        /// <returns>The location, scale and rotation of the gameobject. </returns>
         TransformComponent* GetTransform();
         
     private:
@@ -85,6 +113,11 @@ namespace SuperGameEngine
         /// Everything passed down from the scene.
         /// </summary>
         SceneLoadPackage* m_loadPackage;
+
+        /// <summary>
+        /// Just the GameObject items from Scene.
+        /// </summary>
+        SceneToGameObjectPackage* m_gameObjectPackage;
 
         /// <summary>
         /// All components currently loaded.

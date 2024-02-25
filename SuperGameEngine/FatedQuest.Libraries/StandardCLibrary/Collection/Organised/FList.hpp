@@ -97,5 +97,14 @@ namespace StandardCLibrary
             return FCollection<T>::m_actualData[index];
         }
 
+        T& GetValueAt(size_t index)
+        {
+            return FCollection<T>::m_actualData[index];
+        }
+
+        const T& GetConstValueAt(size_t index) const
+        {
+            return FCollection<T>::m_actualData[index];
+        }
     };
 }

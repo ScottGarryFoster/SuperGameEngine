@@ -21,11 +21,18 @@ namespace SuperGameEngine
         /// <param name="renderer">Ability to render. </param>
         virtual void Draw(SDL_Renderer* renderer) override;
 
+        virtual void UpdateColour(int r, int g, int b, int a);
+
     private:
 
         /// <summary>
         /// Shape to draw.
         /// </summary>
         std::weak_ptr<Rectangle> m_shape;
+
+        int red;
+        int green;
+        int blue;
+        int alpha;
     };
 }

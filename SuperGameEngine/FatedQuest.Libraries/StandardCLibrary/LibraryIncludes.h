@@ -6,6 +6,7 @@
 #include "Text/FString.h"
 #include "File/File.h"
 #include "File/Directory.h"
+#include "Collection/Organised/FCollection.hpp";
 #include "Collection/Organised/FList.hpp";
 #include "Collection/Vector/VectorHelpers.hpp";
 #include "Structural/FVector2D.h"

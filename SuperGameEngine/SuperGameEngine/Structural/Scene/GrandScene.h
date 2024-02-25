@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "../../Engine/Input/DirectInput.h"
 #include "../../Engine/Graphics/Technique/TechniqueRenderer.h"
+#include "SceneToGameObjectPackage.h"
 
 namespace SuperGameEngine
 {
@@ -42,6 +43,13 @@ namespace SuperGameEngine
         /// Can be given to other GameObjets freely.
         /// </summary>
         SceneLoadPackage* m_sceneLoadPackage;
+
+        /// <summary>
+        /// Objects for the GameObject to operate which GameComponents do not need
+        /// to worry about. Things like Collision which the GameObject should help
+        /// manage but the Components should feel like are 'managed' by the GameObject.
+        /// </summary>
+        SceneToGameObjectPackage* m_sceneToGameObjectPackage;
 
         /// <summary>
         /// All the Scenes loaded.

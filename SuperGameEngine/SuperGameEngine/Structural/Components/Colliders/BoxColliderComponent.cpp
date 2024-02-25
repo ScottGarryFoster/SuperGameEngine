@@ -28,10 +28,23 @@ void BoxColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* pare
     m_transform->OnLocationChanged()->Subscribe(this);
 
     m_loadPackage->GetTechniqueRender()->GiveTechnique(m_rectangleDrawableTechnique);
+
+    m_retangleActual->SetLocation(
+        m_transform->GetLocation()->GetX() + m_retangle->GetLeft() - (m_retangle->GetWidth() / 2.0f),
+        m_transform->GetLocation()->GetY() + m_retangle->GetTop() - (m_retangle->GetHeight() / 2.0f));
 }
 
 bool BoxColliderComponent::Overlaps(Collider& other) const
 {
+    if (typeid(other) == typeid(BoxColliderComponent))
+    {
+        BoxColliderComponent* otherBox =
+            dynamic_cast<BoxColliderComponent*>(&other);
+
+        Rectangle* otherRectangle = otherBox->m_retangleActual.get();
+        return m_retangleActual->Overlaps(*otherRectangle);
+    }
+
     return false;
 }
 
@@ -46,6 +59,12 @@ bool BoxColliderComponent::Update(GameTime gameTime)
 
 
     return false;
+}
+
+void BoxColliderComponent::Draw()
+{
+    // Happens after the technique draws. This is for testing.
+    m_rectangleDrawableTechnique->UpdateColour(0, 0, 0, 255);
 }
 
 void BoxColliderComponent::Invoke(FEventArguments* arguments)
@@ -84,4 +103,9 @@ void BoxColliderComponent::SetColliderSize(FVector2D& size)
 {
     m_retangle->SetSize(size.GetX(), size.GetY());
     m_retangleActual->SetSize(size.GetX(), size.GetY());
+}
+
+void BoxColliderComponent::OnCollisionOccuring(Collision& collision)
+{
+    m_rectangleDrawableTechnique->UpdateColour(0, 255, 0, 255);
 }

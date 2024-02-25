@@ -1,5 +1,6 @@
 #include "GameComponent.h"
 #include "GameObject.h"
+#include "../Spatial/Collision/Collision.h"
 
 #include "../../LibraryIncludes.h"
 
@@ -51,4 +52,16 @@ bool SuperGameEngine::GameComponent::DoRender() const
 void SuperGameEngine::GameComponent::SetDoRender(bool newValue)
 {
     m_doRender = newValue;
+}
+
+void GameComponent::OnCollisionBegin(Collision& collision)
+{
+}
+
+void GameComponent::OnCollisionOccuring(Collision& collision)
+{
+}
+
+void GameComponent::OnCollisionEnd(Collision& collision)
+{
 }

@@ -169,7 +169,10 @@
     <ClInclude Include="Structural\Scene\GrandScene.h" />
     <ClInclude Include="Structural\Scene\Scene.h" />
     <ClInclude Include="Structural\Scene\SceneLoadPackage.h" />
+    <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
+    <ClInclude Include="Structural\Spatial\Collision\Collision.h" />
+    <ClInclude Include="Structural\Spatial\Collision\CollisionDectection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
@@ -200,7 +203,10 @@
     <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Scene\Scene.cpp" />
     <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp" />
+    <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
+    <ClCompile Include="Structural\Spatial\Collision\Collision.cpp" />
+    <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

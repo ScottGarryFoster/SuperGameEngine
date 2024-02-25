@@ -1,5 +1,6 @@
 #include "GrandScene.h"
 #include "../../Engine/Basic/GameTime.h"
+#include "../../Structural/Spatial/Collision/CollisionDectection.h"
 
 using namespace SuperGameEngine;
 
@@ -13,8 +14,12 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
         m_techniqueRenderer);
     m_scenes = std::vector<Scene*>();
 
+    m_sceneToGameObjectPackage = new SceneToGameObjectPackage(
+        new CollisionDectection());
+
+
     Scene* scene = new Scene();
-    scene->Setup(m_sceneLoadPackage);
+    scene->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     m_scenes.push_back(scene);
 }
 
@@ -23,12 +28,15 @@ GrandScene::~GrandScene()
     delete m_sceneLoadPackage;
     delete m_directInput;
     delete m_techniqueRenderer;
+    delete m_sceneToGameObjectPackage;
 }
 
 bool GrandScene::Update(Uint64 tick)
 {
     GameTime gameTime = GameTime();
     gameTime.TicksSinceLastFrame = (int)tick;
+
+    m_sceneToGameObjectPackage->GetCollisionDectection()->RunCollisionUpdate();
 
     for (Scene* scene : m_scenes)
     {

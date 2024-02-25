@@ -45,6 +45,11 @@ namespace SuperGameEngine
         virtual bool Update(GameTime gameTime) override;
 
         /// <summary>
+        /// Draw everything in the game.
+        /// </summary>
+        virtual void Draw() override;
+
+        /// <summary>
         /// Reacts to events.
         /// </summary>
         /// <param name="arguments">Arguments for the events. </param>
@@ -57,6 +62,12 @@ namespace SuperGameEngine
         FVector2D GetColliderSize() const;
 
         void SetColliderSize(FVector2D& size);
+
+        /// <summary>
+        /// A collision is on going with another object.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionOccuring(Collision& collision) override;
 
     private:
         /// <summary>
