@@ -10,7 +10,7 @@ namespace SuperGameEngine
     /// <summary>
     /// A collider of a box shape.
     /// </summary>
-    class BoxColliderComponent : public ColliderComponent
+    class BoxColliderComponent : public ColliderComponent, public FEventObserver
     {
     public:
         BoxColliderComponent();
@@ -43,6 +43,12 @@ namespace SuperGameEngine
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
         virtual bool Update(GameTime gameTime) override;
+
+        /// <summary>
+        /// Reacts to events.
+        /// </summary>
+        /// <param name="arguments">Arguments for the events. </param>
+        virtual void Invoke(FEventArguments* arguments) override;
 
         FVector2D GetColliderLocation() const;
 

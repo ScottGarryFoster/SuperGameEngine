@@ -25,6 +25,8 @@ void BoxColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* pare
     ColliderComponent::Setup(loadPackage, parent);
 
     m_transform = parent->GetTransform();
+    m_transform->OnLocationChanged()->Subscribe(this);
+
     m_loadPackage->GetTechniqueRender()->GiveTechnique(m_rectangleDrawableTechnique);
 }
 
@@ -42,11 +44,21 @@ bool BoxColliderComponent::Update(GameTime gameTime)
 {
     ColliderComponent::Update(gameTime);
 
-    // TODO: Do this on Transform location changed.
-    m_retangleActual->SetLocation(
-        m_transform->GetLocation()->GetX() + m_retangle->GetLeft() - (m_retangle->GetWidth() / 2.0f),
-        m_transform->GetLocation()->GetY() + m_retangle->GetTop() - (m_retangle->GetHeight() / 2.0f));
-    return true;
+
+    return false;
+}
+
+void BoxColliderComponent::Invoke(FEventArguments* arguments)
+{
+    if (TypeHelpers::IsDerivedFrom<FEventArguments, FVectorLocationEventArguments>())
+    {
+        FVectorLocationEventArguments* locationArguments =
+            dynamic_cast<FVectorLocationEventArguments*>(arguments);
+
+        m_retangleActual->SetLocation(
+            locationArguments->X + m_retangle->GetLeft() - (m_retangle->GetWidth() / 2.0f),
+            locationArguments->Y + m_retangle->GetTop() - (m_retangle->GetHeight() / 2.0f));
+    }
 }
 
 FVector2D BoxColliderComponent::GetColliderLocation() const
