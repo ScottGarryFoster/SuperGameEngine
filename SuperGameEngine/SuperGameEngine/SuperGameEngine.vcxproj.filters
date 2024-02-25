@@ -80,6 +80,21 @@
     <Filter Include="Project Files\Structural\Components\Gameplay\API">
       <UniqueIdentifier>{ab4ae1c7-9006-42dc-8e66-da6dbcf2e5b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Components\Colliders">
+      <UniqueIdentifier>{047a2569-07c5-45b0-b95d-01d34e20285d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Colliders\API">
+      <UniqueIdentifier>{ea94d2ad-b28f-4d4b-85e8-8728ffbaf741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial">
+      <UniqueIdentifier>{7768ca81-e0c5-463b-bceb-9001cf6caff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Area">
+      <UniqueIdentifier>{82b9e965-209f-48ed-a9a1-bcc2d22f020a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Area\API">
+      <UniqueIdentifier>{cec75cfc-b842-43f9-b01f-b772c0708d7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -147,6 +162,15 @@
     </ClCompile>
     <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp">
       <Filter>Project Files\Structural\Components\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Colliders\BoxColliderComponent.cpp">
+      <Filter>Project Files\Structural\Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Colliders\ColliderComponent.cpp">
+      <Filter>Project Files\Structural\Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +275,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Input\AxisToUniversalAxis.h">
       <Filter>Project Files\Engine\Input\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Colliders\Collider.h">
+      <Filter>Project Files\Structural\Components\Colliders\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Colliders\BoxColliderComponent.h">
+      <Filter>Project Files\Structural\Components\Colliders\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Colliders\ColliderComponent.h">
+      <Filter>Project Files\Structural\Components\Colliders\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\Rectangle.h">
+      <Filter>Project Files\Structural\Spatial\Area\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

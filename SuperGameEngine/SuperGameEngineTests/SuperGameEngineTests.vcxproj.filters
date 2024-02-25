@@ -4,6 +4,9 @@
     <ClCompile Include="Engine\Input\ControllerLayoutFromXMLTests.cpp">
       <Filter>Project Files\Engine\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">
@@ -17,6 +20,15 @@
     </Filter>
     <Filter Include="Project Files\Engine\Input">
       <UniqueIdentifier>{2d2aa0b9-46e4-4e1e-bee5-81a5784d9b0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural">
+      <UniqueIdentifier>{c5ef3ac7-6c02-4b4a-a0bd-8e61010cbd31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial">
+      <UniqueIdentifier>{88b15b17-ad5a-4df7-85a4-369ae32ba3bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Area">
+      <UniqueIdentifier>{ce6abbec-f949-48bb-b24c-cb2413db577b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
