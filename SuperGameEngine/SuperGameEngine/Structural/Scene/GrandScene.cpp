@@ -6,7 +6,11 @@ using namespace SuperGameEngine;
 GrandScene::GrandScene(SDL_Renderer* renderer)
 {
     m_directInput = new DirectInput();
-    m_sceneLoadPackage = new SceneLoadPackage(new ContentManager(renderer), m_directInput);
+    m_techniqueRenderer = new TechniqueRenderer(renderer);
+    m_sceneLoadPackage = new SceneLoadPackage(
+        new ContentManager(renderer),
+        m_directInput, 
+        m_techniqueRenderer);
     m_scenes = std::vector<Scene*>();
 
     Scene* scene = new Scene();
@@ -39,6 +43,7 @@ bool GrandScene::Update(Uint64 tick)
 
 void GrandScene::Draw()
 {
+    m_techniqueRenderer->Draw();
     for (Scene* scene : m_scenes)
     {
         if (scene != nullptr)

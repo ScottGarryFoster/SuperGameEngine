@@ -3,6 +3,7 @@
 #include "SceneLoadPackage.h"
 #include "Scene.h"
 #include "../../Engine/Input/DirectInput.h"
+#include "../../Engine/Graphics/Technique/TechniqueRenderer.h"
 
 namespace SuperGameEngine
 {
@@ -51,5 +52,10 @@ namespace SuperGameEngine
         /// Manages user input directly.
         /// </summary>
         DirectInput* m_directInput;
+
+        /// <summary>
+        /// Renders techniques which for the most part are primitives.
+        /// </summary>
+        TechniqueRenderer* m_techniqueRenderer;
     };
 }

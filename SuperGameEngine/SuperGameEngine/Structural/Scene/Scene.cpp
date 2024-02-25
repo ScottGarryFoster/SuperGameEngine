@@ -5,6 +5,7 @@
 #include "../Components/Spatial/TransformComponent.h"
 #include "../Components/Example/UserInputTestComponent.h"
 #include "../Components/Gameplay/PlayerControllerComponent.h"
+#include "../Components/Colliders/BoxColliderComponent.h"
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -33,6 +34,13 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage)
     GameObject* go = new GameObject();
     go->Setup(m_sceneLoadPackage);
     go->GetTransform()->SetLocation(100, 0);
+
+    BoxColliderComponent* box = go->AddComponent<BoxColliderComponent>();
+    FVector2D l = FVector2D(0, 0);
+    FVector2D s = FVector2D(100, 200);
+    box->SetColliderLocation(l);
+    box->SetColliderSize(s);
+
     go->AddComponent<PlayerControllerComponent>();
     go->AddComponent<SpriteComponent>();
     m_gameObjects.push_back(go);

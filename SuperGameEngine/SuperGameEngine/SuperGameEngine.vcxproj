@@ -131,6 +131,10 @@
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
+    <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h" />
+    <ClInclude Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.h" />
+    <ClInclude Include="Engine\Graphics\Technique\RectangleDrawableTechnique.h" />
+    <ClInclude Include="Engine\Graphics\Technique\TechniqueRenderer.h" />
     <ClInclude Include="Engine\Input\AxisToUniversalAxis.h" />
     <ClInclude Include="Engine\Input\Controller.hpp" />
     <ClInclude Include="Engine\Input\ControllerAxisMappedToButton.h" />
@@ -171,6 +175,10 @@
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
     <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
+    <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp" />
+    <ClCompile Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.cpp" />
+    <ClCompile Include="Engine\Graphics\Technique\RectangleDrawableTechnique.cpp" />
+    <ClCompile Include="Engine\Graphics\Technique\TechniqueRenderer.cpp" />
     <ClCompile Include="Engine\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayout.h" />
     <ClCompile Include="Engine\Input\ControllerLayoutCollection.cpp" />

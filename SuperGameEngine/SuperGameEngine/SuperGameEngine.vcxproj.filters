@@ -95,6 +95,12 @@
     <Filter Include="Project Files\Structural\Spatial\Area\API">
       <UniqueIdentifier>{cec75cfc-b842-43f9-b01f-b772c0708d7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Engine\Graphics\Technique">
+      <UniqueIdentifier>{fbdee248-a8ea-4df5-a19a-2c0e8017912b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Graphics\Technique\API">
+      <UniqueIdentifier>{60f2c34f-436b-4387-98a5-b9469c6c56b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -171,6 +177,18 @@
     </ClCompile>
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.cpp">
+      <Filter>Project Files\Engine\Graphics\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Technique\RectangleDrawableTechnique.cpp">
+      <Filter>Project Files\Engine\Graphics\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Technique\TechniqueRenderer.cpp">
+      <Filter>Project Files\Engine\Graphics\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp">
+      <Filter>Project Files\Engine\Graphics\Technique</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +305,18 @@
     </ClInclude>
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h">
       <Filter>Project Files\Structural\Spatial\Area\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.h">
+      <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Technique\RectangleDrawableTechnique.h">
+      <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Technique\TechniqueRenderer.h">
+      <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h">
+      <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

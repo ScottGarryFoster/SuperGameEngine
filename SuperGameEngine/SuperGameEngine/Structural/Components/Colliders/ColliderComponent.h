@@ -12,6 +12,6 @@ namespace SuperGameEngine
         /// Gets the parent gameobject.
         /// </summary>
         /// <returns>The gameobject the collider belongs to. </returns>
-        inline virtual GameObject* GetParentObject() override;
+        virtual GameObject* GetParentObject() override;
     };
 }

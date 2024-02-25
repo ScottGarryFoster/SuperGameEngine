@@ -57,7 +57,7 @@ void GameObject::Draw()
     }
 }
 
-TransformComponent* SuperGameEngine::GameObject::GetTransform()
+TransformComponent* GameObject::GetTransform()
 {
     return m_transform;
 }

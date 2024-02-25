@@ -276,7 +276,6 @@ namespace SuperGameEngine_Structural_Spatial_Area
         m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
-        ASSERT_TRUE(FloatingPointHelpers::AreEqual(selfX + bothWidthHeight, otherX));
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
 
         // Assert
@@ -354,6 +353,201 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+#pragma endregion
+
+#pragma region OverlapsOrIsTouching
+    //  For these tests, 'self' refers to the testing object and 'other' the object passed in.
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsFalse_WhenOtherRightIsToTheLeftOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX - bothWidthHeight - 1;
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsFalse_WhenOtherLeftIsToTheRightOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX + bothWidthHeight + 1;
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsTrue_WhenOtherRightIsTouchingSelfLeft)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX - bothWidthHeight;
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsFalse_WhenOtherLeftIsTouchingSelfRight)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX + bothWidthHeight;
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(selfX + bothWidthHeight, otherX));
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsTrue_WhenOtherRightIsWithinBodyOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX - (bothWidthHeight / 2.0f);
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsFalse_WhenOtherBottomIsAboveSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY - bothWidthHeight - 1;
+
+        m_testRectangle = new Rectangle(bothX, selfY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsFalse_WhenOtherTopIsBelowSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY + bothWidthHeight + 1;
+
+        m_testRectangle = new Rectangle(bothX, selfY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsTrue_WhenOtherBottomIsTouchingSelfTop)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY - bothWidthHeight;
+
+        m_testRectangle = new Rectangle(bothX, selfY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsTrue_WhenOtherTopIsTouchingSelfBottom)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY + bothWidthHeight;
+
+        m_testRectangle = new Rectangle(bothX, selfY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsOrIsTouching_ReturnsTrue_WhenOtherTopIsInBodyOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY - (bothWidthHeight / 2.0f);
+
+        m_testRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangle);
 
         // Assert
         ASSERT_TRUE(actual);

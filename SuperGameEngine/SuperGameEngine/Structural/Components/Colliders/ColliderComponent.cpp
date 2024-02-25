@@ -3,7 +3,7 @@
 
 using namespace SuperGameEngine;
 
-inline GameObject* ColliderComponent::GetParentObject()
+GameObject* ColliderComponent::GetParentObject()
 {
     return GameComponent::GetParent();
 }

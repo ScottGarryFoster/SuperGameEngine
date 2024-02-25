@@ -113,6 +113,11 @@ bool Rectangle::Overlaps(Rectangle& other) const
     return true;
 }
 
+bool Rectangle::OverlapsOrIsTouching(Rectangle& other) const
+{
+    return IsTouching(other) || Overlaps(other);
+}
+
 bool Rectangle::IsTouching(Rectangle& other) const
 {
     if (FloatingPointHelpers::AreEqual(GetLeft(), other.GetRight()))

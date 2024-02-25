@@ -14,7 +14,7 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
-    float speed = (2 * gameTime.TicksSinceLastFrame);
+    float speed = (2.0f * gameTime.TicksSinceLastFrame);
     TransformComponent* transform = GameComponent::GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
     MoveByKeyboard(speed, gameTime, location);

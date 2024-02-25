@@ -120,6 +120,13 @@ namespace SuperGameEngine
         /// <returns>True means does overlap. </returns>
         bool Overlaps(Rectangle& other) const;
 
+        /// <summary>
+        /// Checks to see if the other rectangle overlaps with this rectangle.
+        /// </summary>
+        /// <param name="other">Other to check against. </param>
+        /// <returns>True means does overlap. </returns>
+        bool OverlapsOrIsTouching(Rectangle& other) const;
+
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.
