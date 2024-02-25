@@ -24,6 +24,11 @@ namespace SuperGameEngine
         /// </summary>
         void Draw();
 
+        /// <summary>
+        /// Emptys memory of unused Techniques.
+        /// </summary>
+        void Clean();
+
     private:
         /// <summary>
         /// Renderer given by the owner.

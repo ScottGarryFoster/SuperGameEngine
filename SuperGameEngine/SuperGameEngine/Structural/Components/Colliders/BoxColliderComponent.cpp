@@ -16,6 +16,8 @@ BoxColliderComponent::BoxColliderComponent() : ColliderComponent()
 BoxColliderComponent::~BoxColliderComponent()
 {
     m_retangle.reset();
+    m_retangleActual.reset();
+    m_rectangleDrawableTechnique.reset();
 }
 
 void BoxColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)

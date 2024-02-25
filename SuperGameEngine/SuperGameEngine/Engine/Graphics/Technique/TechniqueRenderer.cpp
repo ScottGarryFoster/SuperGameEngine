@@ -1,4 +1,5 @@
 #include "TechniqueRenderer.h"
+#include "../../../LibraryIncludes.h"
 
 using namespace SuperGameEngine;
 TechniqueRenderer::TechniqueRenderer(SDL_Renderer* renderer)
@@ -26,4 +27,24 @@ void SuperGameEngine::TechniqueRenderer::Draw()
             shared->Draw(m_renderer);
         }
     }
+}
+
+void TechniqueRenderer::Clean()
+{
+    std::vector< std::weak_ptr<DrawableTechnique>> toRemove = 
+        std::vector< std::weak_ptr<DrawableTechnique>>();
+    for (std::weak_ptr<DrawableTechnique> tech : m_techniques)
+    {
+        std::shared_ptr<DrawableTechnique> shared = tech.lock();
+        if (!shared)
+        {
+            toRemove.push_back(tech);
+        }
+    }
+
+    for (std::weak_ptr<DrawableTechnique> tech : toRemove)
+    {
+        VectorHelpers::RemoveValue(m_techniques, tech);
+    }
+
 }

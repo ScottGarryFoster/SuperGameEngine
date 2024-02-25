@@ -22,6 +22,7 @@ GrandScene::~GrandScene()
 {
     delete m_sceneLoadPackage;
     delete m_directInput;
+    delete m_techniqueRenderer;
 }
 
 bool GrandScene::Update(Uint64 tick)
@@ -36,6 +37,10 @@ bool GrandScene::Update(Uint64 tick)
             scene->Update(gameTime);
         }
     }
+
+    // TODO: This should run maybe once a minute or every 5 minutes.
+    // Make Clean Techniques occur on a slower update loop #41
+    m_techniqueRenderer->Clean();
 
     return true;
 }
