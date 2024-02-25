@@ -190,5 +190,8 @@
     <ClCompile Include="Structural\FObservablePoint.cpp">
       <Filter>Project Files\Structural</Filter>
     </ClCompile>
+    <ClCompile Include="Extentions\FloatingPointHelpers.hpp">
+      <Filter>Project Files\Extentions</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

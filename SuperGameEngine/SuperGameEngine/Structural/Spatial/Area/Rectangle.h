@@ -112,6 +112,14 @@ namespace SuperGameEngine
         /// <param name="height">The new Height of the Rectangle. </param>
         void SetHeight(float height);
 
+        /// <summary>
+        /// Checks to see if the other rectangle overlaps with this rectangle.
+        /// TOUCHES DO NOT COUNT.
+        /// </summary>
+        /// <param name="other">Other to check against. </param>
+        /// <returns>True means does overlap. </returns>
+        bool Overlaps(Rectangle& other) const;
+
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.
@@ -122,5 +130,16 @@ namespace SuperGameEngine
         /// Stores the width and height, X width, Y height.
         /// </summary>
         FVector2D m_size;
+
+        /// <summary>
+        /// Checks to see if the other rectangle is touching.
+        /// Uses the 'close enough' float math to ensure the value is acurate.
+        /// These are touches from the outside in.
+        /// So imagine you are two rectangles from the outside touching one another's sides
+        /// have you actually touched?
+        /// </summary>
+        /// <param name="other">Other rectangle to test. </param>
+        /// <returns>True means are touching. </returns>
+        bool IsTouching(Rectangle& other) const;
     };
 }

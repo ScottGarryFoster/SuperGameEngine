@@ -13,6 +13,8 @@
 #include "Events/FEvent.h"
 #include "Events/FEventObserver.h"
 #include "Events/FEventArguments.h"
+#include "Extentions/IntHelpers.hpp"
+#include "Extentions/FloatingPointHelpers.hpp"
 #include "Object/TypeHelpers.hpp"
 #include "Object/Object.h"
 #include "Object/Asserts/ArgumentNullException.hpp"
@@ -20,4 +22,3 @@
 #include "Object/Asserts/SystemNullReference.hpp"
 #include "Structural/FVectorLocationEventArguments.h"
 #include "Structural/FPointLocationEventArguments.h"
-#include "Extentions/IntHelpers.hpp"

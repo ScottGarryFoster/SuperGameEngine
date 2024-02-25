@@ -15,6 +15,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
     protected:
 
         Rectangle* m_testRectangle;
+        Rectangle* m_otherTestRectangle;
 
         void SetUp() override
         {
@@ -26,6 +27,10 @@ namespace SuperGameEngine_Structural_Spatial_Area
             if (m_testRectangle != nullptr)
             {
                 delete m_testRectangle;
+            }
+            else if (m_otherTestRectangle != nullptr)
+            {
+                delete m_otherTestRectangle;
             }
         }
     };
@@ -43,7 +48,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
         float givenY = 10;
         float validWidthHeight = 1;
 
-        Rectangle* m_testRectangle = new Rectangle(givenX, givenY, validWidthHeight, validWidthHeight);
+        m_testRectangle = new Rectangle(givenX, givenY, validWidthHeight, validWidthHeight);
 
         ASSERT_EQ(givenX, m_testRectangle->GetLeft());
         ASSERT_EQ(givenY, m_testRectangle->GetTop());
@@ -55,7 +60,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
         float givenHeight = 42;
         float validXY = 1;
 
-        Rectangle* m_testRectangle = new Rectangle(validXY, validXY, givenWidth, givenHeight);
+        m_testRectangle = new Rectangle(validXY, validXY, givenWidth, givenHeight);
 
         ASSERT_EQ(givenWidth, m_testRectangle->GetWidth());
         ASSERT_EQ(givenHeight, m_testRectangle->GetHeight());
@@ -66,7 +71,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
         float givenXY = 6;
         float validWidthHeight = 1;
 
-        Rectangle* m_testRectangle = new Rectangle(givenXY, validWidthHeight);
+        m_testRectangle = new Rectangle(givenXY, validWidthHeight);
 
         ASSERT_EQ(givenXY, m_testRectangle->GetLeft());
         ASSERT_EQ(givenXY, m_testRectangle->GetTop());
@@ -77,7 +82,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
         float givenWidthHeight = 21;
         float validXY = 1;
 
-        Rectangle* m_testRectangle = new Rectangle(validXY, givenWidthHeight);
+        m_testRectangle = new Rectangle(validXY, givenWidthHeight);
 
         ASSERT_EQ(givenWidthHeight, m_testRectangle->GetWidth());
         ASSERT_EQ(givenWidthHeight, m_testRectangle->GetHeight());
@@ -88,7 +93,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 #pragma region SetAndGet
     TEST_F(RectangleTests, GetSetX_ChangesLeftValue_WhenGivenNewValue)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenX = 42;
         ASSERT_NE(m_testRectangle->GetLeft(), givenX) << "Ensure the given is not the original, otherwise test means nothing";
 
@@ -100,7 +105,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, GetSetY_ChangesTopValue_WhenGivenNewValue)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenY = 98;
         ASSERT_NE(m_testRectangle->GetTop(), givenY) << "Ensure the given is not the original, otherwise test means nothing";
 
@@ -112,7 +117,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, GetSetWidth_ChangesWidthValue_WhenGivenNewValue)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenWidth = 100;
         ASSERT_NE(m_testRectangle->GetWidth(), givenWidth) << "Ensure the given is not the original, otherwise test means nothing";
 
@@ -124,7 +129,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, GetSetHeight_ChangesHeightValue_WhenGivenNewValue)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenHeight = 21;
         ASSERT_NE(m_testRectangle->GetHeight(), givenHeight) << "Ensure the given is not the original, otherwise test means nothing";
 
@@ -136,7 +141,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, SetLocation_ChangesLeftAndTopValue_WhenGivenNewValue)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenX = 42;
         float givenY = 87;
         ASSERT_NE(m_testRectangle->GetLeft(), givenX) << "Ensure the given is not the original, otherwise test means nothing";
@@ -152,7 +157,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, SetSize_ChangesWidthHeightValue_WhenGivenNewValue)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenWidth = 12;
         float givenHeight = 87;
         ASSERT_NE(m_testRectangle->GetWidth(), givenWidth) << "Ensure the given is not the original, otherwise test means nothing";
@@ -170,7 +175,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 #pragma region Extents
     TEST_F(RectangleTests, GetRight_ReturnsLeftPlusWidth)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenLeft = 21;
         m_testRectangle->SetX(givenLeft);
         float givenWidth = 76;
@@ -184,7 +189,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, GetBottom_ReturnsTopPlusHeight)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenTop = 21;
         m_testRectangle->SetY(givenTop);
         float givenHeight = 76;
@@ -198,7 +203,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
     TEST_F(RectangleTests, GetTopLeft_ReturnsTopAndLeft)
     {
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
         float givenTop = 21;
         m_testRectangle->SetY(givenTop);
         float givenLeft = 76;
@@ -213,7 +218,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
     TEST_F(RectangleTests, GetBottomRight_ReturnsTopPlusHeightAndLeftPlusWidth)
     {
         // Arrange
-        Rectangle* m_testRectangle = CreateBasicRectangle();
+        m_testRectangle = CreateBasicRectangle();
 
         float givenTop = 21;
         m_testRectangle->SetY(givenTop);
@@ -233,6 +238,125 @@ namespace SuperGameEngine_Structural_Spatial_Area
         // Assert
         ASSERT_EQ(expectedRight, actual.GetX());
         ASSERT_EQ(expectedBottom, actual.GetY());
+    }
+#pragma endregion
+
+#pragma region Overlaps
+    //  For these tests, 'self' refers to the testing object and 'other' the object passed in.
+
+    TEST_F(RectangleTests, Overlaps_ReturnsFalse_WhenOtherRightIsToTheLeftOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+       
+        float selfX = 5;
+        float otherX = selfX - bothWidthHeight;
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, Overlaps_ReturnsFalse_WhenOtherLeftIsToTheRightOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX + bothWidthHeight;
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(selfX + bothWidthHeight, otherX));
+        bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, Overlaps_ReturnsTrue_WhenOtherRightIsWithinBodyOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothY = 0;
+
+        float selfX = 5;
+        float otherX = selfX - (bothWidthHeight / 2.0f);
+
+        m_testRectangle = new Rectangle(selfX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(otherX, bothY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, Overlaps_ReturnsFalse_WhenOtherBottomIsAboveSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY - bothWidthHeight;
+
+        m_testRectangle = new Rectangle(bothX, selfY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, Overlaps_ReturnsFalse_WhenOtherTopIsBelowSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY + bothWidthHeight;
+
+        m_testRectangle = new Rectangle(bothX, selfY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, Overlaps_ReturnsTrue_WhenOtherTopIsInBodyOfSelf)
+    {
+        // Arrange
+        float bothWidthHeight = 10;
+        float bothX = 0;
+
+        float selfY = 5;
+        float otherY = selfY - (bothWidthHeight / 2.0f);
+
+        m_testRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangle = new Rectangle(bothX, otherY, bothWidthHeight, bothWidthHeight);
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_TRUE(actual);
     }
 #pragma endregion
 

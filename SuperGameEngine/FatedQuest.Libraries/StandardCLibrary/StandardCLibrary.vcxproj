@@ -160,6 +160,7 @@
     <ClCompile Include="Events\FEvent.cpp" />
     <ClCompile Include="Events\Observer.cpp" />
     <ClCompile Include="Events\Subject.cpp" />
+    <ClCompile Include="Extentions\FloatingPointHelpers.hpp" />
     <ClCompile Include="File\Directory.cpp" />
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Object\FAsserts.cpp" />

@@ -83,4 +83,59 @@ void Rectangle::SetHeight(float height)
     m_size.SetY(height);
 }
 
+bool Rectangle::Overlaps(Rectangle& other) const
+{
+    if (IsTouching(other))
+    {
+        return false;
+    }
+
+    if (GetLeft() > other.GetRight())
+    {
+        return false;
+    }
+
+    if (GetRight() < other.GetLeft())
+    {
+        return false;
+    }
+
+    if (GetTop() > other.GetBottom())
+    {
+        return false;
+    }
+
+    if (GetBottom() < other.GetTop())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool Rectangle::IsTouching(Rectangle& other) const
+{
+    if (FloatingPointHelpers::AreEqual(GetLeft(), other.GetRight()))
+    {
+        return true;
+    }
+
+    if (FloatingPointHelpers::AreEqual(GetRight(), other.GetLeft()))
+    {
+        return true;
+    }
+
+    if (FloatingPointHelpers::AreEqual(GetTop(), other.GetBottom()))
+    {
+        return true;
+    }
+
+    if (FloatingPointHelpers::AreEqual(GetBottom(), other.GetTop()))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 
