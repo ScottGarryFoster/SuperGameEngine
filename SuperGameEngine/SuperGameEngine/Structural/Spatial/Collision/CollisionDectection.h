@@ -13,7 +13,7 @@ namespace SuperGameEngine
         CollisionDectection();
         virtual ~CollisionDectection();
 
-        void GiveActiveCollider(Collider* collider);
+        void GiveActiveCollider(std::weak_ptr<Collider> collider);
 
         // TODO: Add a way to remove colliders from the pool.
         //void TakeCollider(std::weak_ptr<Collider> collider);
@@ -24,7 +24,6 @@ namespace SuperGameEngine
         /// <summary>
         /// A pointer to all the colliders in memory.
         /// </summary>
-        //FList<std::weak_ptr<Collider>>* m_colliders;
-        FList<Collider*>* m_colliders;
+        FList<std::weak_ptr<Collider>>* m_colliders;
     };
 }

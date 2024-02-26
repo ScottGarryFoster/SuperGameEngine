@@ -120,7 +120,7 @@ void GameObject::AddActualComponent(std::shared_ptr<GameComponent> newComponent)
     std::shared_ptr<Collider> collider = std::dynamic_pointer_cast<Collider>(newComponent);
     if (collider)
     {
-        m_gameObjectPackage->GetCollisionDectection()->GiveActiveCollider(collider.get());
+        m_gameObjectPackage->GetCollisionDectection()->GiveActiveCollider(collider);
     }
 
     m_gameComponents.Add(newComponent);
