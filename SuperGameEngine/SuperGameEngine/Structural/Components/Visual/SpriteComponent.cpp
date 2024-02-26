@@ -42,7 +42,6 @@ void SpriteComponent::Draw()
         FPoint drawLocation = FPoint(
             (int)transform->GetLocation()->GetX() - (textureSize.GetX() / 2),
             (int)transform->GetLocation()->GetY() - (textureSize.GetY() / 2));
-        transform.reset();
 
         m_superTexture->Draw(drawLocation);
     }

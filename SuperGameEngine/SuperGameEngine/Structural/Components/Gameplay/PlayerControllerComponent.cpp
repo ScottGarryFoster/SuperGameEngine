@@ -37,7 +37,6 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
         MoveByController(location, speed);
     }
 
-    transform.reset();
     return true;
 }
 
