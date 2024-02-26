@@ -1,24 +1,35 @@
 #pragma once
 #include "../../../LibraryIncludes.h"
 #include "../../../Structural/Components/Colliders/Collider.h"
+#include "CollisionDectectionSubscription.h"
+#include "CollisionDectectionUpdate.h"
 
 namespace SuperGameEngine
 {
     /// <summary>
     /// Handles Collision Detection on a high level.
     /// </summary>
-    class CollisionDectection : public Object
+    class CollisionDectection : 
+        public CollisionDectectionSubscription, 
+        public CollisionDectectionUpdate, 
+        public Object
     {
     public:
         CollisionDectection();
         virtual ~CollisionDectection();
 
-        void GiveActiveCollider(std::weak_ptr<Collider> collider);
+        /// <summary>
+        /// Give an active collider.
+        /// Active colliders are collided against and collided with.
+        /// They take collision and give collision.
+        /// </summary>
+        /// <param name="collider">An active collision. </param>
+        virtual void GiveActiveCollider(std::weak_ptr<Collider> collider) override;
 
-        // TODO: Add a way to remove colliders from the pool.
-        //void TakeCollider(std::weak_ptr<Collider> collider);
-
-        void RunCollisionUpdate();
+        /// <summary>
+        /// Run Collision Update.
+        /// </summary>
+        virtual void RunCollisionUpdate() override;
 
     private:
         /// <summary>

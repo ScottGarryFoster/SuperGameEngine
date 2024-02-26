@@ -21,7 +21,14 @@ namespace SuperGameEngine
         /// <param name="renderer">Ability to render. </param>
         virtual void Draw(SDL_Renderer* renderer) override;
 
-        virtual void UpdateColour(int r, int g, int b, int a);
+        /// <summary>
+        /// Sets the colour for the Rectangle.
+        /// </summary>
+        /// <param name="red">Red Colour, 0-255. </param>
+        /// <param name="green">Green Colour, 0-255. </param>
+        /// <param name="blue">Blue Colour, 0-255.  </param>
+        /// <param name="alpha">Alpha Value, 0-255. 255 is all Opaque. </param>
+        virtual void SetColour(int red, int green, int blue, int alpha);
 
     private:
 
@@ -30,9 +37,24 @@ namespace SuperGameEngine
         /// </summary>
         std::weak_ptr<Rectangle> m_shape;
 
+        /// <summary>
+        /// Colour value Red.
+        /// </summary>
         int red;
+
+        /// <summary>
+        /// Colour value Green.
+        /// </summary>
         int green;
+
+        /// <summary>
+        /// Colour value blue.
+        /// </summary>
         int blue;
+
+        /// <summary>
+        /// Alpha value, 255 is Opaque.
+        /// </summary>
         int alpha;
     };
 }

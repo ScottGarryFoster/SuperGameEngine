@@ -2,7 +2,7 @@
 
 namespace SuperGameEngine
 {
-    class CollisionDectection;
+    class CollisionDectectionSubscription;
 
     /// <summary>
     /// Objects for the GameObject to operate which GameComponents do not need
@@ -12,19 +12,19 @@ namespace SuperGameEngine
     class SceneToGameObjectPackage
     {
     public:
-        SceneToGameObjectPackage(CollisionDectection* collisionDection);
+        SceneToGameObjectPackage(CollisionDectectionSubscription* collisionDection);
         ~SceneToGameObjectPackage();
 
         /// <summary>
         /// Handles Collision Detection on a high level.
         /// </summary>
-        CollisionDectection* GetCollisionDectection();
+        CollisionDectectionSubscription* GetCollisionDectection();
     private:
 
         /// <summary>
         /// Handles Collision Detection on a high level.
         /// </summary>
-        CollisionDectection* m_collisionDectection;
+        CollisionDectectionSubscription* m_collisionDectection;
     };
 }
 

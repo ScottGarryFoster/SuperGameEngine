@@ -35,7 +35,7 @@ void RectangleDrawableTechnique::Draw(SDL_Renderer* renderer)
     SDL_RenderDrawRect(renderer, &rect);
 }
 
-void SuperGameEngine::RectangleDrawableTechnique::UpdateColour(int r, int g, int b, int a)
+void SuperGameEngine::RectangleDrawableTechnique::SetColour(int r, int g, int b, int a)
 {
     red = r < 0 ? 0 : r > 255 ? 255 : r;
     green = g < 0 ? 0 : g > 255 ? 255 : g;

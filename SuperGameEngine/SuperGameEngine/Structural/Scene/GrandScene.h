@@ -8,6 +8,8 @@
 
 namespace SuperGameEngine
 {
+    class CollisionDectection;
+
     /// <summary>
     /// Holds everything in the entire game.
     /// </summary>
@@ -65,5 +67,10 @@ namespace SuperGameEngine
         /// Renders techniques which for the most part are primitives.
         /// </summary>
         TechniqueRenderer* m_techniqueRenderer;
+
+        /// <summary>
+        /// Handles Collision Detection on a high level.
+        /// </summary>
+        CollisionDectection* m_collisionDectection;
     };
 }

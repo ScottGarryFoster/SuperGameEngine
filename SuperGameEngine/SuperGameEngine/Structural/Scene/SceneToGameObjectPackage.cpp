@@ -4,17 +4,16 @@
 
 using namespace SuperGameEngine;
 
-SceneToGameObjectPackage::SceneToGameObjectPackage(CollisionDectection* collisionDection)
+SceneToGameObjectPackage::SceneToGameObjectPackage(CollisionDectectionSubscription* collisionDection)
 {
     m_collisionDectection = collisionDection;
 }
 
 SceneToGameObjectPackage::~SceneToGameObjectPackage()
 {
-    delete m_collisionDectection;
 }
 
-CollisionDectection* SceneToGameObjectPackage::GetCollisionDectection()
+CollisionDectectionSubscription* SceneToGameObjectPackage::GetCollisionDectection()
 {
     return m_collisionDectection;
 }

@@ -55,12 +55,30 @@ namespace SuperGameEngine
         /// <param name="arguments">Arguments for the events. </param>
         virtual void Invoke(FEventArguments* arguments) override;
 
+        /// <summary>
+        /// Get the location of the Collider.
+        /// This is the Location of the Box Relative to the Transform.
+        /// </summary>
+        /// <returns>Location of the Collider. </returns>
         FVector2D GetColliderLocation() const;
 
+        /// <summary>
+        /// Set Collider location, relative to the transform.
+        /// </summary>
+        /// <param name="location">Location of the Collider. </param>
         void SetColliderLocation(FVector2D& location);
 
+        /// <summary>
+        /// Get the size of the Collider in bother directions.
+        /// This is before scaling.
+        /// </summary>
+        /// <returns>Size of the Collider. </returns>
         FVector2D GetColliderSize() const;
 
+        /// <summary>
+        /// Set the Size of the collider before Transform.
+        /// </summary>
+        /// <param name="size">New size of the collider. </param>
         void SetColliderSize(FVector2D& size);
 
         /// <summary>

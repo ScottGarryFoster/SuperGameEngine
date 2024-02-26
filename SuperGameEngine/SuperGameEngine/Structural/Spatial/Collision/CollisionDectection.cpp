@@ -22,34 +22,11 @@ void CollisionDectection::GiveActiveCollider(std::weak_ptr<Collider> collider)
 
 void CollisionDectection::RunCollisionUpdate()
 {
-    //for (Collider* outer : *m_colliders)
-    //{
-    //    for (Collider* inner : *m_colliders)
-    //    {
-    //        if (outer == inner)
-    //        {
-    //            continue;
-    //        }
-
-    //        if (outer->Overlaps(*inner))
-    //        {
-    //            Collision collision = 
-    //                Collision(inner->GetParentObject(),inner);
-
-    //            outer->GetParentObject()->OnCollisionOccuring(collision);
-    //        }
-    //    }
-    //}
-
-
-    // TODO: Start using Shared and Weak pointers in GameObjects and Components.
-
     for (std::weak_ptr<Collider> weakPointer : *m_colliders)
     {
         std::shared_ptr<Collider> sharedPointer = weakPointer.lock();
         if (sharedPointer)
         {
-
             bool didOverlap = false;
 
             for (std::weak_ptr<Collider> innerWeakPointer : *m_colliders)

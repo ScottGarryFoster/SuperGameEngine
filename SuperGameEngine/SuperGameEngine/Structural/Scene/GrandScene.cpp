@@ -14,8 +14,8 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
         m_techniqueRenderer);
     m_scenes = std::vector<Scene*>();
 
-    m_sceneToGameObjectPackage = new SceneToGameObjectPackage(
-        new CollisionDectection());
+    m_collisionDectection = new CollisionDectection();
+    m_sceneToGameObjectPackage = new SceneToGameObjectPackage(m_collisionDectection);
 
 
     Scene* scene = new Scene();
@@ -29,6 +29,7 @@ GrandScene::~GrandScene()
     delete m_directInput;
     delete m_techniqueRenderer;
     delete m_sceneToGameObjectPackage;
+    delete m_collisionDectection;
 }
 
 bool GrandScene::Update(Uint64 tick)
@@ -36,7 +37,7 @@ bool GrandScene::Update(Uint64 tick)
     GameTime gameTime = GameTime();
     gameTime.TicksSinceLastFrame = (int)tick;
 
-    m_sceneToGameObjectPackage->GetCollisionDectection()->RunCollisionUpdate();
+    m_collisionDectection->RunCollisionUpdate();
 
     for (Scene* scene : m_scenes)
     {

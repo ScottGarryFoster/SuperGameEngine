@@ -202,7 +202,9 @@
     <ClCompile Include="Structural\Spatial\Collision\Collision.cpp">
       <Filter>Project Files\Structural\Spatial\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp" />
+    <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp">
+      <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -337,7 +339,15 @@
     <ClInclude Include="Structural\Spatial\Collision\Collision.h">
       <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
     </ClInclude>
-    <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h" />
+    <ClInclude Include="Structural\Spatial\Collision\CollisionDectectionSubscription.h">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Collision\CollisionDectectionUpdate.h">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h">
+      <Filter>Project Files\Structural\Scene\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

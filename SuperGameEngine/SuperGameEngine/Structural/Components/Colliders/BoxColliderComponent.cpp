@@ -65,7 +65,7 @@ bool BoxColliderComponent::Update(GameTime gameTime)
 void BoxColliderComponent::Draw()
 {
     // Happens after the technique draws. This is for testing.
-    m_rectangleDrawableTechnique->UpdateColour(0, 0, 0, 255);
+    m_rectangleDrawableTechnique->SetColour(0, 0, 0, 255);
 }
 
 void BoxColliderComponent::Invoke(FEventArguments* arguments)
@@ -108,5 +108,5 @@ void BoxColliderComponent::SetColliderSize(FVector2D& size)
 
 void BoxColliderComponent::OnCollisionOccuring(Collision& collision)
 {
-    m_rectangleDrawableTechnique->UpdateColour(0, 255, 0, 255);
+    m_rectangleDrawableTechnique->SetColour(0, 255, 0, 255);
 }
