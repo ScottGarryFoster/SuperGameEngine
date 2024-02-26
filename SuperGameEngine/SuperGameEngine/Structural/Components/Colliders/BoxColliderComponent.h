@@ -88,6 +88,6 @@ namespace SuperGameEngine
         /// <summary>
         /// Location of the object.
         /// </summary>
-        TransformComponent* m_transform;
+        std::shared_ptr<TransformComponent> m_transform;
     };
 }

@@ -13,12 +13,11 @@ using namespace StandardCLibrary;
 GameObject::GameObject()
 {
     m_loadPackage = nullptr;
-    m_transform = nullptr;
 }
 
 GameObject::~GameObject()
 {
-
+    m_transform.reset();
 }
 
 void GameObject::Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* gameObjectPackage)
@@ -46,7 +45,7 @@ bool GameObject::Update(GameTime gameTime)
 {
     for (size_t i = 0; i < m_gameComponents.Count(); ++i)
     {
-        GameComponent* component = m_gameComponents[i];
+        std::shared_ptr<GameComponent> component = m_gameComponents[i];
         if (m_gameComponents[i] != nullptr)
         {
             component->Update(gameTime);
@@ -58,11 +57,11 @@ bool GameObject::Update(GameTime gameTime)
 
 void GameObject::Draw()
 {
-    FList<GameComponent*> componentsToDraw = m_gameComponents
-        .Where([](const GameComponent* c) { return c->DoRender(); });
+    FList<std::shared_ptr<GameComponent>> componentsToDraw = m_gameComponents
+        .Where([](const std::shared_ptr<GameComponent> c) { return c->DoRender(); });
     for (size_t i = 0; i < componentsToDraw.Count(); ++i)
     {
-        GameComponent* component = componentsToDraw[i];
+        std::shared_ptr<GameComponent> component = componentsToDraw[i];
         if (componentsToDraw[i] != nullptr)
         {
             component->Draw();
@@ -78,7 +77,7 @@ void GameObject::OnCollisionOccuring(Collision& collision)
 {
     for (size_t i = 0; i < m_gameComponents.Count(); ++i)
     {
-        GameComponent* component = m_gameComponents[i];
+        std::shared_ptr<GameComponent> component = m_gameComponents[i];
         if (m_gameComponents[i] != nullptr)
         {
             component->OnCollisionOccuring(collision);
@@ -90,24 +89,24 @@ void GameObject::OnCollisionEnd(Collision& collision)
 {
 }
 
-TransformComponent* GameObject::GetTransform()
+std::shared_ptr<TransformComponent> GameObject::GetTransform()
 {
     return m_transform;
 }
 
-bool GameObject::AddActualComponentFromObject(Object* newObject)
+bool GameObject::AddActualComponentFromObject(std::shared_ptr<Object> newObject)
 {
     bool typeIsCorrect = TypeHelpers::IsDerivedFrom<Object, GameComponent>();
     if (typeIsCorrect)
     {
-        GameComponent* componentPtr = dynamic_cast<GameComponent*>(newObject);
+        std::shared_ptr<GameComponent> componentPtr = std::static_pointer_cast<GameComponent>(newObject);
         AddActualComponent(componentPtr);
     }
 
     return typeIsCorrect;
 }
 
-void GameObject::AddActualComponent(GameComponent* newComponent)
+void GameObject::AddActualComponent(std::shared_ptr<GameComponent> newComponent)
 {
     if (m_loadPackage == nullptr)
     {
@@ -118,25 +117,23 @@ void GameObject::AddActualComponent(GameComponent* newComponent)
     newComponent->Setup(m_loadPackage, this);
     newComponent->SetDoRender(true);
 
-    Collider* collider = dynamic_cast<Collider*>(newComponent);
+    std::shared_ptr<Collider> collider = std::dynamic_pointer_cast<Collider>(newComponent);
     if (collider)
     {
-        m_gameObjectPackage->GetCollisionDectection()->GiveActiveCollider(collider);
+        m_gameObjectPackage->GetCollisionDectection()->GiveActiveCollider(collider.get());
     }
-
-
 
     m_gameComponents.Add(newComponent);
 }
 
 void GameObject::EnsureTransformIsOnGameObject()
 {
-    if (m_transform != nullptr)
+    if (m_transform) 
     {
         return;
     }
 
-    TransformComponent* transform = GetGameComponent<TransformComponent>();
+    std::shared_ptr<TransformComponent> transform = GetGameComponent<TransformComponent>();
     if (transform == nullptr)
     {
         transform = AddComponent<TransformComponent>();
