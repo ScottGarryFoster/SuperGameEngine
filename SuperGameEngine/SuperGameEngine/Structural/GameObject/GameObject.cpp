@@ -13,11 +13,18 @@ using namespace StandardCLibrary;
 GameObject::GameObject()
 {
     m_loadPackage = nullptr;
+    m_guid = GUIDHelpers::CreateGUID();
 }
 
 GameObject::~GameObject()
 {
     m_transform.reset();
+    m_guid.reset();
+}
+
+std::shared_ptr<GUID> SuperGameEngine::GameObject::GetGuid()
+{
+    return m_guid;
 }
 
 void GameObject::Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* gameObjectPackage)

@@ -24,15 +24,13 @@ void CollisionDectection::RunCollisionUpdate()
 {
     for (std::weak_ptr<Collider> weakPointer : *m_colliders)
     {
-        std::shared_ptr<Collider> sharedPointer = weakPointer.lock();
-        if (sharedPointer)
+        if (std::shared_ptr<Collider> sharedPointer = weakPointer.lock())
         {
             bool didOverlap = false;
 
             for (std::weak_ptr<Collider> innerWeakPointer : *m_colliders)
             {
-                std::shared_ptr<Collider> innerSharedPointer = innerWeakPointer.lock();
-                if (innerSharedPointer)
+                if (std::shared_ptr<Collider> innerSharedPointer = innerWeakPointer.lock())
                 {
                     if (sharedPointer != innerSharedPointer)
                     {

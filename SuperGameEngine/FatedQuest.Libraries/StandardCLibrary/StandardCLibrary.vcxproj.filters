@@ -62,6 +62,12 @@
     <Filter Include="Project Files\Object\Asserts\API">
       <UniqueIdentifier>{53b82d5a-1968-4e4f-a1a4-d96711e16c03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Object\GUID">
+      <UniqueIdentifier>{d723fd0b-ad18-4dbd-a718-8f4342e87e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Object\GUID\API">
+      <UniqueIdentifier>{63dec95c-51c5-47bf-9ad5-e1c39f19323e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -143,6 +149,15 @@
     <ClInclude Include="Structural\FObservablePoint.h">
       <Filter>Project Files\Structural\API</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GUID\GUID.h">
+      <Filter>Project Files\Object\GUID\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GUID\WindowsGUID.h">
+      <Filter>Project Files\Object\GUID\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GUID\GUIDHelpers.h">
+      <Filter>Project Files\Object\GUID\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -192,6 +207,15 @@
     </ClCompile>
     <ClCompile Include="Extentions\FloatingPointHelpers.hpp">
       <Filter>Project Files\Extentions</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GUID\GUID.cpp">
+      <Filter>Project Files\Object\GUID</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GUID\WindowsGUID.cpp">
+      <Filter>Project Files\Object\GUID</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GUID\GUIDHelpers.cpp">
+      <Filter>Project Files\Object\GUID</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

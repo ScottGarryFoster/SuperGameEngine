@@ -19,6 +19,8 @@
 #include "Extentions/FloatingPointHelpers.hpp"
 #include "Object/TypeHelpers.hpp"
 #include "Object/Object.h"
+#include "Object/GUID/GUID.h"
+#include "Object/GUID/GUIDHelpers.h"
 #include "Object/Asserts/ArgumentNullException.hpp"
 #include "Object/Asserts/NotImplementedException.hpp"
 #include "Object/Asserts/SystemNullReference.hpp"

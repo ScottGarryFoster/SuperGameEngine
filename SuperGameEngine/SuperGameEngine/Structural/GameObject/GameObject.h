@@ -23,6 +23,8 @@ namespace SuperGameEngine
         GameObject();
         virtual ~GameObject();
 
+        std::shared_ptr<GUID> GetGuid();
+
         /// <summary>
         /// Sets up the GameObject.
         /// </summary>
@@ -108,6 +110,10 @@ namespace SuperGameEngine
         std::shared_ptr<TransformComponent> GetTransform();
         
     private:
+        /// <summary>
+        /// Unique identifier.
+        /// </summary>
+        std::shared_ptr<GUID> m_guid;
 
         /// <summary>
         /// Everything passed down from the scene.
