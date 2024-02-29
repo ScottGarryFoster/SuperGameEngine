@@ -12,8 +12,10 @@ using namespace StandardCLibrary;
 
 GameObject::GameObject()
 {
-    m_loadPackage = nullptr;
     m_guid = GUIDHelpers::CreateGUID();
+
+    m_gameObjectPackage = nullptr;
+    m_loadPackage = nullptr;
 }
 
 GameObject::~GameObject()
@@ -22,7 +24,7 @@ GameObject::~GameObject()
     m_guid.reset();
 }
 
-std::shared_ptr<GUID> SuperGameEngine::GameObject::GetGuid()
+std::shared_ptr<Guid> SuperGameEngine::GameObject::GetGuid()
 {
     return m_guid;
 }

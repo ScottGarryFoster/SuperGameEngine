@@ -149,13 +149,13 @@
     <ClInclude Include="Structural\FObservablePoint.h">
       <Filter>Project Files\Structural\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GUID\GUID.h">
+    <ClInclude Include="Object\GUID\Guid.h">
       <Filter>Project Files\Object\GUID\API</Filter>
     </ClInclude>
     <ClInclude Include="Object\GUID\WindowsGUID.h">
       <Filter>Project Files\Object\GUID\API</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GUID\GUIDHelpers.h">
+    <ClInclude Include="Object\GUID\GuidHelpers.h">
       <Filter>Project Files\Object\GUID\API</Filter>
     </ClInclude>
   </ItemGroup>
@@ -208,13 +208,13 @@
     <ClCompile Include="Extentions\FloatingPointHelpers.hpp">
       <Filter>Project Files\Extentions</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GUID\GUID.cpp">
+    <ClCompile Include="Object\GUID\Guid.cpp">
       <Filter>Project Files\Object\GUID</Filter>
     </ClCompile>
     <ClCompile Include="Object\GUID\WindowsGUID.cpp">
       <Filter>Project Files\Object\GUID</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GUID\GUIDHelpers.cpp">
+    <ClCompile Include="Object\GUID\GuidHelpers.cpp">
       <Filter>Project Files\Object\GUID</Filter>
     </ClCompile>
   </ItemGroup>

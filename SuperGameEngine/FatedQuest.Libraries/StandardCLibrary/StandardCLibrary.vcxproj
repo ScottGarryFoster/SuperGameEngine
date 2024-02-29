@@ -147,8 +147,8 @@
     <ClInclude Include="Object\Asserts\NotImplementedException.hpp" />
     <ClInclude Include="Object\Asserts\SystemNullReference.hpp" />
     <ClInclude Include="Object\FAsserts.h" />
-    <ClInclude Include="Object\GUID\GUID.h" />
-    <ClInclude Include="Object\GUID\GUIDHelpers.h" />
+    <ClInclude Include="Object\GUID\Guid.h" />
+    <ClInclude Include="Object\GUID\GuidHelpers.h" />
     <ClInclude Include="Object\GUID\WindowsGUID.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\TypeHelpers.hpp" />
@@ -167,8 +167,8 @@
     <ClCompile Include="File\Directory.cpp" />
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="Object\FAsserts.cpp" />
-    <ClCompile Include="Object\GUID\GUID.cpp" />
-    <ClCompile Include="Object\GUID\GUIDHelpers.cpp" />
+    <ClCompile Include="Object\GUID\Guid.cpp" />
+    <ClCompile Include="Object\GUID\GuidHelpers.cpp" />
     <ClCompile Include="Object\GUID\WindowsGUID.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Structural\FObservablePoint.cpp" />

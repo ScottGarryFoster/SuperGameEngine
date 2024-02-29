@@ -7,7 +7,7 @@ namespace StandardCLibrary
     /// A unique identifier.
     /// A GUID should be unique.
     /// </summary>
-    class GUID
+    class Guid
     {
     public:
         /// <summary>
@@ -15,7 +15,7 @@ namespace StandardCLibrary
         /// </summary>
         virtual void Generate() = 0;
 
-        virtual bool operator==(GUID& other) const = 0;
+        virtual bool operator==(Guid& other) const = 0;
 
         /// <summary>
         /// Creates a GUID from string.

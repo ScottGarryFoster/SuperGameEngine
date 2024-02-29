@@ -12,7 +12,7 @@ void WindowsGUID::Generate()
     HRESULT result = CoCreateGuid(&m_guid);
 }
 
-bool WindowsGUID::operator==(GUID& other) const
+bool WindowsGUID::operator==(Guid& other) const
 {
     return ToFString() == other.ToString();
 }

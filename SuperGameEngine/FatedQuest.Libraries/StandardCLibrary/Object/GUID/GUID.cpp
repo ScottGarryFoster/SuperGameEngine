@@ -1,3 +1,3 @@
-#include "GUID.h"
+#include "Guid.h"
 
 using namespace StandardCLibrary;

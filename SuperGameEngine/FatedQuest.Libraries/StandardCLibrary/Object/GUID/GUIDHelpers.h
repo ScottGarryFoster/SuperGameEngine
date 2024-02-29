@@ -1,6 +1,6 @@
 #pragma once
 #include "../Object.h"
-#include "GUID.h"
+#include "Guid.h"
 
 namespace StandardCLibrary
 {
@@ -18,28 +18,28 @@ namespace StandardCLibrary
         /// Using this means you do not need to think about platform.
         /// It will change with Windows, Linux etc.
         /// </remark>
-        static std::shared_ptr<GUID> CreateGUID();
+        static std::shared_ptr<Guid> CreateGUID();
 
         /// <summary>
         /// Creates a GUID from String.
         /// </summary>
         /// <param name="value">Value to generate from. </param>
         /// <returns>GUID generated. </returns>
-        static std::shared_ptr<GUID> CreateFromString(std::string value);
+        static std::shared_ptr<Guid> CreateFromString(std::string value);
 
         /// <summary>
         /// Convert GUID to string and return result.
         /// </summary>
         /// <param name="guid">GUID to convert. </param>
         /// <returns>GUID as a string. </returns>
-        static std::string ToString(GUID& guid);
+        static std::string ToString(Guid& guid);
 
         /// <summary>
         /// Convert GUID to fstring and return result.
         /// </summary>
         /// <param name="guid">GUID to convert. </param>
         /// <returns>GUID as a fstring. </returns>
-        static FString ToFString(GUID& guid);
+        static FString ToFString(Guid& guid);
     };
 
 }

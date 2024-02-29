@@ -9,7 +9,7 @@ namespace StandardCLibrary
     /// A unique identifier.
     /// A GUID should be unique.
     /// </summary>
-    class WindowsGUID : public GUID
+    class WindowsGUID : public Guid
     {
     public:
         WindowsGUID();
@@ -19,7 +19,7 @@ namespace StandardCLibrary
         /// </summary>
         virtual void Generate() override;
 
-        virtual bool operator==(GUID& other) const override;
+        virtual bool operator==(Guid& other) const override;
 
         /// <summary>
         /// Creates a GUID from string.

@@ -23,7 +23,7 @@ namespace SuperGameEngine
         GameObject();
         virtual ~GameObject();
 
-        std::shared_ptr<GUID> GetGuid();
+        std::shared_ptr<Guid> GetGuid();
 
         /// <summary>
         /// Sets up the GameObject.
@@ -113,7 +113,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Unique identifier.
         /// </summary>
-        std::shared_ptr<GUID> m_guid;
+        std::shared_ptr<Guid> m_guid;
 
         /// <summary>
         /// Everything passed down from the scene.
