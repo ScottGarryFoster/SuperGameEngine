@@ -62,12 +62,6 @@ bool BoxColliderComponent::Update(GameTime gameTime)
     return false;
 }
 
-void BoxColliderComponent::Draw()
-{
-    // Happens after the technique draws. This is for testing.
-    m_rectangleDrawableTechnique->SetColour(0, 0, 0, 255);
-}
-
 void BoxColliderComponent::Invoke(FEventArguments* arguments)
 {
     if (TypeHelpers::IsDerivedFrom<FEventArguments, FVectorLocationEventArguments>())
@@ -106,7 +100,17 @@ void BoxColliderComponent::SetColliderSize(FVector2D& size)
     m_retangleActual->SetSize(size.GetX(), size.GetY());
 }
 
+void BoxColliderComponent::OnCollisionBegin(Collision& collision)
+{
+    m_rectangleDrawableTechnique->SetColour(255, 0, 0, 255);
+}
+
 void BoxColliderComponent::OnCollisionOccuring(Collision& collision)
 {
-    m_rectangleDrawableTechnique->SetColour(0, 255, 0, 255);
+    //m_rectangleDrawableTechnique->SetColour(0, 255, 0, 255);
+}
+
+void BoxColliderComponent::OnCollisionEnd(Collision& collision)
+{
+    m_rectangleDrawableTechnique->SetColour(0, 0, 255, 255);
 }

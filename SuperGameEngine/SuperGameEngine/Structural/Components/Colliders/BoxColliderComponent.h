@@ -45,11 +45,6 @@ namespace SuperGameEngine
         virtual bool Update(GameTime gameTime) override;
 
         /// <summary>
-        /// Draw everything in the game.
-        /// </summary>
-        virtual void Draw() override;
-
-        /// <summary>
         /// Reacts to events.
         /// </summary>
         /// <param name="arguments">Arguments for the events. </param>
@@ -82,10 +77,22 @@ namespace SuperGameEngine
         void SetColliderSize(FVector2D& size);
 
         /// <summary>
+        /// A collision with something else has begin.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionBegin(Collision& collision) override;
+
+        /// <summary>
         /// A collision is on going with another object.
         /// </summary>
         /// <param name="collision">Describes the collision. </param>
         virtual void OnCollisionOccuring(Collision& collision) override;
+
+        /// <summary>
+        /// A collision has ended with something.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionEnd(Collision& collision) override;
 
     private:
         /// <summary>

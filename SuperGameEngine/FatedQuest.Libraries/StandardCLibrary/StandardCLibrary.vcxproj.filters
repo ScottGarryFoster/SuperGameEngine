@@ -68,6 +68,9 @@
     <Filter Include="Project Files\Object\GUID\API">
       <UniqueIdentifier>{63dec95c-51c5-47bf-9ad5-e1c39f19323e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Collection\Dictionary">
+      <UniqueIdentifier>{f1d74889-85c9-4857-9f1e-1759bffa28ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Text/FString.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="Object\GUID\GuidHelpers.h">
       <Filter>Project Files\Object\GUID\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection\Dictionary\FDictionary.hpp">
+      <Filter>Project Files\Collection\Dictionary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

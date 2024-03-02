@@ -8,6 +8,9 @@ namespace SuperGameEngine
     class ColliderComponent : public GameComponent, public Collider
     {
     public:
+        ColliderComponent();
+        virtual ~ColliderComponent();
+
         /// <summary>
         /// Gets the parent gameobject.
         /// </summary>

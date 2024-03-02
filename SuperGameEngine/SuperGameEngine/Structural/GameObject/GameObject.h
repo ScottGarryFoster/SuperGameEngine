@@ -71,6 +71,7 @@ namespace SuperGameEngine
         typename std::enable_if<std::is_base_of<GameComponent, T>::value, std::shared_ptr<T>>::type
         GetGameComponent()
         {
+            // This has to be auto because we forward declared GameComponent.
             for (auto component : m_gameComponents)
             {
                 if (typeid(component) == typeid(T))

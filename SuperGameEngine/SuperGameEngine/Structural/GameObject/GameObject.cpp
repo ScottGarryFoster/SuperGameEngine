@@ -80,6 +80,14 @@ void GameObject::Draw()
 
 void GameObject::OnCollisionBegin(Collision& collision)
 {
+    for (size_t i = 0; i < m_gameComponents.Count(); ++i)
+    {
+        std::shared_ptr<GameComponent> component = m_gameComponents[i];
+        if (m_gameComponents[i] != nullptr)
+        {
+            component->OnCollisionBegin(collision);
+        }
+    }
 }
 
 void GameObject::OnCollisionOccuring(Collision& collision)
@@ -96,6 +104,14 @@ void GameObject::OnCollisionOccuring(Collision& collision)
 
 void GameObject::OnCollisionEnd(Collision& collision)
 {
+    for (size_t i = 0; i < m_gameComponents.Count(); ++i)
+    {
+        std::shared_ptr<GameComponent> component = m_gameComponents[i];
+        if (m_gameComponents[i] != nullptr)
+        {
+            component->OnCollisionEnd(collision);
+        }
+    }
 }
 
 std::shared_ptr<TransformComponent> GameObject::GetTransform()

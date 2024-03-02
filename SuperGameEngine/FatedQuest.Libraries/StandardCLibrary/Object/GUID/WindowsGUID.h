@@ -19,7 +19,7 @@ namespace StandardCLibrary
         /// </summary>
         virtual void Generate() override;
 
-        virtual bool operator==(Guid& other) const override;
+        virtual bool operator==(const Guid& other) const override;
 
         /// <summary>
         /// Creates a GUID from string.
@@ -39,10 +39,23 @@ namespace StandardCLibrary
         /// <returns>GUID as FString. </returns>
         virtual FString ToFString() const override;
 
+        /// <summary>
+        /// Returns the GUID converted to a number for comparison purposes.
+        /// </summary>
+        /// <returns>The number representation of the GUID. </returns>
+        virtual uint64_t AsNumber() const override;
+
     private:
         /// <summary>
         /// Actual guid storage.
         /// </summary>
         ::GUID m_guid;
+
+        /// <summary>
+        /// Preconverted number on set.
+        /// </summary>
+        uint64_t m_asNumber;
+
+        uint64_t ToNumber(const GUID& guid);
     };
 }

@@ -10,9 +10,10 @@ WindowsGUID::WindowsGUID()
 void WindowsGUID::Generate()
 {
     HRESULT result = CoCreateGuid(&m_guid);
+    m_asNumber = ToNumber(m_guid);
 }
 
-bool WindowsGUID::operator==(Guid& other) const
+bool WindowsGUID::operator==(const Guid& other) const
 {
     return ToFString() == other.ToString();
 }
@@ -27,13 +28,7 @@ void WindowsGUID::FromString(std::string value)
     HRESULT hr = CLSIDFromString(oleStr, &m_guid);
     if (SUCCEEDED(hr)) 
     {
-        // Successfully converted string to GUID
-        //std::cout << "Successfully converted string to GUID" << std::endl;
-    }
-    else
-    {
-        // Failed to convert string to GUID
-        //std::cout << "Failed to convert string to GUID" << std::endl;
+        m_asNumber = ToNumber(m_guid);
     }
 }
 
@@ -52,4 +47,26 @@ std::string WindowsGUID::ToString() const
 FString StandardCLibrary::WindowsGUID::ToFString() const
 {
     return FString(ToString());
+}
+
+uint64_t StandardCLibrary::WindowsGUID::AsNumber() const
+{
+    // Pre-calculated number on set to help performance
+    // This is called a lot during map/dictionaries.
+    return m_asNumber;
+}
+
+uint64_t StandardCLibrary::WindowsGUID::ToNumber(const GUID& guid)
+{
+    uint64_t number = 0;
+    number += static_cast<uint64_t>(guid.Data1);
+    number += static_cast<uint64_t>(guid.Data2) << 32;
+    number += static_cast<uint64_t>(guid.Data3) << 48;
+
+    for (int i = 0; i < 8; ++i)
+    {
+        number += static_cast<uint64_t>(guid.Data4[i]) << (i * 8);
+    }
+
+    return number;
 }
