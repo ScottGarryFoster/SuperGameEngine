@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Engine/Content/ContentManager.h"
 #include "../../Engine/Input/DirectInput.h"
+#include "../../Engine/Graphics/Technique/TechniqueRenderer.h"
 
 namespace SuperGameEngine
 {
@@ -16,7 +17,11 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="contentManager">Access to resources. </param>
         /// <param name="directInput">Access to direct input from the User. ></param>
-        SceneLoadPackage(ContentManager* contentManager, const DirectInput* directInput);
+        /// <param name="techniqueRenderer">Renders techniques which for the most part are primitives. </param>
+        SceneLoadPackage(
+            ContentManager* contentManager, 
+            const DirectInput* directInput,
+            TechniqueRenderer* techniqueRenderer);
 
         /// <summary>
         /// Allows you to gain access to textures.
@@ -29,6 +34,11 @@ namespace SuperGameEngine
         /// </summary>
         const DirectInput* GetDirectInput() const;
 
+        /// <summary>
+        /// Renders techniques which for the most part are primitives.
+        /// </summary>
+        TechniqueRenderer* GetTechniqueRender();
+
     private:
         /// <summary>
         /// Allows you to gain access to textures.
@@ -39,5 +49,10 @@ namespace SuperGameEngine
         /// Access to direct input from the User.
         /// </summary>
         const DirectInput* m_directInput;
+
+        /// <summary>
+        /// Renders techniques which for the most part are primitives.
+        /// </summary>
+        TechniqueRenderer* m_techniqueRenderer;
     };
 }

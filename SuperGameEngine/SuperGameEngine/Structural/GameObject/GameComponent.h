@@ -8,6 +8,7 @@ namespace SuperGameEngine
 
     class SceneLoadPackage;
     class GameObject;
+    class Collision;
 
     /// <summary>
     /// A logical element attached to GameObjects.
@@ -56,6 +57,24 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newValue">True means the draw loop will run.</param>
         void SetDoRender(bool newValue);
+
+        /// <summary>
+        /// A collision with something else has begin.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionBegin(Collision& collision);
+
+        /// <summary>
+        /// A collision is on going with another object.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionOccuring(Collision& collision);
+
+        /// <summary>
+        /// A collision has ended with something.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionEnd(Collision& collision);
 
     protected:
         /// <summary>

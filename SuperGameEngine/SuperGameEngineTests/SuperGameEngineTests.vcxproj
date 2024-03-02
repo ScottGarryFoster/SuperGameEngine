@@ -97,6 +97,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Input\ControllerLayoutFromXMLTests.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FatedQuest.Libraries\Logging\Logging.vcxproj">

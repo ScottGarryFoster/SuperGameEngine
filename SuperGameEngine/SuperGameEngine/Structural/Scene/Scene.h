@@ -5,6 +5,7 @@
 namespace SuperGameEngine
 {
     class GameObject;
+    class SceneToGameObjectPackage;
     class Scene : public Object
     {
     public:
@@ -15,7 +16,8 @@ namespace SuperGameEngine
         /// Sets up the scene.
         /// </summary>
         /// <param name="sceneLoadPackage">Contains all the objects a GameObject needs to opperate. </param>
-        void Setup(SceneLoadPackage* sceneLoadPackage);
+        /// <param name="sceneToGameObjectPackage">Contains gameObject specfic loading items.</param>
+        void Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* sceneToGameObjectPackage);
 
         /// <summary>
         /// Entry point for the entire game.
@@ -36,7 +38,18 @@ namespace SuperGameEngine
         /// </summary>
         bool m_loaded;
 
+        /// <summary>
+        /// Contains all the objects a GameObject needs to opperate.
+        /// Can be given to other GameObjets freely.
+        /// </summary>
         SceneLoadPackage* m_sceneLoadPackage;
+
+        /// <summary>
+        /// Objects for the GameObject to operate which GameComponents do not need
+        /// to worry about. Things like Collision which the GameObject should help
+        /// manage but the Components should feel like are 'managed' by the GameObject.
+        /// </summary>
+        SceneToGameObjectPackage* m_sceneToGameObjectPackage;
 
         /// <summary>
         /// All game objects currently loaded.

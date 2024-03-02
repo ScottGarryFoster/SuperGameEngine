@@ -5,6 +5,16 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
+PlayerControllerComponent::PlayerControllerComponent() : GameComponent()
+{
+    m_useKeyboard = true;
+}
+
+PlayerControllerComponent::~PlayerControllerComponent()
+{
+
+}
+
 void PlayerControllerComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
     GameComponent::Setup(loadPackage, parent);
@@ -14,11 +24,18 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
-    float speed = (2 * gameTime.TicksSinceLastFrame);
-    TransformComponent* transform = GameComponent::GetParent()->GetTransform();
+    float speed = (0.1f * gameTime.TicksSinceLastFrame);
+    std::shared_ptr<TransformComponent> transform = GameComponent::GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
-    MoveByKeyboard(speed, gameTime, location);
-    MoveByController(location, speed);
+
+    if (m_useKeyboard)
+    {
+        MoveByKeyboard(speed, gameTime, location);
+    }
+    else
+    {
+        MoveByController(location, speed);
+    }
 
     return true;
 }

@@ -4,12 +4,14 @@
 #include "../../Engine/Basic/GameTime.h"
 #include <vector>
 #include "../Scene/SceneLoadPackage.h"
+#include "../Scene/SceneToGameObjectPackage.h"
 using namespace StandardCLibrary;
 
 namespace SuperGameEngine
 {
     class GameComponent;
     class TransformComponent;
+    class Collision;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -21,11 +23,14 @@ namespace SuperGameEngine
         GameObject();
         virtual ~GameObject();
 
+        std::shared_ptr<Guid> GetGuid();
+
         /// <summary>
         /// Sets up the GameObject.
         /// </summary>
-        /// <param name="loadPackage">Everything a GameObject needs to be a game object. </param>
-        virtual void Setup(SceneLoadPackage* loadPackage);
+        /// <param name="sceneLoadPackage">Contains all the objects a GameObject needs to opperate. </param>
+        /// <param name="sceneToGameObjectPackage">Contains gameObject specfic loading items.</param>
+        void Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* gameObjectPackage);
 
         /// <summary>
         /// Entry point for the entire game.
@@ -47,11 +52,11 @@ namespace SuperGameEngine
         /// <typeparam name="T">The type of Component to add. </typeparam>
         /// <returns>The new Component. </returns>
         template<typename T>
-        typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
+        typename std::enable_if<std::is_base_of<GameComponent, T>::value, std::shared_ptr<T>>::type
         AddComponent()
         {
-            T* newComponent = new T();
-            Object* componentPtr = static_cast<Object*>(newComponent);
+            std::shared_ptr<T> newComponent = std::make_shared<T>();
+            std::shared_ptr<Object> componentPtr = std::static_pointer_cast<Object>(newComponent);
             AddActualComponentFromObject(componentPtr);
             return newComponent;
         }
@@ -63,23 +68,53 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>GameComponent of the type. </returns>
         template<typename T>
-        typename std::enable_if<std::is_base_of<GameComponent, T>::value, T*>::type
+        typename std::enable_if<std::is_base_of<GameComponent, T>::value, std::shared_ptr<T>>::type
         GetGameComponent()
         {
+            // This has to be auto because we forward declared GameComponent.
             for (auto component : m_gameComponents)
             {
                 if (typeid(component) == typeid(T))
                 {
-                    return dynamic_cast<T*>(component);
+                    return std::dynamic_pointer_cast<T>(component);
                 }
             }
 
             return nullptr;
         }
 
-        TransformComponent* GetTransform();
+        /// <summary>
+        /// A collision with something else has begin.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionBegin(Collision& collision);
+
+        /// <summary>
+        /// A collision is on going with another object.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionOccuring(Collision& collision);
+
+        /// <summary>
+        /// A collision has ended with something.
+        /// </summary>
+        /// <param name="collision">Describes the collision. </param>
+        virtual void OnCollisionEnd(Collision& collision);
+
+        /// <summary>
+        /// Gets the transform on this GameObject.
+        /// MUST CALL DURING/AFTER SETUP not on construction.
+        /// Never fails after setup.
+        /// Every gameobject has transform.
+        /// </summary>
+        /// <returns>The location, scale and rotation of the gameobject. </returns>
+        std::shared_ptr<TransformComponent> GetTransform();
         
     private:
+        /// <summary>
+        /// Unique identifier.
+        /// </summary>
+        std::shared_ptr<Guid> m_guid;
 
         /// <summary>
         /// Everything passed down from the scene.
@@ -87,14 +122,19 @@ namespace SuperGameEngine
         SceneLoadPackage* m_loadPackage;
 
         /// <summary>
+        /// Just the GameObject items from Scene.
+        /// </summary>
+        SceneToGameObjectPackage* m_gameObjectPackage;
+
+        /// <summary>
         /// All components currently loaded.
         /// </summary>
-        FList<GameComponent*> m_gameComponents;
+        FList<std::shared_ptr<GameComponent>> m_gameComponents;
 
         /// <summary>
         /// Cached Transform component.
         /// </summary>
-        TransformComponent* m_transform;
+        std::shared_ptr<TransformComponent> m_transform;
 
         /// <summary>
         /// Introduction into the system from the outside world.
@@ -105,14 +145,14 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newObject">New Component as an object. </param>
         /// <return>True means Object was the correct type and added component. </return>
-        bool AddActualComponentFromObject(Object* newObject);
+        bool AddActualComponentFromObject(std::shared_ptr<Object> newObject);
 
         /// <summary>
         /// Adds the given Component to the GameObject.
         /// Internal Method to add and setup the Component.
         /// </summary>
         /// <param name="newComponent">The new component.</param>
-        void AddActualComponent(GameComponent* newComponent);
+        void AddActualComponent(std::shared_ptr<GameComponent> newComponent);
 
         /// <summary>
         /// Ensures Transform is on the GameObject.

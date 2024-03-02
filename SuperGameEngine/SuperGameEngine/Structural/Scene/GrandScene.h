@@ -3,9 +3,13 @@
 #include "SceneLoadPackage.h"
 #include "Scene.h"
 #include "../../Engine/Input/DirectInput.h"
+#include "../../Engine/Graphics/Technique/TechniqueRenderer.h"
+#include "SceneToGameObjectPackage.h"
 
 namespace SuperGameEngine
 {
+    class CollisionDectection;
+
     /// <summary>
     /// Holds everything in the entire game.
     /// </summary>
@@ -43,6 +47,13 @@ namespace SuperGameEngine
         SceneLoadPackage* m_sceneLoadPackage;
 
         /// <summary>
+        /// Objects for the GameObject to operate which GameComponents do not need
+        /// to worry about. Things like Collision which the GameObject should help
+        /// manage but the Components should feel like are 'managed' by the GameObject.
+        /// </summary>
+        SceneToGameObjectPackage* m_sceneToGameObjectPackage;
+
+        /// <summary>
         /// All the Scenes loaded.
         /// </summary>
         std::vector<Scene*> m_scenes;
@@ -51,5 +62,15 @@ namespace SuperGameEngine
         /// Manages user input directly.
         /// </summary>
         DirectInput* m_directInput;
+
+        /// <summary>
+        /// Renders techniques which for the most part are primitives.
+        /// </summary>
+        TechniqueRenderer* m_techniqueRenderer;
+
+        /// <summary>
+        /// Handles Collision Detection on a high level.
+        /// </summary>
+        CollisionDectection* m_collisionDectection;
     };
 }

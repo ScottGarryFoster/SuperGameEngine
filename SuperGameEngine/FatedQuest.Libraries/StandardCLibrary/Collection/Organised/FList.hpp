@@ -97,5 +97,32 @@ namespace StandardCLibrary
             return FCollection<T>::m_actualData[index];
         }
 
+        /// <summary>
+        /// Access an element in the array by index.
+        /// </summary>
+        /// <param name="index">Index to access. </param>
+        /// <returns>The element in the List.</returns>
+        /// <exception cref="std::out_of_range">
+        /// When accessing anything before or after the elements in the array.
+        /// Use GetAt() for a safe version of this Method.
+        /// </exception>
+        T& GetValueAt(size_t index)
+        {
+            return FCollection<T>::m_actualData[index];
+        }
+
+        /// <summary>
+        /// Access an element in the array by index.
+        /// </summary>
+        /// <param name="index">Index to access. </param>
+        /// <returns>The element in the List.</returns>
+        /// <exception cref="std::out_of_range">
+        /// When accessing anything before or after the elements in the array.
+        /// Use GetAt() for a safe version of this Method.
+        /// </exception>
+        const T& GetConstValueAt(size_t index) const
+        {
+            return FCollection<T>::m_actualData[index];
+        }
     };
 }
