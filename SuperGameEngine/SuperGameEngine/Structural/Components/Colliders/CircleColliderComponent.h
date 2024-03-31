@@ -1,20 +1,20 @@
 #pragma once
 #include "ColliderComponent.h"
-#include "../../Spatial/Area/Rectangle.h"
-#include "../../../Engine/Graphics/Technique/RectangleDrawableTechnique.h"
+#include "../../Spatial/Area/Circle.h"
+#include "../../../Engine/Graphics/Technique/CircleDrawableTechnique.h"
 
 namespace SuperGameEngine
 {
     class TransformComponent;
 
     /// <summary>
-    /// A collider of a box shape.
+    /// A circle collider.
     /// </summary>
-    class BoxColliderComponent : public ColliderComponent, public FEventObserver
+    class CircleColliderComponent : public ColliderComponent, public FEventObserver
     {
     public:
-        BoxColliderComponent();
-        virtual ~BoxColliderComponent();
+        CircleColliderComponent();
+        virtual ~CircleColliderComponent();
 
         /// <summary>
         /// Sets up the Component.
@@ -68,13 +68,13 @@ namespace SuperGameEngine
         /// This is before scaling.
         /// </summary>
         /// <returns>Size of the Collider. </returns>
-        FVector2D GetColliderSize() const;
+        int GetColliderSize() const;
 
         /// <summary>
         /// Set the Size of the collider before Transform.
         /// </summary>
         /// <param name="size">New size of the collider. </param>
-        void SetColliderSize(FVector2D& size);
+        void SetColliderSize(int size);
 
         /// <summary>
         /// A collision with something else has begin.
@@ -96,19 +96,19 @@ namespace SuperGameEngine
 
     private:
         /// <summary>
-        /// Area for the box without taking into account the transform of the object.
+        /// Area for the circle without taking into account the transform of the object.
         /// </summary>
-        std::shared_ptr<Rectangle> m_retangle;
+        std::shared_ptr<Circle> m_circle;
 
         /// <summary>
         /// The actual rendered location for the collision.
         /// </summary>
-        std::shared_ptr<Rectangle> m_retangleActual;
+        std::shared_ptr<Circle> m_circleActual;
 
         /// <summary>
-        /// Allows the Rectangle bounds to be drawn. Used for debug.
+        /// Allows us to draw a circle.
         /// </summary>
-        std::shared_ptr<RectangleDrawableTechnique> m_rectangleDrawableTechnique;
+        std::shared_ptr<CircleDrawableTechnique> m_circleDrawableTechnique;
 
         /// <summary>
         /// Location of the object.

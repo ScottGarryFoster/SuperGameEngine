@@ -131,6 +131,7 @@
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
+    <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\RectangleDrawableTechnique.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Engine\Graphics\Texture.h" />
     <ClInclude Include="RapidXML.h" />
     <ClInclude Include="Structural\Components\Colliders\BoxColliderComponent.h" />
+    <ClInclude Include="Structural\Components\Colliders\CircleColliderComponent.h" />
     <ClInclude Include="Structural\Components\Colliders\Collider.h" />
     <ClInclude Include="Structural\Components\Colliders\ColliderComponent.h" />
     <ClInclude Include="Structural\Components\Example\UserInputTestComponent.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="Structural\Scene\Scene.h" />
     <ClInclude Include="Structural\Scene\SceneLoadPackage.h" />
     <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h" />
+    <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
     <ClInclude Include="Structural\Spatial\Collision\Collision.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionDectection.h" />
@@ -180,6 +183,7 @@
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
     <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
+    <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\RectangleDrawableTechnique.cpp" />
@@ -194,6 +198,7 @@
     <ClCompile Include="Engine\Input\DirectKeyInput.cpp" />
     <ClCompile Include="Engine\Input\DirectControllerInput.cpp" />
     <ClCompile Include="Structural\Components\Colliders\BoxColliderComponent.cpp" />
+    <ClCompile Include="Structural\Components\Colliders\CircleColliderComponent.cpp" />
     <ClCompile Include="Structural\Components\Colliders\ColliderComponent.cpp" />
     <ClCompile Include="Structural\Components\Example\UserInputTestComponent.cpp" />
     <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp" />
@@ -206,6 +211,7 @@
     <ClCompile Include="Structural\Scene\Scene.cpp" />
     <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp" />
     <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\Collision.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp" />

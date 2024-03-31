@@ -7,6 +7,7 @@
 #include "../Components/Gameplay/PlayerControllerComponent.h"
 #include "../Components/Colliders/BoxColliderComponent.h"
 #include "SceneToGameObjectPackage.h"
+#include "../Components/Colliders/CircleColliderComponent.h"
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -46,11 +47,11 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     go->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     go->GetTransform()->SetLocation(100, 0);
 
-    std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
+    std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
     FVector2D l = FVector2D(0, 0);
     FVector2D s = FVector2D(100, 200);
     box->SetColliderLocation(l);
-    box->SetColliderSize(s);
+    //box->SetColliderSize(s);
 
     go->AddComponent<PlayerControllerComponent>();
     go->AddComponent<SpriteComponent>();
@@ -62,11 +63,11 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     go2->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     go2->GetTransform()->SetLocation(250, 0);
 
-    std::shared_ptr<BoxColliderComponent> box2 = go2->AddComponent<BoxColliderComponent>();
+    std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>();
     FVector2D l2 = FVector2D(0, 0);
     FVector2D s2 = FVector2D(100, 200);
     box2->SetColliderLocation(l2);
-    box2->SetColliderSize(s2);
+    //box2->SetColliderSize(s2);
 
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
     player->UseKeyboard(false);
