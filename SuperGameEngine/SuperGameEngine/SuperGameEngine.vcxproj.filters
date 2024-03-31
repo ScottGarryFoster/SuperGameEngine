@@ -205,6 +205,15 @@
     <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp">
       <Filter>Project Files\Structural\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Components\Colliders\CircleColliderComponent.cpp">
+      <Filter>Project Files\Structural\Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\Circle.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp">
+      <Filter>Project Files\Engine\Graphics\Technique</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -347,6 +356,15 @@
     </ClInclude>
     <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h">
       <Filter>Project Files\Structural\Scene\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Colliders\CircleColliderComponent.h">
+      <Filter>Project Files\Structural\Components\Colliders\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\Circle.h">
+      <Filter>Project Files\Structural\Spatial\Area\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h">
+      <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

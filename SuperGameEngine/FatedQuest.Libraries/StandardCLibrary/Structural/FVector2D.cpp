@@ -1,4 +1,5 @@
 #include "FVector2D.h"
+#include <cmath>
 
 using namespace StandardCLibrary;
 
@@ -103,6 +104,11 @@ float FVector2D::Magnitude() const
 float FVector2D::DotProduct(const FVector2D& other) const
 {
     return m_x * other.m_x + m_y * other.m_y;
+}
+
+float FVector2D::DistanceBetween(const FVector2D& other) const
+{
+    return sqrt(pow(other.m_x - m_x, 2) + pow(other.m_y - m_y, 2));
 }
 
 const FString FVector2D::Print() const

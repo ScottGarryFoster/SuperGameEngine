@@ -1,5 +1,6 @@
 #include "../LibraryIncludes.h"
 #include "../../StandardCLibrary/Structural/FVector2D.h"
+#include <cmath>
 
 using namespace StandardCLibrary;
 
@@ -20,6 +21,11 @@ namespace StandardCLibraryTests_Structural
 
         void TearDown() override
         {
+        }
+
+        double Distance(float x1, float y1, float x2, float y2) const
+        {
+            return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
         }
     };
 
@@ -93,5 +99,55 @@ namespace StandardCLibraryTests_Structural
 
         ASSERT_TRUE(left == right);
     }
+#pragma endregion
+
+#pragma region Distance
+
+    TEST_F(FVector2DTests, Distance_ReturnsZero_WhenTwoValuesEqual)
+    {
+        FVector2D left = FVector2D(1, 1);
+        FVector2D right = FVector2D(1, 1);
+        float expected = 0;
+
+        float actual = left.DistanceBetween(right);
+
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(FVector2DTests, Distance_Returns1_WhenGivenIsOneAwayOnX)
+    {
+        float expected = 1;
+        FVector2D left = FVector2D(2, 1);
+        FVector2D right = FVector2D(1, 1);
+
+        float actual = left.DistanceBetween(right);
+
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(FVector2DTests, Distance_Returns1_WhenGivenIsOneAwayOnY)
+    {
+        float expected = 1;
+        FVector2D left = FVector2D(1, 2);
+        FVector2D right = FVector2D(1, 1);
+
+        float actual = left.DistanceBetween(right);
+
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(FVector2DTests, Distance_ReturnsCorrectValue_WhenGivenTwoPoints)
+    {
+        float expected = Distance(5, 6, 7, 8);
+        FVector2D left = FVector2D(5, 6);
+        FVector2D right = FVector2D(7, 8);
+
+        float actual = left.DistanceBetween(right);
+
+        // This should be fine to compare.
+        // If flakey use the float helper compare.
+        ASSERT_EQ(expected, actual);
+    }
+
 #pragma endregion
 }

@@ -104,6 +104,13 @@ namespace StandardCLibrary
         float DotProduct(const FVector2D& other) const;
 
         /// <summary>
+        /// Calculates the distance between two points.
+        /// </summary>
+        /// <param name="other">Other point to calculate between. </param>
+        /// <returns>The distance between the two points. </returns>
+        float DistanceBetween(const FVector2D& other) const;
+
+        /// <summary>
         /// Prints the Point value.
         /// </summary>
         /// <returns>A string version of the point. </returns>
