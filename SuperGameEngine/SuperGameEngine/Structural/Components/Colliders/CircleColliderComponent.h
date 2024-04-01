@@ -94,6 +94,12 @@ namespace SuperGameEngine
         /// <param name="collision">Describes the collision. </param>
         virtual void OnCollisionEnd(Collision& collision) override;
 
+        /// <summary>
+        /// Get the area which represents the main portion of the component.
+        /// </summary>
+        /// <returns>The Circle in the location it should be in. </returns>
+        Circle GetArea() const;
+
     private:
         /// <summary>
         /// Area for the circle without taking into account the transform of the object.

@@ -48,9 +48,10 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     go->GetTransform()->SetLocation(100, 0);
 
     std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
-    FVector2D l = FVector2D(0, 0);
+    FVector2D l = FVector2D(50, 50);
     FVector2D s = FVector2D(100, 200);
     box->SetColliderLocation(l);
+    box->SetColliderSize(35);
     //box->SetColliderSize(s);
 
     go->AddComponent<PlayerControllerComponent>();

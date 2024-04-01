@@ -1,6 +1,7 @@
 #include "CircleColliderComponent.h"
 #include "../../GameObject/GameObject.h"
 #include "../../Components/Spatial/TransformComponent.h"
+#include "BoxColliderComponent.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -38,8 +39,16 @@ bool CircleColliderComponent::Overlaps(Collider& other) const
         CircleColliderComponent* otherBox =
             dynamic_cast<CircleColliderComponent*>(&other);
 
-        Circle* otherRectangle = otherBox->m_circleActual.get();
-        return m_circleActual->Overlaps(*otherRectangle);
+        Circle otherArea = otherBox->GetArea();
+        return m_circleActual->Overlaps(otherArea);
+    }
+    else if (typeid(other) == typeid(BoxColliderComponent))
+    {
+        BoxColliderComponent* otherBox =
+            dynamic_cast<BoxColliderComponent*>(&other);
+
+        Rectangle otherArea = otherBox->GetArea();
+        //return m_circleActual->Overlaps(otherArea);
     }
 
     return false;
@@ -87,6 +96,7 @@ int CircleColliderComponent::GetColliderSize() const
 void CircleColliderComponent::SetColliderSize(int size)
 {
     m_circle->SetRadius(size);
+    m_circleActual->SetRadius(size);
 }
 
 void CircleColliderComponent::OnCollisionBegin(Collision& collision)
@@ -102,4 +112,9 @@ void CircleColliderComponent::OnCollisionOccuring(Collision& collision)
 void CircleColliderComponent::OnCollisionEnd(Collision& collision)
 {
     m_circleDrawableTechnique->SetColour(0, 0, 255, 255);
+}
+
+Circle SuperGameEngine::CircleColliderComponent::GetArea() const
+{
+    return *m_circleActual;
 }

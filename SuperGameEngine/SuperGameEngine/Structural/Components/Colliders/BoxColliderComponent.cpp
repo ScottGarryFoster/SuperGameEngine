@@ -2,6 +2,7 @@
 #include "../../GameObject/GameObject.h"
 #include "../../Components/Spatial/TransformComponent.h"
 #include "../../../Engine/Graphics/Technique/RectangleDrawableTechnique.h"
+#include "CircleColliderComponent.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -44,6 +45,14 @@ bool BoxColliderComponent::Overlaps(Collider& other) const
 
         Rectangle* otherRectangle = otherBox->m_retangleActual.get();
         return m_retangleActual->Overlaps(*otherRectangle);
+    }
+    else if (typeid(other) == typeid(CircleColliderComponent))
+    {
+        BoxColliderComponent* otherBox =
+            dynamic_cast<BoxColliderComponent*>(&other);
+
+        Rectangle otherArea = otherBox->GetArea();
+        //return m_circleActual->Overlaps(otherArea);
     }
 
     return false;
@@ -113,4 +122,9 @@ void BoxColliderComponent::OnCollisionOccuring(Collision& collision)
 void BoxColliderComponent::OnCollisionEnd(Collision& collision)
 {
     m_rectangleDrawableTechnique->SetColour(0, 0, 255, 255);
+}
+
+Rectangle BoxColliderComponent::GetArea() const
+{
+    return *m_retangleActual;
 }
