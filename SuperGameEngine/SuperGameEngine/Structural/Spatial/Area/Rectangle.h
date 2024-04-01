@@ -4,6 +4,8 @@
 using namespace StandardCLibrary;
 namespace SuperGameEngine
 {
+    class Circle;
+
     /// <summary>
     /// Describes a rectange shape in 2D Space.
     /// </summary>
@@ -119,6 +121,14 @@ namespace SuperGameEngine
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
         bool Overlaps(Rectangle& other) const;
+
+        /// <summary>
+        /// Checks to see if the other area overlaps with this rectangle.
+        /// TOUCHES DO NOT COUNT.
+        /// </summary>
+        /// <param name="other">Other to check against. </param>
+        /// <returns>True means does overlap. </returns>
+        bool Overlaps(Circle& other) const;
 
         /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.

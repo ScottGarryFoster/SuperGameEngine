@@ -10,11 +10,16 @@ namespace SuperGameEngine_Structural_Spatial_Area
     public:
         RectangleTests()
         {
+            m_testCircle = nullptr;
+            m_otherTestCircle = nullptr;
             m_testRectangle = nullptr;
             m_otherTestRectangle = nullptr;
         }
 
     protected:
+
+        Circle* m_testCircle;
+        Circle* m_otherTestCircle;
 
         Rectangle* m_testRectangle;
         Rectangle* m_otherTestRectangle;
@@ -26,11 +31,22 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
         void TearDown() override
         {
+            if (m_testCircle != nullptr)
+            {
+                delete m_testCircle;
+            }
+
+            if (m_otherTestCircle != nullptr)
+            {
+                delete m_otherTestCircle;
+            }
+
             if (m_testRectangle != nullptr)
             {
                 delete m_testRectangle;
             }
-            else if (m_otherTestRectangle != nullptr)
+
+            if (m_otherTestRectangle != nullptr)
             {
                 delete m_otherTestRectangle;
             }
@@ -598,6 +614,113 @@ namespace SuperGameEngine_Structural_Spatial_Area
 
         // Act
         bool actual = m_testRectangle->PointIsWithin(givenLocation);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+#pragma endregion
+
+#pragma region Overlaps Circle
+    TEST_F(RectangleTests, OverlapsCircle_ReturnsFalse_WhenExtentsOfRectangleAreNotWithinCircle)
+    {
+        // Arrange
+        FVector2D givenFirstLocation = FVector2D(10, 10);
+        m_testCircle = CreateBasicCircle();
+        m_testCircle->SetLocation(givenFirstLocation);
+
+        FVector2D givenSecondLocation = FVector2D(0, 0);
+        m_testRectangle = CreateBasicRectangle();
+        m_testRectangle->SetLocation(givenSecondLocation.GetX(), givenSecondLocation.GetY());
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_testCircle);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsCircle_ReturnsTrue_WhenCircleAndRectangleOverlapOnTheX)
+    {
+        // Arrange
+        int radius = 1;
+        float touchingX = radius + radius - 0.1f;
+
+        FVector2D givenFirstLocation = FVector2D(touchingX, 0);
+        m_testCircle = CreateBasicCircle();
+        m_testCircle->SetLocation(givenFirstLocation);
+        m_testCircle->SetRadius(radius);
+
+        FVector2D givenSecondLocation = FVector2D(0, 0);
+        m_testRectangle = CreateBasicRectangle();
+        m_testRectangle->SetLocation(givenSecondLocation.GetX(), givenSecondLocation.GetY());
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_testCircle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsCircle_ReturnsTrue_WhenCircleAndRectangleOverlapOnTheY)
+    {
+        // Arrange
+        int radius = 1;
+        float touchingY = radius + radius - 0.1f;
+
+        FVector2D givenFirstLocation = FVector2D(0, touchingY);
+        m_testCircle = CreateBasicCircle();
+        m_testCircle->SetLocation(givenFirstLocation);
+        m_testCircle->SetRadius(radius);
+
+        FVector2D givenSecondLocation = FVector2D(0, 0);
+        m_testRectangle = CreateBasicRectangle();
+        m_testRectangle->SetLocation(givenSecondLocation.GetX(), givenSecondLocation.GetY());
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_testCircle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsCircle_ReturnsTrue_WhenCircleAndRectangleOverlapOnTheXAndY)
+    {
+        // Arrange
+        int radius = 1;
+
+        FVector2D givenFirstLocation = FVector2D(0.5f, 0.5f);
+        m_testCircle = CreateBasicCircle();
+        m_testCircle->SetLocation(givenFirstLocation);
+        m_testCircle->SetRadius(radius);
+
+        FVector2D givenSecondLocation = FVector2D(1, 1);
+        m_testRectangle = CreateBasicRectangle();
+        m_testRectangle->SetLocation(givenSecondLocation.GetX(), givenSecondLocation.GetY());
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_testCircle);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OverlapsCircle_ReturnsTrue_WhenCircleIsContainedCompletelyInTheRectangle)
+    {
+        // Arrange
+        int radius = 1;
+
+        FVector2D givenFirstLocation = FVector2D(5, 5);
+        m_testCircle = CreateBasicCircle();
+        m_testCircle->SetLocation(givenFirstLocation);
+        m_testCircle->SetRadius(radius);
+
+        FVector2D givenSecondLocation = FVector2D(0, 0);
+        m_testRectangle = CreateBasicRectangle();
+        m_testRectangle->SetLocation(givenSecondLocation.GetX(), givenSecondLocation.GetY());
+        m_testRectangle->SetSize(10, 10);
+
+        // Act
+        bool actual = m_testRectangle->Overlaps(*m_testCircle);
 
         // Assert
         ASSERT_TRUE(actual);

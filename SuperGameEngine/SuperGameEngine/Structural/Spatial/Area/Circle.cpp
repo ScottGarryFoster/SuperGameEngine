@@ -65,6 +65,11 @@ bool Circle::OverlapsOrTouches(Circle& other) const
     return areEqual || distance < (radius + otherRadius);
 }
 
+/// <remark>
+/// The Circle version is the main version of Overlap. as it makes more sence to test
+/// a point is within the rectangle. The Rectangle version would be a repeat and would
+/// link more methods. For this reason the Rectangle version just calls this Overlap.
+/// </remark>
 bool Circle::Overlaps(Rectangle& other) const
 {
     FVector2D myLocation = GetLocation();
