@@ -1,4 +1,5 @@
 #include "Rectangle.h"
+#include "Circle.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -113,9 +114,43 @@ bool Rectangle::Overlaps(Rectangle& other) const
     return true;
 }
 
+bool Rectangle::Overlaps(Circle& other) const
+{
+    Rectangle copy = Rectangle(GetLeft(), GetTop(), GetWidth(), GetHeight());
+    return other.Overlaps(copy);
+}
+
 bool Rectangle::OverlapsOrIsTouching(Rectangle& other) const
 {
     return IsTouching(other) || Overlaps(other);
+}
+
+bool Rectangle::PointIsWithin(FVector2D& location) const
+{
+    float tX = location.GetX();
+    float tY = location.GetY();
+    
+    if (tX < GetLeft())
+    {
+        return false;
+    }
+
+    if (tX > GetRight())
+    {
+        return false;
+    }
+
+    if (tY < GetTop())
+    {
+        return false;
+    }
+
+    if (tY > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool Rectangle::IsTouching(Rectangle& other) const

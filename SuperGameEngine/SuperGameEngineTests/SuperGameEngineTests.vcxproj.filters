@@ -7,6 +7,9 @@
     <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\CircleTests.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">
