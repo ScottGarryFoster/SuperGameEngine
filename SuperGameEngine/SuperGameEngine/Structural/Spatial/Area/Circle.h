@@ -4,6 +4,8 @@
 using namespace StandardCLibrary;
 namespace SuperGameEngine
 {
+    class Rectangle;
+
     /// <summary>
     /// Represents the shape circle.
     /// </summary>
@@ -11,6 +13,7 @@ namespace SuperGameEngine
     {
     public:
         Circle(int radius);
+        Circle(float x, float y, int radius);
         virtual ~Circle();
 
         /// <summary>
@@ -39,12 +42,34 @@ namespace SuperGameEngine
 
         /// <summary>
         /// Checks to see if the other circle overlaps with this circle.
+        /// TOUCHES DO NOT COUNT.
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
         bool Overlaps(Circle& other) const;
 
-        //bool PointIsWithin(FVector2D& location);
+        /// <summary>
+        /// Checks to see if the other circle overlaps with this circle.
+        /// Touches count.
+        /// </summary>
+        /// <param name="other">Other to check against. </param>
+        /// <returns>True means does overlap. </returns>
+        bool OverlapsOrTouches(Circle& other) const;
+
+        /// <summary>
+        /// Checks to see if the other Rectangle overlaps with this circle.
+        /// TOUCHES DO NOT COUNT.
+        /// </summary>
+        /// <param name="other">Other to check against. </param>
+        /// <returns>True means does overlap. </returns>
+        bool Overlaps(Rectangle& other) const;
+
+        /// <summary>
+        /// Detirmines if the given point is within the area.
+        /// </summary>
+        /// <param name="location">Location to test. </param>
+        /// <returns>True means is within area. </returns>
+        bool PointIsWithin(FVector2D& location) const;
     private:
         /// <summary>
         /// Location of the circle.

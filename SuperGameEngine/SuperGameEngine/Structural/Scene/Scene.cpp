@@ -64,11 +64,11 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     go2->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     go2->GetTransform()->SetLocation(250, 0);
 
-    std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>();
+    std::shared_ptr<BoxColliderComponent> box2 = go2->AddComponent<BoxColliderComponent>();
     FVector2D l2 = FVector2D(0, 0);
     FVector2D s2 = FVector2D(100, 200);
     box2->SetColliderLocation(l2);
-    //box2->SetColliderSize(s2);
+    box2->SetColliderSize(s2);
 
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
     player->UseKeyboard(false);

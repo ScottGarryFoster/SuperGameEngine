@@ -48,7 +48,7 @@ bool CircleColliderComponent::Overlaps(Collider& other) const
             dynamic_cast<BoxColliderComponent*>(&other);
 
         Rectangle otherArea = otherBox->GetArea();
-        //return m_circleActual->Overlaps(otherArea);
+        return m_circleActual->Overlaps(otherArea);
     }
 
     return false;

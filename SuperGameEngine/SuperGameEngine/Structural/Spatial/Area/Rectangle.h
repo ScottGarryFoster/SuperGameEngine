@@ -127,6 +127,13 @@ namespace SuperGameEngine
         /// <returns>True means does overlap. </returns>
         bool OverlapsOrIsTouching(Rectangle& other) const;
 
+        /// <summary>
+        /// Detirmines if the given point is within the area.
+        /// </summary>
+        /// <param name="location">Location to test. </param>
+        /// <returns>True means is within area. </returns>
+        bool PointIsWithin(FVector2D& location) const;
+
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.

@@ -1,5 +1,6 @@
 #include "../../../LibraryIncludes.h"
 #include "../../../../SuperGameEngine/Structural/Spatial/Area/Rectangle.h"
+#include "../../../../SuperGameEngine/Structural/Spatial/Area/Circle.h"
 
 using namespace SuperGameEngine;
 namespace SuperGameEngine_Structural_Spatial_Area
@@ -10,6 +11,7 @@ namespace SuperGameEngine_Structural_Spatial_Area
         RectangleTests()
         {
             m_testRectangle = nullptr;
+            m_otherTestRectangle = nullptr;
         }
 
     protected:
@@ -33,13 +35,29 @@ namespace SuperGameEngine_Structural_Spatial_Area
                 delete m_otherTestRectangle;
             }
         }
-    };
 
-    /// <summary>
-    /// Creates a basic rectangle for testing.
-    /// </summary>
-    /// <returns>A Unit 1 by 1 rectangle at (1, 1). </returns>
-    Rectangle* CreateBasicRectangle();
+        /// <summary>
+        /// Creates a basic rectangle for testing.
+        /// </summary>
+        /// <returns>A Unit 1 by 1 rectangle at (1, 1). </returns>
+        Rectangle* CreateBasicRectangle()
+        {
+            float originalXY = 1;
+            float originalWidthHeight = 1;
+            return new Rectangle(originalXY, originalWidthHeight);
+        }
+
+        /// <summary>
+        /// Creates a basic circle for testing.
+        /// </summary>
+        /// <returns>A Unit 1 by 1 circle at (1, 1). </returns>
+        Circle* CreateBasicCircle()
+        {
+            float originalXY = 1;
+            int validRadius = 1;
+            return new Circle(originalXY, originalXY, validRadius);
+        }
+    };
 
 #pragma region Construction
     TEST_F(RectangleTests, OnContruction_ReturnsGivenLocation_WhenGivenAsXY)
@@ -554,12 +572,35 @@ namespace SuperGameEngine_Structural_Spatial_Area
     }
 #pragma endregion
 
-#pragma region Helper Methods
-    Rectangle* CreateBasicRectangle()
+#pragma region PointIsWithin
+    TEST_F(RectangleTests, PointIsWithin_ReturnsFalse_WhenPointIsEasilyOutsideRectangle)
     {
-        float originalXY = 1;
-        float originalWidthHeight = 1;
-        return new Rectangle(originalXY, originalWidthHeight);
+        // Arrange
+        FVector2D givenLocation = FVector2D(5, 5);
+
+        m_testRectangle = CreateBasicRectangle();
+
+        // Act
+        bool actual = m_testRectangle->PointIsWithin(givenLocation);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, PointIsWithin_ReturnsTrue_WhenPointEqualsCenterOfRectangle)
+    {
+        // Arrange
+        FVector2D givenLocation = FVector2D(1, 1);
+
+        m_testRectangle = CreateBasicRectangle();
+        m_testRectangle->SetLocation(0, 0);
+        m_testRectangle->SetSize(2, 2);
+
+        // Act
+        bool actual = m_testRectangle->PointIsWithin(givenLocation);
+
+        // Assert
+        ASSERT_TRUE(actual);
     }
 #pragma endregion
 }

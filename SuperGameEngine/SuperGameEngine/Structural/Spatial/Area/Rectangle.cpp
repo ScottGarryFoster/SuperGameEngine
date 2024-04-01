@@ -118,6 +118,34 @@ bool Rectangle::OverlapsOrIsTouching(Rectangle& other) const
     return IsTouching(other) || Overlaps(other);
 }
 
+bool Rectangle::PointIsWithin(FVector2D& location) const
+{
+    float tX = location.GetX();
+    float tY = location.GetY();
+    
+    if (tX < GetLeft())
+    {
+        return false;
+    }
+
+    if (tX > GetRight())
+    {
+        return false;
+    }
+
+    if (tY < GetTop())
+    {
+        return false;
+    }
+
+    if (tY > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
+}
+
 bool Rectangle::IsTouching(Rectangle& other) const
 {
     if (FloatingPointHelpers::AreEqual(GetLeft(), other.GetRight()))

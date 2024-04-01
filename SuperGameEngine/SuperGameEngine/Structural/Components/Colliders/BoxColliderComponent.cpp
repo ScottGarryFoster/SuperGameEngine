@@ -48,11 +48,11 @@ bool BoxColliderComponent::Overlaps(Collider& other) const
     }
     else if (typeid(other) == typeid(CircleColliderComponent))
     {
-        BoxColliderComponent* otherBox =
-            dynamic_cast<BoxColliderComponent*>(&other);
+        CircleColliderComponent* otherAreaComponent =
+            dynamic_cast<CircleColliderComponent*>(&other);
 
-        Rectangle otherArea = otherBox->GetArea();
-        //return m_circleActual->Overlaps(otherArea);
+        Circle otherArea = otherAreaComponent->GetArea();
+        return otherArea.Overlaps(*m_retangleActual);
     }
 
     return false;
