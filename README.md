@@ -3,7 +3,7 @@
 ![Super Game Engine](https://docs.supergameengine.com/images/SmallerLogo.png)
 
 ## Introduction
-SuperGameEngine (**SGE**) is my project to explore programming in C++ by creating a 2D Engine in SDL3.
+SuperGameEngine (**SGE**) is my project to explore programming in C++ by creating a 2D Engine in SDL2.
 
 ## Documentation
 Formal documentation for the Engine is below.
