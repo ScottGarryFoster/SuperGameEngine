@@ -36,3 +36,8 @@ The best way to keep up with these are the following:
 1. The documentation will have my road map when I have one: [Documentation](https://docs.supergameengine.com)
 2. My social media will have posts with the engine on: [Blue Sky](https://bsky.app/profile/decent.bsky.social)
 3. Dev Logs which are slower than the above will be via YouTube: [YouTube](https://youtube.com/@ScottGarryFoster)
+
+## Licence
+The code presented in under: **Attribution-NonCommercial-ShareAlike 4.0 International** licence as outlined in this page [Licence](https://docs.supergameengine.com/licence.html).\
+**Q: Why this licence?** *This project is publicly available at the moment as a portfolio piece not as a product.*\
+**Q: Can I use this for a commercial product / outside the licence?** *Message me if this is the case.*
