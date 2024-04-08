@@ -76,8 +76,6 @@ bool GrandScene::Update(Uint64 tick)
     while (timesToRunFixedUpdate > 0)
     {
         --timesToRunFixedUpdate;
-        Logger::Info(FString("FUPDATE: ") + fixedUpdateGameTime.TicksSinceLastFrame);
-
         for (Scene* scene : m_scenes)
         {
             if (scene != nullptr)
