@@ -72,7 +72,6 @@ bool GrandScene::Update(Uint64 tick)
         }
     }
 
-    Logger::Info(FString("TICK: ") + (int)tick);
     while (timesToRunFixedUpdate > 0)
     {
         --timesToRunFixedUpdate;
