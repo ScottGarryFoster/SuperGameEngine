@@ -60,6 +60,8 @@ bool GrandScene::Update(Uint64 tick)
     while (timesToRunFixedUpdate > 0)
     {
         --timesToRunFixedUpdate;
+
+        m_collisionDectection->RunCollisionUpdate();
         for (Scene* scene : m_scenes)
         {
             if (scene != nullptr)
@@ -67,12 +69,10 @@ bool GrandScene::Update(Uint64 tick)
                 scene->FixedUpdate(fixedUpdateGameTime);
             }
         }
-
-        m_collisionDectection->RunCollisionUpdate();
     }
 
     GameTime updateGameTime = GameTime();
-    updateGameTime.TicksSinceLastFrame = tick;
+    updateGameTime.TicksSinceLastFrame = (int)tick;
     for (Scene* scene : m_scenes)
     {
         if (scene != nullptr)

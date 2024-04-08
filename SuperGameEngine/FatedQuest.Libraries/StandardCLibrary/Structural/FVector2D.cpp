@@ -41,7 +41,7 @@ void FVector2D::SetY(float newValue)
 
 void FVector2D::SetXYValue(float x, float y)
 {
-    if (x != m_y || y != m_y)
+    if (x != m_x || y != m_y)
     {
         m_x = x;
         m_y = y;

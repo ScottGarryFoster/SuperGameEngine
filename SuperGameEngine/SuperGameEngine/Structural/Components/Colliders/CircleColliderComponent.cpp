@@ -26,7 +26,7 @@ void CircleColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* p
 {
     ColliderComponent::Setup(loadPackage, parent);
 
-    m_loadPackage->GetTechniqueRender()->GiveTechnique(m_circleDrawableTechnique);
+    GetLoadPackage()->GetTechniqueRender()->GiveTechnique(m_circleDrawableTechnique);
 
     m_transform = parent->GetTransform();
     m_transform->OnLocationChanged()->Subscribe(this);

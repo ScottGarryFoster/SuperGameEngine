@@ -86,7 +86,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Allows us to operate.
         /// </summary>
-        SceneLoadPackage* m_loadPackage;
+        SceneLoadPackage* GetLoadPackage();
 
     private:
 
@@ -94,6 +94,11 @@ namespace SuperGameEngine
         /// Parent owning object.
         /// </summary>
         GameObject* m_parent;
+
+        /// <summary>
+        /// Allows us to operate.
+        /// </summary>
+        SceneLoadPackage* m_loadPackage;
 
         /// <summary>
         /// True means run a draw loop.

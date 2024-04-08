@@ -69,3 +69,8 @@ void GameComponent::OnCollisionOccuring(Collision& collision)
 void GameComponent::OnCollisionEnd(Collision& collision)
 {
 }
+
+SceneLoadPackage* SuperGameEngine::GameComponent::GetLoadPackage()
+{
+    return m_loadPackage;
+}

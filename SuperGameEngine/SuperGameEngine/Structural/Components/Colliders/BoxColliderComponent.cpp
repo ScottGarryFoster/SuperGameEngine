@@ -29,7 +29,7 @@ void BoxColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* pare
     m_transform = parent->GetTransform();
     m_transform->OnLocationChanged()->Subscribe(this);
 
-    m_loadPackage->GetTechniqueRender()->GiveTechnique(m_rectangleDrawableTechnique);
+    GetLoadPackage()->GetTechniqueRender()->GiveTechnique(m_rectangleDrawableTechnique);
 
     m_retangleActual->SetLocation(
         m_transform->GetLocation()->GetX() + m_retangle->GetLeft() - (m_retangle->GetWidth() / 2.0f),

@@ -107,6 +107,12 @@
     <Filter Include="Project Files\Structural\Spatial\Collision\API">
       <UniqueIdentifier>{85648a4f-88e0-4916-8b97-af2fe417316d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Structural\Components\Physics">
+      <UniqueIdentifier>{2d0c0933-d5a8-49fa-bb5f-eaf5752bbbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Components\Physics\API">
+      <UniqueIdentifier>{617c796c-177f-40ee-b59c-3489fe882990}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -216,6 +222,9 @@
     </ClCompile>
     <ClCompile Include="Structural\Scene\FrameTiming.cpp">
       <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Physics\SimpleRigidbodyComponent.cpp">
+      <Filter>Project Files\Structural\Components\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,6 +380,9 @@
     </ClInclude>
     <ClInclude Include="Structural\Scene\FrameTiming.h">
       <Filter>Project Files\Structural\Scene\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Physics\SimpleRigidbodyComponent.h">
+      <Filter>Project Files\Structural\Components\Physics\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

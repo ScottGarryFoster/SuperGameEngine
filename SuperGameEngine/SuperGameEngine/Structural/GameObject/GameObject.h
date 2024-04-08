@@ -80,10 +80,19 @@ namespace SuperGameEngine
             // This has to be auto because we forward declared GameComponent.
             for (auto component : m_gameComponents)
             {
-                if (typeid(component) == typeid(T))
+                std::shared_ptr<T> attempt = std::dynamic_pointer_cast<T>(component);
+                if (attempt)
                 {
-                    return std::dynamic_pointer_cast<T>(component);
+                    return attempt;
                 }
+                
+                // This is the prefered method but was not working with certain configurations.
+                // This might start working when we move to proper loaders.
+                // The above is not performant but so long as we cache it should be fine for now.
+                //if (typeid(component) == typeid(T))
+                //{
+                //    return std::dynamic_pointer_cast<T>(component);
+                //}
             }
 
             return nullptr;

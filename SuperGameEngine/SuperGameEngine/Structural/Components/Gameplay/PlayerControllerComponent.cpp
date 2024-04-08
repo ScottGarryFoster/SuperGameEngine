@@ -18,13 +18,16 @@ PlayerControllerComponent::~PlayerControllerComponent()
 void PlayerControllerComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
     GameComponent::Setup(loadPackage, parent);
+
+    m_simpleRigidbodyComponent = GetParent()->GetGameComponent<SimpleRigidbodyComponent>();
 }
 
 bool PlayerControllerComponent::Update(GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
-    float speed = (0.1f * gameTime.TicksSinceLastFrame);
+    //float speed = (0.1f * gameTime.TicksSinceLastFrame);
+    float speed = 100;
     std::shared_ptr<TransformComponent> transform = GameComponent::GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
 
@@ -43,7 +46,7 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
 void PlayerControllerComponent::MoveByKeyboard(float speed, GameTime& gameTime, FVector2D* location)
 {
     const DirectKeyInput* input = 
-        GameComponent::m_loadPackage->GetDirectInput()->GetDirectKeyInput();
+        GameComponent::GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();
 
     bool haveMovedX = false;
     bool haveMovedY = false;
@@ -83,31 +86,38 @@ void PlayerControllerComponent::MoveByKeyboard(float speed, GameTime& gameTime, 
         haveMoved = true;
     }
 
-    float newX = location->GetX() + movementX;
-    float newY = location->GetY() + movementY;
-    if (haveMoved)
-    {
-        location->SetXYValue(newX, newY);
-    }
+    //float newX = location->GetX() + movementX;
+    //float newY = location->GetY() + movementY;
+    m_simpleRigidbodyComponent->SetVelocity(movementX, movementY);
+    //float newX = location->GetX() + movementX;
+    //float newY = location->GetY() + movementY;
+    //if (haveMoved)
+    //{
+    //    location->SetXYValue(newX, newY);
+    //}
 }
 
 void PlayerControllerComponent::MoveByController(FVector2D* location, float speed)
 {
-    const DirectControllerInput* controllerInput = GameComponent::m_loadPackage->GetDirectInput()->GetDirectXInput();
+    const DirectControllerInput* controllerInput = GameComponent::GetLoadPackage()->GetDirectInput()->GetDirectXInput();
 
     int stickX = controllerInput->AxisValue(UniversalControllerAxis::LeftStickX);
     int stickY = controllerInput->AxisValue(UniversalControllerAxis::LeftStickY);
     if (stickX == 0 && stickY == 0)
     {
+        m_simpleRigidbodyComponent->SetVelocity(0, 0);
         return;
     }
 
     FVector2D stick = FVector2D((float)stickX, (float)stickY);
 
-    FVector2D difference = stick - *location;
-    FVector2D direction = difference.Normalize();
+    //FVector2D difference = stick - *location;
+    FVector2D direction = stick.Normalize();
     FVector2D velocity = direction * speed;
-    FVector2D newPosition = *location + velocity;
+    FVector2D newPosition = velocity;
+    //FVector2D newPosition = *location + velocity;
 
-    location->SetXYValue(newPosition.GetX(), newPosition.GetY());
+    //location->SetXYValue(newPosition.GetX(), newPosition.GetY());
+
+    m_simpleRigidbodyComponent->SetVelocity(newPosition.GetX(), newPosition.GetY());
 }

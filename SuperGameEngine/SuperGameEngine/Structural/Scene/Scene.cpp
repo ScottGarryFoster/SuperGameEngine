@@ -8,6 +8,7 @@
 #include "../Components/Colliders/BoxColliderComponent.h"
 #include "SceneToGameObjectPackage.h"
 #include "../Components/Colliders/CircleColliderComponent.h"
+#include "../Components/Physics/SimpleRigidbodyComponent.h"
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -55,8 +56,10 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     box->SetColliderSize(35);
     //box->SetColliderSize(s);
 
-    go->AddComponent<PlayerControllerComponent>();
     go->AddComponent<SpriteComponent>();
+    go->AddComponent<SimpleRigidbodyComponent>();
+    go->AddComponent<PlayerControllerComponent>();
+
     m_gameObjects.push_back(go);
 
 
@@ -71,6 +74,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     box2->SetColliderLocation(l2);
     box2->SetColliderSize(s2);
 
+    go2->AddComponent<SimpleRigidbodyComponent>();
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
     player->UseKeyboard(false);
 

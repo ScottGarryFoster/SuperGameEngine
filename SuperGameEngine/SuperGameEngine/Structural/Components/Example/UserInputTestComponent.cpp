@@ -10,7 +10,7 @@ void UserInputTestComponent::Setup(SceneLoadPackage* loadPackage, GameObject* pa
 
 bool UserInputTestComponent::Update(GameTime gameTime)
 {
-    const DirectKeyInput* directInput = m_loadPackage->GetDirectInput()->GetDirectKeyInput();
+    const DirectKeyInput* directInput = GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();
     if (directInput->KeyDown(InputKeyCode::Q))
     {
         Logger::Info(FString("Q key Down"));

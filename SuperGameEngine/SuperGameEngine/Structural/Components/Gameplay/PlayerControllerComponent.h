@@ -1,5 +1,6 @@
 #pragma once
 #include "../../GameObject/GameComponent.h"
+#include "../Physics/SimpleRigidbodyComponent.h"
 
 namespace SuperGameEngine
 {
@@ -36,5 +37,7 @@ namespace SuperGameEngine
         void MoveByController(StandardCLibrary::FVector2D* location, float speed);
 
         bool m_useKeyboard;
+
+        std::shared_ptr<SimpleRigidbodyComponent> m_simpleRigidbodyComponent;
     };
 }
