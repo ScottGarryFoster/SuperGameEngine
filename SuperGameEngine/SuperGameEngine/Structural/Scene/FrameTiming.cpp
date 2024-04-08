@@ -4,9 +4,8 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-FrameTiming::FrameTiming(bool areUsingVSync)
+FrameTiming::FrameTiming()
 {
-    m_vSync = areUsingVSync;
     m_fixedUpdateLoopTicks = 20;
 }
 

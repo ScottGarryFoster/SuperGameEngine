@@ -57,8 +57,17 @@ bool GrandScene::Update(Uint64 tick)
         ++timesToRunFixedUpdate;
     }
 
-    if (runFixedUpdate)
+    while (timesToRunFixedUpdate > 0)
     {
+        --timesToRunFixedUpdate;
+        for (Scene* scene : m_scenes)
+        {
+            if (scene != nullptr)
+            {
+                scene->FixedUpdate(fixedUpdateGameTime);
+            }
+        }
+
         m_collisionDectection->RunCollisionUpdate();
     }
 
@@ -71,18 +80,6 @@ bool GrandScene::Update(Uint64 tick)
             scene->Update(updateGameTime);
         }
     }
-
-    while (timesToRunFixedUpdate > 0)
-    {
-        --timesToRunFixedUpdate;
-        for (Scene* scene : m_scenes)
-        {
-            if (scene != nullptr)
-            {
-                scene->FixedUpdate(fixedUpdateGameTime);
-            }
-        }
-    } 
 
     // TODO: This should run maybe once a minute or every 5 minutes.
     // Make Clean Techniques occur on a slower update loop #41
