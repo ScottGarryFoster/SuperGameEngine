@@ -168,6 +168,7 @@
     <ClInclude Include="Structural\GameObject\GameComponent.h" />
     <ClInclude Include="Structural\GameObject\GameObject.h" />
     <ClInclude Include="Structural\GameObject\TestComponent.h" />
+    <ClInclude Include="Structural\Scene\FrameTiming.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
     <ClInclude Include="Structural\Scene\Scene.h" />
     <ClInclude Include="Structural\Scene\SceneLoadPackage.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Structural\GameObject\GameComponent.cpp" />
     <ClCompile Include="Structural\GameObject\GameObject.cpp" />
     <ClCompile Include="Structural\GameObject\TestComponent.cpp" />
+    <ClCompile Include="Structural\Scene\FrameTiming.cpp" />
     <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Scene\Scene.cpp" />
     <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp" />

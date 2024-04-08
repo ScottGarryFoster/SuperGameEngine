@@ -64,6 +64,18 @@ bool GameObject::Update(GameTime gameTime)
     return true;
 }
 
+void GameObject::FixedUpdate(GameTime gameTime)
+{
+    for (size_t i = 0; i < m_gameComponents.Count(); ++i)
+    {
+        std::shared_ptr<GameComponent> component = m_gameComponents[i];
+        if (m_gameComponents[i] != nullptr)
+        {
+            component->FixedUpdate(gameTime);
+        }
+    }
+}
+
 void GameObject::Draw()
 {
     FList<std::shared_ptr<GameComponent>> componentsToDraw = m_gameComponents

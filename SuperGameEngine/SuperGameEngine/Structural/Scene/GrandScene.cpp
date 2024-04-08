@@ -8,10 +8,12 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
 {
     m_directInput = new DirectInput();
     m_techniqueRenderer = new TechniqueRenderer(renderer);
+    m_frameTimings = new FrameTiming();
     m_sceneLoadPackage = new SceneLoadPackage(
         new ContentManager(renderer),
         m_directInput, 
-        m_techniqueRenderer);
+        m_techniqueRenderer,
+        m_frameTimings);
     m_scenes = std::vector<Scene*>();
 
     m_collisionDectection = new CollisionDectection();
@@ -21,6 +23,8 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
     Scene* scene = new Scene();
     scene->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     m_scenes.push_back(scene);
+
+    m_currentFixedUpdateTicks = 0;
 }
 
 GrandScene::~GrandScene()
@@ -30,22 +34,58 @@ GrandScene::~GrandScene()
     delete m_techniqueRenderer;
     delete m_sceneToGameObjectPackage;
     delete m_collisionDectection;
+    delete m_frameTimings;
 }
 
 bool GrandScene::Update(Uint64 tick)
 {
-    GameTime gameTime = GameTime();
-    gameTime.TicksSinceLastFrame = (int)tick;
+    m_currentFixedUpdateTicks += tick;
 
-    m_collisionDectection->RunCollisionUpdate();
+    bool runFixedUpdate = false;
 
+    GameTime fixedUpdateGameTime = GameTime();
+    fixedUpdateGameTime.TicksSinceLastFrame = m_frameTimings->GetFixedUpdateLoopTiming();
+
+    int timesToRunFixedUpdate = 0;
+    while (m_currentFixedUpdateTicks >= m_frameTimings->GetFixedUpdateLoopTiming())
+    {
+        runFixedUpdate = true;
+        m_currentFixedUpdateTicks -= m_frameTimings->GetFixedUpdateLoopTiming();
+
+        // If the refresh is really good you want the fixed update to run multiple times
+        // in a frame. This is the number of times to run this frame.
+        ++timesToRunFixedUpdate;
+    }
+
+    if (runFixedUpdate)
+    {
+        m_collisionDectection->RunCollisionUpdate();
+    }
+
+    GameTime updateGameTime = GameTime();
+    updateGameTime.TicksSinceLastFrame = tick;
     for (Scene* scene : m_scenes)
     {
         if (scene != nullptr)
         {
-            scene->Update(gameTime);
+            scene->Update(updateGameTime);
         }
     }
+
+    Logger::Info(FString("TICK: ") + (int)tick);
+    while (timesToRunFixedUpdate > 0)
+    {
+        --timesToRunFixedUpdate;
+        Logger::Info(FString("FUPDATE: ") + fixedUpdateGameTime.TicksSinceLastFrame);
+
+        for (Scene* scene : m_scenes)
+        {
+            if (scene != nullptr)
+            {
+                scene->FixedUpdate(fixedUpdateGameTime);
+            }
+        }
+    } 
 
     // TODO: This should run maybe once a minute or every 5 minutes.
     // Make Clean Techniques occur on a slower update loop #41

@@ -4,11 +4,17 @@ using namespace SuperGameEngine;
 SceneLoadPackage::SceneLoadPackage(
     ContentManager* contentManager, 
     const DirectInput* directInput,
-    TechniqueRenderer* techniqueRenderer)
+    TechniqueRenderer* techniqueRenderer,
+    FrameTiming* frameTimings)
 {
     m_contentManager = contentManager;
     m_directInput = directInput;
     m_techniqueRenderer = techniqueRenderer;
+    m_frameTiming = frameTimings;
+}
+
+SceneLoadPackage::~SceneLoadPackage()
+{
 }
 
 ContentManager* SceneLoadPackage::GetContentManager() const
@@ -24,4 +30,9 @@ const DirectInput* SuperGameEngine::SceneLoadPackage::GetDirectInput() const
 TechniqueRenderer* SuperGameEngine::SceneLoadPackage::GetTechniqueRender()
 {
     return m_techniqueRenderer;
+}
+
+FrameTiming* SuperGameEngine::SceneLoadPackage::GetFrameTiming() const
+{
+    return m_frameTiming;
 }
