@@ -2,6 +2,7 @@
 #include "../../Engine/Content/ContentManager.h"
 #include "../../Engine/Input/DirectInput.h"
 #include "../../Engine/Graphics/Technique/TechniqueRenderer.h"
+#include "FrameTiming.h"
 
 namespace SuperGameEngine
 {
@@ -18,10 +19,13 @@ namespace SuperGameEngine
         /// <param name="contentManager">Access to resources. </param>
         /// <param name="directInput">Access to direct input from the User. ></param>
         /// <param name="techniqueRenderer">Renders techniques which for the most part are primitives. </param>
+        /// <param name="frameTimings">Controls when Loops occur. </param>
         SceneLoadPackage(
             ContentManager* contentManager, 
             const DirectInput* directInput,
-            TechniqueRenderer* techniqueRenderer);
+            TechniqueRenderer* techniqueRenderer,
+            FrameTiming* frameTimings);
+        virtual ~SceneLoadPackage();
 
         /// <summary>
         /// Allows you to gain access to textures.
@@ -39,6 +43,12 @@ namespace SuperGameEngine
         /// </summary>
         TechniqueRenderer* GetTechniqueRender();
 
+        /// <summary>
+        /// Controls when Loops occur.
+        /// </summary>
+        /// <returns>Allows you to control when an update loop occurs. </returns>
+        FrameTiming* GetFrameTiming() const;
+
     private:
         /// <summary>
         /// Allows you to gain access to textures.
@@ -54,5 +64,10 @@ namespace SuperGameEngine
         /// Renders techniques which for the most part are primitives.
         /// </summary>
         TechniqueRenderer* m_techniqueRenderer;
+
+        /// <summary>
+        /// Controls when Loops occur.
+        /// </summary>
+        FrameTiming* m_frameTiming;
     };
 }

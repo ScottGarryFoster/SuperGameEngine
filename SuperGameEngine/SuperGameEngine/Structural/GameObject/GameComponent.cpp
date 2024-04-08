@@ -35,6 +35,10 @@ bool GameComponent::Update(GameTime gameTime)
     return false;
 }
 
+void GameComponent::FixedUpdate(GameTime gameTime)
+{
+}
+
 void GameComponent::Draw()
 {
 }

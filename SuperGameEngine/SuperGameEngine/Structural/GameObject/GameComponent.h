@@ -33,6 +33,12 @@ namespace SuperGameEngine
         virtual bool Update(GameTime gameTime);
 
         /// <summary>
+        /// Frame-rate independent Update message for physics calculations.
+        /// </summary>
+        /// <param name="gameTime">Ticks since last frame. </param>
+        virtual void FixedUpdate(GameTime gameTime);
+
+        /// <summary>
         /// Draw everything in the game.
         /// </summary>
         virtual void Draw();

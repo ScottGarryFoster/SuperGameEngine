@@ -27,6 +27,12 @@ namespace SuperGameEngine
         bool Update(GameTime gameTime);
 
         /// <summary>
+        /// Update which occurs at a set timing.
+        /// </summary>
+        /// <param name="tick">Ticks since last frame. </param>
+        void FixedUpdate(GameTime gameTime);
+
+        /// <summary>
         /// Draw everything in the game.
         /// </summary>
         void Draw();

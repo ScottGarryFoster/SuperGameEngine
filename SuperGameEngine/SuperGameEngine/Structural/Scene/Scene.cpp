@@ -13,6 +13,7 @@ using namespace SuperGameEngine;
 Scene::Scene()
 {
     m_sceneLoadPackage = nullptr;
+    m_sceneToGameObjectPackage = nullptr;
     m_loaded = false;
     m_texture = nullptr;
 
@@ -96,6 +97,23 @@ bool Scene::Update(GameTime gameTime)
     }
 
     return true;
+}
+
+void Scene::FixedUpdate(GameTime gameTime)
+{
+    if (!m_loaded)
+    {
+        return;
+    }
+
+    for (size_t i = 0; i < m_gameObjects.size(); ++i)
+    {
+        GameObject* gameObject = m_gameObjects[i];
+        if (m_gameObjects[i] != nullptr)
+        {
+            gameObject->FixedUpdate(gameTime);
+        }
+    }
 }
 
 void Scene::Draw()

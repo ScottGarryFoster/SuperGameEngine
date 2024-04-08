@@ -214,6 +214,9 @@
     <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp">
       <Filter>Project Files\Engine\Graphics\Technique</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Scene\FrameTiming.cpp">
+      <Filter>Project Files\Structural\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -365,6 +368,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h">
       <Filter>Project Files\Engine\Graphics\Technique\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\FrameTiming.h">
+      <Filter>Project Files\Structural\Scene\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

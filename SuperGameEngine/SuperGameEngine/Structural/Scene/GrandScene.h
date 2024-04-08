@@ -69,8 +69,18 @@ namespace SuperGameEngine
         TechniqueRenderer* m_techniqueRenderer;
 
         /// <summary>
+        /// Controls when Loops occur.
+        /// </summary>
+        FrameTiming* m_frameTimings;
+
+        /// <summary>
         /// Handles Collision Detection on a high level.
         /// </summary>
         CollisionDectection* m_collisionDectection;
+
+        /// <summary>
+        /// Keeps a record of the current fixed update timing.
+        /// </summary>
+        Uint64 m_currentFixedUpdateTicks;
     };
 }
