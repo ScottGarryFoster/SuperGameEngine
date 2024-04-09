@@ -14,6 +14,8 @@ SimpleRigidbodyComponent::SimpleRigidbodyComponent()
     m_canRunPhysics = false;
     m_haveEverUpdated = false;
     m_currentVelocity = new FVector2D();
+
+    m_didMoveLastFrame = false;
 }
 
 SimpleRigidbodyComponent::~SimpleRigidbodyComponent()
@@ -29,6 +31,7 @@ void SimpleRigidbodyComponent::Setup(SceneLoadPackage* loadPackage, GameObject* 
 
 void SimpleRigidbodyComponent::FixedUpdate(GameTime gameTime)
 {
+    m_didMoveLastFrame = false;
     DetirmineIfCanRunPhysics();
 
     if (m_canRunPhysics)
@@ -40,6 +43,11 @@ void SimpleRigidbodyComponent::FixedUpdate(GameTime gameTime)
 void SimpleRigidbodyComponent::OnCollisionBegin(Collision& collision)
 {
     ++m_numberOfCollisions;
+    //if (m_didMoveLastFrame && m_haveEverUpdated)
+    //{
+    //    GameComponent::GetParent()->GetTransform()->SetLocation(
+    //        m_previousLocation->GetX(), m_previousLocation->GetY());
+    //}
 }
 
 void SimpleRigidbodyComponent::OnCollisionEnd(Collision& collision)
@@ -122,6 +130,14 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
     if (setX || setY)
     {
         transform->SetLocation(newX, newY);
+        m_didMoveLastFrame = true;
     }
 
+    std::shared_ptr<FList<CollisionAnswer>> collisionAnswer = 
+        GetLoadPackage()->GetCollisionQuery()->QueryCollisionForGameObject(*GetParent()->GetGuid());
+    if (collisionAnswer->Any([](const CollisionAnswer& c) { return c.Answer != CollisionAnswerState::OnCollisionEnd; }))
+    {
+        GameComponent::GetParent()->GetTransform()->SetLocation(
+            m_previousLocation->GetX(), m_previousLocation->GetY());
+    }
 }

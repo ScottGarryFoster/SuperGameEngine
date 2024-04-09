@@ -6,6 +6,7 @@ using namespace SuperGameEngine;
 
 GrandScene::GrandScene(SDL_Renderer* renderer)
 {
+    m_collisionDectection = new CollisionDectection();
     m_directInput = new DirectInput();
     m_techniqueRenderer = new TechniqueRenderer(renderer);
     m_frameTimings = new FrameTiming();
@@ -13,10 +14,9 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
         new ContentManager(renderer),
         m_directInput, 
         m_techniqueRenderer,
-        m_frameTimings);
+        m_frameTimings,
+        m_collisionDectection);
     m_scenes = std::vector<Scene*>();
-
-    m_collisionDectection = new CollisionDectection();
     m_sceneToGameObjectPackage = new SceneToGameObjectPackage(m_collisionDectection);
 
 

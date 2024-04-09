@@ -119,5 +119,7 @@ void PlayerControllerComponent::MoveByController(FVector2D* location, float spee
 
     //location->SetXYValue(newPosition.GetX(), newPosition.GetY());
 
+    
+
     m_simpleRigidbodyComponent->SetVelocity(newPosition.GetX(), newPosition.GetY());
 }

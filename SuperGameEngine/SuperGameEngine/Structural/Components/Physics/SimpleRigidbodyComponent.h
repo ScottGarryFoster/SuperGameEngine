@@ -80,6 +80,11 @@ namespace SuperGameEngine
         bool m_canRunPhysics;
 
         /// <summary>
+        /// True means did move last frame.
+        /// </summary>
+        bool m_didMoveLastFrame;
+
+        /// <summary>
         /// Current Velocity.
         /// </summary>
         FVector2D* m_currentVelocity;

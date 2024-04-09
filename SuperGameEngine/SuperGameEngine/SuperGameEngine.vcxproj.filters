@@ -384,6 +384,15 @@
     <ClInclude Include="Structural\Components\Physics\SimpleRigidbodyComponent.h">
       <Filter>Project Files\Structural\Components\Physics\API</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Spatial\Collision\CollisionQuery.h">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Collision\CollisionAnswer.h">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Collision\CollisionAnswerState.hpp">
+      <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
