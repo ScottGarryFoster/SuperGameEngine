@@ -29,6 +29,8 @@ namespace StandardCLibraryTests_Structural
         }
     };
 
+
+
 #pragma region Operator==
     TEST_F(FVector2DTests, EqualsOperator_ReturnsTrue_WhenTwoValuesAreEqualToZeroPlaces)
     {

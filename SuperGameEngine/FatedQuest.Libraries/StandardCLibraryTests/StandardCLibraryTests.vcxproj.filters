@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Text\FStringTests.cpp">
-      <Filter>Text</Filter>
+    <ClCompile Include="pch.cpp">
+      <Filter>ProjectFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>ProjectFiles</Filter>
     </ClCompile>
     <ClCompile Include="Collection\Organised\FCollectionTests.cpp">
       <Filter>Collection\Organised</Filter>
@@ -10,38 +13,47 @@
     <ClCompile Include="Collection\Organised\FListTests.cpp">
       <Filter>Collection\Organised</Filter>
     </ClCompile>
+    <ClCompile Include="Text\FStringTests.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
     <ClCompile Include="Structural\FVector2DTests.cpp">
       <Filter>Structural</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Text">
-      <UniqueIdentifier>{85c69d54-b033-4515-b834-274864c1e1ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Package Files">
-      <UniqueIdentifier>{abc4bd17-ee61-4f51-af54-1f3ed033a298}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Collection">
-      <UniqueIdentifier>{16a73baa-603e-4f31-adb7-a668ebb0d752}</UniqueIdentifier>
+      <UniqueIdentifier>{cd753b8d-b03b-40f1-b03b-8cc59437407d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collection\Organised">
-      <UniqueIdentifier>{85c695e8-f55d-4a7a-be28-de27225f525f}</UniqueIdentifier>
+      <UniqueIdentifier>{dbd44f75-b73b-4e24-b446-da140f1f88f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Structural">
-      <UniqueIdentifier>{ef815f2f-fcdd-4c50-8150-3d79d0c4095d}</UniqueIdentifier>
+      <UniqueIdentifier>{57e70d94-c9e2-465d-b582-10aef44c22ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Text">
+      <UniqueIdentifier>{4e8c0858-5cc7-4ec0-8845-3dff15b50597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectFiles">
+      <UniqueIdentifier>{e369fd10-a327-494e-9c84-9fe5caeea752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Package Files">
+      <UniqueIdentifier>{80358774-0d9e-4650-838b-42dddadefe69}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>ProjectFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection\Organised\FCollectionSharedTestHelpers.hpp">
+      <Filter>Collection\Organised</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryIncludes.h">
+      <Filter>ProjectFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <Filter>Package Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="LibraryIncludes.h">
-      <Filter>Package Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collection\Organised\FCollectionSharedTestHelpers.hpp">
-      <Filter>Collection\Organised</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
