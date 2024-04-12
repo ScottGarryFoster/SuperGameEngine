@@ -65,12 +65,30 @@ namespace SuperGameEngine
         void EnsureActiveColliderInteractionExists(uint64_t guid);
 
         /// <summary>
+        /// Ensures we are tracking the active colliders.
+        /// Active colliders are ones which can react to collisions.
+        /// </summary>
+        /// <param name="guid">GUID of the Active collider. </param>
+        /// <param name="collisionHistory">The last state of collider on collider action. </param>
+        void EnsureActiveColliderInteractionExists(
+            uint64_t guid, 
+            std::shared_ptr<FDictionary<uint64_t,std::shared_ptr<FDictionary<uint64_t, bool>>>> collisionHistory) const;
+
+        std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>>
+            CopyCollisionInteractions(
+                std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> toCopy) const;
+
+        /// <summary>
         /// Get the active collider interactions.
         /// This is all the unactive colliders and their interactions.
         /// </summary>
         /// <param name="guid">Active collider guid. </param>
         /// <returns>Active Collider Interaction. </returns>
         std::shared_ptr<FDictionary<uint64_t, bool>> GetActiveColliderInteraction(uint64_t guid) const;
+
+        std::shared_ptr<FDictionary<uint64_t, bool>> GetActiveColliderInteraction(
+            uint64_t guid,
+            std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> collisionHistory) const;
 
         /// <summary>
         /// Ensure we are tracking unactive collider interactions for this active collider.
@@ -80,7 +98,7 @@ namespace SuperGameEngine
         /// <param name="guid">GUID of the unactive collider. </param>
         void EnsureUnactiveColliderInteractionExists(
             std::shared_ptr<FDictionary<uint64_t, bool>>& activeCollection, 
-            uint64_t guid);
+            uint64_t guid) const;
 
         /// <summary>
         /// Get the value of the interaction between the active and unactive collider.

@@ -106,38 +106,73 @@ void SimpleRigidbodyComponent::DetirmineIfCanRunPhysics()
 
 void SimpleRigidbodyComponent::RunPhysicsLoop()
 {
-    std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
+    //GameComponent::GetParent()->GetTransform()->SetLocation(
+    //    m_previousLocation->GetX(), m_previousLocation->GetY());
 
-    FrameTiming* timing = GetLoadPackage()->GetFrameTiming();
+    std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
 
+    // This is all wrong
+    float x = location->GetX();
+    float y = location->GetY();
+    bool foundAnAcceptableVelocity = false;
+    if (!RunPhysicsLoop(x, y))
+    {
+        x /= 2;
+        y /= 2;
+        if (!RunPhysicsLoop(x, y))
+        {
+            x = location->GetX() / 4;
+            y =location->GetY() / 4;
+        }
+        else
+        {
+            x = (location->GetX() / 4) * 3;
+            y = (location->GetY() / 4) * 3;
+        }
+
+        if (RunPhysicsLoop(x, y))
+        {
+            foundAnAcceptableVelocity = true;
+        }
+    }
+}
+
+bool SimpleRigidbodyComponent::RunPhysicsLoop(float x, float y)
+{
+    std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
+    FrameTiming* timing = GetLoadPackage()->GetFrameTiming();
+
     bool setX = false;
-    float newX = location->GetX();
+    float newX = x;
     if (m_currentVelocity->GetX() != 0)
     {
-        newX = location->GetX() + (m_currentVelocity->GetX() * timing->GetFixedUpdateLoopTimingAsSecond());
+        newX = x + (m_currentVelocity->GetX() * timing->GetFixedUpdateLoopTimingAsSecond());
         setX = true;
     }
 
     bool setY = false;
-    float newY = location->GetY();
+    float newY = y;
     if (m_currentVelocity->GetY() != 0)
     {
-        newY = location->GetY() + (m_currentVelocity->GetY() * timing->GetFixedUpdateLoopTimingAsSecond());
+        newY = y + (m_currentVelocity->GetY() * timing->GetFixedUpdateLoopTimingAsSecond());
         setY = true;
     }
 
+    float cachedX = transform->GetLocation()->GetX();
+    float cachedY = transform->GetLocation()->GetY();
     if (setX || setY)
     {
         transform->SetLocation(newX, newY);
         m_didMoveLastFrame = true;
     }
 
-    std::shared_ptr<FList<CollisionAnswer>> collisionAnswer = 
+    std::shared_ptr<FList<CollisionAnswer>> collisionAnswer =
         GetLoadPackage()->GetCollisionQuery()->QueryCollisionForGameObject(*GetParent()->GetGuid());
-    if (collisionAnswer->Any([](const CollisionAnswer& c) { return c.Answer != CollisionAnswerState::OnCollisionEnd; }))
-    {
-        GameComponent::GetParent()->GetTransform()->SetLocation(
-            m_previousLocation->GetX(), m_previousLocation->GetY());
-    }
+
+    // Ensure we do not actually move the transform:
+    transform->SetLocation(cachedX, cachedY);
+
+    return !collisionAnswer->Any(
+        [](const CollisionAnswer& c) { return c.Answer != CollisionAnswerState::OnCollisionEnd; });
 }

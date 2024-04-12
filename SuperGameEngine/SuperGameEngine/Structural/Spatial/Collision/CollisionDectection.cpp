@@ -99,6 +99,10 @@ std::shared_ptr<FList<CollisionAnswer>> CollisionDectection::QueryCollisionForGa
     std::shared_ptr<FList<CollisionAnswer>> returnAnswer = 
         std::make_shared<FList<CollisionAnswer>>();
 
+    std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> 
+        collisionInteractions =
+        CopyCollisionInteractions(m_colliderCollisionHistory);
+
     for (std::weak_ptr<Collider> weakPointer : *m_colliders)
     {
         if (std::shared_ptr<Collider> sharedPointer = weakPointer.lock())
@@ -106,10 +110,12 @@ std::shared_ptr<FList<CollisionAnswer>> CollisionDectection::QueryCollisionForGa
             if (sharedPointer->GetParentObject()->GetGuid()->AsNumber()
                 != gameObjectGuid.AsNumber())
             {
-                break;
+                continue;
             }
 
-            //EnsureActiveColliderInteractionExists(sharedPointer->GetColliderGuid()->AsNumber());
+            EnsureActiveColliderInteractionExists(
+                sharedPointer->GetColliderGuid()->AsNumber(), 
+                collisionInteractions);
 
             std::shared_ptr<FDictionary<uint64_t, bool>> activeColliderCollection =
                 GetActiveColliderInteraction(sharedPointer->GetColliderGuid()->AsNumber());
@@ -120,8 +126,8 @@ std::shared_ptr<FList<CollisionAnswer>> CollisionDectection::QueryCollisionForGa
                 {
                     if (sharedPointer != innerSharedPointer)
                     {
-                        //EnsureUnactiveColliderInteractionExists(
-                        //    activeColliderCollection, innerSharedPointer->GetColliderGuid()->AsNumber());
+                        EnsureUnactiveColliderInteractionExists(
+                            activeColliderCollection, innerSharedPointer->GetColliderGuid()->AsNumber());
 
                         bool didCollideLastFrame = GetUnactiveColliderValue(
                             activeColliderCollection, innerSharedPointer->GetColliderGuid()->AsNumber());
@@ -189,6 +195,37 @@ void CollisionDectection::EnsureActiveColliderInteractionExists(uint64_t guid)
     }
 }
 
+void CollisionDectection::EnsureActiveColliderInteractionExists(
+    uint64_t guid, 
+    std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> collisionHistory) const
+{
+    if (!collisionHistory->KeyExists(guid))
+    {
+        std::shared_ptr<FDictionary<uint64_t, bool>> empty = std::make_shared<FDictionary<uint64_t, bool>>();
+        collisionHistory->SetValue(guid, empty);
+    }
+}
+
+std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> 
+    CollisionDectection::CopyCollisionInteractions(
+        std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> toCopy) const
+{
+    std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> returnNewList
+        = std::make_shared<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>>();
+    for (const auto& outter : *toCopy)
+    {
+        auto valueDictionary = std::make_shared<FDictionary<uint64_t, bool>>();
+        returnNewList->SetValue(outter.first, valueDictionary);
+        for (const auto& inner : *(outter.second))
+        {
+            bool secondValue = inner.second;
+            valueDictionary->SetValue(inner.first, secondValue);
+        }
+    }
+
+    return returnNewList;
+}
+
 std::shared_ptr<FDictionary<uint64_t, bool>> CollisionDectection::GetActiveColliderInteraction(uint64_t guid) const
 {
     std::shared_ptr<FDictionary<uint64_t, bool>> innerCollection;
@@ -202,7 +239,26 @@ std::shared_ptr<FDictionary<uint64_t, bool>> CollisionDectection::GetActiveColli
     return innerCollection;
 }
 
-void CollisionDectection::EnsureUnactiveColliderInteractionExists(std::shared_ptr<FDictionary<uint64_t, bool>>& activeCollection, uint64_t guid)
+std::shared_ptr<FDictionary<uint64_t, bool>> 
+    CollisionDectection::GetActiveColliderInteraction(
+        uint64_t guid,
+        std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> collisionHistory) const
+{
+    std::shared_ptr<FDictionary<uint64_t, bool>> innerCollection;
+    if (!collisionHistory->TryGetValue(guid, innerCollection))
+    {
+        Logger::Error(
+            FString("CollisionDectection::GetActiveColliderInteraction:")
+                + "With custom collisionHistory sent in)" +
+                  "Could not find an entry we just made?");
+    }
+
+    return innerCollection;
+}
+
+void CollisionDectection::EnsureUnactiveColliderInteractionExists(
+    std::shared_ptr<FDictionary<uint64_t, bool>>& activeCollection,
+    uint64_t guid) const
 {
     if (!activeCollection->KeyExists(guid))
     {

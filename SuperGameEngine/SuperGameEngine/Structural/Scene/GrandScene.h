@@ -82,5 +82,13 @@ namespace SuperGameEngine
         /// Keeps a record of the current fixed update timing.
         /// </summary>
         Uint64 m_currentFixedUpdateTicks;
+
+        /// <summary>
+        /// Used to run code once a second.
+        /// </summary>
+        /// <remark>
+        /// This is only here to testing. Will remove when we create proper yeilds.
+        /// </remark>
+        Uint64 m_singleSecondCountdown;
     };
 }

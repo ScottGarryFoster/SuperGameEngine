@@ -44,7 +44,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     // Set SDL hint to enable VSync
-    if (!SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1"))
+    if (!SDL_SetHint(SDL_HINT_RENDER_VSYNC, "0"))
     {
 #ifdef _DEBUG
         std::cout << "Warning: VSync not enabled!" << std::endl;

@@ -40,6 +40,13 @@ GrandScene::~GrandScene()
 bool GrandScene::Update(Uint64 tick)
 {
     m_currentFixedUpdateTicks += tick;
+    m_singleSecondCountdown += tick;
+    if (m_singleSecondCountdown >= 1000)
+    {
+        m_singleSecondCountdown -= 1000;
+        Logger::Info(FString("FPS: ") + (int)(1000.0f / tick));
+    }
+
 
     bool runFixedUpdate = false;
 

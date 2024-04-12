@@ -98,5 +98,13 @@ namespace SuperGameEngine
         /// Runs the Physics Loop.
         /// </summary>
         void RunPhysicsLoop();
+
+        /// <summary>
+        /// Runs the Physics Loop.
+        /// </summary>
+        /// <param name="x">X movement. </param>
+        /// <param name="y">Y movement. </param>
+        /// <returns>True means hit something. </returns>
+        bool RunPhysicsLoop(float x, float y);
     };
 }
