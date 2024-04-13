@@ -20,9 +20,18 @@ namespace SuperGameEngine
     class GameObject : public Object
     {
     public:
-        GameObject();
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="loadingMode">
+        /// True means loading all components at once. Affects the order of setup.
+        /// </param>
+        GameObject(bool loadingMode = false);
         virtual ~GameObject();
 
+        /// <summary>
+        /// A unique identifier.
+        /// </summary>
         std::shared_ptr<Guid> GetGuid();
 
         /// <summary>
@@ -80,10 +89,19 @@ namespace SuperGameEngine
             // This has to be auto because we forward declared GameComponent.
             for (auto component : m_gameComponents)
             {
-                if (typeid(component) == typeid(T))
+                std::shared_ptr<T> attempt = std::dynamic_pointer_cast<T>(component);
+                if (attempt)
                 {
-                    return std::dynamic_pointer_cast<T>(component);
+                    return attempt;
                 }
+                
+                // This is the prefered method but was not working with certain configurations.
+                // This might start working when we move to proper loaders.
+                // The above is not performant but so long as we cache it should be fine for now.
+                //if (typeid(component) == typeid(T))
+                //{
+                //    return std::dynamic_pointer_cast<T>(component);
+                //}
             }
 
             return nullptr;
@@ -141,6 +159,13 @@ namespace SuperGameEngine
         /// Cached Transform component.
         /// </summary>
         std::shared_ptr<TransformComponent> m_transform;
+
+        /// <summary>
+        /// True means we are loading from file in one go.
+        /// This means that we do not setup components on Add.
+        /// Instead we let the update loop handle this.
+        /// </summary>
+        bool m_inLoadingMode;
 
         /// <summary>
         /// Introduction into the system from the outside world.

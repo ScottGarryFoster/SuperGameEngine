@@ -26,6 +26,15 @@ namespace SuperGameEngine
         virtual void Setup(SceneLoadPackage* loadPackage, GameObject* parent);
 
         /// <summary>
+        /// Detirmines if the Setup has been called.
+        /// This should be true pretty much always.
+        /// If the game was just paused it could be false and therefore
+        /// accessing this via the FixedUpdate loop could lead to errors.
+        /// </summary>
+        /// <returns>True means is setup. </returns>
+        virtual bool IsSetup();
+
+        /// <summary>
         /// Entry point for the entire game.
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
@@ -86,7 +95,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Allows us to operate.
         /// </summary>
-        SceneLoadPackage* m_loadPackage;
+        SceneLoadPackage* GetLoadPackage();
 
     private:
 
@@ -96,10 +105,20 @@ namespace SuperGameEngine
         GameObject* m_parent;
 
         /// <summary>
+        /// Allows us to operate.
+        /// </summary>
+        SceneLoadPackage* m_loadPackage;
+
+        /// <summary>
         /// True means run a draw loop.
         /// By default this is to false as most Components will not need to draw anything
         /// and will instead use a Sprite Component to draw.
         /// </summary>
         bool m_doRender;
+
+        /// <summary>
+        /// True means setup has been called successfully in the base.
+        /// </summary>
+        bool m_isSetup;
     };
 }

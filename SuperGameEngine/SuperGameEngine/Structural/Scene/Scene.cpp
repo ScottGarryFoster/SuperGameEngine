@@ -8,6 +8,7 @@
 #include "../Components/Colliders/BoxColliderComponent.h"
 #include "SceneToGameObjectPackage.h"
 #include "../Components/Colliders/CircleColliderComponent.h"
+#include "../Components/Physics/SimpleRigidbodyComponent.h"
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -44,24 +45,28 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     m_sceneToGameObjectPackage = sceneToGameObjectPackage;
     
 
-    GameObject* go = new GameObject();
+    GameObject* go = new GameObject(true);
     go->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     go->GetTransform()->SetLocation(100, 0);
 
-    std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
+    go->AddComponent<PlayerControllerComponent>();
+    go->AddComponent<SimpleRigidbodyComponent>();
+    //std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
+    std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
     FVector2D l = FVector2D(50, 50);
     FVector2D s = FVector2D(100, 200);
     box->SetColliderLocation(l);
-    box->SetColliderSize(35);
-    //box->SetColliderSize(s);
+    box->SetColliderSize(s);
+    //box->SetColliderSize(35);
 
-    go->AddComponent<PlayerControllerComponent>();
     go->AddComponent<SpriteComponent>();
+
+
     m_gameObjects.push_back(go);
 
 
 
-    GameObject* go2 = new GameObject();
+    GameObject* go2 = new GameObject(true);
     go2->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     go2->GetTransform()->SetLocation(250, 0);
 
@@ -71,6 +76,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     box2->SetColliderLocation(l2);
     box2->SetColliderSize(s2);
 
+    go2->AddComponent<SimpleRigidbodyComponent>();
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
     player->UseKeyboard(false);
 

@@ -11,6 +11,7 @@ GameComponent::GameComponent()
     m_parent = nullptr;
     m_doRender = false;
     m_loadPackage = nullptr;
+    m_isSetup = false;
 }
 
 GameComponent::~GameComponent()
@@ -19,6 +20,12 @@ GameComponent::~GameComponent()
 
 void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 {
+    if (m_isSetup)
+    {
+        return;
+    }
+    m_isSetup = true;
+
     if (!loadPackage)
     {
         Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Setup"), FString("loadPackage is null"));
@@ -27,7 +34,11 @@ void GameComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 
     m_loadPackage = loadPackage;
     m_parent = parent;
-    m_doRender = false;
+}
+
+bool GameComponent::IsSetup()
+{
+    return m_isSetup;
 }
 
 bool GameComponent::Update(GameTime gameTime)
@@ -68,4 +79,9 @@ void GameComponent::OnCollisionOccuring(Collision& collision)
 
 void GameComponent::OnCollisionEnd(Collision& collision)
 {
+}
+
+SceneLoadPackage* SuperGameEngine::GameComponent::GetLoadPackage()
+{
+    return m_loadPackage;
 }

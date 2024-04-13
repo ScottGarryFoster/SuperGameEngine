@@ -3,6 +3,7 @@
 #include "../../../Structural/Components/Colliders/Collider.h"
 #include "CollisionDectectionSubscription.h"
 #include "CollisionDectectionUpdate.h"
+#include "CollisionQuery.h"
 
 namespace SuperGameEngine
 {
@@ -11,7 +12,8 @@ namespace SuperGameEngine
     /// </summary>
     class CollisionDectection : 
         public CollisionDectectionSubscription, 
-        public CollisionDectectionUpdate, 
+        public CollisionDectectionUpdate,
+        public CollisionQuery,
         public Object
     {
     public:
@@ -31,6 +33,12 @@ namespace SuperGameEngine
         /// </summary>
         virtual void RunCollisionUpdate() override;
 
+        /// <summary>
+        /// Checks for collisions, for the given GameObject.
+        /// </summary>
+        /// <param name="gameObjectGuid">The GUID of the game object. </param>
+        /// <returns>A list of all of the collisions.</returns>
+        virtual std::shared_ptr<FList<CollisionAnswer>> QueryCollisionForGameObject(Guid& gameObjectGuid) const override;
     private:
         /// <summary>
         /// A pointer to all the colliders in memory.
@@ -57,12 +65,30 @@ namespace SuperGameEngine
         void EnsureActiveColliderInteractionExists(uint64_t guid);
 
         /// <summary>
+        /// Ensures we are tracking the active colliders.
+        /// Active colliders are ones which can react to collisions.
+        /// </summary>
+        /// <param name="guid">GUID of the Active collider. </param>
+        /// <param name="collisionHistory">The last state of collider on collider action. </param>
+        void EnsureActiveColliderInteractionExists(
+            uint64_t guid, 
+            std::shared_ptr<FDictionary<uint64_t,std::shared_ptr<FDictionary<uint64_t, bool>>>> collisionHistory) const;
+
+        std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>>
+            CopyCollisionInteractions(
+                std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> toCopy) const;
+
+        /// <summary>
         /// Get the active collider interactions.
         /// This is all the unactive colliders and their interactions.
         /// </summary>
         /// <param name="guid">Active collider guid. </param>
         /// <returns>Active Collider Interaction. </returns>
-        std::shared_ptr<FDictionary<uint64_t, bool>> GetActiveColliderInteraction(uint64_t guid);
+        std::shared_ptr<FDictionary<uint64_t, bool>> GetActiveColliderInteraction(uint64_t guid) const;
+
+        std::shared_ptr<FDictionary<uint64_t, bool>> GetActiveColliderInteraction(
+            uint64_t guid,
+            std::shared_ptr<FDictionary<uint64_t, std::shared_ptr<FDictionary<uint64_t, bool>>>> collisionHistory) const;
 
         /// <summary>
         /// Ensure we are tracking unactive collider interactions for this active collider.
@@ -72,7 +98,7 @@ namespace SuperGameEngine
         /// <param name="guid">GUID of the unactive collider. </param>
         void EnsureUnactiveColliderInteractionExists(
             std::shared_ptr<FDictionary<uint64_t, bool>>& activeCollection, 
-            uint64_t guid);
+            uint64_t guid) const;
 
         /// <summary>
         /// Get the value of the interaction between the active and unactive collider.
@@ -83,7 +109,7 @@ namespace SuperGameEngine
         /// <returns>True means last time we checked collision, these two were colliding. </returns>
         bool GetUnactiveColliderValue(
             std::shared_ptr<FDictionary<uint64_t, bool>>& activeCollection, 
-            uint64_t guid);
+            uint64_t guid) const;
         
         /// <summary>
         /// Sets the value of the interaction between the active and unactive collider.
@@ -102,6 +128,6 @@ namespace SuperGameEngine
         /// <param name="parent">The object the parent collider was apart of.</param>
         /// <param name="other">The collider of the other collider. </param>
         /// <returns>Collision information. </returns>
-        Collision CreateCollision(GameObject* parent, Collider* other);
+        Collision CreateCollision(GameObject* parent, Collider* other) const;
     };
 }

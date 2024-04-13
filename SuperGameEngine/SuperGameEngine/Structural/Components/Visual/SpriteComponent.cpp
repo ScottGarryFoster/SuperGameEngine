@@ -16,12 +16,14 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     GameComponent::Setup(loadPackage, parent);
 
     FString filePath = FString("Engine\\TestImages\\collideCircle.png");
-    m_superTexture = m_loadPackage->GetContentManager()->GetTexture(filePath);
+    m_superTexture = GetLoadPackage()->GetContentManager()->GetTexture(filePath);
     if (!m_superTexture)
     {
         Logger::Assert(SystemNullReference(), GetTypeName(), FString("Setup"), FString("m_superTexture is null"));
         return;
     }
+
+    SetDoRender(true);
 }
 
 bool SpriteComponent::Update(GameTime gameTime)

@@ -40,6 +40,12 @@ namespace SuperGameEngine
         virtual bool Contain(Collider& other) const = 0;
 
         /// <summary>
+        /// Moves rectangle out of range of other Collider.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        virtual void MoveOutOfOverlapRangeOf(const Collider& other) = 0;
+
+        /// <summary>
         /// Get a unique identifier for the collider.
         /// This is unique per collider instance and it could be attached to a collection
         /// of colliders, it could be a collection.

@@ -10,12 +10,13 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-GameObject::GameObject()
+SuperGameEngine::GameObject::GameObject(bool loadingMode)
 {
     m_guid = GUIDHelpers::CreateGUID();
 
     m_gameObjectPackage = nullptr;
     m_loadPackage = nullptr;
+    m_inLoadingMode = loadingMode;
 }
 
 GameObject::~GameObject()
@@ -52,6 +53,24 @@ void GameObject::Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* 
 
 bool GameObject::Update(GameTime gameTime)
 {
+    if (m_inLoadingMode)
+    {
+        for (size_t i = 0; i < m_gameComponents.Count(); ++i)
+        {
+            std::shared_ptr<GameComponent> component = m_gameComponents[i];
+            if (m_gameComponents[i] != nullptr)
+            {
+                if (!component->IsSetup())
+                {
+                    component->Setup(m_loadPackage, this);
+                }
+            }
+
+        }
+
+        m_inLoadingMode = false;
+    }
+
     for (size_t i = 0; i < m_gameComponents.Count(); ++i)
     {
         std::shared_ptr<GameComponent> component = m_gameComponents[i];
@@ -60,6 +79,7 @@ bool GameObject::Update(GameTime gameTime)
             component->Update(gameTime);
         }
     }
+
 
     return true;
 }
@@ -71,7 +91,10 @@ void GameObject::FixedUpdate(GameTime gameTime)
         std::shared_ptr<GameComponent> component = m_gameComponents[i];
         if (m_gameComponents[i] != nullptr)
         {
-            component->FixedUpdate(gameTime);
+            if (component->IsSetup())
+            {
+                component->FixedUpdate(gameTime);
+            }
         }
     }
 }
@@ -79,7 +102,8 @@ void GameObject::FixedUpdate(GameTime gameTime)
 void GameObject::Draw()
 {
     FList<std::shared_ptr<GameComponent>> componentsToDraw = m_gameComponents
-        .Where([](const std::shared_ptr<GameComponent> c) { return c->DoRender(); });
+        .Where([](const std::shared_ptr<GameComponent> c) 
+            { return c->DoRender(); });
     for (size_t i = 0; i < componentsToDraw.Count(); ++i)
     {
         std::shared_ptr<GameComponent> component = componentsToDraw[i];
@@ -151,8 +175,11 @@ void GameObject::AddActualComponent(std::shared_ptr<GameComponent> newComponent)
             FString("Cannot add Component because do not have scene load package."));
         return;
     }
-    newComponent->Setup(m_loadPackage, this);
-    newComponent->SetDoRender(true);
+
+    if (!m_inLoadingMode)
+    {
+        newComponent->Setup(m_loadPackage, this);
+    }
 
     std::shared_ptr<Collider> collider = std::dynamic_pointer_cast<Collider>(newComponent);
     if (collider)

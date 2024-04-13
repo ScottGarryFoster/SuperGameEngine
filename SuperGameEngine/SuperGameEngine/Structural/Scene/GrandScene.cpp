@@ -6,6 +6,7 @@ using namespace SuperGameEngine;
 
 GrandScene::GrandScene(SDL_Renderer* renderer)
 {
+    m_collisionDectection = new CollisionDectection();
     m_directInput = new DirectInput();
     m_techniqueRenderer = new TechniqueRenderer(renderer);
     m_frameTimings = new FrameTiming();
@@ -13,10 +14,9 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
         new ContentManager(renderer),
         m_directInput, 
         m_techniqueRenderer,
-        m_frameTimings);
+        m_frameTimings,
+        m_collisionDectection);
     m_scenes = std::vector<Scene*>();
-
-    m_collisionDectection = new CollisionDectection();
     m_sceneToGameObjectPackage = new SceneToGameObjectPackage(m_collisionDectection);
 
 
@@ -40,6 +40,13 @@ GrandScene::~GrandScene()
 bool GrandScene::Update(Uint64 tick)
 {
     m_currentFixedUpdateTicks += tick;
+    m_singleSecondCountdown += tick;
+    if (m_singleSecondCountdown >= 1000)
+    {
+        m_singleSecondCountdown -= 1000;
+        //Logger::Info(FString("FPS: ") + (int)(1000.0f / tick));
+    }
+
 
     bool runFixedUpdate = false;
 
@@ -60,6 +67,8 @@ bool GrandScene::Update(Uint64 tick)
     while (timesToRunFixedUpdate > 0)
     {
         --timesToRunFixedUpdate;
+
+        m_collisionDectection->RunCollisionUpdate();
         for (Scene* scene : m_scenes)
         {
             if (scene != nullptr)
@@ -67,12 +76,10 @@ bool GrandScene::Update(Uint64 tick)
                 scene->FixedUpdate(fixedUpdateGameTime);
             }
         }
-
-        m_collisionDectection->RunCollisionUpdate();
     }
 
     GameTime updateGameTime = GameTime();
-    updateGameTime.TicksSinceLastFrame = tick;
+    updateGameTime.TicksSinceLastFrame = (int)tick;
     for (Scene* scene : m_scenes)
     {
         if (scene != nullptr)

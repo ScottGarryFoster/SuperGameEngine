@@ -5,12 +5,14 @@ SceneLoadPackage::SceneLoadPackage(
     ContentManager* contentManager, 
     const DirectInput* directInput,
     TechniqueRenderer* techniqueRenderer,
-    FrameTiming* frameTimings)
+    FrameTiming* frameTimings,
+    CollisionQuery* collisionQuery)
 {
     m_contentManager = contentManager;
     m_directInput = directInput;
     m_techniqueRenderer = techniqueRenderer;
     m_frameTiming = frameTimings;
+    m_collisionQuery = collisionQuery;
 }
 
 SceneLoadPackage::~SceneLoadPackage()
@@ -35,4 +37,9 @@ TechniqueRenderer* SuperGameEngine::SceneLoadPackage::GetTechniqueRender()
 FrameTiming* SuperGameEngine::SceneLoadPackage::GetFrameTiming() const
 {
     return m_frameTiming;
+}
+
+CollisionQuery* SceneLoadPackage::GetCollisionQuery() const
+{
+    return m_collisionQuery;
 }

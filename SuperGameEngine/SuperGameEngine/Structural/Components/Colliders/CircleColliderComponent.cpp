@@ -26,7 +26,7 @@ void CircleColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* p
 {
     ColliderComponent::Setup(loadPackage, parent);
 
-    m_loadPackage->GetTechniqueRender()->GiveTechnique(m_circleDrawableTechnique);
+    GetLoadPackage()->GetTechniqueRender()->GiveTechnique(m_circleDrawableTechnique);
 
     m_transform = parent->GetTransform();
     m_transform->OnLocationChanged()->Subscribe(this);
@@ -57,6 +57,12 @@ bool CircleColliderComponent::Overlaps(Collider& other) const
 bool SuperGameEngine::CircleColliderComponent::Contain(Collider& other) const
 {
     return false;
+}
+
+void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other)
+{
+    Logger::Assert(NotImplementedException(), GetTypeName(), FString("MoveOutOfOverlapRangeOf"),
+        FString("Circle on Circle not yet implemented."));
 }
 
 bool CircleColliderComponent::Update(GameTime gameTime)

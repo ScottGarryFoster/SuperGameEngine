@@ -4,14 +4,38 @@
 
 namespace StandardCLibrary
 {
+    class FPoint;
+
     /// <summary>
     /// A point or direction in space.
     /// </summary>
     class FVector2D
     {
     public:
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         FVector2D();
+
+        /// <summary>
+        /// Create an FVector and give it some values.
+        /// </summary>
+        /// <param name="x">X location. </param>
+        /// <param name="y">Y location. </param>
         FVector2D(float x, float y);
+
+        /// <summary>
+        /// Use the public data of an FVector to create another one.
+        /// </summary>
+        /// <param name="other">Other FVector to use.</param>
+        FVector2D(const FVector2D& other);
+
+        /// <summary>
+        /// Use the public data of an FPoint to create another one.
+        /// </summary>
+        /// <param name="other">Other FPoint to use.</param>
+        FVector2D(const FPoint& other);
+
         virtual ~FVector2D();
 
         /// <summary>
@@ -46,11 +70,30 @@ namespace StandardCLibrary
         virtual void SetXYValue(float x, float y);
 
         /// <summary>
+        /// Sets the X and Y based upon the value of another Vector.
+        /// </summary>
+        /// <param name="other">Other vector to obtain the value from. </param>
+        virtual void SetXYValue(const FVector2D& other);
+
+        /// <summary>
+        /// Sets the X and Y values based on the value in an FPoint.
+        /// </summary>
+        /// <param name="other">Other FPoint location. </param>
+        virtual void SetXYValue(const FPoint& other);
+
+        /// <summary>
         /// Adds two vectors together.
         /// </summary>
         /// <param name="other">Other vector to add. </param>
         /// <returns>Result of addition. </returns>
         FVector2D operator+(const FVector2D& other) const;
+
+        /// <summary>
+        /// Adds two vectors together.
+        /// </summary>
+        /// <param name="other">Other vector to add. </param>
+        /// <returns>Result of addition. </returns>
+        FVector2D& operator+=(const FVector2D& other);
 
         /// <summary>
         /// Subtracts two vectors from one another.
@@ -60,6 +103,13 @@ namespace StandardCLibrary
         FVector2D operator-(const FVector2D& other) const;
 
         /// <summary>
+        /// Subtracts two vectors from one another.
+        /// </summary>
+        /// <param name="other">Other vector to subtract. </param>
+        /// <returns>Result of subtraction. </returns>
+        FVector2D& operator-=(const FVector2D& other);
+
+        /// <summary>
         /// Multiplies the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to multiply by. </param>
@@ -67,11 +117,25 @@ namespace StandardCLibrary
         FVector2D operator*(float scalar) const;
 
         /// <summary>
+        /// Multiplies the components of this vector by a scalar value.
+        /// </summary>
+        /// <param name="scalar">Amount to multiply by. </param>
+        /// <returns>Vector multiplied. </returns>
+        FVector2D& operator*=(float scalar);
+
+        /// <summary>
         /// Divides the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to divide by. </param>
         /// <returns>Vector divided. </returns>
         FVector2D operator/(float scalar) const;
+
+        /// <summary>
+        /// Divides the components of this vector by a scalar value.
+        /// </summary>
+        /// <param name="scalar">Amount to divide by. </param>
+        /// <returns>Vector divided. </returns>
+        FVector2D& operator/=(float scalar);
 
         /// <summary>
         /// Returns true if two vectors are approximately equal.

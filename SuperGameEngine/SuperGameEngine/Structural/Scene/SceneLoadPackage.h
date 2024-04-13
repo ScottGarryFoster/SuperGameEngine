@@ -3,6 +3,7 @@
 #include "../../Engine/Input/DirectInput.h"
 #include "../../Engine/Graphics/Technique/TechniqueRenderer.h"
 #include "FrameTiming.h"
+#include "../Spatial/Collision/CollisionQuery.h"
 
 namespace SuperGameEngine
 {
@@ -24,7 +25,8 @@ namespace SuperGameEngine
             ContentManager* contentManager, 
             const DirectInput* directInput,
             TechniqueRenderer* techniqueRenderer,
-            FrameTiming* frameTimings);
+            FrameTiming* frameTimings,
+            CollisionQuery* m_collisionQuery);
         virtual ~SceneLoadPackage();
 
         /// <summary>
@@ -49,6 +51,13 @@ namespace SuperGameEngine
         /// <returns>Allows you to control when an update loop occurs. </returns>
         FrameTiming* GetFrameTiming() const;
 
+        /// <summary>
+        /// Queries for the colliders in the scene.
+        /// </summary>
+        /// <remark>
+        /// These are expensive commands so use them wisely!
+        /// </remark>
+        CollisionQuery* GetCollisionQuery() const;
     private:
         /// <summary>
         /// Allows you to gain access to textures.
@@ -69,5 +78,13 @@ namespace SuperGameEngine
         /// Controls when Loops occur.
         /// </summary>
         FrameTiming* m_frameTiming;
+
+        /// <summary>
+        /// Queries for the colliders in the scene.
+        /// </summary>
+        /// <remark>
+        /// These are expensive commands so use them wisely!
+        /// </remark>
+        CollisionQuery* m_collisionQuery;
     };
 }
