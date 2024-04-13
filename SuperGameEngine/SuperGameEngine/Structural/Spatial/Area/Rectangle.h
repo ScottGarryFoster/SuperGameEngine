@@ -163,9 +163,18 @@ namespace SuperGameEngine
 
         /// <summary>
         /// Moves rectangle out of range of other Rectangle.
+        /// Will use the position of least resistance.
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         void MoveOutOfOverlapRangeOf(const Rectangle& other);
+
+        /// <summary>
+        /// Returns the location required to no overlap the shape.
+        /// Will use the position of least resistance.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        /// <returns>Location required. </returns>
+        FVector2D GetNewLocationToNotOverlap(const Rectangle& other) const;
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.

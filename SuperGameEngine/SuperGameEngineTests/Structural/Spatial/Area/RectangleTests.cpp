@@ -968,8 +968,8 @@ namespace SuperGameEngine_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
 
-        m_testRectangle = new Rectangle(3, 0, 3, 1);
-        m_otherTestRectangle = new Rectangle(5, 0, 1, 1);
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
         float expectedLeft = 2;
         float expectedRight = 5;
 
@@ -991,8 +991,8 @@ namespace SuperGameEngine_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
 
-        m_testRectangle = new Rectangle(5, 0, 3, 1);
-        m_otherTestRectangle = new Rectangle(5, 0, 1, 1);
+        m_testRectangle = new Rectangle(5, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
         float expectedLeft = 6;
         float expectedRight = 9;
 
@@ -1015,8 +1015,8 @@ namespace SuperGameEngine_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
 
-        m_testRectangle = new Rectangle(0, 3, 1, 3);
-        m_otherTestRectangle = new Rectangle(0, 5, 1, 1);
+        m_testRectangle = new Rectangle(0, 3, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
         float expectedTop = 2;
         float expectedBottom = 5;
 
@@ -1039,8 +1039,8 @@ namespace SuperGameEngine_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
 
-        m_testRectangle = new Rectangle(0, 5, 1, 3);
-        m_otherTestRectangle = new Rectangle(0, 5, 1, 1);
+        m_testRectangle = new Rectangle(0, 5, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
         float expectedTop = 6;
         float expectedBottom = 9;
 
@@ -1050,6 +1050,144 @@ namespace SuperGameEngine_Structural_Spatial_Area
         // Assert
         ASSERT_EQ(expectedTop, m_testRectangle->GetTop());
         ASSERT_EQ(expectedBottom, m_testRectangle->GetBottom());
+    }
+
+    TEST_F(RectangleTests, MoveOutOfOverlapRangeOf_MovesX_WhenXIsLowerThanYWhenMovingAway)
+    {
+        // Arrange
+
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        float expectedLeft = 2;
+        float expectedRight = 5;
+        float expectedTop = 0;
+        float expectedBottom = 10;
+
+        // Act
+        m_testRectangle->MoveOutOfOverlapRangeOf(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, m_testRectangle->GetLeft());
+        ASSERT_EQ(expectedRight, m_testRectangle->GetRight());
+        ASSERT_EQ(expectedTop, m_testRectangle->GetTop());
+        ASSERT_EQ(expectedBottom, m_testRectangle->GetBottom());
+    }
+#pragma endregion
+
+#pragma region GetNewLocationToNotOverlap
+    TEST_F(RectangleTests, GetNewLocationToNotOverlap_MovesToTheLeftByOverlap_WhenOverlappingMostOnRight)
+    {
+        // Arrange
+
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        float expectedLeft = 2;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, actual.GetX());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlap_MovesToTheRightByOverlap_WhenOverlappingMostOnLeft)
+    {
+        // Arrange
+
+        // Setup
+        // 0 1 2 3 4 5 6 7 8
+        // - - - - - O X X -
+        // X -> m_testRectangle
+        // O -> overlap
+
+        m_testRectangle = new Rectangle(5, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        float expectedLeft = 6;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, actual.GetX());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlap_MovesUpByOverlap_WhenOverlappingMostBelow)
+    {
+        // Arrange
+
+        // Setup
+        // (Remember lower numbers means higher in the viewport)
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+
+        m_testRectangle = new Rectangle(0, 3, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
+        float expectedTop = 2;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_EQ(expectedTop, actual.GetY());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlap_MovesdOWNByOverlap_WhenOverlappingMostAbove)
+    {
+        // Arrange
+
+        // Setup
+        // (Remember lower numbers means higher in the viewport)
+        // 0 1 2 3 4 5 6 7 8
+        // - - - - - O X X -
+        // X -> m_testRectangle
+        // O -> overlap
+
+        m_testRectangle = new Rectangle(0, 5, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
+        float expectedTop = 6;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_EQ(expectedTop, actual.GetY());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlap_MovesX_WhenXIsLowerThanYWhenMovingAway)
+    {
+        // Arrange
+
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        float expectedLeft = 2;
+        float expectedTop = 0;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, actual.GetX());
+        ASSERT_EQ(expectedTop, actual.GetY());
     }
 #pragma endregion
 }

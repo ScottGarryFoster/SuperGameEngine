@@ -173,7 +173,7 @@ FVector2D Rectangle::OverlapAmount(const Rectangle& other) const
     FVector2D returnVector = FVector2D();
     if (Overlaps(other))
     {
-        if (m_center.GetX() > other.m_center.GetX())
+        if (GetCenter().GetX() > other.GetCenter().GetX())
         {
             returnVector.SetX(std::abs(GetLeft() - other.GetRight()));
         }
@@ -182,7 +182,7 @@ FVector2D Rectangle::OverlapAmount(const Rectangle& other) const
             returnVector.SetX(std::abs(GetRight() - other.GetLeft()));
         }
 
-        if (m_center.GetY() > other.m_center.GetY())
+        if (GetCenter().GetY() > other.GetCenter().GetY())
         {
             returnVector.SetY(std::abs(GetTop() - other.GetBottom()));
         }
@@ -199,7 +199,7 @@ void Rectangle::MoveOutOfOverlapRangeOf(const Rectangle& other)
 {
     FVector2D overlap = OverlapAmount(other);
     FVector2D applied = FVector2D();
-    if (m_center.GetX() > other.m_center.GetX())
+    if (GetCenter().GetX() > other.GetCenter().GetX())
     {
         applied.SetX(overlap.GetX());
     }
@@ -208,7 +208,7 @@ void Rectangle::MoveOutOfOverlapRangeOf(const Rectangle& other)
         applied.SetX(overlap.GetX() * -1);
     }
 
-    if (m_center.GetY() > other.m_center.GetY())
+    if (GetCenter().GetY() > other.GetCenter().GetY())
     {
         applied.SetY(overlap.GetY());
     }
@@ -217,7 +217,56 @@ void Rectangle::MoveOutOfOverlapRangeOf(const Rectangle& other)
         applied.SetY(overlap.GetY() * -1);
     }
 
+    // If moving X meaning moving less
+    if (std::abs(applied.GetX()) < std::abs(applied.GetY()))
+    {
+        // Then only move X.
+        applied.SetY(0);
+    }
+    else
+    {
+        applied.SetX(0);
+    }
+
     MoveShape(applied);
+}
+
+FVector2D SuperGameEngine::Rectangle::GetNewLocationToNotOverlap(const Rectangle& other) const
+{
+    FVector2D overlap = OverlapAmount(other);
+    FVector2D applied = FVector2D();
+    if (GetCenter().GetX() > other.GetCenter().GetX())
+    {
+        applied.SetX(overlap.GetX());
+    }
+    else
+    {
+        applied.SetX(overlap.GetX() * -1);
+    }
+
+    if (GetCenter().GetY() > other.GetCenter().GetY())
+    {
+        applied.SetY(overlap.GetY());
+    }
+    else
+    {
+        applied.SetY(overlap.GetY() * -1);
+    }
+
+    // If moving X meaning moving less
+    if (std::abs(applied.GetX()) < std::abs(applied.GetY()))
+    {
+        // Then only move X.
+        applied.SetY(0);
+    }
+    else
+    {
+        applied.SetX(0);
+    }
+
+    FVector2D returnLocation = FVector2D(m_location);
+    returnLocation += applied;
+    return returnLocation;
 }
 
 bool Rectangle::IsTouching(const Rectangle& other) const
@@ -247,7 +296,10 @@ bool Rectangle::IsTouching(const Rectangle& other) const
 
 FVector2D Rectangle::GetCenter() const
 {
-    return m_center;
+    FVector2D newCenter = FVector2D(
+        m_location.GetX() + m_size.GetX() / 2,
+        m_location.GetY() + m_size.GetY() / 2);
+    return newCenter;
 }
 
 

@@ -22,6 +22,8 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
         Logger::Assert(SystemNullReference(), GetTypeName(), FString("Setup"), FString("m_superTexture is null"));
         return;
     }
+
+    SetDoRender(true);
 }
 
 bool SpriteComponent::Update(GameTime gameTime)

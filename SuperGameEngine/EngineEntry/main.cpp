@@ -119,7 +119,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         SDL_RenderPresent(renderer);
 
         // Add a small delay to avoid 100% CPU usage
-        SDL_Delay(10);
+        SDL_Delay(3);
     }
 
     // Wait

@@ -38,6 +38,12 @@ namespace SuperGameEngine
         virtual bool Contain(Collider& other) const override;
 
         /// <summary>
+        /// Moves rectangle out of range of other Collider.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        virtual void MoveOutOfOverlapRangeOf(const Collider& other) override;
+
+        /// <summary>
         /// Entry point for the entire game.
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>

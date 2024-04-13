@@ -44,7 +44,7 @@ bool GrandScene::Update(Uint64 tick)
     if (m_singleSecondCountdown >= 1000)
     {
         m_singleSecondCountdown -= 1000;
-        Logger::Info(FString("FPS: ") + (int)(1000.0f / tick));
+        //Logger::Info(FString("FPS: ") + (int)(1000.0f / tick));
     }
 
 

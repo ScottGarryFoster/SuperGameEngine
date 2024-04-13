@@ -63,6 +63,35 @@ bool BoxColliderComponent::Contain(Collider& other) const
     return false;
 }
 
+void BoxColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other)
+{
+    FVector2D cachedLocation = FVector2D(m_retangleActual->GetTopLeft());
+    FVector2D newLocation = FVector2D();
+    if (typeid(other) == typeid(BoxColliderComponent))
+    {
+        const BoxColliderComponent* otherBox =
+            dynamic_cast<const BoxColliderComponent*>(&other);
+
+        Rectangle* otherRectangle = otherBox->m_retangleActual.get();
+        newLocation = m_retangleActual->GetNewLocationToNotOverlap(*otherRectangle);
+    }
+    else if (typeid(other) == typeid(CircleColliderComponent))
+    {
+        Logger::Assert(NotImplementedException(), GetTypeName(), FString("MoveOutOfOverlapRangeOf"),
+            FString("Rec on circle"));
+        //CircleColliderComponent* otherAreaComponent =
+        //    dynamic_cast<CircleColliderComponent*>(&other);
+
+        //Circle otherArea = otherAreaComponent->GetArea();
+        //m_retangleActual->MoveOutOfOverlapRangeOf(otherArea);
+    }
+
+    FVector2D moved = newLocation - cachedLocation;
+    FVector2D* location = m_transform->GetLocation();
+    FVector2D newLoc = *location + moved;
+    m_transform->SetLocation(newLoc.GetX(), newLoc.GetY());
+}
+
 bool BoxColliderComponent::Update(GameTime gameTime)
 {
     ColliderComponent::Update(gameTime);

@@ -20,9 +20,18 @@ namespace SuperGameEngine
     class GameObject : public Object
     {
     public:
-        GameObject();
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="loadingMode">
+        /// True means loading all components at once. Affects the order of setup.
+        /// </param>
+        GameObject(bool loadingMode = false);
         virtual ~GameObject();
 
+        /// <summary>
+        /// A unique identifier.
+        /// </summary>
         std::shared_ptr<Guid> GetGuid();
 
         /// <summary>
@@ -150,6 +159,13 @@ namespace SuperGameEngine
         /// Cached Transform component.
         /// </summary>
         std::shared_ptr<TransformComponent> m_transform;
+
+        /// <summary>
+        /// True means we are loading from file in one go.
+        /// This means that we do not setup components on Add.
+        /// Instead we let the update loop handle this.
+        /// </summary>
+        bool m_inLoadingMode;
 
         /// <summary>
         /// Introduction into the system from the outside world.

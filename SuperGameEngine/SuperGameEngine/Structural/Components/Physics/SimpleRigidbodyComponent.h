@@ -90,6 +90,15 @@ namespace SuperGameEngine
         FVector2D* m_currentVelocity;
 
         /// <summary>
+        /// The collider on the GameObject we care about.
+        /// </summary>
+        /// <remark>
+        /// This is what binds this rigidbody to a single collider
+        /// per rigidbody.
+        /// </remark>
+        std::shared_ptr<Collider> m_colliderOnUs;
+
+        /// <summary>
         /// Detirmines based on collisions if now is a good time to run the physics system.
         /// </summary>
         void DetirmineIfCanRunPhysics();
@@ -98,13 +107,5 @@ namespace SuperGameEngine
         /// Runs the Physics Loop.
         /// </summary>
         void RunPhysicsLoop();
-
-        /// <summary>
-        /// Runs the Physics Loop.
-        /// </summary>
-        /// <param name="x">X movement. </param>
-        /// <param name="y">Y movement. </param>
-        /// <returns>True means hit something. </returns>
-        bool RunPhysicsLoop(float x, float y);
     };
 }
