@@ -115,12 +115,18 @@ namespace SuperGameEngine
         void SetHeight(float height);
 
         /// <summary>
+        /// Moves the shape the given distance.
+        /// </summary>
+        /// <param name="amount">Amount to move. </param>
+        void MoveShape(const FVector2D& amount);
+
+        /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.
         /// TOUCHES DO NOT COUNT.
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
-        bool Overlaps(Rectangle& other) const;
+        bool Overlaps(const Rectangle& other) const;
 
         /// <summary>
         /// Checks to see if the other area overlaps with this rectangle.
@@ -128,14 +134,14 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
-        bool Overlaps(Circle& other) const;
+        bool Overlaps(const Circle& other) const;
 
         /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
-        bool OverlapsOrIsTouching(Rectangle& other) const;
+        bool OverlapsOrIsTouching(const Rectangle& other) const;
 
         /// <summary>
         /// Detirmines if the given point is within the area.
@@ -144,6 +150,22 @@ namespace SuperGameEngine
         /// <returns>True means is within area. </returns>
         bool PointIsWithin(FVector2D& location) const;
 
+        /// <summary>
+        /// Calculates the overlap amount between two shapes.
+        /// This is the amount the shape you call from is 
+        /// overlapping the shape passed in.
+        /// This will always be a number 0 or above and therefore
+        /// will not tell you direction to move to no longer overlap.
+        /// </summary>
+        /// <param name="other">Other shape to use. </param>
+        /// <returns>The overlap amount. </returns>
+        FVector2D OverlapAmount(const Rectangle& other) const;
+
+        /// <summary>
+        /// Moves rectangle out of range of other Rectangle.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        void MoveOutOfOverlapRangeOf(const Rectangle& other);
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.
@@ -156,6 +178,11 @@ namespace SuperGameEngine
         FVector2D m_size;
 
         /// <summary>
+        /// The center of the shape.
+        /// </summary>
+        FVector2D m_center;
+
+        /// <summary>
         /// Checks to see if the other rectangle is touching.
         /// Uses the 'close enough' float math to ensure the value is acurate.
         /// These are touches from the outside in.
@@ -164,6 +191,12 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other rectangle to test. </param>
         /// <returns>True means are touching. </returns>
-        bool IsTouching(Rectangle& other) const;
+        bool IsTouching(const Rectangle& other) const;
+
+        /// <summary>
+        /// Returns the center of the shape.
+        /// </summary>
+        /// <returns>Finds the center of the shape. </returns>
+        FVector2D GetCenter() const;
     };
 }

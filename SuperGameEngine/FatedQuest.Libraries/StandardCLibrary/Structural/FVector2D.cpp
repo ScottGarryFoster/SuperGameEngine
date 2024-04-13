@@ -75,9 +75,23 @@ FVector2D FVector2D::operator+(const FVector2D& other) const
     return FVector2D(m_x + other.m_x, m_y + other.m_y);
 }
 
+FVector2D& FVector2D::operator+=(const FVector2D& other)
+{
+    m_x += other.m_x;
+    m_y += other.m_y;
+    return *this;
+}
+
 FVector2D FVector2D::operator-(const FVector2D& other) const
 {
     return FVector2D(m_x - other.m_x, m_y - other.m_y);
+}
+
+FVector2D& FVector2D::operator-=(const FVector2D& other)
+{
+    m_x -= other.m_x;
+    m_y -= other.m_y;
+    return *this;
 }
 
 FVector2D FVector2D::operator*(float scalar) const
@@ -85,9 +99,23 @@ FVector2D FVector2D::operator*(float scalar) const
     return FVector2D(m_x * scalar, m_y * scalar);
 }
 
+FVector2D& FVector2D::operator*=(float scalar)
+{
+    m_x *= scalar;
+    m_y *= scalar;
+    return *this;
+}
+
 FVector2D FVector2D::operator/(float scalar) const
 {
     return FVector2D(m_x / scalar, m_y / scalar);
+}
+
+FVector2D& FVector2D::operator/=(float scalar)
+{
+    m_x /= scalar;
+    m_y /= scalar;
+    return *this;
 }
 
 bool FVector2D::operator==(const FVector2D& other) const

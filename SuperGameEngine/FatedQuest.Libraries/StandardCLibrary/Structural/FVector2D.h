@@ -89,11 +89,25 @@ namespace StandardCLibrary
         FVector2D operator+(const FVector2D& other) const;
 
         /// <summary>
+        /// Adds two vectors together.
+        /// </summary>
+        /// <param name="other">Other vector to add. </param>
+        /// <returns>Result of addition. </returns>
+        FVector2D& operator+=(const FVector2D& other);
+
+        /// <summary>
         /// Subtracts two vectors from one another.
         /// </summary>
         /// <param name="other">Other vector to subtract. </param>
         /// <returns>Result of subtraction. </returns>
         FVector2D operator-(const FVector2D& other) const;
+
+        /// <summary>
+        /// Subtracts two vectors from one another.
+        /// </summary>
+        /// <param name="other">Other vector to subtract. </param>
+        /// <returns>Result of subtraction. </returns>
+        FVector2D& operator-=(const FVector2D& other);
 
         /// <summary>
         /// Multiplies the components of this vector by a scalar value.
@@ -103,11 +117,25 @@ namespace StandardCLibrary
         FVector2D operator*(float scalar) const;
 
         /// <summary>
+        /// Multiplies the components of this vector by a scalar value.
+        /// </summary>
+        /// <param name="scalar">Amount to multiply by. </param>
+        /// <returns>Vector multiplied. </returns>
+        FVector2D& operator*=(float scalar);
+
+        /// <summary>
         /// Divides the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to divide by. </param>
         /// <returns>Vector divided. </returns>
         FVector2D operator/(float scalar) const;
+
+        /// <summary>
+        /// Divides the components of this vector by a scalar value.
+        /// </summary>
+        /// <param name="scalar">Amount to divide by. </param>
+        /// <returns>Vector divided. </returns>
+        FVector2D& operator/=(float scalar);
 
         /// <summary>
         /// Returns true if two vectors are approximately equal.

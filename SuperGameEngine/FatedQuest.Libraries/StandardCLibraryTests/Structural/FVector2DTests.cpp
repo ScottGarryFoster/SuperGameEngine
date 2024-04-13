@@ -167,6 +167,7 @@ namespace StandardCLibraryTests_Structural
 #pragma endregion
 
 #pragma region Operator+
+#pragma region Operator+ As New Vector
     TEST_F(FVector2DTests, AddOperator_ReturnsXAdd_WhenSecondXHasValue)
     {
         FVector2D expected = FVector2D(2, 1);
@@ -189,8 +190,33 @@ namespace StandardCLibraryTests_Structural
         ASSERT_EQ(expected, actual);
     }
 #pragma endregion
+#pragma region Operator+=
+    TEST_F(FVector2DTests, AddEqualsOperator_ReturnsXAdd_WhenSecondXHasValue)
+    {
+        FVector2D expected = FVector2D(2, 1);
+        FVector2D left = FVector2D(1, 1);
+        FVector2D right = FVector2D(1, 0);
+
+        left += right;
+
+        ASSERT_EQ(expected, left);
+    }
+
+    TEST_F(FVector2DTests, AddEqualsOperator_ReturnsYAdd_WhenSecondYHasValue)
+    {
+        FVector2D expected = FVector2D(1, 2);
+        FVector2D left = FVector2D(1, 1);
+        FVector2D right = FVector2D(0, 1);
+
+        left += right;
+
+        ASSERT_EQ(expected, left);
+    }
+#pragma endregion
+#pragma endregion
 
 #pragma region Operator-
+#pragma region Operator- As new Vector
     TEST_F(FVector2DTests, SubtractOperator_ReturnsXAdd_WhenSecondXHasValue)
     {
         FVector2D expected = FVector2D(0, 1);
@@ -214,8 +240,34 @@ namespace StandardCLibraryTests_Structural
     }
 
 #pragma endregion
+#pragma region Operator-=
+    TEST_F(FVector2DTests, SubtractEqualsOperator_ReturnsXAdd_WhenSecondXHasValue)
+    {
+        FVector2D expected = FVector2D(0, 1);
+        FVector2D left = FVector2D(1, 1);
+        FVector2D right = FVector2D(1, 0);
+
+        left -= right;
+
+        ASSERT_EQ(expected, left);
+    }
+
+    TEST_F(FVector2DTests, SubtractEqualsOperator_ReturnsYAdd_WhenSecondYHasValue)
+    {
+        FVector2D expected = FVector2D(1, 0);
+        FVector2D left = FVector2D(1, 1);
+        FVector2D right = FVector2D(0, 1);
+
+        left -= right;
+
+        ASSERT_EQ(expected, left);
+    }
+
+#pragma endregion
+#pragma endregion
 
 #pragma region Operator*
+#pragma region Operator* As new Vector
     TEST_F(FVector2DTests, MultiplyOperator_DoublesVector_WhenGivenScalarOf2)
     {
         FVector2D expected = FVector2D(2, 2);
@@ -238,8 +290,33 @@ namespace StandardCLibraryTests_Structural
         ASSERT_EQ(expected, actual);
     }
 #pragma endregion
+#pragma region Operator*=
+    TEST_F(FVector2DTests, MultiplyEqualsOperator_DoublesVector_WhenGivenScalarOf2)
+    {
+        FVector2D expected = FVector2D(2, 2);
+        FVector2D given = FVector2D(1, 1);
+        float scalar = 2;
+
+        given *= scalar;
+
+        ASSERT_EQ(expected, given);
+    }
+
+    TEST_F(FVector2DTests, MultiplyEqualsOperator_ChangesPositivityOfVector_WhenGivenScalarOfMinus2)
+    {
+        FVector2D expected = FVector2D(-2, -2);
+        FVector2D given = FVector2D(1, 1);
+        float scalar = -2;
+
+        given *= scalar;
+
+        ASSERT_EQ(expected, given);
+    }
+#pragma endregion
+#pragma endregion
 
 #pragma region Operator/
+#pragma region Operator/ As new Vector
     TEST_F(FVector2DTests, DivideOperator_HalvesVector_WhenGivenScalarOf2)
     {
         FVector2D expected = FVector2D(0.5f, 0.5f);
@@ -272,6 +349,41 @@ namespace StandardCLibraryTests_Structural
 
         ASSERT_EQ(expected, actual);
     }
+#pragma endregion
+#pragma region Operator/=
+    TEST_F(FVector2DTests, DivideEqualsOperator_HalvesVector_WhenGivenScalarOf2)
+    {
+        FVector2D expected = FVector2D(0.5f, 0.5f);
+        FVector2D given = FVector2D(1, 1);
+        float scalar = 2;
+
+        given /= scalar;
+
+        ASSERT_EQ(expected, given);
+    }
+
+    TEST_F(FVector2DTests, DivideEqualsOperator_ReturnsATenth_WhenGivenScalarOf10)
+    {
+        FVector2D expected = FVector2D(0.1f, 0.1f);
+        FVector2D given = FVector2D(1, 1);
+        float scalar = 10;
+
+        given /= scalar;
+
+        ASSERT_EQ(expected, given);
+    }
+
+    TEST_F(FVector2DTests, DivideEqualsOperator_FlipsVector_WhenGivenScalarOfMinus2)
+    {
+        FVector2D expected = FVector2D(-0.5f, -0.5f);
+        FVector2D given = FVector2D(1, 1);
+        float scalar = -2;
+
+        given /= scalar;
+
+        ASSERT_EQ(expected, given);
+    }
+#pragma endregion
 #pragma endregion
 
 #pragma region Normalize

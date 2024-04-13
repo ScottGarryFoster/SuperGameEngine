@@ -46,7 +46,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
-        bool Overlaps(Circle& other) const;
+        bool Overlaps(const Circle& other) const;
 
         /// <summary>
         /// Checks to see if the other circle overlaps with this circle.
@@ -54,7 +54,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
-        bool OverlapsOrTouches(Circle& other) const;
+        bool OverlapsOrTouches(const Circle& other) const;
 
         /// <summary>
         /// Checks to see if the other Rectangle overlaps with this circle.
@@ -62,7 +62,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to check against. </param>
         /// <returns>True means does overlap. </returns>
-        bool Overlaps(Rectangle& other) const;
+        bool Overlaps(const Rectangle& other) const;
 
         /// <summary>
         /// Detirmines if the given point is within the area.

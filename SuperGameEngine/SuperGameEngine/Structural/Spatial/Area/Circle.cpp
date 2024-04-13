@@ -44,7 +44,7 @@ int Circle::GetRadius() const
     return m_radius;
 }
 
-bool Circle::Overlaps(Circle& other) const
+bool Circle::Overlaps(const Circle& other) const
 {
     FVector2D myLocation = GetLocation();
     FVector2D otherLocation = other.GetLocation();
@@ -54,7 +54,7 @@ bool Circle::Overlaps(Circle& other) const
     return distance < (radius + otherRadius);
 }
 
-bool Circle::OverlapsOrTouches(Circle& other) const
+bool Circle::OverlapsOrTouches(const Circle& other) const
 {
     FVector2D myLocation = GetLocation();
     FVector2D otherLocation = other.GetLocation();
@@ -70,7 +70,7 @@ bool Circle::OverlapsOrTouches(Circle& other) const
 /// a point is within the rectangle. The Rectangle version would be a repeat and would
 /// link more methods. For this reason the Rectangle version just calls this Overlap.
 /// </remark>
-bool Circle::Overlaps(Rectangle& other) const
+bool Circle::Overlaps(const Rectangle& other) const
 {
     FVector2D myLocation = GetLocation();
 
