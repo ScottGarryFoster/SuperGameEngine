@@ -1,4 +1,6 @@
 #include "FVector2D.h"
+#include "FPoint.h"
+#include "../Extentions/FloatingPointHelpers.hpp"
 #include <cmath>
 
 using namespace StandardCLibrary;
@@ -13,6 +15,16 @@ FVector2D::FVector2D(float x, float y)
 {
     m_x = x;
     m_y = y;
+}
+
+FVector2D::FVector2D(const FVector2D& other) 
+    : FVector2D(other.GetX(), other.GetY())
+{
+}
+
+FVector2D::FVector2D(const FPoint& other) 
+    : FVector2D((float)other.GetX(), (float)other.GetY())
+{
 }
 
 FVector2D::~FVector2D()
@@ -48,6 +60,16 @@ void FVector2D::SetXYValue(float x, float y)
     }
 }
 
+void FVector2D::SetXYValue(const FVector2D& other)
+{
+    SetXYValue(other.GetX(), other.GetY());
+}
+
+void FVector2D::SetXYValue(const FPoint& other)
+{
+    SetXYValue((float)other.GetX(), (float)other.GetY());
+}
+
 FVector2D FVector2D::operator+(const FVector2D& other) const
 {
     return FVector2D(m_x + other.m_x, m_y + other.m_y);
@@ -70,12 +92,9 @@ FVector2D FVector2D::operator/(float scalar) const
 
 bool FVector2D::operator==(const FVector2D& other) const
 {
-    // The places to be accurate within.
-    float epsilon = 0.00001f;
-
-    return 
-        std::abs(m_x - other.m_x) < epsilon &&
-        std::abs(m_y - other.m_y) < epsilon;
+    return
+        FloatingPointHelpers::AreEqual(m_x, other.m_x) &&
+        FloatingPointHelpers::AreEqual(m_y, other.m_y);
 }
 
 FVector2D FVector2D::Normalize() const
@@ -98,7 +117,7 @@ float FVector2D::Magnitude() const
     // Square Root is not exactly performant and we
     // likely do not need an exact value.
     // TODO: [#32] Change Magnitude which does not use Square Root
-    return std::sqrt(m_x * m_x + m_y * m_y);
+    return (float)std::sqrt(m_x * m_x + m_y * m_y);
 }
 
 float FVector2D::DotProduct(const FVector2D& other) const
@@ -108,7 +127,7 @@ float FVector2D::DotProduct(const FVector2D& other) const
 
 float FVector2D::DistanceBetween(const FVector2D& other) const
 {
-    return sqrt(pow(other.m_x - m_x, 2) + pow(other.m_y - m_y, 2));
+    return (float)std::sqrt((float)std::pow(other.m_x - m_x, 2) + (float)std::pow(other.m_y - m_y, 2));
 }
 
 const FString FVector2D::Print() const
