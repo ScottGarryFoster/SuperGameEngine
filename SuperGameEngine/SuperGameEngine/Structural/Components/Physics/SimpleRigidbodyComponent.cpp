@@ -41,7 +41,7 @@ void SimpleRigidbodyComponent::Setup(SceneLoadPackage* loadPackage, GameObject* 
 void SimpleRigidbodyComponent::FixedUpdate(GameTime gameTime)
 {
     m_didMoveLastFrame = false;
-    DetirmineIfCanRunPhysics();
+    DetermineIfCanRunPhysics();
 
     if (m_canRunPhysics)
     {
@@ -81,7 +81,7 @@ void SimpleRigidbodyComponent::SetVelocity(float x, float y)
     m_currentVelocity->SetXYValue(newX, newY);
 }
 
-void SimpleRigidbodyComponent::DetirmineIfCanRunPhysics()
+void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
 {
     // If we have no collider then there is no collision to
     // detect or run physics on.

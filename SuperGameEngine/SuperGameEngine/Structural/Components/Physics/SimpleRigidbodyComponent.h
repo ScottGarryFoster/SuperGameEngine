@@ -99,9 +99,9 @@ namespace SuperGameEngine
         std::shared_ptr<Collider> m_colliderOnUs;
 
         /// <summary>
-        /// Detirmines based on collisions if now is a good time to run the physics system.
+        /// Determines based on collisions if now is a good time to run the physics system.
         /// </summary>
-        void DetirmineIfCanRunPhysics();
+        void DetermineIfCanRunPhysics();
 
         /// <summary>
         /// Runs the Physics Loop.
