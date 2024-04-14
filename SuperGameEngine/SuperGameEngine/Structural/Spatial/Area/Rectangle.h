@@ -206,6 +206,22 @@ namespace SuperGameEngine
         /// <param name="previousLoctation">Direction to move in.</param>
         /// <returns>Location required. </returns>
         FVector2D GetNewLocationToNotOverlap(const Rectangle& other, const FVector2D& previousLoctation) const;
+
+        /// <summary>
+        /// Returns the location required to no overlap the shape.
+        /// Will use the position of least resistance.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        /// <returns>Location required. </returns>
+        FVector2D GetNewLocationToNotOverlap(const Circle& other) const;
+
+        /// <summary>
+        /// Returns the cloest point on the Shape to the given point.
+        /// Will return the point given when point is in shape.
+        /// </summary>
+        /// <param name="other">Point to test. </param>
+        /// <returns>Cloest point on shape to point.</returns>
+        FVector2D CloestPointTo(const FVector2D& other) const;
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.

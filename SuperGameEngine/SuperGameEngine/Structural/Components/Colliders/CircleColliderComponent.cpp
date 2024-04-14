@@ -66,23 +66,17 @@ bool CircleColliderComponent::Contain(Collider& other) const
 
 void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, const FVector2D& previousLocation)
 {
-    // Previous point is the top left, the compared point in rectangle is the center point.
-    //FVector2D centerPoint = ConvertTopLeftToCenter(previousLocation);
-
     // We cache the location so that transform occurs once on the object
-    // and there is one implementation of the rec to world space rec translation.
+    // and there is one implementation of the shape to world space shape translation.
     FVector2D cachedLocation = FVector2D(m_circleActual->GetLocation());
     FVector2D newLocation = FVector2D();
-
     if (typeid(other) == typeid(BoxColliderComponent))
     {
-        Logger::Assert(NotImplementedException(), GetTypeName(), FString("MoveOutOfOverlapRangeOf"),
-            FString("Rec on circle"));
-        //const BoxColliderComponent* otherBox =
-        //    dynamic_cast<const BoxColliderComponent*>(&other);
+        const BoxColliderComponent* otherBox =
+            dynamic_cast<const BoxColliderComponent*>(&other);
 
-        //Rectangle* otherRectangle = otherBox->m_retangleActual.get();
-        //newLocation = m_retangleActual->GetNewLocationToNotOverlap(*otherRectangle, centerPoint);
+        Rectangle otherRectangle = otherBox->GetArea();
+        newLocation = m_circleActual->GetNewLocationToNotOverlap(otherRectangle);
     }
     else if (typeid(other) == typeid(CircleColliderComponent))
     {

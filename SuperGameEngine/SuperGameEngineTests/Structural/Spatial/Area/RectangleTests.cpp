@@ -1498,4 +1498,98 @@ namespace SuperGameEngine_Structural_Spatial_Area
         ASSERT_EQ(expectedTop, m_testRectangle->GetTop());
     }
 #pragma endregion
+
+#pragma region CloestPointTo
+    TEST_F(RectangleTests, CloestPointTo_MatchesY_WhenToTheLeftOrRight)
+    {
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        FVector2D givenLocationLeft = FVector2D(-5, 7);
+        FVector2D givenLocationRight = FVector2D(12, 5);
+
+        // Act
+        FVector2D actualLeft = m_testRectangle->CloestPointTo(givenLocationLeft);
+        FVector2D actualRight = m_testRectangle->CloestPointTo(givenLocationRight);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(givenLocationLeft.GetY(), actualLeft.GetY()))
+            << "Expected: " << givenLocationLeft.GetY() << " Actual: " << actualLeft.GetY();
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(givenLocationRight.GetY(), actualRight.GetY()))
+            << "Expected: " << givenLocationRight.GetY() << " Actual: " << actualRight.GetY();
+    }
+
+    TEST_F(RectangleTests, CloestPointTo_MatchesXLeft_WhenToTheLeft)
+    {
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        FVector2D givenLocationLeft = FVector2D(-5, 7);
+
+        // Act
+        FVector2D actualLeft = m_testRectangle->CloestPointTo(givenLocationLeft);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(m_testRectangle->GetLeft(), actualLeft.GetX()))
+            << "Expected: " << m_testRectangle->GetLeft() << " Actual: " << actualLeft.GetX();
+    }
+
+    TEST_F(RectangleTests, CloestPointTo_MatchesXRight_WhenToTheRight)
+    {
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        FVector2D givenLocationRight = FVector2D(12, 5);
+
+        // Act
+        FVector2D actualRight = m_testRectangle->CloestPointTo(givenLocationRight);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(m_testRectangle->GetRight(), actualRight.GetX()))
+            << "Expected: " << m_testRectangle->GetRight() << " Actual: " << actualRight.GetX();
+    }
+
+    TEST_F(RectangleTests, CloestPointTo_MatchesX_WhenAboveOrBelow)
+    {
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        FVector2D givenLocationAbove = FVector2D(7, -5);
+        FVector2D givenLocationBelow = FVector2D(5, 12);
+
+        // Act
+        FVector2D actualAbove = m_testRectangle->CloestPointTo(givenLocationAbove);
+        FVector2D actualBelow = m_testRectangle->CloestPointTo(givenLocationBelow);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(givenLocationAbove.GetX(), actualAbove.GetX()))
+            << "Expected: " << givenLocationAbove.GetX() << " Actual: " << actualAbove.GetX();
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(givenLocationBelow.GetX(), actualBelow.GetX()))
+            << "Expected: " << givenLocationBelow.GetX() << " Actual: " << actualBelow.GetX();
+    }
+
+    TEST_F(RectangleTests, CloestPointTo_MatchesYAbove_WhenAbove)
+    {
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        FVector2D givenLocationAbove = FVector2D(7, -5);
+
+        // Act
+        FVector2D actualAbove = m_testRectangle->CloestPointTo(givenLocationAbove);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(m_testRectangle->GetTop(), actualAbove.GetY()))
+            << "Expected: " << m_testRectangle->GetTop() << " Actual: " << actualAbove.GetY();
+    }
+
+    TEST_F(RectangleTests, CloestPointTo_MatchesYBelow_WhenBelow)
+    {
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        FVector2D givenLocationRight = FVector2D(5, 12);
+
+        // Act
+        FVector2D actualBelow = m_testRectangle->CloestPointTo(givenLocationRight);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(m_testRectangle->GetBottom(), actualBelow.GetY()))
+            << "Expected: " << m_testRectangle->GetBottom() << " Actual: " << actualBelow.GetY();
+    }
+#pragma endregion
 }

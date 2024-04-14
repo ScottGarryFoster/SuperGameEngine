@@ -83,13 +83,11 @@ void BoxColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, const 
     }
     else if (typeid(other) == typeid(CircleColliderComponent))
     {
-        Logger::Assert(NotImplementedException(), GetTypeName(), FString("MoveOutOfOverlapRangeOf"),
-            FString("Rec on circle"));
-        //CircleColliderComponent* otherAreaComponent =
-        //    dynamic_cast<CircleColliderComponent*>(&other);
+        const CircleColliderComponent* otherAreaComponent =
+            dynamic_cast<const CircleColliderComponent*>(&other);
 
-        //Circle otherArea = otherAreaComponent->GetArea();
-        //m_retangleActual->MoveOutOfOverlapRangeOf(otherArea);
+        Circle otherArea = otherAreaComponent->GetArea();
+        newLocation = m_retangleActual->GetNewLocationToNotOverlap(otherArea);
     }
 
     FVector2D moved = newLocation - cachedLocation;

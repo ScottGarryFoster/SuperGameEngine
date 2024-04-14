@@ -170,3 +170,26 @@ void Circle::MoveOutOfOverlapRangeOf(const Circle& other)
         SetLocation(newLocation);
     }
 }
+
+FVector2D Circle::GetNewLocationToNotOverlap(const Rectangle& other) const
+{
+    FVector2D myLocation = GetLocation();
+
+    FVector2D cloest = other.CloestPointTo(myLocation);
+    float dx = cloest.GetX() - myLocation.GetX();
+    float dy = cloest.GetY() - myLocation.GetY();
+    float distance = sqrt(dx * dx + dy * dy);
+    float overlap = GetRadius() - distance;
+
+    FVector2D newLocation = FVector2D(myLocation);
+    if (overlap > 0)
+    {
+        dx /= distance;
+        dy /= distance;
+
+        newLocation.SetX(newLocation.GetX() - (overlap * dx));
+        newLocation.SetY(newLocation.GetY() - (overlap * dy));
+    }
+
+    return newLocation;
+}

@@ -50,16 +50,16 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     go->GetTransform()->SetLocation(500, 100);
 
     std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>();
-    pc->SetSpeed(1500);
+    pc->SetSpeed(300);
         
     go->AddComponent<SimpleRigidbodyComponent>();
-    std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
-    //std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
+    //std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
+    std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
     FVector2D l = FVector2D(50, 50);
     FVector2D s = FVector2D(100, 200);
     box->SetColliderLocation(l);
-    //box->SetColliderSize(s);
-    box->SetColliderSize(35);
+    box->SetColliderSize(s);
+    //box->SetColliderSize(35);
 
     go->AddComponent<SpriteComponent>();
 

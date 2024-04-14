@@ -373,6 +373,62 @@ FVector2D Rectangle::GetNewLocationToNotOverlap(const Rectangle& other, const FV
     return returnLocation;
 }
 
+FVector2D Rectangle::GetNewLocationToNotOverlap(const Circle& other) const
+{
+    FVector2D otherLocation = other.GetLocation();
+
+    FVector2D closest = CloestPointTo(other.GetLocation());
+    float dx = closest.GetX() - otherLocation.GetX();
+    float dy = closest.GetY() - otherLocation.GetY();
+    float distance = sqrt(dx * dx + dy * dy);
+    float overlap = other.GetRadius() - distance;
+
+    FVector2D newLocation = FVector2D(m_location);
+    if (overlap > 0)
+    {
+        dx /= distance;
+        dy /= distance;
+        newLocation.SetX(newLocation.GetX() + overlap * dx);
+        newLocation.SetY(newLocation.GetY() + overlap * dy);
+    }
+
+    return newLocation;
+}
+
+FVector2D Rectangle::CloestPointTo(const FVector2D& other) const
+{
+    float closestX = other.GetX();
+    float closestY = other.GetY();
+
+    float myX = other.GetX();
+    float left = GetLeft();
+    float right = GetRight();
+
+    float myY = other.GetY();
+    float top = GetTop();
+    float bottom = GetBottom();
+
+    if (myX < left)
+    {
+        closestX = left;
+    }
+    else if (myX > right)
+    {
+        closestX = right;
+    }
+
+    if (myY < top)
+    {
+        closestY = top;
+    }
+    else if (myY > bottom)
+    {
+        closestY = bottom;
+    }
+
+    return FVector2D(closestX, closestY);
+}
+
 bool Rectangle::IsTouching(const Rectangle& other) const
 {
     if (FloatingPointHelpers::AreEqual(GetLeft(), other.GetRight()))

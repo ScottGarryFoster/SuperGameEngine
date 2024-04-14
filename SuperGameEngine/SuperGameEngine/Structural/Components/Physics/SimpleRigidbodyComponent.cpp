@@ -172,6 +172,6 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
     {
         // Never allow an overlap.
         // Always place them where they began if it is not posible.
-        //transform->SetLocation(cachedX, cachedY);
+        transform->SetLocation(cachedX, cachedY);
     }
 }
