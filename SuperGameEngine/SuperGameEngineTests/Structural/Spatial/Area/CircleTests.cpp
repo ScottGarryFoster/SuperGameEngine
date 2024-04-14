@@ -561,4 +561,214 @@ namespace SuperGameEngine_Structural_Spatial_Area
     }
 
 #pragma endregion
+
+#pragma region OverlapAmount
+    TEST_F(CircleTests, OverlapAmount_ReturnsCorrectOverlap_WhenYIsTheSame)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // Center of the first circle
+        // - - - - - \/ - - - - -
+        // O O O O O O O / X X X
+        // - - /\ - - - -
+        // This is the center of the second circle
+        // Meaning we would expect an overlap of 7.5f (/ means half)
+
+        // Arrange
+        float expectedOverlap = 7.5f;
+        int givenRadius = 5;
+        FVector2D circleLocation = FVector2D(5, 5);
+        FVector2D testLocation = FVector2D(
+            circleLocation.GetX() + 0.1f,
+            circleLocation.GetY() + 0.1f);
+        FVector2D circleSecondLocation = FVector2D(2.5f, 5);
+
+        m_testCircle = new Circle(
+            circleLocation.GetX(), circleLocation.GetY(), givenRadius);
+        m_otherTestCircle = new Circle(
+            circleSecondLocation.GetX(), circleSecondLocation.GetY(), givenRadius);
+
+        // Act
+        float actual = m_testCircle->OverlapAmount(*m_otherTestCircle);
+
+        // Assert
+        ASSERT_EQ(expectedOverlap, actual);
+    }
+
+    TEST_F(CircleTests, OverlapAmount_ReturnsCorrectOverlap_WhenXIsTheSame)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // Center of the first circle
+        // - - - - - \/ - - - - -
+        // O O O O O O O / X X X
+        // - - /\ - - - -
+        // This is the center of the second circle
+        // Meaning we would expect an overlap of 7.5f (/ means half)
+        
+        // Arrange
+        float expectedOverlap = 7.5f;
+        int givenRadius = 5;
+        FVector2D circleLocation = FVector2D(5, 5);
+        FVector2D testLocation = FVector2D(
+            circleLocation.GetX() + 0.1f,
+            circleLocation.GetY() + 0.1f);
+        FVector2D circleSecondLocation = FVector2D(5, 2.5f);
+
+        m_testCircle = new Circle(
+            circleLocation.GetX(), circleLocation.GetY(), givenRadius);
+        m_otherTestCircle = new Circle(
+            circleSecondLocation.GetX(), circleSecondLocation.GetY(), givenRadius);
+
+        // Act
+        float actual = m_testCircle->OverlapAmount(*m_otherTestCircle);
+
+        // Assert
+        ASSERT_EQ(expectedOverlap, actual);
+    }
+#pragma endregion
+
+#pragma region GetNewLocationToNotOverlap
+    TEST_F(CircleTests, GetNewLocationToNotOverlap_MovesToTheRight_WhenRightIsClosest)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // Center of the first circle
+        // - - - - - \/ - - - - -
+        // O O O O O O O / X X X
+        // - - /\ - - - -
+        // This is the center of the second circle
+        // Meaning we would expect an overlap of 7.5f (/ means half)
+        // We would expect it to move left and be at an X of 12.5.
+
+        // Arrange
+        FVector2D expectedFinalLocation = FVector2D(12.5f, 5);
+        int givenRadius = 5;
+        FVector2D circleLocation = FVector2D(5, 5);
+        FVector2D testLocation = FVector2D(
+            circleLocation.GetX() + 0.1f,
+            circleLocation.GetY() + 0.1f);
+        FVector2D circleSecondLocation = FVector2D(2.5f, 5);
+
+        m_testCircle = new Circle(
+            circleLocation.GetX(), circleLocation.GetY(), givenRadius);
+        m_otherTestCircle = new Circle(
+            circleSecondLocation.GetX(), circleSecondLocation.GetY(), givenRadius);
+
+        // Act
+        FVector2D actual = m_testCircle->GetNewLocationToNotOverlap(*m_otherTestCircle);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetX(), actual.GetX()));
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetY(), actual.GetY()));
+    }
+
+    TEST_F(CircleTests, GetNewLocationToNotOverlap_MovesToTheLeft_WhenLeftIsClosest)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // Center of the second circle
+        // - - - - - \/ - - - - -
+        // O O O O O O O / X X X
+        // - - /\ - - - -
+        // This is the center of the first circle
+        // Meaning we would expect an overlap of 7.5f (/ means half)
+        // We would expect it to move left and be at an X of -5
+        // (we flip circles from previous test)
+
+        // Arrange
+        FVector2D expectedFinalLocation = FVector2D(-5, 5);
+        int givenRadius = 5;
+        FVector2D circleLocation = FVector2D(5, 5);
+        FVector2D testLocation = FVector2D(
+            circleLocation.GetX() + 0.1f,
+            circleLocation.GetY() + 0.1f);
+        FVector2D circleSecondLocation = FVector2D(2.5f, 5);
+
+        m_testCircle = new Circle(
+            circleLocation.GetX(), circleLocation.GetY(), givenRadius);
+        m_otherTestCircle = new Circle(
+            circleSecondLocation.GetX(), circleSecondLocation.GetY(), givenRadius);
+
+        // Act
+        FVector2D actual = m_otherTestCircle->GetNewLocationToNotOverlap(*m_testCircle);
+
+        // Assert
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetX(), actual.GetX()));
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetY(), actual.GetY()));
+    }
+#pragma endregion
+
+#pragma region MoveOutOfOverlapRangeOf
+    TEST_F(CircleTests, MoveOutOfOverlapRangeOf_MovesToTheRight_WhenRightIsClosest)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // Center of the first circle
+        // - - - - - \/ - - - - -
+        // O O O O O O O / X X X
+        // - - /\ - - - -
+        // This is the center of the second circle
+        // Meaning we would expect an overlap of 7.5f (/ means half)
+        // We would expect it to move left and be at an X of 12.5.
+
+        // Arrange
+        FVector2D expectedFinalLocation = FVector2D(12.5f, 5);
+        int givenRadius = 5;
+        FVector2D circleLocation = FVector2D(5, 5);
+        FVector2D testLocation = FVector2D(
+            circleLocation.GetX() + 0.1f,
+            circleLocation.GetY() + 0.1f);
+        FVector2D circleSecondLocation = FVector2D(2.5f, 5);
+
+        m_testCircle = new Circle(
+            circleLocation.GetX(), circleLocation.GetY(), givenRadius);
+        m_otherTestCircle = new Circle(
+            circleSecondLocation.GetX(), circleSecondLocation.GetY(), givenRadius);
+
+        // Act
+        m_testCircle->MoveOutOfOverlapRangeOf(*m_otherTestCircle);
+
+        // Assert
+        FVector2D actual = m_testCircle->GetLocation();
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetX(), actual.GetX()));
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetY(), actual.GetY()));
+    }
+
+    TEST_F(CircleTests, MoveOutOfOverlapRangeOf_MovesToTheLeft_WhenLeftIsClosest)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7 8 9 10
+        // Center of the second circle
+        // - - - - - \/ - - - - -
+        // O O O O O O O / X X X
+        // - - /\ - - - -
+        // This is the center of the first circle
+        // Meaning we would expect an overlap of 7.5f (/ means half)
+        // We would expect it to move left and be at an X of -5
+        // (we flip circles from previous test)
+
+        // Arrange
+        FVector2D expectedFinalLocation = FVector2D(-5, 5);
+        int givenRadius = 5;
+        FVector2D circleLocation = FVector2D(5, 5);
+        FVector2D testLocation = FVector2D(
+            circleLocation.GetX() + 0.1f,
+            circleLocation.GetY() + 0.1f);
+        FVector2D circleSecondLocation = FVector2D(2.5f, 5);
+
+        m_testCircle = new Circle(
+            circleLocation.GetX(), circleLocation.GetY(), givenRadius);
+        m_otherTestCircle = new Circle(
+            circleSecondLocation.GetX(), circleSecondLocation.GetY(), givenRadius);
+
+        // Act
+        m_otherTestCircle->MoveOutOfOverlapRangeOf(*m_testCircle);
+
+        // Assert
+        FVector2D actual = m_otherTestCircle->GetLocation();
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetX(), actual.GetX()));
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedFinalLocation.GetY(), actual.GetY()));
+    }
+#pragma endregion
 }

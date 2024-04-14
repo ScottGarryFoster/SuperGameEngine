@@ -34,7 +34,7 @@ void SimpleRigidbodyComponent::Setup(SceneLoadPackage* loadPackage, GameObject* 
     if (!m_colliderOnUs)
     {
         // Not yet implemented.
-        //m_colliderOnUs = parent->GetGameComponent<CircleColliderComponent>();
+        m_colliderOnUs = parent->GetGameComponent<CircleColliderComponent>();
     }
 }
 
@@ -172,6 +172,6 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
     {
         // Never allow an overlap.
         // Always place them where they began if it is not posible.
-        transform->SetLocation(cachedX, cachedY);
+        //transform->SetLocation(cachedX, cachedY);
     }
 }
