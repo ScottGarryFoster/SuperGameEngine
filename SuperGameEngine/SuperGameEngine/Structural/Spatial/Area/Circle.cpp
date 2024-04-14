@@ -114,3 +114,82 @@ bool Circle::PointIsWithin(FVector2D& location) const
     int radius = GetRadius();
     return distance < radius;
 }
+
+float Circle::OverlapAmount(const Circle& other) const
+{
+    FVector2D myLocation = GetLocation();
+    FVector2D otherLocation = other.GetLocation();
+
+    float distance = myLocation.DistanceBetween(otherLocation);
+    int radius = GetRadius();
+    int otherRadius = other.GetRadius();
+    float overlap = radius + otherRadius - distance;
+
+    return overlap > 0 ? overlap : 0;
+}
+
+FVector2D Circle::GetNewLocationToNotOverlap(const Circle& other) const
+{
+    float overlap = OverlapAmount(other);
+    FVector2D myLocation = GetLocation();
+    if (overlap > 0)
+    {
+        float myX = myLocation.GetX();
+        float myY = myLocation.GetY();
+
+        FVector2D otherLocation = other.GetLocation();
+        float otherX = otherLocation.GetX();
+        float otherY = otherLocation.GetY();
+
+        float angle = atan2(myY - otherY, myX - otherX);
+        myX += overlap * cos(angle);
+        myY += overlap * sin(angle);
+        myLocation.SetXYValue(myX, myY);
+    }
+
+    return myLocation;
+}
+
+void Circle::MoveOutOfOverlapRangeOf(const Circle& other)
+{
+    float overlap = OverlapAmount(other);
+    FVector2D myLocation = GetLocation();
+    if (overlap > 0)
+    {
+        float myX = myLocation.GetX();
+        float myY = myLocation.GetY();
+
+        FVector2D otherLocation = other.GetLocation();
+        float otherX = otherLocation.GetX();
+        float otherY = otherLocation.GetY();
+
+        float angle = atan2(myY - otherY, myX - otherX);
+        myX += overlap * cos(angle);
+        myY += overlap * sin(angle);
+        FVector2D newLocation = FVector2D(myX, myY);
+        SetLocation(newLocation);
+    }
+}
+
+FVector2D Circle::GetNewLocationToNotOverlap(const Rectangle& other) const
+{
+    FVector2D myLocation = GetLocation();
+
+    FVector2D cloest = other.CloestPointTo(myLocation);
+    float dx = cloest.GetX() - myLocation.GetX();
+    float dy = cloest.GetY() - myLocation.GetY();
+    float distance = sqrt(dx * dx + dy * dy);
+    float overlap = GetRadius() - distance;
+
+    FVector2D newLocation = FVector2D(myLocation);
+    if (overlap > 0)
+    {
+        dx /= distance;
+        dy /= distance;
+
+        newLocation.SetX(newLocation.GetX() - (overlap * dx));
+        newLocation.SetY(newLocation.GetY() - (overlap * dy));
+    }
+
+    return newLocation;
+}

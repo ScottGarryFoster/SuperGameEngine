@@ -70,6 +70,37 @@ namespace SuperGameEngine
         /// <param name="location">Location to test. </param>
         /// <returns>True means is within area. </returns>
         bool PointIsWithin(FVector2D& location) const;
+
+        /// <summary>
+        /// Calculates the overlap amount between two shapes.
+        /// This will always be a number 0 or above and therefore
+        /// will not tell you direction to move to no longer overlap.
+        /// </summary>
+        /// <param name="other">Other shape to use. </param>
+        /// <returns>The overlap amount. 0 would mean no overlap. </returns>
+        float OverlapAmount(const Circle& other) const;
+
+        /// <summary>
+        /// Gets an acceptable location to not overlap.
+        /// Will find a location based on the current frame.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        /// <returns>Location required. </returns>
+        FVector2D GetNewLocationToNotOverlap(const Circle& other) const;
+
+        /// <summary>
+        /// Moves rectangle out of range of other Rectangle.
+        /// Will use the position of least resistance.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        void MoveOutOfOverlapRangeOf(const Circle& other);
+
+        /// <summary>
+        /// Returns the location required to no overlap the shape.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        /// <returns>Location required. </returns>
+        FVector2D GetNewLocationToNotOverlap(const Rectangle& other) const;
     private:
         /// <summary>
         /// Location of the circle.

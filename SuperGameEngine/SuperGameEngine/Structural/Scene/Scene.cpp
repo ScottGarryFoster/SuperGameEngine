@@ -47,9 +47,11 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     GameObject* go = new GameObject(true);
     go->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
-    go->GetTransform()->SetLocation(100, 0);
+    go->GetTransform()->SetLocation(500, 100);
 
-    go->AddComponent<PlayerControllerComponent>();
+    std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>();
+    pc->SetSpeed(300);
+        
     go->AddComponent<SimpleRigidbodyComponent>();
     //std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
     std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
@@ -68,13 +70,15 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     GameObject* go2 = new GameObject(true);
     go2->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
-    go2->GetTransform()->SetLocation(250, 0);
+    go2->GetTransform()->SetLocation(100, 100);
 
-    std::shared_ptr<BoxColliderComponent> box2 = go2->AddComponent<BoxColliderComponent>();
+    std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>();
+    //std::shared_ptr<BoxColliderComponent> box2 = go2->AddComponent<BoxColliderComponent>();
     FVector2D l2 = FVector2D(0, 0);
     FVector2D s2 = FVector2D(100, 200);
     box2->SetColliderLocation(l2);
-    box2->SetColliderSize(s2);
+    //box2->SetColliderSize(s2);
+    box2->SetColliderSize(50);
 
     go2->AddComponent<SimpleRigidbodyComponent>();
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();

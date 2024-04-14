@@ -30,6 +30,11 @@ void CircleColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* p
 
     m_transform = parent->GetTransform();
     m_transform->OnLocationChanged()->Subscribe(this);
+
+    FVector2D newLocation = FVector2D(
+        m_transform->GetLocation()->GetX() + m_circle->GetLocation().GetX(),
+        m_transform->GetLocation()->GetY() + m_circle->GetLocation().GetY());
+    m_circleActual->SetLocation(newLocation);
 }
 
 bool CircleColliderComponent::Overlaps(Collider& other) const
@@ -54,15 +59,38 @@ bool CircleColliderComponent::Overlaps(Collider& other) const
     return false;
 }
 
-bool SuperGameEngine::CircleColliderComponent::Contain(Collider& other) const
+bool CircleColliderComponent::Contain(Collider& other) const
 {
     return false;
 }
 
-void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other)
+void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, const FVector2D& previousLocation)
 {
-    Logger::Assert(NotImplementedException(), GetTypeName(), FString("MoveOutOfOverlapRangeOf"),
-        FString("Circle on Circle not yet implemented."));
+    // We cache the location so that transform occurs once on the object
+    // and there is one implementation of the shape to world space shape translation.
+    FVector2D cachedLocation = FVector2D(m_circleActual->GetLocation());
+    FVector2D newLocation = FVector2D();
+    if (typeid(other) == typeid(BoxColliderComponent))
+    {
+        const BoxColliderComponent* otherBox =
+            dynamic_cast<const BoxColliderComponent*>(&other);
+
+        Rectangle otherRectangle = otherBox->GetArea();
+        newLocation = m_circleActual->GetNewLocationToNotOverlap(otherRectangle);
+    }
+    else if (typeid(other) == typeid(CircleColliderComponent))
+    {
+        const CircleColliderComponent* otherAreaComponent =
+           dynamic_cast<const CircleColliderComponent*>(&other);
+
+        Circle otherArea = otherAreaComponent->GetArea();
+        newLocation = m_circleActual->GetNewLocationToNotOverlap(otherArea);
+    }
+
+    FVector2D moved = newLocation - cachedLocation;
+    FVector2D* location = m_transform->GetLocation();
+    FVector2D newLoc = *location + moved;
+    m_transform->SetLocation(newLoc.GetX(), newLoc.GetY());
 }
 
 bool CircleColliderComponent::Update(GameTime gameTime)

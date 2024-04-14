@@ -34,14 +34,14 @@ void SimpleRigidbodyComponent::Setup(SceneLoadPackage* loadPackage, GameObject* 
     if (!m_colliderOnUs)
     {
         // Not yet implemented.
-        //m_colliderOnUs = parent->GetGameComponent<CircleColliderComponent>();
+        m_colliderOnUs = parent->GetGameComponent<CircleColliderComponent>();
     }
 }
 
 void SimpleRigidbodyComponent::FixedUpdate(GameTime gameTime)
 {
     m_didMoveLastFrame = false;
-    DetirmineIfCanRunPhysics();
+    DetermineIfCanRunPhysics();
 
     if (m_canRunPhysics)
     {
@@ -81,7 +81,7 @@ void SimpleRigidbodyComponent::SetVelocity(float x, float y)
     m_currentVelocity->SetXYValue(newX, newY);
 }
 
-void SimpleRigidbodyComponent::DetirmineIfCanRunPhysics()
+void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
 {
     // If we have no collider then there is no collision to
     // detect or run physics on.
@@ -146,6 +146,7 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
 
     float cachedX = x;
     float cachedY = y;
+    FVector2D cachedLocation = FVector2D(x, y);
     if (setX || setY)
     {
         transform->SetLocation(newX, newY);
@@ -160,7 +161,7 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
         for (size_t i = 0; i < collisionAnswer->Count(); ++i)
         {
             m_colliderOnUs->MoveOutOfOverlapRangeOf(
-                *collisionAnswer->GetValueAt(i).Collision.GetCollider());
+                *collisionAnswer->GetValueAt(i).Collision.GetCollider(), cachedLocation);
         }
     }
 
