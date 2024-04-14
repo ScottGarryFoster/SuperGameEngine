@@ -162,11 +162,33 @@ namespace SuperGameEngine
         FVector2D OverlapAmount(const Rectangle& other) const;
 
         /// <summary>
+        /// Calculates the overlap amount between two shapes.
+        /// This will always be in the direction of the previous location
+        /// such that it is the amount overlapped in the direction given.
+        /// This will always be a number 0 or above and therefore
+        /// will not tell you direction to move to no longer overlap.
+        /// </summary>
+        /// <param name="other">Other shape to use. </param>
+        /// <param name="previousLoctation">
+        /// Previous location to this overlap - used as a direction.
+        /// </param>
+        /// <returns>The overlap amount. </returns>
+        FVector2D OverlapAmount(const Rectangle& other, const FVector2D& previousLoctation) const;
+
+        /// <summary>
         /// Moves rectangle out of range of other Rectangle.
         /// Will use the position of least resistance.
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         void MoveOutOfOverlapRangeOf(const Rectangle& other);
+
+        /// <summary>
+        /// Moves rectangle out of range of other Rectangle.
+        /// Will go in the direction of previous location.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        /// <param name="previousLoctation">Direction to move in. </param>
+        void MoveOutOfOverlapRangeOf(const Rectangle& other, const FVector2D& previousLoctation);
 
         /// <summary>
         /// Returns the location required to no overlap the shape.
@@ -175,6 +197,15 @@ namespace SuperGameEngine
         /// <param name="other">Other to move out of range of. </param>
         /// <returns>Location required. </returns>
         FVector2D GetNewLocationToNotOverlap(const Rectangle& other) const;
+
+        /// <summary>
+        /// Returns the location required to no overlap the shape.
+        /// Will go in the direction of previous location.
+        /// </summary>
+        /// <param name="other">Other to move out of range of. </param>
+        /// <param name="previousLoctation">Direction to move in.</param>
+        /// <returns>Location required. </returns>
+        FVector2D GetNewLocationToNotOverlap(const Rectangle& other, const FVector2D& previousLoctation) const;
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.

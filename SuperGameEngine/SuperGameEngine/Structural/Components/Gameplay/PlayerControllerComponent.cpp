@@ -8,6 +8,7 @@ using namespace StandardCLibrary;
 PlayerControllerComponent::PlayerControllerComponent() : GameComponent()
 {
     m_useKeyboard = true;
+    m_speed = 100;
 }
 
 PlayerControllerComponent::~PlayerControllerComponent()
@@ -27,20 +28,24 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
     GameComponent::Update(gameTime);
 
     //float speed = (0.1f * gameTime.TicksSinceLastFrame);
-    float speed = 100;
     std::shared_ptr<TransformComponent> transform = GameComponent::GetParent()->GetTransform();
     FVector2D* location = transform->GetLocation();
 
     if (m_useKeyboard)
     {
-        MoveByKeyboard(speed, gameTime, location);
+        MoveByKeyboard(m_speed, gameTime, location);
     }
     else
     {
-        MoveByController(location, speed);
+        MoveByController(location, m_speed);
     }
 
     return true;
+}
+
+void PlayerControllerComponent::SetSpeed(float newValue)
+{
+    m_speed = newValue;
 }
 
 void PlayerControllerComponent::MoveByKeyboard(float speed, GameTime& gameTime, FVector2D* location)

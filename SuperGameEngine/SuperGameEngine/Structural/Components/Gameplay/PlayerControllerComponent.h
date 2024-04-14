@@ -32,6 +32,13 @@ namespace SuperGameEngine
         {
             m_useKeyboard = trueToUseKeyboard;
         }
+
+        /// <summary>
+        /// Updates the speed.
+        /// </summary>
+        /// <param name="newValue">New speed value.</param>
+        void SetSpeed(float newValue);
+
     private:
         void MoveByKeyboard(float speed, SuperGameEngine::GameTime& gameTime, StandardCLibrary::FVector2D* location);
         void MoveByController(StandardCLibrary::FVector2D* location, float speed);
@@ -39,5 +46,7 @@ namespace SuperGameEngine
         bool m_useKeyboard;
 
         std::shared_ptr<SimpleRigidbodyComponent> m_simpleRigidbodyComponent;
+
+        float m_speed;
     };
 }

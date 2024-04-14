@@ -49,7 +49,9 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     go->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
     go->GetTransform()->SetLocation(100, 0);
 
-    go->AddComponent<PlayerControllerComponent>();
+    std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>();
+    pc->SetSpeed(2000);
+        
     go->AddComponent<SimpleRigidbodyComponent>();
     //std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
     std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();

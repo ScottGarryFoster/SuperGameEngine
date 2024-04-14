@@ -146,6 +146,7 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
 
     float cachedX = x;
     float cachedY = y;
+    FVector2D cachedLocation = FVector2D(x, y);
     if (setX || setY)
     {
         transform->SetLocation(newX, newY);
@@ -160,7 +161,7 @@ void SimpleRigidbodyComponent::RunPhysicsLoop()
         for (size_t i = 0; i < collisionAnswer->Count(); ++i)
         {
             m_colliderOnUs->MoveOutOfOverlapRangeOf(
-                *collisionAnswer->GetValueAt(i).Collision.GetCollider());
+                *collisionAnswer->GetValueAt(i).Collision.GetCollider(), cachedLocation);
         }
     }
 

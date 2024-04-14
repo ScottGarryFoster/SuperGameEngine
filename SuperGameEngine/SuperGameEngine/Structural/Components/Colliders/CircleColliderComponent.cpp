@@ -54,12 +54,12 @@ bool CircleColliderComponent::Overlaps(Collider& other) const
     return false;
 }
 
-bool SuperGameEngine::CircleColliderComponent::Contain(Collider& other) const
+bool CircleColliderComponent::Contain(Collider& other) const
 {
     return false;
 }
 
-void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other)
+void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, const FVector2D& previousLocation)
 {
     Logger::Assert(NotImplementedException(), GetTypeName(), FString("MoveOutOfOverlapRangeOf"),
         FString("Circle on Circle not yet implemented."));

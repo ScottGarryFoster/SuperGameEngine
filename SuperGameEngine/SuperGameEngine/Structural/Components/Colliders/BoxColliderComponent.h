@@ -41,7 +41,14 @@ namespace SuperGameEngine
         /// Moves rectangle out of range of other Collider.
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
-        virtual void MoveOutOfOverlapRangeOf(const Collider& other) override;
+        /// <param name="previousLocation">The previous location of the collider.</param>
+        /// <remark>
+        /// Passing previousLocation ensures that the collider does not 'phase' through the other collider
+        /// because the only information it would have go off otherwise is the current frame
+        /// which could be a situation in which the direction of least resitance means moving
+        /// through the object and not bouncing off it.
+        /// </remark>
+        virtual void MoveOutOfOverlapRangeOf(const Collider& other, const FVector2D& previousLocation) override;
 
         /// <summary>
         /// Entry point for the entire game.
@@ -126,5 +133,13 @@ namespace SuperGameEngine
         /// Location of the object.
         /// </summary>
         std::shared_ptr<TransformComponent> m_transform;
+
+        /// <summary>
+        /// Given the the location passed in were the top left,
+        /// converts this to the center point of the shape.
+        /// </summary>
+        /// <param name="location">Top left location. </param>
+        /// <returns>Center point of the Shape. </returns>
+        FVector2D ConvertTopLeftToCenter(const FVector2D& location) const;
     };
 }

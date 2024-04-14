@@ -63,17 +63,23 @@ bool BoxColliderComponent::Contain(Collider& other) const
     return false;
 }
 
-void BoxColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other)
+void BoxColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, const FVector2D& previousLocation)
 {
+    // Previous point is the top left, the compared point in rectangle is the center point.
+    FVector2D centerPoint = ConvertTopLeftToCenter(previousLocation);
+
+    // We cache the location so that transform occurs once on the object
+    // and there is one implementation of the rec to world space rec translation.
     FVector2D cachedLocation = FVector2D(m_retangleActual->GetTopLeft());
     FVector2D newLocation = FVector2D();
+
     if (typeid(other) == typeid(BoxColliderComponent))
     {
         const BoxColliderComponent* otherBox =
             dynamic_cast<const BoxColliderComponent*>(&other);
 
         Rectangle* otherRectangle = otherBox->m_retangleActual.get();
-        newLocation = m_retangleActual->GetNewLocationToNotOverlap(*otherRectangle);
+        newLocation = m_retangleActual->GetNewLocationToNotOverlap(*otherRectangle, centerPoint);
     }
     else if (typeid(other) == typeid(CircleColliderComponent))
     {
@@ -156,4 +162,11 @@ void BoxColliderComponent::OnCollisionEnd(Collision& collision)
 Rectangle BoxColliderComponent::GetArea() const
 {
     return *m_retangleActual;
+}
+
+FVector2D BoxColliderComponent::ConvertTopLeftToCenter(const FVector2D& location) const
+{
+    float x = location.GetX() + m_retangle->GetWidth() / 2.0f;
+    float y = location.GetY() + m_retangle->GetHeight() / 2.0f;
+    return FVector2D(x, y);
 }

@@ -1190,4 +1190,312 @@ namespace SuperGameEngine_Structural_Spatial_Area
         ASSERT_EQ(expectedTop, actual.GetY());
     }
 #pragma endregion
+
+#pragma region Overlap Amount With Location
+    TEST_F(RectangleTests, OverlapAmountWithLoc_ReturnsTheDifferenceInPreviousLocationX_WhenLeastResitanceWouldDictateOtherwise)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // X O Y Y - - - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // Y -> m_otherTestRectangle
+        // The path of least resitance is 1 (move to the left)
+        // however say test rec moved from the right, it would need to move
+        // 4 to the right to not overlap - this is the test.
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 2, 1);
+        m_otherTestRectangle = new Rectangle(1, 0, 3, 1);
+        FVector2D givenLocation = FVector2D(7, 1);
+        FVector2D expectedOverlap = FVector2D(4, 1);
+
+        // Check the least resitance path
+        FVector2D actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
+        ASSERT_EQ(1, actual.GetX()) << "Least resitance setup was not correct.";
+        ASSERT_NE(expectedOverlap.GetX(), actual.GetX()) << "Least resitance setup was not correct.";
+
+        // Act
+        actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX());
+    }
+
+    TEST_F(RectangleTests, OverlapAmountWithLoc_ReturnsLeastResistanceX_WhenDirectionImpliesItWouldBeTheCase)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // X O Y Y - - - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // Y -> m_otherTestRectangle
+        // The path of least resitance is 1 (move to the left)
+        // however say test rec moved from the right, it would need to move
+        // 4 to the right to not overlap - this is the test.
+        // We are giving a position to the left so it should move 1 to the left.
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 2, 1);
+        m_otherTestRectangle = new Rectangle(1, 0, 3, 1);
+        FVector2D givenLocation = FVector2D(-7, 1);
+        FVector2D expectedOverlap = FVector2D(1, 1);
+
+        // Check the least resitance path
+        FVector2D actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
+        ASSERT_EQ(1, actual.GetX()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX()) << "Least resitance setup was not correct.";
+
+        // Act
+        actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX());
+    }
+
+    TEST_F(RectangleTests, OverlapAmountWithLoc_ReturnsTheDifferenceInPreviousLocationY_WhenLeastResitanceWouldDictateOtherwise)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // X O Y Y - - - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // Y -> m_otherTestRectangle
+        // The path of least resitance is 1 (move to the left)
+        // however say test rec moved from the right, it would need to move
+        // 4 to the right to not overlap - this is the test.
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 1, 2);
+        m_otherTestRectangle = new Rectangle(0, 1, 1, 3);
+        FVector2D givenLocation = FVector2D(1, 7);
+        FVector2D expectedOverlap = FVector2D(1, 4);
+
+        // Check the least resitance path
+        FVector2D actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
+        ASSERT_EQ(1, actual.GetY()) << "Least resitance setup was not correct.";
+        ASSERT_NE(expectedOverlap.GetY(), actual.GetY()) << "Least resitance setup was not correct.";
+
+        // Act
+        actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY());
+    }
+
+    TEST_F(RectangleTests, OverlapAmountWithLoc_ReturnsLeastResistanceY_WhenDirectionImpliesItWouldBeTheCase)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // X O Y Y - - - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // Y -> m_otherTestRectangle
+        // The path of least resitance is 1 (move to the left)
+        // however say test rec moved from the right, it would need to move
+        // 4 to the right to not overlap - this is the test.
+        // We are giving a position to the left so it should move 1 to the left.
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 0, 1, 2);
+        m_otherTestRectangle = new Rectangle(0, 1, 1, 3);
+        FVector2D givenLocation = FVector2D(1, -7);
+        FVector2D expectedOverlap = FVector2D(1, 1);
+
+        // Check the least resitance path
+        FVector2D actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
+        ASSERT_EQ(1, actual.GetY()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY()) << "Least resitance setup was not correct.";
+
+        // Act
+        actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY());
+    }
+#pragma endregion
+
+#pragma region GetNewLocationToNotOverlap With Location
+    TEST_F(RectangleTests, GetNewLocationToNotOverlapWithLocation_MovesToTheLeftByOverlap_WhenLocationGivenIsToTheLeft)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // L - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+
+        // Arrange
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        FVector2D givenLocation = FVector2D(0, 1);
+        float expectedLeft = 2;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, actual.GetX());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlapWithLocation_MovesToTheRightByOverlap_WhenLocationGivenIsToTheRight)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - L
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+        // Note the only thing changed from previous test is the location!
+
+        // Arrange
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        FVector2D givenLocation = FVector2D(7, 1);
+        float expectedLeft = 6;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, actual.GetX());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlapWithLocation_MovesAboveByOverlap_WhenLocationGivenIsToTheAbove)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // L - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 3, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
+        FVector2D givenLocation = FVector2D(1, 0);
+        float expectedTop = 2;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedTop, actual.GetY());
+    }
+
+    TEST_F(RectangleTests, GetNewLocationToNotOverlapWithLocation_MovesBelowByOverlap_WhenLocationGivenIsBelow)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - L
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+        // Note the only thing changed from previous test is the location!
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 3, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
+        FVector2D givenLocation = FVector2D(1, 7);
+        float expectedTop = 6;
+
+        // Act
+        FVector2D actual = m_testRectangle->GetNewLocationToNotOverlap(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedTop, actual.GetY());
+    }
+#pragma endregion
+
+#pragma region MoveOutOfOverlapRangeOf With Location
+    TEST_F(RectangleTests, MoveOutOfOverlapRangeOfWithLocation_MovesToTheLeftByOverlap_WhenLocationGivenIsToTheLeft)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // L - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+
+        // Arrange
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        FVector2D givenLocation = FVector2D(0, 1);
+        float expectedLeft = 2;
+
+        // Act
+        m_testRectangle->MoveOutOfOverlapRangeOf(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, m_testRectangle->GetLeft());
+    }
+
+    TEST_F(RectangleTests, MoveOutOfOverlapRangeOfWithLocation_MovesToTheRightByOverlap_WhenLocationGivenIsToTheRight)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - L
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+        // Note the only thing changed from previous test is the location!
+
+        // Arrange
+        m_testRectangle = new Rectangle(3, 0, 3, 10);
+        m_otherTestRectangle = new Rectangle(5, 0, 1, 10);
+        FVector2D givenLocation = FVector2D(7, 1);
+        float expectedLeft = 6;
+
+        // Act
+        m_testRectangle->MoveOutOfOverlapRangeOf(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedLeft, m_testRectangle->GetLeft());
+    }
+
+    TEST_F(RectangleTests, MoveOutOfOverlapRangeOfWithLocation_MovesAboveByOverlap_WhenLocationGivenIsToTheAbove)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // L - - X X O - -
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 3, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
+        FVector2D givenLocation = FVector2D(1, 0);
+        float expectedTop = 2;
+
+        // Act
+        m_testRectangle->MoveOutOfOverlapRangeOf(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedTop, m_testRectangle->GetTop());
+    }
+
+    TEST_F(RectangleTests, MoveOutOfOverlapRangeOfWithLocation_MovesBelowByOverlap_WhenLocationGivenIsBelow)
+    {
+        // Setup
+        // 0 1 2 3 4 5 6 7
+        // - - - X X O - L
+        // X -> m_testRectangle
+        // O -> overlap
+        // L -> Previous Location
+        // Note the only thing changed from previous test is the location!
+
+        // Arrange
+        m_testRectangle = new Rectangle(0, 3, 10, 3);
+        m_otherTestRectangle = new Rectangle(0, 5, 10, 1);
+        FVector2D givenLocation = FVector2D(1, 7);
+        float expectedTop = 6;
+
+        // Act
+        m_testRectangle->MoveOutOfOverlapRangeOf(*m_otherTestRectangle, givenLocation);
+
+        // Assert
+        ASSERT_EQ(expectedTop, m_testRectangle->GetTop());
+    }
+#pragma endregion
 }

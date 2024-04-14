@@ -195,6 +195,36 @@ FVector2D Rectangle::OverlapAmount(const Rectangle& other) const
     return returnVector;
 }
 
+FVector2D Rectangle::OverlapAmount(
+    const Rectangle& other, 
+    const FVector2D& previousLoctation)
+    const
+{
+    FVector2D returnVector = FVector2D();
+    if (Overlaps(other))
+    {
+        if (previousLoctation.GetX() > other.GetCenter().GetX())
+        {
+            returnVector.SetX(std::abs(GetLeft() - other.GetRight()));
+        }
+        else
+        {
+            returnVector.SetX(std::abs(GetRight() - other.GetLeft()));
+        }
+
+        if (previousLoctation.GetY() > other.GetCenter().GetY())
+        {
+            returnVector.SetY(std::abs(GetTop() - other.GetBottom()));
+        }
+        else
+        {
+            returnVector.SetY(std::abs(GetBottom() - other.GetTop()));
+        }
+    }
+
+    return returnVector;
+}
+
 void Rectangle::MoveOutOfOverlapRangeOf(const Rectangle& other)
 {
     FVector2D overlap = OverlapAmount(other);
@@ -231,7 +261,43 @@ void Rectangle::MoveOutOfOverlapRangeOf(const Rectangle& other)
     MoveShape(applied);
 }
 
-FVector2D SuperGameEngine::Rectangle::GetNewLocationToNotOverlap(const Rectangle& other) const
+void Rectangle::MoveOutOfOverlapRangeOf(const Rectangle& other, const FVector2D& previousLoctation)
+{
+    FVector2D overlap = OverlapAmount(other, previousLoctation);
+    FVector2D applied = FVector2D();
+    if (previousLoctation.GetX() > other.GetCenter().GetX())
+    {
+        applied.SetX(overlap.GetX());
+    }
+    else
+    {
+        applied.SetX(overlap.GetX() * -1);
+    }
+
+    if (previousLoctation.GetY() > other.GetCenter().GetY())
+    {
+        applied.SetY(overlap.GetY());
+    }
+    else
+    {
+        applied.SetY(overlap.GetY() * -1);
+    }
+
+    // If moving X meaning moving less
+    if (std::abs(applied.GetX()) < std::abs(applied.GetY()))
+    {
+        // Then only move X.
+        applied.SetY(0);
+    }
+    else
+    {
+        applied.SetX(0);
+    }
+
+    MoveShape(applied);
+}
+
+FVector2D Rectangle::GetNewLocationToNotOverlap(const Rectangle& other) const
 {
     FVector2D overlap = OverlapAmount(other);
     FVector2D applied = FVector2D();
@@ -245,6 +311,44 @@ FVector2D SuperGameEngine::Rectangle::GetNewLocationToNotOverlap(const Rectangle
     }
 
     if (GetCenter().GetY() > other.GetCenter().GetY())
+    {
+        applied.SetY(overlap.GetY());
+    }
+    else
+    {
+        applied.SetY(overlap.GetY() * -1);
+    }
+
+    // If moving X meaning moving less
+    if (std::abs(applied.GetX()) < std::abs(applied.GetY()))
+    {
+        // Then only move X.
+        applied.SetY(0);
+    }
+    else
+    {
+        applied.SetX(0);
+    }
+
+    FVector2D returnLocation = FVector2D(m_location);
+    returnLocation += applied;
+    return returnLocation;
+}
+
+FVector2D Rectangle::GetNewLocationToNotOverlap(const Rectangle& other, const FVector2D& previousLoctation) const
+{
+    FVector2D overlap = OverlapAmount(other, previousLoctation);
+    FVector2D applied = FVector2D();
+    if (previousLoctation.GetX() > other.GetCenter().GetX())
+    {
+        applied.SetX(overlap.GetX());
+    }
+    else
+    {
+        applied.SetX(overlap.GetX() * -1);
+    }
+
+    if (previousLoctation.GetY() > other.GetCenter().GetY())
     {
         applied.SetY(overlap.GetY());
     }
