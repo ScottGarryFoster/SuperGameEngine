@@ -34,6 +34,6 @@ namespace SuperGameEngine
         /// <summary>
         /// A texture stored in the content manager.
         /// </summary>
-        SuperTexture* m_superTexture;
+        std::shared_ptr<SuperTexture> m_superTexture;
     };
 }

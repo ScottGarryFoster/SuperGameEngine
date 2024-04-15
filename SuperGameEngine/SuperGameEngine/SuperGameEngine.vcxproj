@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
+    <ClInclude Include="Engine\Graphics\SplitTexture.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
     <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h" />
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
+    <ClCompile Include="Engine\Graphics\SplitTexture.cpp" />
     <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp" />

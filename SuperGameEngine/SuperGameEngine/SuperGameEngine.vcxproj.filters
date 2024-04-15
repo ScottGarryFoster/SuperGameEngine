@@ -226,6 +226,9 @@
     <ClCompile Include="Structural\Components\Physics\SimpleRigidbodyComponent.cpp">
       <Filter>Project Files\Structural\Components\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphics\SplitTexture.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -392,6 +395,9 @@
     </ClInclude>
     <ClInclude Include="Structural\Spatial\Collision\CollisionAnswerState.hpp">
       <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SplitTexture.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

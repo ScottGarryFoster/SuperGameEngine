@@ -23,7 +23,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="filePath">File Path releative to the products folder. </param>
         /// <returns>The texture or <c>nullptr</c> if not found. </returns>
-        SuperTexture* GetTexture(FString filePath);
+        std::shared_ptr<SuperTexture> GetTexture(FString filePath);
 
     private:
         /// <summary>
@@ -34,7 +34,7 @@ namespace SuperGameEngine
         /// <summary>
         /// All the textures currently loaded.
         /// </summary>
-        std::vector<SuperTexture*> m_textureLibrary;
+        std::vector<std::shared_ptr<SuperTexture>> m_textureLibrary;
 
         /// <summary>
         /// The directory products are stored.

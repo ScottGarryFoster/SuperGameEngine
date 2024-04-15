@@ -12,7 +12,15 @@ namespace SuperGameEngine
     class SuperTexture
     {
     public:
+        /// <summary>
+        /// Constructs a SuperTexture from a texture.
+        /// The texture given is SuperTextures responsiblity to delete,
+        /// it is cleaned up by the SuperTexture.
+        /// </summary>
+        /// <param name="texture">Texture to use. </param>
         SuperTexture(Texture* texture);
+
+        virtual ~SuperTexture();
 
         /// <summary>
         /// Draws to screen.

@@ -8,6 +8,11 @@ SuperTexture::SuperTexture(Texture* texture)
     m_actualTexture = texture;
 }
 
+SuperTexture::~SuperTexture()
+{
+    delete m_actualTexture;
+}
+
 void SuperTexture::Draw()
 {
     m_actualTexture->Draw();
