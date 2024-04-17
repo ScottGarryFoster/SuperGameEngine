@@ -3,6 +3,7 @@
 #include "../../LibraryIncludes.h"
 #include <vector>
 #include <SDL.h>
+#include "../Graphics/TextureWrapper.h"
 
 using namespace StandardCLibrary;
 
@@ -34,7 +35,7 @@ namespace SuperGameEngine
         /// <summary>
         /// All the textures currently loaded.
         /// </summary>
-        std::vector<std::shared_ptr<SuperTexture>> m_textureLibrary;
+        std::vector<std::shared_ptr<TextureWrapper>> m_textureLibrary;
 
         /// <summary>
         /// The directory products are stored.

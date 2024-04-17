@@ -137,6 +137,7 @@
     <ClInclude Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\RectangleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\TechniqueRenderer.h" />
+    <ClInclude Include="Engine\Graphics\TextureWrapper.h" />
     <ClInclude Include="Engine\Input\AxisToUniversalAxis.h" />
     <ClInclude Include="Engine\Input\Controller.hpp" />
     <ClInclude Include="Engine\Input\ControllerAxisMappedToButton.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Engine\Graphics\Technique\RectangleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\TechniqueRenderer.cpp" />
     <ClCompile Include="Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\Graphics\TextureWrapper.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayout.h" />
     <ClCompile Include="Engine\Input\ControllerLayoutCollection.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp" />

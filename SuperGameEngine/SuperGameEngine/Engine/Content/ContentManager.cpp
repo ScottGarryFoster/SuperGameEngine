@@ -14,7 +14,7 @@ ContentManager::ContentManager(SDL_Renderer* renderer)
     }
 
     m_renderer = renderer;
-    m_textureLibrary = std::vector<std::shared_ptr<SuperTexture>>();
+    m_textureLibrary = std::vector<std::shared_ptr<TextureWrapper>>();
     m_productsDirectory = FString(FilesAndFolders::GetProductsFolder());
 }
 
@@ -41,8 +41,8 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
     filePath = m_productsDirectory + "\\" + filePath;
 
     bool foundTexture = false;
-    std::shared_ptr<SuperTexture> returnTexture = nullptr;
-    for (std::shared_ptr<SuperTexture>& texture : m_textureLibrary)
+    std::shared_ptr<TextureWrapper> returnTexture = nullptr;
+    for (std::shared_ptr<TextureWrapper>& texture : m_textureLibrary)
     {
         if (texture->RepresentSameImage(filePath))
         {
@@ -58,7 +58,7 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
         std::vector<FString> errors = std::vector<FString>();
         if (newTexture->LoadImageFromFile(filePath, errors))
         {
-            returnTexture = std::make_shared<SuperTexture>(newTexture);
+            returnTexture = std::make_shared<TextureWrapper>(newTexture);
             m_textureLibrary.push_back(returnTexture);
         }
     }

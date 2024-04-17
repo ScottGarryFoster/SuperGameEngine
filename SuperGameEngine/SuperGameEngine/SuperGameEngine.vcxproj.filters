@@ -229,6 +229,9 @@
     <ClCompile Include="Engine\Graphics\SplitTexture.cpp">
       <Filter>Project Files\Engine\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphics\TextureWrapper.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -397,6 +400,9 @@
       <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SplitTexture.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\TextureWrapper.h">
       <Filter>Project Files\Engine\Graphics\API</Filter>
     </ClInclude>
   </ItemGroup>
