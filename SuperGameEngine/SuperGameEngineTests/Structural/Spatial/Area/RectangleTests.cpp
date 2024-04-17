@@ -1592,4 +1592,36 @@ namespace SuperGameEngine_Structural_Spatial_Area
             << "Expected: " << m_testRectangle->GetBottom() << " Actual: " << actualBelow.GetY();
     }
 #pragma endregion
+
+#pragma region Operator==
+    TEST_F(RectangleTests, OperatorEquals_ReturnsTrue_WhenBothSideAreFuntionallyTheSame)
+    {
+        m_testRectangle = new Rectangle(0, 0, 10, 10);
+        m_otherTestRectangle = new Rectangle(0, 0, 10, 10);
+
+        bool actual = *m_testRectangle == *m_otherTestRectangle;
+
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(RectangleTests, OperatorEquals_ReturnsFalse_WhenBothSideAreDifferent)
+    {
+        m_testRectangle = new Rectangle(1, 2, 3, 4);
+        m_otherTestRectangle = new Rectangle(0, 0, 10, 10);
+
+        bool actual = *m_testRectangle == *m_otherTestRectangle;
+
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(RectangleTests, OperatorEquals_ReturnsTrue_WhenBothSideAreFuntionallyTheSameFloatWize)
+    {
+        m_testRectangle = new Rectangle(0.000001f, 0.000001f, 10.000001f, 10.000001f);
+        m_otherTestRectangle = new Rectangle(0, 0, 10, 10);
+
+        bool actual = *m_testRectangle == *m_otherTestRectangle;
+
+        ASSERT_TRUE(actual);
+    }
+#pragma endregion
 }

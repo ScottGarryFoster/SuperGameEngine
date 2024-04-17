@@ -127,9 +127,6 @@
     <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp">
       <Filter>Project Files\Structural\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\SuperTexture.cpp">
-      <Filter>Project Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Content\ContentManager.cpp">
       <Filter>Project Files\Engine\Content</Filter>
     </ClCompile>
@@ -403,6 +400,9 @@
       <Filter>Project Files\Engine\Graphics\API</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\TextureWrapper.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SplitTextureAsset.h">
       <Filter>Project Files\Engine\Graphics\API</Filter>
     </ClInclude>
   </ItemGroup>

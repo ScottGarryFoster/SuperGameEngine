@@ -23,9 +23,8 @@ namespace SuperGameEngine_Engine_Graphics
     public:
         SplitTextureTests()
         {
-            //Texture* t = nullptr;
             std::shared_ptr<SuperTexture> super = std::make_shared<MockSuperTexture>();
-            m_splitTexture = new SplitTexture();
+            m_splitTexture = new SplitTexture(super);
         }
 
     protected:
@@ -38,16 +37,39 @@ namespace SuperGameEngine_Engine_Graphics
 
         void TearDown() override
         {
-
         }
     };
 
+#pragma region GetSplits
     TEST_F(SplitTextureTests, GetSplits_IsEmpty_OnConstruction)
     {
         int expected = 0;
 
-        //std::vector<Rectangle> actual = m_splitTexture->GetSplits();
+        std::vector<Rectangle> actual = m_splitTexture->GetSplits();
 
-        //ASSERT_EQ(expected, actual.size());
+        ASSERT_EQ(expected, actual.size());
     }
+
+    TEST_F(SplitTextureTests, GetSplits_IsOne_WhenGivenSplit)
+    {
+        int expected = 1;
+        Rectangle given = Rectangle(0, 0, 0, 0);
+        m_splitTexture->AddSplit(given);
+
+        std::vector<Rectangle> actual = m_splitTexture->GetSplits();
+
+        ASSERT_EQ(expected, actual.size());
+    }
+
+    TEST_F(SplitTextureTests, GetSplits_ReturnsSameAsGiven_WhenAddIsGivenASplit)
+    {
+        int expected = 1;
+        Rectangle given = Rectangle(1, 2, 3, 4);
+        m_splitTexture->AddSplit(given);
+
+        std::vector<Rectangle> actual = m_splitTexture->GetSplits();
+
+        ASSERT_EQ(given, actual[0]);
+    }
+#pragma endregion
 }

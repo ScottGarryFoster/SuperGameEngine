@@ -10,13 +10,15 @@
     <ClCompile Include="Structural\Spatial\Area\CircleTests.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\SplitTextureTests.cpp" />
     <ClCompile Include="LibraryIncludes.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
       <Filter>Package Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>Package Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SplitTextureTests.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

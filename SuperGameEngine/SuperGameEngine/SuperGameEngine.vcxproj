@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -130,7 +130,9 @@
   <ItemGroup>
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
+    <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
     <ClInclude Include="Engine\Graphics\SplitTexture.h" />
+    <ClInclude Include="Engine\Graphics\SplitTextureAsset.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
     <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h" />
@@ -189,8 +191,8 @@
   <ItemGroup>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
+    <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
     <ClCompile Include="Engine\Graphics\SplitTexture.cpp" />
-    <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.cpp" />

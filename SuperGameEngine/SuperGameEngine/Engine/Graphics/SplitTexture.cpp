@@ -3,9 +3,15 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-SplitTexture::SplitTexture()
+SplitTexture::SplitTexture(std::shared_ptr<SuperTexture> superTexture)
 {
+    if (!superTexture)
+    {
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Construction"),
+            FString("superTexture must not be null"));
+    }
 
+    m_splits = std::vector<Rectangle>();
 }
 
 SplitTexture::~SplitTexture()
@@ -15,5 +21,10 @@ SplitTexture::~SplitTexture()
 
 std::vector<Rectangle> SplitTexture::GetSplits()
 {
-    return std::vector<Rectangle>();
+    return m_splits;
+}
+
+void SplitTexture::AddSplit(const Rectangle& newLocation)
+{
+    m_splits.push_back(newLocation);
 }

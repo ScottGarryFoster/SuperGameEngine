@@ -29,6 +29,13 @@ namespace SuperGameEngine
         Rectangle(float xy, float widthHeight);
 
         /// <summary>
+        /// Does this shape equal the other functionally.
+        /// </summary>
+        /// <param name="other">Other shape to compare to. </param>
+        /// <returns>True means functionally equal but not pointer equal. </returns>
+        bool operator==(const Rectangle& other) const;
+
+        /// <summary>
         /// The left X of the Rectangle.
         /// </summary>
         /// <returns>The Left X coordinate of the Rectangle. </returns>
