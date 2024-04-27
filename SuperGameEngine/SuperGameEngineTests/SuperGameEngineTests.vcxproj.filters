@@ -55,4 +55,9 @@
       <Filter>Package Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Graphics\MockSuperTexture.h">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

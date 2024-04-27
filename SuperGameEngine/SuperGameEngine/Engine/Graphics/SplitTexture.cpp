@@ -1,5 +1,4 @@
 #include "SplitTexture.h"
-#include "../../Structural/Spatial/Area/RectangleInt.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -31,8 +30,13 @@ void SplitTexture::AddSplit(const RectangleInt& newLocation)
     m_splits.push_back(newLocation);
 }
 
-void SplitTexture::Draw(int split, FPoint& location)
+void SplitTexture::Draw(int split, const RectangleInt& screenLocation) const
 {
-    RectangleInt f = RectangleInt(0, 0);
-    m_superTexture->Draw(m_splits[0], f);
+    int lastElement = (int)m_splits.size() - 1;
+    if (split < 0 || split > lastElement)
+    {
+        return;
+    }
+
+    m_superTexture->Draw(m_splits[split], screenLocation);
 }

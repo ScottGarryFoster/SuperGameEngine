@@ -1,6 +1,6 @@
 #pragma once
 #include "SuperTexture.h"
-#include "../../Structural/Spatial/Area/Rectangle.h"
+#include "../../Structural/Spatial/Area/RectangleInt.h"
 
 namespace SuperGameEngine
 {
@@ -26,10 +26,10 @@ namespace SuperGameEngine
         /// Draws the given part of the texture at the location.
         /// </summary>
         /// <param name="split">Split to draw, defines the location on the texture. </param>
-        /// <param name="location">Locaiton on the screen to draw. </param>
+        /// <param name="screenLocation">Locaiton and Size on the screen to draw. </param>
         /// <remark>
         /// Keep in mind Camera is not involved in this method this is screenspace.
         /// </remark>
-        virtual void Draw(int split, FPoint& location) = 0;
+        virtual void Draw(int split, const RectangleInt& screenLocation) const = 0;
     };
 }

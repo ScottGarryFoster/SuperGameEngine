@@ -3,7 +3,7 @@
 #include "../../../../SuperGameEngine/Structural/Spatial/Area/Rectangle.h"
 
 using namespace SuperGameEngine;
-namespace SuperGameEngine_Structural_Spatial_Area
+namespace SuperGameEngineTests_Structural_Spatial_Area
 {
     class CircleTests : public ::testing::Test
     {

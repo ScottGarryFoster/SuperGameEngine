@@ -4,7 +4,7 @@
 #include "../../../../SuperGameEngine/Structural/Spatial/Area/Circle.h"
 
 using namespace SuperGameEngine;
-namespace SuperGameEngine_Structural_Spatial_Area
+namespace SuperGameEngineTests_Structural_Spatial_Area
 {
     class RectangleIntTests : public ::testing::Test
     {
