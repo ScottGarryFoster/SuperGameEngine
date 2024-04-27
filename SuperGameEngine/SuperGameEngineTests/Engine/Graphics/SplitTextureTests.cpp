@@ -8,8 +8,6 @@
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
 using namespace SuperGameEngineTests;
-using ::testing::AtLeast;
-using ::testing::_;
 
 namespace SuperGameEngineTests_Engine_Graphics
 {
@@ -18,29 +16,26 @@ namespace SuperGameEngineTests_Engine_Graphics
     public:
         SplitTextureTests()
         {
-            mockSuperTexture = nullptr;
-            m_splitTexture = nullptr;
         }
 
     protected:
 
         std::shared_ptr<MockSuperTexture> m_mockSuperTexture;
-        MockSuperTexture* mockSuperTexture;
-        SplitTexture* m_splitTexture;
+        std::shared_ptr<SplitTexture> m_splitTexture;
 
         void SetUp() override
         {
             m_mockSuperTexture = std::make_shared<MockSuperTexture>();
-            mockSuperTexture = m_mockSuperTexture.get();
-            m_splitTexture = new SplitTexture(m_mockSuperTexture);
+
+            FPoint validSize = FPoint(100, 100);
+            EXPECT_CALL(*m_mockSuperTexture, Size())
+                .WillRepeatedly(Return(validSize));
+
+            m_splitTexture = std::make_shared<SplitTexture>(m_mockSuperTexture);
         }
 
         void TearDown() override
         {
-            if (m_splitTexture != nullptr)
-            {
-                delete m_splitTexture;
-            }
         }
     };
 
@@ -77,6 +72,99 @@ namespace SuperGameEngineTests_Engine_Graphics
     }
 #pragma endregion
 
+#pragma region AddSplit
+    TEST_F(SplitTextureTests, AddSplit_ReturnsTrue_WhenSplitIsOnTheTexture)
+    {
+        // Arrange
+        FPoint givenSize = FPoint(10, 10);
+        RectangleInt givenSplit = RectangleInt(1, 1, 2, 2);
+        m_splitTexture->AddSplit(givenSplit);
+
+        EXPECT_CALL(*m_mockSuperTexture, Size())
+            .WillRepeatedly(Return(givenSize));
+
+        // Act
+        m_splitTexture = std::make_shared<SplitTexture>(m_mockSuperTexture);
+        bool actual = m_splitTexture->AddSplit(givenSplit);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(SplitTextureTests, AddSplit_ReturnsFalse_WhenSplitIsOffTheTexture)
+    {
+        // Arrange
+        FPoint givenSize = FPoint(10, 10);
+        RectangleInt givenSplit = RectangleInt(1, 1, 20, 20);
+        EXPECT_CALL(*m_mockSuperTexture, Size())
+            .WillRepeatedly(Return(givenSize));
+
+        // Act
+        m_splitTexture = std::make_shared<SplitTexture>(m_mockSuperTexture);
+        bool actual = m_splitTexture->AddSplit(givenSplit);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(SplitTextureTests, AddSplit_ReturnsFalse_WhenSplitBeginsBeforeTextureDoes)
+    {
+        // Arrange
+        FPoint givenSize = FPoint(10, 10);
+        RectangleInt givenSplitX = RectangleInt(-1, 1, 1, 1);
+        RectangleInt givenSplitY = RectangleInt(1, -1, 1, 1);
+        EXPECT_CALL(*m_mockSuperTexture, Size())
+            .WillRepeatedly(Return(givenSize));
+
+        // Act
+        m_splitTexture = std::make_shared<SplitTexture>(m_mockSuperTexture);
+        bool actual = m_splitTexture->AddSplit(givenSplitX);
+        bool actual2 = m_splitTexture->AddSplit(givenSplitY);
+
+        // Assert
+        ASSERT_FALSE(actual);
+        ASSERT_FALSE(actual2);
+    }
+
+    TEST_F(SplitTextureTests, AddSplit_ReturnsFalse_WhenSplitBeginsAfterTextureDoes)
+    {
+        // Arrange
+        FPoint givenSize = FPoint(10, 10);
+        RectangleInt givenSplitX = RectangleInt(10, 1, 1, 1);
+        RectangleInt givenSplitY = RectangleInt(1, 10, 1, 1);
+        EXPECT_CALL(*m_mockSuperTexture, Size())
+            .WillRepeatedly(Return(givenSize));
+
+        // Act
+        m_splitTexture = std::make_shared<SplitTexture>(m_mockSuperTexture);
+        bool actual = m_splitTexture->AddSplit(givenSplitX);
+        bool actual2 = m_splitTexture->AddSplit(givenSplitY);
+
+        // Assert
+        ASSERT_FALSE(actual);
+        ASSERT_FALSE(actual2);
+    }
+
+    TEST_F(SplitTextureTests, AddSplit_DoesNotAddSplit_WhenFalse)
+    {
+        // Arrange
+        FPoint givenSize = FPoint(10, 10);
+        RectangleInt givenSplit = RectangleInt(10, 1, 2, 2);
+        m_splitTexture->AddSplit(givenSplit);
+
+        EXPECT_CALL(*m_mockSuperTexture, Size())
+            .WillRepeatedly(Return(givenSize));
+
+        // Act
+        m_splitTexture = std::make_shared<SplitTexture>(m_mockSuperTexture);
+        bool actual = m_splitTexture->AddSplit(givenSplit);
+
+        // Assert
+        std::vector<RectangleInt> splits = m_splitTexture->GetSplits();
+        ASSERT_EQ(0, splits.size());
+    }
+#pragma endregion
+
 #pragma region Draw
     TEST_F(SplitTextureTests, Draw_UsesTheLocationOfTheSplit_WhenGivenASplitNumber)
     {
@@ -88,7 +176,7 @@ namespace SuperGameEngineTests_Engine_Graphics
         m_splitTexture->AddSplit(givenTextureLocation);
 
         // Assert
-        EXPECT_CALL(*mockSuperTexture, Draw(givenTextureLocation, validLocation))
+        EXPECT_CALL(*m_mockSuperTexture, Draw(givenTextureLocation, validLocation))
             .Times(AtLeast(1));
 
         // Act
@@ -115,7 +203,7 @@ namespace SuperGameEngineTests_Engine_Graphics
 
 
         // Assert
-        EXPECT_CALL(*mockSuperTexture, Draw(givenTextureLocation, validLocation))
+        EXPECT_CALL(*m_mockSuperTexture, Draw(givenTextureLocation, validLocation))
             .Times(AtLeast(1));
 
         // Act
@@ -129,7 +217,7 @@ namespace SuperGameEngineTests_Engine_Graphics
         RectangleInt validLocation = RectangleInt(4, 3, 2, 1);
 
         // Assert
-        EXPECT_CALL(*mockSuperTexture, Draw()).Times(0);
+        EXPECT_CALL(*m_mockSuperTexture, Draw()).Times(0);
 
         // Act
         m_splitTexture->Draw(givenSplit, validLocation);
@@ -145,7 +233,7 @@ namespace SuperGameEngineTests_Engine_Graphics
         m_splitTexture->AddSplit(givenTextureLocation);
 
         // Assert
-        EXPECT_CALL(*mockSuperTexture, Draw()).Times(0);
+        EXPECT_CALL(*m_mockSuperTexture, Draw()).Times(0);
 
         // Act
         m_splitTexture->Draw(expectedSplit, validLocation);
@@ -158,7 +246,7 @@ namespace SuperGameEngineTests_Engine_Graphics
         RectangleInt validLocation = RectangleInt(4, 3, 2, 1);
 
         // Assert
-        EXPECT_CALL(*mockSuperTexture, Draw()).Times(0);
+        EXPECT_CALL(*m_mockSuperTexture, Draw()).Times(0);
 
         // Act
         m_splitTexture->Draw(givenSplit, validLocation);

@@ -22,7 +22,11 @@ namespace SuperGameEngine
         /// Add a split to the list of splits.
         /// </summary>
         /// <param name="newLocation">New location for split. </param>
-        virtual void AddSplit(const RectangleInt& newLocation) override;
+        /// <returns>
+        /// True means split was valid and added to list.
+        /// False means that the Split overlapped the edge of the texture.
+        /// </returns>
+        virtual bool AddSplit(const RectangleInt& newLocation) override;
 
         /// <summary>
         /// Draws the given part of the texture at the location.
@@ -43,5 +47,18 @@ namespace SuperGameEngine
         /// Super texture for this texture.
         /// </summary>
         std::shared_ptr<SuperTexture> m_superTexture;
+
+        /// <summary>
+        /// A rectangle which represents the area for the rectangle.
+        /// </summary>
+        std::shared_ptr<RectangleInt> m_textureArea;
+
+        /// <summary>
+        /// Returns true if right is completely contained in right.
+        /// </summary>
+        /// <param name="left">The base. </param>
+        /// <param name="right">The compare. </param>
+        /// <returns>True means right is complete contained in left. </returns>
+        bool Contains(const RectangleInt& left, const RectangleInt& right) const;
     };
 }

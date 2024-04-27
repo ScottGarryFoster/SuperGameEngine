@@ -9,6 +9,10 @@
 #include <gmock/gmock.h>
 #pragma warning(pop)
 
+using ::testing::AtLeast;
+using ::testing::_;
+using ::testing::Return;
+
 
 //class Turtle 
 //{

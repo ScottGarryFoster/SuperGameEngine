@@ -20,7 +20,11 @@ namespace SuperGameEngine
         /// Add a split to the list of splits.
         /// </summary>
         /// <param name="newLocation">New location for split. </param>
-        virtual void AddSplit(const RectangleInt& newLocation) = 0;
+        /// <returns>
+        /// True means split was valid and added to list.
+        /// False means that the Split overlapped the edge of the texture.
+        /// </returns>
+        virtual bool AddSplit(const RectangleInt& newLocation) = 0;
 
         /// <summary>
         /// Draws the given part of the texture at the location.
