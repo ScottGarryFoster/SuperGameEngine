@@ -53,6 +53,16 @@ void FPoint::SetXYValue(int x, int y)
     }
 }
 
+bool FPoint::operator==(const FPoint& other) const
+{
+    int leftX = other.GetX();
+    int leftY = other.GetY();
+
+    int rightX = GetX();
+    int rightY = GetY();
+    return leftX == rightX && leftY == rightY;
+}
+
 const FString FPoint::Print() const
 {
     return FString(FString("X: ") + m_x + FString(" Y:") + m_y);

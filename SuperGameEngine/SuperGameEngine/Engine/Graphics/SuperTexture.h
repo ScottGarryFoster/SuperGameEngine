@@ -28,7 +28,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        virtual void Draw(FPoint location, FPoint size) = 0;
+        virtual void Draw(const FPoint& location, const FPoint& size) = 0;
 
         /// <summary>
         /// Determines if the two textures are the same image.

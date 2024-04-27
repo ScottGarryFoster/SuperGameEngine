@@ -46,6 +46,13 @@ namespace StandardCLibrary
         virtual void SetXYValue(int x, int y);
 
         /// <summary>
+        /// Are equal to one another.
+        /// </summary>
+        /// <param name="other">Other vector to test against. </param>
+        /// <returns>True means equal. </returns>
+        bool operator==(const FPoint& other) const;
+
+        /// <summary>
         /// Prints the Point value.
         /// </summary>
         /// <returns>A string version of the point. </returns>

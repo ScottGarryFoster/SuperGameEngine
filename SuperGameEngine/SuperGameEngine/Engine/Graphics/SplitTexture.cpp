@@ -10,6 +10,7 @@ SplitTexture::SplitTexture(std::shared_ptr<SuperTexture> superTexture)
         Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Construction"),
             FString("superTexture must not be null"));
     }
+    m_superTexture = superTexture;
 
     m_splits = std::vector<Rectangle>();
 }
@@ -27,4 +28,10 @@ std::vector<Rectangle> SplitTexture::GetSplits()
 void SplitTexture::AddSplit(const Rectangle& newLocation)
 {
     m_splits.push_back(newLocation);
+}
+
+void SplitTexture::Draw(int split, FPoint& location)
+{
+    FPoint f = FPoint(0, 0);
+    m_superTexture->Draw(f, f);
 }

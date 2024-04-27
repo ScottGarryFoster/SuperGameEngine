@@ -21,5 +21,15 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newLocation">New location for split. </param>
         virtual void AddSplit(const Rectangle& newLocation) = 0;
+
+        /// <summary>
+        /// Draws the given part of the texture at the location.
+        /// </summary>
+        /// <param name="split">Split to draw, defines the location on the texture. </param>
+        /// <param name="location">Locaiton on the screen to draw. </param>
+        /// <remark>
+        /// Keep in mind Camera is not involved in this method this is screenspace.
+        /// </remark>
+        virtual void Draw(int split, FPoint& location) = 0;
     };
 }

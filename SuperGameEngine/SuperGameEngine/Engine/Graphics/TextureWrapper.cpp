@@ -23,7 +23,7 @@ void TextureWrapper::Draw(const FPoint& location)
     m_actualTexture->Draw(location);
 }
 
-void TextureWrapper::Draw(FPoint location, FPoint size)
+void TextureWrapper::Draw(const FPoint& location, const FPoint& size)
 {
     m_actualTexture->Draw(location, size);
 }

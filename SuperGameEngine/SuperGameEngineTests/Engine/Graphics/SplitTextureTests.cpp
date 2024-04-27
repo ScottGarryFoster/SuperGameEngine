@@ -5,16 +5,17 @@
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
+using ::testing::AtLeast;
 
 namespace SuperGameEngine_Engine_Graphics
 {
     class MockSuperTexture : public SuperTexture {
     public:
         MOCK_METHOD(void, Draw, (), (override));
-        MOCK_METHOD(void, Draw, (const FPoint& location), (override));
-        MOCK_METHOD(void, Draw, (FPoint location, FPoint size), (override));
-        MOCK_METHOD(bool, RepresentSameImage, (SuperTexture* texture), (override));
-        MOCK_METHOD(bool, RepresentSameImage, (FString filePath), (override));
+        MOCK_METHOD(void, Draw, (const FPoint&), (override));
+        MOCK_METHOD(void, Draw, (const FPoint&, const FPoint&), (override));
+        MOCK_METHOD(bool, RepresentSameImage, (SuperTexture*), (override));
+        MOCK_METHOD(bool, RepresentSameImage, (FString), (override));
         MOCK_METHOD(FPoint, Size, (), (const, override));
     };
 
@@ -23,20 +24,27 @@ namespace SuperGameEngine_Engine_Graphics
     public:
         SplitTextureTests()
         {
-            std::shared_ptr<SuperTexture> super = std::make_shared<MockSuperTexture>();
-            m_splitTexture = new SplitTexture(super);
         }
 
     protected:
 
+        std::shared_ptr<MockSuperTexture> m_mockSuperTexture;
+        MockSuperTexture* mockSuperTexture;
         SplitTexture* m_splitTexture;
 
         void SetUp() override
         {
+            m_mockSuperTexture = std::make_shared<MockSuperTexture>();
+            mockSuperTexture = m_mockSuperTexture.get();
+            m_splitTexture = new SplitTexture(m_mockSuperTexture);
         }
 
         void TearDown() override
         {
+            if (m_splitTexture != nullptr)
+            {
+                delete m_splitTexture;
+            }
         }
     };
 
@@ -72,4 +80,18 @@ namespace SuperGameEngine_Engine_Graphics
         ASSERT_EQ(given, actual[0]);
     }
 #pragma endregion
+
+#pragma region Draw
+    TEST_F(SplitTextureTests, Draw_UsesTheLocationOfTheSplit_WhenGivenASplitNumber)
+    {
+        int expected = 0;
+        int givenSplit = 0;
+        FPoint validLocation = FPoint(0, 0);
+
+        EXPECT_CALL(*mockSuperTexture, Draw(validLocation, validLocation))
+            .Times(AtLeast(1));
+
+        m_splitTexture->Draw(givenSplit, validLocation);
+    }
+#pragma endregion Draw
 }

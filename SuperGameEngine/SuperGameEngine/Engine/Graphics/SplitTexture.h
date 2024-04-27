@@ -24,10 +24,24 @@ namespace SuperGameEngine
         /// <param name="newLocation">New location for split. </param>
         virtual void AddSplit(const Rectangle& newLocation) override;
 
+        /// <summary>
+        /// Draws the given part of the texture at the location.
+        /// </summary>
+        /// <param name="split">Split to draw, defines the location on the texture. </param>
+        /// <param name="location">Locaiton on the screen to draw. </param>
+        /// <remark>
+        /// Keep in mind Camera is not involved in this method this is screenspace.
+        /// </remark>
+        virtual void Draw(int split, FPoint& location);
     private:
         /// <summary>
         /// The segments on the shape to render.
         /// </summary>
         std::vector<Rectangle> m_splits;
+
+        /// <summary>
+        /// Super texture for this texture.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_superTexture;
     };
 }
