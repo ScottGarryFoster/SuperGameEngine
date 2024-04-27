@@ -20,6 +20,9 @@
     <ClCompile Include="Engine\Graphics\SplitTextureTests.cpp">
       <Filter>Project Files\Engine\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleIntTests.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">

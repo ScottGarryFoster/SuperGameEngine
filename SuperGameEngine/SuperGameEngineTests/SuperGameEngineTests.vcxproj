@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\Input\ControllerLayoutFromXMLTests.cpp" />
     <ClCompile Include="Structural\Spatial\Area\CircleTests.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\RectangleIntTests.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp" />
     <ClCompile Include="Engine\Graphics\SplitTextureTests.cpp" />
     <ClCompile Include="LibraryIncludes.h" />

@@ -24,6 +24,8 @@ namespace SuperGameEngine_Engine_Graphics
     public:
         SplitTextureTests()
         {
+            mockSuperTexture = nullptr;
+            m_splitTexture = nullptr;
         }
 
     protected:

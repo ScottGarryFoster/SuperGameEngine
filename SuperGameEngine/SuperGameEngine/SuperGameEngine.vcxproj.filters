@@ -229,6 +229,10 @@
     <ClCompile Include="Engine\Graphics\TextureWrapper.cpp">
       <Filter>Project Files\Engine\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -404,6 +408,10 @@
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SplitTextureAsset.h">
       <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
+    <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
+      <Filter>Project Files\Structural\Spatial\Area\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

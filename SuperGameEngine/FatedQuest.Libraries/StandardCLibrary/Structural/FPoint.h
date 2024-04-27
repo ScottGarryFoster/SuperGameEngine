@@ -53,6 +53,20 @@ namespace StandardCLibrary
         bool operator==(const FPoint& other) const;
 
         /// <summary>
+        /// Adds two points together.
+        /// </summary>
+        /// <param name="other">Other vector to add. </param>
+        /// <returns>Result of addition. </returns>
+        FPoint operator+(const FPoint& other) const;
+
+        /// <summary>
+        /// Adds two points together.
+        /// </summary>
+        /// <param name="other">Other vector to add. </param>
+        /// <returns>Result of addition. </returns>
+        FPoint& operator+=(const FPoint& other);
+
+        /// <summary>
         /// Prints the Point value.
         /// </summary>
         /// <returns>A string version of the point. </returns>

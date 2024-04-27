@@ -180,6 +180,7 @@
     <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h" />
     <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
+    <ClInclude Include="Structural\Spatial\Area\RectangleInt.h" />
     <ClInclude Include="Structural\Spatial\Collision\Collision.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionAnswer.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionAnswerState.hpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\Collision.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp" />
   </ItemGroup>
