@@ -16,13 +16,13 @@ namespace SuperGameEngine
         /// Get all the segments of the texture.
         /// </summary>
         /// <returns>All the places on the texture to render. </returns>
-        virtual std::vector<Rectangle> GetSplits() override;
+        virtual std::vector<RectangleInt> GetSplits() override;
 
         /// <summary>
         /// Add a split to the list of splits.
         /// </summary>
         /// <param name="newLocation">New location for split. </param>
-        virtual void AddSplit(const Rectangle& newLocation) override;
+        virtual void AddSplit(const RectangleInt& newLocation) override;
 
         /// <summary>
         /// Draws the given part of the texture at the location.
@@ -37,7 +37,7 @@ namespace SuperGameEngine
         /// <summary>
         /// The segments on the shape to render.
         /// </summary>
-        std::vector<Rectangle> m_splits;
+        std::vector<RectangleInt> m_splits;
 
         /// <summary>
         /// Super texture for this texture.

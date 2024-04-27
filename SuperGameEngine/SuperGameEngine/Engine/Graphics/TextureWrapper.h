@@ -42,6 +42,13 @@ namespace SuperGameEngine
         virtual void Draw(const FPoint& location, const FPoint& size) override;
 
         /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) override;
+
+        /// <summary>
         /// Determines if the two textures are the same image.
         /// </summary>
         /// <param name="texture">Texture to test. </param>
@@ -62,7 +69,9 @@ namespace SuperGameEngine
         virtual FPoint Size() const override;
 
     private:
-
+        /// <summary>
+        /// The lowest level of texture. This is a wrapper for the Render level.
+        /// </summary>
         Texture* m_actualTexture;
     };
 }

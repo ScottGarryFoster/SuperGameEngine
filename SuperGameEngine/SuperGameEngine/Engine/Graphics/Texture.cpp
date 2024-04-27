@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "../../Structural/Spatial/Area/RectangleInt.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -15,6 +16,7 @@ Texture::Texture(SDL_Renderer* renderer)
     m_texture = nullptr;
     m_textureSize = new FPoint();
     m_screenRect = new SDL_Rect();
+    m_textureRect = new SDL_Rect();
 }
 
 Texture::~Texture()
@@ -109,6 +111,36 @@ void Texture::Draw(const FPoint& location, const FPoint& size)
     SDL_RenderCopyEx(m_renderer, m_texture, NULL, m_screenRect, rotation, NULL, SDL_FLIP_NONE);
 }
 
+void Texture::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle)
+{
+    if (m_renderer == nullptr)
+    {
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_renderer is null."));
+        return;
+    }
+
+    if (m_renderer == nullptr)
+    {
+        Logger::Assert(ArgumentNullException(), GetTypeName(), FString("Draw"), FString("m_texture is null."));
+        return;
+    }
+
+    // Screen Texture
+    m_screenRect->x = screenRectangle.GetLeft();
+    m_screenRect->y = screenRectangle.GetTop();
+    m_screenRect->w = screenRectangle.GetWidth();
+    m_screenRect->h = screenRectangle.GetHeight();
+
+    // Texture Area
+    m_textureRect->x = textureRectangle.GetLeft();
+    m_textureRect->y = textureRectangle.GetTop();
+    m_textureRect->w = textureRectangle.GetWidth();
+    m_textureRect->h = textureRectangle.GetHeight();
+
+    double rotation = 0;
+    SDL_RenderCopyEx(m_renderer, m_texture, m_textureRect, m_screenRect, rotation, NULL, SDL_FLIP_NONE);
+}
+
 /// <summary>
 /// Get the Filepath of the loaded texture.
 /// </summary>
@@ -118,7 +150,7 @@ FString Texture::GetLoadedFilePath()
     return m_filePath;
 }
 
-FPoint SuperGameEngine::Texture::Size() const
+FPoint Texture::Size() const
 {
     if (m_textureSize == nullptr)
     {

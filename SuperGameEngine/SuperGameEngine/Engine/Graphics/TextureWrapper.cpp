@@ -28,6 +28,11 @@ void TextureWrapper::Draw(const FPoint& location, const FPoint& size)
     m_actualTexture->Draw(location, size);
 }
 
+void TextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle)
+{
+    m_actualTexture->Draw(textureRectangle, screenRectangle);
+}
+
 /// <summary>
 /// Detirmines if the two textures are the same image.
 /// </summary>

@@ -14,13 +14,13 @@ namespace SuperGameEngine
         /// Get all the segments of the texture.
         /// </summary>
         /// <returns>All the places on the texture to render. </returns>
-        virtual std::vector<Rectangle> GetSplits() = 0;
+        virtual std::vector<RectangleInt> GetSplits() = 0;
 
         /// <summary>
         /// Add a split to the list of splits.
         /// </summary>
         /// <param name="newLocation">New location for split. </param>
-        virtual void AddSplit(const Rectangle& newLocation) = 0;
+        virtual void AddSplit(const RectangleInt& newLocation) = 0;
 
         /// <summary>
         /// Draws the given part of the texture at the location.

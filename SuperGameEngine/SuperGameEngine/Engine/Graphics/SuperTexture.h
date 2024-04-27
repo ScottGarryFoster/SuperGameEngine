@@ -5,6 +5,7 @@ using namespace StandardCLibrary;
 namespace SuperGameEngine
 {
     class Texture;
+    class RectangleInt;
 
     /// <summary>
     /// A texture owned by the content manager.
@@ -29,6 +30,13 @@ namespace SuperGameEngine
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
         virtual void Draw(const FPoint& location, const FPoint& size) = 0;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) = 0;
 
         /// <summary>
         /// Determines if the two textures are the same image.

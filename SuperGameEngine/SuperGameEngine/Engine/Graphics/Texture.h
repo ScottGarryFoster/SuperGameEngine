@@ -7,6 +7,8 @@ using namespace StandardCLibrary;
 
 namespace SuperGameEngine
 {
+    class RectangleInt;
+
     /// <summary>
     /// Contains a renderable 2D Texture.
     /// </summary>
@@ -41,6 +43,13 @@ namespace SuperGameEngine
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
         void Draw(const FPoint& location, const FPoint& size);
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle);
 
         /// <summary>
         /// Get the Filepath of the loaded texture.
@@ -81,6 +90,12 @@ namespace SuperGameEngine
         /// Might move dependant on performance.
         /// </summary>
         SDL_Rect* m_screenRect;
+
+        /// <summary>
+        /// Reused texture rect.
+        /// Used for the area to draw on the texture.
+        /// </summary>
+        SDL_Rect* m_textureRect;
 
         /// <summary>
         /// Extracts the meta data from the texture.

@@ -2,6 +2,7 @@
 #include "../../LibraryIncludes.h"
 #include "../../../SuperGameEngine/Engine/Graphics/SplitTexture.h"
 #include "../../../SuperGameEngine/Engine/Graphics/SuperTexture.h"
+#include "../../../SuperGameEngine/Structural/Spatial/Area/RectangleInt.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -14,6 +15,7 @@ namespace SuperGameEngine_Engine_Graphics
         MOCK_METHOD(void, Draw, (), (override));
         MOCK_METHOD(void, Draw, (const FPoint&), (override));
         MOCK_METHOD(void, Draw, (const FPoint&, const FPoint&), (override));
+        MOCK_METHOD(void, Draw, (const RectangleInt&, const RectangleInt&), (override));
         MOCK_METHOD(bool, RepresentSameImage, (SuperTexture*), (override));
         MOCK_METHOD(bool, RepresentSameImage, (FString), (override));
         MOCK_METHOD(FPoint, Size, (), (const, override));
@@ -55,7 +57,7 @@ namespace SuperGameEngine_Engine_Graphics
     {
         int expected = 0;
 
-        std::vector<Rectangle> actual = m_splitTexture->GetSplits();
+        std::vector<RectangleInt> actual = m_splitTexture->GetSplits();
 
         ASSERT_EQ(expected, actual.size());
     }
@@ -63,10 +65,10 @@ namespace SuperGameEngine_Engine_Graphics
     TEST_F(SplitTextureTests, GetSplits_IsOne_WhenGivenSplit)
     {
         int expected = 1;
-        Rectangle given = Rectangle(0, 0, 0, 0);
+        RectangleInt given = RectangleInt(0, 0, 0, 0);
         m_splitTexture->AddSplit(given);
 
-        std::vector<Rectangle> actual = m_splitTexture->GetSplits();
+        std::vector<RectangleInt> actual = m_splitTexture->GetSplits();
 
         ASSERT_EQ(expected, actual.size());
     }
@@ -74,10 +76,10 @@ namespace SuperGameEngine_Engine_Graphics
     TEST_F(SplitTextureTests, GetSplits_ReturnsSameAsGiven_WhenAddIsGivenASplit)
     {
         int expected = 1;
-        Rectangle given = Rectangle(1, 2, 3, 4);
+        RectangleInt given = RectangleInt(1, 2, 3, 4);
         m_splitTexture->AddSplit(given);
 
-        std::vector<Rectangle> actual = m_splitTexture->GetSplits();
+        std::vector<RectangleInt> actual = m_splitTexture->GetSplits();
 
         ASSERT_EQ(given, actual[0]);
     }
@@ -89,8 +91,12 @@ namespace SuperGameEngine_Engine_Graphics
         int expected = 0;
         int givenSplit = 0;
         FPoint validLocation = FPoint(0, 0);
+        RectangleInt validLocation2 = RectangleInt(0, 0);
 
-        EXPECT_CALL(*mockSuperTexture, Draw(validLocation, validLocation))
+        RectangleInt givenTextureLocation = RectangleInt(1, 2, 3, 4);
+        m_splitTexture->AddSplit(givenTextureLocation);
+
+        EXPECT_CALL(*mockSuperTexture, Draw(givenTextureLocation, validLocation2))
             .Times(AtLeast(1));
 
         m_splitTexture->Draw(givenSplit, validLocation);

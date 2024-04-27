@@ -9,14 +9,14 @@ RectangleInt::RectangleInt(int x, int y, int width, int height)
 {
     m_location = FPoint(x, y);
     m_size = FPoint(width, height);
-    m_center = FVector2D(x + width / 2, y + height / 2);
+    m_center = FVector2D(x + width / 2.0f, y + height / 2.0f);
 }
 
 RectangleInt::RectangleInt(int xy, int widthHeight)
 {
     m_location = FPoint(xy, xy);
     m_size = FPoint(widthHeight, widthHeight);
-    m_center = FVector2D(xy + widthHeight / 2, xy + widthHeight / 2);
+    m_center = FVector2D(xy + widthHeight / 2.0f, xy + widthHeight / 2.0f);
 }
 
 bool RectangleInt::operator==(const RectangleInt& other) const
@@ -173,7 +173,7 @@ bool RectangleInt::Overlaps(const RectangleInt& other) const
 
 bool RectangleInt::Overlaps(const Circle& other) const
 {
-    Rectangle copy = Rectangle(GetLeft(), GetTop(), GetWidth(), GetHeight());
+    Rectangle copy = Rectangle((float)GetLeft(), (float)GetTop(), (float)GetWidth(), (float)GetHeight());
     return other.Overlaps(copy);
 }
 
@@ -218,7 +218,9 @@ bool RectangleInt::PointIsWithin(FPoint& location) const
 FPoint RectangleInt::OverlapAmount(const Rectangle& other) const
 {
     FPoint otherSize = FPoint((int)other.GetWidth(), (int)other.GetHeight());
-    RectangleInt ri = RectangleInt(other.GetLeft(), other.GetTop(), otherSize.GetX(), otherSize.GetY());
+    RectangleInt ri = RectangleInt(
+        (int)other.GetLeft(), (int)other.GetTop(), 
+        otherSize.GetX(), otherSize.GetY());
     return OverlapAmount(ri);
 }
 
@@ -229,20 +231,20 @@ FPoint RectangleInt::OverlapAmount(const RectangleInt& other) const
     {
         if (GetCenter().GetX() > other.GetCenter().GetX())
         {
-            returnVector.SetX(std::round(std::abs(GetLeft() - other.GetRight())));
+            returnVector.SetX(std::abs(GetLeft() - other.GetRight()));
         }
         else
         {
-            returnVector.SetX(std::round(std::abs(GetRight() - other.GetLeft())));
+            returnVector.SetX(std::abs(GetRight() - other.GetLeft()));
         }
 
         if (GetCenter().GetY() > other.GetCenter().GetY())
         {
-            returnVector.SetY(std::round(std::abs(GetTop() - other.GetBottom())));
+            returnVector.SetY(std::abs(GetTop() - other.GetBottom()));
         }
         else
         {
-            returnVector.SetY(std::round(std::abs(GetBottom() - other.GetTop())));
+            returnVector.SetY(std::abs(GetBottom() - other.GetTop()));
         }
     }
 
@@ -252,7 +254,9 @@ FPoint RectangleInt::OverlapAmount(const RectangleInt& other) const
 FPoint SuperGameEngine::RectangleInt::OverlapAmount(const Rectangle& other, const FPoint& previousLoctation) const
 {
     FPoint otherSize = FPoint((int)other.GetWidth(), (int)other.GetHeight());
-    RectangleInt ri = RectangleInt(other.GetLeft(), other.GetTop(), otherSize.GetX(), otherSize.GetY());
+    RectangleInt ri = RectangleInt(
+        (int)other.GetLeft(), (int)other.GetTop(),
+        otherSize.GetX(), otherSize.GetY());
     return OverlapAmount(ri, previousLoctation);
 }
 
@@ -286,7 +290,9 @@ FPoint RectangleInt::OverlapAmount(const RectangleInt& other, const FPoint& prev
 void RectangleInt::MoveOutOfOverlapRangeOf(const Rectangle& other)
 {
     FPoint otherSize = FPoint((int)other.GetWidth(), (int)other.GetHeight());
-    RectangleInt ri = RectangleInt(other.GetLeft(), other.GetTop(), otherSize.GetX(), otherSize.GetY());
+    RectangleInt ri = RectangleInt(
+        (int)other.GetLeft(), (int)other.GetTop(),
+        otherSize.GetX(), otherSize.GetY());
     MoveOutOfOverlapRangeOf(ri);
 }
 
@@ -329,7 +335,9 @@ void RectangleInt::MoveOutOfOverlapRangeOf(const RectangleInt& other)
 void RectangleInt::MoveOutOfOverlapRangeOf(const Rectangle& other, const FPoint& previousLoctation)
 {
     FPoint otherSize = FPoint((int)other.GetWidth(), (int)other.GetHeight());
-    RectangleInt ri = RectangleInt(other.GetLeft(), other.GetTop(), otherSize.GetX(), otherSize.GetY());
+    RectangleInt ri = RectangleInt(
+        (int)other.GetLeft(), (int)other.GetTop(),
+        otherSize.GetX(), otherSize.GetY());
     MoveOutOfOverlapRangeOf(ri, previousLoctation);
 }
 
@@ -372,7 +380,9 @@ void RectangleInt::MoveOutOfOverlapRangeOf(const RectangleInt& other, const FPoi
 FPoint SuperGameEngine::RectangleInt::GetNewLocationToNotOverlap(const Rectangle& other) const
 {
     FPoint otherSize = FPoint((int)other.GetWidth(), (int)other.GetHeight());
-    RectangleInt ri = RectangleInt(other.GetLeft(), other.GetTop(), otherSize.GetX(), otherSize.GetY());
+    RectangleInt ri = RectangleInt(
+        (int)other.GetLeft(), (int)other.GetTop(),
+        otherSize.GetX(), otherSize.GetY());
     return GetNewLocationToNotOverlap(ri);
 }
 
@@ -418,7 +428,9 @@ FPoint RectangleInt::GetNewLocationToNotOverlap(
     const Rectangle& other, const FPoint& previousLoctation) const
 {
     FPoint otherSize = FPoint((int)other.GetWidth(), (int)other.GetHeight());
-    RectangleInt ri = RectangleInt(other.GetLeft(), other.GetTop(), otherSize.GetX(), otherSize.GetY());
+    RectangleInt ri = RectangleInt(
+        (int)other.GetLeft(), (int)other.GetTop(), 
+        otherSize.GetX(), otherSize.GetY());
     return GetNewLocationToNotOverlap(ri, previousLoctation);
 }
 
@@ -463,21 +475,21 @@ FPoint RectangleInt::GetNewLocationToNotOverlap(const RectangleInt& other, const
 FPoint RectangleInt::GetNewLocationToNotOverlap(const Circle& other) const
 {
     FVector2D otherLocation = other.GetLocation();
-    FPoint otherLocationPoint = FPoint(otherLocation.GetX(), otherLocation.GetY());
+    FPoint otherLocationPoint = FPoint((int)otherLocation.GetX(), (int)otherLocation.GetY());
 
     FVector2D closest = CloestPointTo(otherLocationPoint);
-    int dx = closest.GetX() - otherLocation.GetX();
-    int dy = closest.GetY() - otherLocation.GetY();
-    int distance = sqrt(dx * dx + dy * dy);
-    int overlap = other.GetRadius() - distance;
+    float dx = closest.GetX() - otherLocation.GetX();
+    float dy = closest.GetY() - otherLocation.GetY();
+    float distance = sqrt(dx * dx + dy * dy);
+    float overlap = other.GetRadius() - distance;
 
     FPoint newLocation = FPoint(m_location);
     if (overlap > 0)
     {
         dx /= distance;
         dy /= distance;
-        newLocation.SetX(newLocation.GetX() + overlap * dx);
-        newLocation.SetY(newLocation.GetY() + overlap * dy);
+        newLocation.SetX((int)(newLocation.GetX() + overlap * dx));
+        newLocation.SetY((int)(newLocation.GetY() + overlap * dy));
     }
 
     return newLocation;
