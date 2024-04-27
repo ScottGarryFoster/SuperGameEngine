@@ -1,6 +1,7 @@
 #pragma once
 #include "../../GameObject/GameComponent.h"
 #include "../../Scene/SceneLoadPackage.h"
+#include "../../../Engine/Graphics/SplitTexture.h"
 
 namespace SuperGameEngine
 {
@@ -35,5 +36,20 @@ namespace SuperGameEngine
         /// A texture stored in the content manager.
         /// </summary>
         std::shared_ptr<SuperTexture> m_superTexture;
+
+        /// <summary>
+        /// A texture capable of providing segements of itself to render.
+        /// </summary>
+        std::shared_ptr<SplitTexture> m_splitTexture;
+
+        /// <summary>
+        /// Testing var to cycle the splits in the texture.
+        /// </summary>
+        int m_currentSplit;
+
+        /// <summary>
+        /// Testing var to time.
+        /// </summary>
+        int m_currentTime;
     };
 }
