@@ -10,6 +10,19 @@
     <ClCompile Include="Structural\Spatial\Area\CircleTests.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
+    <ClCompile Include="LibraryIncludes.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>Package Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
+      <Filter>Package Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SplitTextureTests.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleIntTests.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">
@@ -33,15 +46,18 @@
     <Filter Include="Project Files\Structural\Spatial\Area">
       <UniqueIdentifier>{ce6abbec-f949-48bb-b24c-cb2413db577b}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="LibraryIncludes.h">
-      <Filter>Package Files</Filter>
-    </ClInclude>
+    <Filter Include="Project Files\Engine\Graphics">
+      <UniqueIdentifier>{d1fbffe5-6653-4d05-a14b-9149056b02b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <Filter>Package Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Graphics\MockSuperTexture.h">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

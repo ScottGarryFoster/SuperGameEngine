@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -130,12 +130,16 @@
   <ItemGroup>
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
+    <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
+    <ClInclude Include="Engine\Graphics\SplitTexture.h" />
+    <ClInclude Include="Engine\Graphics\SplitTextureAsset.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
     <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\RectangleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\TechniqueRenderer.h" />
+    <ClInclude Include="Engine\Graphics\TextureWrapper.h" />
     <ClInclude Include="Engine\Input\AxisToUniversalAxis.h" />
     <ClInclude Include="Engine\Input\Controller.hpp" />
     <ClInclude Include="Engine\Input\ControllerAxisMappedToButton.h" />
@@ -176,6 +180,7 @@
     <ClInclude Include="Structural\Scene\SceneToGameObjectPackage.h" />
     <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
+    <ClInclude Include="Structural\Spatial\Area\RectangleInt.h" />
     <ClInclude Include="Structural\Spatial\Collision\Collision.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionAnswer.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionAnswerState.hpp" />
@@ -187,13 +192,15 @@
   <ItemGroup>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
-    <ClCompile Include="Engine\Graphics\SuperTexture.cpp" />
+    <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
+    <ClCompile Include="Engine\Graphics\SplitTexture.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\PrimitiveDrawableShapeTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\RectangleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\TechniqueRenderer.cpp" />
     <ClCompile Include="Engine\Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\Graphics\TextureWrapper.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayout.h" />
     <ClCompile Include="Engine\Input\ControllerLayoutCollection.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp" />
@@ -220,6 +227,7 @@
     <ClCompile Include="Structural\Scene\SceneToGameObjectPackage.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\Collision.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp" />
   </ItemGroup>

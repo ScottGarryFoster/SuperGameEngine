@@ -127,9 +127,6 @@
     <ClCompile Include="Structural\Scene\SceneLoadPackage.cpp">
       <Filter>Project Files\Structural\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\SuperTexture.cpp">
-      <Filter>Project Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Content\ContentManager.cpp">
       <Filter>Project Files\Engine\Content</Filter>
     </ClCompile>
@@ -225,6 +222,16 @@
     </ClCompile>
     <ClCompile Include="Structural\Components\Physics\SimpleRigidbodyComponent.cpp">
       <Filter>Project Files\Structural\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SplitTexture.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\TextureWrapper.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
+      <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +399,19 @@
     </ClInclude>
     <ClInclude Include="Structural\Spatial\Collision\CollisionAnswerState.hpp">
       <Filter>Project Files\Structural\Spatial\Collision\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SplitTexture.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\TextureWrapper.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SplitTextureAsset.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
+    <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
+      <Filter>Project Files\Structural\Spatial\Area\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

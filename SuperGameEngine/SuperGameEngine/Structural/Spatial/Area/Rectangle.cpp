@@ -16,6 +16,15 @@ Rectangle::Rectangle(float xy, float widthHeight)
     m_center = FVector2D(xy + widthHeight / 2, xy + widthHeight / 2);
 }
 
+bool Rectangle::operator==(const Rectangle& other) const
+{
+    return
+        FloatingPointHelpers::AreEqual(GetLeft(), other.GetLeft()) &&
+        FloatingPointHelpers::AreEqual(GetRight(), other.GetRight()) &&
+        FloatingPointHelpers::AreEqual(GetBottom(), other.GetBottom()) &&
+        FloatingPointHelpers::AreEqual(GetTop(), other.GetTop());
+}
+
 float Rectangle::GetLeft() const
 {
     return m_location.GetX();

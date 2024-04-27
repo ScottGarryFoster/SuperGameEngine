@@ -5,7 +5,7 @@
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
 
-namespace SuperGameEngine_Engine_Input
+namespace SuperGameEngineTests_Engine_Input
 {
     class ControllerLayoutFromXMLTests : public ::testing::Test
     {

@@ -53,6 +53,27 @@ void FPoint::SetXYValue(int x, int y)
     }
 }
 
+bool FPoint::operator==(const FPoint& other) const
+{
+    int leftX = other.GetX();
+    int leftY = other.GetY();
+
+    int rightX = GetX();
+    int rightY = GetY();
+    return leftX == rightX && leftY == rightY;
+}
+
+FPoint StandardCLibrary::FPoint::operator+(const FPoint& other) const
+{
+    return FPoint(GetX() + other.GetX(), GetY() + other.GetY());
+}
+
+FPoint& StandardCLibrary::FPoint::operator+=(const FPoint& other)
+{
+    SetXYValue(GetX() + other.GetX(), GetY() + other.GetY());
+    return *this;
+}
+
 const FString FPoint::Print() const
 {
     return FString(FString("X: ") + m_x + FString(" Y:") + m_y);

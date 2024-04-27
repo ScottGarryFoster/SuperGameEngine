@@ -1,26 +1,36 @@
-#include "SuperTexture.h"
+#include "TextureWrapper.h"
 #include "Texture.h"
 
 using namespace SuperGameEngine;
 
-SuperTexture::SuperTexture(Texture* texture)
+TextureWrapper::TextureWrapper(Texture* texture)
 {
     m_actualTexture = texture;
 }
 
-void SuperTexture::Draw()
+TextureWrapper::~TextureWrapper()
+{
+    delete m_actualTexture;
+}
+
+void TextureWrapper::Draw()
 {
     m_actualTexture->Draw();
 }
 
-void SuperTexture::Draw(const FPoint& location)
+void TextureWrapper::Draw(const FPoint& location)
 {
     m_actualTexture->Draw(location);
 }
 
-void SuperTexture::Draw(FPoint location, FPoint size)
+void TextureWrapper::Draw(const FPoint& location, const FPoint& size)
 {
     m_actualTexture->Draw(location, size);
+}
+
+void TextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle)
+{
+    m_actualTexture->Draw(textureRectangle, screenRectangle);
 }
 
 /// <summary>
@@ -28,14 +38,20 @@ void SuperTexture::Draw(FPoint location, FPoint size)
 /// </summary>
 /// <param name="texture">Texture to test. </param>
 /// <returns>True means are the same. </returns>
-bool SuperTexture::RepresentSameImage(SuperTexture* texture)
+bool TextureWrapper::RepresentSameImage(SuperTexture* texture)
 {
     if (texture == nullptr)
     {
         return false;
     }
 
-    if (texture->m_actualTexture == nullptr)
+    if (typeid(texture) != typeid(TextureWrapper))
+    {
+        return false;
+    }
+
+    TextureWrapper* textureWrapper = dynamic_cast<TextureWrapper*>(texture);
+    if (textureWrapper->m_actualTexture == nullptr)
     {
         return false;
     }
@@ -45,7 +61,7 @@ bool SuperTexture::RepresentSameImage(SuperTexture* texture)
         return false;
     }
 
-    FString other = texture->m_actualTexture->GetLoadedFilePath().ToLower();
+    FString other = textureWrapper->m_actualTexture->GetLoadedFilePath().ToLower();
     FString self = m_actualTexture->GetLoadedFilePath().ToLower();
 
     return self == other;
@@ -56,7 +72,7 @@ bool SuperTexture::RepresentSameImage(SuperTexture* texture)
 /// </summary>
 /// <param name="filePath">File path to text. </param>
 /// <returns>True means this uses the same file path. </returns>
-bool SuperTexture::RepresentSameImage(FString filePath)
+bool TextureWrapper::RepresentSameImage(FString filePath)
 {
     if (m_actualTexture == nullptr)
     {
@@ -67,7 +83,7 @@ bool SuperTexture::RepresentSameImage(FString filePath)
     return self == filePath;
 }
 
-FPoint SuperGameEngine::SuperTexture::Size() const
+FPoint SuperGameEngine::TextureWrapper::Size() const
 {
     return m_actualTexture->Size();
 }
