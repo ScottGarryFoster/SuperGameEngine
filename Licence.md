@@ -176,6 +176,7 @@ Non-Library assets in this context refers to all the items included which are no
 ### Small 8-direction Characters
 1. **What is this?** Image asset: SuperGameEngine\Products\Engine\TestImages\Small-8-Direction-Characters_by_AxulArt.png
 2. **What is the lisence?** Creative Commons 4.0, CC BY 4.0 DEED, Attribution 4.0 International
+3. **What is the original link?** [https://axulart.itch.io/small-8-direction-characters](https://axulart.itch.io/small-8-direction-characters)
 
 **You are free to:**
 * **Share** — copy and redistribute the material in any medium or format for any purpose, even commercially.
