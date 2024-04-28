@@ -7,7 +7,8 @@
 namespace StandardCLibrary
 {
     /// <summary>
-    /// The string type used by everything.
+    /// Used to store a string text internally.
+    /// Not to be used for Uni-code based strings.
     /// </summary>
     class FString
     {
