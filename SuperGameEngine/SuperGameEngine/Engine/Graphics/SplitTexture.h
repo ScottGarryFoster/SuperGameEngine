@@ -6,7 +6,7 @@ namespace SuperGameEngine
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
-    class SplitTexture : public SplitTextureAsset, public Object
+    class SplitTexture : public SplitTextureAsset
     {
     public:
         SplitTexture(std::shared_ptr<SuperTexture> superTexture);

@@ -36,6 +36,11 @@ namespace SuperGameEngineTests_Engine_Graphics
 
         void TearDown() override
         {
+            // Occasially tests fail due to these shared
+            // not being found. This reset kicks the garbadge collector
+            // into gear.
+            m_mockSuperTexture.reset();
+            m_splitTexture.reset();
         }
     };
 

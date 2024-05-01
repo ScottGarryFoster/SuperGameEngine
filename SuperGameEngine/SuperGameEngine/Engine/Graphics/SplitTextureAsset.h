@@ -7,9 +7,12 @@ namespace SuperGameEngine
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
-    class SplitTextureAsset
+    class SplitTextureAsset : public Object
     {
     public:
+        SplitTextureAsset() {}
+        virtual ~SplitTextureAsset() {}
+
         /// <summary>
         /// Get all the segments of the texture.
         /// </summary>

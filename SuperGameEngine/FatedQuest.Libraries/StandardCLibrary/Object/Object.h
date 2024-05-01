@@ -10,6 +10,7 @@ namespace StandardCLibrary
     class Object
     {
     public:
+        Object(){}
         virtual ~Object(){}
 
         /// <summary>

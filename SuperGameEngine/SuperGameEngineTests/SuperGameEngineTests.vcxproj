@@ -102,6 +102,8 @@
     <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp" />
     <ClCompile Include="Engine\Graphics\SplitTextureTests.cpp" />
     <ClCompile Include="LibraryIncludes.h" />
+    <ClCompile Include="UserInterface\Text\FontFaceTests.cpp" />
+    <ClInclude Include="Engine\Graphics\MockSuperTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FatedQuest.Libraries\Logging\Logging.vcxproj">
@@ -116,9 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Engine\Graphics\MockSuperTexture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

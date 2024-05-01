@@ -254,6 +254,9 @@
     <ClCompile Include="Structural\Spatial\Positional\Transform.cpp">
       <Filter>Project Files\Structural\Spatial\Positional</Filter>
     </ClCompile>
+    <ClCompile Include="UserInterface\Text\FontFace.cpp">
+      <Filter>Project Files\UserInterface\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -439,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="Structural\Spatial\Positional\Transform.h">
       <Filter>Project Files\Structural\Spatial\Positional\API</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Text\FontFace.h">
+      <Filter>Project Files\UserInterface\Text\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -189,6 +189,7 @@
     <ClInclude Include="Structural\Spatial\Collision\CollisionDectectionUpdate.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionQuery.h" />
     <ClInclude Include="Structural\Spatial\Positional\Transform.h" />
+    <ClInclude Include="UserInterface\Text\FontFace.h" />
     <ClInclude Include="UserInterface\Text\FontFaceAsset.h" />
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +234,7 @@
     <ClCompile Include="Structural\Spatial\Collision\Collision.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp" />
     <ClCompile Include="Structural\Spatial\Positional\Transform.cpp" />
+    <ClCompile Include="UserInterface\Text\FontFace.cpp" />
     <ClCompile Include="UserInterface\Text\FontFaceAsset.cpp" />
   </ItemGroup>
   <ItemGroup>

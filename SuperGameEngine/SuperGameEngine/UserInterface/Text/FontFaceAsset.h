@@ -1,6 +1,6 @@
 #pragma once
 #include "../../LibraryIncludes.h"
-#include "../../Engine/Graphics/SplitTextureAsset.h"
+#include "../../Engine/Graphics/SplitTexture.h"
 #include "../../Structural/Spatial/Positional/Transform.h"
 
 namespace SuperGameEngine_UserInterface
@@ -8,9 +8,11 @@ namespace SuperGameEngine_UserInterface
     using namespace SuperGameEngine;
     using namespace StandardCLibrary;
 
-    class FontFaceAsset : public SplitTextureAsset
+    class FontFaceAsset : public SplitTexture
     {
     public:
+        FontFaceAsset(std::shared_ptr<SuperTexture> superTexture) : SplitTexture(superTexture) {}
+
         /// <summary>
         /// Adds a single letter to the Font.
         /// </summary>

@@ -23,6 +23,9 @@
     <ClCompile Include="Structural\Spatial\Area\RectangleIntTests.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
+    <ClCompile Include="UserInterface\Text\FontFaceTests.cpp">
+      <Filter>Project Files\UserInterface\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">
@@ -48,6 +51,12 @@
     </Filter>
     <Filter Include="Project Files\Engine\Graphics">
       <UniqueIdentifier>{d1fbffe5-6653-4d05-a14b-9149056b02b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\UserInterface">
+      <UniqueIdentifier>{13a91f47-d06c-43be-9ba9-0fbc8d14ebc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\UserInterface\Text">
+      <UniqueIdentifier>{70a7e2d0-fad4-428d-bbb5-5f6266fde416}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
