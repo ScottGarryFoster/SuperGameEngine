@@ -113,6 +113,21 @@
     <Filter Include="Project Files\Structural\Components\Physics\API">
       <UniqueIdentifier>{617c796c-177f-40ee-b59c-3489fe882990}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\UserInterface">
+      <UniqueIdentifier>{5d196f53-58bf-4614-be06-5b26030ee03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\UserInterface\Text">
+      <UniqueIdentifier>{77ba2327-d07f-49ca-a132-dc8044b6df59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\UserInterface\Text\API">
+      <UniqueIdentifier>{7a020b0a-acb4-4a56-95ff-4132807a08c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Positional">
+      <UniqueIdentifier>{87470044-ea85-406e-8ead-cbb0a0046880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Positional\API">
+      <UniqueIdentifier>{88e145df-23c3-49bb-85b4-09610e1d0673}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -232,6 +247,12 @@
     <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface\Text\FontFaceAsset.cpp">
+      <Filter>Project Files\UserInterface\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Positional\Transform.cpp">
+      <Filter>Project Files\Structural\Spatial\Positional</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +433,12 @@
     <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
       <Filter>Project Files\Structural\Spatial\Area\API</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Text\FontFaceAsset.h">
+      <Filter>Project Files\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Positional\Transform.h">
+      <Filter>Project Files\Structural\Spatial\Positional\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

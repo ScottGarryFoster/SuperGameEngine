@@ -4,6 +4,7 @@
 #pragma warning(disable : 4067)
 
 #include "Text/FString.h"
+#include "Text/FText.h"
 #include "File/File.h"
 #include "File/Directory.h"
 #include "Collection/Dictionary/FDictionary.hpp";

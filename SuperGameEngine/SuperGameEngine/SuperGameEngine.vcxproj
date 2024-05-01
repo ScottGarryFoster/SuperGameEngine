@@ -188,6 +188,8 @@
     <ClInclude Include="Structural\Spatial\Collision\CollisionDectectionSubscription.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionDectectionUpdate.h" />
     <ClInclude Include="Structural\Spatial\Collision\CollisionQuery.h" />
+    <ClInclude Include="Structural\Spatial\Positional\Transform.h" />
+    <ClInclude Include="UserInterface\Text\FontFaceAsset.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
@@ -230,6 +232,8 @@
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\Collision.cpp" />
     <ClCompile Include="Structural\Spatial\Collision\CollisionDectection.cpp" />
+    <ClCompile Include="Structural\Spatial\Positional\Transform.cpp" />
+    <ClCompile Include="UserInterface\Text\FontFaceAsset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
