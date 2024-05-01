@@ -35,6 +35,7 @@ namespace SuperGameEngineTests_UserInterface_Text
 
         void TearDown() override
         {
+            mockSuperTexture.reset();
             if (this->fontFace != nullptr)
             {
                 delete this->fontFace;
@@ -148,5 +149,67 @@ namespace SuperGameEngineTests_UserInterface_Text
         this->fontFace->DrawText(givenText, givenTransform);
     }
 
+#pragma endregion
+
+#pragma region DrawText
+    TEST_F(FontFaceTests, DrawText_DrawsFirstCharacterFromTheCorrectTextureLocation)
+    {
+        // Arrange
+        wchar_t givenFirst = L'a';
+        RectangleInt valid = RectangleInt(0, 0, 1, 1);
+        this->fontFace->AddCharacter(givenFirst, valid);
+
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"a");
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+        EXPECT_CALL(*this->mockSuperTexture, Draw(valid, _)).Times(1);
+
+        // Act
+        this->fontFace->DrawText(givenText, givenTransform);
+    }
+
+    TEST_F(FontFaceTests, DrawText_DrawsFirstCharacterFromTheCorrectTextureLocation_WhenGivenTwoLocations)
+    {
+        // Arrange
+        wchar_t givenFirst = L'a';
+        RectangleInt valid = RectangleInt(4, 3, 2, 1);
+        this->fontFace->AddCharacter(givenFirst, valid);
+
+        wchar_t givenSecond = L'b';
+        RectangleInt validSecond = RectangleInt(1, 2, 3, 4);
+        this->fontFace->AddCharacter(givenSecond, validSecond);
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+
+        // We have to utilise the == operator of Rectangle to get this working
+        // this dose mean a little bit of logic which should be replaced with a
+        // custom matcher.
+        int seq = 0;
+        bool inOrder = true;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, _))
+            .WillRepeatedly(testing::Invoke(
+                [&seq, &inOrder, &valid, &validSecond]
+                (const RectangleInt& x, const RectangleInt& y)
+                { 
+                    if (seq == 0 && x == valid)
+                    {
+                        ++seq;
+                    }
+                    else if (seq == 1 && x == validSecond)
+                    {
+                        ++seq;
+                    }
+                    else
+                    {
+                        inOrder = false;
+                    }
+                }));
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+
+        // Act
+        this->fontFace->DrawText(givenText, givenTransform);
+
+        // Assert
+        ASSERT_TRUE(seq == 2 && inOrder) << "Seq: " << seq << " In Order: " << inOrder;
+    }
 #pragma endregion
 }

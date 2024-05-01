@@ -1,4 +1,5 @@
 #pragma once
+#include "../../LibraryIncludes.h"
 #include "FontFaceAsset.h"
 #include "../../Engine/Graphics/SplitTexture.h"
 
@@ -37,6 +38,8 @@ namespace SuperGameEngine_UserInterface
         virtual void DrawText(std::shared_ptr<FText> text, std::shared_ptr<Transform> transform) override;
     private:
 
-        std::shared_ptr <FList<std::pair<wchar_t, RectangleInt>>> storedCharacters;
+        std::shared_ptr<FList<std::pair<wchar_t, int>>> storedCharacters;
+
+        int currentCharacter;
     };
 }
