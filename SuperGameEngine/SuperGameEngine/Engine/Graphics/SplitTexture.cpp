@@ -50,6 +50,11 @@ void SplitTexture::Draw(int split, const RectangleInt& screenLocation) const
     m_superTexture->Draw(m_splits[split], screenLocation);
 }
 
+bool SuperGameEngine::SplitTexture::LoadAsset(std::shared_ptr<AssetLoader> assetLoader, FString key)
+{
+    return assetLoader->LoadAsset(this, key);
+}
+
 bool SplitTexture::Contains(const RectangleInt& left, const RectangleInt& right) const
 {
     // You start before

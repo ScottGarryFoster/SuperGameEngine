@@ -88,7 +88,7 @@ void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, con
     }
 
     FVector2D moved = newLocation - cachedLocation;
-    FVector2D* location = m_transform->GetLocation();
+    const FVector2D* location = m_transform->GetLocation();
     FVector2D newLoc = *location + moved;
     m_transform->SetLocation(newLoc.GetX(), newLoc.GetY());
 }

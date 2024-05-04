@@ -1,10 +1,12 @@
 #pragma once
 #include "../../GameObject/GameComponent.h"
 #include "../../Scene/SceneLoadPackage.h"
-#include "../../../Engine/Graphics/SplitTexture.h"
+//#include "../../../Engine/Graphics/SplitTexture.h"
+#include "../../../UserInterface/Text/FontFaceAsset.h"
 
 namespace SuperGameEngine
 {
+    using namespace SuperGameEngine_UserInterface;
     /// <summary>
     /// Renders a texture.
     /// </summary>
@@ -51,5 +53,7 @@ namespace SuperGameEngine
         /// Testing var to time.
         /// </summary>
         int m_currentTime;
+
+        std::unique_ptr<FontFaceAsset> testAsset;
     };
 }

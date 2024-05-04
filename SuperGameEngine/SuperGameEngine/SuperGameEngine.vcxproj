@@ -157,6 +157,9 @@
     <ClInclude Include="Engine\Input\KeyState.hpp" />
     <ClInclude Include="Engine\Input\UniversalControllerAxis.hpp" />
     <ClInclude Include="Engine\Input\UniversalControllerButton.hpp" />
+    <ClInclude Include="Engine\Loaders\AssetLoader.h" />
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceAssetLoader.h" />
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.h" />
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Engine\Basic\GameTime.h" />
     <ClInclude Include="Engine\Graphics\Texture.h" />
@@ -212,6 +215,9 @@
     <ClCompile Include="Engine\Input\DirectInput.cpp" />
     <ClCompile Include="Engine\Input\DirectKeyInput.cpp" />
     <ClCompile Include="Engine\Input\DirectControllerInput.cpp" />
+    <ClCompile Include="Engine\Loaders\AssetLoader.cpp" />
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceAssetLoader.cpp" />
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.cpp" />
     <ClCompile Include="Structural\Components\Colliders\BoxColliderComponent.cpp" />
     <ClCompile Include="Structural\Components\Colliders\CircleColliderComponent.cpp" />
     <ClCompile Include="Structural\Components\Colliders\ColliderComponent.cpp" />

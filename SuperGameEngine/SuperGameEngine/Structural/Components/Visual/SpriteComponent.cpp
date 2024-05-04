@@ -2,6 +2,8 @@
 #include "../../../LibraryIncludes.h"
 #include "../Spatial/TransformComponent.h"
 #include "../../GameObject/GameObject.h"
+#include "../../../UserInterface/Text/FontFace.h"
+#include "../../../Engine/Loaders/Specific/UserInterface/Text/FontFaceLoader.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -33,6 +35,12 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     }
     m_currentSplit = 0;
     m_currentTime = 0;
+
+    testAsset = std::make_unique<FontFace>(m_superTexture);
+
+    std::shared_ptr<AssetLoader> as = std::make_shared<FontFaceLoader>();
+    this->testAsset->LoadAsset(as, FString(""));
+
 
     SetDoRender(true);
 }
@@ -75,6 +83,11 @@ void SpriteComponent::Draw()
             drawLocation.GetX(), drawLocation.GetY(), 
             textureSize.GetX(), textureSize.GetY());
         m_splitTexture->Draw(m_currentSplit, screenRect);
+
+
+        std::shared_ptr<FText> text = std::make_shared<FText>(L"aba");
+
+        this->testAsset->DrawText(text, transform);
     }
 
 }

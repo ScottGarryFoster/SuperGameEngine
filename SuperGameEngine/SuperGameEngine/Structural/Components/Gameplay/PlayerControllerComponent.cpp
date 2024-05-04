@@ -29,16 +29,19 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
 
     //float speed = (0.1f * gameTime.TicksSinceLastFrame);
     std::shared_ptr<TransformComponent> transform = GameComponent::GetParent()->GetTransform();
-    FVector2D* location = transform->GetLocation();
+    const FVector2D* location = transform->GetLocation();
+    FVector2D* locationCopy = new FVector2D(*location);
 
     if (m_useKeyboard)
     {
-        MoveByKeyboard(m_speed, gameTime, location);
+        MoveByKeyboard(m_speed, gameTime, locationCopy);
     }
     else
     {
-        MoveByController(location, m_speed);
+        MoveByController(locationCopy, m_speed);
     }
+
+    delete locationCopy;
 
     return true;
 }

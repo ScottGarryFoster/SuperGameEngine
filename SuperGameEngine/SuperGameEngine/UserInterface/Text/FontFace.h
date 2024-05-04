@@ -16,7 +16,6 @@ namespace SuperGameEngine_UserInterface
         FontFace(std::shared_ptr<SuperTexture> superTexture);
         virtual ~FontFace();
 
-
         /// <summary>
         /// Adds a single letter to the Font.
         /// </summary>
@@ -37,7 +36,10 @@ namespace SuperGameEngine_UserInterface
         /// </remark>
         virtual void DrawText(std::shared_ptr<FText> text, std::shared_ptr<Transform> transform) override;
     private:
-
+        /// <summary>
+        /// Stores the charcters added and the location of the textures
+        /// as they relate to the characters.
+        /// </summary>
         std::unique_ptr<FList<std::pair<wchar_t, int>>> storedCharacters;
     };
 }

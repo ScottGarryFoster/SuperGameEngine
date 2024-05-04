@@ -14,7 +14,7 @@ FontFace::~FontFace()
 
 bool FontFace::AddCharacter(wchar_t character, RectangleInt location)
 {
-    int numberOfSplits = GetSplits().size();
+    int numberOfSplits = (int)GetSplits().size();
     bool addedSplit = AddSplit(location);
     if (addedSplit)
     {
@@ -29,7 +29,8 @@ void FontFace::DrawText(
     std::shared_ptr<FText> text, std::shared_ptr<Transform> transform
     )
 {
-    FVector2D* topLeft = transform->GetLocation();
+    const FVector2D* topLeft = transform->GetLocation();
+    FVector2D* copyTopLeft = new FVector2D(*topLeft);
     std::vector<RectangleInt> splits = GetSplits();
 
     std::wstring wtext = text->AsStdWstring();
@@ -46,14 +47,16 @@ void FontFace::DrawText(
             int textureRectangleNumber = first[0].second;
             RectangleInt textureRectangle = splits.at(textureRectangleNumber);
             auto screenRectangle = RectangleInt(
-                topLeft->GetX(),
-                topLeft->GetY(),
+                (int)copyTopLeft->GetX(),
+                (int)copyTopLeft->GetY(),
                 textureRectangle.GetWidth(),
                 textureRectangle.GetHeight());
 
             Draw(textureRectangleNumber, screenRectangle);
 
-            topLeft->SetX(topLeft->GetX() + textureRectangle.GetWidth());
+            copyTopLeft->SetX(copyTopLeft->GetX() + textureRectangle.GetWidth());
         }
     }
+
+    delete copyTopLeft;
 }

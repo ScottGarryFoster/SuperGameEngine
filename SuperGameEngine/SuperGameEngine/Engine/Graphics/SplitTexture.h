@@ -1,8 +1,10 @@
 #pragma once
 #include "SplitTextureAsset.h"
+#include "../../LibraryIncludes.h"
 
 namespace SuperGameEngine
 {
+    using namespace StandardCLibrary;
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
@@ -37,6 +39,14 @@ namespace SuperGameEngine
         /// Keep in mind Camera is not involved in this method this is screenspace.
         /// </remark>
         virtual void Draw(int split, const RectangleInt& screenLocation) const override;
+
+        /// <summary>
+        /// Loads an asset from a file, products, from some source of truth about
+        /// the asset. The key should remain the same regardless as the asset location.
+        /// </summary>
+        /// <param name="key">Asset Key which is a location releative from products. </param>
+        /// <returns>True means loaded, false means failed to load. </returns>
+        virtual bool LoadAsset(std::shared_ptr<AssetLoader> assetLoader, FString key) override;
     private:
         /// <summary>
         /// The segments on the shape to render.
