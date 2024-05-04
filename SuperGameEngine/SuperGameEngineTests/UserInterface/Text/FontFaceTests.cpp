@@ -19,7 +19,7 @@ namespace SuperGameEngineTests_UserInterface_Text
 
     protected:
 
-        FontFace* fontFace;
+        std::shared_ptr<FontFace> fontFace;
         std::shared_ptr<MockSuperTexture> mockSuperTexture;
 
         void SetUp() override
@@ -30,16 +30,24 @@ namespace SuperGameEngineTests_UserInterface_Text
             EXPECT_CALL(*this->mockSuperTexture, Size())
                 .WillRepeatedly(Return(validSize));
 
-            this->fontFace = new FontFace(mockSuperTexture);
+            this->fontFace = std::make_shared<FontFace>(mockSuperTexture);
         }
 
         void TearDown() override
         {
-            if (this->fontFace != nullptr)
+            this->mockSuperTexture.reset();
+            this->fontFace.reset();
+        }
+
+        void SetUpFontWithAlphabet(std::shared_ptr<FontFace> fontface)
+        {
+            std::wstring alphabet = L"abcdefghijklmnopqrstuvwxyz";
+            RectangleInt textureLocation = RectangleInt(0, 0, 1, 1);
+            for (wchar_t charr : alphabet)
             {
-                delete this->fontFace;
+                fontFace->AddCharacter(charr, textureLocation);
             }
-            mockSuperTexture.reset();
+
         }
     };
 
@@ -216,6 +224,49 @@ namespace SuperGameEngineTests_UserInterface_Text
             .InSequence(sequence);
 
         std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+
+        // Act
+        this->fontFace->DrawText(givenText, givenTransform);
+    }
+#pragma endregion
+
+#pragma region WhereThCharacterIsDrawn
+    TEST_F(FontFaceTests, DrawText_DrawsCharacterInLocation_WhenTransformGiven)
+    {
+        // Arrange
+        SetUpFontWithAlphabet(fontFace);
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"a");
+        float givenX = 1;
+        float givenY = 2;
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+        givenTransform->SetLocation(givenX, givenY);
+        RectangleInt expectedScreenLocation = RectangleInt(givenX, givenY, 1, 1);
+
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocation)).Times(1);
+
+        // Act
+        this->fontFace->DrawText(givenText, givenTransform);
+    }
+
+    TEST_F(FontFaceTests, DrawText_DrawsSecondCharacterNextToFirst_WhenTwoCharactersGiven)
+    {
+        // Arrange
+        SetUpFontWithAlphabet(fontFace);
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+        float givenX = 1;
+        float givenY = 2;
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+        givenTransform->SetLocation(givenX, givenY);
+        RectangleInt expectedScreenLocation = RectangleInt(givenX, givenY, 1, 1);
+        RectangleInt expectedScreenLocationSecond = RectangleInt(givenX + 1, givenY, 1, 1);
+
+        Sequence sequence;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocation))
+            .InSequence(sequence);
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocationSecond))
+            .InSequence(sequence);
 
         // Act
         this->fontFace->DrawText(givenText, givenTransform);

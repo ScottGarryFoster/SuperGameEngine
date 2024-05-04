@@ -38,8 +38,6 @@ namespace SuperGameEngine_UserInterface
         virtual void DrawText(std::shared_ptr<FText> text, std::shared_ptr<Transform> transform) override;
     private:
 
-        std::shared_ptr<FList<std::pair<wchar_t, int>>> storedCharacters;
-
-        int currentCharacter;
+        std::unique_ptr<FList<std::pair<wchar_t, int>>> storedCharacters;
     };
 }
