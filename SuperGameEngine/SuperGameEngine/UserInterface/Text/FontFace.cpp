@@ -16,11 +16,12 @@ FontFace::~FontFace()
 
 bool FontFace::AddCharacter(wchar_t character, RectangleInt location)
 {
+    int numberOfSplits = GetSplits().size();
     bool addedSplit = AddSplit(location);
     if (addedSplit)
     {
             storedCharacters->Add(
-        std::pair<wchar_t, int>(character, currentCharacter++));
+        std::pair<wchar_t, int>(character, numberOfSplits));
     }
 
     return addedSplit;
@@ -39,14 +40,9 @@ void FontFace::DrawText(
                 (const std::pair<wchar_t, int>& c)
                 { return c.first == charr; });
 
-        //if (storedCharacters->Any(
-        //    [charr]
-        //    (const std::pair<wchar_t, RectangleInt>& c) 
-        //    { return c.first == charr; }))
         if(first.Any())
         {
             auto r = RectangleInt(0, 0, 1, 1);
-            //AddSplit(r);
             int t = first[0].second;
             Draw(first[0].second, r);
         }

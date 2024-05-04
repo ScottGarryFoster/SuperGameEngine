@@ -35,11 +35,11 @@ namespace SuperGameEngineTests_UserInterface_Text
 
         void TearDown() override
         {
-            mockSuperTexture.reset();
             if (this->fontFace != nullptr)
             {
                 delete this->fontFace;
             }
+            mockSuperTexture.reset();
         }
     };
 
@@ -152,6 +152,8 @@ namespace SuperGameEngineTests_UserInterface_Text
 #pragma endregion
 
 #pragma region DrawText
+
+#pragma region WhichCharacterIsDrawn
     TEST_F(FontFaceTests, DrawText_DrawsFirstCharacterFromTheCorrectTextureLocation)
     {
         // Arrange
@@ -180,36 +182,44 @@ namespace SuperGameEngineTests_UserInterface_Text
 
         std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
 
-        // We have to utilise the == operator of Rectangle to get this working
-        // this dose mean a little bit of logic which should be replaced with a
-        // custom matcher.
-        int seq = 0;
-        bool inOrder = true;
-        EXPECT_CALL(*this->mockSuperTexture, Draw(_, _))
-            .WillRepeatedly(testing::Invoke(
-                [&seq, &inOrder, &valid, &validSecond]
-                (const RectangleInt& x, const RectangleInt& y)
-                { 
-                    if (seq == 0 && x == valid)
-                    {
-                        ++seq;
-                    }
-                    else if (seq == 1 && x == validSecond)
-                    {
-                        ++seq;
-                    }
-                    else
-                    {
-                        inOrder = false;
-                    }
-                }));
+        Sequence sequence;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(valid, _))
+            .InSequence(sequence);
+        EXPECT_CALL(*this->mockSuperTexture, Draw(validSecond, _))
+            .InSequence(sequence);
+
         std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
 
         // Act
         this->fontFace->DrawText(givenText, givenTransform);
-
-        // Assert
-        ASSERT_TRUE(seq == 2 && inOrder) << "Seq: " << seq << " In Order: " << inOrder;
     }
+
+    TEST_F(FontFaceTests, DrawText_DrawsFirstCharacterFromTheCorrectTextureLocation_WhenAddSplitIsCalled)
+    {
+        // Arrange
+        wchar_t givenFirst = L'a';
+        RectangleInt valid = RectangleInt(4, 3, 2, 1);
+        this->fontFace->AddCharacter(givenFirst, valid);
+
+        this->fontFace->AddSplit(valid);
+
+        wchar_t givenSecond = L'b';
+        RectangleInt validSecond = RectangleInt(1, 2, 3, 4);
+        this->fontFace->AddCharacter(givenSecond, validSecond);
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+
+        Sequence sequence;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(valid, _))
+            .InSequence(sequence);
+        EXPECT_CALL(*this->mockSuperTexture, Draw(validSecond, _))
+            .InSequence(sequence);
+
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+
+        // Act
+        this->fontFace->DrawText(givenText, givenTransform);
+    }
+#pragma endregion
 #pragma endregion
 }
