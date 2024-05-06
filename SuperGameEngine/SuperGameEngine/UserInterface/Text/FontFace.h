@@ -1,7 +1,6 @@
 #pragma once
 #include "../../LibraryIncludes.h"
 #include "FontFaceAsset.h"
-#include "../../Engine/Graphics/SplitTexture.h"
 
 namespace SuperGameEngine_UserInterface
 {
@@ -35,6 +34,15 @@ namespace SuperGameEngine_UserInterface
         /// draws using Camera for this which would adjust with the camera world space.
         /// </remark>
         virtual void DrawText(std::shared_ptr<FText> text, std::shared_ptr<Transform> transform) override;
+
+        /// <summary>
+        /// Sets the information to produce a render packet.
+        /// </summary>
+        /// <param name="parameters">
+        /// All the information which differs between one Font render operation
+        /// and another, passed into a Draw.
+        /// </param>
+        virtual std::shared_ptr<RenderPacket> SetParametersForRenderPacket(const FontFaceRenderPacketParameters& parameters) override;
     private:
         /// <summary>
         /// Stores the charcters added and the location of the textures

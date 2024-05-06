@@ -1,10 +1,12 @@
 #pragma once
 #include "SplitTextureAsset.h"
 #include "../../LibraryIncludes.h"
+#include "../../Engine/Graphics/RenderPacket.h"
 
 namespace SuperGameEngine
 {
     using namespace StandardCLibrary;
+
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
@@ -47,6 +49,33 @@ namespace SuperGameEngine
         /// <param name="key">Asset Key which is a location releative from products. </param>
         /// <returns>True means loaded, false means failed to load. </returns>
         virtual bool LoadAsset(std::shared_ptr<AssetLoader> assetLoader, FString key) override;
+
+        /// <summary>
+        /// Gets the Objects state as a render packet.
+        /// </summary>
+        /// <returns>The render state as a packet for drawing. </returns>
+        virtual std::shared_ptr<RenderPacket> GetObjectRenderPacket() override;
+
+        /// <summary>
+        /// Draws the Object using the Render Packet.
+        /// </summary>
+        /// <param name="renderPacket">
+        /// The state of this object as a Render Packet.
+        /// </param>
+        /// <param name="transform">
+        /// Current transform. Used to move the draw without a complete
+        /// recalculation.
+        /// </param>
+        virtual void DrawPacket(
+            std::shared_ptr<RenderPacket> renderPacket,
+            std::shared_ptr<Transform> transform) override;
+
+    protected:
+        /// <summary>
+        /// The last render packet to be created.
+        /// </summary>
+        std::shared_ptr<RenderPacket> cachedRenderPacket;
+
     private:
         /// <summary>
         /// The segments on the shape to render.

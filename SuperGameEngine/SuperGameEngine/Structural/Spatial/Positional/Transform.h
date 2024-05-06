@@ -16,6 +16,11 @@ namespace SuperGameEngine
         /// This is the center of the GameObject.
         /// </summary>
         /// <returns>The location of the GameObject. </returns>
+        /// <remarks>
+        /// Do not store this location as a pointer.
+        /// It is to only be used as a reference and to get the
+        /// location out without using multiple methods.
+        /// </remarks>
         const FVector2D* GetLocation() const;
 
         /// <summary>

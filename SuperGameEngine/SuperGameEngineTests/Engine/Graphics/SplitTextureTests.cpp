@@ -3,6 +3,7 @@
 #include "../../../SuperGameEngine/Engine/Graphics/SplitTexture.h"
 #include "../../../SuperGameEngine/Engine/Graphics/SuperTexture.h"
 #include "../../../SuperGameEngine/Structural/Spatial/Area/RectangleInt.h"
+#include "../../../SuperGameEngine/Engine/Graphics/RenderPacket.h"
 #include "MockSuperTexture.h"
 
 using namespace StandardCLibrary;

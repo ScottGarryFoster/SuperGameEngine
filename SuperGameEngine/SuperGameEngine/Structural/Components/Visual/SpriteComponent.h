@@ -54,6 +54,13 @@ namespace SuperGameEngine
         /// </summary>
         int m_currentTime;
 
+        /// <summary>
+        /// Render Packet for the text.
+        /// </summary>
+        std::shared_ptr<RenderPacket> textRenderPacket;
+
         std::unique_ptr<FontFaceAsset> testAsset;
+
+
     };
 }

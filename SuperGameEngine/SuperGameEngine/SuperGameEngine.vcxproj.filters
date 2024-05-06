@@ -284,6 +284,15 @@
     <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.cpp">
       <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphics\CacheableRender.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\RenderPacket.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SimpleRenderPacket.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -481,6 +490,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.h">
       <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\CacheableRender.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\RenderPacket.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Text\FontFaceRenderPacketParameters.hpp">
+      <Filter>Project Files\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h">
+      <Filter>Project Files\Engine\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

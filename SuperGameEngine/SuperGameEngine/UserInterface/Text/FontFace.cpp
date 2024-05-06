@@ -1,4 +1,5 @@
 #include "FontFace.h"
+#include "../../Engine/Graphics/SimpleRenderPacket.h"
 
 using namespace SuperGameEngine_UserInterface;
 using namespace SuperGameEngine;
@@ -52,11 +53,47 @@ void FontFace::DrawText(
                 textureRectangle.GetWidth(),
                 textureRectangle.GetHeight());
 
-            Draw(textureRectangleNumber, screenRectangle);
+            SplitTexture::Draw(textureRectangleNumber, screenRectangle);
 
             copyTopLeft->SetX(copyTopLeft->GetX() + textureRectangle.GetWidth());
         }
     }
 
     delete copyTopLeft;
+}
+
+std::shared_ptr<RenderPacket> FontFace::SetParametersForRenderPacket(const FontFaceRenderPacketParameters& parameters)
+{
+    std::shared_ptr<RenderPacket> returnPacket = std::make_shared<SimpleRenderPacket>();
+    this->cachedRenderPacket = returnPacket;
+
+    std::shared_ptr <FVector2D> copyTopLeft = std::make_shared <FVector2D>(0,0);
+    std::vector<RectangleInt> splits = GetSplits();
+
+    std::wstring wtext = parameters.TextToRender.AsStdWstring();
+    for (wchar_t charr : wtext)
+    {
+        FList<std::pair<wchar_t, int>> first =
+            this->storedCharacters->First(
+                [charr]
+                (const std::pair<wchar_t, int>& c)
+                { return c.first == charr; });
+
+        if (first.Any())
+        {
+            int textureRectangleNumber = first[0].second;
+            RectangleInt textureRectangle = splits.at(textureRectangleNumber);
+            auto screenRectangle = RectangleInt(
+                (int)copyTopLeft->GetX(),
+                (int)copyTopLeft->GetY(),
+                textureRectangle.GetWidth(),
+                textureRectangle.GetHeight());
+
+            returnPacket->AddDrawPacket(textureRectangle, screenRectangle);
+
+            copyTopLeft->SetX(copyTopLeft->GetX() + textureRectangle.GetWidth());
+        }
+    }
+
+    return returnPacket;
 }

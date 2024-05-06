@@ -131,6 +131,9 @@
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
+    <ClInclude Include="Engine\Graphics\CacheableRender.h" />
+    <ClInclude Include="Engine\Graphics\RenderPacket.h" />
+    <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h" />
     <ClInclude Include="Engine\Graphics\SplitTexture.h" />
     <ClInclude Include="Engine\Graphics\SplitTextureAsset.h" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
@@ -194,11 +197,15 @@
     <ClInclude Include="Structural\Spatial\Positional\Transform.h" />
     <ClInclude Include="UserInterface\Text\FontFace.h" />
     <ClInclude Include="UserInterface\Text\FontFaceAsset.h" />
+    <ClInclude Include="UserInterface\Text\FontFaceRenderPacketParameters.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
     <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
+    <ClCompile Include="Engine\Graphics\CacheableRender.cpp" />
+    <ClCompile Include="Engine\Graphics\RenderPacket.cpp" />
+    <ClCompile Include="Engine\Graphics\SimpleRenderPacket.cpp" />
     <ClCompile Include="Engine\Graphics\SplitTexture.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\CircleDrawableTechnique.cpp" />
     <ClCompile Include="Engine\Graphics\Technique\DrawableTechnique.cpp" />

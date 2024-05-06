@@ -236,11 +236,11 @@ namespace SuperGameEngineTests_UserInterface_Text
         // Arrange
         SetUpFontWithAlphabet(fontFace);
         std::shared_ptr<FText> givenText = std::make_shared<FText>(L"a");
-        float givenX = 1;
-        float givenY = 2;
+        int givenX = 1;
+        int givenY = 2;
 
         std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
-        givenTransform->SetLocation(givenX, givenY);
+        givenTransform->SetLocation((float)givenX, (float)givenY);
         RectangleInt expectedScreenLocation = RectangleInt(givenX, givenY, 1, 1);
 
         EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocation)).Times(1);
@@ -254,11 +254,11 @@ namespace SuperGameEngineTests_UserInterface_Text
         // Arrange
         SetUpFontWithAlphabet(fontFace);
         std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
-        float givenX = 1;
-        float givenY = 2;
+        int givenX = 1;
+        int givenY = 2;
 
         std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
-        givenTransform->SetLocation(givenX, givenY);
+        givenTransform->SetLocation((float)givenX, (float)givenY);
         RectangleInt expectedScreenLocation = RectangleInt(givenX, givenY, 1, 1);
         RectangleInt expectedScreenLocationSecond = RectangleInt(givenX + 1, givenY, 1, 1);
 
@@ -270,6 +270,146 @@ namespace SuperGameEngineTests_UserInterface_Text
 
         // Act
         this->fontFace->DrawText(givenText, givenTransform);
+    }
+#pragma endregion
+#pragma endregion
+
+#pragma region RenderPacket
+
+#pragma region WhichCharacterIsDrawn
+    TEST_F(FontFaceTests, DrawWithRenderPacket_DrawsFirstCharacterFromTheCorrectTextureLocation)
+    {
+        // Arrange
+        wchar_t givenFirst = L'a';
+        RectangleInt valid = RectangleInt(0, 0, 1, 1);
+        this->fontFace->AddCharacter(givenFirst, valid);
+
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"a");
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *givenText;
+        this->fontFace->SetParametersForRenderPacket(parameters);
+        std::shared_ptr<RenderPacket> givenPacket = this->fontFace->GetObjectRenderPacket();
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+        EXPECT_CALL(*this->mockSuperTexture, Draw(valid, _)).Times(1);
+
+        // Act
+        this->fontFace->DrawPacket(givenPacket, givenTransform);
+    }
+
+    TEST_F(FontFaceTests, DrawWithRenderPacket_DrawsFirstCharacterFromTheCorrectTextureLocation_WhenGivenTwoLocations)
+    {
+        // Arrange
+        wchar_t givenFirst = L'a';
+        RectangleInt valid = RectangleInt(4, 3, 2, 1);
+        this->fontFace->AddCharacter(givenFirst, valid);
+
+        wchar_t givenSecond = L'b';
+        RectangleInt validSecond = RectangleInt(1, 2, 3, 4);
+        this->fontFace->AddCharacter(givenSecond, validSecond);
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *givenText;
+        this->fontFace->SetParametersForRenderPacket(parameters);
+        std::shared_ptr<RenderPacket> givenPacket = this->fontFace->GetObjectRenderPacket();
+
+        Sequence sequence;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(valid, _))
+            .InSequence(sequence);
+        EXPECT_CALL(*this->mockSuperTexture, Draw(validSecond, _))
+            .InSequence(sequence);
+
+        // Act
+        this->fontFace->DrawPacket(givenPacket, givenTransform);
+    }
+
+    TEST_F(FontFaceTests, DrawWithRenderPacket_DrawsFirstCharacterFromTheCorrectTextureLocation_WhenAddSplitIsCalled)
+    {
+        // Arrange
+        wchar_t givenFirst = L'a';
+        RectangleInt valid = RectangleInt(4, 3, 2, 1);
+        this->fontFace->AddCharacter(givenFirst, valid);
+
+        this->fontFace->AddSplit(valid);
+
+        wchar_t givenSecond = L'b';
+        RectangleInt validSecond = RectangleInt(1, 2, 3, 4);
+        this->fontFace->AddCharacter(givenSecond, validSecond);
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *givenText;
+        this->fontFace->SetParametersForRenderPacket(parameters);
+        std::shared_ptr<RenderPacket> givenPacket = this->fontFace->GetObjectRenderPacket();
+
+        Sequence sequence;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(valid, _))
+            .InSequence(sequence);
+        EXPECT_CALL(*this->mockSuperTexture, Draw(validSecond, _))
+            .InSequence(sequence);
+
+        // Act
+        this->fontFace->DrawPacket(givenPacket, givenTransform);
+    }
+#pragma endregion
+
+#pragma region WhereThCharacterIsDrawn
+    TEST_F(FontFaceTests, DrawWithRenderPacket_DrawsCharacterInLocation_WhenTransformGiven)
+    {
+        // Arrange
+        SetUpFontWithAlphabet(fontFace);
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"a");
+        int givenX = 1;
+        int givenY = 2;
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+        givenTransform->SetLocation((float)givenX, (float)givenY);
+        RectangleInt expectedScreenLocation = RectangleInt(givenX, givenY, 1, 1);
+
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *givenText;
+        this->fontFace->SetParametersForRenderPacket(parameters);
+        std::shared_ptr<RenderPacket> givenPacket = this->fontFace->GetObjectRenderPacket();
+
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocation)).Times(1);
+
+        // Act
+        this->fontFace->DrawPacket(givenPacket, givenTransform);
+    }
+
+    TEST_F(FontFaceTests, DrawWithRenderPacket_DrawsSecondCharacterNextToFirst_WhenTwoCharactersGiven)
+    {
+        // Arrange
+        SetUpFontWithAlphabet(fontFace);
+        std::shared_ptr<FText> givenText = std::make_shared<FText>(L"ab");
+        int givenX = 1;
+        int givenY = 2;
+
+        std::shared_ptr<Transform> givenTransform = std::make_shared<Transform>();
+        givenTransform->SetLocation((float)givenX, (float)givenY);
+        RectangleInt expectedScreenLocation = RectangleInt(givenX, givenY, 1, 1);
+        RectangleInt expectedScreenLocationSecond = RectangleInt(givenX + 1, givenY, 1, 1);
+
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *givenText;
+        this->fontFace->SetParametersForRenderPacket(parameters);
+        std::shared_ptr<RenderPacket> givenPacket = this->fontFace->GetObjectRenderPacket();
+
+        Sequence sequence;
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocation))
+            .InSequence(sequence);
+        EXPECT_CALL(*this->mockSuperTexture, Draw(_, expectedScreenLocationSecond))
+            .InSequence(sequence);
+
+        // Act
+        this->fontFace->DrawPacket(givenPacket, givenTransform);
     }
 #pragma endregion
 #pragma endregion

@@ -4,6 +4,7 @@
 #include "../../GameObject/GameObject.h"
 #include "../../../UserInterface/Text/FontFace.h"
 #include "../../../Engine/Loaders/Specific/UserInterface/Text/FontFaceLoader.h"
+#include "../../../Engine/Graphics/SimpleRenderPacket.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -11,6 +12,7 @@ using namespace SuperGameEngine;
 SpriteComponent::SpriteComponent() : GameComponent()
 {
     m_superTexture = nullptr;
+    textRenderPacket = std::make_shared<SimpleRenderPacket>();
 }
 
 void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
@@ -40,7 +42,9 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 
     std::shared_ptr<AssetLoader> as = std::make_shared<FontFaceLoader>();
     this->testAsset->LoadAsset(as, FString(""));
-
+    FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+    parameters.TextToRender = FText("aabbaa");
+    this->textRenderPacket = this->testAsset->SetParametersForRenderPacket(parameters);
 
     SetDoRender(true);
 }
@@ -87,7 +91,8 @@ void SpriteComponent::Draw()
 
         std::shared_ptr<FText> text = std::make_shared<FText>(L"aba");
 
-        this->testAsset->DrawText(text, transform);
+        std::shared_ptr<Transform> t = transform;
+        this->testAsset->DrawPacket(this->textRenderPacket, t);
     }
 
 }

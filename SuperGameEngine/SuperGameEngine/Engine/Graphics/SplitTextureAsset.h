@@ -2,13 +2,14 @@
 #include "SuperTexture.h"
 #include "../../Structural/Spatial/Area/RectangleInt.h"
 #include "../../Engine/Loaders/AssetLoader.h"
+#include "../../Engine/Graphics/CacheableRender.h"
 
 namespace SuperGameEngine
 {
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
-    class SplitTextureAsset : public Object
+    class SplitTextureAsset : public Object, public CacheableRender
     {
     public:
         SplitTextureAsset() {}
