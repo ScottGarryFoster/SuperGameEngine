@@ -20,7 +20,7 @@ namespace SuperGameEngine
         /// Get all the segments of the texture.
         /// </summary>
         /// <returns>All the places on the texture to render. </returns>
-        virtual std::vector<RectangleInt> GetSplits() override;
+        virtual std::vector<RectangleInt> GetSplits() const override;
 
         /// <summary>
         /// Add a split to the list of splits.

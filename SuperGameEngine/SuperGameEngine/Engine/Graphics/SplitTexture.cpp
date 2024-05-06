@@ -25,7 +25,7 @@ SplitTexture::~SplitTexture()
     this->cachedRenderPacket.reset();
 }
 
-std::vector<RectangleInt> SplitTexture::GetSplits()
+std::vector<RectangleInt> SplitTexture::GetSplits() const
 {
     return m_splits;
 }

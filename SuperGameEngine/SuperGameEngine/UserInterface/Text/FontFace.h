@@ -49,5 +49,12 @@ namespace SuperGameEngine_UserInterface
         /// as they relate to the characters.
         /// </summary>
         std::unique_ptr<FList<std::pair<wchar_t, int>>> storedCharacters;
+
+        /// <summary>
+        /// Calculates the positions for the text render based on the given parameters.
+        /// </summary>
+        /// <param name="parameters">Parameters to use. </param>
+        /// <returns>Where and how to render text. Note this is relative to position 0,0. </returns>
+        std::shared_ptr<RenderPacket> CalculateRender(const FontFaceRenderPacketParameters& parameters) const;
     };
 }
