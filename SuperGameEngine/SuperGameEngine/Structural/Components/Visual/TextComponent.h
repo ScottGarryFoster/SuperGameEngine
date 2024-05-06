@@ -5,8 +5,6 @@
 
 namespace SuperGameEngine
 {
-    using namespace SuperGameEngine_UserInterface;
-
     class RenderPacket;
 
     /// <summary>

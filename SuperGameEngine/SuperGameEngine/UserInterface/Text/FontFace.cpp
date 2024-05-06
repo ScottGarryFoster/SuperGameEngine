@@ -1,7 +1,6 @@
 #include "FontFace.h"
 #include "../../Engine/Graphics/SimpleRenderPacket.h"
 
-using namespace SuperGameEngine_UserInterface;
 using namespace SuperGameEngine;
 
 FontFace::FontFace(std::shared_ptr<SuperTexture> superTexture) : FontFaceAsset(superTexture)

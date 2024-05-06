@@ -7,7 +7,6 @@
 #include "../../Components/Spatial/TransformComponent.h"
 
 using namespace SuperGameEngine;
-using namespace SuperGameEngine_UserInterface;
 using namespace StandardCLibrary;
 
 TextComponent::TextComponent()
@@ -25,7 +24,7 @@ void TextComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     SetDoRender(true);
 
     std::shared_ptr<bool> didFind = std::make_shared<bool>();
-    std::shared_ptr<FontFaceAsset> ffa = loadPackage->GetContentManager()->GetFontFace(FString(""), didFind);
+    std::shared_ptr<FontFaceAsset> ffa = loadPackage->GetContentManager()->GetFontFace(FString("Engine\\Assets\\Fonts\\Direct-Message.assetmeta"), didFind);
     if (*didFind)
     {
         this->fontFace = ffa;

@@ -4,8 +4,6 @@
 #include "../../Scene/SceneLoadPackage.h"
 #include "../../../Engine/Graphics/SplitTexture.h"
 
-using namespace SuperGameEngine_UserInterface;
-
 namespace SuperGameEngine
 {
     /// <summary>

@@ -162,6 +162,7 @@
     <ClInclude Include="Engine\Input\UniversalControllerButton.hpp" />
     <ClInclude Include="Engine\Loaders\AssetLoader.h" />
     <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceAssetLoader.h" />
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.h" />
     <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.h" />
     <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Engine\Basic\GameTime.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="Engine\Input\DirectControllerInput.cpp" />
     <ClCompile Include="Engine\Loaders\AssetLoader.cpp" />
     <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceAssetLoader.cpp" />
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.cpp" />
     <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.cpp" />
     <ClCompile Include="Structural\Components\Colliders\BoxColliderComponent.cpp" />
     <ClCompile Include="Structural\Components\Colliders\CircleColliderComponent.cpp" />

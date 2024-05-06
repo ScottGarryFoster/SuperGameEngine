@@ -6,7 +6,6 @@
 #include "../../UserInterface/Text/FontFace.h"
 
 using namespace SuperGameEngine;
-using namespace SuperGameEngine_UserInterface;
 using namespace StandardCLibrary;
 
 ContentManager::ContentManager(SDL_Renderer* renderer)
@@ -101,6 +100,7 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
             Logger::Error(FString("ContentManager::GetFontFace: Object does not inherit fron Font"));
         }
 
+        filePath = m_productsDirectory + "\\" + filePath;
         loaded = this->fontLoader->LoadAsset(object, filePath);
         discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
     }

@@ -1,13 +1,14 @@
 #pragma once
 #include "FontFaceAssetLoader.h"
-#include "../../../../../UserInterface/Text/FontFace.h"
+#include "FontFaceFromText.h"
 
 namespace SuperGameEngine
 {
-    using namespace SuperGameEngine_UserInterface;
-
     class ContentManager;
 
+    /// <summary>
+    /// Loads Font Faces using XML.
+    /// </summary>
     class FontFaceLoader : public FontFaceAssetLoader
     {
     public:
@@ -34,5 +35,10 @@ namespace SuperGameEngine
         /// Gives the ability to load textures.
         /// </summary>
         ContentManager* contentManager;
+
+        /// <summary>
+        /// Allows us to parse the font from text.
+        /// </summary>
+        std::shared_ptr<FontFaceFromText> fromText;
     };
 }

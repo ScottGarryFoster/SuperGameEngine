@@ -3,7 +3,6 @@
 #include "../../Engine/Graphics/MockSuperTexture.h"
 
 using namespace StandardCLibrary;
-using namespace SuperGameEngine_UserInterface;
 using namespace SuperGameEngine;
 using namespace SuperGameEngineTests;
 

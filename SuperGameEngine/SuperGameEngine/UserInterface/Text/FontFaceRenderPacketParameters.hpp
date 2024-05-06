@@ -1,7 +1,7 @@
 #pragma once
 #include "../../LibraryIncludes.h"
 
-namespace SuperGameEngine_UserInterface
+namespace SuperGameEngine
 {
     /// <summary>
     /// All the information which differs between one Font render operation

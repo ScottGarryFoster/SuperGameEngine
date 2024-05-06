@@ -1,6 +1,6 @@
 <AssetMeta>
     <Metadata Type="FontFaceAsset" Name="Direct Message" Brand="Original" />
-    <Texture Source="Engine/Assets/Fonts/Direct-Message.png" />
+    <Texture Source="Engine\Assets\Fonts\Direct-Message.png" />
     <Characters>
         <Character Top="1" Left="1" Width="5" Height="10" Character="A" />
         <Character Top="1" Left="7" Width="5" Height="10" Character="B" />

@@ -1,6 +1,7 @@
 #include "FontFaceLoader.h"
 #include "../../../../../Engine/Graphics/TextureWrapper.h"
 #include "../../../../../Engine/Content/ContentManager.h"
+#include "../../../../../UserInterface/Text/FontFace.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -8,6 +9,7 @@ using namespace StandardCLibrary;
 FontFaceLoader::FontFaceLoader(ContentManager* contentManager)
 {
     this->contentManager = contentManager;
+    this->fromText = std::make_shared<FontFaceFromText>(this->contentManager);
 
 }
 
@@ -21,22 +23,27 @@ bool FontFaceLoader::LoadAsset(std::shared_ptr<Object>& subject, FString key)
         return false;
     }
 
-    std::shared_ptr<SuperTexture> sp = this->contentManager->GetTexture(FString("Engine\\Assets\\Fonts\\Direct-Message.png"));
-    if (!sp)
+    if (!File::Exists(key))
     {
         Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAsset"),
-            FString("Super Texture not found / could not load. "));
+            FString("File does not exist: ") + key);
         return false;
     }
 
-    fontFace = std::make_shared<FontFace>(sp);
-    subject = fontFace;
+    std::shared_ptr<FString> fileContents = std::make_shared<FString>(File::ReadFileContents(key));
 
-    RectangleInt r = RectangleInt(0, 0, 32, 32);
-    fontFace->AddCharacter(L'a', r);
-
-    RectangleInt r2 = RectangleInt(32, 32, 32, 32);
-    fontFace->AddCharacter(L'b', r2);
+    std::shared_ptr<bool> loaded = std::make_shared<bool>();
+    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, fileContents);
+    if (loaded)
+    {
+        subject = ff;
+    }
+    else
+    {
+        Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAsset"),
+            FString("Could not load font from file. ") + key);
+        return false;
+    }
 
     return true;
 }

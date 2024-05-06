@@ -7,7 +7,7 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-namespace SuperGameEngine_UserInterface
+namespace SuperGameEngine
 {
 
     class FontFaceAsset : public SplitTexture

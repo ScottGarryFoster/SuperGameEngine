@@ -296,6 +296,9 @@
     <ClCompile Include="Structural\Components\Visual\TextComponent.cpp">
       <Filter>Project Files\Structural\Components\Visual</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.cpp">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="Structural\Components\Visual\TextComponent.h">
       <Filter>Project Files\Structural\Components\Visual\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.h">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
 
 using namespace SuperGameEngine;
 
-namespace SuperGameEngine_UserInterface
+namespace SuperGameEngine
 {
 
     /// <summary>

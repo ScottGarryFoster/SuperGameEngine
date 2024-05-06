@@ -8,7 +8,6 @@
 #include "../../UserInterface/Text/FontFaceAsset.h"
 
 using namespace StandardCLibrary;
-using namespace SuperGameEngine_UserInterface;
 
 namespace SuperGameEngine
 {
