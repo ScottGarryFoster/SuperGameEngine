@@ -4,10 +4,11 @@
 #include "../../Structural/Spatial/Positional/Transform.h"
 #include "FontFaceRenderPacketParameters.hpp"
 
+using namespace SuperGameEngine;
+using namespace StandardCLibrary;
+
 namespace SuperGameEngine_UserInterface
 {
-    using namespace SuperGameEngine;
-    using namespace StandardCLibrary;
 
     class FontFaceAsset : public SplitTexture
     {

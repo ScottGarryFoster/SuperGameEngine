@@ -8,11 +8,10 @@
 #include "../../UserInterface/Text/FontFaceAsset.h"
 
 using namespace StandardCLibrary;
+using namespace SuperGameEngine_UserInterface;
 
 namespace SuperGameEngine
 {
-    class SuperGameEngine_UserInterface::FontFaceAsset;
-
     /// <summary>
     /// Manages the data (content) in the game meaning game elements do not need to continually
     /// create and delete resources causing spikes in memory.
@@ -42,7 +41,7 @@ namespace SuperGameEngine
         /// <returns>
         /// If loaded successfully this is the FontFaceAsset.
         /// </returns>
-        std::shared_ptr<SuperGameEngine_UserInterface::FontFaceAsset> GetFontFace(
+        std::shared_ptr<FontFaceAsset> GetFontFace(
             FString filePath,
             std::shared_ptr<bool>& didCreate);
 
@@ -72,7 +71,7 @@ namespace SuperGameEngine
         /// </summary>
         std::unique_ptr<FList
             <std::pair<FString, std::shared_ptr
-                <SuperGameEngine_UserInterface::FontFaceAsset>>>> 
+                <FontFaceAsset>>>> 
                     fontFaceCache;
 
         /// <summary>

@@ -73,7 +73,7 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
     return returnTexture;
 }
 
-std::shared_ptr<SuperGameEngine_UserInterface::FontFaceAsset> ContentManager::GetFontFace(
+std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
     FString filePath,
     std::shared_ptr<bool>& didCreate)
 {

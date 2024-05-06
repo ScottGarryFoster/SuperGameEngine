@@ -51,11 +51,15 @@ bool FontFaceLoader::LoadAsset(Object* subject, FString key)
     //    return false;
     //}
 
+
     //RectangleInt r = RectangleInt(0, 0, 32, 32);
     //fontFace->AddCharacter(L'a', r);
 
     //RectangleInt r2 = RectangleInt(32, 32, 32, 32);
     //fontFace->AddCharacter(L'b', r2);
 
-    return true;
+    Logger::Assert(NotImplementedException(), FString("FontFaceLoader"), FString("LoadAsset"),
+                FString("Loading assets via Raw Point is not supported yet."));
+
+    return false;
 }
