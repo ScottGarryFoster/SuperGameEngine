@@ -19,6 +19,9 @@
     <ClCompile Include="Structural\FVector2DTests.cpp">
       <Filter>Structural</Filter>
     </ClCompile>
+    <ClCompile Include="Text\FTextTests.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Collection">

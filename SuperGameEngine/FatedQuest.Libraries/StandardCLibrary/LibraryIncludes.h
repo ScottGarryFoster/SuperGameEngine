@@ -4,6 +4,7 @@
 #pragma warning(disable : 4067)
 
 #include "Text/FString.h"
+#include "Text/FText.h"
 #include "File/File.h"
 #include "File/Directory.h"
 #include "Collection/Dictionary/FDictionary.hpp";
@@ -25,5 +26,6 @@
 #include "Object/Asserts/ArgumentNullException.hpp"
 #include "Object/Asserts/NotImplementedException.hpp"
 #include "Object/Asserts/SystemNullReference.hpp"
+#include "Object/Asserts/FileOpenException.hpp"
 #include "Structural/FVectorLocationEventArguments.h"
 #include "Structural/FPointLocationEventArguments.h"

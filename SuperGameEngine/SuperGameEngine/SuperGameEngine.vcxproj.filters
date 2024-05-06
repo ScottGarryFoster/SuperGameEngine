@@ -113,6 +113,39 @@
     <Filter Include="Project Files\Structural\Components\Physics\API">
       <UniqueIdentifier>{617c796c-177f-40ee-b59c-3489fe882990}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\UserInterface">
+      <UniqueIdentifier>{5d196f53-58bf-4614-be06-5b26030ee03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\UserInterface\Text">
+      <UniqueIdentifier>{77ba2327-d07f-49ca-a132-dc8044b6df59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\UserInterface\Text\API">
+      <UniqueIdentifier>{7a020b0a-acb4-4a56-95ff-4132807a08c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Positional">
+      <UniqueIdentifier>{87470044-ea85-406e-8ead-cbb0a0046880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Structural\Spatial\Positional\API">
+      <UniqueIdentifier>{88e145df-23c3-49bb-85b4-09610e1d0673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Loaders">
+      <UniqueIdentifier>{7e1be29c-a9ee-4395-8c2d-92b68deff9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Loaders\API">
+      <UniqueIdentifier>{3e3c2806-9069-48c9-a699-df15f321d97b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Loaders\Specific">
+      <UniqueIdentifier>{2c3e3fd1-5462-4339-9133-11359e5c112a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Loaders\Specific\UserInterface">
+      <UniqueIdentifier>{54a17487-7781-45ad-b4c2-b736ff183f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Loaders\Specific\UserInterface\Text">
+      <UniqueIdentifier>{3e9c5544-9311-42b0-9583-76be763b9834}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\Loaders\Specific\UserInterface\Text\API">
+      <UniqueIdentifier>{8d0711ed-5566-4d74-a94f-9865653071fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -232,6 +265,39 @@
     <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface\Text\FontFaceAsset.cpp">
+      <Filter>Project Files\UserInterface\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Positional\Transform.cpp">
+      <Filter>Project Files\Structural\Spatial\Positional</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface\Text\FontFace.cpp">
+      <Filter>Project Files\UserInterface\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Loaders\AssetLoader.cpp">
+      <Filter>Project Files\Engine\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceAssetLoader.cpp">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.cpp">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\CacheableRender.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\RenderPacket.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\SimpleRenderPacket.cpp">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Components\Visual\TextComponent.cpp">
+      <Filter>Project Files\Structural\Components\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.cpp">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +478,42 @@
     <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
       <Filter>Project Files\Structural\Spatial\Area\API</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Text\FontFaceAsset.h">
+      <Filter>Project Files\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Positional\Transform.h">
+      <Filter>Project Files\Structural\Spatial\Positional\API</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Text\FontFace.h">
+      <Filter>Project Files\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Loaders\AssetLoader.h">
+      <Filter>Project Files\Engine\Loaders\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceAssetLoader.h">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceLoader.h">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\CacheableRender.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\RenderPacket.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface\Text\FontFaceRenderPacketParameters.hpp">
+      <Filter>Project Files\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h">
+      <Filter>Project Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Visual\TextComponent.h">
+      <Filter>Project Files\Structural\Components\Visual\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.h">
+      <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

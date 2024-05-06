@@ -53,6 +53,8 @@ namespace StandardCLibrary
             }
         }
 
+        virtual ~FCollection(){}
+
         /// <summary>
         /// Iterator so that you may use this in foreach loops.
         /// </summary>
@@ -124,6 +126,70 @@ namespace StandardCLibrary
                 if (predicate(component))
                 {
                     filteredComponents.push_back(component);
+                }
+            }
+
+            FCollection<T*> returnCollection(filteredComponents);
+            return returnCollection;
+        }
+
+        /// <summary>
+        /// Returns a Collection for which the items all match the predicate.
+        /// Matches the first item then stops. If nothing matches returns empty list.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>FCollection which matches or one with zero elements. </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Where(
+        ///         [](const FString& c) { return c.ToLower().AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        FCollection<T> First(std::function<bool(const T&)> predicate)
+        {
+            std::vector<T> filteredComponents;
+            for (const auto& component : m_actualData)
+            {
+                if (predicate(component))
+                {
+                    filteredComponents.push_back(component);
+                    break;
+                }
+            }
+
+            FCollection<T> returnCollection(filteredComponents);
+            return returnCollection;
+        }
+
+        /// <summary>
+        /// Returns a Collection for which the items all match the predicate.
+        /// Matches the first item then stops. If nothing matches returns empty list.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>FCollection which matches or one with zero elements. </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Where(
+        ///         [](const FString* c) { return c->ToLower()->AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        FCollection<T> First(std::function<bool(const T*)> predicate)
+        {
+            std::vector<T> filteredComponents;
+            for (const auto& component : m_actualData)
+            {
+                if (predicate(component))
+                {
+                    filteredComponents.push_back(component);
+                    break;
                 }
             }
 

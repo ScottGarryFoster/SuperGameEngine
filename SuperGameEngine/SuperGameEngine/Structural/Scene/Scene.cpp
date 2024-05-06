@@ -9,6 +9,7 @@
 #include "SceneToGameObjectPackage.h"
 #include "../Components/Colliders/CircleColliderComponent.h"
 #include "../Components/Physics/SimpleRigidbodyComponent.h"
+#include "../Components/Visual/TextComponent.h"
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -61,7 +62,9 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     box->SetColliderSize(s);
     //box->SetColliderSize(35);
 
-    go->AddComponent<SpriteComponent>();
+    std::shared_ptr tc = go->AddComponent<TextComponent>();
+    tc->SetText(FText("TestText"));
+    //go->AddComponent<SpriteComponent>();
 
 
     m_gameObjects.push_back(go);

@@ -2,6 +2,7 @@
 #include "../../../LibraryIncludes.h"
 #include "../Spatial/TransformComponent.h"
 #include "../../GameObject/GameObject.h"
+#include "../../../Engine/Graphics/SimpleRenderPacket.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -62,7 +63,6 @@ void SpriteComponent::Draw()
 
     if (m_superTexture)
     {
-        //FPoint textureSize = m_superTexture->Size();
         FPoint textureSize = FPoint(16 * 4,32 * 4);
         std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
         FPoint drawLocation = FPoint(

@@ -143,7 +143,7 @@
     <ClInclude Include="Object\Asserts\SystemNullReference.hpp">
       <Filter>Project Files\Object\Asserts</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Asserts\FileOpenAssert.hpp">
+    <ClInclude Include="Object\Asserts\FileOpenException.hpp">
       <Filter>Project Files\Object\Asserts</Filter>
     </ClInclude>
     <ClInclude Include="Structural\FObservableVector2D.h">
@@ -163,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Collection\Dictionary\FDictionary.hpp">
       <Filter>Project Files\Collection\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="Text\FText.h">
+      <Filter>Project Files\Text\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +225,9 @@
     </ClCompile>
     <ClCompile Include="Object\GUID\GuidHelpers.cpp">
       <Filter>Project Files\Object\GUID</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\FText.cpp">
+      <Filter>Project Files\Text</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

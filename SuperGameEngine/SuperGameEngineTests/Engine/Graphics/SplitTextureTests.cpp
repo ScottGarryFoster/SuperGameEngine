@@ -3,6 +3,7 @@
 #include "../../../SuperGameEngine/Engine/Graphics/SplitTexture.h"
 #include "../../../SuperGameEngine/Engine/Graphics/SuperTexture.h"
 #include "../../../SuperGameEngine/Structural/Spatial/Area/RectangleInt.h"
+#include "../../../SuperGameEngine/Engine/Graphics/RenderPacket.h"
 #include "MockSuperTexture.h"
 
 using namespace StandardCLibrary;
@@ -36,6 +37,11 @@ namespace SuperGameEngineTests_Engine_Graphics
 
         void TearDown() override
         {
+            // Occasially tests fail due to these shared
+            // not being found. This reset kicks the garbadge collector
+            // into gear.
+            m_mockSuperTexture.reset();
+            m_splitTexture.reset();
         }
     };
 

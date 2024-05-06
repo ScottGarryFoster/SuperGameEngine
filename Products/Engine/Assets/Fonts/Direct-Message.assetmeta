@@ -1,0 +1,119 @@
+<AssetMeta>
+    <Metadata Type="FontFaceAsset" Name="Direct Message" Brand="Original" />
+    <Texture Source="Engine\Assets\Fonts\Direct-Message.png" />
+    <Characters>
+        <Character Top="1" Left="1" Width="5" Height="10" Character="A" />
+        <Character Top="1" Left="7" Width="5" Height="10" Character="B" />
+        <Character Top="1" Left="12" Width="5" Height="10" Character="C" />
+        <Character Top="1" Left="17" Width="5" Height="10" Character="D" />
+        <Character Top="1" Left="22" Width="5" Height="10" Character="E" />
+        <Character Top="1" Left="27" Width="5" Height="10" Character="F" />
+        <Character Top="1" Left="32" Width="5" Height="10" Character="G" />
+        <Character Top="1" Left="37" Width="5" Height="10" Character="H" />
+        
+        <Character Top="12" Left="1" Width="5" Height="10" Character="I" />
+        <Character Top="12" Left="7" Width="5" Height="10" Character="J" />
+        <Character Top="12" Left="12" Width="5" Height="10" Character="K" />
+        <Character Top="12" Left="17" Width="5" Height="10" Character="L" />
+        <Character Top="12" Left="22" Width="5" Height="10" Character="M" />
+        <Character Top="12" Left="27" Width="5" Height="10" Character="N" />
+        <Character Top="12" Left="32" Width="5" Height="10" Character="O" />
+        <Character Top="12" Left="37" Width="5" Height="10" Character="P" />
+        
+        <Character Top="23" Left="1" Width="5" Height="10" Character="Q" />
+        <Character Top="23" Left="7" Width="5" Height="10" Character="R" />
+        <Character Top="23" Left="12" Width="5" Height="10" Character="S" />
+        <Character Top="23" Left="17" Width="5" Height="10" Character="T" />
+        <Character Top="23" Left="22" Width="5" Height="10" Character="U" />
+        <Character Top="23" Left="27" Width="5" Height="10" Character="V" />
+        <Character Top="23" Left="32" Width="5" Height="10" Character="W" />
+        <Character Top="23" Left="37" Width="5" Height="10" Character="X" />
+        
+        <Character Top="34" Left="1" Width="5" Height="10" Character="Y" />
+        <Character Top="34" Left="7" Width="5" Height="10" Character="Z" />
+        
+        
+        <Character Top="45" Left="1" Width="5" Height="10" Character="a" />
+        <Character Top="45" Left="7" Width="5" Height="10" Character="b" />
+        <Character Top="45" Left="12" Width="5" Height="10" Character="c" />
+        <Character Top="45" Left="17" Width="5" Height="10" Character="d" />
+        <Character Top="45" Left="22" Width="5" Height="10" Character="e" />
+        <Character Top="45" Left="27" Width="5" Height="10" Character="f" />
+        <Character Top="45" Left="32" Width="5" Height="10" Character="g" />
+        <Character Top="45" Left="37" Width="5" Height="10" Character="h" />
+        
+        <Character Top="56" Left="1" Width="5" Height="10" Character="i" />
+        <Character Top="56" Left="7" Width="5" Height="10" Character="j" />
+        <Character Top="56" Left="12" Width="5" Height="10" Character="k" />
+        <Character Top="56" Left="17" Width="5" Height="10" Character="l" />
+        <Character Top="56" Left="22" Width="5" Height="10" Character="m" />
+        <Character Top="56" Left="27" Width="5" Height="10" Character="n" />
+        <Character Top="56" Left="32" Width="5" Height="10" Character="o" />
+        <Character Top="56" Left="37" Width="5" Height="10" Character="p" />
+        
+        <Character Top="67" Left="1" Width="5" Height="10" Character="q" />
+        <Character Top="67" Left="7" Width="5" Height="10" Character="r" />
+        <Character Top="67" Left="12" Width="5" Height="10" Character="s" />
+        <Character Top="67" Left="17" Width="5" Height="10" Character="t" />
+        <Character Top="67" Left="22" Width="5" Height="10" Character="u" />
+        <Character Top="67" Left="27" Width="5" Height="10" Character="v" />
+        <Character Top="67" Left="32" Width="5" Height="10" Character="w" />
+        <Character Top="67" Left="37" Width="5" Height="10" Character="x" />
+        
+        <Character Top="78" Left="1" Width="5" Height="10" Character="y" />
+        <Character Top="78" Left="7" Width="5" Height="10" Character="z" />
+        
+        
+        <Character Top="89" Left="1" Width="5" Height="10" Character="0" />
+        <Character Top="89" Left="7" Width="5" Height="10" Character="1" />
+        <Character Top="89" Left="12" Width="5" Height="10" Character="2" />
+        <Character Top="89" Left="17" Width="5" Height="10" Character="3" />
+        <Character Top="89" Left="22" Width="5" Height="10" Character="4" />
+        <Character Top="89" Left="27" Width="5" Height="10" Character="5" />
+        <Character Top="89" Left="32" Width="5" Height="10" Character="6" />
+        <Character Top="89" Left="37" Width="5" Height="10" Character="7" />
+        
+        <Character Top="100" Left="1" Width="5" Height="10" Character="8" />
+        <Character Top="100" Left="7" Width="5" Height="10" Character="9" />
+        
+        
+        <Character Top="111" Left="1" Width="5" Height="10" Character="¬" />
+        <Character Top="111" Left="7" Width="5" Height="10" Character="!" />
+        <Character Top="111" Left="12" Width="5" Height="10" Character="&quot;" />
+        <Character Top="111" Left="17" Width="5" Height="10" Character="#" />
+        <Character Top="111" Left="22" Width="5" Height="10" Character="$" />
+        <Character Top="111" Left="27" Width="5" Height="10" Character="%" />
+        <Character Top="111" Left="32" Width="5" Height="10" Character="&" />
+        <Character Top="111" Left="37" Width="5" Height="10" Character="'" />
+        
+        <Character Top="122" Left="1" Width="5" Height="10" Character="(" />
+        <Character Top="122" Left="7" Width="5" Height="10" Character=")" />
+        <Character Top="122" Left="12" Width="5" Height="10" Character="*" />
+        <Character Top="122" Left="17" Width="5" Height="10" Character="+" />
+        <Character Top="122" Left="22" Width="5" Height="10" Character="," />
+        <Character Top="122" Left="27" Width="5" Height="10" Character="-" />
+        <Character Top="122" Left="32" Width="5" Height="10" Character="." />
+        <Character Top="122" Left="37" Width="5" Height="10" Character="/" />
+        
+        <Character Top="133" Left="1" Width="5" Height="10" Character=":" />
+        <Character Top="133" Left="7" Width="5" Height="10" Character=";" />
+        <Character Top="133" Left="12" Width="5" Height="10" Character="<" />
+        <Character Top="133" Left="17" Width="5" Height="10" Character="=" />
+        <Character Top="133" Left="22" Width="5" Height="10" Character=">" />
+        <Character Top="133" Left="27" Width="5" Height="10" Character="?" />
+        <Character Top="133" Left="32" Width="5" Height="10" Character="[" />
+        <Character Top="133" Left="37" Width="5" Height="10" Character="]" />
+        
+        <Character Top="144" Left="1" Width="5" Height="10" Character="\" />
+        <Character Top="144" Left="7" Width="5" Height="10" Character="^" />
+        <Character Top="144" Left="12" Width="5" Height="10" Character="_" />
+        <Character Top="144" Left="17" Width="5" Height="10" Character="`" />
+        <Character Top="144" Left="22" Width="5" Height="10" Character="{" />
+        <Character Top="144" Left="27" Width="5" Height="10" Character="}" />
+        <Character Top="144" Left="32" Width="5" Height="10" Character="|" />
+        <Character Top="144" Left="37" Width="5" Height="10" Character="~" />
+        
+        <Character Top="155" Left="1" Width="5" Height="10" Character="@" />
+        <Character Top="155" Left="7" Width="5" Height="10" Character="•" />
+    </Characters>
+</AssetMeta>

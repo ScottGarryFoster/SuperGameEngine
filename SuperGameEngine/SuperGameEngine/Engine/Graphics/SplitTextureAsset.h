@@ -1,20 +1,25 @@
 #pragma once
 #include "SuperTexture.h"
 #include "../../Structural/Spatial/Area/RectangleInt.h"
+#include "../../Engine/Loaders/AssetLoader.h"
+#include "../../Engine/Graphics/CacheableRender.h"
 
 namespace SuperGameEngine
 {
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
-    class SplitTextureAsset
+    class SplitTextureAsset : public Object, public CacheableRender
     {
     public:
+        SplitTextureAsset() {}
+        virtual ~SplitTextureAsset() {}
+
         /// <summary>
         /// Get all the segments of the texture.
         /// </summary>
         /// <returns>All the places on the texture to render. </returns>
-        virtual std::vector<RectangleInt> GetSplits() = 0;
+        virtual std::vector<RectangleInt> GetSplits() const = 0;
 
         /// <summary>
         /// Add a split to the list of splits.
@@ -35,5 +40,13 @@ namespace SuperGameEngine
         /// Keep in mind Camera is not involved in this method this is screenspace.
         /// </remark>
         virtual void Draw(int split, const RectangleInt& screenLocation) const = 0;
+        
+        /// <summary>
+        /// Loads an asset from a file, products, from some source of truth about
+        /// the asset. The key should remain the same regardless as the asset location.
+        /// </summary>
+        /// <param name="key">Asset Key which is a location releative from products. </param>
+        /// <returns>True means loaded, false means failed to load. </returns>
+        virtual bool LoadAsset(std::shared_ptr<AssetLoader> assetLoader, FString key) = 0;
     };
 }

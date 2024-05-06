@@ -15,6 +15,7 @@ namespace StandardCLibrary
         FList(const T& value) : FCollection<T>(value) {}
         FList(const std::vector<T> values) : FCollection<T>(values) {}
         FList(bool overload, const FCollection<T> values) : FCollection<T>(overload, values) {}
+        virtual ~FList() {}
 
         /// <summary>
         /// Adds a new element to the end of the collection
@@ -65,6 +66,52 @@ namespace StandardCLibrary
         FList<T> Where(std::function<bool(const T*)> predicate)
         {
             FCollection<T*> collection = FCollection<T*>::Where(predicate);
+            FList<T*> returnCollection(true, collection);
+            return returnCollection;
+        }
+
+        /// <summary>
+        /// Returns a Collection for which the items all match the predicate.
+        /// Matches the first item then stops. If nothing matches returns empty list.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>FCollection which matches or one with zero elements. </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Where(
+        ///         [](const FString& c) { return c.ToLower().AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        FList<T> First(std::function<bool(const T&)> predicate)
+        {
+            FCollection<T> collection = FCollection<T>::First(predicate);
+            FList<T> returnCollection(true, collection);
+            return returnCollection;
+        }
+
+        /// <summary>
+        /// Returns a Collection for which the items all match the predicate.
+        /// Matches the first item then stops. If nothing matches returns empty list.
+        /// </summary>
+        /// <param name="predicate">Preicate to match against.</param>
+        /// <returns>FCollection which matches or one with zero elements. </returns>
+        /// <example> 
+        /// To use the predicate send in a lambda function returning a bool with the Type.
+        /// For instance if the Collection were a set of strings:
+        /// <code>
+        ///     collection.Where(
+        ///         [](const FString* c) { return c->ToLower()->AsStdString() == "something"; }
+        ///         );
+        /// </code>
+        /// This would match anything equalling the word 'something'
+        /// </example>
+        FList<T> First(std::function<bool(const T*)> predicate)
+        {
+            FCollection<T*> collection = FCollection<T*>::First(predicate);
             FList<T*> returnCollection(true, collection);
             return returnCollection;
         }

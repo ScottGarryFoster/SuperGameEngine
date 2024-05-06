@@ -1,5 +1,5 @@
 #include "File.h"
-#include "../Object/Asserts/FileOpenAssert.hpp"
+#include "../Object/Asserts/FileOpenException.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -47,7 +47,7 @@ std::string StandardCLibrary::File::ReadFileContents(const std::string& filepath
     else
     {
 #ifdef _DEBUG
-        std::cout << "ASSERT " << FileOpenAssert().GetDisplayKey() << ": [File::ReadFileContents] "
+        std::cout << "ASSERT " << FileOpenException().GetDisplayKey() << ": [File::ReadFileContents] "
             << "File was already open: " << filepath << std::endl;
 #endif
     }

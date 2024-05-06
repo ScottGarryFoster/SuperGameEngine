@@ -1,12 +1,16 @@
 #pragma once
 #include "SplitTextureAsset.h"
+#include "../../LibraryIncludes.h"
+#include "../../Engine/Graphics/RenderPacket.h"
 
 namespace SuperGameEngine
 {
+    using namespace StandardCLibrary;
+
     /// <summary>
     /// A texture capable of providing segements of itself to render.
     /// </summary>
-    class SplitTexture : public SplitTextureAsset, public Object
+    class SplitTexture : public SplitTextureAsset
     {
     public:
         SplitTexture(std::shared_ptr<SuperTexture> superTexture);
@@ -16,7 +20,7 @@ namespace SuperGameEngine
         /// Get all the segments of the texture.
         /// </summary>
         /// <returns>All the places on the texture to render. </returns>
-        virtual std::vector<RectangleInt> GetSplits() override;
+        virtual std::vector<RectangleInt> GetSplits() const override;
 
         /// <summary>
         /// Add a split to the list of splits.
@@ -37,6 +41,41 @@ namespace SuperGameEngine
         /// Keep in mind Camera is not involved in this method this is screenspace.
         /// </remark>
         virtual void Draw(int split, const RectangleInt& screenLocation) const override;
+
+        /// <summary>
+        /// Loads an asset from a file, products, from some source of truth about
+        /// the asset. The key should remain the same regardless as the asset location.
+        /// </summary>
+        /// <param name="key">Asset Key which is a location releative from products. </param>
+        /// <returns>True means loaded, false means failed to load. </returns>
+        virtual bool LoadAsset(std::shared_ptr<AssetLoader> assetLoader, FString key) override;
+
+        /// <summary>
+        /// Gets the Objects state as a render packet.
+        /// </summary>
+        /// <returns>The render state as a packet for drawing. </returns>
+        virtual std::shared_ptr<RenderPacket> GetObjectRenderPacket() override;
+
+        /// <summary>
+        /// Draws the Object using the Render Packet.
+        /// </summary>
+        /// <param name="renderPacket">
+        /// The state of this object as a Render Packet.
+        /// </param>
+        /// <param name="transform">
+        /// Current transform. Used to move the draw without a complete
+        /// recalculation.
+        /// </param>
+        virtual void DrawPacket(
+            std::shared_ptr<RenderPacket> renderPacket,
+            std::shared_ptr<Transform> transform) override;
+
+    protected:
+        /// <summary>
+        /// The last render packet to be created.
+        /// </summary>
+        std::shared_ptr<RenderPacket> cachedRenderPacket;
+
     private:
         /// <summary>
         /// The segments on the shape to render.

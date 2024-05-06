@@ -95,7 +95,7 @@ void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
     {
         if (!m_haveEverUpdated)
         {
-            FVector2D* currentLocation = GameComponent::GetParent()->GetTransform()->GetLocation();
+            const FVector2D* currentLocation = GameComponent::GetParent()->GetTransform()->GetLocation();
             m_previousLocation->SetXYValue(currentLocation->GetX(), currentLocation->GetY());
             m_haveEverUpdated = true;
         }
@@ -110,7 +110,7 @@ void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
         m_canRunPhysics = true;
         if (m_numberOfCollisionsLastFixedUpdate >= 0)
         {
-            FVector2D* currentLocation = GameComponent::GetParent()->GetTransform()->GetLocation();
+            const FVector2D* currentLocation = GameComponent::GetParent()->GetTransform()->GetLocation();
             m_previousLocation->SetXYValue(currentLocation->GetX(), currentLocation->GetY());
             m_haveEverUpdated = true;
         }
