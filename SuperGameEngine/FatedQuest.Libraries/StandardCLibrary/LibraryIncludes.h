@@ -26,5 +26,6 @@
 #include "Object/Asserts/ArgumentNullException.hpp"
 #include "Object/Asserts/NotImplementedException.hpp"
 #include "Object/Asserts/SystemNullReference.hpp"
+#include "Object/Asserts/FileOpenException.hpp"
 #include "Structural/FVectorLocationEventArguments.h"
 #include "Structural/FPointLocationEventArguments.h"

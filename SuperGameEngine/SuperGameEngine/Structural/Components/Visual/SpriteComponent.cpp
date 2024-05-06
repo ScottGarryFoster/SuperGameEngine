@@ -2,8 +2,6 @@
 #include "../../../LibraryIncludes.h"
 #include "../Spatial/TransformComponent.h"
 #include "../../GameObject/GameObject.h"
-#include "../../../UserInterface/Text/FontFace.h"
-#include "../../../Engine/Loaders/Specific/UserInterface/Text/FontFaceLoader.h"
 #include "../../../Engine/Graphics/SimpleRenderPacket.h"
 
 using namespace StandardCLibrary;
@@ -12,7 +10,6 @@ using namespace SuperGameEngine;
 SpriteComponent::SpriteComponent() : GameComponent()
 {
     m_superTexture = nullptr;
-    textRenderPacket = std::make_shared<SimpleRenderPacket>();
 }
 
 void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
@@ -37,14 +34,6 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     }
     m_currentSplit = 0;
     m_currentTime = 0;
-
-    testAsset = std::make_unique<FontFace>(m_superTexture);
-
-    std::shared_ptr<AssetLoader> as = std::make_shared<FontFaceLoader>();
-    this->testAsset->LoadAsset(as, FString(""));
-    FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
-    parameters.TextToRender = FText("aabbaa");
-    this->textRenderPacket = this->testAsset->SetParametersForRenderPacket(parameters);
 
     SetDoRender(true);
 }
@@ -74,7 +63,6 @@ void SpriteComponent::Draw()
 
     if (m_superTexture)
     {
-        //FPoint textureSize = m_superTexture->Size();
         FPoint textureSize = FPoint(16 * 4,32 * 4);
         std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
         FPoint drawLocation = FPoint(
@@ -87,12 +75,6 @@ void SpriteComponent::Draw()
             drawLocation.GetX(), drawLocation.GetY(), 
             textureSize.GetX(), textureSize.GetY());
         m_splitTexture->Draw(m_currentSplit, screenRect);
-
-
-        std::shared_ptr<FText> text = std::make_shared<FText>(L"aba");
-
-        std::shared_ptr<Transform> t = transform;
-        this->testAsset->DrawPacket(this->textRenderPacket, t);
     }
 
 }

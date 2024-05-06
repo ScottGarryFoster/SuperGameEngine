@@ -7,7 +7,7 @@ namespace StandardCLibrary
     /// <summary>
     /// There was an issue openning the given file.
     /// </summary>
-    class FileOpenAssert : public FAsserts
+    class FileOpenException : public FAsserts
     {
     public:
         /// <summary>
@@ -17,7 +17,7 @@ namespace StandardCLibrary
         /// <returns>A unique text key. </returns>
         FString GetKey() final
         {
-            return FString("FileOpenAssert");
+            return FString("FileOpenException");
         };
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace StandardCLibrary
         /// <returns>A display name. </returns>
         FString GetDisplayKey() final
         {
-            return FString("FileOpenAssert");
+            return FString("FileOpenException");
         };
     };
 }

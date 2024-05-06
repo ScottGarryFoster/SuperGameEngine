@@ -293,6 +293,9 @@
     <ClCompile Include="Engine\Graphics\SimpleRenderPacket.cpp">
       <Filter>Project Files\Engine\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Components\Visual\TextComponent.cpp">
+      <Filter>Project Files\Structural\Components\Visual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -502,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h">
       <Filter>Project Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Components\Visual\TextComponent.h">
+      <Filter>Project Files\Structural\Components\Visual\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

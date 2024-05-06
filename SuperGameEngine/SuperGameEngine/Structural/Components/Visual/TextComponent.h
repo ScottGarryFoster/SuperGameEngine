@@ -1,20 +1,22 @@
 #pragma once
-#include "../../../LibraryIncludes.h"
 #include "../../GameObject/GameComponent.h"
 #include "../../Scene/SceneLoadPackage.h"
-#include "../../../Engine/Graphics/SplitTexture.h"
-
-using namespace SuperGameEngine_UserInterface;
+#include "../../../UserInterface/Text/FontFaceAsset.h"
 
 namespace SuperGameEngine
 {
+    using namespace SuperGameEngine_UserInterface;
+
+    class RenderPacket;
+
     /// <summary>
-    /// Renders a texture.
+    /// Renders text.
     /// </summary>
-    class SpriteComponent : public GameComponent
+    class TextComponent : public GameComponent
     {
     public:
-        SpriteComponent();
+        TextComponent();
+        virtual ~TextComponent();
 
         /// <summary>
         /// Sets up the Component.
@@ -34,25 +36,32 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw() override;
 
+        /// <summary>
+        /// Set the text to display.
+        /// </summary>
+        /// <param name="newValue">New value to set. </param>
+        void SetText(const FText& newValue);
+
+        /// <summary>
+        /// Get the current text set.
+        /// </summary>
+        /// <returns>Current text. </returns>
+        const FText GetText();
     private:
-        /// <summary>
-        /// A texture stored in the content manager.
-        /// </summary>
-        std::shared_ptr<SuperTexture> m_superTexture;
 
         /// <summary>
-        /// A texture capable of providing segements of itself to render.
+        /// The font used for the Text.
         /// </summary>
-        std::shared_ptr<SplitTexture> m_splitTexture;
+        std::shared_ptr<FontFaceAsset> fontFace;
 
         /// <summary>
-        /// Testing var to cycle the splits in the texture.
+        /// The text for the component.
         /// </summary>
-        int m_currentSplit;
+        std::shared_ptr<FText> componentText;
 
         /// <summary>
-        /// Testing var to time.
+        /// Cached Render information - how to render the text.
         /// </summary>
-        int m_currentTime;
+        std::shared_ptr<RenderPacket> textRenderPacket;
     };
 }

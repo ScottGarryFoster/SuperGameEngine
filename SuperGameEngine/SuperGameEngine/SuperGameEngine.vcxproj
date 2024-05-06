@@ -176,6 +176,7 @@
     <ClInclude Include="Structural\Components\Physics\SimpleRigidbodyComponent.h" />
     <ClInclude Include="Structural\Components\Spatial\TransformComponent.h" />
     <ClInclude Include="Structural\Components\Visual\SpriteComponent.h" />
+    <ClInclude Include="Structural\Components\Visual\TextComponent.h" />
     <ClInclude Include="Structural\GameObject\GameComponent.h" />
     <ClInclude Include="Structural\GameObject\GameObject.h" />
     <ClInclude Include="Structural\GameObject\TestComponent.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="Structural\Components\Physics\SimpleRigidbodyComponent.cpp" />
     <ClCompile Include="Structural\Components\Spatial\TransformComponent.cpp" />
     <ClCompile Include="Structural\Components\Visual\SpriteComponent.cpp" />
+    <ClCompile Include="Structural\Components\Visual\TextComponent.cpp" />
     <ClCompile Include="Structural\GameObject\GameComponent.cpp" />
     <ClCompile Include="Structural\GameObject\GameObject.cpp" />
     <ClCompile Include="Structural\GameObject\TestComponent.cpp" />

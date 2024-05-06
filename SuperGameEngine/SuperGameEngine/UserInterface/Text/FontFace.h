@@ -1,10 +1,10 @@
 #pragma once
-#include "../../LibraryIncludes.h"
 #include "FontFaceAsset.h"
+
+using namespace SuperGameEngine;
 
 namespace SuperGameEngine_UserInterface
 {
-    using namespace SuperGameEngine;
 
     /// <summary>
     /// Represents a single font face.
