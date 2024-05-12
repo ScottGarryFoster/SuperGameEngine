@@ -48,32 +48,27 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     GameObject* go = new GameObject(true);
     go->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
-    go->GetTransform()->SetLocation(500, 100);
+    go->GetTransform()->SetLocation(200, 100);
 
     std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>();
     pc->SetSpeed(300);
+    pc->UseKeyboard(false);
         
     go->AddComponent<SimpleRigidbodyComponent>();
+
     //std::shared_ptr<CircleColliderComponent> box = go->AddComponent<CircleColliderComponent>();
     std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
-    FVector2D l = FVector2D(50, 50);
+    FVector2D l = FVector2D(0, 0);
     FVector2D s = FVector2D(100, 200);
     box->SetColliderLocation(l);
     box->SetColliderSize(s);
     //box->SetColliderSize(35);
 
-    std::shared_ptr tc = go->AddComponent<TextComponent>();
-    tc->SetText(FText("TestText"));
-    //go->AddComponent<SpriteComponent>();
-
-
     m_gameObjects.push_back(go);
-
-
 
     GameObject* go2 = new GameObject(true);
     go2->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
-    go2->GetTransform()->SetLocation(100, 100);
+    go2->GetTransform()->SetLocation(500, 500);
 
     std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>();
     //std::shared_ptr<BoxColliderComponent> box2 = go2->AddComponent<BoxColliderComponent>();
@@ -85,9 +80,14 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     go2->AddComponent<SimpleRigidbodyComponent>();
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
-    player->UseKeyboard(false);
+    player->UseKeyboard(true);
 
+    std::shared_ptr tc = go2->AddComponent<TextComponent>();
+    tc->SetText(FText("TestText"));
     go2->AddComponent<SpriteComponent>();
+
+
+    //go2->AddComponent<SpriteComponent>();
     m_gameObjects.push_back(go2);
 
     m_loaded = true;

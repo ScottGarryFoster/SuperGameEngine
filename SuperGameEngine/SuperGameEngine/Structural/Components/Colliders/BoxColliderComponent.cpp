@@ -3,6 +3,7 @@
 #include "../../Components/Spatial/TransformComponent.h"
 #include "../../../Engine/Graphics/Technique/RectangleDrawableTechnique.h"
 #include "CircleColliderComponent.h"
+#include "../../Spatial/Positional/TransformChangedEventArguments.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -106,14 +107,13 @@ bool BoxColliderComponent::Update(GameTime gameTime)
 
 void BoxColliderComponent::Invoke(FEventArguments* arguments)
 {
-    if (TypeHelpers::IsDerivedFrom<FEventArguments, FVectorLocationEventArguments>())
+    TransformChangedEventArguments* locationArguments =
+        dynamic_cast<TransformChangedEventArguments*>(arguments);
+    if (locationArguments)
     {
-        FVectorLocationEventArguments* locationArguments =
-            dynamic_cast<FVectorLocationEventArguments*>(arguments);
-
         m_retangleActual->SetLocation(
-            locationArguments->X + m_retangle->GetLeft() - (m_retangle->GetWidth() / 2.0f),
-            locationArguments->Y + m_retangle->GetTop() - (m_retangle->GetHeight() / 2.0f));
+            locationArguments->Location->GetX() + m_retangle->GetLeft() - (m_retangle->GetWidth() / 2.0f),
+            locationArguments->Location->GetY() + m_retangle->GetTop() - (m_retangle->GetHeight() / 2.0f));
     }
 }
 

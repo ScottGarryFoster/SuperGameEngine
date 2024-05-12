@@ -62,6 +62,20 @@ namespace SuperGameEngine
         /// </param>
         virtual void DrawPacket
             (std::shared_ptr<SuperTexture> texture, const FVector2D& offsetLocation) const = 0;
+
+        /// <summary>
+        /// Draws the contents of the packet.
+        /// </summary>
+        /// <param name="texture">
+        /// Texture to use when drawing.
+        /// </param>
+        /// <param name="transform">
+        /// Offset the Rectangles by the location given, scale and rotation.
+        /// This means that you can use 0,0 as the releative location for the 
+        /// Draw and then use this location to not recreate the packet everytrime.
+        /// </param>
+        virtual void DrawPacket
+            (std::shared_ptr<SuperTexture> texture, const std::shared_ptr<Transform> transform) const = 0;
     };
 
 }

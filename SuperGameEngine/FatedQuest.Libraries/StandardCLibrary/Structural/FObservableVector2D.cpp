@@ -50,6 +50,8 @@ void FObservableVector2D::InvokeOnValueChanged()
     FVectorLocationEventArguments* arguments = new FVectorLocationEventArguments();
     arguments->X = GetX();
     arguments->Y = GetY();
+    arguments->Caller = this;
+
     m_onValueChangedEvent->Invoke(arguments);
 
     delete arguments;

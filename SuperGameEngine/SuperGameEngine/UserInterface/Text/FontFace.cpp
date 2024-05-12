@@ -33,6 +33,7 @@ void FontFace::DrawText(
     parameters.TextToRender = *text;
 
     std::shared_ptr<RenderPacket> renderPacket = CalculateRender(parameters);
+
     DrawPacket(renderPacket, transform);
 }
 
