@@ -64,7 +64,6 @@ std::shared_ptr<RenderPacket> SplitTexture::GetObjectRenderPacket()
 
 void SplitTexture::DrawPacket(std::shared_ptr<RenderPacket> renderPacket, std::shared_ptr<Transform> transform)
 {
-    transform->SetScale(3, 3);
     renderPacket->DrawPacket(m_superTexture, transform);
 }
 

@@ -28,7 +28,7 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
     GameComponent::Update(gameTime);
 
     //float speed = (0.1f * gameTime.TicksSinceLastFrame);
-    std::shared_ptr<TransformComponent> transform = GameComponent::GetParent()->GetTransform();
+    std::shared_ptr<TransformComponent> transform = GameComponent::GetParent()->GetTransformComponent();
     const FVector2D* location = transform->GetLocation();
     FVector2D* locationCopy = new FVector2D(*location);
 

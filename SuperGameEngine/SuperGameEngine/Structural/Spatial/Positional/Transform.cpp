@@ -62,6 +62,7 @@ void Transform::Invoke(FEventArguments* arguments)
     transformArguments->Rotation = m_rotation.get();
 
     m_onLocationChanged->Invoke(transformArguments);
+    delete transformArguments;
 }
 
 void Transform::SetScale(const float xy)

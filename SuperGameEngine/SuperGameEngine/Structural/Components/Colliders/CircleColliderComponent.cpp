@@ -29,7 +29,7 @@ void CircleColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* p
 
     GetLoadPackage()->GetTechniqueRender()->GiveTechnique(m_circleDrawableTechnique);
 
-    m_transform = parent->GetTransform();
+    m_transform = parent->GetTransformComponent();
     m_transform->OnLocationChanged()->Subscribe(this);
 
     FVector2D newLocation = FVector2D(

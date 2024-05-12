@@ -48,7 +48,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     GameObject* go = new GameObject(true);
     go->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
-    go->GetTransform()->SetLocation(200, 100);
+    go->GetTransformComponent()->SetLocation(200, 100);
 
     std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>();
     pc->SetSpeed(300);
@@ -68,7 +68,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     GameObject* go2 = new GameObject(true);
     go2->Setup(m_sceneLoadPackage, m_sceneToGameObjectPackage);
-    go2->GetTransform()->SetLocation(500, 500);
+    go2->GetTransformComponent()->SetLocation(500, 500);
 
     std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>();
     //std::shared_ptr<BoxColliderComponent> box2 = go2->AddComponent<BoxColliderComponent>();
@@ -84,7 +84,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     std::shared_ptr tc = go2->AddComponent<TextComponent>();
     tc->SetText(FText("TestText"));
-    go2->AddComponent<SpriteComponent>();
+    //go2->AddComponent<SpriteComponent>();
 
 
     //go2->AddComponent<SpriteComponent>();

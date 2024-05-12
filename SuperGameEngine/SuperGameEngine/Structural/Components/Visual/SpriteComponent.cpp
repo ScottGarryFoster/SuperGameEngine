@@ -64,7 +64,7 @@ void SpriteComponent::Draw()
     if (m_superTexture)
     {
         FPoint textureSize = FPoint(16 * 4,32 * 4);
-        std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
+        std::shared_ptr<TransformComponent> transform = GetParent()->GetTransformComponent();
         FPoint drawLocation = FPoint(
             (int)transform->GetLocation()->GetX() - (textureSize.GetX() / 2),
             (int)transform->GetLocation()->GetY() - (textureSize.GetY() / 2));

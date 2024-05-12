@@ -27,7 +27,7 @@ void BoxColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* pare
 {
     ColliderComponent::Setup(loadPackage, parent);
 
-    m_transform = parent->GetTransform();
+    m_transform = parent->GetTransformComponent();
     m_transform->OnLocationChanged()->Subscribe(this);
 
     GetLoadPackage()->GetTechniqueRender()->GiveTechnique(m_rectangleDrawableTechnique);
