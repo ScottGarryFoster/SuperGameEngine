@@ -95,13 +95,13 @@ void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
     {
         if (!m_haveEverUpdated)
         {
-            const FVector2D* currentLocation = GameComponent::GetParent()->GetTransform()->GetLocation();
+            const FVector2D* currentLocation = GameComponent::GetParent()->GetTransformComponent()->GetLocation();
             m_previousLocation->SetXYValue(currentLocation->GetX(), currentLocation->GetY());
             m_haveEverUpdated = true;
         }
         else
         {
-            GameComponent::GetParent()->GetTransform()->SetLocation(
+            GameComponent::GetParent()->GetTransformComponent()->SetLocation(
                 m_previousLocation->GetX(), m_previousLocation->GetY());
         }
     }
@@ -110,7 +110,7 @@ void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
         m_canRunPhysics = true;
         if (m_numberOfCollisionsLastFixedUpdate >= 0)
         {
-            const FVector2D* currentLocation = GameComponent::GetParent()->GetTransform()->GetLocation();
+            const FVector2D* currentLocation = GameComponent::GetParent()->GetTransformComponent()->GetLocation();
             m_previousLocation->SetXYValue(currentLocation->GetX(), currentLocation->GetY());
             m_haveEverUpdated = true;
         }
@@ -122,7 +122,7 @@ void SimpleRigidbodyComponent::DetermineIfCanRunPhysics()
 
 void SimpleRigidbodyComponent::RunPhysicsLoop()
 {
-    std::shared_ptr<TransformComponent> transform = GetParent()->GetTransform();
+    std::shared_ptr<TransformComponent> transform = GetParent()->GetTransformComponent();
     FrameTiming* timing = GetLoadPackage()->GetFrameTiming();
 
     float x = transform->GetLocation()->GetX();

@@ -33,6 +33,8 @@ void TextComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 
         this->textRenderPacket = this->fontFace->SetParametersForRenderPacket(parameters);
     }
+
+    GetParent()->GetTransform()->SetScale(3);
 }
 
 bool TextComponent::Update(GameTime gameTime)
@@ -51,9 +53,7 @@ void TextComponent::Draw()
         return;
     }
 
-    std::shared_ptr<Transform> transform = dynamic_pointer_cast<Transform>(this->GetParent()->GetTransform());
-
-    this->fontFace->DrawPacket(this->textRenderPacket, transform);
+    this->fontFace->DrawPacket(this->textRenderPacket, GetParent()->GetTransform());
 }
 
 void TextComponent::SetText(const FText& newValue)

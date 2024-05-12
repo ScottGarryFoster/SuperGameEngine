@@ -64,7 +64,7 @@ std::shared_ptr<RenderPacket> SplitTexture::GetObjectRenderPacket()
 
 void SplitTexture::DrawPacket(std::shared_ptr<RenderPacket> renderPacket, std::shared_ptr<Transform> transform)
 {
-    renderPacket->DrawPacket(m_superTexture, *transform->GetLocation());
+    renderPacket->DrawPacket(m_superTexture, transform);
 }
 
 bool SplitTexture::Contains(const RectangleInt& left, const RectangleInt& right) const

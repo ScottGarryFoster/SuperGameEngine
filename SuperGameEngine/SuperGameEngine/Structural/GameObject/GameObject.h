@@ -132,7 +132,16 @@ namespace SuperGameEngine
         /// Every gameobject has transform.
         /// </summary>
         /// <returns>The location, scale and rotation of the gameobject. </returns>
-        std::shared_ptr<TransformComponent> GetTransform();
+        std::shared_ptr<TransformComponent> GetTransformComponent();
+
+        /// <summary>
+        /// Gets the transform on this GameObject.
+        /// MUST CALL DURING/AFTER SETUP not on construction.
+        /// Never fails after setup.
+        /// Every gameobject has transform.
+        /// </summary>
+        /// <returns>The location, scale and rotation of the gameobject. </returns>
+        std::shared_ptr<Transform> GetTransform();
         
     private:
         /// <summary>

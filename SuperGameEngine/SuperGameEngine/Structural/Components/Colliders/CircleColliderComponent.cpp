@@ -2,6 +2,7 @@
 #include "../../GameObject/GameObject.h"
 #include "../../Components/Spatial/TransformComponent.h"
 #include "BoxColliderComponent.h"
+#include "../../Spatial/Positional/TransformChangedEventArguments.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -28,7 +29,7 @@ void CircleColliderComponent::Setup(SceneLoadPackage* loadPackage, GameObject* p
 
     GetLoadPackage()->GetTechniqueRender()->GiveTechnique(m_circleDrawableTechnique);
 
-    m_transform = parent->GetTransform();
+    m_transform = parent->GetTransformComponent();
     m_transform->OnLocationChanged()->Subscribe(this);
 
     FVector2D newLocation = FVector2D(
@@ -100,14 +101,13 @@ bool CircleColliderComponent::Update(GameTime gameTime)
 
 void CircleColliderComponent::Invoke(FEventArguments* arguments)
 {
-    if (TypeHelpers::IsDerivedFrom<FEventArguments, FVectorLocationEventArguments>())
+    TransformChangedEventArguments* locationArguments =
+        dynamic_cast<TransformChangedEventArguments*>(arguments);
+    if (locationArguments)
     {
-        FVectorLocationEventArguments* locationArguments =
-            dynamic_cast<FVectorLocationEventArguments*>(arguments);
-
         FVector2D circleLocation = m_circle->GetLocation();
-        circleLocation.SetX(locationArguments->X + circleLocation.GetX());
-        circleLocation.SetY(locationArguments->Y + circleLocation.GetY());
+        circleLocation.SetX(locationArguments->Location->GetX() + circleLocation.GetX());
+        circleLocation.SetY(locationArguments->Location->GetY() + circleLocation.GetY());
         m_circleActual->SetLocation(circleLocation);
     }
 }

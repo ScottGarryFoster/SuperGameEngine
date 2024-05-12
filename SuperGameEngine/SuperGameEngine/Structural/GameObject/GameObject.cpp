@@ -150,7 +150,12 @@ void GameObject::OnCollisionEnd(Collision& collision)
     }
 }
 
-std::shared_ptr<TransformComponent> GameObject::GetTransform()
+std::shared_ptr<TransformComponent> GameObject::GetTransformComponent()
+{
+    return m_transform;
+}
+
+std::shared_ptr<Transform> GameObject::GetTransform()
 {
     return m_transform;
 }

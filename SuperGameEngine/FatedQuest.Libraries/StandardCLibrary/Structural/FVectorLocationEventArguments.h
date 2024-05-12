@@ -4,6 +4,8 @@
 
 namespace StandardCLibrary
 {
+    class FVector2D;
+
     /// <summary>
     /// Information about the Location changing on a FVector
     /// </summary>
@@ -19,5 +21,10 @@ namespace StandardCLibrary
         /// Y cordinate.
         /// </summary>
         float Y = 0;
+
+        /// <summary>
+        /// The object which called the event.
+        /// </summary>
+        const FVector2D* Caller = nullptr;
     };
 }

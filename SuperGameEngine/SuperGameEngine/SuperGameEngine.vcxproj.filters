@@ -506,14 +506,17 @@
     <ClInclude Include="UserInterface\Text\FontFaceRenderPacketParameters.hpp">
       <Filter>Project Files\UserInterface\Text\API</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h">
-      <Filter>Project Files\Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Structural\Components\Visual\TextComponent.h">
       <Filter>Project Files\Structural\Components\Visual\API</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.h">
       <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Positional\TransformChangedEventArguments.h">
+      <Filter>Project Files\Structural\Spatial\Positional\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

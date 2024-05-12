@@ -36,7 +36,7 @@ namespace SuperGameEngine
         {
         public:
             RectangleInt TextureRectangle = RectangleInt(0, 0, 0, 0);
-            wchar_t Character;
+            wchar_t Character = L' ';
         };
 
         /// <summary>
