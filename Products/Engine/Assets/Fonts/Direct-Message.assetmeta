@@ -4,30 +4,30 @@
     <Characters>
         <Character Top="1" Left="1" Width="5" Height="10" Character="A" />
         <Character Top="1" Left="7" Width="5" Height="10" Character="B" />
-        <Character Top="1" Left="12" Width="5" Height="10" Character="C" />
-        <Character Top="1" Left="17" Width="5" Height="10" Character="D" />
-        <Character Top="1" Left="22" Width="5" Height="10" Character="E" />
-        <Character Top="1" Left="27" Width="5" Height="10" Character="F" />
-        <Character Top="1" Left="32" Width="5" Height="10" Character="G" />
-        <Character Top="1" Left="37" Width="5" Height="10" Character="H" />
+        <Character Top="1" Left="13" Width="5" Height="10" Character="C" />
+        <Character Top="1" Left="19" Width="5" Height="10" Character="D" />
+        <Character Top="1" Left="25" Width="5" Height="10" Character="E" />
+        <Character Top="1" Left="31" Width="5" Height="10" Character="F" />
+        <Character Top="1" Left="37" Width="5" Height="10" Character="G" />
+        <Character Top="1" Left="43" Width="5" Height="10" Character="H" />
         
         <Character Top="12" Left="1" Width="5" Height="10" Character="I" />
         <Character Top="12" Left="7" Width="5" Height="10" Character="J" />
-        <Character Top="12" Left="12" Width="5" Height="10" Character="K" />
-        <Character Top="12" Left="17" Width="5" Height="10" Character="L" />
-        <Character Top="12" Left="22" Width="5" Height="10" Character="M" />
-        <Character Top="12" Left="27" Width="5" Height="10" Character="N" />
-        <Character Top="12" Left="32" Width="5" Height="10" Character="O" />
-        <Character Top="12" Left="37" Width="5" Height="10" Character="P" />
+        <Character Top="12" Left="13" Width="5" Height="10" Character="K" />
+        <Character Top="12" Left="19" Width="5" Height="10" Character="L" />
+        <Character Top="12" Left="25" Width="5" Height="10" Character="M" />
+        <Character Top="12" Left="31" Width="5" Height="10" Character="N" />
+        <Character Top="12" Left="37" Width="5" Height="10" Character="O" />
+        <Character Top="12" Left="43" Width="5" Height="10" Character="P" />
         
         <Character Top="23" Left="1" Width="5" Height="10" Character="Q" />
         <Character Top="23" Left="7" Width="5" Height="10" Character="R" />
-        <Character Top="23" Left="12" Width="5" Height="10" Character="S" />
-        <Character Top="23" Left="17" Width="5" Height="10" Character="T" />
-        <Character Top="23" Left="22" Width="5" Height="10" Character="U" />
-        <Character Top="23" Left="27" Width="5" Height="10" Character="V" />
-        <Character Top="23" Left="32" Width="5" Height="10" Character="W" />
-        <Character Top="23" Left="37" Width="5" Height="10" Character="X" />
+        <Character Top="23" Left="13" Width="5" Height="10" Character="S" />
+        <Character Top="23" Left="19" Width="5" Height="10" Character="T" />
+        <Character Top="23" Left="25" Width="5" Height="10" Character="U" />
+        <Character Top="23" Left="31" Width="5" Height="10" Character="V" />
+        <Character Top="23" Left="37" Width="5" Height="10" Character="W" />
+        <Character Top="23" Left="43" Width="5" Height="10" Character="X" />
         
         <Character Top="34" Left="1" Width="5" Height="10" Character="Y" />
         <Character Top="34" Left="7" Width="5" Height="10" Character="Z" />
@@ -66,12 +66,12 @@
         
         <Character Top="89" Left="1" Width="5" Height="10" Character="0" />
         <Character Top="89" Left="7" Width="5" Height="10" Character="1" />
-        <Character Top="89" Left="12" Width="5" Height="10" Character="2" />
-        <Character Top="89" Left="17" Width="5" Height="10" Character="3" />
-        <Character Top="89" Left="22" Width="5" Height="10" Character="4" />
-        <Character Top="89" Left="27" Width="5" Height="10" Character="5" />
-        <Character Top="89" Left="32" Width="5" Height="10" Character="6" />
-        <Character Top="89" Left="37" Width="5" Height="10" Character="7" />
+        <Character Top="89" Left="13" Width="5" Height="10" Character="2" />
+        <Character Top="89" Left="19" Width="5" Height="10" Character="3" />
+        <Character Top="89" Left="25" Width="5" Height="10" Character="4" />
+        <Character Top="89" Left="31" Width="5" Height="10" Character="5" />
+        <Character Top="89" Left="37" Width="5" Height="10" Character="6" />
+        <Character Top="89" Left="43" Width="5" Height="10" Character="7" />
         
         <Character Top="100" Left="1" Width="5" Height="10" Character="8" />
         <Character Top="100" Left="7" Width="5" Height="10" Character="9" />

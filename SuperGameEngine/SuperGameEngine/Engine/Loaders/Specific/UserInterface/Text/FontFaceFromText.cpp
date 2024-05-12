@@ -13,6 +13,8 @@ FontFaceFromText::FontFaceFromText(ContentManager* contentManager)
 std::shared_ptr<FontFace> FontFaceFromText::LoadFromFile
     (std::shared_ptr<bool>& answer, const std::shared_ptr<FString> text)
 {
+    // TODO: Make a better error throw back than this bool.
+    // Does not seem to be good enough.
     *answer = false;
     std::shared_ptr<FontFace> fontFace = std::shared_ptr<FontFace>();
 
@@ -47,7 +49,7 @@ std::shared_ptr<FontFace> FontFaceFromText::LoadFromFile
             }
             if (name == FString("texture"))
             {
-                if (!ParseAssetTexture(fontFaceData, child))
+                if (ParseAssetTexture(fontFaceData, child))
                 {
                     ++tagsFound;
                 }
@@ -59,7 +61,7 @@ std::shared_ptr<FontFace> FontFaceFromText::LoadFromFile
 
             if (name == FString("characters"))
             {
-                if (!ParseCharacters(fontFaceData, child))
+                if (ParseCharacters(fontFaceData, child))
                 {
                     ++tagsFound;
                 }

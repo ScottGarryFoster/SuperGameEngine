@@ -29,7 +29,7 @@ void TextComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     {
         this->fontFace = ffa;
         FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
-        parameters.TextToRender = FText("aabbaa");
+        parameters.TextToRender = FText("QWERTYUIOPASDFGHJKLZXCVBNM1234567890"); //
 
         this->textRenderPacket = this->fontFace->SetParametersForRenderPacket(parameters);
     }
