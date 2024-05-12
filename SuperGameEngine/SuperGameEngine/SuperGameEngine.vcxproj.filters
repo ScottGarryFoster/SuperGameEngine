@@ -518,6 +518,9 @@
     <ClInclude Include="Structural\Spatial\Positional\TransformChangedEventArguments.h">
       <Filter>Project Files\Structural\Spatial\Positional\API</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Graphics\SplitTextureRenderPacketParameters.hpp">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

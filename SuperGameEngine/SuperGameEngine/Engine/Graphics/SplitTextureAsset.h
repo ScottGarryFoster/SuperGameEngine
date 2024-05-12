@@ -3,6 +3,7 @@
 #include "../../Structural/Spatial/Area/RectangleInt.h"
 #include "../../Engine/Loaders/AssetLoader.h"
 #include "../../Engine/Graphics/CacheableRender.h"
+#include "SplitTextureRenderPacketParameters.hpp"
 
 namespace SuperGameEngine
 {
@@ -48,5 +49,13 @@ namespace SuperGameEngine
         /// <param name="key">Asset Key which is a location releative from products. </param>
         /// <returns>True means loaded, false means failed to load. </returns>
         virtual bool LoadAsset(std::shared_ptr<AssetLoader> assetLoader, FString key) = 0;
+
+        /// <summary>
+        /// Sets the information to produce a render packet.
+        /// </summary>
+        /// <param name="parameters">
+        /// Parameters required to create a render packet from a Split Texture.
+        /// </param>
+        virtual std::shared_ptr<RenderPacket> SetParametersForRenderPacket(const SplitTextureRenderPacketParameters& parameters) = 0;
     };
 }

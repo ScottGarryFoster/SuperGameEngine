@@ -10,6 +10,7 @@ using namespace SuperGameEngine;
 SpriteComponent::SpriteComponent() : GameComponent()
 {
     m_superTexture = nullptr;
+    m_renderPacket = std::shared_ptr<RenderPacket>();
 }
 
 void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
@@ -35,6 +36,10 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     m_currentSplit = 0;
     m_currentTime = 0;
 
+    GetParent()->GetTransform()->SetScale(4, 4);
+
+    UpdateCurrentSprite();
+
     SetDoRender(true);
 }
 
@@ -51,6 +56,8 @@ bool SpriteComponent::Update(GameTime gameTime)
             m_currentSplit = 0;
         }
 
+        UpdateCurrentSprite();
+
         m_currentTime -= 100;
     }
 
@@ -61,20 +68,16 @@ void SpriteComponent::Draw()
 {
     GameComponent::Draw();
 
-    if (m_superTexture)
+    if (m_splitTexture && m_renderPacket)
     {
-        FPoint textureSize = FPoint(16 * 4,32 * 4);
-        std::shared_ptr<TransformComponent> transform = GetParent()->GetTransformComponent();
-        FPoint drawLocation = FPoint(
-            (int)transform->GetLocation()->GetX() - (textureSize.GetX() / 2),
-            (int)transform->GetLocation()->GetY() - (textureSize.GetY() / 2));
-
-        //m_superTexture->Draw(drawLocation);
-
-        RectangleInt screenRect = RectangleInt(
-            drawLocation.GetX(), drawLocation.GetY(), 
-            textureSize.GetX(), textureSize.GetY());
-        m_splitTexture->Draw(m_currentSplit, screenRect);
+        m_splitTexture->DrawPacket(m_renderPacket, GetParent()->GetTransform());
     }
 
+}
+
+void SpriteComponent::UpdateCurrentSprite()
+{
+    SplitTextureRenderPacketParameters parameters;
+    parameters.Split = m_currentSplit;
+    m_renderPacket = m_splitTexture->SetParametersForRenderPacket(parameters);
 }

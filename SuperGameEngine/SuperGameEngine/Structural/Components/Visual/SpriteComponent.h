@@ -52,5 +52,15 @@ namespace SuperGameEngine
         /// Testing var to time.
         /// </summary>
         int m_currentTime;
+
+        /// <summary>
+        /// Cached version of the Draw.
+        /// </summary>
+        std::shared_ptr<RenderPacket> m_renderPacket;
+
+        /// <summary>
+        /// Updates the current sprite for drawing.
+        /// </summary>
+        void UpdateCurrentSprite();
     };
 }
