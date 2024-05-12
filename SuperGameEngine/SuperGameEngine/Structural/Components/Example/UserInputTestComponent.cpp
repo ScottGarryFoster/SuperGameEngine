@@ -8,7 +8,7 @@ void UserInputTestComponent::Setup(SceneLoadPackage* loadPackage, GameObject* pa
     GameComponent::Setup(loadPackage, parent);
 }
 
-bool UserInputTestComponent::Update(GameTime gameTime)
+bool UserInputTestComponent::Update(const GameTime gameTime)
 {
     const DirectKeyInput* directInput = GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();
     if (directInput->KeyDown(InputKeyCode::Q))

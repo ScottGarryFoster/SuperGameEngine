@@ -11,7 +11,7 @@ using namespace StandardCLibrary;
 
 TextComponent::TextComponent()
 {
-    this->componentText = std::make_shared<FText>();
+    m_componentText = std::make_shared<FText>(L"FROM SCENE");
 }
 
 TextComponent::~TextComponent()
@@ -27,20 +27,20 @@ void TextComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     std::shared_ptr<FontFaceAsset> ffa = loadPackage->GetContentManager()->GetFontFace(FString("Engine\\Assets\\Fonts\\Direct-Message.assetmeta"), didFind);
     if (*didFind)
     {
-        this->fontFace = ffa;
-        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
-        parameters.TextToRender = FText("QWERTYUIOPASDFGHJKLZXCVBNM1234567890"); //
+        this->m_fontFace = ffa;
 
-        this->textRenderPacket = this->fontFace->SetParametersForRenderPacket(parameters);
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *m_componentText;
+
+        this->m_textRenderPacket = this->m_fontFace->SetParametersForRenderPacket(parameters);
     }
 
     GetParent()->GetTransform()->SetScale(3);
 }
 
-bool TextComponent::Update(GameTime gameTime)
+bool TextComponent::Update(const GameTime gameTime)
 {
     GameComponent::Update(gameTime);
-
     return false;
 }
 
@@ -48,17 +48,18 @@ void TextComponent::Draw()
 {
     GameComponent::Draw();
 
-    if (!this->fontFace)
+    if (!this->m_fontFace)
     {
         return;
     }
 
-    this->fontFace->DrawPacket(this->textRenderPacket, GetParent()->GetTransform());
+    this->m_fontFace->DrawPacket(this->m_textRenderPacket, GetParent()->GetTransform());
 }
 
 void TextComponent::SetText(const FText& newValue)
 {
-    if (!this->fontFace)
+    this->m_componentText = std::make_shared<FText>(newValue.AsStdWstring());
+    if (!this->m_fontFace)
     {
         return;
     }
@@ -66,12 +67,10 @@ void TextComponent::SetText(const FText& newValue)
     FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
     parameters.TextToRender = newValue;
 
-    this->textRenderPacket = this->fontFace->SetParametersForRenderPacket(parameters);
-
-    this->componentText = std::make_shared<FText>(newValue.AsStdWstring());
+    this->m_textRenderPacket = this->m_fontFace->SetParametersForRenderPacket(parameters);
 }
 
 const FText TextComponent::GetText()
 {
-    return *this->componentText;
+    return *this->m_componentText;
 }

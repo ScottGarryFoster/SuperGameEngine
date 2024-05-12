@@ -13,6 +13,11 @@ namespace SuperGameEngine
         ~Scene();
 
         /// <summary>
+        /// A unique identifier.
+        /// </summary>
+        std::shared_ptr<Guid> GetGuid();
+
+        /// <summary>
         /// Sets up the scene.
         /// </summary>
         /// <param name="sceneLoadPackage">Contains all the objects a GameObject needs to opperate. </param>
@@ -24,20 +29,36 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
-        bool Update(GameTime gameTime);
+        bool Update(const GameTime gameTime);
 
         /// <summary>
         /// Update which occurs at a set timing.
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
-        void FixedUpdate(GameTime gameTime);
+        void FixedUpdate(const GameTime gameTime);
 
         /// <summary>
         /// Draw everything in the game.
         /// </summary>
         void Draw();
 
+        /// <summary>
+        /// Creates new Game Object in the scene.
+        /// </summary>
+        /// <returns>New Game Object in the Scene.</returns>
+        std::shared_ptr<GameObject> CreateNewGameObject();
+
+        /// <summary>
+        /// Gets all Game Objects.
+        /// </summary>
+        /// <returns>All GameObjects in the Scene. </returns>
+        std::vector<std::shared_ptr<GameObject>> GetAllGameObjects();
+
     private:
+        /// <summary>
+        /// Unique identifier.
+        /// </summary>
+        std::shared_ptr<Guid> m_guid;
 
         /// <summary>
         /// Has setup run successfully?
@@ -60,8 +81,6 @@ namespace SuperGameEngine
         /// <summary>
         /// All game objects currently loaded.
         /// </summary>
-        std::vector<GameObject*> m_gameObjects;
-
-        SuperTexture* m_texture;
+        std::vector<std::shared_ptr<GameObject>> m_gameObjects;
     };
 }

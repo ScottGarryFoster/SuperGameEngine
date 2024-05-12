@@ -94,7 +94,7 @@ void CircleColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, con
     m_transform->SetLocation(newLoc.GetX(), newLoc.GetY());
 }
 
-bool CircleColliderComponent::Update(GameTime gameTime)
+bool CircleColliderComponent::Update(const GameTime gameTime)
 {
     return false;
 }

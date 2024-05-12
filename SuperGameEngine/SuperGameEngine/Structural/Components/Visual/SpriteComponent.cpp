@@ -3,6 +3,7 @@
 #include "../Spatial/TransformComponent.h"
 #include "../../GameObject/GameObject.h"
 #include "../../../Engine/Graphics/SimpleRenderPacket.h"
+#include "../../Components/Visual/TextComponent.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
@@ -11,6 +12,8 @@ SpriteComponent::SpriteComponent() : GameComponent()
 {
     m_superTexture = nullptr;
     m_renderPacket = std::shared_ptr<RenderPacket>();
+    m_currentSplit = 0;
+    m_currentTime = 0;
 }
 
 void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
@@ -43,7 +46,7 @@ void SpriteComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
     SetDoRender(true);
 }
 
-bool SpriteComponent::Update(GameTime gameTime)
+bool SpriteComponent::Update(const GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
@@ -55,10 +58,9 @@ bool SpriteComponent::Update(GameTime gameTime)
         {
             m_currentSplit = 0;
         }
+        m_currentTime -= 100;
 
         UpdateCurrentSprite();
-
-        m_currentTime -= 100;
     }
 
     return false;

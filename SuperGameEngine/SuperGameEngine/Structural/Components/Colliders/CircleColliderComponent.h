@@ -55,7 +55,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
-        virtual bool Update(GameTime gameTime) override;
+        virtual bool Update(const GameTime gameTime) override;
 
         /// <summary>
         /// Reacts to events.

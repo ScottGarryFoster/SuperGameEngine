@@ -7,16 +7,17 @@
 #include "../../Structural/Components/Colliders/Collider.h"
 #include "../Scene/SceneToGameObjectPackage.h"
 #include "../Spatial/Collision/CollisionDectection.h"
+#include "../../Structural/Scene/GrandScene.h"
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-SuperGameEngine::GameObject::GameObject(bool loadingMode)
+SuperGameEngine::GameObject::GameObject()
 {
     m_guid = GUIDHelpers::CreateGUID();
 
     m_gameObjectPackage = nullptr;
     m_loadPackage = nullptr;
-    m_inLoadingMode = loadingMode;
+    m_sceneGuid = std::shared_ptr<Guid>();
 }
 
 GameObject::~GameObject()
@@ -25,9 +26,19 @@ GameObject::~GameObject()
     m_guid.reset();
 }
 
-std::shared_ptr<Guid> SuperGameEngine::GameObject::GetGuid()
+std::shared_ptr<Guid> GameObject::GetGuid()
 {
     return m_guid;
+}
+
+std::shared_ptr<Guid> GameObject::GetSceneGuid()
+{
+    return m_sceneGuid;
+}
+
+void GameObject::SetScene(std::shared_ptr<Guid> guid)
+{
+    m_sceneGuid = guid;
 }
 
 void GameObject::Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* gameObjectPackage)
@@ -51,9 +62,9 @@ void GameObject::Setup(SceneLoadPackage* loadPackage, SceneToGameObjectPackage* 
     EnsureTransformIsOnGameObject();
 }
 
-bool GameObject::Update(GameTime gameTime)
+bool GameObject::Update(const GameTime gameTime)
 {
-    if (m_inLoadingMode)
+    if (m_componentNeedsSetup)
     {
         for (size_t i = 0; i < m_gameComponents.Count(); ++i)
         {
@@ -68,7 +79,7 @@ bool GameObject::Update(GameTime gameTime)
 
         }
 
-        m_inLoadingMode = false;
+        m_componentNeedsSetup = false;
     }
 
     for (size_t i = 0; i < m_gameComponents.Count(); ++i)
@@ -84,7 +95,7 @@ bool GameObject::Update(GameTime gameTime)
     return true;
 }
 
-void GameObject::FixedUpdate(GameTime gameTime)
+void GameObject::FixedUpdate(const GameTime gameTime)
 {
     for (size_t i = 0; i < m_gameComponents.Count(); ++i)
     {
@@ -160,6 +171,11 @@ std::shared_ptr<Transform> GameObject::GetTransform()
     return m_transform;
 }
 
+std::shared_ptr<GameObject> GameObject::CreateNewGameObject()
+{
+    return m_gameObjectPackage->GetScene()->CreateNewGameObject(this);
+}
+
 bool GameObject::AddActualComponentFromObject(std::shared_ptr<Object> newObject)
 {
     bool typeIsCorrect = TypeHelpers::IsDerivedFrom<Object, GameComponent>();
@@ -181,10 +197,7 @@ void GameObject::AddActualComponent(std::shared_ptr<GameComponent> newComponent)
         return;
     }
 
-    if (!m_inLoadingMode)
-    {
-        newComponent->Setup(m_loadPackage, this);
-    }
+    m_componentNeedsSetup = true;
 
     std::shared_ptr<Collider> collider = std::dynamic_pointer_cast<Collider>(newComponent);
     if (collider)

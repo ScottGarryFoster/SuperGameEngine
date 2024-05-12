@@ -24,7 +24,7 @@ namespace SuperGameEngine
         /// Entry point for the entire game.
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
-        virtual void FixedUpdate(GameTime gameTime) override;
+        virtual void FixedUpdate(const GameTime gameTime) override;
 
         /// <summary>
         /// A collision with something else has begin.

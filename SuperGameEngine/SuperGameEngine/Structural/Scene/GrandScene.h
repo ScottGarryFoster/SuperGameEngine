@@ -39,6 +39,15 @@ namespace SuperGameEngine
         /// <param name="e">Event last sent from the update loop.</param>
         void EventUpdate(SDL_Event& e);
 
+        /// <summary>
+        /// Creates new Game Object in the scene.
+        /// </summary>
+        /// <param name="caller">
+        /// GameObject which called the Method. Used to create a GameObject in the same scene.
+        /// </param>
+        /// <returns>New Game Object in the Scene.</returns>
+        std::shared_ptr<GameObject> CreateNewGameObject(GameObject* caller);
+
     private:
         /// <summary>
         /// Contains all the objects a GameObject needs to opperate.

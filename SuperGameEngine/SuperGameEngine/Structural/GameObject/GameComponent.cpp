@@ -41,12 +41,12 @@ bool GameComponent::IsSetup()
     return m_isSetup;
 }
 
-bool GameComponent::Update(GameTime gameTime)
+bool GameComponent::Update(const GameTime gameTime)
 {
     return false;
 }
 
-void GameComponent::FixedUpdate(GameTime gameTime)
+void GameComponent::FixedUpdate(const GameTime gameTime)
 {
 }
 
@@ -59,12 +59,12 @@ GameObject* GameComponent::GetParent()
     return m_parent;
 }
 
-bool SuperGameEngine::GameComponent::DoRender() const
+bool GameComponent::DoRender() const
 {
     return m_doRender;
 }
 
-void SuperGameEngine::GameComponent::SetDoRender(bool newValue)
+void GameComponent::SetDoRender(bool newValue)
 {
     m_doRender = newValue;
 }
@@ -81,7 +81,7 @@ void GameComponent::OnCollisionEnd(Collision& collision)
 {
 }
 
-SceneLoadPackage* SuperGameEngine::GameComponent::GetLoadPackage()
+SceneLoadPackage* GameComponent::GetLoadPackage()
 {
     return m_loadPackage;
 }

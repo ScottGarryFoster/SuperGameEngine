@@ -23,16 +23,25 @@ namespace SuperGameEngine
         /// <summary>
         /// Default constructor.
         /// </summary>
-        /// <param name="loadingMode">
-        /// True means loading all components at once. Affects the order of setup.
-        /// </param>
-        GameObject(bool loadingMode = false);
+        GameObject();
         virtual ~GameObject();
 
         /// <summary>
         /// A unique identifier.
         /// </summary>
         std::shared_ptr<Guid> GetGuid();
+
+        /// <summary>
+        /// A unique identifier.
+        /// </summary>
+        /// <returns>Guid of the Scene. </returns>
+        std::shared_ptr<Guid> GetSceneGuid();
+
+        /// <summary>
+        /// Sets scene.
+        /// </summary>
+        /// <param name="guid">Guid of the Scene. </param>
+        void SetScene(std::shared_ptr<Guid> guid);
 
         /// <summary>
         /// Sets up the GameObject.
@@ -46,13 +55,13 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
-        virtual bool Update(GameTime gameTime);
+        virtual bool Update(const GameTime gameTime);
 
         /// <summary>
         /// Update which occurs at a set time.
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
-        virtual void FixedUpdate(GameTime gameTime);
+        virtual void FixedUpdate(const GameTime gameTime);
 
         /// <summary>
         /// Draw everything in the game.
@@ -142,12 +151,23 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>The location, scale and rotation of the gameobject. </returns>
         std::shared_ptr<Transform> GetTransform();
+
+        /// <summary>
+        /// Creates a new game object.
+        /// </summary>
+        /// <returns>A new game object in the scene. </returns>
+        std::shared_ptr<GameObject> CreateNewGameObject();
         
     private:
         /// <summary>
         /// Unique identifier.
         /// </summary>
         std::shared_ptr<Guid> m_guid;
+
+        /// <summary>
+        /// Scene Guid.
+        /// </summary>
+        std::shared_ptr<Guid> m_sceneGuid;
 
         /// <summary>
         /// Everything passed down from the scene.
@@ -170,11 +190,9 @@ namespace SuperGameEngine
         std::shared_ptr<TransformComponent> m_transform;
 
         /// <summary>
-        /// True means we are loading from file in one go.
-        /// This means that we do not setup components on Add.
-        /// Instead we let the update loop handle this.
+        /// True means a component needs setting up.
         /// </summary>
-        bool m_inLoadingMode;
+        bool m_componentNeedsSetup;
 
         /// <summary>
         /// Introduction into the system from the outside world.
