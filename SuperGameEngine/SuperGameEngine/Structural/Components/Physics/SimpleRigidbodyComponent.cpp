@@ -38,7 +38,7 @@ void SimpleRigidbodyComponent::Setup(SceneLoadPackage* loadPackage, GameObject* 
     }
 }
 
-void SimpleRigidbodyComponent::FixedUpdate(GameTime gameTime)
+void SimpleRigidbodyComponent::FixedUpdate(const GameTime gameTime)
 {
     m_didMoveLastFrame = false;
     DetermineIfCanRunPhysics();

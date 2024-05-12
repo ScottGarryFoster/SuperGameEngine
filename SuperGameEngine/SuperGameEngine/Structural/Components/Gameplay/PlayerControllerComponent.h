@@ -24,7 +24,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
-        virtual bool Update(GameTime gameTime) override;
+        virtual bool Update(const GameTime gameTime) override;
 
         /// <summary>
         /// Temp method to make player use only keyboard.
@@ -40,7 +40,7 @@ namespace SuperGameEngine
         void SetSpeed(float newValue);
 
     private:
-        void MoveByKeyboard(float speed, SuperGameEngine::GameTime& gameTime, StandardCLibrary::FVector2D* location);
+        void MoveByKeyboard(float speed, const GameTime& gameTime, StandardCLibrary::FVector2D* location);
         void MoveByController(StandardCLibrary::FVector2D* location, float speed);
 
         bool m_useKeyboard;
@@ -48,5 +48,7 @@ namespace SuperGameEngine
         std::shared_ptr<SimpleRigidbodyComponent> m_simpleRigidbodyComponent;
 
         float m_speed;
+
+        std::shared_ptr<GameObject> gameObjectt;
     };
 }

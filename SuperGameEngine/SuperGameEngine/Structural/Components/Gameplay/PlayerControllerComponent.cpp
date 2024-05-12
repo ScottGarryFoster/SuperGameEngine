@@ -1,6 +1,8 @@
 #include "PlayerControllerComponent.h"
 #include "../../GameObject/GameObject.h"
 #include "../Spatial/TransformComponent.h"
+#include "../Visual/SpriteComponent.h"
+#include "../Visual/TextComponent.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -9,6 +11,8 @@ PlayerControllerComponent::PlayerControllerComponent() : GameComponent()
 {
     m_useKeyboard = true;
     m_speed = 100;
+
+    gameObjectt = std::shared_ptr<GameObject>();
 }
 
 PlayerControllerComponent::~PlayerControllerComponent()
@@ -23,7 +27,7 @@ void PlayerControllerComponent::Setup(SceneLoadPackage* loadPackage, GameObject*
     m_simpleRigidbodyComponent = GetParent()->GetGameComponent<SimpleRigidbodyComponent>();
 }
 
-bool PlayerControllerComponent::Update(GameTime gameTime)
+bool PlayerControllerComponent::Update(const GameTime gameTime)
 {
     GameComponent::Update(gameTime);
 
@@ -35,6 +39,18 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
     if (m_useKeyboard)
     {
         MoveByKeyboard(m_speed, gameTime, locationCopy);
+
+        // Test for making new Game Objects [#20]
+        const DirectKeyInput* input =
+            GameComponent::GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();
+        if (!gameObjectt && input->KeyDown(InputKeyCode::N))
+        {
+            gameObjectt = GetParent()->CreateNewGameObject();
+            gameObjectt->GetTransform()->SetLocation(500, 500);
+            gameObjectt->AddComponent<SpriteComponent>();
+            std::shared_ptr<TextComponent> tc = gameObjectt->AddComponent<TextComponent>();
+            tc->SetText(FText("NEW"));
+        }
     }
     else
     {
@@ -42,6 +58,7 @@ bool PlayerControllerComponent::Update(GameTime gameTime)
     }
 
     delete locationCopy;
+
 
     return true;
 }
@@ -51,7 +68,7 @@ void PlayerControllerComponent::SetSpeed(float newValue)
     m_speed = newValue;
 }
 
-void PlayerControllerComponent::MoveByKeyboard(float speed, GameTime& gameTime, FVector2D* location)
+void PlayerControllerComponent::MoveByKeyboard(float speed, const GameTime& gameTime, FVector2D* location)
 {
     const DirectKeyInput* input = 
         GameComponent::GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();

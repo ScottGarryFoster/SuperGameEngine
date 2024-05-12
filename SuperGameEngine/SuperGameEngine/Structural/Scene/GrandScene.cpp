@@ -1,6 +1,7 @@
 #include "GrandScene.h"
 #include "../../Engine/Basic/GameTime.h"
 #include "../../Structural/Spatial/Collision/CollisionDectection.h"
+#include "../../Structural/GameObject/GameObject.h"
 
 using namespace SuperGameEngine;
 
@@ -17,7 +18,7 @@ GrandScene::GrandScene(SDL_Renderer* renderer)
         m_frameTimings,
         m_collisionDectection);
     m_scenes = std::vector<Scene*>();
-    m_sceneToGameObjectPackage = new SceneToGameObjectPackage(m_collisionDectection);
+    m_sceneToGameObjectPackage = new SceneToGameObjectPackage(m_collisionDectection, this);
 
 
     Scene* scene = new Scene();
@@ -111,4 +112,22 @@ void GrandScene::Draw()
 void GrandScene::EventUpdate(SDL_Event& e)
 {
     m_directInput->EventUpdate(e);
+}
+
+std::shared_ptr<GameObject> GrandScene::CreateNewGameObject(GameObject* caller)
+{
+    if (caller == nullptr)
+    {
+        return m_scenes[0]->CreateNewGameObject();
+    }
+
+    for (Scene* scene : m_scenes)
+    {
+        if (scene->GetGuid() == caller->GetSceneGuid())
+        {
+            return scene->CreateNewGameObject();
+        }
+    }
+
+    return m_scenes[0]->CreateNewGameObject();
 }

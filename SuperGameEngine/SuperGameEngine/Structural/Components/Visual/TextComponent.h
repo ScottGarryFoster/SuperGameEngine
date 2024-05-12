@@ -27,7 +27,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="tick">Ticks since last frame. </param>
         /// <returns>True means continue. False means close. </returns>
-        virtual bool Update(GameTime gameTime) override;
+        virtual bool Update(const GameTime gameTime) override;
 
         /// <summary>
         /// Draw everything in the game.
@@ -50,16 +50,16 @@ namespace SuperGameEngine
         /// <summary>
         /// The font used for the Text.
         /// </summary>
-        std::shared_ptr<FontFaceAsset> fontFace;
+        std::shared_ptr<FontFaceAsset> m_fontFace;
 
         /// <summary>
         /// The text for the component.
         /// </summary>
-        std::shared_ptr<FText> componentText;
+        std::shared_ptr<FText> m_componentText;
 
         /// <summary>
         /// Cached Render information - how to render the text.
         /// </summary>
-        std::shared_ptr<RenderPacket> textRenderPacket;
+        std::shared_ptr<RenderPacket> m_textRenderPacket;
     };
 }

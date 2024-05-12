@@ -97,7 +97,7 @@ void BoxColliderComponent::MoveOutOfOverlapRangeOf(const Collider& other, const 
     m_transform->SetLocation(newLoc.GetX(), newLoc.GetY());
 }
 
-bool BoxColliderComponent::Update(GameTime gameTime)
+bool BoxColliderComponent::Update(const GameTime gameTime)
 {
     ColliderComponent::Update(gameTime);
 
