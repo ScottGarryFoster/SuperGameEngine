@@ -82,9 +82,9 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
     player->UseKeyboard(true);
 
-    std::shared_ptr tc = go2->AddComponent<TextComponent>();
-    tc->SetText(FText("TestText"));
-    //go2->AddComponent<SpriteComponent>();
+    //std::shared_ptr tc = go2->AddComponent<TextComponent>();
+    //tc->SetText(FText("TestText"));
+    go2->AddComponent<SpriteComponent>();
 
 
     //go2->AddComponent<SpriteComponent>();

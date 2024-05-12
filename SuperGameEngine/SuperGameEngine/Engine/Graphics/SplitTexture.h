@@ -70,6 +70,14 @@ namespace SuperGameEngine
             std::shared_ptr<RenderPacket> renderPacket,
             std::shared_ptr<Transform> transform) override;
 
+        /// <summary>
+        /// Sets the information to produce a render packet.
+        /// </summary>
+        /// <param name="parameters">
+        /// Parameters required to create a render packet from a Split Texture.
+        /// </param>
+        virtual std::shared_ptr<RenderPacket> SetParametersForRenderPacket(const SplitTextureRenderPacketParameters& parameters) override;
+
     protected:
         /// <summary>
         /// The last render packet to be created.

@@ -136,6 +136,7 @@
     <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h" />
     <ClInclude Include="Engine\Graphics\SplitTexture.h" />
     <ClInclude Include="Engine\Graphics\SplitTextureAsset.h" />
+    <ClInclude Include="Engine\Graphics\SplitTextureRenderPacketParameters.hpp" />
     <ClInclude Include="Engine\Graphics\SuperTexture.h" />
     <ClInclude Include="Engine\Graphics\Technique\CircleDrawableTechnique.h" />
     <ClInclude Include="Engine\Graphics\Technique\DrawableTechnique.h" />

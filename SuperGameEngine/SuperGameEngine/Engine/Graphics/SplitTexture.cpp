@@ -67,6 +67,37 @@ void SplitTexture::DrawPacket(std::shared_ptr<RenderPacket> renderPacket, std::s
     renderPacket->DrawPacket(m_superTexture, transform);
 }
 
+std::shared_ptr<RenderPacket> SplitTexture::SetParametersForRenderPacket(const SplitTextureRenderPacketParameters& parameters)
+{
+    this->cachedRenderPacket = std::make_shared<SimpleRenderPacket>();
+
+    int split = parameters.Split;
+    int lastElement = (int)m_splits.size() - 1;
+    if (split < 0 || split > lastElement)
+    {
+        split = 0;
+        if (split < 0 || split > lastElement)
+        {
+            // There is nothing to render.
+            return this->cachedRenderPacket;
+        }
+    }
+
+    RectangleInt textureLocation = m_splits[split];
+
+    // Set the screen location so that 0,0 is the center.
+    // The draw will fix the rest.
+    RectangleInt screenLocation = RectangleInt(0, 0);
+    screenLocation.SetX(0 - (int)(textureLocation.GetWidth() / 2.0f));
+    screenLocation.SetY(0 - (int)(textureLocation.GetHeight() / 2.0f));
+    screenLocation.SetWidth(textureLocation.GetWidth());
+    screenLocation.SetHeight(textureLocation.GetHeight());
+
+    this->cachedRenderPacket->AddDrawPacket(textureLocation, screenLocation);
+
+    return this->cachedRenderPacket;
+}
+
 bool SplitTexture::Contains(const RectangleInt& left, const RectangleInt& right) const
 {
     // You start before
