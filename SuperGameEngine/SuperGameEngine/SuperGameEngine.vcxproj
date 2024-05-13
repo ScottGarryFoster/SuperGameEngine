@@ -132,6 +132,7 @@
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
     <ClInclude Include="Engine\Graphics\CacheableRender.h" />
+    <ClInclude Include="Engine\Graphics\EmptyTexture.hpp" />
     <ClInclude Include="Engine\Graphics\RenderPacket.h" />
     <ClInclude Include="Engine\Graphics\SimpleRenderPacket.h" />
     <ClInclude Include="Engine\Graphics\SplitTexture.h" />

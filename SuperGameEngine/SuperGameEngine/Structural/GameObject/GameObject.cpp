@@ -18,6 +18,7 @@ SuperGameEngine::GameObject::GameObject()
     m_gameObjectPackage = nullptr;
     m_loadPackage = nullptr;
     m_sceneGuid = std::shared_ptr<Guid>();
+    m_isDestroyed = false;
 }
 
 GameObject::~GameObject()
@@ -174,6 +175,32 @@ std::shared_ptr<Transform> GameObject::GetTransform()
 std::shared_ptr<GameObject> GameObject::CreateNewGameObject()
 {
     return m_gameObjectPackage->GetScene()->CreateNewGameObject(this);
+}
+
+void GameObject::OnGameObjectDestroyed(const Guid& guid)
+{
+    for (size_t i = 0; i < m_gameComponents.Count(); ++i)
+    {
+        std::shared_ptr<GameComponent> component = m_gameComponents[i];
+        if (m_gameComponents[i] != nullptr)
+        {
+            if (component->IsSetup())
+            {
+                component->OnGameObjectDestroyed(guid);
+            }
+        }
+
+    }
+}
+
+void GameObject::Destroy()
+{
+    m_isDestroyed = true;
+}
+
+bool GameObject::IsDestroyed() const
+{
+    return m_isDestroyed;
 }
 
 bool GameObject::AddActualComponentFromObject(std::shared_ptr<Object> newObject)

@@ -10,6 +10,8 @@
 #include "../Components/Colliders/CircleColliderComponent.h"
 #include "../Components/Physics/SimpleRigidbodyComponent.h"
 #include "../Components/Visual/TextComponent.h"
+#include "../Scene/GrandScene.h"
+
 using namespace SuperGameEngine;
 
 Scene::Scene()
@@ -93,12 +95,22 @@ bool Scene::Update(const GameTime gameTime)
         return true;
     }
 
-    for (size_t i = 0; i < m_gameObjects.size(); ++i)
+    std::vector<std::shared_ptr<GameObject>> allObjects = m_gameObjects;
+    for (size_t i = 0; i < allObjects.size(); ++i)
     {
         std::shared_ptr<GameObject> gameObject = m_gameObjects[i];
         if (m_gameObjects[i] != nullptr)
         {
-            gameObject->Update(gameTime);
+            if (gameObject->IsDestroyed())
+            {
+                VectorHelpers::RemoveValue(m_gameObjects, gameObject);
+                m_sceneToGameObjectPackage->GetScene()->
+                    OnGameObjectDestroyed(*gameObject->GetGuid());
+            }
+            else
+            {
+                gameObject->Update(gameTime);
+            }
         }
     }
 
@@ -151,4 +163,16 @@ std::shared_ptr<GameObject> Scene::CreateNewGameObject()
 std::vector<std::shared_ptr<GameObject>> Scene::GetAllGameObjects()
 {
     return m_gameObjects;
+}
+
+void Scene::OnGameObjectDestroyed(const Guid& guid)
+{
+    for (size_t i = 0; i < m_gameObjects.size(); ++i)
+    {
+        std::shared_ptr<GameObject> gameObject = m_gameObjects[i];
+        if (m_gameObjects[i] != nullptr)
+        {
+            gameObject->OnGameObjectDestroyed(guid);
+        }
+    }
 }

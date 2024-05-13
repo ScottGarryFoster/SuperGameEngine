@@ -1,77 +1,79 @@
 #pragma once
-#include "../../LibraryIncludes.h"
 #include "SuperTexture.h"
-using namespace StandardCLibrary;
 
 namespace SuperGameEngine
 {
-    class Texture;
-
     /// <summary>
-    /// A texture owned by the content manager.
+    /// A texture without an image.
+    /// Used to create a dummy object only.
     /// </summary>
-    class TextureWrapper : public SuperTexture
+    class EmptyTexture : public SuperTexture
     {
     public:
         /// <summary>
-        /// Constructs a SuperTexture from a texture.
-        /// The texture given is SuperTextures responsiblity to delete,
-        /// it is cleaned up by the SuperTexture.
-        /// </summary>
-        /// <param name="texture">Texture to use. </param>
-        TextureWrapper(std::shared_ptr<Texture> texture);
-
-        virtual ~TextureWrapper();
-
-        /// <summary>
         /// Draws to screen.
         /// </summary>
-        virtual void Draw() override;
+        inline virtual void Draw() override 
+        {
+            Logger::Info(FString("EmptyTexture::Draw: This Texture is empty. "));
+        }
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
-        virtual void Draw(const FPoint& location) override;
+        inline virtual void Draw(const FPoint& location) override
+        {
+            Logger::Info(FString("EmptyTexture::Draw: This Texture is empty. "));
+        }
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        virtual void Draw(const FPoint& location, const FPoint& size) override;
+        inline virtual void Draw(const FPoint& location, const FPoint& size) override
+        {
+            Logger::Info(FString("EmptyTexture::Draw: This Texture is empty. "));
+        }
 
         /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
         /// <param name="screenRectangle">Where on the screen to render. </param>
-        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) override;
+        inline virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) override
+        {
+            Logger::Info(FString("EmptyTexture::Draw: This Texture is empty. "));
+        }
 
         /// <summary>
         /// Determines if the two textures are the same image.
         /// </summary>
         /// <param name="texture">Texture to test. </param>
         /// <returns>True means are the same. </returns>
-        virtual bool RepresentSameImage(SuperTexture* texture) override;
+        inline virtual bool RepresentSameImage(SuperTexture* texture) override
+        {
+            return false;
+        }
 
         /// <summary>
         /// Determines if the texture uses this file path.
         /// </summary>
         /// <param name="filePath">File path to text. </param>
         /// <returns>True means this uses the same file path. </returns>
-        virtual bool RepresentSameImage(FString filePath) override;
+        inline virtual bool RepresentSameImage(FString filePath) override
+        {
+            return false;
+        }
 
         /// <summary>
         /// Get the size of the Texture in Pixels.
         /// </summary>
         /// <returns>Returns the size of the Texture. </returns>
-        virtual FPoint Size() const override;
-
-    private:
-        /// <summary>
-        /// The lowest level of texture. This is a wrapper for the Render level.
-        /// </summary>
-        std::shared_ptr<Texture> m_actualTexture;
+        inline virtual FPoint Size() const override
+        {
+            return FPoint();
+        }
     };
 }

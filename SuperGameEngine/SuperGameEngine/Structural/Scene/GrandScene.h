@@ -48,6 +48,14 @@ namespace SuperGameEngine
         /// <returns>New Game Object in the Scene.</returns>
         std::shared_ptr<GameObject> CreateNewGameObject(GameObject* caller);
 
+        /// <summary>
+        /// Called when GameObject is destroyed.
+        /// Should be used to ensure you do not have a link back to the
+        /// GameObject as a SharedPointer.
+        /// </summary>
+        /// <param name="guid">Guid of the GameObject.</param>
+        virtual void OnGameObjectDestroyed(const Guid& guid);
+
     private:
         /// <summary>
         /// Contains all the objects a GameObject needs to opperate.

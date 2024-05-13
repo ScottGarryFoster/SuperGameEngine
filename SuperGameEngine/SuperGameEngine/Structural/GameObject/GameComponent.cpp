@@ -81,6 +81,10 @@ void GameComponent::OnCollisionEnd(Collision& collision)
 {
 }
 
+void GameComponent::OnGameObjectDestroyed(const Guid& guid)
+{
+}
+
 SceneLoadPackage* GameComponent::GetLoadPackage()
 {
     return m_loadPackage;

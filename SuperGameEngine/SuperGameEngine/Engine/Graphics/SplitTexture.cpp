@@ -13,11 +13,14 @@ SplitTexture::SplitTexture(std::shared_ptr<SuperTexture> superTexture)
     }
     m_superTexture = superTexture;
 
-    FPoint size = m_superTexture->Size();
-    m_textureArea = std::make_shared<RectangleInt>(0, 0, size.GetX(), size.GetY());
+    if (m_superTexture)
+    {
+        FPoint size = m_superTexture->Size();
+        m_textureArea = std::make_shared<RectangleInt>(0, 0, size.GetX(), size.GetY());
 
-    m_splits = std::vector<RectangleInt>();
-    this->cachedRenderPacket = std::make_shared<SimpleRenderPacket>();
+        m_splits = std::vector<RectangleInt>();
+        this->cachedRenderPacket = std::make_shared<SimpleRenderPacket>();
+    }
 }
 
 SplitTexture::~SplitTexture()

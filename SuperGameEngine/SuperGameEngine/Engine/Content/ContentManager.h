@@ -77,7 +77,7 @@ namespace SuperGameEngine
         /// Creates an Empty Texture.
         /// </summary>
         /// <return>Empty texture. </return>
-        Texture* GetEmptyTexture();
+        std::shared_ptr<Texture> GetEmptyTexture();
 
         /// <summary>
         /// Create Empty Super Texture.

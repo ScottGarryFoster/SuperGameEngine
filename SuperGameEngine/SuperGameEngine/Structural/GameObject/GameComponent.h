@@ -91,6 +91,14 @@ namespace SuperGameEngine
         /// <param name="collision">Describes the collision. </param>
         virtual void OnCollisionEnd(Collision& collision);
 
+        /// <summary>
+        /// Called when GameObject is destroyed.
+        /// Should be used to ensure you do not have a link back to the
+        /// GameObject as a SharedPointer.
+        /// </summary>
+        /// <param name="guid">Guid of the GameObject.</param>
+        virtual void OnGameObjectDestroyed(const Guid& guid);
+
     protected:
         /// <summary>
         /// Allows us to operate.
