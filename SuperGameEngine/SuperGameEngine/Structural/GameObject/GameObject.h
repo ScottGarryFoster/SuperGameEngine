@@ -157,6 +157,25 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>A new game object in the scene. </returns>
         std::shared_ptr<GameObject> CreateNewGameObject();
+
+        /// <summary>
+        /// Called when GameObject is destroyed.
+        /// Should be used to ensure you do not have a link back to the
+        /// GameObject as a SharedPointer.
+        /// </summary>
+        /// <param name="guid">Guid of the GameObject.</param>
+        virtual void OnGameObjectDestroyed(const Guid& guid);
+
+        /// <summary>
+        /// Destroys the game object.
+        /// </summary>
+        void Destroy();
+
+        /// <summary>
+        /// Is this GameObject marks for destruction.
+        /// </summary>
+        /// <returns>True means is marked for Destoryed. </returns>
+        bool IsDestroyed() const;
         
     private:
         /// <summary>
@@ -193,6 +212,11 @@ namespace SuperGameEngine
         /// True means a component needs setting up.
         /// </summary>
         bool m_componentNeedsSetup;
+
+        /// <summary>
+        /// True means destroyed.
+        /// </summary>
+        bool m_isDestroyed;
 
         /// <summary>
         /// Introduction into the system from the outside world.

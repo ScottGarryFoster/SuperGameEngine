@@ -3,14 +3,13 @@
 
 using namespace SuperGameEngine;
 
-TextureWrapper::TextureWrapper(Texture* texture)
+TextureWrapper::TextureWrapper(std::shared_ptr<Texture> texture)
 {
     m_actualTexture = texture;
 }
 
 TextureWrapper::~TextureWrapper()
 {
-    delete m_actualTexture;
 }
 
 void TextureWrapper::Draw()
@@ -80,7 +79,7 @@ bool TextureWrapper::RepresentSameImage(FString filePath)
     }
 
     FString self = m_actualTexture->GetLoadedFilePath().ToLower();
-    return self == filePath;
+    return self == filePath.ToLower();
 }
 
 FPoint SuperGameEngine::TextureWrapper::Size() const

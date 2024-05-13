@@ -13,6 +13,8 @@ PlayerControllerComponent::PlayerControllerComponent() : GameComponent()
     m_speed = 100;
 
     gameObjectt = std::shared_ptr<GameObject>();
+
+    deleteCycle = 0;
 }
 
 PlayerControllerComponent::~PlayerControllerComponent()
@@ -40,17 +42,29 @@ bool PlayerControllerComponent::Update(const GameTime gameTime)
     {
         MoveByKeyboard(m_speed, gameTime, locationCopy);
 
-        // Test for making new Game Objects [#20]
-        const DirectKeyInput* input =
-            GameComponent::GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();
-        if (!gameObjectt && input->KeyDown(InputKeyCode::N))
+        deleteCycle += gameTime.TicksSinceLastFrame;
+        if (deleteCycle > 10)
         {
-            gameObjectt = GetParent()->CreateNewGameObject();
-            gameObjectt->GetTransform()->SetLocation(500, 500);
-            gameObjectt->AddComponent<SpriteComponent>();
-            std::shared_ptr<TextComponent> tc = gameObjectt->AddComponent<TextComponent>();
-            tc->SetText(FText("NEW"));
+            deleteCycle = 0;
+            // Test for making new Game Objects [#20]
+            const DirectKeyInput* input =
+                GameComponent::GetLoadPackage()->GetDirectInput()->GetDirectKeyInput();
+            if (!gameObjectt)
+                //if (!gameObjectt && input->KeyDown(InputKeyCode::N))
+            {
+                gameObjectt = GetParent()->CreateNewGameObject();
+                gameObjectt->GetTransform()->SetLocation(500, 500);
+                gameObjectt->AddComponent<SpriteComponent>();
+                std::shared_ptr<TextComponent> tc = gameObjectt->AddComponent<TextComponent>();
+                tc->SetText(FText("NEW"));
+            }
+            else if (gameObjectt)
+                //else if (gameObjectt && input->KeyDown(InputKeyCode::M))
+            {
+                gameObjectt->Destroy();
+            }
         }
+
     }
     else
     {
@@ -66,6 +80,14 @@ bool PlayerControllerComponent::Update(const GameTime gameTime)
 void PlayerControllerComponent::SetSpeed(float newValue)
 {
     m_speed = newValue;
+}
+
+void PlayerControllerComponent::OnGameObjectDestroyed(const Guid& guid)
+{
+    if (gameObjectt)
+    {
+        gameObjectt = std::shared_ptr<GameObject>();
+    }
 }
 
 void PlayerControllerComponent::MoveByKeyboard(float speed, const GameTime& gameTime, FVector2D* location)

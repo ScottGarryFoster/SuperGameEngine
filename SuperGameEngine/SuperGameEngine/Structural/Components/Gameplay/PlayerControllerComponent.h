@@ -39,6 +39,14 @@ namespace SuperGameEngine
         /// <param name="newValue">New speed value.</param>
         void SetSpeed(float newValue);
 
+        /// <summary>
+        /// Called when GameObject is destroyed.
+        /// Should be used to ensure you do not have a link back to the
+        /// GameObject as a SharedPointer.
+        /// </summary>
+        /// <param name="guid">Guid of the GameObject.</param>
+        virtual void OnGameObjectDestroyed(const Guid& guid) override;
+
     private:
         void MoveByKeyboard(float speed, const GameTime& gameTime, StandardCLibrary::FVector2D* location);
         void MoveByController(StandardCLibrary::FVector2D* location, float speed);
@@ -50,5 +58,7 @@ namespace SuperGameEngine
         float m_speed;
 
         std::shared_ptr<GameObject> gameObjectt;
+
+        int deleteCycle;
     };
 }

@@ -521,6 +521,9 @@
     <ClInclude Include="Engine\Graphics\SplitTextureRenderPacketParameters.hpp">
       <Filter>Project Files\Engine\Graphics\API</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Graphics\EmptyTexture.hpp">
+      <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

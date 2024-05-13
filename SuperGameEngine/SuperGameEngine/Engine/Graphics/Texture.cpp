@@ -23,7 +23,9 @@ Texture::~Texture()
 {
     delete m_textureSize;
     delete m_screenRect;
+    delete m_textureRect;
     SDL_DestroyTexture(m_texture);
+    delete m_texture;
 }
 
 /// <summary>

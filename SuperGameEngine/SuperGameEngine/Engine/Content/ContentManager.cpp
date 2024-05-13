@@ -4,6 +4,7 @@
 #include "../Basic/FilesAndFolders.h"
 #include "../Loaders/Specific/UserInterface/Text/FontFaceLoader.h"
 #include "../../UserInterface/Text/FontFace.h"
+#include "../Graphics/EmptyTexture.hpp"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -60,7 +61,7 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
 
     if (!foundTexture)
     {
-        Texture* newTexture = new Texture(m_renderer);
+        std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(m_renderer);
         std::vector<FString> errors = std::vector<FString>();
         if (newTexture->LoadImageFromFile(filePath, errors))
         {
@@ -92,29 +93,31 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
 
     if (!loaded)
     {
-        std::shared_ptr<FontFace> fontFace = 
-            std::make_shared<FontFace>(GetEmptySuperTexture());
+        std::shared_ptr<FontFace> fontFace = std::make_shared<FontFace>(GetEmptySuperTexture());
         std::shared_ptr<Object> object = dynamic_pointer_cast<Object>(fontFace);
         if (!object)
         {
             Logger::Error(FString("ContentManager::GetFontFace: Object does not inherit fron Font"));
         }
 
-        filePath = m_productsDirectory + "\\" + filePath;
-        loaded = this->fontLoader->LoadAsset(object, filePath);
+        // Not this
+        FString filePathOnDisk = m_productsDirectory + "\\" + filePath;
+        loaded = this->fontLoader->LoadAsset(object, filePathOnDisk);
         discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
+
+        this->fontFaceCache->Add(std::pair<FString, std::shared_ptr<FontFaceAsset>>(filePath, discoveredFontAsset));
     }
     *didCreate = loaded;
 
     return discoveredFontAsset;
 }
 
-Texture* ContentManager::GetEmptyTexture()
+std::shared_ptr<Texture> ContentManager::GetEmptyTexture()
 {
-    return new Texture(m_renderer);
+    return std::make_shared<Texture>(m_renderer);
 }
 
 std::shared_ptr<SuperTexture> ContentManager::GetEmptySuperTexture()
 {
-    return std::make_shared<TextureWrapper>(GetEmptyTexture());
+    return std::make_shared<EmptyTexture>();
 }

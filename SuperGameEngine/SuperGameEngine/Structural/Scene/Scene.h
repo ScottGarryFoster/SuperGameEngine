@@ -54,6 +54,14 @@ namespace SuperGameEngine
         /// <returns>All GameObjects in the Scene. </returns>
         std::vector<std::shared_ptr<GameObject>> GetAllGameObjects();
 
+        /// <summary>
+        /// Called when GameObject is destroyed.
+        /// Should be used to ensure you do not have a link back to the
+        /// GameObject as a SharedPointer.
+        /// </summary>
+        /// <param name="guid">Guid of the GameObject.</param>
+        virtual void OnGameObjectDestroyed(const Guid& guid);
+
     private:
         /// <summary>
         /// Unique identifier.

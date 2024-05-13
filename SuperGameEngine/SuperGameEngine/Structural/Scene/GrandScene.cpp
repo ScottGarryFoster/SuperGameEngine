@@ -131,3 +131,14 @@ std::shared_ptr<GameObject> GrandScene::CreateNewGameObject(GameObject* caller)
 
     return m_scenes[0]->CreateNewGameObject();
 }
+
+void GrandScene::OnGameObjectDestroyed(const Guid& guid)
+{
+    for (Scene* scene : m_scenes)
+    {
+        if (scene != nullptr)
+        {
+            scene->OnGameObjectDestroyed(guid);
+        }
+    }
+}
