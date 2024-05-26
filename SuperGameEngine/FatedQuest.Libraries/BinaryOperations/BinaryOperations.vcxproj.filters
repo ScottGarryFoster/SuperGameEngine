@@ -16,13 +16,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryFile\BinaryFile.cpp">
-      <Filter>Project Files\BinaryFile</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="BinaryFile\BinaryFile.h">
       <Filter>Project Files\BinaryFile\API</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryFile\StandardBinaryFile.h">
+      <Filter>Project Files\BinaryFile\API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BinaryFile\StandardBinaryFile.cpp">
+      <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

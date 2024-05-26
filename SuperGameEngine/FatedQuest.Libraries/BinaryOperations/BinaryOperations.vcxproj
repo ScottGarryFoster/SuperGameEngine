@@ -20,9 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryFile\BinaryFile.h" />
+    <ClInclude Include="BinaryFile\StandardBinaryFile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryFile\BinaryFile.cpp" />
+    <ClCompile Include="BinaryFile\StandardBinaryFile.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
