@@ -1,5 +1,8 @@
 #pragma once
 #include "BinaryFile.h"
+#include "BinaryString.h"
+#include <map>
+#include <memory>
 
 namespace BinaryOperations
 {
@@ -10,6 +13,8 @@ namespace BinaryOperations
     class StandardBinaryFile : public BinaryFile
     {
     public:
+        StandardBinaryFile();
+        virtual ~StandardBinaryFile();
 
         virtual void AddInt(std::string key) override;
 
@@ -17,6 +22,16 @@ namespace BinaryOperations
 
         virtual int TryGetInt(std::string key, int defaultValue) override;
 
-        virtual std::string ExportBinaryData() override;
+        virtual const std::string ExportBinaryData() override;
+
+        virtual void ImportBinaryData(const std::string& data) override;
+
+    private:
+        std::map<std::string, int> m_intValues;
+
+        /// <summary>
+        /// Operations for binary strings.
+        /// </summary>
+        std::shared_ptr<BinaryString> m_binaryString;
     };
 }

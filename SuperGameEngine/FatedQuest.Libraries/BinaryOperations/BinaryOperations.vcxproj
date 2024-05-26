@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryFile\BinaryFile.h" />
+    <ClInclude Include="BinaryFile\BinaryString.h" />
     <ClInclude Include="BinaryFile\StandardBinaryFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryFile\BinaryString.cpp" />
     <ClCompile Include="BinaryFile\StandardBinaryFile.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -120,6 +122,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>

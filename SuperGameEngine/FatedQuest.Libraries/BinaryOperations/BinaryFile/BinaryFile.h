@@ -16,6 +16,8 @@ namespace BinaryOperations
 
         virtual int TryGetInt(std::string key, int defaultValue) = 0;
 
-        virtual std::string ExportBinaryData() = 0;
+        virtual const std::string ExportBinaryData() = 0;
+
+        virtual void ImportBinaryData(const std::string& data) = 0;
     };
 }

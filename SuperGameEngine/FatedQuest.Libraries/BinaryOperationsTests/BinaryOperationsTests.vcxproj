@@ -103,7 +103,8 @@
     <ClInclude Include="LibraryIncludes.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryFile\StandardBinaryFile.cpp" />
+    <ClCompile Include="BinaryFile\BinaryStringTest.cpp" />
+    <ClCompile Include="BinaryFile\StandardBinaryFileTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BinaryOperations\BinaryOperations.vcxproj">

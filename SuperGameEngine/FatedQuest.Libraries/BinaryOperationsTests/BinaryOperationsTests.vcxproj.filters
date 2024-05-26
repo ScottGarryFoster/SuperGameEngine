@@ -20,7 +20,12 @@
     <ClInclude Include="LibraryIncludes.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryFile\StandardBinaryFile.cpp">
+    <ClCompile Include="BinaryFile\StandardBinaryFileTests.cpp">
+      <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
+    <ClCompile Include="BinaryFile\BinaryStringTest.cpp">
       <Filter>Project Files\BinaryFile</Filter>
     </ClCompile>
   </ItemGroup>
