@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperGameEngineTests", "Sup
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardCLibraryTests", "FatedQuest.Libraries\StandardCLibraryTests\StandardCLibraryTests.vcxproj", "{51315DC7-E26D-4195-917E-D7DBBA0F9605}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinaryOperations", "FatedQuest.Libraries\BinaryOperations\BinaryOperations.vcxproj", "{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -73,6 +75,14 @@ Global
 		{51315DC7-E26D-4195-917E-D7DBBA0F9605}.Release|x64.Build.0 = Release|x64
 		{51315DC7-E26D-4195-917E-D7DBBA0F9605}.Release|x86.ActiveCfg = Release|Win32
 		{51315DC7-E26D-4195-917E-D7DBBA0F9605}.Release|x86.Build.0 = Release|Win32
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Debug|x64.ActiveCfg = Debug|x64
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Debug|x64.Build.0 = Debug|x64
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Debug|x86.ActiveCfg = Debug|Win32
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Debug|x86.Build.0 = Debug|Win32
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Release|x64.ActiveCfg = Release|x64
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Release|x64.Build.0 = Release|x64
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Release|x86.ActiveCfg = Release|Win32
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +91,7 @@ Global
 		{3964752B-73C2-4C0E-8BFE-3C42DBEF2E03} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
 		{FBD9A5D9-BB38-479B-8DD7-1EBD2382A035} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
 		{51315DC7-E26D-4195-917E-D7DBBA0F9605} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
+		{1BC135F0-12F0-4DFD-90A4-8DD09AF88B7C} = {C4D6F146-E2C8-417E-9F40-8EA459D0E1D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEE90C3C-7E45-4340-A20A-250D28E875BC}
