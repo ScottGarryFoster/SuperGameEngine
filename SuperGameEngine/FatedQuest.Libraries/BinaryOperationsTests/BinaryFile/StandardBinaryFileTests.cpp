@@ -127,6 +127,12 @@ namespace BinaryOperations_StandardBinaryFileTests
         int expected = 1234;
         int defaultValue = 5678;
 
+        m_binaryFile->AddInt(givenKey);
+        m_binaryFileSecond->AddInt(givenKey);
+
+        // Only second is ever given expected.
+        m_binaryFile->SetInt(givenKey, expected);
+
         const std::string data = m_binaryFile->ExportBinaryData();
         m_binaryFileSecond->ImportBinaryData(data);
 

@@ -5,6 +5,7 @@
 
 #include "Text/FString.h"
 #include "Text/FText.h"
+#include "Text/FStringStream.h"
 #include "File/File.h"
 #include "File/Directory.h"
 #include "Collection/Dictionary/FDictionary.hpp";

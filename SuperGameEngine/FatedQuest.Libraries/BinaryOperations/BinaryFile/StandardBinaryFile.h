@@ -1,8 +1,12 @@
 #pragma once
+#include "../../StandardCLibrary/LibraryIncludes.h"
 #include "BinaryFile.h"
 #include "BinaryString.h"
+#include "BinaryInt.h"
 #include <map>
 #include <memory>
+
+using namespace StandardCLibrary;
 
 namespace BinaryOperations
 {
@@ -33,5 +37,15 @@ namespace BinaryOperations
         /// Operations for binary strings.
         /// </summary>
         std::shared_ptr<BinaryString> m_binaryString;
+
+        /// <summary>
+        /// Operations for binary ints.
+        /// </summary>
+        std::shared_ptr<BinaryInt> m_binaryInt;
+
+        std::string MoveStreamPointer(std::shared_ptr<FStringStream> stringStream, std::string value);
+        std::string MoveStreamPointer(std::shared_ptr<FStringStream> stringStream, int value);
+
+        bool TryParseInt(std::string& data, int& output);
     };
 }

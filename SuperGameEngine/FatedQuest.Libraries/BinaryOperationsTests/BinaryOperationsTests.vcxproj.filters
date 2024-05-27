@@ -28,5 +28,8 @@
     <ClCompile Include="BinaryFile\BinaryStringTest.cpp">
       <Filter>Project Files\BinaryFile</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryFile\BinaryIntTest.cpp">
+      <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

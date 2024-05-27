@@ -20,12 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryFile\BinaryFile.h" />
+    <ClInclude Include="BinaryFile\BinaryInt.h" />
     <ClInclude Include="BinaryFile\BinaryString.h" />
     <ClInclude Include="BinaryFile\StandardBinaryFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryFile\BinaryInt.cpp" />
     <ClCompile Include="BinaryFile\BinaryString.cpp" />
     <ClCompile Include="BinaryFile\StandardBinaryFile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
+      <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

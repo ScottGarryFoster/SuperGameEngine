@@ -4,9 +4,9 @@
 namespace BinaryOperations
 {
     /// <summary>
-    /// Operations to create and read binary strings.
+    /// Operations to create and read binary int.
     /// </summary>
-    class BinaryString
+    class BinaryInt
     {
     public:
         /// <summary>
@@ -14,20 +14,20 @@ namespace BinaryOperations
         /// </summary>
         /// <param name="plainText">Text in plain text. </param>
         /// <returns>Binary data. </returns>
-        std::string ToBinary(const std::string& plainText);
+        std::string ToBinary(const int& data);
 
         /// <summary>
         /// Parses a binary string into plain text.
         /// </summary>
         /// <param name="binary">Binary string. </param>
         /// <returns>Plain text string. </returns>
-        std::string ToPlainText(const std::string& binary);
+        int ToInt(const std::string& binary);
 
         /// <summary>
         /// Size of the data if it were placed in binary.
         /// </summary>
-        /// <param name="plainText">Data you would make into binary. </param>
+        /// <param name="data">Data you would make into binary. </param>
         /// <returns>The size of the data in binary. </returns>
-        std::streampos SizeOfDataInBinary(const std::string& plainText);
+        std::streampos SizeOfDataInBinary(const int& data);
     };
 }

@@ -167,6 +167,9 @@
     <ClInclude Include="Text\FText.h">
       <Filter>Project Files\Text\API</Filter>
     </ClInclude>
+    <ClInclude Include="Text\FStringStream.h">
+      <Filter>Project Files\Text\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -227,6 +230,9 @@
       <Filter>Project Files\Object\GUID</Filter>
     </ClCompile>
     <ClCompile Include="Text\FText.cpp">
+      <Filter>Project Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\FStringStream.cpp">
       <Filter>Project Files\Text</Filter>
     </ClCompile>
   </ItemGroup>

@@ -103,6 +103,7 @@
     <ClInclude Include="LibraryIncludes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryFile\BinaryIntTest.cpp" />
     <ClCompile Include="BinaryFile\BinaryStringTest.cpp" />
     <ClCompile Include="BinaryFile\StandardBinaryFileTests.cpp" />
   </ItemGroup>

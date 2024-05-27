@@ -158,6 +158,7 @@
     <ClInclude Include="Structural\FPoint.h" />
     <ClInclude Include="Structural\FVector2D.h" />
     <ClInclude Include="Text/FString.h" />
+    <ClInclude Include="Text\FStringStream.h" />
     <ClInclude Include="Text\FText.h" />
     <ClInclude Include="Time\Timespan.h" />
   </ItemGroup>
@@ -180,6 +181,7 @@
     <ClCompile Include="Structural\FVector2D.cpp" />
     <ClCompile Include="Structural\FVectorLocationEventArguments.h" />
     <ClCompile Include="Text/FString.cpp" />
+    <ClCompile Include="Text\FStringStream.cpp" />
     <ClCompile Include="Text\FText.cpp" />
     <ClCompile Include="Time\Timespan.cpp" />
   </ItemGroup>
