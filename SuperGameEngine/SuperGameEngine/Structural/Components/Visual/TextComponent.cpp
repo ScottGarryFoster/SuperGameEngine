@@ -25,17 +25,17 @@ void TextComponent::Setup(SceneLoadPackage* loadPackage, GameObject* parent)
 
     std::shared_ptr<bool> didFind = std::make_shared<bool>();
     std::shared_ptr<FontFaceAsset> ffa = loadPackage->GetContentManager()->GetFontFace(FString("Engine\\Assets\\Fonts\\Direct-Message.assetmeta"), didFind);
-    //if (*didFind)
-    //{
-    //    this->m_fontFace = ffa;
+    if (*didFind)
+    {
+        this->m_fontFace = ffa;
 
-    //    FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
-    //    parameters.TextToRender = *m_componentText;
+        FontFaceRenderPacketParameters parameters = FontFaceRenderPacketParameters();
+        parameters.TextToRender = *m_componentText;
 
-    //    m_textRenderPacket = m_fontFace->SetParametersForRenderPacket(parameters);
-    //}
+        m_textRenderPacket = m_fontFace->SetParametersForRenderPacket(parameters);
+    }
 
-    //GetParent()->GetTransform()->SetScale(3);
+    GetParent()->GetTransform()->SetScale(3);
 }
 
 bool TextComponent::Update(const GameTime gameTime)

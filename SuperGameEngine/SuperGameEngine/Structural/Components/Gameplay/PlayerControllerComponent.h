@@ -61,4 +61,6 @@ namespace SuperGameEngine
 
         int deleteCycle;
     };
+
+    REGISTER_COMPONENT(PlayerControllerComponent)
 }

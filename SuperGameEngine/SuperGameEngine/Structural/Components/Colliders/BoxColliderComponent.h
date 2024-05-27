@@ -142,4 +142,6 @@ namespace SuperGameEngine
         /// <returns>Center point of the Shape. </returns>
         FVector2D ConvertTopLeftToCenter(const FVector2D& location) const;
     };
+
+    REGISTER_COMPONENT(BoxColliderComponent)
 }

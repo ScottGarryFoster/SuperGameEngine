@@ -77,12 +77,61 @@ namespace SuperGameEngine
         /// <returns>The new Component. </returns>
         template<typename T>
         typename std::enable_if<std::is_base_of<GameComponent, T>::value, std::shared_ptr<T>>::type
-        AddComponent()
+            AddComponent()
         {
             std::shared_ptr<T> newComponent = std::make_shared<T>();
             std::shared_ptr<Object> componentPtr = std::static_pointer_cast<Object>(newComponent);
             AddActualComponentFromObject(componentPtr);
             return newComponent;
+        }
+
+        /// <summary>
+        /// Adds the GameComponent to the GameObject.
+        /// Will run Setup on the GameComponent and add it to any
+        /// services such as the Collision.
+        /// Ensured the component is registered see 'ComponentFactory.h'.
+        /// </summary>
+        /// <param name="type">Name of the type. This must be registed. </param>
+        /// <typeparam name="T">The type of Component to add. </typeparam>
+        /// <returns>The new Component. </returns>
+        template<typename T>
+        typename std::enable_if<std::is_base_of<GameComponent, T>::value, std::shared_ptr<T>>::type
+        AddComponent(std::string type)
+        {
+            //std::shared_ptr<T> newComponent = std::make_shared<T>();
+            //std::shared_ptr<Object> componentPtr = std::static_pointer_cast<Object>(newComponent);
+            //AddActualComponentFromObject(componentPtr);
+            //return newComponent;
+
+            auto component = ComponentFactory::CreateComponent(type);
+            if (component)
+            {
+                std::shared_ptr<Object> componentPtr = std::static_pointer_cast<Object>(component);
+                AddActualComponentFromObject(componentPtr);
+            }
+
+            std::shared_ptr<T> componentOfType = std::static_pointer_cast<T>(component);
+            return componentOfType;
+        }
+
+        /// <summary>
+        /// Adds the GameComponent to the GameObject.
+        /// Will run Setup on the GameComponent and add it to any
+        /// services such as the Collision.
+        /// Ensured the component is registered see 'ComponentFactory.h'.
+        /// </summary>
+        /// <param name="type">Name of the type. This must be registed. </param>
+        /// <returns>GameComponent added. </returns>
+        /// <remark>This should be used if the actual type is not used as less casts are used. </remark>
+        std::shared_ptr<GameComponent> AddComponent(std::string type)
+        {
+            auto component = ComponentFactory::CreateComponent(type);
+            if (component)
+            {
+                AddActualComponentFromObject(component);
+            }
+
+            return component;
         }
 
         /// <summary>

@@ -24,6 +24,8 @@ namespace SuperGameEngine
         /// <returns>True means continue. False means close. </returns>
         virtual bool Update(const GameTime gameTime) override;
     };
+
+    REGISTER_COMPONENT(UserInputTestComponent)
 }
 
 

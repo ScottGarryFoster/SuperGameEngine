@@ -134,4 +134,6 @@ namespace SuperGameEngine
         /// </summary>
         std::shared_ptr<TransformComponent> m_transform;
     };
+
+    REGISTER_COMPONENT(CircleColliderComponent)
 }
