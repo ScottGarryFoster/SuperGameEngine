@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Project Files">
+      <UniqueIdentifier>{8574479c-f870-45a2-a5ea-aadaf5b4ad68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Package Files">
+      <UniqueIdentifier>{4b0b86c5-25a8-4c9c-accc-2cc96f8d2356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\BinaryFile">
+      <UniqueIdentifier>{9daa4322-6204-46ac-91f8-93579c88656f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Package Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LibraryIncludes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BinaryFile\StandardBinaryFileTests.cpp">
+      <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
+    <ClCompile Include="BinaryFile\BinaryStringTest.cpp">
+      <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryFile\BinaryIntTest.cpp">
+      <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
