@@ -5,10 +5,10 @@ using namespace BinaryOperations;
 
 namespace BinaryOperations_StandardBinaryDataTests
 {
-    class StandardBinaryFileTests : public ::testing::Test
+    class StandardBinaryDataTests : public ::testing::Test
     {
     public:
-        StandardBinaryFileTests()
+        StandardBinaryDataTests()
         {
         }
 
@@ -54,7 +54,7 @@ namespace BinaryOperations_StandardBinaryDataTests
     /// format. Otherwise export and import could be just text which defeats the
     /// point a little bit.
     /// </summary>
-    TEST_F(StandardBinaryFileTests, ExportBinaryData_ReturnsAStreamWithTheFirstWordContainingBinaryFile)
+    TEST_F(StandardBinaryDataTests, ExportBinaryData_ReturnsAStreamWithTheFirstWordContainingBinaryFile)
     {
         // Arrange
         std::string expected = "BinaryFile_V1.0.0";
@@ -69,7 +69,7 @@ namespace BinaryOperations_StandardBinaryDataTests
 
 #pragma region Int
 
-    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsDefault_WhenAddIsNotCalled)
+    TEST_F(StandardBinaryDataTests, TryGetInt_ReturnsDefault_WhenAddIsNotCalled)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -82,7 +82,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsGiven_WhenValueSetAndGiven)
+    TEST_F(StandardBinaryDataTests, TryGetInt_ReturnsGiven_WhenValueSetAndGiven)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -99,7 +99,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsGiven_WhenMultipleValuesGiven)
+    TEST_F(StandardBinaryDataTests, TryGetInt_ReturnsGiven_WhenMultipleValuesGiven)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -122,7 +122,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsValue_WhenExportedWithDataAndImportedIntoFreshVersion)
+    TEST_F(StandardBinaryDataTests, TryGetInt_ReturnsValue_WhenExportedWithDataAndImportedIntoFreshVersion)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -145,7 +145,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsMultipleValues_WhenExportedWithDataAndImportedIntoFreshVersion)
+    TEST_F(StandardBinaryDataTests, TryGetInt_ReturnsMultipleValues_WhenExportedWithDataAndImportedIntoFreshVersion)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -188,7 +188,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expectedThird, actualThird);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsDefaultValue_WhenSetIntThenImportValueWithoutData)
+    TEST_F(StandardBinaryDataTests, TryGetInt_ReturnsDefaultValue_WhenSetIntThenImportValueWithoutData)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -217,7 +217,7 @@ namespace BinaryOperations_StandardBinaryDataTests
 
 #pragma region String
 
-    TEST_F(StandardBinaryFileTests, TryGetString_ReturnsDefault_WhenAddIsNotCalled)
+    TEST_F(StandardBinaryDataTests, TryGetString_ReturnsDefault_WhenAddIsNotCalled)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -230,7 +230,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetString_ReturnsGiven_WhenValueSetAndGiven)
+    TEST_F(StandardBinaryDataTests, TryGetString_ReturnsGiven_WhenValueSetAndGiven)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -247,7 +247,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetString_ReturnsGiven_WhenMultipleValuesGiven)
+    TEST_F(StandardBinaryDataTests, TryGetString_ReturnsGiven_WhenMultipleValuesGiven)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -270,7 +270,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetString_ReturnsValue_WhenExportedWithDataAndImportedIntoFreshVersion)
+    TEST_F(StandardBinaryDataTests, TryGetString_ReturnsValue_WhenExportedWithDataAndImportedIntoFreshVersion)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -293,7 +293,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expected, actual);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetString_ReturnsMultipleValues_WhenExportedWithDataAndImportedIntoFreshVersion)
+    TEST_F(StandardBinaryDataTests, TryGetString_ReturnsMultipleValues_WhenExportedWithDataAndImportedIntoFreshVersion)
     {
         // Arrange
         std::string givenKey = "givenKey";
@@ -336,7 +336,7 @@ namespace BinaryOperations_StandardBinaryDataTests
         ASSERT_EQ(expectedThird, actualThird);
     }
 
-    TEST_F(StandardBinaryFileTests, TryGetString_ReturnsDefaultValue_WhenSetIntThenImportValueWithoutData)
+    TEST_F(StandardBinaryDataTests, TryGetString_ReturnsDefaultValue_WhenSetIntThenImportValueWithoutData)
     {
         // Arrange
         std::string givenKey = "givenKey";
