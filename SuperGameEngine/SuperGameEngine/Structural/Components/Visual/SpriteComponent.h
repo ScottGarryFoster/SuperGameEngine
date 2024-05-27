@@ -7,6 +7,7 @@
 namespace SuperGameEngine
 {
     class TextComponent;
+
     /// <summary>
     /// Renders a texture.
     /// </summary>
@@ -64,4 +65,6 @@ namespace SuperGameEngine
         /// </summary>
         void UpdateCurrentSprite();
     };
+
+    REGISTER_COMPONENT(SpriteComponent)
 }

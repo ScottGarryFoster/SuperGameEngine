@@ -12,4 +12,6 @@ namespace SuperGameEngine
     class TransformComponent : public GameComponent, public Transform
     {
     };
+
+    REGISTER_COMPONENT(TransformComponent)
 }

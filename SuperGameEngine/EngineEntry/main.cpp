@@ -9,6 +9,7 @@
 #include "../SuperGameEngine/Engine/Graphics/Texture.h"
 #include "../FatedQuest.Libraries/StandardCLibrary/Time/Timespan.h"
 #include "../SuperGameEngine/Structural/Scene/GrandScene.h"
+#include "../SuperGameEngine/Structural/GameObject/ComponentFactory.h"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;

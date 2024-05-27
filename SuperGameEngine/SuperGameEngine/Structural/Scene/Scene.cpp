@@ -55,12 +55,14 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     std::shared_ptr<GameObject> go = CreateNewGameObject();
     go->GetTransformComponent()->SetLocation(200, 100);
-    std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>();
+
+    std::shared_ptr<PlayerControllerComponent> pc = go->AddComponent<PlayerControllerComponent>("PlayerControllerComponent");
+
     pc->SetSpeed(300);
     pc->UseKeyboard(false);
-    go->AddComponent<SimpleRigidbodyComponent>();
+    go->AddComponent<SimpleRigidbodyComponent>("SimpleRigidbodyComponent");
 
-    std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>();
+    std::shared_ptr<BoxColliderComponent> box = go->AddComponent<BoxColliderComponent>("BoxColliderComponent");
     FVector2D l = FVector2D(0, 0);
     FVector2D s = FVector2D(100, 200);
     box->SetColliderLocation(l);
@@ -70,18 +72,20 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
     std::shared_ptr<GameObject> go2 = CreateNewGameObject();
     go2->GetTransformComponent()->SetLocation(500, 500);
 
-    std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>();
+    std::shared_ptr<CircleColliderComponent> box2 = go2->AddComponent<CircleColliderComponent>("CircleColliderComponent");
     FVector2D l2 = FVector2D(0, 0);
     FVector2D s2 = FVector2D(100, 200);
     box2->SetColliderLocation(l2);
     box2->SetColliderSize(50);
 
-    go2->AddComponent<SimpleRigidbodyComponent>();
-    std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>();
+    go2->AddComponent<SimpleRigidbodyComponent>("SimpleRigidbodyComponent");
+
+    std::shared_ptr<PlayerControllerComponent> player = go2->AddComponent<PlayerControllerComponent>("PlayerControllerComponent");
+
     player->UseKeyboard(true);
 
-    go2->AddComponent<SpriteComponent>();
-    go2->AddComponent<TextComponent>();
+    go2->AddComponent<SpriteComponent>("SpriteComponent");
+    go2->AddComponent<TextComponent>("TextComponent");
 
     m_gameObjects.push_back(go2);
 

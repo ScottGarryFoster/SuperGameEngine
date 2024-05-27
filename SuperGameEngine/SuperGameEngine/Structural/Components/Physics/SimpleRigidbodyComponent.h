@@ -108,4 +108,6 @@ namespace SuperGameEngine
         /// </summary>
         void RunPhysicsLoop();
     };
+
+    REGISTER_COMPONENT(SimpleRigidbodyComponent)
 }

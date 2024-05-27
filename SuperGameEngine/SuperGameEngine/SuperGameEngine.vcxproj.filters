@@ -299,6 +299,9 @@
     <ClCompile Include="Engine\Loaders\Specific\UserInterface\Text\FontFaceFromText.cpp">
       <Filter>Project Files\Engine\Loaders\Specific\UserInterface\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\GameObject\ComponentFactory.cpp">
+      <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -523,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Graphics\EmptyTexture.hpp">
       <Filter>Project Files\Engine\Graphics\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\ComponentFactory.h">
+      <Filter>Project Files\Structural\GameObject\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

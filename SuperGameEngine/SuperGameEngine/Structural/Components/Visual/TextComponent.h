@@ -62,4 +62,6 @@ namespace SuperGameEngine
         /// </summary>
         std::shared_ptr<RenderPacket> m_textRenderPacket;
     };
+
+    REGISTER_COMPONENT(TextComponent)
 }

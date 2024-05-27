@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Engine/Basic/GameTime.h"
 #include "../../LibraryIncludes.h"
+#include "ComponentFactory.h"
 
 namespace SuperGameEngine
 {
