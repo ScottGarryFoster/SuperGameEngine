@@ -105,7 +105,7 @@
   <ItemGroup>
     <ClCompile Include="BinaryFile\BinaryIntTest.cpp" />
     <ClCompile Include="BinaryFile\BinaryStringTest.cpp" />
-    <ClCompile Include="BinaryFile\StandardBinaryFileTests.cpp" />
+    <ClCompile Include="BinaryFile\StandardBinaryDataTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BinaryOperations\BinaryOperations.vcxproj">

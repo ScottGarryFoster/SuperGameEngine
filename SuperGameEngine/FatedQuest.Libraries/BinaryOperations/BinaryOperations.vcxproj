@@ -19,15 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinaryFile\BinaryFile.h" />
+    <ClInclude Include="BinaryFile\BinaryData.h" />
     <ClInclude Include="BinaryFile\BinaryInt.h" />
     <ClInclude Include="BinaryFile\BinaryString.h" />
-    <ClInclude Include="BinaryFile\StandardBinaryFile.h" />
+    <ClInclude Include="BinaryFile\StandardBinaryData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryFile\BinaryInt.cpp" />
     <ClCompile Include="BinaryFile\BinaryString.cpp" />
-    <ClCompile Include="BinaryFile\StandardBinaryFile.cpp" />
+    <ClCompile Include="BinaryFile\StandardBinaryData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
