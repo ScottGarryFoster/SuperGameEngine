@@ -45,6 +45,7 @@ namespace SuperGameEngine
 // All components should use:     REGISTER_COMPONENT(TYPENAME)
 // on the component header to register themselves to this factory.
 // Only SGE components can be created natively without a name.
+
 #define REGISTER_COMPONENT(TYPE) \
     namespace { \
         auto reg_##TYPE = []() { \

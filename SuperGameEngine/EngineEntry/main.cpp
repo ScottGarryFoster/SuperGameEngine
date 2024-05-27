@@ -10,6 +10,7 @@
 #include "../FatedQuest.Libraries/StandardCLibrary/Time/Timespan.h"
 #include "../SuperGameEngine/Structural/Scene/GrandScene.h"
 #include "../SuperGameEngine/Structural/GameObject/ComponentFactory.h"
+#include "../SuperGameEngineTools/Components.cpp"
 
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;

@@ -86,6 +86,7 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     go2->AddComponent<SpriteComponent>("SpriteComponent");
     go2->AddComponent<TextComponent>("TextComponent");
+    go2->AddComponent("TestToolsComponent");
 
     m_gameObjects.push_back(go2);
 
