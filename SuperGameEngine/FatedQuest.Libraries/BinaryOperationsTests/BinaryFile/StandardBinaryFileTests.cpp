@@ -142,4 +142,72 @@ namespace BinaryOperations_StandardBinaryFileTests
         // Assert
         ASSERT_EQ(expected, actual);
     }
+
+    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsMultipleValues_WhenExportedWithDataAndImportedIntoFreshVersion)
+    {
+        // Arrange
+        std::string givenKey = "givenKey";
+        int expected = 1234;
+        int defaultValue = 7777777;
+
+        std::string givenKeySecond = "otherKey";
+        int expectedSecond = 543543;
+        int defaultValueSecond = 99999;
+
+        std::string givenKeyThird = "otherOtherKey";
+        int expectedThird = 121242;
+        int defaultValueThird = 888888;
+
+        m_binaryFile->AddInt(givenKey);
+        m_binaryFileSecond->AddInt(givenKey);
+
+        m_binaryFile->AddInt(givenKeySecond);
+        m_binaryFileSecond->AddInt(givenKeySecond);
+
+        m_binaryFile->AddInt(givenKeyThird);
+        m_binaryFileSecond->AddInt(givenKeyThird);
+
+        // Only second is ever given expected.
+        m_binaryFile->SetInt(givenKey, expected);
+        m_binaryFile->SetInt(givenKeySecond, expectedSecond);
+        m_binaryFile->SetInt(givenKeyThird, expectedThird);
+
+        const std::string data = m_binaryFile->ExportBinaryData();
+        m_binaryFileSecond->ImportBinaryData(data);
+
+        // Act
+        int actual = m_binaryFileSecond->TryGetInt(givenKey, defaultValue);
+        int actualSecond = m_binaryFileSecond->TryGetInt(givenKeySecond, defaultValueSecond);
+        int actualThird = m_binaryFileSecond->TryGetInt(givenKeyThird, defaultValueThird);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+        ASSERT_EQ(expectedSecond, actualSecond);
+        ASSERT_EQ(expectedThird, actualThird);
+    }
+
+    TEST_F(StandardBinaryFileTests, TryGetInt_ReturnsDefaultValue_WhenSetIntThenImportValueWithoutData)
+    {
+        // Arrange
+        std::string givenKey = "givenKey";
+        int given = 1234;
+        int defaultValue = 5678;
+        int expected = defaultValue;
+
+        m_binaryFile->AddInt(givenKey);
+        m_binaryFileSecond->AddInt(givenKey);
+
+        // Only second is ever given expected.
+        m_binaryFile->SetInt(givenKey, expected);
+
+        // Import blank data
+        const std::string data = m_binaryFileSecond->ExportBinaryData();
+        m_binaryFile->ImportBinaryData(data);
+
+        // Act
+        int actual = m_binaryFileSecond->TryGetInt(givenKey, defaultValue);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
 }

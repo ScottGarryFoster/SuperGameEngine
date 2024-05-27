@@ -11,7 +11,7 @@ using namespace BinaryOperations;
 StandardBinaryFile::StandardBinaryFile()
 {
     m_binaryString = std::make_shared<BinaryString>();
-    m_intValues = std::map<std::string, int>();
+    m_intValues = std::map<std::string, IntValue>();
 }
 
 StandardBinaryFile::~StandardBinaryFile()
@@ -20,27 +20,28 @@ StandardBinaryFile::~StandardBinaryFile()
 
 void StandardBinaryFile::AddInt(std::string key)
 {
-    auto result = m_intValues.insert(std::make_pair(key, 0));
+    IntValue intValue;
+    auto result = m_intValues.insert(std::make_pair(key, intValue));
 }
 
 void StandardBinaryFile::SetInt(std::string key, int value)
 {
     if (m_intValues.find(key) != m_intValues.end())
     {
-        m_intValues[key] = value;
+        m_intValues[key].Value = value;
+        m_intValues[key].IsSet = true;
     }
 }
 
 int StandardBinaryFile::TryGetInt(std::string key, int defaultValue)
 {
-    int returnValue = 0;
-    if (m_intValues.find(key) == m_intValues.end())
+    int returnValue = defaultValue;
+    if (m_intValues.find(key) != m_intValues.end())
     {
-        returnValue = defaultValue;
-    }
-    else
-    {
-        returnValue = m_intValues[key];
+        if (m_intValues[key].IsSet)
+        {
+            returnValue = m_intValues[key].Value;
+        }
     }
 
     return returnValue;
@@ -51,13 +52,11 @@ const std::string StandardBinaryFile::ExportBinaryData()
     std::stringstream stringStream;
     stringStream << m_binaryString->ToBinary("BinaryFile_V1.0.0");
 
-    size_t t = m_intValues.size();
-    stringStream << m_binaryString->ToBinary(std::to_string(t));
-    for (const std::pair<std::string, int>& pair : m_intValues)
+    stringStream << m_binaryInt->ToBinary(m_intValues.size());
+    for (const std::pair<std::string, IntValue>& pair : m_intValues)
     {
         stringStream << m_binaryString->ToBinary(pair.first);
-        stringStream << m_binaryString->
-            ToBinary(std::to_string(pair.second));
+        stringStream << m_binaryInt->ToBinary(pair.second.Value);
     }
 
     stringStream.seekg(0, std::ios_base::beg);
@@ -77,34 +76,7 @@ void StandardBinaryFile::ImportBinaryData(const std::string& data)
     std::string version = m_binaryString->ToPlainText(currentData);
     currentData = MoveStreamPointer(stringStream, version);
 
-    std::string numberOfKeysText = m_binaryString->ToPlainText(currentData);
-    int numberOfIntKeys = -1;
-    if (!TryParseInt(numberOfKeysText, numberOfIntKeys))
-    {
-        return;
-    }
-    currentData = MoveStreamPointer(stringStream, numberOfKeysText);
-    
-
-    for (size_t i = 0; i < numberOfIntKeys; ++i)
-    {
-        std::string keyName = m_binaryString->ToPlainText(currentData);
-        currentData = MoveStreamPointer(stringStream, keyName);
-
-        std::string intValueText = m_binaryString->ToPlainText(currentData);
-        int intValue = -1;
-        currentData = MoveStreamPointer(stringStream, intValueText);
-
-        if (!TryParseInt(intValueText, intValue))
-        {
-            continue;
-        }
-
-        if (m_intValues.find(keyName) != m_intValues.end())
-        {
-            m_intValues[keyName] = intValue;
-        }
-    }
+    currentData = ProcessIntKeys(stringStream);
 }
 
 std::string BinaryOperations::StandardBinaryFile::MoveStreamPointer(std::shared_ptr<FStringStream> stringStream, std::string value)
@@ -135,4 +107,33 @@ bool BinaryOperations::StandardBinaryFile::TryParseInt(std::string& data, int& o
     }
 
     return false;
+}
+
+std::string StandardBinaryFile::ProcessIntKeys(std::shared_ptr<FStringStream> stringStream)
+{
+    std::string currentData = stringStream->GetSeekedString();
+
+    for (const std::pair<std::string, IntValue>& pair : m_intValues)
+    {
+        m_intValues[pair.first].IsSet = false;
+    }
+
+    int numberOfKeysText = m_binaryInt->ToInt(currentData);
+    currentData = MoveStreamPointer(stringStream, numberOfKeysText);
+    for (size_t i = 0; i < numberOfKeysText; ++i)
+    {
+        std::string keyName = m_binaryString->ToPlainText(currentData);
+        currentData = MoveStreamPointer(stringStream, keyName);
+
+        int intValue = m_binaryInt->ToInt(currentData);
+        currentData = MoveStreamPointer(stringStream, intValue);
+
+        if (m_intValues.find(keyName) != m_intValues.end())
+        {
+            m_intValues[keyName].Value = intValue;
+            m_intValues[keyName].IsSet = true;
+        }
+    }
+
+    return currentData;
 }
