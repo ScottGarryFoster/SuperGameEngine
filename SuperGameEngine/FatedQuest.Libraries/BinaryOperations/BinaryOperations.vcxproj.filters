@@ -16,10 +16,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinaryFile\BinaryFile.h">
+    <ClInclude Include="BinaryFile\BinaryData.h">
       <Filter>Project Files\BinaryFile\API</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryFile\StandardBinaryFile.h">
+    <ClInclude Include="BinaryFile\StandardBinaryData.h">
       <Filter>Project Files\BinaryFile\API</Filter>
     </ClInclude>
     <ClInclude Include="BinaryFile\BinaryString.h">
@@ -30,7 +30,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryFile\StandardBinaryFile.cpp">
+    <ClCompile Include="BinaryFile\StandardBinaryData.cpp">
       <Filter>Project Files\BinaryFile</Filter>
     </ClCompile>
     <ClCompile Include="BinaryFile\BinaryString.cpp">
