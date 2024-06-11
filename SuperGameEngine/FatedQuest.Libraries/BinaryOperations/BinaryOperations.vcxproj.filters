@@ -40,6 +40,15 @@
     <ClInclude Include="BinaryZip\StandardBinaryZip.h">
       <Filter>Project Files\BinaryZip\API</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryZip\Zip.h">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryZip\ZipCreateOpenOption.hpp">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryZip\MiniZip.h">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryFile\StandardBinaryData.cpp">
@@ -55,6 +64,12 @@
       <Filter>Project Files\BinaryZip</Filter>
     </ClCompile>
     <ClCompile Include="BinaryZip\StandardBinaryZip.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\Zip.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\MiniZip.cpp">
       <Filter>Project Files\BinaryZip</Filter>
     </ClCompile>
   </ItemGroup>

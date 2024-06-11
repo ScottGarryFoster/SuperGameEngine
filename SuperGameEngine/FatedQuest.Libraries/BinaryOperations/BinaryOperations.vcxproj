@@ -24,14 +24,19 @@
     <ClInclude Include="BinaryFile\BinaryString.h" />
     <ClInclude Include="BinaryFile\StandardBinaryData.h" />
     <ClInclude Include="BinaryZip\BinaryZip.h" />
+    <ClInclude Include="BinaryZip\MiniZip.h" />
     <ClInclude Include="BinaryZip\StandardBinaryZip.h" />
+    <ClInclude Include="BinaryZip\Zip.h" />
+    <ClInclude Include="BinaryZip\ZipCreateOpenOption.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryFile\BinaryInt.cpp" />
     <ClCompile Include="BinaryFile\BinaryString.cpp" />
     <ClCompile Include="BinaryFile\StandardBinaryData.cpp" />
     <ClCompile Include="BinaryZip\BinaryZip.cpp" />
+    <ClCompile Include="BinaryZip\MiniZip.cpp" />
     <ClCompile Include="BinaryZip\StandardBinaryZip.cpp" />
+    <ClCompile Include="BinaryZip\Zip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logging\Logging.vcxproj">

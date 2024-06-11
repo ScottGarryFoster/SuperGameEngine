@@ -10,6 +10,9 @@
     <Filter Include="Project Files\BinaryFile">
       <UniqueIdentifier>{9daa4322-6204-46ac-91f8-93579c88656f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\BinaryZip">
+      <UniqueIdentifier>{875ae60a-23c8-4d84-aead-59d65cb88f31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -30,6 +33,9 @@
     </ClCompile>
     <ClCompile Include="BinaryFile\BinaryIntTest.cpp">
       <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\MiniZipTests.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
