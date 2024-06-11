@@ -12,6 +12,8 @@
 #include "../SuperGameEngine/Structural/GameObject/ComponentFactory.h"
 #include "../SuperGameEngineTools/Components.cpp"
 
+#include <vector>
+
 using namespace StandardCLibrary;
 using namespace SuperGameEngine;
 

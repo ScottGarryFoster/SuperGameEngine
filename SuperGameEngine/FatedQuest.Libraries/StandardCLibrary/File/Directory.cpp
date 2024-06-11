@@ -144,3 +144,36 @@ FList<FString> StandardCLibrary::Directory::GetFilepaths(FString path)
 
     return extracted;
 }
+
+bool Directory::CreateDirectories(std::string path)
+{
+    try
+    {
+        FileSystem::create_directories(path);
+    }
+    catch (const FileSystem::filesystem_error e)
+    {
+        return false;
+    }
+    catch (const std::exception e)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool Directory::RemoveAll(std::string path)
+{
+    try
+    {
+        // Remove the directory and all its contents
+        FileSystem::remove_all(path);
+    }
+    catch (const FileSystem::filesystem_error& e)
+    {
+        return false;
+    }
+
+    return true;
+}

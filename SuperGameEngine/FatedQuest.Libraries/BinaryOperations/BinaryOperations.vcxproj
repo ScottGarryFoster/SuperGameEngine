@@ -23,13 +23,20 @@
     <ClInclude Include="BinaryFile\BinaryInt.h" />
     <ClInclude Include="BinaryFile\BinaryString.h" />
     <ClInclude Include="BinaryFile\StandardBinaryData.h" />
+    <ClInclude Include="BinaryZip\BinaryZip.h" />
+    <ClInclude Include="BinaryZip\StandardBinaryZip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryFile\BinaryInt.cpp" />
     <ClCompile Include="BinaryFile\BinaryString.cpp" />
     <ClCompile Include="BinaryFile\StandardBinaryData.cpp" />
+    <ClCompile Include="BinaryZip\BinaryZip.cpp" />
+    <ClCompile Include="BinaryZip\StandardBinaryZip.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.vcxproj">
+      <Project>{fbd9a5d9-bb38-479b-8dd7-1ebd2382a035}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>
@@ -129,7 +136,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -158,5 +165,12 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets" Condition="Exists('..\..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets'))" />
+  </Target>
 </Project>

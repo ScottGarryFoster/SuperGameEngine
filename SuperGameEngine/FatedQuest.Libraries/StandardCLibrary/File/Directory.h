@@ -61,6 +61,22 @@ namespace StandardCLibrary
         /// A list of filepaths or empty if either no files or directory does not exist.
         /// </returns>
         static FList<FString> GetFilepaths(FString path);
+
+        /// <summary>
+        /// Creates the directory and any in between.
+        /// </summary>
+        /// <param name="path">
+        /// Path to ensure the directories exist in.
+        /// Can be a file path. </param>
+        /// <returns>True means created. </returns>
+        static bool CreateDirectories(std::string path);
+
+        /// <summary>
+        /// Remove all directories and files for the given path.
+        /// </summary>
+        /// <param name="path">Path to remove all for. </param>
+        /// <returns>True means successful. False means something went wrong. </returns>
+        static bool RemoveAll(std::string path);
     };
 }
 
