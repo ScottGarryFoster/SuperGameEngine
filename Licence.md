@@ -196,6 +196,33 @@ Copyright notice:
   
 See the licence: [https://github.com/madler/zlib/tree/master?tab=License-1-ov-file](https://github.com/madler/zlib/tree/master?tab=License-1-ov-file)
 
+## Technologies
+These are pieces of technology which are used to create the product but the package itself may not be included in the code or final product. These are on the line between external software and package but still require licence.
+
+### VCPKG
+MIT License
+
+Copyright (c) Microsoft Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+See the licence: [https://github.com/microsoft/vcpkg/blob/master/LICENSE.txt](https://github.com/microsoft/vcpkg/blob/master/LICENSE.txt)
+
 ## Non-Library Assets
 Non-Library assets in this context refers to all the items included which are not compiled as part of the main distribution but make up the repo. The best example of this would be any images and fonts used to demonstrate the engine or to allow use of the engine by third party / non-technical users - for instance tools.
 
