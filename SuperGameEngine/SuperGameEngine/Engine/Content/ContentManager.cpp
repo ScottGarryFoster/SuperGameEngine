@@ -5,9 +5,14 @@
 #include "../Loaders/Specific/UserInterface/Text/FontFaceLoader.h"
 #include "../../UserInterface/Text/FontFace.h"
 #include "../Graphics/EmptyTexture.hpp"
+#include "../../../FatedQuest.Libraries/BinaryOperations/BinaryZip/StandardBinaryZip.h"
+
+#include <string>
+#include <algorithm>
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
+using namespace BinaryOperations;
 
 ContentManager::ContentManager(SDL_Renderer* renderer)
 {
@@ -21,8 +26,9 @@ ContentManager::ContentManager(SDL_Renderer* renderer)
     m_textureLibrary = std::vector<std::shared_ptr<TextureWrapper>>();
     m_productsDirectory = FString(FilesAndFolders::GetProductsFolder());
 
-    this->fontLoader = std::make_unique<FontFaceLoader>(this);
-    this->fontFaceCache = std::make_unique<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>>();
+    m_fontLoader = std::make_unique<FontFaceLoader>(this);
+    m_fontFaceCache = std::make_unique<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>>();
+    m_binaryZip = std::make_unique<StandardBinaryZip>();
 }
 
 ContentManager::~ContentManager()
@@ -44,10 +50,11 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
         return nullptr;
     }
 
-    filePath = m_productsDirectory + "\\" + filePath;
+    std::string filePathInsideProducts = filePath.AsStdString();
+    filePath = m_productsDirectory + "\\" + filePathInsideProducts;
     filePath.ConvertToLower();
 
-    FString filePathZip = m_productsDirectory + ".zip\\" + filePath;
+    FString filePathZip = m_productsDirectory + ".zip\\" + filePathInsideProducts;
     filePathZip.ConvertToLower();
 
     bool foundTexture = false;
@@ -86,9 +93,8 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
         else
         {
             std::string zipName = m_productsDirectory.AsStdString() + ".zip";
-            std::string filePathAsString = filePath.AsStdString();
-            std::vector<unsigned char> outputData;
-            if (LoadFileFromData(zipName, filePathAsString, outputData, errors))
+            std::vector<unsigned char> outputData = std::vector<unsigned char>();
+            if (LoadFileFromData(zipName, filePathInsideProducts, outputData, errors))
             {
                 if (newTexture->LoadImageFromData(outputData, filePathZip.AsStdString(), errors))
                 {
@@ -106,13 +112,25 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
     FString filePath,
     std::shared_ptr<bool>& didCreate)
 {
+    std::string filePathInsideProducts = filePath.AsStdString();
+    filePath = m_productsDirectory + "\\" + filePathInsideProducts;
     filePath.ConvertToLower();
+
+    FString filePathZip = m_productsDirectory + ".zip\\" + filePathInsideProducts;
+    filePathZip.ConvertToLower();
 
     bool loaded = false;
     std::shared_ptr<FontFaceAsset> discoveredFontAsset;
-    for (std::pair<FString, std::shared_ptr<FontFaceAsset>> entry: *this->fontFaceCache)
+
+    for (const std::pair<FString, std::shared_ptr<FontFaceAsset>>& entry : *m_fontFaceCache)
     {
         if (filePath == entry.first)
+        {
+            discoveredFontAsset = entry.second;
+            loaded = true;
+            break;
+        }
+        else if (filePathZip == entry.first)
         {
             discoveredFontAsset = entry.second;
             loaded = true;
@@ -129,12 +147,30 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
             Logger::Error(FString("ContentManager::GetFontFace: Object does not inherit fron Font"));
         }
 
-        // Not this
-        FString filePathOnDisk = m_productsDirectory + "\\" + filePath;
-        loaded = this->fontLoader->LoadAsset(object, filePathOnDisk);
-        discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
+        if (File::Exists(filePath))
+        {
+            // This is not ideal. There is a decent amount of casting here.
+            // Caching will likely save us but we should avoid this.
+            loaded = m_fontLoader->LoadAsset(object, filePath);
+            discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
+        }
+        else
+        {
+            std::string zipName = m_productsDirectory.AsStdString() + ".zip";
+            std::string filePathAsString = filePath.AsStdString();
+            std::vector<FString> errors;
+            std::vector<unsigned char> outputData = std::vector<unsigned char>();
+            if (LoadFileFromData(zipName, filePathInsideProducts, outputData, errors))
+            {
+                if (m_fontLoader->LoadAssetFromData(object, outputData))
+                {
+                    discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
+                    loaded = true;
+                }
+            }
+        }
 
-        this->fontFaceCache->Add(std::pair<FString, std::shared_ptr<FontFaceAsset>>(filePath, discoveredFontAsset));
+        m_fontFaceCache->Add(std::pair<FString, std::shared_ptr<FontFaceAsset>>(filePath, discoveredFontAsset));
     }
     *didCreate = loaded;
 
@@ -157,8 +193,15 @@ bool ContentManager::LoadFileFromData(
     std::vector<unsigned char>& data,
     std::vector<FString>& errors)
 {
-    // TODO: IMPLEMENT THIS AS PART OF [#75]
-    Logger::Assert(NotImplementedException(), GetTypeName(), FString("LoadFileFromData"),
-        FString("Not implemented yet. To be implemented as part of ticket #75. "));
-    return false;
+    std::vector<std::string> errorsAsString = std::vector<std::string>();
+    bool created = m_binaryZip->ExtractSingleFileToData(zipName, innerFile, data, errorsAsString);
+    if (!created)
+    {
+        for (std::string error : errorsAsString)
+        {
+            errors.push_back(FString(error));
+        }
+    }
+
+    return created;
 }

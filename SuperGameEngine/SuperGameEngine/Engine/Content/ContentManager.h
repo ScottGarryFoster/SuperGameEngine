@@ -6,8 +6,10 @@
 #include "../Graphics/TextureWrapper.h"
 #include "../Loaders/AssetLoader.h"
 #include "../../UserInterface/Text/FontFaceAsset.h"
+#include "../../../FatedQuest.Libraries/BinaryOperations/BinaryZip/BinaryZip.h"
 
 using namespace StandardCLibrary;
+using namespace BinaryOperations;
 
 namespace SuperGameEngine
 {
@@ -63,15 +65,17 @@ namespace SuperGameEngine
         /// <summary>
         /// Loads font faces from Meta files.
         /// </summary>
-        std::unique_ptr<AssetLoader> fontLoader;
+        std::unique_ptr<AssetLoader> m_fontLoader;
 
         /// <summary>
         /// All of the Fonts currently loaded.
         /// </summary>
-        std::unique_ptr<FList
-            <std::pair<FString, std::shared_ptr
-                <FontFaceAsset>>>> 
-                    fontFaceCache;
+        std::unique_ptr<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>> m_fontFaceCache;
+
+        /// <summary>
+        /// Allows operations on Zip files.
+        /// </summary>
+        std::unique_ptr<BinaryZip> m_binaryZip;
 
         /// <summary>
         /// Creates an Empty Texture.

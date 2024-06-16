@@ -20,6 +20,7 @@ bool StandardBinaryZip::FileToBinary(const std::string& input, const std::string
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::FileToBinary with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -60,6 +61,7 @@ bool StandardBinaryZip::BinaryToFile(const std::string& input, const std::string
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::BinaryToFile with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -118,6 +120,7 @@ bool StandardBinaryZip::DirectoryToBinary(const std::string& input, const std::s
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::DirectoryToBinary with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -164,6 +167,7 @@ bool BinaryOperations::StandardBinaryZip::BinaryDirectoryToDirectory(const std::
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::BinaryDirectoryToDirectory with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -202,6 +206,7 @@ bool StandardBinaryZip::DirectoryToZip(const std::string& input, const std::stri
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::DirectoryToZip with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -244,6 +249,7 @@ bool StandardBinaryZip::ZipToDirectory(const std::string& input, const std::stri
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::ZipToDirectory with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -309,6 +315,7 @@ bool BinaryOperations::StandardBinaryZip::DirectoryToZipWithFileToBinary(const s
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::DirectoryToZipWithFileToBinary with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -379,6 +386,7 @@ bool StandardBinaryZip::ZipWithBinaryToDirectoryToFile(const std::string& input,
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
     {
+        errors.push_back("Called StandardBinaryZip::ZipWithBinaryToDirectoryToFile with errors already. Handle the errors before continuing. ");
         return false;
     }
 
@@ -458,6 +466,64 @@ bool StandardBinaryZip::ZipWithBinaryToDirectoryToFile(const std::string& input,
 
     unzClose(uf);
     return false;
+}
+
+bool BinaryOperations::StandardBinaryZip::ExtractSingleFileToData(const std::string& zipFilePath, const std::string innerFilepath, std::vector<unsigned char>& data, std::vector<std::string>& errors)
+{
+    // Do not allow methods to do anything if there are existing errors.
+    if (errors.size() > 0)
+    {
+        errors.push_back("Called StandardBinaryZip::ExtractSingleFileToData with errors already. Handle the errors before continuing. ");
+        return false;
+    }
+
+    if (!File::Exists(zipFilePath))
+    {
+        errors.push_back("Zip file does not exist: " + zipFilePath);
+        return false;
+    }
+
+    unzFile zipfile = unzOpen(zipFilePath.c_str());
+    if (zipfile == nullptr) {
+        errors.push_back("Failed to open zip file.");
+        return false;
+    }
+
+    // Forward slashes matter for paths in zips.
+    std::string cleanInnerPath = innerFilepath;
+    std::replace(cleanInnerPath.begin(), cleanInnerPath.end(), '\\', '/');
+
+    if (unzLocateFile(zipfile, cleanInnerPath.c_str(), 0) != UNZ_OK)
+    {
+        errors.push_back("File not found in the zip archive.");
+        unzClose(zipfile);
+        return false;
+    }
+
+    if (unzOpenCurrentFile(zipfile) != UNZ_OK)
+    {
+        errors.push_back("Failed to open file in zip archive.");
+        unzClose(zipfile);
+        return false;
+    }
+
+    unz_file_info fileInfo;
+    unzGetCurrentFileInfo(zipfile, &fileInfo, nullptr, 0, nullptr, 0, nullptr, 0);
+
+    data.resize(fileInfo.uncompressed_size);
+    int bytesRead = unzReadCurrentFile(zipfile, data.data(), data.size());
+    if (bytesRead < 0)
+    {
+        errors.push_back("Failed to read file from zip archive.");
+        data.clear();
+        unzClose(zipfile);
+        return false;
+    }
+
+    unzCloseCurrentFile(zipfile);
+    unzClose(zipfile);
+
+    return true;
 }
 
 std::ifstream StandardBinaryZip::ReadFileContentsToBinaryStream(const std::string& input, std::vector<std::string>& errors)

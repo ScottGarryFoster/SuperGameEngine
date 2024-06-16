@@ -48,6 +48,40 @@ bool FontFaceLoader::LoadAsset(std::shared_ptr<Object>& subject, FString key)
     return true;
 }
 
+bool FontFaceLoader::LoadAssetFromData(std::shared_ptr<Object>& subject, std::vector<unsigned char>& data)
+{
+    std::shared_ptr<FontFace> fontFace = dynamic_pointer_cast<FontFace>(subject);
+    if (!fontFace)
+    {
+        Logger::Assert(NotImplementedException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
+            FString("You must pass in a Font face to load. (Shared Pointer Version) "));
+        return false;
+    }
+
+    if (data.empty())
+    {
+        Logger::Assert(NotImplementedException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
+            FString("No data to load font. "));
+        return false;
+    }
+
+    std::shared_ptr<FString> fileContents = std::make_shared<FString>(data);
+    std::shared_ptr<bool> loaded = std::make_shared<bool>();
+    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, fileContents);
+    if (loaded)
+    {
+        subject = ff;
+    }
+    else
+    {
+        Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
+            FString("Could not load font from data. "));
+        return false;
+    }
+
+    return true;
+}
+
 bool FontFaceLoader::LoadAsset(Object* subject, FString key)
 {
     //FontFace* fontFace = dynamic_cast<FontFace*>(subject);

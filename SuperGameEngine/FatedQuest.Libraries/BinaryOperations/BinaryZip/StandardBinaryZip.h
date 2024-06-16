@@ -86,6 +86,16 @@ namespace BinaryOperations
         /// <returns>True means created successfully. </returns>
         virtual bool ZipWithBinaryToDirectoryToFile(const std::string& inputFilepath, const std::string& outputPath, std::vector<std::string>& errors);
 
+        /// <summary>
+        /// Extracts a single file and reads it back in memory (directly from file).
+        /// This is a non-binary version so it will just read the file back as is.
+        /// </summary>
+        /// <param name="zipFilePath">Location of the zip file. </param>
+        /// <param name="innerFilepath">Location of the file with the zip. Case-Sensitive! </param>
+        /// <param name="data">If found and loaded this is the data. </param>
+        /// <param name="errors">If not loaded this will be the reason why. </param>
+        /// <returns>True means loaded successfully. </returns>
+        virtual bool ExtractSingleFileToData(const std::string& zipFilePath, const std::string innerFilepath, std::vector<unsigned char>& data, std::vector<std::string>& errors);
     private:
         /// <summary>
         /// Reads file contents into Stream.

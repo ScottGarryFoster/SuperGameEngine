@@ -23,6 +23,14 @@ namespace SuperGameEngine
         virtual bool LoadAsset(std::shared_ptr<Object>& subject, FString key) override;
 
         /// <summary>
+        /// Loads the asset from raw data.
+        /// </summary>
+        /// <param name="subject">The output. </param>
+        /// <param name="subject">The data. </param>
+        /// <returns>True means loaded. </returns>
+        virtual bool LoadAssetFromData(std::shared_ptr<Object>& subject, std::vector<unsigned char>& data) override;
+
+        /// <summary>
         /// Loads an asset from a file, products, from some source of truth about
         /// the asset. The key should remain the same regardless as the asset location.
         /// </summary>

@@ -36,7 +36,7 @@ namespace SuperGameEngine
         /// </param>
         /// <param name="errors">Errors if not created. </param>
         /// <returns>True means created. </returns>
-        bool LoadImageFromData(const std::vector<unsigned char>& data, const std::string& filepath, std::vector<FString>& errors);
+        bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<FString>& errors);
 
         /// <summary>
         /// Draws to screen.

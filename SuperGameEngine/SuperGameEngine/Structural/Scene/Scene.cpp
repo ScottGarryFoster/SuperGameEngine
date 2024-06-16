@@ -90,6 +90,13 @@ void Scene::Setup(SceneLoadPackage* sceneLoadPackage, SceneToGameObjectPackage* 
 
     m_gameObjects.push_back(go2);
 
+    std::shared_ptr<GameObject> go3 = CreateNewGameObject();
+    go3->GetTransformComponent()->SetLocation(700, 200);
+
+    go3->AddComponent<SpriteComponent>("SpriteComponent");
+
+    m_gameObjects.push_back(go3);
+
     m_loaded = true;
 }
 

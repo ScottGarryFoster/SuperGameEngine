@@ -75,12 +75,48 @@ bool Texture::LoadImageFromFile(const FString& filePath, std::vector<FString>& e
     return true;
 }
 
-bool Texture::LoadImageFromData(const std::vector<unsigned char>& data, const std::string& filepath, std::vector<FString>& errors)
+bool Texture::LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<FString>& errors)
 {
-    // TODO: IMPLEMENT THIS AS PART OF [#75]
-    Logger::Assert(NotImplementedException(), GetTypeName(), FString("LoadFileFromData"),
-        FString("Not implemented yet. To be implemented as part of ticket #75. "));
-    return false;
+    if (data.empty())
+    {
+        errors.push_back(FString("No data to create texture. "));
+        return false;
+    }
+
+    SDL_RWops* rwOps = SDL_RWFromMem(data.data(), data.size());
+    if (!rwOps)
+    {
+        errors.push_back(FString("Failed to create RWops from memory."));
+        return false;
+    }
+
+    SDL_Surface* imageSurface = IMG_Load_RW(rwOps, 1); // 1 means SDL will close the RWops for us
+    if (!imageSurface)
+    {
+        std::string imageError = IMG_GetError();
+        errors.push_back(FString("Failed to load image from RWops: " + imageError));
+        return false;
+    }
+
+    // Create texture
+    m_texture = SDL_CreateTextureFromSurface(m_renderer, imageSurface);
+
+    // Free surface as it's no longer needed
+    SDL_FreeSurface(imageSurface);
+    imageSurface = NULL;
+    if (!m_texture)
+    {
+        FString error = FString("Error creating texture: ", SDL_GetError());
+        Logger::Error(error);
+        errors.push_back(error);
+        return false;
+    }
+
+    UpdateTextureMetaData(m_texture);
+
+    m_filePath = filepath;
+
+    return true;
 }
 
 /// <summary>
