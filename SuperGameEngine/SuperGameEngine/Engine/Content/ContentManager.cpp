@@ -194,7 +194,7 @@ bool ContentManager::LoadFileFromData(
     std::vector<FString>& errors)
 {
     std::vector<std::string> errorsAsString = std::vector<std::string>();
-    bool created = m_binaryZip->ExtractSingleFileToData(zipName, innerFile, data, errorsAsString);
+    bool created = m_binaryZip->ExtractSingleBinaryFileToData(zipName, innerFile, data, errorsAsString);
     if (!created)
     {
         for (std::string error : errorsAsString)

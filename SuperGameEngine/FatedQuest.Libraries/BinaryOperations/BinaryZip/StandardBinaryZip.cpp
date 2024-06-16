@@ -468,7 +468,7 @@ bool StandardBinaryZip::ZipWithBinaryToDirectoryToFile(const std::string& input,
     return false;
 }
 
-bool BinaryOperations::StandardBinaryZip::ExtractSingleFileToData(const std::string& zipFilePath, const std::string innerFilepath, std::vector<unsigned char>& data, std::vector<std::string>& errors)
+bool StandardBinaryZip::ExtractSingleFileToData(const std::string& zipFilePath, const std::string innerFilepath, std::vector<unsigned char>& data, std::vector<std::string>& errors)
 {
     // Do not allow methods to do anything if there are existing errors.
     if (errors.size() > 0)
@@ -519,6 +519,94 @@ bool BinaryOperations::StandardBinaryZip::ExtractSingleFileToData(const std::str
         unzClose(zipfile);
         return false;
     }
+
+    unzCloseCurrentFile(zipfile);
+    unzClose(zipfile);
+
+    return true;
+}
+
+bool StandardBinaryZip::ExtractSingleBinaryFileToData(const std::string& zipFilePath, const std::string innerFilepath, std::vector<unsigned char>& data, std::vector<std::string>& errors)
+{
+    // Do not allow methods to do anything if there are existing errors.
+    if (errors.size() > 0)
+    {
+        errors.push_back("Called StandardBinaryZip::ExtractSingleFileToData with errors already. Handle the errors before continuing. ");
+        return false;
+    }
+
+    if (!File::Exists(zipFilePath))
+    {
+        errors.push_back("Zip file does not exist: " + zipFilePath);
+        return false;
+    }
+
+    unzFile zipfile = unzOpen(zipFilePath.c_str());
+    if (zipfile == nullptr)
+    {
+        errors.push_back("Failed to open zip file.");
+        return false;
+    }
+
+    // Forward slashes matter for paths in zips.
+    std::string cleanInnerPath = innerFilepath;
+    std::replace(cleanInnerPath.begin(), cleanInnerPath.end(), '\\', '/');
+
+    if (unzLocateFile(zipfile, cleanInnerPath.c_str(), 0) != UNZ_OK)
+    {
+        errors.push_back("File not found in the zip archive.");
+        unzClose(zipfile);
+        return false;
+    }
+
+    if (unzOpenCurrentFile(zipfile) != UNZ_OK)
+    {
+        errors.push_back("Failed to open file in zip archive.");
+        unzClose(zipfile);
+        return false;
+    }
+
+    // Get the file details.
+    unz_file_info fileInfo;
+    unzGetCurrentFileInfo(zipfile, &fileInfo, nullptr, 0, nullptr, 0, nullptr, 0);
+
+    std::vector<unsigned char> fromFileData;
+    fromFileData.resize(fileInfo.uncompressed_size);
+    int bytesRead = unzReadCurrentFile(zipfile, fromFileData.data(), fromFileData.size());
+    if (bytesRead < 0)
+    {
+        errors.push_back("Failed to read file from zip archive.");
+        fromFileData.clear();
+        unzClose(zipfile);
+        return false;
+    }
+
+    // Start Uncompressing the data
+    uLong sourceLength = fromFileData.size();
+
+    // This is unknown at this stage, we perform a loop below to figure this out.
+    uLong destinationLength = sourceLength * 2;
+
+    std::vector<unsigned char> decompressedData(destinationLength);
+
+    // Keep increasing the buffer until it is big enough.
+    int result;
+    while ((result = uncompress(decompressedData.data(), &destinationLength, reinterpret_cast<unsigned char*>(fromFileData.data()), sourceLength)) == Z_BUF_ERROR)
+    {
+        destinationLength *= 2;
+        decompressedData.resize(destinationLength);
+
+        if (result != Z_BUF_ERROR && result != Z_OK)
+        {
+            break;
+        }
+    }
+
+    // The last loop above we might not have increased this.
+    decompressedData.resize(destinationLength);
+
+    // Lock in the data.
+    data = decompressedData;
 
     unzCloseCurrentFile(zipfile);
     unzClose(zipfile);
