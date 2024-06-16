@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <string>
 
 namespace StandardCLibrary
 {
@@ -83,6 +84,53 @@ namespace StandardCLibrary
             {
                 vector.erase(vector.begin() + index);
                 return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Does vector contain the given type?
+        /// </summary>
+        /// <typeparam name="T">Type of vector and entries. </typeparam>
+        /// <param name="data">Collection. </param>
+        /// <param name="lookFor">Type to lookfor. </param>
+        /// <returns>True means does contain. </returns>
+        template<typename T>
+        static inline bool Contains(const std::vector<T>& data, const T& lookFor)
+        {
+            for (const auto& entry : data)
+            {
+                if (entry == lookFor)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Vector contains string.
+        /// Might be more performant in certain situations.
+        /// </summary>
+        /// <param name="data">Collection of string. </param>
+        /// <param name="lookFor">String to look for. </param>
+        /// <returns>True means does contain. </returns>
+        static inline bool ContainsString(const std::vector<std::string>& data, const std::string& lookFor)
+        {
+            size_t lookForLength = lookFor.size();
+            for (const std::string& entry : data)
+            {
+                if (entry.size() != lookForLength)
+                {
+                    continue;
+                }
+
+                if (entry == lookFor)
+                {
+                    return true;
+                }
             }
 
             return false;

@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <filesystem>
+namespace FileSystem = std::filesystem;
 
 using namespace StandardCLibrary;
 
@@ -58,4 +60,39 @@ std::string StandardCLibrary::File::ReadFileContents(const std::string& filepath
 FString File::ReadFileContents(const FString& filepath)
 {
     return FString(ReadFileContents(filepath.AsStdString()));
+}
+
+bool File::IsFile(const std::string& filepath)
+{
+    return FileSystem::is_regular_file(filepath);
+}
+
+bool File::Delete(const std::string& filepath)
+{
+    if (!File::Exists(filepath))
+    {
+        return false;
+    }
+
+    if (!File::IsFile(filepath))
+    {
+        return false;
+    }
+
+    return FileSystem::remove(filepath);
+}
+
+bool File::EndInExtension(const std::string& filepath, const std::string& extention)
+{
+    if (filepath.size() < extention.size())
+    {
+        return false;
+    }
+    
+    if(filepath.compare(filepath.size() - extention.size(), extention.size(), extention) == 0)
+    {
+        return true;
+    }
+    
+    return false;
 }

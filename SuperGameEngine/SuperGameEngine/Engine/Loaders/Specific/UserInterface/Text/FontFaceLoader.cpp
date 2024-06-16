@@ -31,21 +31,42 @@ bool FontFaceLoader::LoadAsset(std::shared_ptr<Object>& subject, FString key)
     }
 
     std::shared_ptr<FString> fileContents = std::make_shared<FString>(File::ReadFileContents(key));
-
-    std::shared_ptr<bool> loaded = std::make_shared<bool>();
-    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, fileContents);
-    if (loaded)
-    {
-        subject = ff;
-    }
-    else
+    bool loaded = LoadAssetFromString(subject, fileContents);
+    if (!loaded)
     {
         Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAsset"),
             FString("Could not load font from file. ") + key);
+    }
+
+    return loaded;
+}
+
+bool FontFaceLoader::LoadAssetFromData(std::shared_ptr<Object>& subject, std::vector<unsigned char>& data)
+{
+    std::shared_ptr<FontFace> fontFace = dynamic_pointer_cast<FontFace>(subject);
+    if (!fontFace)
+    {
+        Logger::Assert(NotImplementedException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
+            FString("You must pass in a Font face to load. (Shared Pointer Version) "));
         return false;
     }
 
-    return true;
+    if (data.empty())
+    {
+        Logger::Assert(NotImplementedException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
+            FString("No data to load font. "));
+        return false;
+    }
+
+    std::shared_ptr<FString> fileContents = std::make_shared<FString>(data);
+    bool loaded = LoadAssetFromString(subject, fileContents);
+    if (!loaded)
+    {
+        Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
+            FString("Could not load font from data. "));
+    }
+
+    return loaded;
 }
 
 bool FontFaceLoader::LoadAsset(Object* subject, FString key)
@@ -69,4 +90,16 @@ bool FontFaceLoader::LoadAsset(Object* subject, FString key)
                 FString("Loading assets via Raw Point is not supported yet."));
 
     return false;
+}
+
+bool FontFaceLoader::LoadAssetFromString(std::shared_ptr<Object>& subject, std::shared_ptr<FString> rawData)
+{
+    std::shared_ptr<bool> loaded = std::make_shared<bool>();
+    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, rawData);
+    if (loaded)
+    {
+        subject = ff;
+    }
+
+    return *loaded;
 }

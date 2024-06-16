@@ -94,6 +94,19 @@ FString::FString(const std::string str1, const std::string str2, const std::stri
     m_storage = content.str();
 }
 
+FString::FString(const std::vector<unsigned char>& constChar)
+{
+    if (constChar.empty())
+    {
+        m_storage = "";
+    }
+    else
+    {
+        std::string str(constChar.begin(), constChar.end());
+        m_storage = str;
+    }
+}
+
 const std::string FString::AsStdString() const
 {
     return m_storage;

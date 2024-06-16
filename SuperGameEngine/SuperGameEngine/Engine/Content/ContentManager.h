@@ -6,8 +6,10 @@
 #include "../Graphics/TextureWrapper.h"
 #include "../Loaders/AssetLoader.h"
 #include "../../UserInterface/Text/FontFaceAsset.h"
+#include "../../../FatedQuest.Libraries/BinaryOperations/BinaryZip/BinaryZip.h"
 
 using namespace StandardCLibrary;
+using namespace BinaryOperations;
 
 namespace SuperGameEngine
 {
@@ -63,15 +65,22 @@ namespace SuperGameEngine
         /// <summary>
         /// Loads font faces from Meta files.
         /// </summary>
-        std::unique_ptr<AssetLoader> fontLoader;
+        std::unique_ptr<AssetLoader> m_fontLoader;
 
         /// <summary>
         /// All of the Fonts currently loaded.
         /// </summary>
-        std::unique_ptr<FList
-            <std::pair<FString, std::shared_ptr
-                <FontFaceAsset>>>> 
-                    fontFaceCache;
+        std::unique_ptr<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>> m_fontFaceCache;
+
+        /// <summary>
+        /// All the files in the Archive.
+        /// </summary>
+        std::vector<std::string> m_productArchiveFiles;
+
+        /// <summary>
+        /// Allows operations on Zip files.
+        /// </summary>
+        std::unique_ptr<BinaryZip> m_binaryZip;
 
         /// <summary>
         /// Creates an Empty Texture.
@@ -84,5 +93,31 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>Empty super texture with no image. </returns>
         std::shared_ptr<SuperTexture> GetEmptySuperTexture();
+
+        /// <summary>
+        /// Loads the given file from within the Products Zip.
+        /// </summary>
+        /// <param name="zipName">The Zip file to find the data. </param>
+        /// <param name="innerFile">The Inner File name to load the data. </param>
+        /// <param name="data">The loaded data if loaded. </param>
+        /// <param name="errors">Errors when loading if any. </param>
+        /// <returns> True means could load. See errors if false. </returns>
+        bool LoadFileFromData(
+            const std::string zipName,
+            const std::string innerFile,
+            std::vector<unsigned char>& data,
+            std::vector<FString>& errors);
+
+        /// <summary>
+        /// Looks for file in the products archive.
+        /// </summary>
+        /// <param name="filename">Filename to look for. </param>
+        /// <returns>True means is in archive. </returns>
+        bool FileIsInArchive(const std::string& filename);
+
+        /// <summary>
+        /// Loads the Product Files Archive and fills the Cache.
+        /// </summary>
+        void LoadArchiveFilesIntoCache();
     };
 }

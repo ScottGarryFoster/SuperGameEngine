@@ -263,6 +263,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FatedQuest.Libraries\BinaryOperations\BinaryOperations.vcxproj">
+      <Project>{1bc135f0-12f0-4dfd-90a4-8dd09af88b7c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
     </ProjectReference>

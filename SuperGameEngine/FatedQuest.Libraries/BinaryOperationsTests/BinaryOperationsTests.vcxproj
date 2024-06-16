@@ -106,6 +106,7 @@
     <ClCompile Include="BinaryFile\BinaryIntTest.cpp" />
     <ClCompile Include="BinaryFile\BinaryStringTest.cpp" />
     <ClCompile Include="BinaryFile\StandardBinaryDataTests.cpp" />
+    <ClCompile Include="BinaryZip\MiniZipTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BinaryOperations\BinaryOperations.vcxproj">

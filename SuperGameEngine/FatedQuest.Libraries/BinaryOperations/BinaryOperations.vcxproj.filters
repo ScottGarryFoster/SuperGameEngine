@@ -14,6 +14,12 @@
     <Filter Include="Project Files\BinaryFile\API">
       <UniqueIdentifier>{5d6e64f2-04fe-41c9-a38e-ba36f52cf332}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\BinaryZip">
+      <UniqueIdentifier>{bd2d7c61-e4c7-4bee-9217-28a0dfb5ac1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\BinaryZip\API">
+      <UniqueIdentifier>{39eafe5c-05f5-4c3a-9b84-e93ae9b388f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryFile\BinaryData.h">
@@ -28,6 +34,21 @@
     <ClInclude Include="BinaryFile\BinaryInt.h">
       <Filter>Project Files\BinaryFile\API</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryZip\BinaryZip.h">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryZip\StandardBinaryZip.h">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryZip\Zip.h">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryZip\ZipCreateOpenOption.hpp">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryZip\MiniZip.h">
+      <Filter>Project Files\BinaryZip\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryFile\StandardBinaryData.cpp">
@@ -38,6 +59,18 @@
     </ClCompile>
     <ClCompile Include="BinaryFile\BinaryInt.cpp">
       <Filter>Project Files\BinaryFile</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\BinaryZip.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\StandardBinaryZip.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\Zip.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryZip\MiniZip.cpp">
+      <Filter>Project Files\BinaryZip</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

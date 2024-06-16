@@ -23,6 +23,10 @@ namespace SuperGameEngine
         /// <param name="answer">True if loaded. </param>
         /// <param name="text">Text to parse. </param>
         /// <returns>The font face if loaded. </returns>
+        /// <remark>
+        /// Probably not the best name for this.
+        /// Filename would be the input for load from file.
+        /// </remark>
         virtual std::shared_ptr<FontFace> LoadFromFile(std::shared_ptr<bool>& answer, const std::shared_ptr<FString> text);
 
     private:
