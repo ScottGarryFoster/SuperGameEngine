@@ -31,21 +31,14 @@ bool FontFaceLoader::LoadAsset(std::shared_ptr<Object>& subject, FString key)
     }
 
     std::shared_ptr<FString> fileContents = std::make_shared<FString>(File::ReadFileContents(key));
-
-    std::shared_ptr<bool> loaded = std::make_shared<bool>();
-    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, fileContents);
-    if (loaded)
-    {
-        subject = ff;
-    }
-    else
+    bool loaded = LoadAssetFromString(subject, fileContents);
+    if (!loaded)
     {
         Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAsset"),
             FString("Could not load font from file. ") + key);
-        return false;
     }
 
-    return true;
+    return loaded;
 }
 
 bool FontFaceLoader::LoadAssetFromData(std::shared_ptr<Object>& subject, std::vector<unsigned char>& data)
@@ -66,20 +59,14 @@ bool FontFaceLoader::LoadAssetFromData(std::shared_ptr<Object>& subject, std::ve
     }
 
     std::shared_ptr<FString> fileContents = std::make_shared<FString>(data);
-    std::shared_ptr<bool> loaded = std::make_shared<bool>();
-    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, fileContents);
-    if (loaded)
-    {
-        subject = ff;
-    }
-    else
+    bool loaded = LoadAssetFromString(subject, fileContents);
+    if (!loaded)
     {
         Logger::Assert(FileOpenException(), FString("FontFaceLoader"), FString("LoadAssetFromData"),
             FString("Could not load font from data. "));
-        return false;
     }
 
-    return true;
+    return loaded;
 }
 
 bool FontFaceLoader::LoadAsset(Object* subject, FString key)
@@ -103,4 +90,16 @@ bool FontFaceLoader::LoadAsset(Object* subject, FString key)
                 FString("Loading assets via Raw Point is not supported yet."));
 
     return false;
+}
+
+bool FontFaceLoader::LoadAssetFromString(std::shared_ptr<Object>& subject, std::shared_ptr<FString> rawData)
+{
+    std::shared_ptr<bool> loaded = std::make_shared<bool>();
+    std::shared_ptr<FontFace> ff = this->fromText->LoadFromFile(loaded, rawData);
+    if (loaded)
+    {
+        subject = ff;
+    }
+
+    return *loaded;
 }
