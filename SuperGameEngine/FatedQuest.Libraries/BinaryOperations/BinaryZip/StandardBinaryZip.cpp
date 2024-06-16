@@ -489,15 +489,17 @@ bool StandardBinaryZip::ExtractSingleFileToData(const std::string& zipFilePath, 
         return false;
     }
 
-    // Forward slashes matter for paths in zips.
-    std::string cleanInnerPath = innerFilepath;
-    std::replace(cleanInnerPath.begin(), cleanInnerPath.end(), '\\', '/');
-
-    if (unzLocateFile(zipfile, cleanInnerPath.c_str(), 0) != UNZ_OK)
+    if (unzLocateFile(zipfile, innerFilepath.c_str(), 0) != UNZ_OK)
     {
-        errors.push_back("File not found in the zip archive.");
-        unzClose(zipfile);
-        return false;
+        // Forward slashes matter for paths in zips.
+        std::string cleanInnerPath = innerFilepath;
+        std::replace(cleanInnerPath.begin(), cleanInnerPath.end(), '\\', '/');
+        if (unzLocateFile(zipfile, cleanInnerPath.c_str(), 0) != UNZ_OK)
+        {
+            errors.push_back("File not found in the zip archive.");
+            unzClose(zipfile);
+            return false;
+        }
     }
 
     if (unzOpenCurrentFile(zipfile) != UNZ_OK)
@@ -548,15 +550,17 @@ bool StandardBinaryZip::ExtractSingleBinaryFileToData(const std::string& zipFile
         return false;
     }
 
-    // Forward slashes matter for paths in zips.
-    std::string cleanInnerPath = innerFilepath;
-    std::replace(cleanInnerPath.begin(), cleanInnerPath.end(), '\\', '/');
-
-    if (unzLocateFile(zipfile, cleanInnerPath.c_str(), 0) != UNZ_OK)
+    if (unzLocateFile(zipfile, innerFilepath.c_str(), 0) != UNZ_OK)
     {
-        errors.push_back("File not found in the zip archive.");
-        unzClose(zipfile);
-        return false;
+        // Forward slashes matter for paths in zips.
+        std::string cleanInnerPath = innerFilepath;
+        std::replace(cleanInnerPath.begin(), cleanInnerPath.end(), '\\', '/');
+        if (unzLocateFile(zipfile, cleanInnerPath.c_str(), 0) != UNZ_OK)
+        {
+            errors.push_back("File not found in the zip archive.");
+            unzClose(zipfile);
+            return false;
+        }
     }
 
     if (unzOpenCurrentFile(zipfile) != UNZ_OK)
@@ -612,6 +616,64 @@ bool StandardBinaryZip::ExtractSingleBinaryFileToData(const std::string& zipFile
     unzClose(zipfile);
 
     return true;
+}
+
+std::vector<std::string> StandardBinaryZip::ListFilesInArchive(const std::string& filepath, std::vector<std::string>& errors)
+{
+    std::vector<std::string> zipFiles;
+
+    // Do not allow methods to do anything if there are existing errors.
+    if (errors.size() > 0)
+    {
+        errors.push_back("Called StandardBinaryZip::ListFilesInArchive with errors already. Handle the errors before continuing. ");
+        return zipFiles;
+    }
+
+    if (!File::Exists(filepath))
+    {
+        errors.push_back("Zip file does not exist: " + filepath);
+        return zipFiles;
+    }
+
+    unzFile zipfile = unzOpen(filepath.c_str());
+    if (zipfile == nullptr)
+    {
+        errors.push_back("Cannot open zip file " + filepath);
+        return zipFiles;
+    }
+
+    int error = unzGoToFirstFile(zipfile);
+    if (error != UNZ_OK)
+    {
+        errors.push_back("Cannot go to the first file in the zip archive");
+        unzClose(zipfile);
+        return zipFiles;
+    }
+
+    do
+    {
+        char filename[256];
+        unz_file_info fileInfo;
+
+        error = unzGetCurrentFileInfo(zipfile, &fileInfo, filename, sizeof(filename), nullptr, 0, nullptr, 0);
+        if (error != UNZ_OK)
+        {
+            errors.push_back("Cannot get file info for the current file");
+            break;
+        }
+
+        zipFiles.push_back(filename);
+        error = unzGoToNextFile(zipfile);
+    } while (error == UNZ_OK);
+
+    if (error != UNZ_END_OF_LIST_OF_FILE && error != UNZ_OK)
+    {
+        errors.push_back("Cannot go to the next file in the zip archive");
+    }
+
+    unzClose(zipfile);
+
+    return zipFiles;
 }
 
 std::ifstream StandardBinaryZip::ReadFileContentsToBinaryStream(const std::string& input, std::vector<std::string>& errors)

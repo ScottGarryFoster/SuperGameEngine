@@ -108,6 +108,14 @@ namespace BinaryOperations
         /// <param name="errors">If not loaded this will be the reason why. </param>
         /// <returns>True means loaded successfully. </returns>
         virtual bool ExtractSingleBinaryFileToData(const std::string& zipFilePath, const std::string innerFilepath, std::vector<unsigned char>& data, std::vector<std::string>& errors);
+
+        /// <summary>
+        /// Lists all files within a Zip.
+        /// </summary>
+        /// <param name="filepath">Zip file location. </param>
+        /// <param name="errors">If not loaded this will contain the reasons why. </param>
+        /// <returns>All the file paths within the zip if loaded, or an empty Vector if not. </returns>
+        virtual std::vector<std::string> ListFilesInArchive(const std::string& filepath, std::vector<std::string>& errors);
     private:
         /// <summary>
         /// Reads file contents into Stream.

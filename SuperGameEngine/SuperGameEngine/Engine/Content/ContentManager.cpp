@@ -29,6 +29,8 @@ ContentManager::ContentManager(SDL_Renderer* renderer)
     m_fontLoader = std::make_unique<FontFaceLoader>(this);
     m_fontFaceCache = std::make_unique<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>>();
     m_binaryZip = std::make_unique<StandardBinaryZip>();
+
+    LoadArchiveFilesIntoCache();
 }
 
 ContentManager::~ContentManager()
@@ -36,11 +38,6 @@ ContentManager::~ContentManager()
 
 }
 
-/// <summary>
-/// Creates or gets the given Texture.
-/// </summary>
-/// <param name="filePath">File Path releative to the products folder. </param>
-/// <returns>The texture or <c>nullptr</c> if not found. </returns>
 std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
 {
     if (m_renderer == nullptr)
@@ -57,6 +54,10 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
     FString filePathZip = m_productsDirectory + ".zip\\" + filePathInsideProducts;
     filePathZip.ConvertToLower();
 
+    std::string binaryFilePathInsideProducts = filePathInsideProducts + ".gz";
+    FString binaryFilePathZip = m_productsDirectory + ".zip\\" + binaryFilePathInsideProducts;
+    binaryFilePathZip.ConvertToLower();
+
     bool foundTexture = false;
     std::shared_ptr<TextureWrapper> returnTexture = nullptr;
 
@@ -69,6 +70,12 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
             break;
         }
         else if (texture->RepresentSameImage(filePathZip))
+        {
+            returnTexture = texture;
+            foundTexture = true;
+            break;
+        }
+        else if (texture->RepresentSameImage(binaryFilePathInsideProducts))
         {
             returnTexture = texture;
             foundTexture = true;
@@ -92,14 +99,35 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
         }
         else
         {
-            std::string zipName = m_productsDirectory.AsStdString() + ".zip";
-            std::vector<unsigned char> outputData = std::vector<unsigned char>();
-            if (LoadFileFromData(zipName, filePathInsideProducts, outputData, errors))
+            // Ensure to use the correct path when loading the texture.
+            // This means if another texture is used it will be reloaded.
+            FString* zipPathToStore = nullptr;
+
+            std::string fileToLoad = filePathInsideProducts;
+            bool shouldLoad = false;
+            if (FileIsInArchive(filePathInsideProducts))
             {
-                if (newTexture->LoadImageFromData(outputData, filePathZip.AsStdString(), errors))
+                zipPathToStore = &filePathZip;
+                shouldLoad = true;
+            }
+            else if (FileIsInArchive(binaryFilePathInsideProducts))
+            {
+                zipPathToStore = &binaryFilePathZip;
+                fileToLoad = binaryFilePathInsideProducts;
+                shouldLoad = true;
+            }
+
+            if (shouldLoad)
+            {
+                std::string zipName = m_productsDirectory.AsStdString() + ".zip";
+                std::vector<unsigned char> outputData = std::vector<unsigned char>();
+                if (LoadFileFromData(zipName, fileToLoad, outputData, errors))
                 {
-                    returnTexture = std::make_shared<TextureWrapper>(newTexture);
-                    m_textureLibrary.push_back(returnTexture);
+                    if (newTexture->LoadImageFromData(outputData, zipPathToStore->AsStdString(), errors))
+                    {
+                        returnTexture = std::make_shared<TextureWrapper>(newTexture);
+                        m_textureLibrary.push_back(returnTexture);
+                    }
                 }
             }
         }
@@ -119,6 +147,10 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
     FString filePathZip = m_productsDirectory + ".zip\\" + filePathInsideProducts;
     filePathZip.ConvertToLower();
 
+    std::string binaryFilePathInsideProducts = filePathInsideProducts + ".gz";
+    FString binaryFilePathZip = m_productsDirectory + ".zip\\" + binaryFilePathInsideProducts;
+    binaryFilePathZip.ConvertToLower();
+
     bool loaded = false;
     std::shared_ptr<FontFaceAsset> discoveredFontAsset;
 
@@ -131,6 +163,12 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
             break;
         }
         else if (filePathZip == entry.first)
+        {
+            discoveredFontAsset = entry.second;
+            loaded = true;
+            break;
+        }
+        else if (binaryFilePathZip == entry.first)
         {
             discoveredFontAsset = entry.second;
             loaded = true;
@@ -156,16 +194,31 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
         }
         else
         {
-            std::string zipName = m_productsDirectory.AsStdString() + ".zip";
-            std::string filePathAsString = filePath.AsStdString();
-            std::vector<FString> errors;
-            std::vector<unsigned char> outputData = std::vector<unsigned char>();
-            if (LoadFileFromData(zipName, filePathInsideProducts, outputData, errors))
+            std::string fileToLoad = filePathInsideProducts;
+            bool shouldLoad = false;
+            if (FileIsInArchive(filePathInsideProducts))
             {
-                if (m_fontLoader->LoadAssetFromData(object, outputData))
+                shouldLoad = true;
+            }
+            else if(FileIsInArchive(binaryFilePathInsideProducts))
+            {
+                fileToLoad = binaryFilePathInsideProducts;
+                shouldLoad = true;
+            }
+
+            if (shouldLoad)
+            {
+                std::string zipName = m_productsDirectory.AsStdString() + ".zip";
+                std::string filePathAsString = filePath.AsStdString();
+                std::vector<FString> errors;
+                std::vector<unsigned char> outputData = std::vector<unsigned char>();
+                if (LoadFileFromData(zipName, fileToLoad, outputData, errors))
                 {
-                    discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
-                    loaded = true;
+                    if (m_fontLoader->LoadAssetFromData(object, outputData))
+                    {
+                        discoveredFontAsset = dynamic_pointer_cast<FontFaceAsset>(object);
+                        loaded = true;
+                    }
                 }
             }
         }
@@ -187,6 +240,22 @@ std::shared_ptr<SuperTexture> ContentManager::GetEmptySuperTexture()
     return std::make_shared<EmptyTexture>();
 }
 
+void ContentManager::LoadArchiveFilesIntoCache()
+{
+    std::vector<std::string> loadingZipErrors;
+    m_productArchiveFiles = m_binaryZip->ListFilesInArchive(m_productsDirectory.AsStdString() + ".zip", loadingZipErrors);
+    for (std::string error : loadingZipErrors)
+    {
+        Logger::Error("Loading Products Zip error: " + error);
+    }
+
+    // Standardise all paths in lookup to forward slashes.
+    for (std::string& path : m_productArchiveFiles)
+    {
+        std::replace(path.begin(), path.end(), '\\', '/');
+    }
+}
+
 bool ContentManager::LoadFileFromData(
     const std::string zipName,
     const std::string innerFile,
@@ -194,14 +263,28 @@ bool ContentManager::LoadFileFromData(
     std::vector<FString>& errors)
 {
     std::vector<std::string> errorsAsString = std::vector<std::string>();
-    bool created = m_binaryZip->ExtractSingleBinaryFileToData(zipName, innerFile, data, errorsAsString);
-    if (!created)
+
+    bool created = false;
+    if (File::EndInExtension(innerFile, ".gz"))
     {
-        for (std::string error : errorsAsString)
-        {
-            errors.push_back(FString(error));
-        }
+        created = m_binaryZip->ExtractSingleBinaryFileToData(zipName, innerFile, data, errorsAsString);
+    }
+    else
+    {
+        created = m_binaryZip->ExtractSingleFileToData(zipName, innerFile, data, errorsAsString);
+    }
+
+    for (std::string error : errorsAsString)
+    {
+        errors.push_back(FString(error));
     }
 
     return created;
+}
+
+bool ContentManager::FileIsInArchive(const std::string& filename)
+{
+    std::string adjustedName = filename;
+    std::replace(adjustedName.begin(), adjustedName.end(), '\\', '/');
+    return VectorHelpers::ContainsString(m_productArchiveFiles, adjustedName);
 }

@@ -81,3 +81,18 @@ bool File::Delete(const std::string& filepath)
 
     return FileSystem::remove(filepath);
 }
+
+bool File::EndInExtension(const std::string& filepath, const std::string& extention)
+{
+    if (filepath.size() < extention.size())
+    {
+        return false;
+    }
+    
+    if(filepath.compare(filepath.size() - extention.size(), extention.size(), extention) == 0)
+    {
+        return true;
+    }
+    
+    return false;
+}

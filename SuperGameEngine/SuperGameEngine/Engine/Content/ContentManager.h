@@ -73,6 +73,11 @@ namespace SuperGameEngine
         std::unique_ptr<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>> m_fontFaceCache;
 
         /// <summary>
+        /// All the files in the Archive.
+        /// </summary>
+        std::vector<std::string> m_productArchiveFiles;
+
+        /// <summary>
         /// Allows operations on Zip files.
         /// </summary>
         std::unique_ptr<BinaryZip> m_binaryZip;
@@ -102,5 +107,17 @@ namespace SuperGameEngine
             const std::string innerFile,
             std::vector<unsigned char>& data,
             std::vector<FString>& errors);
+
+        /// <summary>
+        /// Looks for file in the products archive.
+        /// </summary>
+        /// <param name="filename">Filename to look for. </param>
+        /// <returns>True means is in archive. </returns>
+        bool FileIsInArchive(const std::string& filename);
+
+        /// <summary>
+        /// Loads the Product Files Archive and fills the Cache.
+        /// </summary>
+        void LoadArchiveFilesIntoCache();
     };
 }

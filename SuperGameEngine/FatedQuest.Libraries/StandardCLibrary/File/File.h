@@ -52,6 +52,14 @@ namespace StandardCLibrary
         /// <param name="filepath">Deletes the given file. </param>
         /// <returns>True means delete file. False means could not delete file or file was not a file.</returns>
         static bool Delete(const std::string& filepath);
+
+        /// <summary>
+        /// Looks for the given suffix on the filepath.
+        /// </summary>
+        /// <param name="filepath">Filepath to inspect. </param>
+        /// <param name="extention">Extension to look for. </param>
+        /// <returns>True means has extension. </returns>
+        static bool EndInExtension(const std::string& filepath, const std::string& extention);
     };
 }
 
