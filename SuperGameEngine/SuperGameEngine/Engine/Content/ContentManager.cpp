@@ -44,11 +44,15 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
         return nullptr;
     }
 
-    filePath.ConvertToLower();
     filePath = m_productsDirectory + "\\" + filePath;
+    filePath.ConvertToLower();
+
+    FString filePathZip = m_productsDirectory + ".zip\\" + filePath;
+    filePathZip.ConvertToLower();
 
     bool foundTexture = false;
     std::shared_ptr<TextureWrapper> returnTexture = nullptr;
+
     for (std::shared_ptr<TextureWrapper>& texture : m_textureLibrary)
     {
         if (texture->RepresentSameImage(filePath))
@@ -57,16 +61,41 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
             foundTexture = true;
             break;
         }
+        else if (texture->RepresentSameImage(filePathZip))
+        {
+            returnTexture = texture;
+            foundTexture = true;
+            break;
+        }
     }
+
 
     if (!foundTexture)
     {
         std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(m_renderer);
         std::vector<FString> errors = std::vector<FString>();
-        if (newTexture->LoadImageFromFile(filePath, errors))
+
+        if (File::Exists(filePath))
         {
-            returnTexture = std::make_shared<TextureWrapper>(newTexture);
-            m_textureLibrary.push_back(returnTexture);
+            if (newTexture->LoadImageFromFile(filePath, errors))
+            {
+                returnTexture = std::make_shared<TextureWrapper>(newTexture);
+                m_textureLibrary.push_back(returnTexture);
+            }
+        }
+        else
+        {
+            std::string zipName = m_productsDirectory.AsStdString() + ".zip";
+            std::string filePathAsString = filePath.AsStdString();
+            std::vector<unsigned char> outputData;
+            if (LoadFileFromData(zipName, filePathAsString, outputData, errors))
+            {
+                if (newTexture->LoadImageFromData(outputData, filePathZip.AsStdString(), errors))
+                {
+                    returnTexture = std::make_shared<TextureWrapper>(newTexture);
+                    m_textureLibrary.push_back(returnTexture);
+                }
+            }
         }
     }
 
@@ -120,4 +149,16 @@ std::shared_ptr<Texture> ContentManager::GetEmptyTexture()
 std::shared_ptr<SuperTexture> ContentManager::GetEmptySuperTexture()
 {
     return std::make_shared<EmptyTexture>();
+}
+
+bool ContentManager::LoadFileFromData(
+    const std::string zipName,
+    const std::string innerFile,
+    std::vector<unsigned char>& data,
+    std::vector<FString>& errors)
+{
+    // TODO: IMPLEMENT THIS AS PART OF [#75]
+    Logger::Assert(NotImplementedException(), GetTypeName(), FString("LoadFileFromData"),
+        FString("Not implemented yet. To be implemented as part of ticket #75. "));
+    return false;
 }

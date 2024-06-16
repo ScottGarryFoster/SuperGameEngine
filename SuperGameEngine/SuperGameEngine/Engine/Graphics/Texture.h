@@ -27,6 +27,18 @@ namespace SuperGameEngine
         bool LoadImageFromFile(const FString& filePath, std::vector<FString>& errors);
 
         /// <summary>
+        /// Loads a texture from raw data.
+        /// </summary>
+        /// <param name="data">Data to load the texture from. </param>
+        /// <param name="filepath">
+        /// Filepath to store when making the texture -
+        /// this does not exist and is used to create the texture as part of the comparer.
+        /// </param>
+        /// <param name="errors">Errors if not created. </param>
+        /// <returns>True means created. </returns>
+        bool LoadImageFromData(const std::vector<unsigned char>& data, const std::string& filepath, std::vector<FString>& errors);
+
+        /// <summary>
         /// Draws to screen.
         /// </summary>
         void Draw();

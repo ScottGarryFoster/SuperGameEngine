@@ -84,5 +84,19 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>Empty super texture with no image. </returns>
         std::shared_ptr<SuperTexture> GetEmptySuperTexture();
+
+        /// <summary>
+        /// Loads the given file from within the Products Zip.
+        /// </summary>
+        /// <param name="zipName">The Zip file to find the data. </param>
+        /// <param name="innerFile">The Inner File name to load the data. </param>
+        /// <param name="data">The loaded data if loaded. </param>
+        /// <param name="errors">Errors when loading if any. </param>
+        /// <returns> True means could load. See errors if false. </returns>
+        bool LoadFileFromData(
+            const std::string zipName,
+            const std::string innerFile,
+            std::vector<unsigned char>& data,
+            std::vector<FString>& errors);
     };
 }

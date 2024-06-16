@@ -75,6 +75,14 @@ bool Texture::LoadImageFromFile(const FString& filePath, std::vector<FString>& e
     return true;
 }
 
+bool Texture::LoadImageFromData(const std::vector<unsigned char>& data, const std::string& filepath, std::vector<FString>& errors)
+{
+    // TODO: IMPLEMENT THIS AS PART OF [#75]
+    Logger::Assert(NotImplementedException(), GetTypeName(), FString("LoadFileFromData"),
+        FString("Not implemented yet. To be implemented as part of ticket #75. "));
+    return false;
+}
+
 /// <summary>
 /// Draws to screen.
 /// </summary>
