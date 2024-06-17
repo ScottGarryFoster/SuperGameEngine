@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "../../../FatedQuest.Libraries/StandardCLibrary/Text/FString.h"
+#include "../../../FatedQuest.Libraries/Logging/Logger.h"
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
@@ -35,8 +36,7 @@ std::string FilesAndFolders::GetWorkingDirectory()
     char path[MAX_PATH] = "";
     GetCurrentDirectoryA(MAX_PATH, path);
     std::string executablePath = path;
-    std::string executableDirectory = executablePath.substr(0, executablePath.find_last_of("\\"));
-    return executableDirectory;
+    return executablePath;
 #endif // WINDOWS
 }
 
@@ -49,7 +49,14 @@ std::string FilesAndFolders::GetProductsFolder()
     std::vector<FString> pathSplit = FString::Split(executableDirectory, FString("\\"));
 
     executableDirectory = FString("");
-    for (size_t i = 0; i < pathSplit.size() - 1; ++i)
+
+    size_t splitCutOff = pathSplit.size();
+#ifdef _DEBUG
+    // Debug the products live in the top of the directory.
+    splitCutOff -= 2;
+#endif // _DEBUG
+
+    for (size_t i = 0; i < splitCutOff; ++i)
     {
         if (i == 0)
         {
