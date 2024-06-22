@@ -119,6 +119,7 @@
     </ClCompile>
     <ClCompile Include="Text\FStringTests.cpp" />
     <ClCompile Include="Text\FTextTests.cpp" />
+    <ClCompile Include="Text\StringHelpersTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -170,6 +170,15 @@
     <ClInclude Include="Text\FStringStream.h">
       <Filter>Project Files\Text\API</Filter>
     </ClInclude>
+    <ClInclude Include="Text\StringHelpers.h">
+      <Filter>Project Files\Text\API</Filter>
+    </ClInclude>
+    <ClInclude Include="File\CopyOptionsFileSystemHelper.hpp">
+      <Filter>Project Files\File\API</Filter>
+    </ClInclude>
+    <ClInclude Include="File\CopyFileOptions.hpp">
+      <Filter>Project Files\File\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Text/FString.cpp">
@@ -233,6 +242,9 @@
       <Filter>Project Files\Text</Filter>
     </ClCompile>
     <ClCompile Include="Text\FStringStream.cpp">
+      <Filter>Project Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\StringHelpers.cpp">
       <Filter>Project Files\Text</Filter>
     </ClCompile>
   </ItemGroup>

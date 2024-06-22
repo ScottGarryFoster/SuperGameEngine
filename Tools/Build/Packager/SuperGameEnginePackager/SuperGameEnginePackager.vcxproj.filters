@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ProjectFiles">
+      <UniqueIdentifier>{c9d18d08-2bb6-4f82-958f-4480ab517269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectFiles\GamePackage">
+      <UniqueIdentifier>{b8ca0bd2-1380-4f2b-a48a-f8708e9a87ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectFiles\GamePackage\API">
+      <UniqueIdentifier>{2bd97966-5022-4c68-a243-a5019edaefea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GamePackage\ProductsPackager.h">
+      <Filter>ProjectFiles\GamePackage\API</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\ProductsPackageCompression.hpp">
+      <Filter>ProjectFiles\GamePackage\API</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryIncludes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GamePackage\ProductsPackager.cpp">
+      <Filter>ProjectFiles\GamePackage</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
