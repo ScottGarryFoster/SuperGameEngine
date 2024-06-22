@@ -156,9 +156,6 @@ bool StandardBinaryZip::DirectoryToBinary(const std::string& input, const std::s
         }
     }
 
-    std::string zipPath = output + ".zip";
-    CreateZip(zipPath.c_str(), filenames, filenamesRelativeToDirectory, errors);
-
     return true;
 }
 

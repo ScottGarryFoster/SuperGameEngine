@@ -22,6 +22,9 @@
     <ClCompile Include="Text\FTextTests.cpp">
       <Filter>Text</Filter>
     </ClCompile>
+    <ClCompile Include="Text\StringHelpersTests.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Collection">

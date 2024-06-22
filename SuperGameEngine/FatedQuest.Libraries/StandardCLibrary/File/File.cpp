@@ -1,4 +1,5 @@
 #include "File.h"
+#include "Directory.h"
 #include "../Object/Asserts/FileOpenException.hpp"
 
 #include <iostream>
@@ -6,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <filesystem>
+#include "CopyOptionsFileSystemHelper.hpp"
 namespace FileSystem = std::filesystem;
 
 using namespace StandardCLibrary;
@@ -67,6 +69,11 @@ bool File::IsFile(const std::string& filepath)
     return FileSystem::is_regular_file(filepath);
 }
 
+bool File::IsFile(const FString& filepath)
+{
+    return IsFile(filepath.AsStdString());
+}
+
 bool File::Delete(const std::string& filepath)
 {
     if (!File::Exists(filepath))
@@ -82,6 +89,11 @@ bool File::Delete(const std::string& filepath)
     return FileSystem::remove(filepath);
 }
 
+bool File::Delete(const FString& filepath)
+{
+    return Delete(filepath.AsStdString());
+}
+
 bool File::EndInExtension(const std::string& filepath, const std::string& extention)
 {
     if (filepath.size() < extention.size())
@@ -95,4 +107,57 @@ bool File::EndInExtension(const std::string& filepath, const std::string& extent
     }
     
     return false;
+}
+
+bool File::EndInExtension(const FString& filepath, const FString& extention)
+{
+    return EndInExtension(filepath.AsStdString(), extention.AsStdString());
+}
+
+bool File::EndInExtension(const FString& filepath, const std::string& extention)
+{
+    return EndInExtension(filepath.AsStdString(), extention);
+}
+
+bool File::EndInExtension(const std::string& filepath, const FString& extention)
+{
+    return EndInExtension(filepath, extention.AsStdString());
+}
+
+bool File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
+{
+    try
+    {
+        if (!File::Exists(inputFilepath))
+        {
+            return false;
+        }
+
+        FileSystem::copy_options copyOption = Convert(options);
+        FileSystem::path inputPathAsPath = inputFilepath;
+        FileSystem::path destinationAsPath = outputDirectoryPath;
+
+        return FileSystem::copy_file(inputPathAsPath, destinationAsPath, copyOption);
+    }
+    catch (const std::exception)
+    {
+        return false;
+    }
+
+    return false;
+}
+
+bool File::CopyFile(const FString& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options)
+{
+    return CopyFile(inputFilepath.AsStdString(), outputDirectoryPath.AsStdString(), options);
+}
+
+bool File::CopyFile(const std::string& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options)
+{
+    return CopyFile(inputFilepath, outputDirectoryPath.AsStdString(), options);
+}
+
+bool File::CopyFile(const FString& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
+{
+    return CopyFile(inputFilepath.AsStdString(), outputDirectoryPath, options);
 }
