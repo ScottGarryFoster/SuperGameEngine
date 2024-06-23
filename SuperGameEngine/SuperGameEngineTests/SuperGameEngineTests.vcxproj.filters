@@ -29,6 +29,9 @@
     <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoaderTests.cpp">
       <Filter>Project Files\Engine\AuthoredLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataTests.cpp">
+      <Filter>Project Files\Engine\AuthoredLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">
