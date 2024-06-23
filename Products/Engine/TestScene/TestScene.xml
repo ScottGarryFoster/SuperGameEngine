@@ -1,17 +1,17 @@
 <Scene>
     <GameObject>
         <GameComponent type="TransformComponent">
-            <Property name="X" value="200" />
-            <Property name="Y" value="100" />
+            <Property name="X" type="float" value="200" />
+            <Property name="Y" type="float" value="100" />
         </GameComponent>
         <GameComponent type="PlayerControllerComponent">
-            <Property name="Speed" value="300" />
-            <Property name="UseKeyboard" value="false" />
+            <Property name="Speed" type="float" value="300" />
+            <Property name="UseKeyboard" type="bool" value="false" />
         </GameComponent>
         <GameComponent type="SimpleRigidbodyComponent" />
         <GameComponent type="BoxColliderComponent">
-            <Property name="SizeX" value="100" />
-            <Property name="SizeY" value="200" />
+            <Property name="SizeX" type="float" value="100" />
+            <Property name="SizeY" type="float" value="200" />
         </GameComponent>
     </GameObject>
 </Scene>

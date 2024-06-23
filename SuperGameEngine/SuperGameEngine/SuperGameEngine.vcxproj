@@ -135,8 +135,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\AuthoredLoader\ParsedData.h" />
     <ClInclude Include="Engine\AuthoredLoader\PrimitiveData.h" />
     <ClInclude Include="Engine\AuthoredLoader\PrimitiveDataLoader.h" />
+    <ClInclude Include="Engine\AuthoredLoader\PrimitiveDataParser.h" />
+    <ClInclude Include="Engine\AuthoredLoader\SceneDataParser.h" />
     <ClInclude Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.h" />
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
@@ -215,8 +218,11 @@
     <ClInclude Include="UserInterface\Text\FontFaceRenderPacketParameters.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\AuthoredLoader\ParsedData.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\PrimitiveData.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataLoader.cpp" />
+    <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataParser.cpp" />
+    <ClCompile Include="Engine\AuthoredLoader\SceneDataParser.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.cpp" />
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />

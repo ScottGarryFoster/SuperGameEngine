@@ -102,7 +102,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\AuthoredLoader\ParsedDataTests.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataTests.cpp" />
+    <ClCompile Include="Engine\AuthoredLoader\SceneDataParserTests.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoaderTests.cpp" />
     <ClCompile Include="Engine\Input\ControllerLayoutFromXMLTests.cpp" />
     <ClCompile Include="Structural\Spatial\Area\CircleTests.cpp" />
