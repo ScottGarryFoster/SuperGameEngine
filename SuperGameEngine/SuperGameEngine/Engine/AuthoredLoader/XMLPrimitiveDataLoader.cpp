@@ -5,7 +5,9 @@ using namespace rapidxml;
 const std::shared_ptr<PrimitiveData> XMLPrimitiveDataLoader::ExtractData(const std::string& data)
 {
     std::shared_ptr<XMLDocument> document = std::make_shared<XMLDocument>();
-    bool didParse = ParseDocument(data, document);
+
+    std::string copyOfData = data;
+    bool didParse = ParseDocument(copyOfData, document);
     if(!didParse)
     {
         return std::shared_ptr<PrimitiveData>();
@@ -24,6 +26,10 @@ const std::shared_ptr<PrimitiveData> XMLPrimitiveDataLoader::ExtractData(const s
 
     std::string nameAsString = rootNode->name();
     primitiveData = std::make_shared<PrimitiveData>(nameAsString, children);
+    for (XMLAttribute* attribute = rootNode->first_attribute(); attribute; attribute = attribute->next_attribute())
+    {
+        primitiveData->SetProperty(attribute->name(), attribute->value());
+    }
 
     return primitiveData;
 }
@@ -56,4 +62,8 @@ void XMLPrimitiveDataLoader::AddNodeToData(const XMLNode* node, std::shared_ptr<
 
     std::string nameAsString = node->name();
     data = std::make_shared<PrimitiveData>(nameAsString, children);
+    for (XMLAttribute* attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
+    {
+        data->SetProperty(attribute->name(), attribute->value());
+    }
 }

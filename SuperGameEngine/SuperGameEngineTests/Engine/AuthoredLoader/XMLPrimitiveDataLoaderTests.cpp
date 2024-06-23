@@ -111,16 +111,85 @@ namespace SuperGameEngineTests_Engine_AuthoredLoader
         ASSERT_EQ(expectedNamesInner1B.size(), actual->GetChildren()[1]->GetChildren().size());
         for (size_t i = 0; i < actual->GetChildren()[0]->GetChildren().size(); ++i)
         {
-            std::shared_ptr<PrimitiveData> data = actual->GetChildren()[0]->GetChildren()[i];
+            std::shared_ptr<const PrimitiveData> data = actual->GetChildren()[0]->GetChildren()[i];
             ASSERT_EQ(expectedNamesInner1[i], data->GetName()) << "Inner Children 1 not equal, index: " << i;
         }
 
         for (size_t i = 0; i < actual->GetChildren()[1]->GetChildren().size(); ++i)
         {
-            std::shared_ptr<PrimitiveData> data = actual->GetChildren()[1]->GetChildren()[i];
+            std::shared_ptr<const PrimitiveData> data = actual->GetChildren()[1]->GetChildren()[i];
             ASSERT_EQ(expectedNamesInner1B[i], data->GetName()) << "Inner Children 1B not equal, index: " << i;
         }
     }
 
+#pragma region Properties
+
+    TEST_F(XMLPrimitiveDataLoaderTests, ExtractData_AddsProperty_WhenPropertyIsAdded)
+    {
+        // Arrange
+        std::string given = "<RandomTag Property=\"value\"></RandomTag>";
+        std::string propertyName = "Property";
+        std::string propertyValue = "value";
+
+        // Act
+        std::shared_ptr<PrimitiveData> actual = m_primitiveDataLoader->ExtractData(given);
+
+        // Assert
+        std::string actualValue = std::string();
+        ASSERT_TRUE(actual->TryGetProperty(propertyName, actualValue));
+    }
+
+    TEST_F(XMLPrimitiveDataLoaderTests, ExtractData_AddsPropertyValue_WhenPropertyHasAValue)
+    {
+        // Arrange
+        std::string given = "<RandomTag PropertyWithValue=\"someValue\"></RandomTag>";
+        std::string propertyName = "PropertyWithValue";
+        std::string propertyValue = "someValue";
+
+        // Act
+        std::shared_ptr<PrimitiveData> actual = m_primitiveDataLoader->ExtractData(given);
+
+        // Assert
+        std::string actualValue = std::string();
+        ASSERT_TRUE(actual->TryGetProperty(propertyName, actualValue));
+        ASSERT_EQ(propertyValue, actualValue);
+    }
+
+    TEST_F(XMLPrimitiveDataLoaderTests, ExtractData_AddsPropertyForChild_WhenPropertyIsAdded)
+    {
+        // Arrange
+        std::string given = "<RandomTag><Child Property=\"value\"></Child></RandomTag>";
+        std::string propertyName = "Property";
+        std::string propertyValue = "value";
+
+        // Act
+        std::shared_ptr<PrimitiveData> actual = m_primitiveDataLoader->ExtractData(given);
+
+        // Assert
+        std::shared_ptr<const PrimitiveData> actualChild = actual->GetChildren()[0];
+
+        std::string actualValue = std::string();
+        ASSERT_TRUE(actualChild->TryGetProperty(propertyName, actualValue));
+    }
+
+    TEST_F(XMLPrimitiveDataLoaderTests, ExtractData_AddsPropertyValueForChild_WhenPropertyHasAValue)
+    {
+        // Arrange
+        std::string given = "<RandomTag><Child PropertyWithValue=\"someValue\"></Child></RandomTag>";
+        std::string propertyName = "PropertyWithValue";
+        std::string propertyValue = "someValue";
+
+        // Act
+        std::shared_ptr<PrimitiveData> actual = m_primitiveDataLoader->ExtractData(given);
+
+        // Assert
+        std::shared_ptr<const PrimitiveData> actualChild = actual->GetChildren()[0];
+
+        std::string actualValue = std::string();
+        ASSERT_TRUE(actualChild->TryGetProperty(propertyName, actualValue));
+        ASSERT_EQ(propertyValue, actualValue);
+    }
+
+#pragma endregion
 
 }
