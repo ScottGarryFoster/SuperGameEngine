@@ -135,9 +135,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\AuthoredLoader\PrimitiveData.h" />
+    <ClInclude Include="Engine\AuthoredLoader\PrimitiveDataLoader.h" />
+    <ClInclude Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.h" />
     <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
-    <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
     <ClInclude Include="Engine\Graphics\CacheableRender.h" />
     <ClInclude Include="Engine\Graphics\EmptyTexture.hpp" />
     <ClInclude Include="Engine\Graphics\RenderPacket.h" />
@@ -213,9 +215,11 @@
     <ClInclude Include="UserInterface\Text\FontFaceRenderPacketParameters.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\AuthoredLoader\PrimitiveData.cpp" />
+    <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataLoader.cpp" />
+    <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.cpp" />
     <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
-    <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
     <ClCompile Include="Engine\Graphics\CacheableRender.cpp" />
     <ClCompile Include="Engine\Graphics\RenderPacket.cpp" />
     <ClCompile Include="Engine\Graphics\SimpleRenderPacket.cpp" />

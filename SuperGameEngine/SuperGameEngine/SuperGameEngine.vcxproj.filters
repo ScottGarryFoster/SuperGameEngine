@@ -146,6 +146,12 @@
     <Filter Include="Project Files\Engine\Loaders\Specific\UserInterface\Text\API">
       <UniqueIdentifier>{8d0711ed-5566-4d74-a94f-9865653071fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\Engine\AuthoredLoader">
+      <UniqueIdentifier>{56a8ea67-6cfa-47f0-bf8e-f305731f1714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\AuthoredLoader\API">
+      <UniqueIdentifier>{dfa4c146-76ce-43b5-b548-e6506baee25f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Structural\Scene\GrandScene.cpp">
@@ -262,7 +268,6 @@
     <ClCompile Include="Engine\Graphics\TextureWrapper.cpp">
       <Filter>Project Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Global\PackageRuntimeDifference.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
       <Filter>Project Files\Structural\Spatial\Area</Filter>
     </ClCompile>
@@ -301,6 +306,15 @@
     </ClCompile>
     <ClCompile Include="Structural\GameObject\ComponentFactory.cpp">
       <Filter>Project Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataLoader.cpp">
+      <Filter>Project Files\Engine\AuthoredLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AuthoredLoader\PrimitiveData.cpp">
+      <Filter>Project Files\Engine\AuthoredLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.cpp">
+      <Filter>Project Files\Engine\AuthoredLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,7 +492,6 @@
     <ClInclude Include="Engine\Graphics\SplitTextureAsset.h">
       <Filter>Project Files\Engine\Graphics\API</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Global\PackageRuntimeDifference.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
       <Filter>Project Files\Structural\Spatial\Area\API</Filter>
     </ClInclude>
@@ -529,6 +542,15 @@
     </ClInclude>
     <ClInclude Include="Structural\GameObject\ComponentFactory.h">
       <Filter>Project Files\Structural\GameObject\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AuthoredLoader\PrimitiveDataLoader.h">
+      <Filter>Project Files\Engine\AuthoredLoader\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AuthoredLoader\PrimitiveData.h">
+      <Filter>Project Files\Engine\AuthoredLoader\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.h">
+      <Filter>Project Files\Engine\AuthoredLoader\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

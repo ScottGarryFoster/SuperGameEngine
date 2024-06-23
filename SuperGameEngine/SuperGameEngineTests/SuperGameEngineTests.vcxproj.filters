@@ -26,6 +26,9 @@
     <ClCompile Include="UserInterface\Text\FontFaceTests.cpp">
       <Filter>Project Files\UserInterface\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoaderTests.cpp">
+      <Filter>Project Files\Engine\AuthoredLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Project Files">
@@ -57,6 +60,9 @@
     </Filter>
     <Filter Include="Project Files\UserInterface\Text">
       <UniqueIdentifier>{70a7e2d0-fad4-428d-bbb5-5f6266fde416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Engine\AuthoredLoader">
+      <UniqueIdentifier>{87a0cde0-5c69-487f-b77f-d125cf5c0797}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

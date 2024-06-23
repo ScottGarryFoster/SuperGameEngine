@@ -1,0 +1,5 @@
+<GameSetup>
+    <Scenes>
+        <Scene value="Engine\\TestScene\\TestScene.xml" default="True" />
+    </Scenes>
+</GameSetup>

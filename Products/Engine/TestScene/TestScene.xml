@@ -1,0 +1,17 @@
+<Scene>
+    <GameObject>
+        <GameComponent type="TransformComponent">
+            <Property name="X" value="200" />
+            <Property name="Y" value="100" />
+        </GameComponent>
+        <GameComponent type="PlayerControllerComponent">
+            <Property name="Speed" value="300" />
+            <Property name="UseKeyboard" value="false" />
+        </GameComponent>
+        <GameComponent type="SimpleRigidbodyComponent" />
+        <GameComponent type="BoxColliderComponent">
+            <Property name="SizeX" value="100" />
+            <Property name="SizeY" value="200" />
+        </GameComponent>
+    </GameObject>
+</Scene>
