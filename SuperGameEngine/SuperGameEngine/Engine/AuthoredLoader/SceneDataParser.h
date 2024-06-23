@@ -94,5 +94,12 @@ namespace SuperGameEngine
         /// <param name="primitive">Unparsed data. </param>
         /// <returns>Parsed property. </returns>
         const std::shared_ptr<ParsedData> CreateFloatProperty(const std::shared_ptr<const PrimitiveData> primitive);
+
+        /// <summary>
+        /// Creates a Bool property.
+        /// </summary>
+        /// <param name="primitive">Unparsed data. </param>
+        /// <returns>Parsed property. </returns>
+        const std::shared_ptr<ParsedData> CreateBoolProperty(const std::shared_ptr<const PrimitiveData> primitive);
     };
 }

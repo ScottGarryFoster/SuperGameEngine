@@ -244,4 +244,74 @@ namespace SuperGameEngineTests_Engine_AuthoredLoader
     }
 
 #pragma endregion
+
+#pragma region TryGetProperty Boolean
+
+    TEST_F(ParsedDataTests, TryGetPropertyBool_ReturnsFalse_WhenSetPropertyIsNotCalled)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        // Act
+        bool propertyValue = bool();
+        bool actual = testClass->TryGetBoolProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(ParsedDataTests, TryGetPropertyBool_ReturnsProperty_WhenSetPropertyIsCalledButDoesNotMatchTryPropertyValue)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        std::string setProperty = "setProperty";
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        testClass->SetProperty(setProperty, bool());
+
+        // Act
+        bool propertyValue = bool();
+        bool actual = testClass->TryGetBoolProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(ParsedDataTests, TryGetPropertyBool_ReturnsProperty_WhenSetPropertyCalled)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        testClass->SetProperty(given, bool());
+
+        // Act
+        bool propertyValue = bool();
+        bool actual = testClass->TryGetBoolProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(ParsedDataTests, TryGetPropertyBool_ReturnsValue_WhenPropertyValueGiven)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        bool givenValue = true;
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        testClass->SetProperty(given, givenValue);
+
+        // Act
+        bool propertyValue = bool();
+        bool actual = testClass->TryGetBoolProperty(given, propertyValue);
+
+        // Assert
+        // Need to ensure try get passes as this is a bool
+        ASSERT_TRUE(actual);
+        ASSERT_EQ(givenValue, propertyValue);
+    }
+
+#pragma endregion
 }

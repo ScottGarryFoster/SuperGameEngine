@@ -101,3 +101,28 @@ void ParsedData::SetProperty(const std::string& propertyName, const float& prope
 
     m_floatProperties[propertyName] = propertyValue;
 }
+
+const bool ParsedData::TryGetBoolProperty(const std::string& propertyName, bool& propertyValue) const
+{
+    bool found = false;
+    propertyValue = bool();
+
+    auto it = m_boolProperties.find(propertyName);
+    if (it != m_boolProperties.end())
+    {
+        propertyValue = it->second;
+        found = true;
+    }
+
+    return found;
+}
+
+void ParsedData::SetBoolProperty(const std::string& propertyName, const bool& propertyValue)
+{
+    if (propertyName.empty())
+    {
+        return;
+    }
+
+    m_boolProperties[propertyName] = propertyValue;
+}

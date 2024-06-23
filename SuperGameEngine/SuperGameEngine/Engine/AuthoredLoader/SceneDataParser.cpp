@@ -118,6 +118,10 @@ const std::shared_ptr<ParsedData> SceneDataParser::CreatePropertyOfType(
     {
         return CreateFloatProperty(primitive);
     }
+    if (type == "bool")
+    {
+        return CreateBoolProperty(primitive);
+    }
 
     return std::shared_ptr<ParsedData>();
 }
@@ -220,6 +224,54 @@ const std::shared_ptr<ParsedData> SceneDataParser::CreateFloatProperty(const std
     // We set both the string a int versions
     returnPointer->SetProperty("value", valueValue);
     returnPointer->SetProperty("value", outValue);
+
+    return returnPointer;
+}
+
+const std::shared_ptr<ParsedData> SuperGameEngine::SceneDataParser::CreateBoolProperty(const std::shared_ptr<const PrimitiveData> primitive)
+{
+    std::string valueValue = std::string();
+    if (!primitive->TryGetProperty("value", valueValue))
+    {
+        // Early return for invalid data
+        return std::shared_ptr<ParsedData>();
+    }
+
+    std::string nameValue = std::string();
+    if (!primitive->TryGetProperty("name", nameValue))
+    {
+        // Early return for invalid data
+        return std::shared_ptr<ParsedData>();
+    }
+
+    bool outValue = false;
+    valueValue = StringHelpers::Trim(valueValue);
+    StringHelpers::ConvertToLower(valueValue);
+    if (valueValue == "true")
+    {
+        outValue = true;
+    }
+    else if (valueValue == "false")
+    {
+        // Do nothing but also not an early out
+    }
+    else
+    {
+        // Invalid option
+        // Early return for invalid data
+        return std::shared_ptr<ParsedData>();
+    }
+
+    std::vector<std::shared_ptr<ParsedData>> children = std::vector<std::shared_ptr<ParsedData>>();
+    std::string name = primitive->GetName();
+    std::shared_ptr<ParsedData> returnPointer = std::make_shared<ParsedData>(name, children);
+
+    returnPointer->SetProperty("type", "bool");
+    returnPointer->SetProperty("name", nameValue);
+
+    // We set both the string a int versions
+    returnPointer->SetProperty("value", valueValue);
+    returnPointer->SetBoolProperty("value", outValue);
 
     return returnPointer;
 }

@@ -68,6 +68,21 @@ namespace SuperGameEngine
         /// <param name="propertyName">Name of the property. Case sensitive. </param>
         /// <param name="propertyValue">Value of the property if found. </param>
         void SetProperty(const std::string& propertyName, const float& propertyValue);
+
+        /// <summary>
+        /// Tries to get the Property if found within the data.
+        /// </summary>
+        /// <param name="propertyName">Name of the Property. Case sensitive.</param>
+        /// <param name="propertyValue">Value of the property if found. </param>
+        /// <returns>True means found. </returns>
+        const bool TryGetBoolProperty(const std::string& propertyName, bool& propertyValue) const;
+
+        /// <summary>
+        /// Sets a property with the given value.
+        /// </summary>
+        /// <param name="propertyName">Name of the property. Case sensitive. </param>
+        /// <param name="propertyValue">Value of the property if found. </param>
+        void SetBoolProperty(const std::string& propertyName, const bool& propertyValue);
     private:
         /// <summary>
         /// Name of the current piece of data.
@@ -93,6 +108,11 @@ namespace SuperGameEngine
         /// All float proeprties for this data.
         /// </summary>
         std::map<std::string, float> m_floatProperties;
+
+        /// <summary>
+        /// All bool proeprties for this data.
+        /// </summary>
+        std::map<std::string, bool> m_boolProperties;
     };
 
 }
