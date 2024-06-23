@@ -76,3 +76,28 @@ void ParsedData::SetProperty(const std::string& propertyName, const int& propert
 
     m_intProperties[propertyName] = propertyValue;
 }
+
+const bool ParsedData::TryGetProperty(const std::string& propertyName, float& propertyValue) const
+{
+    bool found = false;
+    propertyValue = int();
+
+    auto it = m_floatProperties.find(propertyName);
+    if (it != m_floatProperties.end())
+    {
+        propertyValue = it->second;
+        found = true;
+    }
+
+    return found;
+}
+
+void ParsedData::SetProperty(const std::string& propertyName, const float& propertyValue)
+{
+    if (propertyName.empty())
+    {
+        return;
+    }
+
+    m_floatProperties[propertyName] = propertyValue;
+}

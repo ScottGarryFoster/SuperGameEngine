@@ -87,5 +87,12 @@ namespace SuperGameEngine
         /// <param name="primitive">Unparsed data. </param>
         /// <returns>Parsed property. </returns>
         const std::shared_ptr<ParsedData> CreateIntProperty(const std::shared_ptr<const PrimitiveData> primitive);
+
+        /// <summary>
+        /// Creates a Float property.
+        /// </summary>
+        /// <param name="primitive">Unparsed data. </param>
+        /// <returns>Parsed property. </returns>
+        const std::shared_ptr<ParsedData> CreateFloatProperty(const std::shared_ptr<const PrimitiveData> primitive);
     };
 }

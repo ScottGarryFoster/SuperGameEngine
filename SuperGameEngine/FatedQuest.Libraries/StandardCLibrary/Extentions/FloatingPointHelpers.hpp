@@ -37,5 +37,93 @@ namespace StandardCLibrary
 
             return std::abs(left - right) < epsilon;
         }
+
+        /// <summary>
+        /// Parses a string to an Float.
+        /// </summary>
+        /// <param name="parsing">Pasing value. </param>
+        /// <param name="outValue">The output of the parsing. Is -1 by default. </param>
+        /// <returns>True means is parsed. </returns>
+        inline static bool TryParse(FString& parsing, float& outValue)
+        {
+            outValue = -1;
+            try
+            {
+                outValue = std::stof(parsing.AsStdString());
+                return true;
+            }
+            catch (const std::exception)
+            {
+                // Do nothing
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Parses a string to an Float.
+        /// </summary>
+        /// <param name="parsing">Pasing value. </param>
+        /// <param name="outValue">The output of the parsing. Is -1 by default. </param>
+        /// <returns>True means is parsed. </returns>
+        inline static bool TryParse(std::string& parsing, float& outValue)
+        {
+            outValue = -1;
+            try
+            {
+                outValue = std::stof(parsing);
+                return true;
+            }
+            catch (const std::exception)
+            {
+                // Do nothing
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Parses a string to an Double.
+        /// </summary>
+        /// <param name="parsing">Pasing value. </param>
+        /// <param name="outValue">The output of the parsing. Is -1 by default. </param>
+        /// <returns>True means is parsed. </returns>
+        inline static bool TryParse(FString& parsing, double& outValue)
+        {
+            outValue = -1;
+            try
+            {
+                outValue = std::stod(parsing.AsStdString());
+                return true;
+            }
+            catch (const std::exception)
+            {
+                // Do nothing
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Parses a string to an Double.
+        /// </summary>
+        /// <param name="parsing">Pasing value. </param>
+        /// <param name="outValue">The output of the parsing. Is -1 by default. </param>
+        /// <returns>True means is parsed. </returns>
+        inline static bool TryParse(std::string& parsing, double& outValue)
+        {
+            outValue = -1;
+            try
+            {
+                outValue = std::stod(parsing);
+                return true;
+            }
+            catch (const std::exception)
+            {
+                // Do nothing
+            }
+
+            return false;
+        }
     };
 }

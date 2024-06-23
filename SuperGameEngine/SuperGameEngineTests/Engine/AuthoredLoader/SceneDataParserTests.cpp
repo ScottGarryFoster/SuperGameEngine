@@ -405,5 +405,115 @@ namespace SuperGameEngineTests_Engine_AuthoredLoader
         property->TryGetProperty("value", actualIntValue);
         ASSERT_EQ(expectedValueNumber, actualIntValue);
     }
+
+    TEST_F(SceneDataParserTests, ParseData_ReturnsEmpty_WhenGivenIntValueIsNotAnInt)
+    {
+        // Arrange
+        std::string expectedName = "textName";
+        std::string expectedValue = "fdsfds";
+
+        std::string givenName = "Property";
+        std::shared_ptr<PrimitiveData> given =
+            std::make_shared<PrimitiveData>(givenName, std::vector<std::shared_ptr<PrimitiveData>>());
+
+        // Property Details
+        given->SetProperty("type", "int");
+        given->SetProperty("name", expectedName);
+        given->SetProperty("value", expectedValue);
+
+        std::shared_ptr<PrimitiveData> gameComponent = ReturnGameComponent(given);
+        std::shared_ptr<PrimitiveData> gameObject = ReturnGameObjectData(gameComponent);
+        std::shared_ptr<PrimitiveData> scene = ReturnSceneData(gameObject);
+
+        // Act
+        std::shared_ptr<ParsedData> actual = testClass->ParseData(scene);
+
+        // Assert
+        std::vector<std::shared_ptr<const ParsedData>> componentChildren =
+            actual->GetChildren()[0]->GetChildren()[0]->GetChildren();
+        ASSERT_EQ(0, componentChildren.size());
+    }
+
+#pragma
+
+#pragma region Float Property
+    TEST_F(SceneDataParserTests, ParseData_ReturnsFloatProperty_WhenGivenIntProperty)
+    {
+        // Arrange
+        std::string expectedName = "textName";
+        std::string expectedValue = "23.67";
+        float expectedValueNumber = 23.67f;
+
+        std::string givenName = "Property";
+        std::shared_ptr<PrimitiveData> given =
+            std::make_shared<PrimitiveData>(givenName, std::vector<std::shared_ptr<PrimitiveData>>());
+
+        // Property Details
+        given->SetProperty("type", "float");
+        given->SetProperty("name", expectedName);
+        given->SetProperty("value", expectedValue);
+
+        std::shared_ptr<PrimitiveData> gameComponent = ReturnGameComponent(given);
+        std::shared_ptr<PrimitiveData> gameObject = ReturnGameObjectData(gameComponent);
+        std::shared_ptr<PrimitiveData> scene = ReturnSceneData(gameObject);
+
+        // Act
+        std::shared_ptr<ParsedData> actual = testClass->ParseData(scene);
+
+        // Assert
+        std::vector<std::shared_ptr<const ParsedData>> componentChildren =
+            actual->GetChildren()[0]->GetChildren()[0]->GetChildren();
+        ASSERT_EQ(1, componentChildren.size());
+        std::shared_ptr<const ParsedData> property =
+            actual->GetChildren()[0]->GetChildren()[0]->GetChildren()[0];
+        ASSERT_TRUE(property);
+
+        // Type
+        std::string actualValue = std::string();
+        property->TryGetProperty("type", actualValue);
+        ASSERT_EQ("float", actualValue);
+
+        // Name
+        property->TryGetProperty("name", actualValue);
+        ASSERT_EQ(expectedName, actualValue);
+
+        // Value
+        property->TryGetProperty("value", actualValue);
+        ASSERT_EQ(expectedValue, actualValue);
+
+        // Value as float
+        float actualIntValue = float();
+        property->TryGetProperty("value", actualIntValue);
+        ASSERT_EQ(expectedValueNumber, actualIntValue);
+    }
+
+    TEST_F(SceneDataParserTests, ParseData_ReturnsEmpty_WhenGivenFloatValueIsNotAnFloat)
+    {
+        // Arrange
+        std::string expectedName = "textName";
+        std::string expectedValue = "fdsfds";
+
+        std::string givenName = "Property";
+        std::shared_ptr<PrimitiveData> given =
+            std::make_shared<PrimitiveData>(givenName, std::vector<std::shared_ptr<PrimitiveData>>());
+
+        // Property Details
+        given->SetProperty("type", "float");
+        given->SetProperty("name", expectedName);
+        given->SetProperty("value", expectedValue);
+
+        std::shared_ptr<PrimitiveData> gameComponent = ReturnGameComponent(given);
+        std::shared_ptr<PrimitiveData> gameObject = ReturnGameObjectData(gameComponent);
+        std::shared_ptr<PrimitiveData> scene = ReturnSceneData(gameObject);
+
+        // Act
+        std::shared_ptr<ParsedData> actual = testClass->ParseData(scene);
+
+        // Assert
+        std::vector<std::shared_ptr<const ParsedData>> componentChildren =
+            actual->GetChildren()[0]->GetChildren()[0]->GetChildren();
+        ASSERT_EQ(0, componentChildren.size());
+    }
+
 #pragma
 }

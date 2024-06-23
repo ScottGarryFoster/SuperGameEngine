@@ -176,4 +176,72 @@ namespace SuperGameEngineTests_Engine_AuthoredLoader
     }
 
 #pragma endregion
+
+#pragma region TryGetProperty Float
+
+    TEST_F(ParsedDataTests, TryGetPropertyFloat_ReturnsFalse_WhenSetPropertyIsNotCalled)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        // Act
+        float propertyValue = float();
+        bool actual = testClass->TryGetProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(ParsedDataTests, TryGetPropertyFloat_ReturnsProperty_WhenSetPropertyIsCalledButDoesNotMatchTryPropertyValue)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        std::string setProperty = "setProperty";
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        testClass->SetProperty(setProperty, float());
+
+        // Act
+        float propertyValue = float();
+        bool actual = testClass->TryGetProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(ParsedDataTests, TryGetPropertyFloat_ReturnsProperty_WhenSetPropertyCalled)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        testClass->SetProperty(given, float());
+
+        // Act
+        float propertyValue = float();
+        bool actual = testClass->TryGetProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(ParsedDataTests, TryGetPropertyFloat_ReturnsValue_WhenPropertyValueGiven)
+    {
+        // Arrange
+        std::string given = "testProperty";
+        float givenValue = 42.432f;
+        std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
+
+        testClass->SetProperty(given, givenValue);
+
+        // Act
+        float propertyValue = float();
+        bool actual = testClass->TryGetProperty(given, propertyValue);
+
+        // Assert
+        ASSERT_EQ(givenValue, propertyValue);
+    }
+
+#pragma endregion
 }

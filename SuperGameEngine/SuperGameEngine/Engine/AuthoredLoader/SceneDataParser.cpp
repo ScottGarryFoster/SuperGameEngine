@@ -114,6 +114,10 @@ const std::shared_ptr<ParsedData> SceneDataParser::CreatePropertyOfType(
     {
         return CreateIntProperty(primitive);
     }
+    if (type == "float")
+    {
+        return CreateFloatProperty(primitive);
+    }
 
     return std::shared_ptr<ParsedData>();
 }
@@ -174,6 +178,43 @@ const std::shared_ptr<ParsedData> SceneDataParser::CreateIntProperty(const std::
     std::shared_ptr<ParsedData> returnPointer = std::make_shared<ParsedData>(name, children);
 
     returnPointer->SetProperty("type", "int");
+    returnPointer->SetProperty("name", nameValue);
+
+    // We set both the string a int versions
+    returnPointer->SetProperty("value", valueValue);
+    returnPointer->SetProperty("value", outValue);
+
+    return returnPointer;
+}
+
+const std::shared_ptr<ParsedData> SceneDataParser::CreateFloatProperty(const std::shared_ptr<const PrimitiveData> primitive)
+{
+    std::string valueValue = std::string();
+    if (!primitive->TryGetProperty("value", valueValue))
+    {
+        // Early return for invalid data
+        return std::shared_ptr<ParsedData>();
+    }
+
+    std::string nameValue = std::string();
+    if (!primitive->TryGetProperty("name", nameValue))
+    {
+        // Early return for invalid data
+        return std::shared_ptr<ParsedData>();
+    }
+
+    float outValue = float();
+    if (!FloatingPointHelpers::TryParse(valueValue, outValue))
+    {
+        // Early return for invalid data
+        return std::shared_ptr<ParsedData>();
+    }
+
+    std::vector<std::shared_ptr<ParsedData>> children = std::vector<std::shared_ptr<ParsedData>>();
+    std::string name = primitive->GetName();
+    std::shared_ptr<ParsedData> returnPointer = std::make_shared<ParsedData>(name, children);
+
+    returnPointer->SetProperty("type", "float");
     returnPointer->SetProperty("name", nameValue);
 
     // We set both the string a int versions
