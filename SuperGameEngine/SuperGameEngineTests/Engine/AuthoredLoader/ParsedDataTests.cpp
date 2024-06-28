@@ -284,7 +284,7 @@ namespace SuperGameEngineTests_Engine_AuthoredLoader
         std::string given = "testProperty";
         std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
 
-        testClass->SetProperty(given, bool());
+        testClass->SetBoolProperty(given, bool());
 
         // Act
         bool propertyValue = bool();
@@ -301,7 +301,7 @@ namespace SuperGameEngineTests_Engine_AuthoredLoader
         bool givenValue = true;
         std::shared_ptr<ParsedData> testClass = std::make_shared<ParsedData>();
 
-        testClass->SetProperty(given, givenValue);
+        testClass->SetBoolProperty(given, givenValue);
 
         // Act
         bool propertyValue = bool();

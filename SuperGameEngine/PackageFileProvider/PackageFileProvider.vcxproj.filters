@@ -12,10 +12,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Project Files\API">
+      <UniqueIdentifier>{b5e4a156-5509-4706-bd24-ff836d74c8f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LibraryIncludes.h">
       <Filter>Package Files</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GamePackage.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
