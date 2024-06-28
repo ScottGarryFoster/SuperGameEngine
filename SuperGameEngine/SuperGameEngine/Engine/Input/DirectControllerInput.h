@@ -8,6 +8,7 @@
 #include "ControllerResolver.h"
 #include "UniversalControllerButton.hpp"
 #include "ControllerMapper.h"
+#include "../Content/PackageContents.h"
 
 namespace SuperGameEngine
 {
@@ -18,7 +19,7 @@ namespace SuperGameEngine
     class DirectControllerInput : public Object
     {
     public:
-        DirectControllerInput();
+        DirectControllerInput(std::shared_ptr<PackageContents> packageContents);
         virtual ~DirectControllerInput();
 
         /// <summary>
@@ -67,6 +68,12 @@ namespace SuperGameEngine
         /// <returns>Gets a Valid controller plugged in or 'Unknown' if none found (or recognised). </returns>
         Controller GetCurrentController() const;
     private:
+        /// <summary>
+        /// File access to the package without the need to worry about
+        /// the package or binary formats.
+        /// </summary>
+        std::shared_ptr<PackageContents> m_packageContents;
+
         /// <summary>
         /// The current state of the Key.
         /// </summary>

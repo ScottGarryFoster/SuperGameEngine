@@ -14,7 +14,7 @@ using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 using namespace BinaryOperations;
 
-ContentManager::ContentManager(SDL_Renderer* renderer)
+ContentManager::ContentManager(SDL_Renderer* renderer, std::shared_ptr<PackageContents> package)
 {
     if (renderer == nullptr)
     {
@@ -22,15 +22,19 @@ ContentManager::ContentManager(SDL_Renderer* renderer)
         Logger::Error(error);
     }
 
+    if (package == nullptr)
+    {
+        FString error = FString("ARGUMENTNULLEXPCETION: ", "ContentManager::ContentManager: ", "package is null.");
+        Logger::Error(error);
+    }
+
     m_renderer = renderer;
+    m_package = package;
     m_textureLibrary = std::vector<std::shared_ptr<TextureWrapper>>();
     m_productsDirectory = FString(FilesAndFolders::GetProductsFolder());
 
     m_fontLoader = std::make_unique<FontFaceLoader>(this);
     m_fontFaceCache = std::make_unique<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>>();
-    m_binaryZip = std::make_unique<StandardBinaryZip>();
-
-    LoadArchiveFilesIntoCache();
 }
 
 ContentManager::~ContentManager()
@@ -105,12 +109,12 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
 
             std::string fileToLoad = filePathInsideProducts;
             bool shouldLoad = false;
-            if (FileIsInArchive(filePathInsideProducts))
+            if (m_package->ExplictlyExists(filePathInsideProducts))
             {
                 zipPathToStore = &filePathZip;
                 shouldLoad = true;
             }
-            else if (FileIsInArchive(binaryFilePathInsideProducts))
+            else if (m_package->ExplictlyExists(binaryFilePathInsideProducts))
             {
                 zipPathToStore = &binaryFilePathZip;
                 fileToLoad = binaryFilePathInsideProducts;
@@ -121,7 +125,7 @@ std::shared_ptr<SuperTexture> ContentManager::GetTexture(FString filePath)
             {
                 std::string zipName = m_productsDirectory.AsStdString() + ".zip";
                 std::vector<unsigned char> outputData = std::vector<unsigned char>();
-                if (LoadFileFromData(zipName, fileToLoad, outputData, errors))
+                if (m_package->ReadFileContentsUnsigned(fileToLoad, outputData))
                 {
                     if (newTexture->LoadImageFromData(outputData, zipPathToStore->AsStdString(), errors))
                     {
@@ -196,11 +200,11 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
         {
             std::string fileToLoad = filePathInsideProducts;
             bool shouldLoad = false;
-            if (FileIsInArchive(filePathInsideProducts))
+            if (m_package->ExplictlyExists(filePathInsideProducts))
             {
                 shouldLoad = true;
             }
-            else if(FileIsInArchive(binaryFilePathInsideProducts))
+            else if(m_package->ExplictlyExists(binaryFilePathInsideProducts))
             {
                 fileToLoad = binaryFilePathInsideProducts;
                 shouldLoad = true;
@@ -212,7 +216,7 @@ std::shared_ptr<FontFaceAsset> ContentManager::GetFontFace(
                 std::string filePathAsString = filePath.AsStdString();
                 std::vector<FString> errors;
                 std::vector<unsigned char> outputData = std::vector<unsigned char>();
-                if (LoadFileFromData(zipName, fileToLoad, outputData, errors))
+                if (m_package->ReadFileContentsUnsigned(fileToLoad, outputData))
                 {
                     if (m_fontLoader->LoadAssetFromData(object, outputData))
                     {
@@ -238,53 +242,4 @@ std::shared_ptr<Texture> ContentManager::GetEmptyTexture()
 std::shared_ptr<SuperTexture> ContentManager::GetEmptySuperTexture()
 {
     return std::make_shared<EmptyTexture>();
-}
-
-void ContentManager::LoadArchiveFilesIntoCache()
-{
-    std::vector<std::string> loadingZipErrors;
-    m_productArchiveFiles = m_binaryZip->ListFilesInArchive(m_productsDirectory.AsStdString() + ".zip", loadingZipErrors);
-    for (std::string error : loadingZipErrors)
-    {
-        Logger::Error("Loading Products Zip error: " + error);
-    }
-
-    // Standardise all paths in lookup to forward slashes.
-    for (std::string& path : m_productArchiveFiles)
-    {
-        std::replace(path.begin(), path.end(), '\\', '/');
-    }
-}
-
-bool ContentManager::LoadFileFromData(
-    const std::string zipName,
-    const std::string innerFile,
-    std::vector<unsigned char>& data,
-    std::vector<FString>& errors)
-{
-    std::vector<std::string> errorsAsString = std::vector<std::string>();
-
-    bool created = false;
-    if (File::EndInExtension(innerFile, ".gz"))
-    {
-        created = m_binaryZip->ExtractSingleBinaryFileToData(zipName, innerFile, data, errorsAsString);
-    }
-    else
-    {
-        created = m_binaryZip->ExtractSingleFileToData(zipName, innerFile, data, errorsAsString);
-    }
-
-    for (std::string error : errorsAsString)
-    {
-        errors.push_back(FString(error));
-    }
-
-    return created;
-}
-
-bool ContentManager::FileIsInArchive(const std::string& filename)
-{
-    std::string adjustedName = filename;
-    std::replace(adjustedName.begin(), adjustedName.end(), '\\', '/');
-    return VectorHelpers::ContainsString(m_productArchiveFiles, adjustedName);
 }

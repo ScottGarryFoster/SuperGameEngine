@@ -18,6 +18,21 @@ std::string StringHelpers::Join(const std::string& separator, const std::vector<
     return finalString;
 }
 
+std::vector<std::string> StringHelpers::Split(const std::string& separator, const std::string& input)
+{
+    std::vector<std::string> newList;
+
+    size_t start = 0, end = 0;
+    while ((end = input.find(separator, start)) != std::string::npos)
+    {
+        newList.push_back(input.substr(start, end - start));
+        start = end + separator.length();
+    }
+    newList.push_back(input.substr(start));
+
+    return newList;
+}
+
 std::string StringHelpers::Trim(const std::string& input)
 {
     if (input.empty())
@@ -108,4 +123,29 @@ std::string StringHelpers::ToUpper(const std::string& input)
     std::string output = input;
     ConvertToUpper(output);
     return output;
+}
+
+std::string StringHelpers::ConvertFrom(const std::vector<unsigned char>& input)
+{
+    std::string output = std::string();
+    if (!input.empty())
+    {
+        std::string str(input.begin(), input.end());
+        output = str;
+    }
+
+    return output;
+}
+
+bool StringHelpers::Equals(const std::string& left, const std::string& right, bool ignorecase)
+{
+    std::string compareLeft = left;
+    std::string compareRight = right;
+    if (ignorecase)
+    {
+        ConvertToLower(compareLeft);
+        ConvertToLower(compareRight);
+    }
+
+    return compareLeft == compareRight;
 }

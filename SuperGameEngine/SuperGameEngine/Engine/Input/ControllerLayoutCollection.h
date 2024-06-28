@@ -1,5 +1,6 @@
 #pragma once
 #include "ControllerLayout.h"
+#include "../Content/PackageContents.h"
 
 namespace SuperGameEngine
 {
@@ -9,7 +10,7 @@ namespace SuperGameEngine
     class ControllerLayoutCollection : public Object
     {
     public:
-        ControllerLayoutCollection();
+        ControllerLayoutCollection(std::shared_ptr<PackageContents> packageContents);
         ~ControllerLayoutCollection();
 
         /// <summary>
@@ -24,5 +25,11 @@ namespace SuperGameEngine
         /// All Controller layouts loaded.
         /// </summary>
         FList<ControllerLayout*>* m_controllerLayout;
+
+        /// <summary>
+        /// File access to the package without the need to worry about
+        /// the package or binary formats.
+        /// </summary>
+        std::shared_ptr<PackageContents> m_packageContents;
     };
 }

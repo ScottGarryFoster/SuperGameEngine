@@ -3,6 +3,7 @@
 #include "DirectKeyInput.h"
 #include <SDL.h>
 #include "DirectControllerInput.h"
+#include "../Content/PackageContents.h"
 
 namespace SuperGameEngine
 {
@@ -12,7 +13,7 @@ namespace SuperGameEngine
     class DirectInput : public Object
     {
     public:
-        DirectInput();
+        DirectInput(std::shared_ptr<PackageContents> packageContents);
         virtual ~DirectInput();
 
         /// <summary>
@@ -45,6 +46,11 @@ namespace SuperGameEngine
         /// Access to input on a XInput controller.
         /// </summary>
         DirectControllerInput* m_directXInput;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        std::shared_ptr<PackageContents> m_packageContents;
     };
 }
 

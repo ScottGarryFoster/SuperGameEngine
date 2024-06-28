@@ -12,12 +12,13 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 
-ControllerLayoutCollection::ControllerLayoutCollection()
+ControllerLayoutCollection::ControllerLayoutCollection(std::shared_ptr<PackageContents> packageContents)
 {
+    m_packageContents = packageContents;
     m_controllerLayout = new FList<ControllerLayout*>();
 
     ControllerLayoutFromXML* fromXML = new ControllerLayoutFromXML();
-    FString directory = FString(FilesAndFolders::GetProductsFolder()) + "\\Engine\\Input\\ControllerMappings";
+    FString directory = FString("Engine/Input/ControllerMappings");
     if (Directory::Exists(directory))
     {
         FList<FString> paths = Directory::GetFilepaths(directory);

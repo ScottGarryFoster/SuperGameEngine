@@ -2,21 +2,24 @@
 #include "../../Engine/Basic/GameTime.h"
 #include "../../Structural/Spatial/Collision/CollisionDectection.h"
 #include "../../Structural/GameObject/GameObject.h"
+#include "../../Engine/Content/ProductsPackage.h"
 
 using namespace SuperGameEngine;
 
 GrandScene::GrandScene(SDL_Renderer* renderer)
 {
+    std::shared_ptr<PackageContents> packageContents = std::make_shared<ProductsPackage>();
     m_collisionDectection = new CollisionDectection();
-    m_directInput = new DirectInput();
+    m_directInput = new DirectInput(packageContents);
     m_techniqueRenderer = new TechniqueRenderer(renderer);
     m_frameTimings = new FrameTiming();
     m_sceneLoadPackage = new SceneLoadPackage(
-        new ContentManager(renderer),
+        new ContentManager(renderer, packageContents),
         m_directInput, 
         m_techniqueRenderer,
         m_frameTimings,
-        m_collisionDectection);
+        m_collisionDectection,
+        packageContents);
     m_scenes = std::vector<Scene*>();
     m_sceneToGameObjectPackage = new SceneToGameObjectPackage(m_collisionDectection, this);
 

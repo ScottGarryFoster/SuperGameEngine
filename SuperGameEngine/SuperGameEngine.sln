@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinaryOperationsTests", "Fa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperGameEngineTools", "SuperGameEngineTools\SuperGameEngineTools.vcxproj", "{887BE1BB-B32D-48E4-8243-D2E5BDE61692}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PackageFileProvider", "PackageFileProvider\PackageFileProvider.vcxproj", "{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -100,6 +102,14 @@ Global
 		{887BE1BB-B32D-48E4-8243-D2E5BDE61692}.Release|x64.Build.0 = Release|x64
 		{887BE1BB-B32D-48E4-8243-D2E5BDE61692}.Release|x86.ActiveCfg = Release|Win32
 		{887BE1BB-B32D-48E4-8243-D2E5BDE61692}.Release|x86.Build.0 = Release|Win32
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Debug|x64.ActiveCfg = Debug|x64
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Debug|x64.Build.0 = Debug|x64
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Debug|x86.ActiveCfg = Debug|Win32
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Debug|x86.Build.0 = Debug|Win32
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Release|x64.ActiveCfg = Release|x64
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Release|x64.Build.0 = Release|x64
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Release|x86.ActiveCfg = Release|Win32
+		{C2B275BB-9EDE-4961-BDD0-1F5EC698B681}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

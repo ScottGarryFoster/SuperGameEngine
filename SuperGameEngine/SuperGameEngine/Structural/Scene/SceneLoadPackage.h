@@ -26,7 +26,8 @@ namespace SuperGameEngine
             const DirectInput* directInput,
             TechniqueRenderer* techniqueRenderer,
             FrameTiming* frameTimings,
-            CollisionQuery* m_collisionQuery);
+            CollisionQuery* collisionQuery,
+            std::shared_ptr<PackageContents> packageContents);
         virtual ~SceneLoadPackage();
 
         /// <summary>
@@ -58,6 +59,12 @@ namespace SuperGameEngine
         /// These are expensive commands so use them wisely!
         /// </remark>
         CollisionQuery* GetCollisionQuery() const;
+
+        /// <summary>
+        /// Gives access to files on disk.
+        /// </summary>
+        /// <returns>Gives access to files on disk.</returns>
+        PackageContents* GetPackageContents() const;
     private:
         /// <summary>
         /// Allows you to gain access to textures.
@@ -86,5 +93,10 @@ namespace SuperGameEngine
         /// These are expensive commands so use them wisely!
         /// </remark>
         CollisionQuery* m_collisionQuery;
+
+        /// <summary>
+        /// Gives access to files on disk.
+        /// </summary>
+        std::shared_ptr<PackageContents> m_packageContents;
     };
 }

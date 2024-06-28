@@ -325,6 +325,12 @@
     <ClCompile Include="Engine\AuthoredLoader\SceneDataParser.cpp">
       <Filter>Project Files\Engine\AuthoredLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Content\PackageContents.cpp">
+      <Filter>Project Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\ProductsPackage.cpp">
+      <Filter>Project Files\Engine\Content</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structural\Scene\GrandScene.h">
@@ -569,6 +575,12 @@
     </ClInclude>
     <ClInclude Include="Engine\AuthoredLoader\SceneDataParser.h">
       <Filter>Project Files\Engine\AuthoredLoader\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\PackageContents.h">
+      <Filter>Project Files\Engine\Content\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\ProductsPackage.h">
+      <Filter>Project Files\Engine\Content\API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

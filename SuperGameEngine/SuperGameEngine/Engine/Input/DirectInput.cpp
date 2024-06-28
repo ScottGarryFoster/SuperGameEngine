@@ -2,10 +2,12 @@
 
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
-DirectInput::DirectInput()
+
+DirectInput::DirectInput(std::shared_ptr<PackageContents> packageContents)
 {
+    m_packageContents = packageContents;
     m_directKeyInput = new DirectKeyInput();
-    m_directXInput = new DirectControllerInput();
+    m_directXInput = new DirectControllerInput(packageContents);
 }
 
 DirectInput::~DirectInput()

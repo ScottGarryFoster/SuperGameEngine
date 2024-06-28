@@ -2,8 +2,10 @@
 
 using namespace SuperGameEngine;
 
-DirectControllerInput::DirectControllerInput()
+DirectControllerInput::DirectControllerInput(std::shared_ptr<PackageContents> packageContents)
 {
+    m_packageContents = packageContents;
+
     m_keyState = new std::unordered_map<UniversalControllerButton, bool>();
     m_keyStateLastFrame = new std::unordered_map<UniversalControllerButton, bool>();
     m_currentState = new std::unordered_map<UniversalControllerButton, KeyState>();
@@ -14,7 +16,7 @@ DirectControllerInput::DirectControllerInput()
         m_currentState->insert(std::make_pair(key, KeyState::Unpressed));
     }
 
-    m_controllerLayoutCollection = new ControllerLayoutCollection();
+    m_controllerLayoutCollection = new ControllerLayoutCollection(packageContents);
     m_controllerResolver = new ControllerResolver(m_controllerLayoutCollection);
     m_controllerMapper = new ControllerMapper(m_controllerLayoutCollection);
 
