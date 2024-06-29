@@ -257,16 +257,15 @@ void FString::ConvertToUpper()
 
 bool StandardCLibrary::FString::IsEmptyOrWhitespace() const
 {
-    std::string empty;
     for (const char& c : m_storage)
     {
         if (c != ' ')
         {
-            empty += c;
+            return false;
         }
     }
 
-    return empty.length() == 0;
+    return true;
 }
 
 std::vector<FString> FString::Split(FString& toSplit, FString by)

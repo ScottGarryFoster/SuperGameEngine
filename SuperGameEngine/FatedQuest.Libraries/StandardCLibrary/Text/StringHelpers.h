@@ -75,5 +75,11 @@ namespace StandardCLibrary
         /// <returns>True means equal. </returns>
         static bool Equals(const std::string& left, const std::string& right, bool ignorecase = false);
 
+        /// <summary>
+        /// Figures out the given is empty or contains nothing more than spaces.
+        /// </summary>
+        /// <param name="input">Input to test. </param>
+        /// <returns>True means string contains nothing or is just whitespace. </returns>
+        static bool IsEmptyOrWhitespace(const std::string& input);
     };
 }

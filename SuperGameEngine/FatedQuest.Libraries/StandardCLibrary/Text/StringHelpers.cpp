@@ -149,3 +149,16 @@ bool StringHelpers::Equals(const std::string& left, const std::string& right, bo
 
     return compareLeft == compareRight;
 }
+
+bool StringHelpers::IsEmptyOrWhitespace(const std::string& input)
+{
+    for (const char& c : input)
+    {
+        if (c != ' ')
+        {
+            return false;
+        }
+    }
+
+    return true;
+}

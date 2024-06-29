@@ -1,4 +1,6 @@
 #pragma once
+#include "../../Text/StringHelpers.h"
+
 #include <vector>
 #include <memory>
 #include <algorithm>
@@ -116,9 +118,17 @@ namespace StandardCLibrary
         /// </summary>
         /// <param name="data">Collection of string. </param>
         /// <param name="lookFor">String to look for. </param>
+        /// <param name="caseSensitive">True means case must match. </param>
         /// <returns>True means does contain. </returns>
-        static inline bool ContainsString(const std::vector<std::string>& data, const std::string& lookFor)
+        static inline bool ContainsString(const std::vector<std::string>& data, const std::string& lookFor, bool caseSensitive = true)
         {
+            std::string lowerLookFor = std::string();
+            if (!caseSensitive)
+            {
+                // Avoid doing this if we do not need to.
+                lowerLookFor = StringHelpers::ToLower(lookFor);
+            }
+
             size_t lookForLength = lookFor.size();
             for (const std::string& entry : data)
             {
@@ -127,13 +137,108 @@ namespace StandardCLibrary
                     continue;
                 }
 
-                if (entry == lookFor)
+                if (caseSensitive)
                 {
-                    return true;
+                    if (entry == lookFor)
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    if (StringHelpers::ToLower(entry) == lowerLookFor)
+                    {
+                        return true;
+                    }
+                }
+
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Looks for the given within the vector.
+        /// Returns the Index so you can access the data.
+        /// </summary>
+        /// <typeparam name="T">Type stored in the Vector. </typeparam>
+        /// <param name="data">Data to search. </param>
+        /// <param name="lookFor">T to look for. </param>
+        /// <returns>The index of the found data or -1 if not found. </returns>
+        template<typename T>
+        static inline size_t Find(const std::vector<T>& data, const T& lookFor)
+        {
+            for (size_t i = 0; i < data.size(); ++i)
+            {
+                if (data[i] == lookFor)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Removes element at the given index if posible.
+        /// </summary>
+        /// <typeparam name="T">Type for the vector. </typeparam>
+        /// <param name="data">Vector to remove from. </param>
+        /// <param name="index">Index to remove. </param>
+        /// <returns>True means could remove. </returns>
+        template<typename T>
+        static inline bool RemoveElementAtIndex(std::vector<T>& data, size_t index)
+        {
+            bool didRemove = false;
+            if (index < data.size())
+            {
+                data.erase(data.begin() + index);
+                didRemove = true;
+            }
+
+            return didRemove;
+        }
+
+        /// <summary>
+        /// Remove and element at the given index if posible.
+        /// The only way to check with this version is by checking the size decreased.
+        /// </summary>
+        /// <typeparam name="T">Type for the vector. </typeparam>
+        /// <param name="data">Vector to remove from. </param>
+        /// <param name="index">Index to remove. </param>
+        /// <returns>Vector one smaller if successful. </returns>
+        template<typename T>
+        static inline std::vector<T> ReturnVectorWithElementRemovedAtIndex(const std::vector<T>& data, size_t index)
+        {
+            std::vector<T> returnVector = data;
+            if (index < returnVector.size())
+            {
+                returnVector.erase(returnVector.begin() + index);
+            }
+
+            return returnVector;
+        }
+
+        /// <summary>
+        /// Remove and element at the given index if posible.
+        /// </summary>
+        /// <typeparam name="T">Type for the vector. </typeparam>
+        /// <param name="data">Vector to remove from. </param>
+        /// <param name="index">Index to remove. </param>
+        /// <param name="didRemove">True means did remove. </param>
+        /// <returns>Vector one smaller if successful. </returns>
+        template<typename T>
+        static inline std::vector<T> ReturnVectorWithElementRemovedAtIndex(const std::vector<T>& data, size_t index, bool& didRemove)
+        {
+            didRemove = false;
+            std::vector<T> returnVector = data;
+            if (index < returnVector.size())
+            {
+                returnVector.erase(returnVector.begin() + index);
+                didRemove = true;
+            }
+
+            return returnVector;
         }
     };
 }

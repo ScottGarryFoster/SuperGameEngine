@@ -23,9 +23,21 @@
     <ClInclude Include="GamePackage.h">
       <Filter>Project Files\API</Filter>
     </ClInclude>
+    <ClInclude Include="FilepathCollection.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="FilepathCollectionFromExternalSource.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GamePackage.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FilepathCollection.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FilepathCollectionFromExternalSource.cpp">
       <Filter>Project Files</Filter>
     </ClCompile>
   </ItemGroup>

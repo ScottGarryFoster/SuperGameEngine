@@ -8,6 +8,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
       <Filter>Package Files</Filter>
     </ClCompile>
+    <ClCompile Include="FilepathCollectionTests.hpp">
+      <Filter>ProjectFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LibraryIncludes.h" />
@@ -15,6 +18,9 @@
   <ItemGroup>
     <Filter Include="Package Files">
       <UniqueIdentifier>{4c4c1432-a0f7-487e-9613-ba4307cd6341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectFiles">
+      <UniqueIdentifier>{8aa9fe5f-3980-4b35-bbe6-b2d398f8b955}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
