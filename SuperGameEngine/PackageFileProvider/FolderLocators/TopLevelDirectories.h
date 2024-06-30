@@ -1,13 +1,13 @@
 #pragma once
 #include <string>
 
-namespace SuperGameEngine
+namespace PackageFileProvider
 {
     /// <summary>
     /// Broadly gives context about locations of the files and folders for
     /// resources.
     /// </summary>
-    class FilesAndFolders
+    class TopLevelDirectories
     {
     public:
         /// <summary>

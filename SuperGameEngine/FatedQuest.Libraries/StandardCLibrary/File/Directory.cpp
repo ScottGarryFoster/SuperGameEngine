@@ -8,9 +8,10 @@ using namespace StandardCLibrary;
 namespace FileSystem = std::filesystem;
 bool Directory::Exists(const std::string& path)
 {
+    std::string directoryPath = EnsurePathIsInDirectoryForm(path);
     try
     {
-        return FileSystem::exists(path) && FileSystem::is_directory(path);
+        return FileSystem::exists(directoryPath) && FileSystem::is_directory(directoryPath);
     }
     catch (const FileSystem::filesystem_error)
     {
@@ -31,9 +32,10 @@ bool Directory::Exists(const FString& path)
 
 bool Directory::IsDirectory(const std::string& path)
 {
+    std::string directoryPath = EnsurePathIsInDirectoryForm(path);
     try
     {
-        return FileSystem::is_directory(path);
+        return FileSystem::is_directory(directoryPath);
     }
     catch (const FileSystem::filesystem_error)
     {
@@ -52,16 +54,31 @@ bool Directory::IsDirectory(const FString& path)
     return IsDirectory(path.AsStdString());
 }
 
-FList<FString> Directory::GetFiles(const std::string& path)
+FList<FString> Directory::GetFiles(const std::string& path, bool recursive)
 {
     FList<FString> extracted;
     try
     {
-        for (const auto& filepath : FileSystem::directory_iterator(path))
+        if (recursive)
         {
-            if (filepath.is_regular_file())
+            FileSystem::path inputPath = path;
+            for (const auto& filepath : FileSystem::directory_iterator(path))
             {
-                extracted.Add(FString(filepath.path().filename().string()));
+                if (filepath.is_regular_file())
+                {
+                    auto relative_path = FileSystem::relative(filepath.path(), inputPath);
+                    extracted.Add(relative_path.string());
+                }
+            }
+        }
+        else
+        {
+            for (const auto& filepath : FileSystem::directory_iterator(path))
+            {
+                if (filepath.is_regular_file())
+                {
+                    extracted.Add(FString(filepath.path().filename().string()));
+                }
             }
         }
     }
@@ -77,17 +94,32 @@ FList<FString> Directory::GetFiles(const std::string& path)
     return extracted;
 }
 
-FList<FString> Directory::GetFiles(const FString& path)
+FList<FString> Directory::GetFiles(const FString& path, bool recursive)
 {
     std::string sPath = path.AsStdString();
     FList<FString> extracted;
     try
     {
-        for (const auto& filepath : FileSystem::directory_iterator(sPath))
+        if (recursive)
         {
-            if (filepath.is_regular_file())
+            FileSystem::path inputPath = path.AsStdString();
+            for (const auto& filepath : FileSystem::recursive_directory_iterator(sPath))
             {
-                extracted.Add(FString(filepath.path().filename().string()));
+                if (filepath.is_regular_file())
+                {
+                    auto relative_path = FileSystem::relative(filepath.path(), inputPath);
+                    extracted.Add(relative_path.string());
+                }
+            }
+        }
+        else
+        {
+            for (const auto& filepath : FileSystem::directory_iterator(sPath))
+            {
+                if (filepath.is_regular_file())
+                {
+                    extracted.Add(FString(filepath.path().filename().string()));
+                }
             }
         }
     }
@@ -101,6 +133,49 @@ FList<FString> Directory::GetFiles(const FString& path)
     }
 
     return extracted;
+}
+
+std::vector<std::string> Directory::GetFilesOnlyStd(const std::string& path, bool recursive)
+{
+    std::vector<std::string> extracted;
+    try
+    {
+        if (recursive)
+        {
+            FileSystem::path inputPath = path;
+            for (const auto& filepath : FileSystem::recursive_directory_iterator(path))
+            {
+                if (filepath.is_regular_file())
+                {
+                    auto relative_path = FileSystem::relative(filepath.path(), inputPath);
+                    extracted.push_back(relative_path.string());
+                }
+            }
+        }
+        else
+        {
+            for (const auto& filepath : FileSystem::directory_iterator(path))
+            {
+                if (filepath.is_regular_file())
+                {
+                    extracted.push_back(filepath.path().filename().string());
+                }
+            }
+        }
+    }
+    catch (const FileSystem::filesystem_error)
+    {
+        // Caught but unused.
+        return extracted;
+    }
+    catch (const std::exception)
+    {
+        // Caught but unused.
+        return extracted;
+    }
+
+    return extracted;
+
 }
 
 FList<FString> Directory::GetFilepaths(const std::string& path)
@@ -253,4 +328,31 @@ bool Directory::CopyDirectory(const std::string& inputPath, const FString& outpu
 bool Directory::CopyDirectory(const FString& inputPath, const std::string& outputPath, const CopyFileOptions& options)
 {
     return CopyDirectory(inputPath.AsStdString(), outputPath, options);
+}
+
+std::string StandardCLibrary::Directory::EnsurePathIsInDirectoryForm(const std::string& inputDirectoryPath)
+{
+    std::string newPath = inputDirectoryPath;
+    size_t sizeOfPath = inputDirectoryPath.size();
+    if (sizeOfPath < 2)
+    {
+        if (sizeOfPath == 0)
+        {
+            return std::string();
+        }
+        else
+        {
+            newPath += "\\";
+        }
+    }
+
+    // If the input is in directory form with slashes at the end.
+    sizeOfPath = newPath.size();
+    if (newPath.substr(sizeOfPath - 2) != "\\\\"
+        || newPath.substr(sizeOfPath - 2) != "/")
+    {
+        newPath += "\\";
+    }
+
+    return newPath;
 }

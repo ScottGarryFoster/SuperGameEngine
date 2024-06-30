@@ -106,7 +106,7 @@ namespace StandardCLibrary
         /// <param name="outputDirectoryPath">Directory to copy to. </param>
         /// <param name="options">Options when copying. </param>
         /// <returns>True means copied. </returns>
-        static bool CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
+        static bool CopyFileToDirectory(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
 
         /// <summary>
         /// Copies file to directory.
@@ -115,7 +115,7 @@ namespace StandardCLibrary
         /// <param name="outputDirectoryPath">Directory to copy to. </param>
         /// <param name="options">Options when copying. </param>
         /// <returns>True means copied. </returns>
-        static bool CopyFile(const FString& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options);
+        static bool CopyFileToDirectory(const FString& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options);
 
         /// <summary>
         /// Copies file to directory.
@@ -124,7 +124,7 @@ namespace StandardCLibrary
         /// <param name="outputDirectoryPath">Directory to copy to. </param>
         /// <param name="options">Options when copying. </param>
         /// <returns>True means copied. </returns>
-        static bool CopyFile(const std::string& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options);
+        static bool CopyFileToDirectory(const std::string& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options);
 
         /// <summary>
         /// Copies file to directory.
@@ -133,7 +133,43 @@ namespace StandardCLibrary
         /// <param name="outputDirectoryPath">Directory to copy to. </param>
         /// <param name="options">Options when copying. </param>
         /// <returns>True means copied. </returns>
-        static bool CopyFile(const FString& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
+        static bool CopyFileToDirectory(const FString& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
+
+        /// <summary>
+        /// Copies file to the new given path.
+        /// </summary>
+        /// <param name="inputFilepath">Filepath to copy. </param>
+        /// <param name="outputDirectoryPath">Directory to copy to. </param>
+        /// <param name="options">Options when copying. </param>
+        /// <returns>True means copied. </returns>
+        static bool CopyFileToPath(const std::string& inputFilepath, const std::string& outputFilePath, const CopyFileOptions& options);
+
+        /// <summary>
+        /// Copies file to the new given path.
+        /// </summary>
+        /// <param name="inputFilepath">Filepath to copy. </param>
+        /// <param name="outputDirectoryPath">Directory to copy to. </param>
+        /// <param name="options">Options when copying. </param>
+        /// <returns>True means copied. </returns>
+        static bool CopyFileToPath(const FString& inputFilepath, const FString& outputFilePath, const CopyFileOptions& options);
+
+        /// <summary>
+        /// Copies file to the new given path.
+        /// </summary>
+        /// <param name="inputFilepath">Filepath to copy. </param>
+        /// <param name="outputDirectoryPath">Directory to copy to. </param>
+        /// <param name="options">Options when copying. </param>
+        /// <returns>True means copied. </returns>
+        static bool CopyFileToPath(const std::string& inputFilepath, const FString& outputFilePath, const CopyFileOptions& options);
+
+        /// <summary>
+        /// Copies file to the new given path.
+        /// </summary>
+        /// <param name="inputFilepath">Filepath to copy. </param>
+        /// <param name="outputDirectoryPath">Directory to copy to. </param>
+        /// <param name="options">Options when copying. </param>
+        /// <returns>True means copied. </returns>
+        static bool CopyFileToPath(const FString& inputFilepath, const std::string& outputFilePath, const CopyFileOptions& options);
     };
 }
 

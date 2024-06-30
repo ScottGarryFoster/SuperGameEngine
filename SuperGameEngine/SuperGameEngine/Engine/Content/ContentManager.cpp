@@ -1,7 +1,6 @@
 #include "ContentManager.h"
 #include "../../Engine/Graphics/Texture.h"
 #include "../../Engine/Graphics/SuperTexture.h"
-#include "../Basic/FilesAndFolders.h"
 #include "../Loaders/Specific/UserInterface/Text/FontFaceLoader.h"
 #include "../../UserInterface/Text/FontFace.h"
 #include "../Graphics/EmptyTexture.hpp"
@@ -13,6 +12,7 @@
 using namespace SuperGameEngine;
 using namespace StandardCLibrary;
 using namespace BinaryOperations;
+using namespace PackageFileProvider;
 
 ContentManager::ContentManager(SDL_Renderer* renderer, std::shared_ptr<PackageContents> package)
 {
@@ -31,7 +31,7 @@ ContentManager::ContentManager(SDL_Renderer* renderer, std::shared_ptr<PackageCo
     m_renderer = renderer;
     m_package = package;
     m_textureLibrary = std::vector<std::shared_ptr<TextureWrapper>>();
-    m_productsDirectory = FString(FilesAndFolders::GetProductsFolder());
+    m_productsDirectory = FString(TopLevelDirectories::GetProductsFolder());
 
     m_fontLoader = std::make_unique<FontFaceLoader>(this);
     m_fontFaceCache = std::make_unique<FList<std::pair<FString, std::shared_ptr<FontFaceAsset>>>>();

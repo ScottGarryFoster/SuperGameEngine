@@ -5,3 +5,10 @@
 
 #include "../FatedQuest.Libraries/StandardCLibrary/LibraryIncludes.h"
 #include "../FatedQuest.Libraries/Logging/Logger.h"
+
+#include "GamePackage.h"
+
+#include "FileHandler.h"
+#include "FilepathCollection.h"
+
+#include "FolderLocators/TopLevelDirectories.h"

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="test.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>Package Files</Filter>
     </ClCompile>
@@ -9,6 +8,9 @@
       <Filter>Package Files</Filter>
     </ClCompile>
     <ClCompile Include="FilepathCollectionTests.hpp">
+      <Filter>ProjectFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveDiskFileHandlerTests.hpp">
       <Filter>ProjectFiles</Filter>
     </ClCompile>
   </ItemGroup>

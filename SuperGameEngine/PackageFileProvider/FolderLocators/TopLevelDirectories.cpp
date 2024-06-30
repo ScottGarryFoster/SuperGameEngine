@@ -1,4 +1,4 @@
-#include "FilesAndFolders.h"
+#include "TopLevelDirectories.h"
 #define PLATFORM_WINDOWS
 
 #include <string>
@@ -10,15 +10,15 @@
 
 #include <vector>
 
-#include "../../../FatedQuest.Libraries/StandardCLibrary/Text/FString.h"
-#include "../../../FatedQuest.Libraries/Logging/Logger.h"
+#include "../../FatedQuest.Libraries/StandardCLibrary/Text/FString.h"
+#include "../../FatedQuest.Libraries/Logging/Logger.h"
 
-using namespace SuperGameEngine;
+using namespace PackageFileProvider;
 using namespace StandardCLibrary;
 
-std::string FilesAndFolders::GetExeDirectory()
+std::string TopLevelDirectories::GetExeDirectory()
 {
-// Do not have a Linux Mac version but this is not going to work there.
+    // Do not have a Linux Mac version but this is not going to work there.
 #ifdef PLATFORM_WINDOWS
     char path[MAX_PATH] = "";
     GetModuleFileNameA(NULL, path, MAX_PATH);
@@ -29,9 +29,9 @@ std::string FilesAndFolders::GetExeDirectory()
 #endif // WINDOWS
 }
 
-std::string FilesAndFolders::GetWorkingDirectory()
+std::string TopLevelDirectories::GetWorkingDirectory()
 {
-// Do not have a Linux Mac version but this is not going to work there.
+    // Do not have a Linux Mac version but this is not going to work there.
 #ifdef PLATFORM_WINDOWS
     char path[MAX_PATH] = "";
     GetCurrentDirectoryA(MAX_PATH, path);
@@ -40,7 +40,7 @@ std::string FilesAndFolders::GetWorkingDirectory()
 #endif // WINDOWS
 }
 
-std::string FilesAndFolders::GetProductsFolder()
+std::string TopLevelDirectories::GetProductsFolder()
 {
 #ifdef PLATFORM_WINDOWS
     std::string executablePath = GetWorkingDirectory();

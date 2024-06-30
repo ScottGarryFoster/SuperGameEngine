@@ -19,12 +19,12 @@ FilepathCollectionFromExternalSource::FilepathCollectionFromExternalSource
     }
 }
 
-const std::vector<std::string> FilepathCollectionFromExternalSource::GetAllFiles()
+const std::vector<std::string> FilepathCollectionFromExternalSource::GetAllFiles() const
 {
     return m_filepaths;
 }
 
-bool FilepathCollectionFromExternalSource::Exists(const std::string& filePath)
+bool FilepathCollectionFromExternalSource::Exists(const std::string& filePath) const
 {
     std::vector<std::string> pathSplit = SplitPathIntoParts(filePath);
 
@@ -47,7 +47,7 @@ bool FilepathCollectionFromExternalSource::Exists(const std::string& filePath)
 }
 
 const std::vector<std::string> FilepathCollectionFromExternalSource::GetAllFilesInDirectory
-    (const std::string& directoryPath)
+    (const std::string& directoryPath) const
 {
     std::shared_ptr<DirectoryInfo> directory = 
         GetDirectory(directoryPath, m_filePathsAsDirectories);
@@ -58,22 +58,6 @@ const std::vector<std::string> FilepathCollectionFromExternalSource::GetAllFiles
     }
 
     return directory->Files;
-}
-
-const std::vector<std::string> FilepathCollectionFromExternalSource::SplitPathIntoParts
-    (const std::string& path)
-{
-    std::vector<std::string> pathSplit = StringHelpers::Split("/", path);
-    if (!pathSplit.empty())
-    {
-        // Ensure that if the input had a blank directory at the end this is not counted.
-        if (StringHelpers::IsEmptyOrWhitespace(pathSplit.back()))
-        {
-            pathSplit.pop_back();
-        }
-    }
-
-    return pathSplit;
 }
 
 void FilepathCollectionFromExternalSource::AddPathToDirectoryTree
@@ -120,9 +104,25 @@ void FilepathCollectionFromExternalSource::AddPathToDirectoryTree
     }
 }
 
+const std::vector<std::string> FilepathCollectionFromExternalSource::SplitPathIntoParts
+    (const std::string& path) const
+{
+    std::vector<std::string> pathSplit = StringHelpers::Split("/", path);
+    if (!pathSplit.empty())
+    {
+        // Ensure that if the input had a blank directory at the end this is not counted.
+        if (StringHelpers::IsEmptyOrWhitespace(pathSplit.back()))
+        {
+            pathSplit.pop_back();
+        }
+    }
+
+    return pathSplit;
+}
+
 std::shared_ptr<FilepathCollectionFromExternalSource::DirectoryInfo> 
     FilepathCollectionFromExternalSource::GetDirectory
-        (const std::string& path, std::shared_ptr<DirectoryInfo> current)
+        (const std::string& path, std::shared_ptr<DirectoryInfo> current) const
 {
     std::vector<std::string> pathSplit = SplitPathIntoParts(path);
     return GetDirectory(pathSplit, current);
@@ -130,7 +130,7 @@ std::shared_ptr<FilepathCollectionFromExternalSource::DirectoryInfo>
 
 std::shared_ptr<FilepathCollectionFromExternalSource::DirectoryInfo> 
     FilepathCollectionFromExternalSource::GetDirectory
-        (const std::vector<std::string>& pathSplit, std::shared_ptr<DirectoryInfo> current)
+        (const std::vector<std::string>& pathSplit, std::shared_ptr<DirectoryInfo> current) const
 {
     if (pathSplit.empty())
     {

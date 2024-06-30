@@ -5,3 +5,4 @@
 
 #include "../FatedQuest.Libraries/StandardCLibrary/LibraryIncludes.h"
 #include "../FatedQuest.Libraries/Logging/Logger.h"
+#include "../PackageFileProvider/LibraryIncludes.h"

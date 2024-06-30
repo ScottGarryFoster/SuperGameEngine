@@ -195,7 +195,6 @@
     <ClInclude Include="Engine\AuthoredLoader\PrimitiveDataParser.h" />
     <ClInclude Include="Engine\AuthoredLoader\SceneDataParser.h" />
     <ClInclude Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.h" />
-    <ClInclude Include="Engine\Basic\FilesAndFolders.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Content\PackageContents.h" />
     <ClInclude Include="Engine\Content\ProductsPackage.h" />
@@ -280,7 +279,6 @@
     <ClCompile Include="Engine\AuthoredLoader\PrimitiveDataParser.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\SceneDataParser.cpp" />
     <ClCompile Include="Engine\AuthoredLoader\XMLPrimitiveDataLoader.cpp" />
-    <ClCompile Include="Engine\Basic\FilesAndFolders.cpp" />
     <ClCompile Include="Engine\Content\ContentManager.cpp" />
     <ClCompile Include="Engine\Content\PackageContents.cpp" />
     <ClCompile Include="Engine\Content\ProductsPackage.cpp" />
@@ -343,6 +341,9 @@
     </ProjectReference>
     <ProjectReference Include="..\FatedQuest.Libraries\StandardCLibrary\StandardCLibrary.vcxproj">
       <Project>{3964752b-73c2-4c0e-8bfe-3c42dbef2e03}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PackageFileProvider\PackageFileProvider.vcxproj">
+      <Project>{c2b275bb-9ede-4961-bdd0-1f5ec698b681}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

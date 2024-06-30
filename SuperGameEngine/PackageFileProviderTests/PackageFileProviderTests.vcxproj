@@ -145,8 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActiveDiskFileHandlerTests.hpp" />
     <ClCompile Include="FilepathCollectionTests.hpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FatedQuest.Libraries\Logging\Logging.vcxproj">

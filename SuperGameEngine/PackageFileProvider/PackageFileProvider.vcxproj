@@ -27,10 +27,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActiveDiskFileHandler.h" />
+    <ClInclude Include="ArchiveFileHandler.h" />
+    <ClInclude Include="DiskFileHandler.h" />
+    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="FilepathCollection.h" />
     <ClInclude Include="FilepathCollectionFromExternalSource.h" />
+    <ClInclude Include="FolderLocators\TopLevelDirectories.h" />
     <ClInclude Include="GamePackage.h" />
     <ClInclude Include="LibraryIncludes.h" />
+    <ClInclude Include="PreloadedDiskFileHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FatedQuest.Libraries\Logging\Logging.vcxproj">
@@ -41,9 +47,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActiveDiskFileHandler.cpp" />
+    <ClCompile Include="ArchiveFileHandler.cpp" />
+    <ClCompile Include="DiskFileHandler.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="FilepathCollection.cpp" />
     <ClCompile Include="FilepathCollectionFromExternalSource.cpp" />
+    <ClCompile Include="FolderLocators\TopLevelDirectories.cpp" />
     <ClCompile Include="GamePackage.cpp" />
+    <ClCompile Include="PreloadedDiskFileHandler.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

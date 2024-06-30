@@ -1,14 +1,14 @@
 #include "ProductsPackage.h"
 #include "../../../FatedQuest.Libraries/BinaryOperations/BinaryZip/StandardBinaryZip.h"
-#include "../../Engine/Basic/FilesAndFolders.h"
 
 using namespace SuperGameEngine;
+using namespace PackageFileProvider;
 
 ProductsPackage::ProductsPackage()
 {
     m_binaryZip = std::make_unique<StandardBinaryZip>();
 
-    m_productsDirectory = FString(FilesAndFolders::GetProductsFolder());
+    m_productsDirectory = FString(TopLevelDirectories::GetProductsFolder());
     LoadArchiveFilesIntoCache();
 }
 

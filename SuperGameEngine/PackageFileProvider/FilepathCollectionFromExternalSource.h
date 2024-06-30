@@ -18,21 +18,21 @@ namespace PackageFileProvider
         /// gave the data.
         /// </summary>
         /// <returns>All files in the package. </returns>
-        virtual const std::vector<std::string> GetAllFiles() override;
+        virtual const std::vector<std::string> GetAllFiles() const override;
 
         /// <summary>
         /// Detirmines if the given path exists in the files.
         /// </summary>
         /// <param name="filePath">File path to test. </param>
         /// <returns>True means exists. </returns>
-        virtual bool Exists(const std::string& filePath) override;
+        virtual bool Exists(const std::string& filePath) const override;
 
         /// <summary>
         /// Gets all the files in the given directory.
         /// </summary>
         /// <param name="directoryPath">Directory path to find the files for. </param>
         /// <returns>All the files in the directory. </returns>
-        virtual const std::vector<std::string> GetAllFilesInDirectory(const std::string& directoryPath) override;
+        virtual const std::vector<std::string> GetAllFilesInDirectory(const std::string& directoryPath) const override;
 
     private:
         /// <summary>
@@ -77,13 +77,6 @@ namespace PackageFileProvider
         std::shared_ptr<DirectoryInfo> m_filePathsAsDirectories;
 
         /// <summary>
-        /// Splits a path into the steps to make it to the filepath.
-        /// </summary>
-        /// <param name="path">Full filepath or directory path. </param>
-        /// <returns>All the segments of the filepath. </returns>
-        const std::vector<std::string> SplitPathIntoParts(const std::string& path);
-
-        /// <summary>
         /// Add the given path to the directory tree used for searching for files.
         /// </summary>
         /// <param name="pathSplit">The file path to add already split. </param>
@@ -94,6 +87,13 @@ namespace PackageFileProvider
         void AddPathToDirectoryTree(const std::vector<std::string>& pathSplit, std::shared_ptr<DirectoryInfo> current);
 
         /// <summary>
+        /// Splits a path into the steps to make it to the filepath.
+        /// </summary>
+        /// <param name="path">Full filepath or directory path. </param>
+        /// <returns>All the segments of the filepath. </returns>
+        const std::vector<std::string> SplitPathIntoParts(const std::string& path) const;
+
+        /// <summary>
         /// Get the directory for the given path.
         /// </summary>
         /// <param name="path">A directory path. </param>
@@ -102,7 +102,7 @@ namespace PackageFileProvider
         /// Send in the top directory first.
         /// </param>
         /// <returns>The directory if found or an empty pointer if not. </returns>
-        std::shared_ptr<DirectoryInfo> GetDirectory(const std::string& path, std::shared_ptr<DirectoryInfo> current);
+        std::shared_ptr<DirectoryInfo> GetDirectory(const std::string& path, std::shared_ptr<DirectoryInfo> current) const;
 
         /// <summary>
         /// Get the directory for the given path.
@@ -110,6 +110,6 @@ namespace PackageFileProvider
         /// <param name="pathSplit">A directory pathsplit up. </param>
         /// <param name="current">The current directoy searching within. </param>
         /// <returns>The directory if found or an empty pointer if not. </returns>
-        std::shared_ptr<DirectoryInfo> GetDirectory(const std::vector<std::string>& pathSplit, std::shared_ptr<DirectoryInfo> current);
+        std::shared_ptr<DirectoryInfo> GetDirectory(const std::vector<std::string>& pathSplit, std::shared_ptr<DirectoryInfo> current) const;
     };
 }

@@ -211,9 +211,6 @@
     <ClCompile Include="Engine\Input\ControllerLayoutFromXML.cpp">
       <Filter>Project Files\Engine\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Basic\FilesAndFolders.cpp">
-      <Filter>Project Files\Engine\Basic</Filter>
-    </ClCompile>
     <ClCompile Include="Structural\Components\Gameplay\PlayerControllerComponent.cpp">
       <Filter>Project Files\Structural\Components\Gameplay</Filter>
     </ClCompile>
@@ -422,9 +419,6 @@
     </ClInclude>
     <ClInclude Include="RapidXML.h">
       <Filter>Package Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Basic\FilesAndFolders.h">
-      <Filter>Project Files\Engine\Basic\API</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Basic\GameTime.h">
       <Filter>Project Files\Engine\Basic\API</Filter>

@@ -47,19 +47,41 @@ namespace StandardCLibrary
         /// Lists all files in the directory.
         /// </summary>
         /// <param name="path">Path to directory. </param>
+        /// <param name="recursive">
+        /// When true list all in sub-directories as well.
+        /// If true the path is relative to the given.
+        /// </param>
         /// <returns>
         /// A list of files or empty if either no files or directory does not exist.
         /// </returns>
-        static FList<FString> GetFiles(const std::string& path);
+        static FList<FString> GetFiles(const std::string& path, bool recursive = false);
 
         /// <summary>
         /// Lists all files in the directory.
         /// </summary>
         /// <param name="path">Path to directory. </param>
+        /// <param name="recursive">
+        /// When true list all in sub-directories as well.
+        /// If true the path is relative to the given.
+        /// </param>
         /// <returns>
         /// A list of files or empty if either no files or directory does not exist.
         /// </returns>
-        static FList<FString> GetFiles(const FString& path);
+        static FList<FString> GetFiles(const FString& path, bool recursive = false);
+
+        /// <summary>
+        /// Lists all files in the directory.
+        /// Returns a Standard Vector with strings.
+        /// </summary>
+        /// <param name="path">Path to directory. </param>
+        /// <param name="recursive">
+        /// When true list all in sub-directories as well.
+        /// If true the path is relative to the given.
+        /// </param>
+        /// <returns>
+        /// A list of files or empty if either no files or directory does not exist.
+        /// </returns>
+        static std::vector<std::string> GetFilesOnlyStd(const std::string& path, bool recursive = false);
 
         /// <summary>
         /// Lists all filepaths in the directory.
@@ -146,6 +168,8 @@ namespace StandardCLibrary
         /// <param name="options">Instructs how to copy. </param>
         /// <returns>True means sucessful. </returns>
         static bool CopyDirectory(const FString& inputPath, const std::string& outputPath, const CopyFileOptions& options);
+
+        static std::string EnsurePathIsInDirectoryForm(const std::string& inputDirectoryPath);
     };
 }
 

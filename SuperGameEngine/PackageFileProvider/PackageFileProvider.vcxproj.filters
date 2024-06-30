@@ -15,6 +15,12 @@
     <Filter Include="Project Files\API">
       <UniqueIdentifier>{b5e4a156-5509-4706-bd24-ff836d74c8f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project Files\FolderLocators">
+      <UniqueIdentifier>{2884fbf8-b146-4512-aab9-b4e04337e24f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\FolderLocators\API">
+      <UniqueIdentifier>{95e4dfd9-48cf-4c37-8a6e-4789780796d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LibraryIncludes.h">
@@ -29,6 +35,24 @@
     <ClInclude Include="FilepathCollectionFromExternalSource.h">
       <Filter>Project Files\API</Filter>
     </ClInclude>
+    <ClInclude Include="FileHandler.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="ArchiveFileHandler.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="DiskFileHandler.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveDiskFileHandler.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="PreloadedDiskFileHandler.h">
+      <Filter>Project Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="FolderLocators\TopLevelDirectories.h">
+      <Filter>Project Files\FolderLocators\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GamePackage.cpp">
@@ -39,6 +63,24 @@
     </ClCompile>
     <ClCompile Include="FilepathCollectionFromExternalSource.cpp">
       <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHandler.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArchiveFileHandler.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DiskFileHandler.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveDiskFileHandler.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PreloadedDiskFileHandler.cpp">
+      <Filter>Project Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FolderLocators\TopLevelDirectories.cpp">
+      <Filter>Project Files\FolderLocators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

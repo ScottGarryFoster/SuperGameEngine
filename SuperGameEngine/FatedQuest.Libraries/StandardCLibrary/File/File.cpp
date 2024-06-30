@@ -124,7 +124,7 @@ bool File::EndInExtension(const std::string& filepath, const FString& extention)
     return EndInExtension(filepath, extention.AsStdString());
 }
 
-bool File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
+bool File::CopyFileToDirectory(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
 {
     try
     {
@@ -133,9 +133,15 @@ bool File::CopyFile(const std::string& inputFilepath, const std::string& outputD
             return false;
         }
 
+        std::string directoryPath = Directory::EnsurePathIsInDirectoryForm(outputDirectoryPath);
+        if (!Directory::Exists(directoryPath))
+        {
+            return false;
+        }
+
         FileSystem::copy_options copyOption = Convert(options);
         FileSystem::path inputPathAsPath = inputFilepath;
-        FileSystem::path destinationAsPath = outputDirectoryPath;
+        FileSystem::path destinationAsPath = directoryPath + inputPathAsPath.filename().string();
 
         return FileSystem::copy_file(inputPathAsPath, destinationAsPath, copyOption);
     }
@@ -147,17 +153,55 @@ bool File::CopyFile(const std::string& inputFilepath, const std::string& outputD
     return false;
 }
 
-bool File::CopyFile(const FString& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options)
+bool File::CopyFileToDirectory(const FString& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options)
 {
-    return CopyFile(inputFilepath.AsStdString(), outputDirectoryPath.AsStdString(), options);
+    return CopyFileToDirectory(inputFilepath.AsStdString(), outputDirectoryPath.AsStdString(), options);
 }
 
-bool File::CopyFile(const std::string& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options)
+bool File::CopyFileToDirectory(const std::string& inputFilepath, const FString& outputDirectoryPath, const CopyFileOptions& options)
 {
-    return CopyFile(inputFilepath, outputDirectoryPath.AsStdString(), options);
+    return CopyFileToDirectory(inputFilepath, outputDirectoryPath.AsStdString(), options);
 }
 
-bool File::CopyFile(const FString& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
+bool File::CopyFileToDirectory(const FString& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
 {
-    return CopyFile(inputFilepath.AsStdString(), outputDirectoryPath, options);
+    return CopyFileToDirectory(inputFilepath.AsStdString(), outputDirectoryPath, options);
+}
+
+bool File::CopyFileToPath(const std::string& inputFilepath, const std::string& outputFilePath, const CopyFileOptions& options)
+{
+    try
+    {
+        if (!File::Exists(inputFilepath))
+        {
+            return false;
+        }
+
+        FileSystem::copy_options copyOption = Convert(options);
+        FileSystem::path inputPathAsPath = inputFilepath;
+        FileSystem::path destinationAsPath = outputFilePath;
+
+        return FileSystem::copy_file(inputPathAsPath, destinationAsPath, copyOption);
+    }
+    catch (const std::exception)
+    {
+        return false;
+    }
+
+    return false;
+}
+
+bool File::CopyFileToPath(const FString& inputFilepath, const FString& outputFilePath, const CopyFileOptions& options)
+{
+    return CopyFileToPath(inputFilepath.AsStdString(), outputFilePath.AsStdString(), options);
+}
+
+bool File::CopyFileToPath(const std::string& inputFilepath, const FString& outputFilePath, const CopyFileOptions& options)
+{
+    return CopyFileToPath(inputFilepath, outputFilePath.AsStdString(), options);
+}
+
+bool File::CopyFileToPath(const FString& inputFilepath, const std::string& outputFilePath, const CopyFileOptions& options)
+{
+    return CopyFileToPath(inputFilepath.AsStdString(), outputFilePath, options);
 }
