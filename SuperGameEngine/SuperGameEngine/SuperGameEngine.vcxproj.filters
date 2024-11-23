@@ -25,15 +25,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EngineEntry\EngineEntry.cpp">
+      <Filter>Source Files\EngineEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MainEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineEntry\EngineEntry.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\Engine.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MainEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

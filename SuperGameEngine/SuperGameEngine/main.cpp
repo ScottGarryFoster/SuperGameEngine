@@ -1,10 +1,14 @@
 #include <Windows.h>
+//#include <SDL.h>
 
 #ifdef _DEBUG
     #include <iostream>
 #endif
 
 #include "EngineEntry/EngineEntry.h"
+#include "Engine/MainEngine.h"
+
+using namespace SuperGameEngine;
 
 int main()
 {
@@ -20,6 +24,7 @@ int main()
     FreeConsole();
 #endif
 
-    EngineEntry engine = EngineEntry();
-    return engine.RunApplication();
+    EngineEntry engineEntry = EngineEntry();
+    std::shared_ptr<Engine> engine = std::make_shared<MainEngine>();
+    return engineEntry.RunApplication(engine);
 }

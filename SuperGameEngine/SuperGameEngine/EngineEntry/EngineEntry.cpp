@@ -1,13 +1,15 @@
 #include "EngineEntry.h"
+#include "Engine.h"
 
+#include <SDL.h>
 #include <Windows.h>
 #ifdef _DEBUG
     #include <iostream>
 #endif
 
-#include <SDL.h>
+using namespace SuperGameEngine;
 
-int EngineEntry::RunApplication()
+int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 {
     // Pointers to our window and surface
     SDL_Surface* winSurface = NULL;
@@ -74,6 +76,11 @@ int EngineEntry::RunApplication()
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
+            if (!engine->Event(e))
+            {
+                quit = true;
+            }
+
             if (e.type == SDL_QUIT)
             {
 #ifdef _DEBUG
@@ -87,14 +94,16 @@ int EngineEntry::RunApplication()
         Uint64 ticksThisFrame = currentTime - startTime;
         startTime = currentTime;
 
-        //grandScene->EventUpdate(e);
-        //grandScene->Update(ticksThisFrame);
+        if (!engine->Update(ticksThisFrame))
+        {
+            quit = true;
+        }
 
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
         SDL_RenderClear(renderer);
 
-        //grandScene->Draw();
+        engine->Draw();
 
         // Update screen
         SDL_RenderPresent(renderer);
