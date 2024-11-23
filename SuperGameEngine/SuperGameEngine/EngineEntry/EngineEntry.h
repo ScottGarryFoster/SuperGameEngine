@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine.h"
 #include <memory>
+#include "WindowExit.h"
 
 namespace SuperGameEngine
 {
@@ -19,5 +20,12 @@ namespace SuperGameEngine
         /// attempting to start the application.
         /// </returns>
         int RunApplication(std::shared_ptr<Engine> engine);
+
+    private:
+
+        /// <summary>
+        /// Creates the SDL Window loop.
+        /// </summary>
+        WindowExit RunSDLWindow(std::shared_ptr<Engine> engine);
     };
 }

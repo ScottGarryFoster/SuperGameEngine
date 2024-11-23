@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
+    <ClInclude Include="EngineEntry\WindowExit.h" />
     <ClInclude Include="Engine\MainEngine.h" />
   </ItemGroup>
   <ItemGroup>

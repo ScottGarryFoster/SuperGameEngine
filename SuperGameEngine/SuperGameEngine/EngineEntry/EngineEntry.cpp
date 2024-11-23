@@ -11,6 +11,17 @@ using namespace SuperGameEngine;
 
 int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 {
+    WindowExit windowState = WindowExit::Restart;
+    while (windowState != WindowExit::Close)
+    {
+        windowState = RunSDLWindow(engine);
+    }
+
+    return 0;
+}
+
+WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
+{
     // Pointers to our window and surface
     SDL_Surface* winSurface = NULL;
     SDL_Window* window = NULL;
@@ -20,10 +31,10 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     {
 #ifdef _DEBUG
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
-#endif
         system("pause");
-        // End the program
-        return 1;
+#endif
+
+        return WindowExit::Close;
     }
 
     // Set SDL hint to enable VSync
@@ -42,10 +53,10 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     {
 #ifdef _DEBUG
         std::cout << "Error creating window: " << SDL_GetError() << std::endl;
-#endif
         system("pause");
-        // End the program
-        return 1;
+#endif
+        
+        return WindowExit::Close;
     }
 
     // Create a renderer
@@ -58,7 +69,8 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
         // Handle renderer creation failure
         SDL_DestroyWindow(window);
         SDL_Quit();
-        return 1;
+
+        return WindowExit::Close;
     }
 
     // Main loop flag
@@ -126,5 +138,5 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     FreeConsole();
 #endif
 
-    return 0;
+    return WindowExit::Close;
 }
