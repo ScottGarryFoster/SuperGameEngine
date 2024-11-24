@@ -5,6 +5,7 @@
 #ifdef DEBUG
 #include <iostream>
 #endif // DEBUG
+#include <cstdarg>
 
 using namespace FatedQuestLibraries;
 namespace FileSystem = std::filesystem;
@@ -148,4 +149,22 @@ bool Directory::CopyDirectory(const std::string& inputPath, const std::string& o
     }
 
     return true;
+}
+
+std::string Directory::GetTempDirectory()
+{
+    try
+    {
+        FileSystem::path temp = std::filesystem::temp_directory_path();
+        return temp.string();
+    }
+    catch (const std::exception e)
+    {
+
+#ifdef _DEBUG
+        // TODO: Log the error here
+        std::cout << "Directory::GetTempDirectory: Exception thrown: " << e.what() << std::endl;
+#endif
+        return "";
+    }
 }

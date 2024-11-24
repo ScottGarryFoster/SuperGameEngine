@@ -141,12 +141,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllReferences.h" />
     <ClInclude Include="FileHandling\CopyFileOptions.h" />
     <ClInclude Include="FileHandling\CopyOptionsFileSystemHelper.h" />
     <ClInclude Include="FileHandling\Directory.h" />
     <ClInclude Include="FileHandling\File.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="XMLDocument\RapidXML.h" />
+    <ClInclude Include="XMLDocument\RapidXMLDocument.h" />
+    <ClInclude Include="XMLDocument\RapidXMLNode.h" />
+    <ClInclude Include="XMLDocument\XMLAttribute.h" />
+    <ClInclude Include="XMLDocument\XMLDocument.h" />
+    <ClInclude Include="XMLDocument\XMLNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileHandling\Directory.cpp" />
@@ -158,6 +165,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StandardOperations.cpp" />
+    <ClCompile Include="XMLDocument\RapidXMLDocument.cpp" />
+    <ClCompile Include="XMLDocument\RapidXMLNode.cpp" />
+    <ClCompile Include="XMLDocument\XMLAttribute.cpp" />
+    <ClCompile Include="XMLDocument\XMLDocument.cpp" />
+    <ClCompile Include="XMLDocument\XMLNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StandardObjects\StandardObjects.vcxproj">

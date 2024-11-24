@@ -101,3 +101,26 @@ bool FatedQuestLibraries::File::CopyFile(const std::string& inputFilepath, const
 
     return false;
 }
+
+bool File::WriteLine(const std::string& filepath, const std::string& contents)
+{
+    try
+    {
+        FileSystem::path asPath(filepath);
+        if (!FileSystem::exists(asPath.parent_path()))
+        {
+            // If the directory the path sits within does not exist - make it!
+            FileSystem::create_directories(asPath.parent_path());
+        }
+
+        std::ofstream outFile(filepath, std::ios::out | std::ios::trunc);
+        outFile << contents;
+        outFile.close();
+    }
+    catch (const std::exception)
+    {
+        return false;
+    }
+
+    return true;
+}

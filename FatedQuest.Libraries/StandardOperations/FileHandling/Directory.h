@@ -3,6 +3,8 @@
 #include <vector>
 #include "CopyFileOptions.h"
 
+#include <filesystem>
+
 namespace FatedQuestLibraries
 {
     /// <summary>
@@ -20,6 +22,7 @@ namespace FatedQuestLibraries
 
         /// <summary>
         /// Determines if path is a directory.
+        /// Directory must exist.
         /// </summary>
         /// <param name="path">Path to directory. </param>
         /// <returns>True means directory. </returns>
@@ -58,5 +61,32 @@ namespace FatedQuestLibraries
         /// <param name="options">Instructs how to copy. </param>
         /// <returns>True means sucessful. </returns>
         static bool CopyDirectory(const std::string& inputPath, const std::string& outputPath, const CopyFileOptions& options);
+
+        /// <summary>
+        /// Gets the temp directory path.
+        /// </summary>
+        /// <returns>
+        /// The path to the temp directory on the computer or
+        /// an empty string if it cannot be retrived.
+        /// </returns>
+        static std::string GetTempDirectory();
+
+        /// <summary>
+        /// Combines paths as strings together.
+        /// </summary>
+        /// <typeparam name="...FilepathAsString">Filepaths as strings.</typeparam>
+        /// <param name="...args">All filepaths to combine as strings. </param>
+        /// <returns>A combined file path. </returns>
+        template <typename... FilepathAsString>
+        static std::string CombinePath(const FilepathAsString&... args)
+        {
+            //static_assert((std::is_same_v<FilepathAsString, std::string> && ...),
+            //    "Directory::CombinePath: All arguments must be strings.");
+
+            std::filesystem::path combinedPath;
+            (combinedPath /= ... /= args);
+
+            return combinedPath.string();
+        }
     };
 }

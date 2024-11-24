@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="XMLDocument\RapidXMLDocumentTests.cpp">
+      <Filter>XMLDocument</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="XMLDocument">
+      <UniqueIdentifier>{4e2e85c6-2c51-4675-842e-c21521f823d0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

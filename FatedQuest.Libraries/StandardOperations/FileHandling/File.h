@@ -9,6 +9,7 @@ namespace FatedQuestLibraries
     /// </summary>
     class File
     {
+    public:
         /// <summary>
         /// Determines if the file path exists.
         /// </summary>
@@ -25,6 +26,7 @@ namespace FatedQuestLibraries
 
         /// <summary>
         /// Determines if the given path is a file.
+        /// File must exist.
         /// </summary>
         /// <param name="filepath">Filepath to test. </param>
         /// <returns>True means is filepath. False means not a filepath or a directory. </returns>
@@ -53,5 +55,14 @@ namespace FatedQuestLibraries
         /// <param name="options">Options when copying. </param>
         /// <returns>True means copied. </returns>
         static bool CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
+
+        /// <summary>
+        /// Writes the line into the file.
+        /// Will override any existing contents.
+        /// </summary>
+        /// <param name="filepath">Path to write. </param>
+        /// <param name="contents">Contents to write in file. </param>
+        /// <returns>True means could write. </returns>
+        static bool WriteLine(const std::string& filepath, const std::string& contents);
     };
 }
