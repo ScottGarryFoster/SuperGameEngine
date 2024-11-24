@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperGameEngine", "SuperGameEngine\SuperGameEngine.vcxproj", "{278646A9-2C85-4D86-A464-E6241CFBE589}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardObjects", "SuperGameEngine\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj", "{B244F2CE-2289-4305-866E-464BA599E7AC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardObjects", "..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj", "{B244F2CE-2289-4305-866E-464BA599E7AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FatedQuest.Libraries", "FatedQuest.Libraries", "{E1F2A6F8-6777-48F2-8648-39923C29236E}"
 EndProject

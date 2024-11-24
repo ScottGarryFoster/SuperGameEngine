@@ -10,8 +10,8 @@ namespace SuperGameEngine
     {
     public:
 
-        Texture(SDL_Renderer* renderer);
-        virtual Texture();
+        //Texture(SDL_Renderer* renderer);
+        //virtual Texture();
 
 
     };
