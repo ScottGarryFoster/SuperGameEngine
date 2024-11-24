@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-//#include "../../StandardObjects/Text/StringHelpers.h"
+#include "../../StandardObjects/Text/StringHelpers.h"
 
 #ifdef _DEBUG
 #include <iostream>
@@ -180,8 +180,8 @@ namespace FatedQuestLibraries
             }
             else
             {
-                //std::string toLower = StringHelpers::ToLower(value);
-                /*if (toLower == "unknown") return CopyFileOptions::Unknown;
+                std::string toLower = StringHelpers::ToLower(value);
+                if (toLower == "unknown") return CopyFileOptions::Unknown;
                 if (toLower == "none") return CopyFileOptions::None;
                 if (toLower == "skipexistingfile") return CopyFileOptions::SkipExistingFile;
                 if (toLower == "overwriteexistingfile") return CopyFileOptions::OverwriteExistingFile;
@@ -191,7 +191,7 @@ namespace FatedQuestLibraries
                 if (toLower == "skipsymlinks") return CopyFileOptions::SkipSymlinks;
                 if (toLower == "directoriesonly") return CopyFileOptions::DirectoriesOnly;
                 if (toLower == "createsymlinks") return CopyFileOptions::CreateSymlinks;
-                if (toLower == "createhardlinks") return CopyFileOptions::CreateHardLinks;*/
+                if (toLower == "createhardlinks") return CopyFileOptions::CreateHardLinks;
             }
 
 #ifdef _DEBUG
