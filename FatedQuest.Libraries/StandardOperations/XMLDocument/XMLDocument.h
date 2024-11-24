@@ -19,6 +19,13 @@ namespace FatedQuestLibraries
         virtual bool LoadFromFile(const std::string& path) = 0;
 
         /// <summary>
+        /// Loads XML Document from the file contents.
+        /// </summary>
+        /// <param name="path">Contents of the XML document. </param>
+        /// <returns>True means parsed. </returns>
+        virtual bool Load(const std::string& fileContents) = 0;
+
+        /// <summary>
         /// Gets the root XMLNode for the document.
         /// </summary>
         /// <returns>

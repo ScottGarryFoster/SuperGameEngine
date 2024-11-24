@@ -31,7 +31,29 @@ bool RapidXMLDocument::LoadFromFile(const std::string& path)
     }
 
     RapidXML::XMLNode* node = document->first_node();
-    m_rootNode = ParseAllNodes(node);
+    m_rootNode = ParseNode(node);
+
+    return true;
+}
+
+bool RapidXMLDocument::Load(const std::string& fileContents)
+{
+    // We must create the string now and have it as a mutable string.
+    // Rapid modifies the string contents inline as it parses.
+    // This means this string must exist for as long as we are parsing and
+    // must be mutable to override.
+    std::string fileContentsMutable(fileContents);
+
+    bool didParse = false;
+    std::shared_ptr<RapidXML::XMLDocument> document = TryParseXMLDocument(fileContentsMutable, didParse);
+    if (!didParse)
+    {
+        // Could not parse.
+        return false;
+    }
+
+    RapidXML::XMLNode* node = document->first_node();
+    m_rootNode = ParseNode(node);
 
     return true;
 }
@@ -58,7 +80,7 @@ std::shared_ptr<RapidXML::XMLDocument> RapidXMLDocument::TryParseXMLDocument(con
     return document;
 }
 
-std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseAllNodes(RapidXML::XMLNode* currentNode)
+std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* currentNode)
 {
     std::shared_ptr<RapidXMLNode> parseNode = std::make_shared<RapidXMLNode>();
     std::string name = currentNode->name();
@@ -83,7 +105,7 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseAllNodes(RapidXML::XMLNode*
     std::shared_ptr<RapidXMLNode> last;
     for (RapidXML::XMLNode* child = currentNode->first_node(); child; child = child->next_sibling())
     {
-        std::shared_ptr<RapidXMLNode> current = ParseAllNodes(child);
+        std::shared_ptr<RapidXMLNode> current = ParseNode(child);
         last = current;
 
         if (!foundNode)

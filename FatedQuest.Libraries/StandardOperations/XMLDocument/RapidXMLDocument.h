@@ -21,6 +21,13 @@ namespace FatedQuestLibraries
         virtual bool LoadFromFile(const std::string& path) override;
 
         /// <summary>
+        /// Loads XML Document from the file contents.
+        /// </summary>
+        /// <param name="path">Contents of the XML document. </param>
+        /// <returns>True means parsed. </returns>
+        virtual bool Load(const std::string& fileContents) override;
+
+        /// <summary>
         /// Gets the root XMLNode for the document.
         /// </summary>
         /// <returns>
