@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "../FatedQuestReferences.h"
+
+using namespace StandardObjects;
 
 namespace SuperGameEngine
 {
@@ -80,29 +83,13 @@ namespace SuperGameEngine
             }
             else
             {
-                std::string stringValue = ToLower(value);
+                std::string stringValue = StringHelpers::ToLower(value);
                 if (stringValue == "unknown") return WindowExit::Unknown;
                 if (stringValue == "close") return WindowExit::Close;
                 if (stringValue == "restart") return WindowExit::Restart;
             }
 
             return WindowExit::Unknown;
-        }
-
-    private:
-
-        static std::string ToLower(const std::string input)
-        {
-            std::string toLower = input;
-            for (char& c : toLower)
-            {
-                if (c >= 'A' && c <= 'Z')
-                {
-                    c = c - 'A' + 'a';
-                }
-            }
-
-            return input;
         }
     };
 }

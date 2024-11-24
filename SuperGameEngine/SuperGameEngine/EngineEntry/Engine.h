@@ -1,6 +1,5 @@
 #pragma once
-#include <SDL_events.h>
-#include <SDL_stdinc.h>
+#include <SDL.h>
 
 namespace SuperGameEngine
 {
@@ -10,6 +9,17 @@ namespace SuperGameEngine
     class Engine
     {
     public:
+        /// <summary>
+        /// Gives the engine a renderer.
+        /// This can be called multiple times whilst the application is open
+        /// as a user may decide to change certain settings which require
+        /// re-creating the window.
+        /// In this situation you should ensure everything using the renderer
+        /// is recreated on this new renderer.
+        /// </summary>
+        /// <param name="renderer">The current window Renderer. </param>
+        virtual void GiveRenderer(SDL_Renderer* renderer) = 0;
+
         /// <summary>
         /// Handle the current event.
         /// </summary>

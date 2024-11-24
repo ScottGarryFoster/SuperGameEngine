@@ -1,7 +1,6 @@
 #include "EngineEntry.h"
 #include "Engine.h"
 
-#include <SDL.h>
 #include <Windows.h>
 #ifdef _DEBUG
     #include <iostream>
@@ -79,7 +78,7 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
     // Event handler
     SDL_Event e;
 
-    //GrandScene* grandScene = new GrandScene(renderer);
+    engine->GiveRenderer(renderer);
     Uint64 startTime = SDL_GetTicks64();
 
     // Main loop

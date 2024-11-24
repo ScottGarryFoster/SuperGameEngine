@@ -2,14 +2,13 @@
 #include "../EngineEntry/Engine.h"
 #include <SDL.h>
 
-namespace SuperGameEngine
+namespace SuperEngineDebug
 {
     /// <summary>
-    /// Main game engine.
+    /// An engine just for debuging. It is independant from other engines.
     /// </summary>
-    class MainEngine : public Engine
+    class DebugEngine : public SuperGameEngine::Engine
     {
-    public:
         /// <summary>
         /// Gives the engine a renderer.
         /// This can be called multiple times whilst the application is open
@@ -46,5 +45,5 @@ namespace SuperGameEngine
         /// Draw to the screen.
         /// </summary>
         virtual void Draw();
-};
+    };
 }

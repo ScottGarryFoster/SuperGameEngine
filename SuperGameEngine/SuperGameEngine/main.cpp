@@ -1,5 +1,7 @@
 #include <Windows.h>
-//#include <SDL.h>
+#include <SDL.h>
+// SDL_main.h is included automatically from SDL.h, so you always get the nasty #define.
+#undef main 
 
 #ifdef _DEBUG
     #include <iostream>
@@ -10,7 +12,7 @@
 
 using namespace SuperGameEngine;
 
-int main()
+int main(int argc, char* args[])
 {
 
 #ifdef _DEBUG

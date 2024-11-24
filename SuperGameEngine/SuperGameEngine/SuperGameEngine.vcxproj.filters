@@ -19,6 +19,30 @@
     <Filter Include="Source Files\EngineEntry">
       <UniqueIdentifier>{6615a4c4-efe0-4e80-ac05-26f9467eb023}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{067501bb-680e-4bb5-8117-b38c0d383c2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DebugEngine">
+      <UniqueIdentifier>{a02aeb77-74f7-41e9-90c0-445471fa9bc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{73c6bc16-d182-46ae-9de9-1f40ad91294c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DebugEngine">
+      <UniqueIdentifier>{baf6ca17-3018-43a8-8eff-5c1319880f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{64e16c7b-68ab-4055-87c9-7862a70d0bcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{69bd23eb-9628-4e17-b19e-3cdec9dd00d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{3618165d-bd8c-41d9-b708-48533c01b4eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{7c36127e-bac3-4c15-9315-733bba5b8253}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,7 +52,13 @@
       <Filter>Source Files\EngineEntry</Filter>
     </ClCompile>
     <ClCompile Include="Engine\MainEngine.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugEngine\DebugEngine.cpp">
+      <Filter>Source Files\DebugEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\Texture.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +69,22 @@
       <Filter>Header Files\EngineEntry</Filter>
     </ClInclude>
     <ClInclude Include="Engine\MainEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugEngine\DebugEngine.h">
+      <Filter>Header Files\DebugEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\WindowExit.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\Texture.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="FatedQuestReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
