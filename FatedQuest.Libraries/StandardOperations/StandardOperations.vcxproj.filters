@@ -64,7 +64,10 @@
       <Filter>Header Files\XMLDocument</Filter>
     </ClInclude>
     <ClInclude Include="XMLDocument\RapidXMLNode.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\XMLDocument</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLDocument\RapidXMLAttribute.h">
+      <Filter>Header Files\XMLDocument</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +96,10 @@
       <Filter>Source Files\XMLDocument</Filter>
     </ClCompile>
     <ClCompile Include="XMLDocument\RapidXMLNode.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\XMLDocument</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLDocument\RapidXMLAttribute.cpp">
+      <Filter>Source Files\XMLDocument</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -34,13 +34,21 @@ namespace FatedQuestLibraries
         /// Parses path to XML.
         /// </summary>
         /// <param name="path">Path to parse. </param>
-        /// <returns>XML Document or Nullptr if could not parse. </returns>
-        RapidXML::XMLDocument* TryParseXMLDocument(const std::string& path);
+        /// <param name="didParse">Set during the parinsing. True means parsed. </param>
+        /// <returns>XML Document parsed or empty. </returns>
+        std::shared_ptr<RapidXML::XMLDocument> TryParseXMLDocument(const std::string& xmlContents, bool& didParse);
 
         /// <summary>
         /// Root node for the document.
         /// </summary>
         std::shared_ptr<RapidXMLNode> m_rootNode;
+
+        /// <summary>
+        /// Parses RapidNode into the internal node.
+        /// </summary>
+        /// <param name="currentNode">Current stage of the node. </param>
+        /// <returns>The top level version of the given node. </returns>
+        std::shared_ptr<RapidXMLNode> ParseNode(RapidXML::XMLNode* currentNode);
     };
 }
 

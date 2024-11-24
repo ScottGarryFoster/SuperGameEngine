@@ -149,6 +149,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="XMLDocument\RapidXML.h" />
+    <ClInclude Include="XMLDocument\RapidXMLAttribute.h" />
     <ClInclude Include="XMLDocument\RapidXMLDocument.h" />
     <ClInclude Include="XMLDocument\RapidXMLNode.h" />
     <ClInclude Include="XMLDocument\XMLAttribute.h" />
@@ -165,6 +166,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StandardOperations.cpp" />
+    <ClCompile Include="XMLDocument\RapidXMLAttribute.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLDocument.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLNode.cpp" />
     <ClCompile Include="XMLDocument\XMLAttribute.cpp" />

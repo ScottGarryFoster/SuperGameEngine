@@ -16,17 +16,22 @@ bool RapidXMLDocument::LoadFromFile(const std::string& path)
         return false;
     }
 
-    RapidXML::XMLDocument* document = TryParseXMLDocument(path);
-    if (document == nullptr)
+    // We must create the string now and have it as a mutable string.
+    // Rapid modifies the string contents inline as it parses.
+    // This means this string must exist for as long as we are parsing and
+    // must be mutable to override.
+    std::string fileContents = File::ReadFileContents(path);
+
+    bool didParse = false;
+    std::shared_ptr<RapidXML::XMLDocument> document = TryParseXMLDocument(fileContents, didParse);
+    if (!didParse)
     {
         // Could not parse.
         return false;
     }
 
     RapidXML::XMLNode* node = document->first_node();
-    m_rootNode = std::make_shared<RapidXMLNode>();
-    std::string name = node->name();
-    m_rootNode->SetName(name);
+    m_rootNode = ParseAllNodes(node);
 
     return true;
 }
@@ -36,20 +41,64 @@ std::shared_ptr<XMLNode> RapidXMLDocument::GetRoot()
     return m_rootNode;
 }
 
-RapidXML::XMLDocument* RapidXMLDocument::TryParseXMLDocument(const std::string& path)
+std::shared_ptr<RapidXML::XMLDocument> RapidXMLDocument::TryParseXMLDocument(const std::string& xmlContents, bool& didParse)
 {
-    std::string fileContents = File::ReadFileContents(path);
+    std::shared_ptr<RapidXML::XMLDocument> document = std::make_shared<RapidXML::XMLDocument>();
+    didParse = false;
 
-    RapidXML::XMLDocument* document = new RapidXML::XMLDocument();
     try
     {
-        document->parse<0>(const_cast<char*>(fileContents.c_str()));
+        document->parse<0>(const_cast<char*>(&xmlContents[0]));
+        didParse = true;
     }
     catch (rapidxml::parse_error e)
     {
-        delete document;
-        document = nullptr;
     }
 
     return document;
+}
+
+std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseAllNodes(RapidXML::XMLNode* currentNode)
+{
+    std::shared_ptr<RapidXMLNode> parseNode = std::make_shared<RapidXMLNode>();
+    std::string name = currentNode->name();
+    parseNode->SetName(name);
+
+    std::vector<std::shared_ptr<XMLAttribute>> attributesInNode;
+    for (RapidXML::XMLAttribute* child = currentNode->first_attribute(); child; child = child->next_attribute())
+    {
+        std::stringstream myStreamString;
+        myStreamString << child->name();
+        std::string myString = myStreamString.str();
+
+        const char* n = child->name();
+        std::string name(child->name());
+        std::string value(child->value());
+        attributesInNode.push_back(std::make_shared<RapidXMLAttribute>(name, value));
+    }
+    parseNode->SetAttributes(attributesInNode);
+
+    bool foundNode = false;
+    std::shared_ptr<RapidXMLNode> firstChild;
+    std::shared_ptr<RapidXMLNode> last;
+    for (RapidXML::XMLNode* child = currentNode->first_node(); child; child = child->next_sibling())
+    {
+        std::shared_ptr<RapidXMLNode> current = ParseAllNodes(child);
+        last = current;
+
+        if (!foundNode)
+        {
+            firstChild = current;
+            foundNode = true;
+        }
+        else
+        {
+            current->GiveAdjacentNode(last);
+        }
+    }
+
+    parseNode->GiveFirstChild(firstChild);
+    parseNode->GiveLastChild(last);
+
+    return parseNode;
 }
