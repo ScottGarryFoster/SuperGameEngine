@@ -54,4 +54,7 @@
       <Filter>Source Files\FileHandling</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>
