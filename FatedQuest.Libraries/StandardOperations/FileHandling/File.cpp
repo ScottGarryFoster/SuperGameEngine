@@ -2,9 +2,10 @@
 #include <fstream>
 #include <sstream>
 #include <filesystem>
+#include "CopyOptionsFileSystemHelper.h"
 
 #ifdef _DEBUG
-    #include <iostream>
+#include <iostream>
 #endif
 
 namespace FileSystem = std::filesystem;
@@ -73,6 +74,29 @@ bool File::EndInExtension(const std::string& filepath, const std::string& extent
     if (filepath.compare(filepath.size() - extention.size(), extention.size(), extention) == 0)
     {
         return true;
+    }
+
+    return false;
+}
+
+bool FatedQuestLibraries::File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
+{
+    try
+    {
+        if (!File::Exists(inputFilepath))
+        {
+            return false;
+        }
+
+        FileSystem::copy_options copyOption = CopyFileOptionsHelper::Convert(options);
+        FileSystem::path inputPathAsPath = inputFilepath;
+        FileSystem::path destinationAsPath = outputDirectoryPath;
+
+        return FileSystem::copy_file(inputPathAsPath, destinationAsPath, copyOption);
+    }
+    catch (const std::exception)
+    {
+        return false;
     }
 
     return false;

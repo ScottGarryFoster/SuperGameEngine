@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "CopyFileOptions.h"
 
 namespace FatedQuestLibraries
 {
@@ -43,5 +44,14 @@ namespace FatedQuestLibraries
         /// <param name="extention">Extension to look for. </param>
         /// <returns>True means has extension. </returns>
         static bool EndInExtension(const std::string& filepath, const std::string& extention);
+
+        /// <summary>
+        /// Copies file to directory.
+        /// </summary>
+        /// <param name="inputFilepath">Filepath to copy. </param>
+        /// <param name="outputDirectoryPath">Directory to copy to. </param>
+        /// <param name="options">Options when copying. </param>
+        /// <returns>True means copied. </returns>
+        static bool CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
     };
 }

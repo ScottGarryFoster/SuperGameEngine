@@ -146,8 +146,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
-      <Project>{b244f2ce-2289-4305-866e-464ba599e7ac}</Project>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
+      <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

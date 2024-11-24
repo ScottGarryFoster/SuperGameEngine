@@ -14,18 +14,42 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\FileHandling">
-      <UniqueIdentifier>{44de2fb9-1047-4512-8c67-dceeeabdeecd}</UniqueIdentifier>
+      <UniqueIdentifier>{47af2f50-9ec2-4e83-88ca-5d87f44b5edb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FileHandling">
-      <UniqueIdentifier>{b812918f-db2e-491e-8513-15eb267a13ba}</UniqueIdentifier>
+      <UniqueIdentifier>{5a648048-5cc7-4ecd-848e-1fb1751fc0a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHandling\CopyFileOptions.h">
+      <Filter>Header Files\FileHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHandling\CopyOptionsFileSystemHelper.h">
+      <Filter>Header Files\FileHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHandling\Directory.h">
+      <Filter>Header Files\FileHandling</Filter>
+    </ClInclude>
     <ClInclude Include="FileHandling\File.h">
       <Filter>Header Files\FileHandling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="StandardOperations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHandling\Directory.cpp">
+      <Filter>Source Files\FileHandling</Filter>
+    </ClCompile>
     <ClCompile Include="FileHandling\File.cpp">
       <Filter>Source Files\FileHandling</Filter>
     </ClCompile>

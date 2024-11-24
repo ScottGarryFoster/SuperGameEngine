@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-int main(int argc, char* args[])
+int main()
 {
     std::cout << "Hello World!\n";
 }

@@ -3,7 +3,7 @@
 #include <string>
 #include "../FatedQuestReferences.h"
 
-using namespace StandardObjects;
+using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {

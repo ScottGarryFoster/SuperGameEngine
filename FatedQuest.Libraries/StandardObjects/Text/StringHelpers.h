@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-namespace StandardObjects
+namespace FatedQuestLibraries
 {
     /// <summary>
     /// Methods which standardise string based operations.

@@ -14,13 +14,19 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\Text">
-      <UniqueIdentifier>{f44acc33-d210-43e3-bacf-7cf2af2c0434}</UniqueIdentifier>
+      <UniqueIdentifier>{eea1baae-30af-4107-95a8-15dca3aa8819}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Text">
-      <UniqueIdentifier>{0f847c57-a07e-4741-aea3-97dac95b512a}</UniqueIdentifier>
+      <UniqueIdentifier>{d85a3426-434b-4985-b182-837ac5b657e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Text\StringHelpers.h">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
@@ -29,6 +35,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="StandardObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Text\StringHelpers.cpp">
       <Filter>Source Files\Text</Filter>
     </ClCompile>

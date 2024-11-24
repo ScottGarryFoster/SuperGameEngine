@@ -1,6 +1,6 @@
 #include "StringHelpers.h"
 
-using namespace StandardObjects;
+using namespace FatedQuestLibraries;
 
 std::string StringHelpers::Join(const std::string& separator, const std::vector<std::string>& list)
 {

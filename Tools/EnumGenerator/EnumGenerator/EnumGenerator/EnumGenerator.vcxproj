@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0eafdf7f-b6d0-4814-821c-2b812c27470c}</ProjectGuid>
+    <ProjectGuid>{12cf31fb-ddf4-4abf-a15f-6861f01c9fad}</ProjectGuid>
     <RootNamespace>EnumGenerator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -104,7 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnumGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
+      <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj">
+      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
