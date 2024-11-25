@@ -31,9 +31,12 @@ bool RapidXMLDocument::LoadFromFile(const std::string& path)
     }
 
     RapidXML::XMLNode* node = document->first_node();
-    m_rootNode = ParseNode(node);
+    if (node)
+    {
+        m_rootNode = ParseNode(node);
+    }
 
-    return true;
+    return node;
 }
 
 bool RapidXMLDocument::Load(const std::string& fileContents)
@@ -53,9 +56,12 @@ bool RapidXMLDocument::Load(const std::string& fileContents)
     }
 
     RapidXML::XMLNode* node = document->first_node();
-    m_rootNode = ParseNode(node);
+    if (node)
+    {
+        m_rootNode = ParseNode(node);
+    }
 
-    return true;
+    return node;
 }
 
 std::shared_ptr<XMLNode> RapidXMLDocument::GetRoot()
@@ -106,6 +112,10 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* cur
     for (RapidXML::XMLNode* child = currentNode->first_node(); child; child = child->next_sibling())
     {
         std::shared_ptr<RapidXMLNode> current = ParseNode(child);
+        if (foundNode)
+        {
+            last->GiveAdjacentNode(current);
+        }
         last = current;
 
         if (!foundNode)
@@ -115,7 +125,6 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* cur
         }
         else
         {
-            current->GiveAdjacentNode(last);
         }
     }
 

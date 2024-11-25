@@ -2,10 +2,23 @@
 //
 
 #include <iostream>
+#include "GenerateEnum.h"
 
-int main()
+using namespace EnumGenerator;
+
+int main(int argc, char* args[])
 {
     std::cout << "Hello World!\n";
+
+    GenerateEnum generator;
+    if (!generator.SingleFile(
+        R"(E:\Development\SuperGameEngine-Myriad\Tools\EnumGenerator\TestFiles\EnumTest.enum)",
+        R"(E:\Development\SuperGameEngine-Myriad\Tools\EnumGenerator\TestFiles\EnumOutput.h)"))
+    {
+        std::cout << "Could not generate file. " << std::endl;
+    }
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

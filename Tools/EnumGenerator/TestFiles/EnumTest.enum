@@ -1,0 +1,4 @@
+<SuperEnum Type="Standard">
+    <Namespace Name="SuperGameEngine" />
+    <EnumName Name="ControllerComparisonType" />
+</SuperEnum>
