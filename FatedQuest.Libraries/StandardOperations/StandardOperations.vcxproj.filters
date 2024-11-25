@@ -25,6 +25,12 @@
     <Filter Include="Header Files\XMLDocument">
       <UniqueIdentifier>{90545528-aab6-422d-8dd3-cdb332e2711b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Text">
+      <UniqueIdentifier>{eeaf2bfc-0444-4abc-ad32-190ffde6b7f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Text">
+      <UniqueIdentifier>{cc5c0bab-f0eb-49a0-8718-655fffaee48d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -69,6 +75,9 @@
     <ClInclude Include="XMLDocument\RapidXMLAttribute.h">
       <Filter>Header Files\XMLDocument</Filter>
     </ClInclude>
+    <ClInclude Include="Text\StringAdvancedReplace.h">
+      <Filter>Header Files\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StandardOperations.cpp">
@@ -100,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="XMLDocument\RapidXMLAttribute.cpp">
       <Filter>Source Files\XMLDocument</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\StringAdvancedReplace.cpp">
+      <Filter>Source Files\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

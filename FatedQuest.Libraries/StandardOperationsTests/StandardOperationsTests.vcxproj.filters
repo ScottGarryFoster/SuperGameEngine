@@ -5,6 +5,9 @@
     <ClCompile Include="XMLDocument\RapidXMLDocumentTests.cpp">
       <Filter>XMLDocument</Filter>
     </ClCompile>
+    <ClCompile Include="Text\StringAdvancedReplaceTests.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -12,6 +15,9 @@
   <ItemGroup>
     <Filter Include="XMLDocument">
       <UniqueIdentifier>{4e2e85c6-2c51-4675-842e-c21521f823d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text">
+      <UniqueIdentifier>{55c7d3b8-e6b1-4605-889c-23c56b1e6423}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

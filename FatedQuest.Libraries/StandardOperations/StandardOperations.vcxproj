@@ -148,6 +148,7 @@
     <ClInclude Include="FileHandling\File.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Text\StringAdvancedReplace.h" />
     <ClInclude Include="XMLDocument\RapidXML.h" />
     <ClInclude Include="XMLDocument\RapidXMLAttribute.h" />
     <ClInclude Include="XMLDocument\RapidXMLDocument.h" />
@@ -166,6 +167,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StandardOperations.cpp" />
+    <ClCompile Include="Text\StringAdvancedReplace.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLAttribute.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLDocument.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLNode.cpp" />
