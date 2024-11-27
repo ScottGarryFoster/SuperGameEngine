@@ -109,6 +109,7 @@
     </ClCompile>
     <ClCompile Include="Text\StringAdvancedReplaceTests.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLDocumentTests.cpp" />
+    <ClCompile Include="XMLDocument\RapidXMLNodeTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

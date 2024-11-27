@@ -103,7 +103,16 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
         }
     }
 
-    return m_enumName.Parsed;
+    for (std::shared_ptr<XMLNode> child = enumNode->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::shared_ptr<EnumValueString> enumValue = std::make_shared<EnumValueString>();
+        
+        enumValue->Value = child->Name();
+        enumValue->LowercaseValue = StringHelpers::ToLower(child->Name());
+        m_enumValues.push_back(enumValue);
+    }
+
+    return m_enumName.Parsed && m_enumValues.size() > 0;
 }
 
 std::string SuperEnum::PrintDateTime()
@@ -148,10 +157,11 @@ std::string SuperEnum::PrintEnum(int indents)
         ++indents;
     }
 
-    output += PrintIndents(indents) + "Entry,\n";
-    output += PrintIndents(indents) + "EntryTwo,\n";
-    output += PrintIndents(indents) + "EntryThree,\n";
-
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        output += PrintIndents(indents) + enumValue->Value + ",\n";
+        ;
+    }
 
     if (m_namespace.Parsed)
     {

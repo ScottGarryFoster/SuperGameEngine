@@ -34,6 +34,13 @@ namespace SuperEnumGenerator
             std::string Value = "";
         };
 
+        class EnumValueString
+        {
+        public:
+            std::string Value = "";
+            std::string LowercaseValue = "";
+        };
+
         /// <summary>
         /// The namespace to use.
         /// </summary>
@@ -43,6 +50,11 @@ namespace SuperEnumGenerator
         /// The enum name to use.
         /// </summary>
         ParsedString m_enumName;
+
+        /// <summary>
+        /// All the enum values.
+        /// </summary>
+        std::vector<std::shared_ptr<EnumValueString>> m_enumValues;
 
         bool ParseNamespace(std::shared_ptr<XMLNode> namespaceNode);
 

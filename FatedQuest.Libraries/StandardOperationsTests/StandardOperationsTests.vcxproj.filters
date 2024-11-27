@@ -8,6 +8,9 @@
     <ClCompile Include="Text\StringAdvancedReplaceTests.cpp">
       <Filter>Text</Filter>
     </ClCompile>
+    <ClCompile Include="XMLDocument\RapidXMLNodeTests.cpp">
+      <Filter>XMLDocument</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

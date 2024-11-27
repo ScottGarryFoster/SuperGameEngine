@@ -32,6 +32,21 @@ namespace FatedQuestLibraries
         virtual const std::vector<std::shared_ptr<XMLAttribute>> Attributes() const;
 
         /// <summary>
+        /// Searches for attribute of the given name.
+        /// </summary>
+        /// <param name="criteria">Name to search for.</param>
+        /// <returns>Attribute if found, or empty if not. </returns>
+        virtual const std::shared_ptr<XMLAttribute> Attribute(const std::string& criteria) const;
+
+        /// <summary>
+        /// Searches for attribute of the given name.
+        /// </summary>
+        /// <param name="criteria">Name to search for.</param>
+        /// <param name="caseSensitive">True means any case is acceptable. </param>
+        /// <returns>Attribute if found, or empty if not. </returns>
+        virtual const std::shared_ptr<XMLAttribute> Attribute(const std::string& criteria, bool caseSensitive) const;
+
+        /// <summary>
         /// Sets attributes on the Node.
         /// </summary>
         /// <param name="attributes">Attributes to update. Will override not add. </param>

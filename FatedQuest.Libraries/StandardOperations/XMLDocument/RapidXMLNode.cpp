@@ -1,4 +1,5 @@
 #include "RapidXMLNode.h"
+#include "../AllReferences.h"
 
 using namespace FatedQuestLibraries;
 
@@ -21,6 +22,38 @@ void RapidXMLNode::SetName(const std::string& name)
 const std::vector<std::shared_ptr<XMLAttribute>> RapidXMLNode::Attributes() const
 {
     return m_attributes;
+}
+
+const std::shared_ptr<XMLAttribute> FatedQuestLibraries::RapidXMLNode::Attribute(const std::string& criteria) const
+{
+    for (const std::shared_ptr<XMLAttribute>& attribute : m_attributes)
+    {
+        if (attribute->Name() == criteria)
+        {
+            return attribute;
+        }
+    }
+
+    return std::shared_ptr<XMLAttribute>();
+}
+
+const std::shared_ptr<XMLAttribute> FatedQuestLibraries::RapidXMLNode::Attribute(const std::string& criteria, bool caseSensitive) const
+{
+    if (!caseSensitive)
+    {
+        return Attribute(criteria);
+    }
+
+    std::string lowerCriteria = StringHelpers::ToLower(criteria);
+    for (const std::shared_ptr<XMLAttribute>& attribute : m_attributes)
+    {
+        if (StringHelpers::ToLower(attribute->Name()) == lowerCriteria)
+        {
+            return attribute;
+        }
+    }
+
+    return std::shared_ptr<XMLAttribute>();
 }
 
 void RapidXMLNode::SetAttributes(std::vector<std::shared_ptr<XMLAttribute>> attributes)
