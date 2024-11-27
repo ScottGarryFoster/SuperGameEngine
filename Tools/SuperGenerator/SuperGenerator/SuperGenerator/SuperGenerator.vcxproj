@@ -22,8 +22,9 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{12cf31fb-ddf4-4abf-a15f-6861f01c9fad}</ProjectGuid>
-    <RootNamespace>EnumGenerator</RootNamespace>
+    <RootNamespace>SuperGenerator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SuperGenerator</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -128,25 +129,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EnumGenerator.cpp" />
-    <ClCompile Include="GenerateEnum.cpp" />
-    <ClCompile Include="SuperEnum.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
-      <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj">
-      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
-    </ProjectReference>
+    <ClCompile Include="SuperGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FatedQuestLibraries.h" />
-    <ClInclude Include="GenerateEnum.h" />
-    <ClInclude Include="SuperEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperEnumGenerator\SuperEnumGenerator.vcxproj">
+      <Project>{7e141bab-0c83-497e-a3ad-49349e2ffd22}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

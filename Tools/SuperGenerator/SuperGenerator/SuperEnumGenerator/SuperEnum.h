@@ -4,7 +4,7 @@
 
 using namespace FatedQuestLibraries;
 
-namespace EnumGenerator
+namespace SuperEnumGenerator
 {
     /// <summary>
     /// Represents an ungenerated enum file.

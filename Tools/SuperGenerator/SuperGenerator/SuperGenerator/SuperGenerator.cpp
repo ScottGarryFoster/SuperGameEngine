@@ -2,9 +2,9 @@
 //
 
 #include <iostream>
-#include "GenerateEnum.h"
+#include "../SuperEnumGenerator/GenerateEnum.h"
 
-using namespace EnumGenerator;
+using namespace SuperEnumGenerator;
 
 int main(int argc, char* args[])
 {
@@ -12,8 +12,8 @@ int main(int argc, char* args[])
 
     GenerateEnum generator;
     if (!generator.SingleFile(
-        R"(E:\Development\SuperGameEngine-Myriad\Tools\EnumGenerator\TestFiles\EnumTest.enum)",
-        R"(E:\Development\SuperGameEngine-Myriad\Tools\EnumGenerator\TestFiles\EnumOutput.h)"))
+        R"(E:\Development\SuperGameEngine-Myriad\Tools\SuperGenerator\TestFiles\EnumTest.enum)",
+        R"(E:\Development\SuperGameEngine-Myriad\Tools\SuperGenerator\TestFiles\EnumOutput.h)"))
     {
         std::cout << "Could not generate file. " << std::endl;
     }

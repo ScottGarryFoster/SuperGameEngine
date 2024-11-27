@@ -9,9 +9,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardObjects", "..\..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardOperations", "..\..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj", "{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnumGenerator", "EnumGenerator\EnumGenerator.vcxproj", "{12CF31FB-DDF4-4ABF-A15F-6861F01C9FAD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperGenerator", "SuperGenerator\SuperGenerator.vcxproj", "{12CF31FB-DDF4-4ABF-A15F-6861F01C9FAD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardOperationsTests", "..\..\..\FatedQuest.Libraries\StandardOperationsTests\StandardOperationsTests.vcxproj", "{B19376E1-C964-431D-AD90-664B70946B8E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperEnumGenerator", "SuperEnumGenerator\SuperEnumGenerator.vcxproj", "{7E141BAB-0C83-497E-A3AD-49349E2FFD22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,14 @@ Global
 		{B19376E1-C964-431D-AD90-664B70946B8E}.Release|x64.Build.0 = Release|x64
 		{B19376E1-C964-431D-AD90-664B70946B8E}.Release|x86.ActiveCfg = Release|Win32
 		{B19376E1-C964-431D-AD90-664B70946B8E}.Release|x86.Build.0 = Release|Win32
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Debug|x64.ActiveCfg = Debug|x64
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Debug|x64.Build.0 = Debug|x64
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Debug|x86.ActiveCfg = Debug|Win32
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Debug|x86.Build.0 = Debug|Win32
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x64.ActiveCfg = Release|x64
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x64.Build.0 = Release|x64
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x86.ActiveCfg = Release|Win32
+		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

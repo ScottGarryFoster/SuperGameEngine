@@ -15,23 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EnumGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GenerateEnum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SuperEnum.cpp">
+    <ClCompile Include="SuperGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GenerateEnum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SuperEnum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FatedQuestLibraries.h">
       <Filter>Header Files</Filter>
     </ClInclude>

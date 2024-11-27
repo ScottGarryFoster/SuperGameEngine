@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace EnumGenerator
+namespace SuperEnumGenerator
 {
     /// <summary>
     /// Generates enums.

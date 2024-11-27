@@ -2,7 +2,7 @@
 #include "FatedQuestLibraries.h"
 #include "SuperEnum.h"
 
-using namespace EnumGenerator;
+using namespace SuperEnumGenerator;
 using namespace FatedQuestLibraries;
 
 bool GenerateEnum::SingleFile(const std::string& enumFilepath, const std::string& outputPath) const
