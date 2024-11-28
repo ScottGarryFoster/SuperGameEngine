@@ -58,5 +58,11 @@ namespace FatedQuestLibraries
         /// Node next to this one or empty pointer.
         /// </returns>
         virtual const std::shared_ptr<XMLNode> GetAdjacentNode() const = 0;
+
+        /// <summary>
+        /// Get the inner text.
+        /// </summary>
+        /// <returns>Get the inner text. </returns>
+        virtual const std::string Inner() const = 0;
     };
 }

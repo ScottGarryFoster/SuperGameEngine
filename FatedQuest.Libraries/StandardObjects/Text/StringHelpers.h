@@ -19,6 +19,14 @@ namespace FatedQuestLibraries
         static std::string Join(const std::string& separator, const std::vector<std::string>& list);
 
         /// <summary>
+        /// Split string into pieces.
+        /// </summary>
+        /// <param name="toSplit">Source to split. </param>
+        /// <param name="by">Place to split by. </param>
+        /// <returns>Pieces split into. </returns>
+        static std::vector<std::string> Split(const std::string& toSplit, const std::string& by);
+
+        /// <summary>
         /// Trims spaces from both sides.
         /// </summary>
         /// <param name="input">Input to have spaces trimmed. </param>

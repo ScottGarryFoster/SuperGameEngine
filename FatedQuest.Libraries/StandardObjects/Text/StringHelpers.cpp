@@ -18,6 +18,21 @@ std::string StringHelpers::Join(const std::string& separator, const std::vector<
     return finalString;
 }
 
+std::vector<std::string> StringHelpers::Split(const std::string& toSplit, const std::string& by)
+{
+    std::vector<std::string> newList;
+
+    size_t start = 0, end = 0;
+    while ((end = toSplit.find(by, start)) != std::string::npos)
+    {
+        newList.push_back(toSplit.substr(start, end - start));
+        start = end + by.length();
+    }
+    newList.push_back(toSplit.substr(start));
+
+    return newList;
+}
+
 std::string StringHelpers::Trim(const std::string& input)
 {
     if (input.empty())
@@ -47,6 +62,12 @@ std::string StringHelpers::Trim(const std::string& input)
     else
     {
         copy = input;
+    }
+
+    // If all whitespace
+    if (copy.empty())
+    {
+        return std::string();
     }
 
     std::string returnn = std::string();

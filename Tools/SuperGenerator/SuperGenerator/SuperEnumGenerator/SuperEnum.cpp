@@ -28,6 +28,13 @@ bool SuperEnum::FromString(const std::string& superEnumFile)
                 return false;
             }
         }
+        else if (name == "enumcomment")
+        {
+            if (!ParseEnumComment(child))
+            {
+                return false;
+            }
+        }
         else if (name == "enumname")
         {
             if (!ParseEnumName(child))
@@ -88,6 +95,20 @@ bool SuperEnum::ParseNamespace(std::shared_ptr<XMLNode> namespaceNode)
     return m_namespace.Parsed;
 }
 
+bool SuperEnumGenerator::SuperEnum::ParseEnumComment(std::shared_ptr<XMLNode> enumNode)
+{
+    std::string comment = StringHelpers::Trim(enumNode->Inner());
+    if (comment == "")
+    {
+        return false;
+    }
+
+    m_enumComment.Parsed = true;
+    m_enumComment.Value = comment;
+
+    return true;
+}
+
 bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
 {
     for (std::shared_ptr<XMLAttribute> attribute : enumNode->Attributes())
@@ -109,6 +130,8 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
         
         enumValue->Value = child->Name();
         enumValue->LowercaseValue = StringHelpers::ToLower(child->Name());
+        enumValue->Comment = child->Inner();
+
         m_enumValues.push_back(enumValue);
     }
 
@@ -150,6 +173,11 @@ std::string SuperEnum::PrintIndents(int number)
 std::string SuperEnum::PrintEnum(int indents)
 {
     std::string output;
+    if (m_enumComment.Parsed)
+    {
+        output += PrintSingleComment(m_enumComment.Value, indents);
+    }
+
     if (m_enumName.Parsed)
     {
         output += PrintIndents(indents) + "enum class " + m_enumName.Value + "\n";
@@ -157,17 +185,52 @@ std::string SuperEnum::PrintEnum(int indents)
         ++indents;
     }
 
-    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    for (int i = 0; i < m_enumValues.size(); ++i)
     {
+        const std::shared_ptr<EnumValueString>& enumValue = m_enumValues[i];
+        std::string comments = PrintSingleComment(enumValue->Comment, indents);
+        if (comments != "")
+        {
+            output += comments;
+        }
+
         output += PrintIndents(indents) + enumValue->Value + ",\n";
-        ;
+
+        // Ensure there is a line space between each other than the very last.
+        if (i + 1 < m_enumValues.size())
+        {
+            output += "\n";
+        }
     }
 
     if (m_namespace.Parsed)
     {
         --indents;
-        output += PrintIndents(indents) + "}\n";
+        output += PrintIndents(indents) + "};\n";
     }
+
+    return output;
+}
+
+std::string SuperEnumGenerator::SuperEnum::PrintSingleComment(const std::string& rawComment, int indents)
+{
+    std::string output = "";
+    if (rawComment.empty())
+    {
+        return output;
+    }
+
+    output += PrintIndents(indents) + "/// <summary>\n";
+    std::vector<std::string> lines = StringHelpers::Split(rawComment, "\n");
+    for (const std::string line : lines)
+    {
+        std::string lineTrimmed = StringHelpers::Trim(line);
+        if (lineTrimmed != "")
+        {
+            output += PrintIndents(indents) + "/// " + lineTrimmed + "\n";
+        }
+    }
+    output += PrintIndents(indents) + "/// </summary>\n";
 
     return output;
 }

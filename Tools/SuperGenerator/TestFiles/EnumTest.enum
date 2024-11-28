@@ -1,7 +1,12 @@
 <SuperEnum Type="Standard">
     <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        How to compare values with inputs.
+    </EnumComment>
     <EnumName Name="ControllerComparisonType">
-        <Unknown />
+        <Unknown>
+            Only used for unsuccessful parsing.
+        </Unknown>
         <Greater />
         <Less />
         <Equals />

@@ -7,6 +7,7 @@ RapidXMLNode::RapidXMLNode()
 {
     m_name = "";
     m_attributes = std::vector<std::shared_ptr<XMLAttribute>>();
+    m_innerText = "";
 }
 
 const std::string RapidXMLNode::Name() const
@@ -89,4 +90,14 @@ const std::shared_ptr<XMLNode> RapidXMLNode::GetAdjacentNode() const
 void RapidXMLNode::GiveAdjacentNode(std::shared_ptr<XMLNode> next)
 {
     m_nextChild = next;
+}
+
+const std::string FatedQuestLibraries::RapidXMLNode::Inner() const
+{
+    return m_innerText;
+}
+
+void FatedQuestLibraries::RapidXMLNode::SetInner(const std::string& inner)
+{
+    m_innerText = inner;
 }

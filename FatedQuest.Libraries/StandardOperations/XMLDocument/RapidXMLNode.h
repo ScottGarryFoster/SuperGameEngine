@@ -90,6 +90,18 @@ namespace FatedQuestLibraries
         /// <param name="next">The next node to this one. </param>
         virtual void GiveAdjacentNode(std::shared_ptr<XMLNode> next);
 
+        /// <summary>
+        /// Get the inner text.
+        /// </summary>
+        /// <returns>Get the inner text. </returns>
+        virtual const std::string Inner() const override;
+
+        /// <summary>
+        /// Sets the inner text.
+        /// </summary>
+        /// <param name="inner">Text inside the node. </param>
+        virtual void SetInner(const std::string& inner);
+
     private:
         /// <summary>
         /// Name of the XML Node.
@@ -115,5 +127,10 @@ namespace FatedQuestLibraries
         /// The child next to this one.
         /// </summary>
         std::shared_ptr<XMLNode> m_nextChild;
+
+        /// <summary>
+        /// The text inside this node.
+        /// </summary>
+        std::string m_innerText;
     };
 }

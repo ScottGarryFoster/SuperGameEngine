@@ -436,4 +436,48 @@ namespace FatedQuestLibraries_StandardOperations_XMLDocument
     }
 
 #pragma endregion
+
+#pragma region XMLNode
+
+    TEST_F(RapidXMLDocumentTests, Inner_ReturnsInnerText_WhenGivenNodeWithInnerText)
+    {
+        // Arrange
+        std::string given = R"(<Node>Text</Node>)";
+        m_testClass->Load(given);
+
+        // Act
+        std::string actual = m_testClass->GetRoot()->Inner();
+
+        // Assert
+        ASSERT_EQ("Text", actual);
+    }
+
+    TEST_F(RapidXMLDocumentTests, Inner_ReturnsEmptyString_WhenNodeHasNoInnerText)
+    {
+        // Arrange
+        std::string given = R"(<Node></Node>)";
+        m_testClass->Load(given);
+
+        // Act
+        std::string actual = m_testClass->GetRoot()->Inner();
+
+        // Assert
+        ASSERT_EQ("", actual);
+    }
+
+
+    TEST_F(RapidXMLDocumentTests, Inner_ReturnsEmptyString_WhenNodeIsSelfClosing)
+    {
+        // Arrange
+        std::string given = R"(<Node />)";
+        m_testClass->Load(given);
+
+        // Act
+        std::string actual = m_testClass->GetRoot()->Inner();
+
+        // Assert
+        ASSERT_EQ("", actual);
+    }
+
+#pragma endregion
 }
