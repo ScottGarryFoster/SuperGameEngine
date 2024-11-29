@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Text">
       <UniqueIdentifier>{d85a3426-434b-4985-b182-837ac5b657e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Number">
+      <UniqueIdentifier>{7f008d7f-c129-4ad9-ba61-19ae4b6ecb79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Number">
+      <UniqueIdentifier>{fd0f5d9a-e0eb-4ee7-85ba-c3f8dc890a85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -33,6 +39,12 @@
     <ClInclude Include="AllReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Number\IntHelpers.h">
+      <Filter>Header Files\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="Number\FloatingPointHelpers.h">
+      <Filter>Header Files\Number</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StandardObjects.cpp">
@@ -43,6 +55,12 @@
     </ClCompile>
     <ClCompile Include="Text\StringHelpers.cpp">
       <Filter>Source Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Number\IntHelpers.cpp">
+      <Filter>Source Files\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="Number\FloatingPointHelpers.cpp">
+      <Filter>Source Files\Number</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

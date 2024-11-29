@@ -143,10 +143,14 @@
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Number\FloatingPointHelpers.h" />
+    <ClInclude Include="Number\IntHelpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Text\StringHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Number\FloatingPointHelpers.cpp" />
+    <ClCompile Include="Number\IntHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

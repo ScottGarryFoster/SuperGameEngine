@@ -96,11 +96,6 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* cur
     std::vector<std::shared_ptr<XMLAttribute>> attributesInNode;
     for (RapidXML::XMLAttribute* child = currentNode->first_attribute(); child; child = child->next_attribute())
     {
-        std::stringstream myStreamString;
-        myStreamString << child->name();
-        std::string myString = myStreamString.str();
-
-        const char* n = child->name();
         std::string name(child->name());
         std::string value(child->value());
         attributesInNode.push_back(std::make_shared<RapidXMLAttribute>(name, value));

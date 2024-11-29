@@ -68,6 +68,9 @@ std::string SuperEnum::ToString()
 
     output += PrintEnum(indents);
 
+    output += PrintEnumHelper(indents);
+
+
     if (m_namespace.Parsed)
     {
         --indents;
@@ -113,7 +116,8 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
 {
     for (std::shared_ptr<XMLAttribute> attribute : enumNode->Attributes())
     {
-        if (StringHelpers::ToLower(attribute->Name()) == "name")
+        std::string name = StringHelpers::ToLower(attribute->Name());
+        if (name == "name")
         {
             std::string value = StringHelpers::Trim(attribute->Value());
             if (value != "")
@@ -132,10 +136,57 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
         enumValue->LowercaseValue = StringHelpers::ToLower(child->Name());
         enumValue->Comment = child->Inner();
 
+        bool parsedAttributes = true;
+        for (std::shared_ptr<XMLAttribute> attribute : child->Attributes())
+        {
+            std::string name = StringHelpers::ToLower(attribute->Name());
+            if (name == "value")
+            {
+                std::string value = StringHelpers::Trim(attribute->Value());
+                if (value != "")
+                {
+                    int outValue = 0;
+                    if (IntHelpers::TryParse(attribute->Value(), outValue))
+                    {
+                        enumValue->SetValue = outValue;
+                        enumValue->ValueIsSet = true;
+                    }
+                    else
+                    {
+                        // Could not read number.
+                        // TODO: Add Log for this.
+                        parsedAttributes = false;
+                        break;
+                    }
+                }
+            }
+        }
+
         m_enumValues.push_back(enumValue);
     }
 
+    SetUpImpliedEnumValues();
+
     return m_enumName.Parsed && m_enumValues.size() > 0;
+}
+
+bool SuperEnum::SetUpImpliedEnumValues()
+{
+    int currentIndex = 0;
+    for (int i = 0; i < m_enumValues.size(); ++i)
+    {
+        if (m_enumValues[i]->ValueIsSet)
+        {
+            m_enumValues[i]->ImpliedValue = m_enumValues[i]->SetValue;
+            currentIndex = m_enumValues[i]->SetValue + 1;
+        }
+        else
+        {
+            m_enumValues[i]->ImpliedValue = currentIndex++;
+        }
+    }
+
+    return true;
 }
 
 std::string SuperEnum::PrintDateTime()
@@ -194,7 +245,13 @@ std::string SuperEnum::PrintEnum(int indents)
             output += comments;
         }
 
-        output += PrintIndents(indents) + enumValue->Value + ",\n";
+        // Print the actual name within the enum class
+        output += PrintIndents(indents) + enumValue->Value;
+        if (enumValue->ValueIsSet)
+        {
+            output += " = " + std::to_string(enumValue->SetValue);
+        }
+        output += ",\n";
 
         // Ensure there is a line space between each other than the very last.
         if (i + 1 < m_enumValues.size())
@@ -210,6 +267,66 @@ std::string SuperEnum::PrintEnum(int indents)
     }
 
     return output;
+}
+
+std::string SuperEnumGenerator::SuperEnum::PrintEnumHelper(int indents)
+{
+    std::string output = "";
+    if (!m_enumName.Parsed)
+    {
+        return std::string();
+    }
+
+    output += "\n";
+    output += PrintSingleComment("Accompanies enums to provide extra functionality.", indents);
+    output += PrintIndents(indents) + "class E" + m_enumName.Value + " : public Object\n";
+    output += PrintIndents(indents) + "{\n";
+    output += PrintIndents(indents) + "public:\n";
+
+    ++indents;
+    output += PrintIndents(indents) + "static " + m_enumName.Value + " Min() { return " + m_enumName.Value + "::" + GetMinEnumValue() + "; }\n";
+    output += PrintIndents(indents) + "static " + m_enumName.Value + " Max() { return " + m_enumName.Value + "::" + GetMaxEnumValue() + "; }\n";
+    --indents;
+
+    output += PrintIndents(indents) + "}\n";
+
+    return output;
+}
+
+std::string SuperEnum::GetMinEnumValue()
+{
+    bool foundMin = false;
+    int currentIndex = 0;
+    std::string min = "";
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (!foundMin || enumValue->ImpliedValue < currentIndex)
+        {
+            currentIndex = enumValue->ImpliedValue;
+            min = enumValue->Value;
+            foundMin = true;
+        }
+    }
+
+    return min;
+}
+
+std::string SuperEnum::GetMaxEnumValue()
+{
+    bool foundMin = false;
+    int currentIndex = 0;
+    std::string max = "";
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (!foundMin || enumValue->ImpliedValue > currentIndex)
+        {
+            currentIndex = enumValue->ImpliedValue;
+            max = enumValue->Value;
+            foundMin = true;
+        }
+    }
+
+    return max;
 }
 
 std::string SuperEnumGenerator::SuperEnum::PrintSingleComment(const std::string& rawComment, int indents)

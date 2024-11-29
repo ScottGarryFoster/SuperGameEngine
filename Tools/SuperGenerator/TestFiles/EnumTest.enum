@@ -4,7 +4,7 @@
         How to compare values with inputs.
     </EnumComment>
     <EnumName Name="ControllerComparisonType">
-        <Unknown>
+        <Unknown Value="-1">
             Only used for unsuccessful parsing.
         </Unknown>
         <Greater />

@@ -42,11 +42,17 @@ namespace SuperEnumGenerator
             
             bool ValueIsSet = false;
             int SetValue = 0;
+            int ImpliedValue = 0;
 
             bool OverrideAsMin = false;
             bool OverrideAsMax = false;
 
             std::string Comment = "";
+
+            /// <summary>
+            /// Hides from Array and Vector methods.
+            /// </summary>
+            bool HideFromLists = false;
         };
 
         /// <summary>
@@ -75,10 +81,15 @@ namespace SuperEnumGenerator
 
         bool ParseEnumName(std::shared_ptr<XMLNode> enumNode);
 
+        bool SetUpImpliedEnumValues();
+
         std::string PrintDateTime();
         std::string PrintIndents(int number);
 
         std::string PrintEnum(int indents);
+        std::string PrintEnumHelper(int indents);
+        std::string GetMinEnumValue();
+        std::string GetMaxEnumValue();
 
         std::string PrintSingleComment(const std::string& rawComment, int indents);
     };
