@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL.h>
+#include <memory>
+#include "../Engine/Graphics/Texture/SDLRendererReader.h"
 
 namespace SuperGameEngine
 {
@@ -18,7 +20,7 @@ namespace SuperGameEngine
         /// is recreated on this new renderer.
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
-        virtual void GiveRenderer(SDL_Renderer* renderer) = 0;
+        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) = 0;
 
         /// <summary>
         /// Handle the current event.
@@ -45,5 +47,15 @@ namespace SuperGameEngine
         /// Draw to the screen.
         /// </summary>
         virtual void Draw() = 0;
+
+        /// <summary>
+        /// Called as the window starts.
+        /// </summary>
+        virtual void WindowStart() = 0;
+
+        /// <summary>
+        /// Called when the window is torndown.
+        /// </summary>
+        virtual void WindowTeardown() = 0;
     };
 }

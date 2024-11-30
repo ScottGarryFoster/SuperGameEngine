@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClCompile Include="DebugEngine\DebugEngine.cpp" />
     <ClCompile Include="EngineEntry\EngineEntry.cpp" />
+    <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp" />
+    <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\Texture.cpp" />
     <ClCompile Include="Engine\MainEngine.cpp" />
     <ClCompile Include="main.cpp" />
@@ -138,6 +140,9 @@
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
     <ClInclude Include="EngineEntry\WindowExit.h" />
+    <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h" />
+    <ClInclude Include="Engine\Graphics\Texture\SDLRendererState.h" />
+    <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h" />
     <ClInclude Include="Engine\Graphics\Texture\Texture.h" />
     <ClInclude Include="Engine\MainEngine.h" />
     <ClInclude Include="FatedQuestReferences.h" />

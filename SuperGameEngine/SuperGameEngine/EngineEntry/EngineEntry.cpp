@@ -6,6 +6,8 @@
     #include <iostream>
 #endif
 
+#include "../Engine/Graphics/Texture/SDLRenderer.h"
+
 using namespace SuperGameEngine;
 
 int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
@@ -72,13 +74,19 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
         return WindowExit::Close;
     }
 
+    std::shared_ptr<SDLRenderer> sharedRenderer = std::make_shared<SDLRenderer>();
+    sharedRenderer->SetRenderer(renderer);
+
     // Main loop flag
     bool quit = false;
 
     // Event handler
     SDL_Event e;
 
-    engine->GiveRenderer(renderer);
+    // Setup the engine.
+    engine->GiveRenderer(sharedRenderer);
+    engine->WindowStart();
+
     Uint64 startTime = SDL_GetTicks64();
 
     // Main loop
@@ -125,6 +133,10 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
 
     // Wait
     //system("pause");
+
+    // Ensure the engine knows we no longer have a window
+    sharedRenderer->SetRenderer(nullptr);
+    engine->WindowTeardown();
 
     // Destroy the window. This will also destroy the surface
     SDL_DestroyWindow(window);

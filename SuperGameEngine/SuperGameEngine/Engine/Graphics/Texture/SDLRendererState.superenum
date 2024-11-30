@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../../../FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        The state the renderer is in.
+        Used to understand whether to trust the reference.
+    </EnumComment>
+    <EnumName Name="SDLRendererState">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Active>
+            The renderer is currently in use and therefore can be trusted.
+        </Active>
+        <Destroyed>
+            The renderer has been destroyed.
+            Remove references and do not use it again.
+        </Destroyed>
+    </EnumName>
+</SuperEnum>

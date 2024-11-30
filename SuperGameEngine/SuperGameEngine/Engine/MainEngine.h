@@ -19,7 +19,7 @@ namespace SuperGameEngine
         /// is recreated on this new renderer.
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
-        virtual void GiveRenderer(SDL_Renderer* renderer);
+        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer);
 
         /// <summary>
         /// Handle the current event.
@@ -46,5 +46,15 @@ namespace SuperGameEngine
         /// Draw to the screen.
         /// </summary>
         virtual void Draw();
+
+        /// <summary>
+        /// Called as the window starts.
+        /// </summary>
+        virtual void WindowStart();
+
+        /// <summary>
+        /// Called when the window is torndown.
+        /// </summary>
+        virtual void WindowTeardown();
 };
 }

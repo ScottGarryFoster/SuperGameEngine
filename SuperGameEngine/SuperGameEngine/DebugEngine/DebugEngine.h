@@ -1,13 +1,17 @@
 #pragma once
-#include "../EngineEntry/Engine.h"
 #include <SDL.h>
+#include <memory>
+#include "../EngineEntry/Engine.h"
+#include "../Engine/Graphics/Texture/SDLRendererReader.h"
+
+using namespace SuperGameEngine;
 
 namespace SuperEngineDebug
 {
     /// <summary>
     /// An engine just for debuging. It is independant from other engines.
     /// </summary>
-    class DebugEngine : public SuperGameEngine::Engine
+    class DebugEngine : public Engine
     {
         /// <summary>
         /// Gives the engine a renderer.
@@ -18,7 +22,7 @@ namespace SuperEngineDebug
         /// is recreated on this new renderer.
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
-        virtual void GiveRenderer(SDL_Renderer* renderer);
+        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer);
 
         /// <summary>
         /// Handle the current event.
@@ -45,5 +49,16 @@ namespace SuperEngineDebug
         /// Draw to the screen.
         /// </summary>
         virtual void Draw();
+
+
+        /// <summary>
+        /// Called as the window starts.
+        /// </summary>
+        virtual void WindowStart();
+
+        /// <summary>
+        /// Called when the window is torndown.
+        /// </summary>
+        virtual void WindowTeardown();
     };
 }

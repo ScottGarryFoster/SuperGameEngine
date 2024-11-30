@@ -290,6 +290,12 @@ std::string SuperEnumGenerator::SuperEnum::PrintHeader(int indents)
             output += PrintIndents(indents) + lineTrimmed + "\n";
         }
     }
+
+    // These are used by this script
+    output += PrintIndents(indents) + "#include <vector>\n";
+    output += PrintIndents(indents) + "#include <string>\n";
+
+    output += PrintIndents(indents) + "\n";
     output += PrintIndents(indents) + "\n";
 
     return output;
@@ -353,7 +359,7 @@ std::string SuperEnum::PrintEnumHelper(int indents)
 
     output += "\n";
     output += PrintSingleComment("Accompanies enums to provide extra functionality.", indents);
-    output += PrintIndents(indents) + "class E" + m_enumName.Value + " : public Object\n";
+    output += PrintIndents(indents) + "class E" + m_enumName.Value + "\n";
     output += PrintIndents(indents) + "{\n";
     output += PrintIndents(indents) + "public:\n";
 
@@ -497,7 +503,7 @@ std::string SuperEnum::PrintFromString(int indents)
         output += PrintIndents(indents) + "else\n";
         output += PrintIndents(indents) + "{\n";
         ++indents;
-        output += PrintIndents(indents) + "std::string valueLower = StringHelpers::ToLower(value); \n";
+        output += PrintIndents(indents) + "std::string valueLower = FatedQuestLibraries::StringHelpers::ToLower(value); \n";
         for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
         {
             
@@ -506,7 +512,7 @@ std::string SuperEnum::PrintFromString(int indents)
         --indents;
         output += PrintIndents(indents) + "}\n";
         output += PrintIndents(indents) + "\n";
-        output += PrintIndents(indents) + "return \"" + GetUnknownValue() + "\";\n";
+        output += PrintIndents(indents) + "return " + m_enumName.Value + "::" + GetUnknownValue() + ";\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     return output;

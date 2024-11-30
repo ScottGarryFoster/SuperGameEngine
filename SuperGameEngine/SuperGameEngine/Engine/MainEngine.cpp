@@ -2,7 +2,7 @@
 
 using namespace SuperGameEngine;
 
-void MainEngine::GiveRenderer(SDL_Renderer* renderer)
+void MainEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 {
 
 }
@@ -18,5 +18,13 @@ bool MainEngine::Update(Uint64 ticks)
 }
 
 void MainEngine::Draw()
+{
+}
+
+void MainEngine::WindowStart()
+{
+}
+
+void MainEngine::WindowTeardown()
 {
 }

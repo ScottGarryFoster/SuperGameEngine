@@ -9,6 +9,7 @@
 
 #include "EngineEntry/EngineEntry.h"
 #include "Engine/MainEngine.h"
+#include "DebugEngine/DebugEngine.h"
 
 using namespace SuperGameEngine;
 
@@ -27,6 +28,6 @@ int main(int argc, char* args[])
 #endif
 
     EngineEntry engineEntry = EngineEntry();
-    std::shared_ptr<Engine> engine = std::make_shared<MainEngine>();
+    std::shared_ptr<Engine> engine = std::make_shared<SuperEngineDebug::DebugEngine>();
     return engineEntry.RunApplication(engine);
 }
