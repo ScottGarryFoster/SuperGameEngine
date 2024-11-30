@@ -31,6 +31,12 @@
     <Filter Include="Header Files\Text">
       <UniqueIdentifier>{cc5c0bab-f0eb-49a0-8718-655fffaee48d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Number">
+      <UniqueIdentifier>{7f008d7f-c129-4ad9-ba61-19ae4b6ecb79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Number">
+      <UniqueIdentifier>{fd0f5d9a-e0eb-4ee7-85ba-c3f8dc890a85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -75,8 +81,17 @@
     <ClInclude Include="XMLDocument\RapidXMLAttribute.h">
       <Filter>Header Files\XMLDocument</Filter>
     </ClInclude>
+    <ClInclude Include="Text\StringHelpers.h">
+      <Filter>Header Files\Text</Filter>
+    </ClInclude>
     <ClInclude Include="Text\StringAdvancedReplace.h">
       <Filter>Header Files\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Number\FloatingPointHelpers.h">
+      <Filter>Source Files\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="Number\IntHelpers.h">
+      <Filter>Source Files\Number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +126,9 @@
       <Filter>Source Files\XMLDocument</Filter>
     </ClCompile>
     <ClCompile Include="Text\StringAdvancedReplace.cpp">
+      <Filter>Source Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\StringHelpers.cpp">
       <Filter>Source Files\Text</Filter>
     </ClCompile>
   </ItemGroup>

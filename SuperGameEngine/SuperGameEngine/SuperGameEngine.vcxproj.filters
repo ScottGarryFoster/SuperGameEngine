@@ -66,6 +66,12 @@
     <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp">
       <Filter>Source Files\Engine\Graphics\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SuperTexture.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SuperTextureWrapper.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineEntry\EngineEntry.h">
@@ -96,6 +102,12 @@
       <Filter>Header Files\Engine\Graphics\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SuperTexture.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SuperTextureWrapper.h">
       <Filter>Header Files\Engine\Graphics\Texture</Filter>
     </ClInclude>
   </ItemGroup>

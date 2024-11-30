@@ -13,18 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Text">
-      <UniqueIdentifier>{eea1baae-30af-4107-95a8-15dca3aa8819}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Text">
-      <UniqueIdentifier>{d85a3426-434b-4985-b182-837ac5b657e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Number">
-      <UniqueIdentifier>{7f008d7f-c129-4ad9-ba61-19ae4b6ecb79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Number">
-      <UniqueIdentifier>{fd0f5d9a-e0eb-4ee7-85ba-c3f8dc890a85}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -33,17 +21,8 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Text\StringHelpers.h">
-      <Filter>Header Files\Text</Filter>
-    </ClInclude>
     <ClInclude Include="AllReferences.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Number\IntHelpers.h">
-      <Filter>Header Files\Number</Filter>
-    </ClInclude>
-    <ClInclude Include="Number\FloatingPointHelpers.h">
-      <Filter>Header Files\Number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -52,15 +31,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Text\StringHelpers.cpp">
-      <Filter>Source Files\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Number\IntHelpers.cpp">
-      <Filter>Source Files\Number</Filter>
-    </ClCompile>
-    <ClCompile Include="Number\FloatingPointHelpers.cpp">
-      <Filter>Source Files\Number</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

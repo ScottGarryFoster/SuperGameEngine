@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "../../StandardObjects/Text/StringHelpers.h"
+#include "../Text/StringHelpers.h"
 
 #ifdef _DEBUG
 #include <iostream>
