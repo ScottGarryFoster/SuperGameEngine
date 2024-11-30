@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +155,9 @@
     <ProjectReference Include="..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
       <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj">
+      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -163,6 +167,7 @@
     <Import Project="..\packages\sdl2_mixer.nuget.2.8.0\build\native\sdl2_mixer.nuget.targets" Condition="Exists('..\packages\sdl2_mixer.nuget.2.8.0\build\native\sdl2_mixer.nuget.targets')" />
     <Import Project="..\packages\sdl2.nuget.redist.2.30.9\build\native\sdl2.nuget.redist.targets" Condition="Exists('..\packages\sdl2.nuget.redist.2.30.9\build\native\sdl2.nuget.redist.targets')" />
     <Import Project="..\packages\sdl2.nuget.2.30.9\build\native\sdl2.nuget.targets" Condition="Exists('..\packages\sdl2.nuget.2.30.9\build\native\sdl2.nuget.targets')" />
+    <Import Project="..\packages\rapidxml.1.13\build\native\rapidxml.targets" Condition="Exists('..\packages\rapidxml.1.13\build\native\rapidxml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -174,5 +179,6 @@
     <Error Condition="!Exists('..\packages\sdl2_mixer.nuget.2.8.0\build\native\sdl2_mixer.nuget.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2_mixer.nuget.2.8.0\build\native\sdl2_mixer.nuget.targets'))" />
     <Error Condition="!Exists('..\packages\sdl2.nuget.redist.2.30.9\build\native\sdl2.nuget.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2.nuget.redist.2.30.9\build\native\sdl2.nuget.redist.targets'))" />
     <Error Condition="!Exists('..\packages\sdl2.nuget.2.30.9\build\native\sdl2.nuget.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2.nuget.2.30.9\build\native\sdl2.nuget.targets'))" />
+    <Error Condition="!Exists('..\packages\rapidxml.1.13\build\native\rapidxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\rapidxml.1.13\build\native\rapidxml.targets'))" />
   </Target>
 </Project>

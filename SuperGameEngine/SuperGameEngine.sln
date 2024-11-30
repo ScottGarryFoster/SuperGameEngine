@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FatedQuest.Libraries", "Fat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardObjects", "..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj", "{3F3CCD80-0310-46B9-A963-285EAC938CD6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardOperations", "..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj", "{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,12 +35,21 @@ Global
 		{3F3CCD80-0310-46B9-A963-285EAC938CD6}.Release|x64.Build.0 = Release|x64
 		{3F3CCD80-0310-46B9-A963-285EAC938CD6}.Release|x86.ActiveCfg = Release|Win32
 		{3F3CCD80-0310-46B9-A963-285EAC938CD6}.Release|x86.Build.0 = Release|Win32
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Debug|x64.ActiveCfg = Debug|x64
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Debug|x64.Build.0 = Debug|x64
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Debug|x86.ActiveCfg = Debug|Win32
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Debug|x86.Build.0 = Debug|Win32
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Release|x64.ActiveCfg = Release|x64
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Release|x64.Build.0 = Release|x64
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Release|x86.ActiveCfg = Release|Win32
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3F3CCD80-0310-46B9-A963-285EAC938CD6} = {E1F2A6F8-6777-48F2-8648-39923C29236E}
+		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538} = {E1F2A6F8-6777-48F2-8648-39923C29236E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8C60E3A-E468-42D3-8D01-76CB2F870B79}

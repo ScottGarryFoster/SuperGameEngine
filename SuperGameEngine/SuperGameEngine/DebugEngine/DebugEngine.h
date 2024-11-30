@@ -3,6 +3,7 @@
 #include <memory>
 #include "../EngineEntry/Engine.h"
 #include "../Engine/Graphics/Texture/SDLRendererReader.h"
+#include "../Engine/Graphics/Texture/Texture.h"
 
 using namespace SuperGameEngine;
 
@@ -60,5 +61,18 @@ namespace SuperEngineDebug
         /// Called when the window is torndown.
         /// </summary>
         virtual void WindowTeardown();
+
+    private:
+
+        bool m_haveLoaded = false;
+        bool m_haveRestartedWindow = false;
+
+        std::shared_ptr<Texture> m_texture;
+        std::shared_ptr<SDLRendererReader> m_renderer;
+
+        std::time_t originalTime;
+
+        Uint64 t;
+        Uint64 curr;
     };
 }

@@ -8,7 +8,10 @@ namespace FatedQuestLibraries
     /// <summary>
     /// Parses and organises XML Documents.
     /// </summary>
-    class XMLDocument
+    /// <remark>
+    /// This is called SuperXMLDocument because of a name conflict.
+    /// </remark>
+    class SuperXMLDocument
     {
     public:
         /// <summary>

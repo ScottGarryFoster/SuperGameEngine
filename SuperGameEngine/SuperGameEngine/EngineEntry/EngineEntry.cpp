@@ -12,6 +12,7 @@ using namespace SuperGameEngine;
 
 int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 {
+    m_renderer = std::make_shared<SDLRenderer>();
     WindowExit windowState = WindowExit::Restart;
     while (windowState != WindowExit::Close)
     {
@@ -74,8 +75,6 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
         return WindowExit::Close;
     }
 
-    std::shared_ptr<SDLRenderer> sharedRenderer = std::make_shared<SDLRenderer>();
-    sharedRenderer->SetRenderer(renderer);
 
     // Main loop flag
     bool quit = false;
@@ -84,7 +83,8 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
     SDL_Event e;
 
     // Setup the engine.
-    engine->GiveRenderer(sharedRenderer);
+    m_renderer->SetRenderer(renderer);
+    engine->GiveRenderer(m_renderer);
     engine->WindowStart();
 
     Uint64 startTime = SDL_GetTicks64();
@@ -135,7 +135,7 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
     //system("pause");
 
     // Ensure the engine knows we no longer have a window
-    sharedRenderer->SetRenderer(nullptr);
+    m_renderer->SetRenderer(nullptr);
     engine->WindowTeardown();
 
     // Destroy the window. This will also destroy the surface
@@ -149,5 +149,5 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
     FreeConsole();
 #endif
 
-    return WindowExit::Close;
+    return WindowExit::Restart;
 }

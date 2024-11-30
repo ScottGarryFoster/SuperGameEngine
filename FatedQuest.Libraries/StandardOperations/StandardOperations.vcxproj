@@ -154,7 +154,7 @@
     <ClInclude Include="XMLDocument\RapidXMLDocument.h" />
     <ClInclude Include="XMLDocument\RapidXMLNode.h" />
     <ClInclude Include="XMLDocument\XMLAttribute.h" />
-    <ClInclude Include="XMLDocument\XMLDocument.h" />
+    <ClInclude Include="XMLDocument\SuperXMLDocument.h" />
     <ClInclude Include="XMLDocument\XMLNode.h" />
   </ItemGroup>
   <ItemGroup>
@@ -172,7 +172,7 @@
     <ClCompile Include="XMLDocument\RapidXMLDocument.cpp" />
     <ClCompile Include="XMLDocument\RapidXMLNode.cpp" />
     <ClCompile Include="XMLDocument\XMLAttribute.cpp" />
-    <ClCompile Include="XMLDocument\XMLDocument.cpp" />
+    <ClCompile Include="XMLDocument\SuperXMLDocument.cpp" />
     <ClCompile Include="XMLDocument\XMLNode.cpp" />
   </ItemGroup>
   <ItemGroup>

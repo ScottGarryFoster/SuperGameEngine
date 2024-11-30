@@ -10,7 +10,7 @@ SuperEnum::SuperEnum()
 
 bool SuperEnum::FromString(const std::string& superEnumFile)
 {
-    std::shared_ptr<XMLDocument> xml = std::make_shared<RapidXMLDocument>();
+    std::shared_ptr<SuperXMLDocument> xml = std::make_shared<RapidXMLDocument>();
     if (!xml->Load(superEnumFile))
     {
         // Could not parse.

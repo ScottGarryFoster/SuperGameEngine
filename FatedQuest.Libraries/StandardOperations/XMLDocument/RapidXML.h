@@ -12,7 +12,7 @@ using namespace rapidxml;
 namespace RapidXML
 {
     // Define some shorthand when refering to Rapid Types.
-    using XMLDocument = xml_document<>;
-    using XMLNode = xml_node<>;
-    using XMLAttribute = xml_attribute<>;
+    using XML_Document = xml_document<>;
+    using XML_Node = xml_node<>;
+    using XML_Attribute = xml_attribute<>;
 }

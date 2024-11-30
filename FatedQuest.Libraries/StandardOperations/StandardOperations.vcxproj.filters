@@ -51,7 +51,7 @@
     <ClInclude Include="FileHandling\File.h">
       <Filter>Header Files\FileHandling</Filter>
     </ClInclude>
-    <ClInclude Include="XMLDocument\XMLDocument.h">
+    <ClInclude Include="XMLDocument\SuperXMLDocument.h">
       <Filter>Header Files\XMLDocument</Filter>
     </ClInclude>
     <ClInclude Include="XMLDocument\XMLNode.h">
@@ -92,7 +92,7 @@
     <ClCompile Include="FileHandling\File.cpp">
       <Filter>Source Files\FileHandling</Filter>
     </ClCompile>
-    <ClCompile Include="XMLDocument\XMLDocument.cpp">
+    <ClCompile Include="XMLDocument\SuperXMLDocument.cpp">
       <Filter>Source Files\XMLDocument</Filter>
     </ClCompile>
     <ClCompile Include="XMLDocument\XMLNode.cpp">

@@ -2,7 +2,7 @@
 
 using namespace SuperGameEngine;
 
-SDL_Renderer* SuperGameEngine::SDLRendererReader::GetRenderer()
+SDL_Renderer* SDLRendererReader::GetRenderer()
 {
     return m_renderer;
 }

@@ -23,14 +23,14 @@ bool RapidXMLDocument::LoadFromFile(const std::string& path)
     std::string fileContents = File::ReadFileContents(path);
 
     bool didParse = false;
-    std::shared_ptr<RapidXML::XMLDocument> document = TryParseXMLDocument(fileContents, didParse);
+    std::shared_ptr<RapidXML::XML_Document> document = TryParseXMLDocument(fileContents, didParse);
     if (!didParse)
     {
         // Could not parse.
         return false;
     }
 
-    RapidXML::XMLNode* node = document->first_node();
+    RapidXML::XML_Node* node = document->first_node();
     if (node)
     {
         m_rootNode = ParseNode(node);
@@ -48,14 +48,14 @@ bool RapidXMLDocument::Load(const std::string& fileContents)
     std::string fileContentsMutable(fileContents);
 
     bool didParse = false;
-    std::shared_ptr<RapidXML::XMLDocument> document = TryParseXMLDocument(fileContentsMutable, didParse);
+    std::shared_ptr<RapidXML::XML_Document> document = TryParseXMLDocument(fileContentsMutable, didParse);
     if (!didParse)
     {
         // Could not parse.
         return false;
     }
 
-    RapidXML::XMLNode* node = document->first_node();
+    RapidXML::XML_Node* node = document->first_node();
     if (node)
     {
         m_rootNode = ParseNode(node);
@@ -69,9 +69,9 @@ std::shared_ptr<XMLNode> RapidXMLDocument::GetRoot()
     return m_rootNode;
 }
 
-std::shared_ptr<RapidXML::XMLDocument> RapidXMLDocument::TryParseXMLDocument(const std::string& xmlContents, bool& didParse)
+std::shared_ptr<RapidXML::XML_Document> RapidXMLDocument::TryParseXMLDocument(const std::string& xmlContents, bool& didParse)
 {
-    std::shared_ptr<RapidXML::XMLDocument> document = std::make_shared<RapidXML::XMLDocument>();
+    std::shared_ptr<RapidXML::XML_Document> document = std::make_shared<RapidXML::XML_Document>();
     didParse = false;
 
     try
@@ -86,7 +86,7 @@ std::shared_ptr<RapidXML::XMLDocument> RapidXMLDocument::TryParseXMLDocument(con
     return document;
 }
 
-std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* currentNode)
+std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XML_Node* currentNode)
 {
     std::shared_ptr<RapidXMLNode> parseNode = std::make_shared<RapidXMLNode>();
     std::string name = currentNode->name();
@@ -94,7 +94,7 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* cur
     parseNode->SetInner(currentNode->value());
 
     std::vector<std::shared_ptr<XMLAttribute>> attributesInNode;
-    for (RapidXML::XMLAttribute* child = currentNode->first_attribute(); child; child = child->next_attribute())
+    for (RapidXML::XML_Attribute* child = currentNode->first_attribute(); child; child = child->next_attribute())
     {
         std::string name(child->name());
         std::string value(child->value());
@@ -105,7 +105,7 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XMLNode* cur
     bool foundNode = false;
     std::shared_ptr<RapidXMLNode> firstChild;
     std::shared_ptr<RapidXMLNode> last;
-    for (RapidXML::XMLNode* child = currentNode->first_node(); child; child = child->next_sibling())
+    for (RapidXML::XML_Node* child = currentNode->first_node(); child; child = child->next_sibling())
     {
         std::shared_ptr<RapidXMLNode> current = ParseNode(child);
         if (foundNode)

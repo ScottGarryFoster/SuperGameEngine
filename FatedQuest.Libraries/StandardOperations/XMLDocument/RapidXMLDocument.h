@@ -1,14 +1,14 @@
 #pragma once
-#include "XMLDocument.h"
-#include "RapidXML.h"
+#include "SuperXMLDocument.h"
 #include "RapidXMLNode.h"
+#include "RapidXML.h"
 
 namespace FatedQuestLibraries
 {
     /// <summary>
     /// Parses document into XML via the Rapid Libraries.
     /// </summary>
-    class RapidXMLDocument : public XMLDocument
+    class RapidXMLDocument : public SuperXMLDocument
     {
     public:
         RapidXMLDocument();
@@ -43,7 +43,7 @@ namespace FatedQuestLibraries
         /// <param name="path">Path to parse. </param>
         /// <param name="didParse">Set during the parinsing. True means parsed. </param>
         /// <returns>XML Document parsed or empty. </returns>
-        std::shared_ptr<RapidXML::XMLDocument> TryParseXMLDocument(const std::string& xmlContents, bool& didParse);
+        std::shared_ptr<RapidXML::XML_Document> TryParseXMLDocument(const std::string& xmlContents, bool& didParse);
 
         /// <summary>
         /// Root node for the document.
@@ -55,7 +55,7 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="currentNode">Current stage of the node. </param>
         /// <returns>The top level version of the given node. </returns>
-        std::shared_ptr<RapidXMLNode> ParseNode(RapidXML::XMLNode* currentNode);
+        std::shared_ptr<RapidXMLNode> ParseNode(RapidXML::XML_Node* currentNode);
     };
 }
 

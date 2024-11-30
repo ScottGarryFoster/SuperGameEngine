@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include <memory>
 #include "WindowExit.h"
+#include "../Engine/Graphics/Texture/SDLRenderer.h"
 
 namespace SuperGameEngine
 {
@@ -27,5 +28,12 @@ namespace SuperGameEngine
         /// Creates the SDL Window loop.
         /// </summary>
         WindowExit RunSDLWindow(std::shared_ptr<Engine> engine);
+
+        /// <summary>
+        /// The renderer for the current window.
+        /// This will flip flop and change with windows but is the
+        /// active window.
+        /// </summary>
+        std::shared_ptr<SDLRenderer> m_renderer;
     };
 }
