@@ -13,6 +13,15 @@ Texture::Texture(std::shared_ptr<SDLRendererReader> renderer)
 
 Texture::~Texture()
 {
+    // Create texture
+    // Keep in mind that texture here should only be trusted as long as the
+    // renderer exists however we only render anyway with an active renderer
+    // so this should not be an issue.
+    if (m_texture != nullptr)
+    {
+        SDL_DestroyTexture(m_texture);
+        m_texture = nullptr;
+    }
 }
 
 bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors)
