@@ -7,14 +7,14 @@ void MainEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 
 }
 
-bool MainEngine::Event(SDL_Event event)
+ApplicationOperationState MainEngine::Event(SDL_Event event)
 {
-    return true;
+    return ApplicationOperationState::Running;
 }
 
-bool MainEngine::Update(Uint64 ticks)
+ApplicationOperationState MainEngine::Update(Uint64 ticks)
 {
-    return true;
+    return ApplicationOperationState::Running;
 }
 
 void MainEngine::Draw()

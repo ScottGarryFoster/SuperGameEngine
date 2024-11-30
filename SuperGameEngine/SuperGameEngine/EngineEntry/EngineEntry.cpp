@@ -13,8 +13,8 @@ using namespace SuperGameEngine;
 int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 {
     m_renderer = std::make_shared<SDLRenderer>();
-    WindowExit windowState = WindowExit::Restart;
-    while (windowState != WindowExit::Close)
+    ApplicationOperationState windowState = ApplicationOperationState::Restart;
+    while (windowState != ApplicationOperationState::Close)
     {
         windowState = RunSDLWindow(engine);
     }
@@ -22,7 +22,7 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     return 0;
 }
 
-WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
+ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
 {
     // Pointers to our window and surface
     SDL_Surface* winSurface = NULL;
@@ -36,7 +36,7 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
         system("pause");
 #endif
 
-        return WindowExit::Close;
+        return ApplicationOperationState::Close;
     }
 
     // Set SDL hint to enable VSync
@@ -58,7 +58,7 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
         system("pause");
 #endif
         
-        return WindowExit::Close;
+        return ApplicationOperationState::Close;
     }
 
     // Create a renderer
@@ -72,12 +72,8 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
         SDL_DestroyWindow(window);
         SDL_Quit();
 
-        return WindowExit::Close;
+        return ApplicationOperationState::Close;
     }
-
-
-    // Main loop flag
-    bool quit = false;
 
     // Event handler
     SDL_Event e;
@@ -90,14 +86,18 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
     Uint64 startTime = SDL_GetTicks64();
 
     // Main loop
-    while (!quit)
+    ApplicationOperationState operationState = ApplicationOperationState::Running;
+    while (operationState == ApplicationOperationState::Running)
     {
+        ApplicationOperationState eventAnswer = ApplicationOperationState::Running;
+
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
-            if (!engine->Event(e))
+            eventAnswer = engine->Event(e);
+            if (eventAnswer != ApplicationOperationState::Running)
             {
-                quit = true;
+                operationState = eventAnswer;
             }
 
             if (e.type == SDL_QUIT)
@@ -105,7 +105,7 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
 #ifdef _DEBUG
                 std::cout << "SDL Quit" << std::endl;
 #endif
-                quit = true;
+                operationState = ApplicationOperationState::Close;
             }
         }
 
@@ -113,10 +113,25 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
         Uint64 ticksThisFrame = currentTime - startTime;
         startTime = currentTime;
 
-        if (!engine->Update(ticksThisFrame))
+        ApplicationOperationState updateAnswer = engine->Update(ticksThisFrame);
+        if (updateAnswer != ApplicationOperationState::Running)
         {
-            quit = true;
+            operationState = updateAnswer;
         }
+
+        // Unlikely to occur but in the situation the event and update loop
+        // try to override one another we should log this, incase we get a bug
+        // here.
+#ifdef _DEBUG
+        if (eventAnswer != ApplicationOperationState::Running &&
+            updateAnswer != ApplicationOperationState::Running &&
+            eventAnswer != updateAnswer)
+        {
+            std::cout << "The event update and the update loop are both trying to affect the application state but do not agree on what to do." << std::endl;
+            std::cout << "Event State: " << EApplicationOperationState::ToString(eventAnswer) << ". ";
+            std::cout << "Update State: " << EApplicationOperationState::ToString(updateAnswer) << "." << std::endl;
+        }
+#endif
 
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
@@ -149,5 +164,5 @@ WindowExit SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> en
     FreeConsole();
 #endif
 
-    return WindowExit::Restart;
+    return operationState;
 }

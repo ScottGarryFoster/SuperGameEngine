@@ -140,7 +140,7 @@
     <ClInclude Include="DebugEngine\DebugEngine.h" />
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
-    <ClInclude Include="EngineEntry\WindowExit.h" />
+    <ClInclude Include="EngineEntry\ApplicationOperationState.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRendererState.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h" />

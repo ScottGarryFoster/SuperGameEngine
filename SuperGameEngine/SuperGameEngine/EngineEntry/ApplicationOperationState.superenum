@@ -1,0 +1,27 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        The state the application is currently in or should change to.
+    </EnumComment>
+    <EnumName Name="ApplicationOperationState">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Running>
+            The application is currently running.
+            If this is returned as a state, ensure the application continues to run.
+        </Running>
+        <Close>
+            The application is currently closing.
+            If this is returned as a state, close the application at the next opertunity.
+        </Close>
+        <Restart>
+            The application is currently restarting.
+            If this is returned as a state, restart the application at the next opertunity.
+        </Restart>
+    </EnumName>
+</SuperEnum>

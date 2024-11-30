@@ -80,7 +80,7 @@
     <ClInclude Include="DebugEngine\DebugEngine.h">
       <Filter>Header Files\DebugEngine</Filter>
     </ClInclude>
-    <ClInclude Include="EngineEntry\WindowExit.h">
+    <ClInclude Include="EngineEntry\ApplicationOperationState.h">
       <Filter>Header Files\EngineEntry</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Graphics\Texture\Texture.h">

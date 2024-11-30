@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine.h"
 #include <memory>
-#include "WindowExit.h"
+#include "ApplicationOperationState.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 
 namespace SuperGameEngine
@@ -27,7 +27,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Creates the SDL Window loop.
         /// </summary>
-        WindowExit RunSDLWindow(std::shared_ptr<Engine> engine);
+        ApplicationOperationState RunSDLWindow(std::shared_ptr<Engine> engine);
 
         /// <summary>
         /// The renderer for the current window.

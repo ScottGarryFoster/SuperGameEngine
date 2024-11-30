@@ -30,10 +30,11 @@ namespace SuperEngineDebug
         /// </summary>
         /// <param name="event">Current event. </param>
         /// <returns>
-        /// True means keep running the application.
-        /// False will quit the application.
+        /// ApplicationOperationState::Running will keep the window running.
+        /// ApplicationOperationState::Restart will restart the window at the next opertunity.
+        /// ApplicationOperationState::Close will close the game window at the next opertunity.
         /// </returns>
-        virtual bool Event(SDL_Event event);
+        virtual ApplicationOperationState Event(SDL_Event event);
 
         /// <summary>
         /// Update the application each frame.
@@ -41,10 +42,11 @@ namespace SuperEngineDebug
         /// </summary>
         /// <param name="ticks">Ticks between this frame and the last. </param>
         /// <returns>
-        /// True means keep running the application.
-        /// False will quit the application.
+        /// ApplicationOperationState::Running will keep the window running.
+        /// ApplicationOperationState::Restart will restart the window at the next opertunity.
+        /// ApplicationOperationState::Close will close the game window at the next opertunity.
         /// </returns>
-        virtual bool Update(Uint64 ticks);
+        virtual ApplicationOperationState Update(Uint64 ticks);
 
         /// <summary>
         /// Draw to the screen.

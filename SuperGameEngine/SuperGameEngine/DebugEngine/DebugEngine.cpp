@@ -8,12 +8,12 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
 }
 
-bool DebugEngine::Event(SDL_Event event)
+ApplicationOperationState DebugEngine::Event(SDL_Event event)
 {
-    return true;
+    return ApplicationOperationState::Running;
 }
 
-bool DebugEngine::Update(Uint64 ticks)
+ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (!m_haveLoaded)
     {
@@ -31,11 +31,11 @@ bool DebugEngine::Update(Uint64 ticks)
         m_haveRestartedWindow = true;
         curr = 0;
         std::cout << "Restart" << std::endl;
-        return false;
+        return ApplicationOperationState::Restart;
     }
 
 
-    return true;
+    return ApplicationOperationState::Running;
 }
 
 void DebugEngine::Draw()

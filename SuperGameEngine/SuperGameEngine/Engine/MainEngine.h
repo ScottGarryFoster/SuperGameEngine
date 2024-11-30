@@ -29,7 +29,7 @@ namespace SuperGameEngine
         /// True means keep running the application.
         /// False will quit the application.
         /// </returns>
-        virtual bool Event(SDL_Event event);
+        virtual ApplicationOperationState Event(SDL_Event event);
 
         /// <summary>
         /// Update the application each frame.
@@ -40,7 +40,7 @@ namespace SuperGameEngine
         /// True means keep running the application.
         /// False will quit the application.
         /// </returns>
-        virtual bool Update(Uint64 ticks);
+        virtual ApplicationOperationState Update(Uint64 ticks);
 
         /// <summary>
         /// Draw to the screen.
