@@ -44,15 +44,18 @@ namespace SuperEnumGenerator
             int SetValue = 0;
             int ImpliedValue = 0;
 
-            bool OverrideAsMin = false;
-            bool OverrideAsMax = false;
-
             std::string Comment = "";
 
             /// <summary>
             /// Hides from Array and Vector methods.
             /// </summary>
             bool HideFromLists = false;
+
+            /// <summary>
+            /// If true this will be used as the unknown value
+            /// when a string cannot be parsed.
+            /// </summary>
+            bool IsUnknownValue = false;
         };
 
         /// <summary>
@@ -71,9 +74,17 @@ namespace SuperEnumGenerator
         ParsedString m_enumName;
 
         /// <summary>
+        /// Header to the file.
+        /// Should occur at the very top.
+        /// </summary>
+        ParsedString m_header;
+
+        /// <summary>
         /// All the enum values.
         /// </summary>
         std::vector<std::shared_ptr<EnumValueString>> m_enumValues;
+
+        bool ParseHeader(std::shared_ptr<XMLNode> headerNode);
 
         bool ParseNamespace(std::shared_ptr<XMLNode> namespaceNode);
 
@@ -86,10 +97,16 @@ namespace SuperEnumGenerator
         std::string PrintDateTime();
         std::string PrintIndents(int number);
 
+        std::string PrintHeader(int indents);
         std::string PrintEnum(int indents);
         std::string PrintEnumHelper(int indents);
+        std::string PrintToArray(int indents);
+        std::string PrintToVector(int indents);
+        std::string PrintToString(int indents);
+        std::string PrintFromString(int indents);
         std::string GetMinEnumValue();
         std::string GetMaxEnumValue();
+        std::string GetUnknownValue();
 
         std::string PrintSingleComment(const std::string& rawComment, int indents);
     };
