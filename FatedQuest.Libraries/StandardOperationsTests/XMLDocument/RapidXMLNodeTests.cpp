@@ -9,7 +9,7 @@ namespace FatedQuestLibraries_StandardOperations_XMLDocument
     class RapidXMLNodeTests : public ::testing::Test
     {
     public:
-        std::shared_ptr<XMLDocument> m_testClass;
+        std::shared_ptr<SuperXMLDocument> m_testClass;
 
         RapidXMLNodeTests()
         {
