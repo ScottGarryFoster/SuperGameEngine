@@ -145,6 +145,8 @@
     <ClInclude Include="EngineEntry\ApplicationOperationState.h" />
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
+    <ClInclude Include="Engine\Content\SuperTextureManager.h" />
+    <ClInclude Include="Engine\Content\TextureManager.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRendererState.h" />
@@ -163,6 +165,7 @@
     <ClCompile Include="DebugEngine\DebugEngine.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineEntry\EngineEntry.cpp" />
+    <ClCompile Include="Engine\Content\SuperTextureManager.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SuperTexture.cpp" />

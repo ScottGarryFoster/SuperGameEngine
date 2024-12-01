@@ -12,7 +12,7 @@ namespace SuperGameEngine
     class SuperTextureWrapper : public SuperTexture
     {
     public:
-        SuperTextureWrapper(std::shared_ptr<Texture> texture);
+        SuperTextureWrapper(const std::shared_ptr<Texture>& texture);
         virtual ~SuperTextureWrapper();
 
         /// <summary>

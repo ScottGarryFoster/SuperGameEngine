@@ -15,7 +15,7 @@ namespace SuperGameEngine
     class Texture
     {
     public:
-        Texture(std::shared_ptr<SDLRendererReader> renderer);
+        Texture(const std::shared_ptr<SDLRendererReader>& renderer);
         virtual ~Texture();
 
         /// <summary>
@@ -68,6 +68,12 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>The filepath of the texture loaded. </returns>
         [[nodiscard]] std::string GetLoadedFilePath() const;
+
+        /// <summary>
+         /// Get the size of the Texture in Pixels.
+         /// </summary>
+         /// <returns>Returns the size of the Texture. </returns>
+        FPoint Size() const;
 
         /// <summary>
         /// Remakes the texture if possible.

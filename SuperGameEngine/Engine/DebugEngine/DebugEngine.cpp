@@ -6,6 +6,14 @@ using namespace SuperGameEngine;
 void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 {
     m_renderer = renderer;
+    if (!m_textureManager)
+    {
+        m_textureManager = std::make_unique<SuperTextureManager>(renderer);
+    }
+    else
+    {
+        // TODO: Create a way to update the Renderer.
+    }
 }
 
 ApplicationOperationState DebugEngine::Event(SDL_Event event)
@@ -17,9 +25,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (!m_haveLoaded)
     {
-        m_texture = std::make_shared<Texture>(m_renderer);
-        std::vector<std::string> errors;
-        m_texture->LoadImageFromFile(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)", errors);
+        m_supertexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
         m_haveLoaded = true;
 
         curr = ticks;
@@ -40,7 +46,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 
 void DebugEngine::Draw()
 {
-    m_texture->Draw();
+    m_supertexture->Draw();
 }
 
 void DebugEngine::WindowStart()
@@ -48,12 +54,7 @@ void DebugEngine::WindowStart()
     if (m_haveLoaded)
     {
         std::vector<std::string> errors;
-        m_texture->Remake(errors);
-    }
-    else
-    {
-        originalTime = std::time(nullptr);
-
+        m_textureManager->RemakeAllTextures(errors);
     }
 }
 

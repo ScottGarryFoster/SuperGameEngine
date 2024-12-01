@@ -61,6 +61,12 @@
     <Filter Include="Header Files\Structural\Spatial\Area">
       <UniqueIdentifier>{b9a8fef2-71f4-4bef-ba29-5f341cb73d3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Content">
+      <UniqueIdentifier>{35c0ea69-c9b4-4068-b169-75c351b2f4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Content">
+      <UniqueIdentifier>{b01b67d7-471e-45f9-85b5-372099ec9df8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -114,6 +120,12 @@
     <ClInclude Include="FatedQuestReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Content\TextureManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\SuperTextureManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -154,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="Engine\MainEngine.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\SuperTextureManager.cpp">
+      <Filter>Source Files\Engine\Content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

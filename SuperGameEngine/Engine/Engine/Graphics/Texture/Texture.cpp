@@ -6,7 +6,7 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
-Texture::Texture(std::shared_ptr<SDLRendererReader> renderer)
+Texture::Texture(const std::shared_ptr<SDLRendererReader>& renderer)
 {
     m_sdlRenderer = renderer;
     m_texture = nullptr;
@@ -106,18 +106,14 @@ void Texture::Draw() const
         return;
     }
 
-    int textureWidth, textureHeight;
-    SDL_QueryTexture(m_texture, NULL, NULL, &textureWidth, &textureHeight);
-
     // Render texture
-    SDL_Rect* rect = new SDL_Rect();
-    rect->x = 0;
-    rect->y = 0;
-    rect->w = textureWidth;
-    rect->h = textureHeight;
+    m_screenRect->x = 0;
+    m_screenRect->y = 0;
+    m_screenRect->w = m_textureSize->GetX();
+    m_screenRect->h = m_textureSize->GetY();
 
     double rotation = 0;
-    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, NULL, rect, rotation, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, NULL, m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
 }
 
 void Texture::Draw(const FPoint& location) const

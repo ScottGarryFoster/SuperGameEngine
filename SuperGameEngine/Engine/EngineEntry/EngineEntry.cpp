@@ -25,7 +25,6 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
 {
     // Pointers to our window and surface
-    SDL_Surface* winSurface = NULL;
     SDL_Window* window = NULL;
 
     // Initialize SDL. SDL_Init will return -1 if it fails.
@@ -150,6 +149,7 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
     //system("pause");
 
     // Ensure the engine knows we no longer have a window
+    SDL_DestroyRenderer(m_renderer->GetRenderer());
     m_renderer->SetRenderer(nullptr);
     engine->WindowTeardown();
 

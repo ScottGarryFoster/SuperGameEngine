@@ -3,17 +3,20 @@
 #include <memory>
 #include "../EngineEntry/Engine.h"
 #include "../Engine/Graphics/Texture/SDLRendererReader.h"
-#include "../Engine/Graphics/Texture/Texture.h"
+#include "../Engine/Content/SuperTextureManager.h"
 
 using namespace SuperGameEngine;
 
+
 namespace SuperEngineDebug
 {
+
     /// <summary>
-    /// An engine just for debuging. It is independant from other engines.
+    /// An engine just for debugging. It is independent from other engines.
     /// </summary>
     class DebugEngine : public Engine
     {
+    public:
         /// <summary>
         /// Gives the engine a renderer.
         /// This can be called multiple times whilst the application is open
@@ -23,7 +26,7 @@ namespace SuperEngineDebug
         /// is recreated on this new renderer.
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
-        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer);
+        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
 
         /// <summary>
         /// Handle the current event.
@@ -34,7 +37,7 @@ namespace SuperEngineDebug
         /// ApplicationOperationState::Restart will restart the window at the next opertunity.
         /// ApplicationOperationState::Close will close the game window at the next opertunity.
         /// </returns>
-        virtual ApplicationOperationState Event(SDL_Event event);
+        virtual ApplicationOperationState Event(SDL_Event event) override;
 
         /// <summary>
         /// Update the application each frame.
@@ -43,36 +46,38 @@ namespace SuperEngineDebug
         /// <param name="ticks">Ticks between this frame and the last. </param>
         /// <returns>
         /// ApplicationOperationState::Running will keep the window running.
-        /// ApplicationOperationState::Restart will restart the window at the next opertunity.
-        /// ApplicationOperationState::Close will close the game window at the next opertunity.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
         /// </returns>
-        virtual ApplicationOperationState Update(Uint64 ticks);
+        virtual ApplicationOperationState Update(Uint64 ticks) override;
 
         /// <summary>
         /// Draw to the screen.
         /// </summary>
-        virtual void Draw();
+        virtual void Draw() override;
 
 
         /// <summary>
         /// Called as the window starts.
         /// </summary>
-        virtual void WindowStart();
+        virtual void WindowStart() override;
 
         /// <summary>
         /// Called when the window is torndown.
         /// </summary>
-        virtual void WindowTeardown();
+        virtual void WindowTeardown() override;
 
     private:
+        /// <summary>
+        /// Creates, stores and manages all textures in the engine.
+        /// </summary>
+        std::unique_ptr<SuperTextureManager> m_textureManager;
 
         bool m_haveLoaded = false;
         bool m_haveRestartedWindow = false;
 
-        std::shared_ptr<Texture> m_texture;
+        std::shared_ptr<SuperTexture> m_superTexture;
         std::shared_ptr<SDLRendererReader> m_renderer;
-
-        std::time_t originalTime;
 
         Uint64 t;
         Uint64 curr;
