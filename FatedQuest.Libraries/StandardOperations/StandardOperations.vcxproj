@@ -163,6 +163,8 @@
   <ItemGroup>
     <ClCompile Include="FileHandling\Directory.cpp" />
     <ClCompile Include="FileHandling\File.cpp" />
+    <ClCompile Include="Number\FloatingPointHelpers.cpp" />
+    <ClCompile Include="Number\IntHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -178,11 +180,6 @@
     <ClCompile Include="XMLDocument\XMLAttribute.cpp" />
     <ClCompile Include="XMLDocument\SuperXMLDocument.cpp" />
     <ClCompile Include="XMLDocument\XMLNode.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StandardObjects\StandardObjects.vcxproj">
-      <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

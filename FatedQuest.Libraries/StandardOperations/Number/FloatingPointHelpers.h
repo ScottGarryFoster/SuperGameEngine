@@ -14,7 +14,7 @@ namespace FatedQuestLibraries
         /// 1.000001f == 1 = true but 1.00001f == 1 = false.
         /// </summary>
         /// <returns>True means are equal. </return>
-        inline static bool AreEqual(float left, float right);
+        static bool AreEqual(float left, float right);
 
         /// <summary>
         /// Returns true if two double are approximately equal.
@@ -22,6 +22,6 @@ namespace FatedQuestLibraries
         /// 1.000001f == 1 = true but 1.00001f == 1 = false.
         /// </summary>
         /// <returns>True means are equal. </return>
-        inline static bool AreEqual(double left, double right);
+        static bool AreEqual(double left, double right);
     };
 }

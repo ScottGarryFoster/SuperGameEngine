@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Position">
+      <UniqueIdentifier>{125f88a5-4213-4db3-b298-8e841e04e745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Position">
+      <UniqueIdentifier>{8d040e81-a166-479b-81cd-75a5e7e13a33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,6 +30,12 @@
     <ClInclude Include="AllReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Position\FPoint.h">
+      <Filter>Header Files\Position</Filter>
+    </ClInclude>
+    <ClInclude Include="Position\FVector2D.h">
+      <Filter>Header Files\Position</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StandardObjects.cpp">
@@ -32,5 +44,14 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Position\FPoint.cpp">
+      <Filter>Source Files\Position</Filter>
+    </ClCompile>
+    <ClCompile Include="Position\FVector2D.cpp">
+      <Filter>Source Files\Position</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

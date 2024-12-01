@@ -88,10 +88,10 @@
       <Filter>Header Files\Text</Filter>
     </ClInclude>
     <ClInclude Include="Number\FloatingPointHelpers.h">
-      <Filter>Source Files\Number</Filter>
+      <Filter>Header Files\Number</Filter>
     </ClInclude>
     <ClInclude Include="Number\IntHelpers.h">
-      <Filter>Source Files\Number</Filter>
+      <Filter>Header Files\Number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="Text\StringHelpers.cpp">
       <Filter>Source Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Number\FloatingPointHelpers.cpp">
+      <Filter>Source Files\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="Number\IntHelpers.cpp">
+      <Filter>Source Files\Number</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

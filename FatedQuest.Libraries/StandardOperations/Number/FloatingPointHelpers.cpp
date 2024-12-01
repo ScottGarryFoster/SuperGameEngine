@@ -3,7 +3,7 @@
 
 using namespace FatedQuestLibraries;
 
-inline bool FloatingPointHelpers::AreEqual(float left, float right)
+bool FloatingPointHelpers::AreEqual(float left, float right)
 {
     // The places to be accurate within.
     float epsilon = 0.00001f;
@@ -11,7 +11,7 @@ inline bool FloatingPointHelpers::AreEqual(float left, float right)
     return std::abs(left - right) < epsilon;
 }
 
-inline bool FloatingPointHelpers::AreEqual(double left, double right)
+bool FloatingPointHelpers::AreEqual(double left, double right)
 {
     // The places to be accurate within.
     double epsilon = 0.00001;

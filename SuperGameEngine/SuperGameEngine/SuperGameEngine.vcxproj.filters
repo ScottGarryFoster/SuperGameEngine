@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Engine\Graphics\Texture">
       <UniqueIdentifier>{7c36127e-bac3-4c15-9315-733bba5b8253}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Structural">
+      <UniqueIdentifier>{a0552830-085c-4d0a-bcbf-77cf1b013ab4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Spatial">
+      <UniqueIdentifier>{dfd8aae0-b43d-46ec-9768-04fb023e6922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural">
+      <UniqueIdentifier>{a0330dfd-27a3-423c-98f0-7dffe467a690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Spatial">
+      <UniqueIdentifier>{2ea5c298-246e-4203-8644-5301f9006443}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Graphics\Texture\SuperTextureWrapper.cpp">
       <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\RectangleInt.cpp">
+      <Filter>Source Files\Structural\Spatial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Graphics\Texture\SuperTextureWrapper.h">
       <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\RectangleInt.h">
+      <Filter>Header Files\Structural\Spatial</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

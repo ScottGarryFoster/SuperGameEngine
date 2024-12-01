@@ -137,6 +137,7 @@
     <ClCompile Include="Engine\Graphics\Texture\Texture.cpp" />
     <ClCompile Include="Engine\MainEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Structural\Spatial\RectangleInt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugEngine\DebugEngine.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Engine\Graphics\Texture\Texture.h" />
     <ClInclude Include="Engine\MainEngine.h" />
     <ClInclude Include="FatedQuestReferences.h" />
+    <ClInclude Include="Structural\Spatial\RectangleInt.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
