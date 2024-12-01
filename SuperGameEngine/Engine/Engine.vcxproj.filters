@@ -114,9 +114,6 @@
     <ClInclude Include="FatedQuestReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Structural\TestClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -157,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="Engine\MainEngine.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Structural\TestClass.cpp">
-      <Filter>Source Files\Structural</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

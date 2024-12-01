@@ -1,6 +1,7 @@
 #include "Texture.h"
 #include "../../../FatedQuestReferences.h"
 #include <string>
+#include <SDL_image.h>
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -9,6 +10,9 @@ Texture::Texture(std::shared_ptr<SDLRendererReader> renderer)
 {
     m_sdlRenderer = renderer;
     m_texture = nullptr;
+    m_textureSize = std::make_shared<FPoint>();
+    m_screenRect = std::make_shared <SDL_Rect>();
+    m_textureRect = std::make_shared <SDL_Rect>();
 }
 
 Texture::~Texture()
@@ -78,6 +82,8 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
     // TODO: Implement this: UpdateTextureMetaData(m_texture);
 
     m_filePath = filePath;
+    UpdateTextureMetaData(m_texture);
+
     return true;
 }
 
@@ -114,12 +120,83 @@ void Texture::Draw() const
     SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, NULL, rect, rotation, NULL, SDL_FLIP_NONE);
 }
 
-std::string SuperGameEngine::Texture::GetLoadedFilePath()
+void Texture::Draw(const FPoint& location) const
+{
+    Draw(location, *m_textureSize);
+}
+
+void Texture::Draw(const FPoint& location, const FPoint& size) const
+{
+    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    {
+        // TODO: ADD Logger for this error.
+        return;
+    }
+
+    if (!m_texture)
+    {
+        // TODO: ADD Logger for this error.
+        return;
+    }
+
+    // Screen Texture
+    m_screenRect->x = location.GetX();
+    m_screenRect->y = location.GetY();
+    m_screenRect->w = size.GetX();
+    m_screenRect->h = size.GetY();
+
+    double rotation = 0;
+    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, NULL, m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+}
+
+void Texture::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
+{
+    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    {
+        // TODO: ADD Logger for this error.
+        return;
+    }
+
+    if (!m_texture)
+    {
+        // TODO: ADD Logger for this error.
+        return;
+    }
+
+    // Screen Texture
+    m_screenRect->x = screenRectangle.GetLeft();
+    m_screenRect->y = screenRectangle.GetTop();
+    m_screenRect->w = screenRectangle.GetWidth();
+    m_screenRect->h = screenRectangle.GetHeight();
+
+    // Texture Area
+    m_textureRect->x = textureRectangle.GetLeft();
+    m_textureRect->y = textureRectangle.GetTop();
+    m_textureRect->w = textureRectangle.GetWidth();
+    m_textureRect->h = textureRectangle.GetHeight();
+
+    double rotation = 0;
+    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, m_textureRect.get(), m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+}
+
+std::string SuperGameEngine::Texture::GetLoadedFilePath() const
 {
     return m_filePath;
 }
 
-bool SuperGameEngine::Texture::Remake(std::vector<std::string>& errors)
+FPoint Texture::Size() const
+{
+    return *m_textureSize;
+}
+
+bool Texture::Remake(std::vector<std::string>& errors)
 {
     return LoadImageFromFile(m_filePath, errors);
+}
+
+void Texture::UpdateTextureMetaData(SDL_Texture* texture) const
+{
+    int textureWidth, textureHeight;
+    SDL_QueryTexture(texture, NULL, NULL, &textureWidth, &textureHeight);
+    m_textureSize->SetXYValue(textureWidth, textureHeight);
 }

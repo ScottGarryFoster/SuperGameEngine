@@ -158,7 +158,6 @@
     <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h" />
-    <ClInclude Include="Structural\TestClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DebugEngine\DebugEngine.cpp" />
@@ -179,7 +178,6 @@
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />
-    <ClCompile Include="Structural\TestClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

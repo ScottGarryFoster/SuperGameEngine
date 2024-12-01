@@ -1,9 +1,11 @@
 #pragma once
 #include <SDL.h>
-#include <SDL_image.h>
 #include <memory>
 #include "SDLRendererReader.h"
+#include "../../../FatedQuestReferences.h"
+#include "../../../Structural/Spatial/Area/RectangleInt.h"
 
+using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
@@ -42,16 +44,36 @@ namespace SuperGameEngine
         void Draw() const;
 
         /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        void Draw(const FPoint& location) const;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        void Draw(const FPoint& location, const FPoint& size) const;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const;
+
+        /// <summary>
         /// Get the Filepath of the loaded texture.
         /// </summary>
         /// <returns>The filepath of the texture loaded. </returns>
-        std::string GetLoadedFilePath();
+        [[nodiscard]] std::string GetLoadedFilePath() const;
 
         /// <summary>
-        /// Remakes the texture if posible.
+        /// Remakes the texture if possible.
         /// Used when the window has just been torn apart and is now new,
         /// or if the filepath now have new data within it.
-        /// Will remake in the same way it was last scuessfully attempted.
+        /// Will remake in the same way it was last successfully attempted.
         /// </summary>
         bool Remake(std::vector<std::string>& errors);
 
@@ -72,5 +94,29 @@ namespace SuperGameEngine
         /// File path of the texture loaded.
         /// </summary>
         std::string m_filePath;
+
+        /// <summary>
+        /// The size of the Texture.
+        /// </summary>
+        std::shared_ptr<FPoint> m_textureSize;
+
+        /// <summary>
+        /// Reused draw screen rect location.
+        /// Kept on the heap to reduce size.
+        /// Might move dependent on performance.
+        /// </summary>
+        std::shared_ptr<SDL_Rect> m_screenRect;
+
+        /// <summary>
+        /// Reused texture rect.
+        /// Used for the area to draw on the texture.
+        /// </summary>
+        std::shared_ptr<SDL_Rect> m_textureRect;
+
+        /// <summary>
+        /// Extracts the metadata from the texture.
+        /// </summary>
+        /// <param name="texture">Texture to extract metadata. </param>
+        void UpdateTextureMetaData(SDL_Texture* texture) const;
     };
 }
