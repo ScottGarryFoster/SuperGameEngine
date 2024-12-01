@@ -25,7 +25,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (!m_haveLoaded)
     {
-        m_supertexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
+        m_superTexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
         m_haveLoaded = true;
 
         curr = ticks;
@@ -46,7 +46,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 
 void DebugEngine::Draw()
 {
-    m_supertexture->Draw();
+    m_superTexture->Draw();
 }
 
 void DebugEngine::WindowStart()
