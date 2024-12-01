@@ -6,7 +6,7 @@
 
 using namespace FatedQuestLibraries;
 
-namespace StandardCLibraryTests_Structural
+namespace FatedQuestLibraries_StandardObjects_Position
 {
     class FVector2DTests : public ::testing::Test
     {
@@ -78,7 +78,7 @@ namespace StandardCLibraryTests_Structural
     {
         float givenX = 57;
         float givenY = 20;
-        FPoint givenVector = FPoint(givenX, givenY);
+        FPoint givenVector = FPoint(static_cast<int>(givenX), static_cast<int>(givenY));
 
         FVector2D testCase = FVector2D(givenVector);
 

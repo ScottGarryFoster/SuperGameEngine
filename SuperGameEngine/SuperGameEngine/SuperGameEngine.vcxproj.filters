@@ -87,6 +87,12 @@
     <ClCompile Include="Structural\Spatial\RectangleInt.cpp">
       <Filter>Source Files\Structural\Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Spatial\Rectangle.cpp">
+      <Filter>Source Files\Structural\Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Circle.cpp">
+      <Filter>Source Files\Structural\Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineEntry\EngineEntry.h">
@@ -126,6 +132,12 @@
       <Filter>Header Files\Engine\Graphics\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Structural\Spatial\RectangleInt.h">
+      <Filter>Header Files\Structural\Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Rectangle.h">
+      <Filter>Header Files\Structural\Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Circle.h">
       <Filter>Header Files\Structural\Spatial</Filter>
     </ClInclude>
   </ItemGroup>
