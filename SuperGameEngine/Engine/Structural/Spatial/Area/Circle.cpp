@@ -78,13 +78,13 @@ bool Circle::Overlaps(const Rectangle& other) const
     float closestX = myLocation.GetX();
     float closestY = myLocation.GetY();
 
-    float myX = myLocation.GetX();
-    float left = other.GetLeft();
-    float right = other.GetRight();
+    const float myX = myLocation.GetX();
+    const float left = other.GetLeft();
+    const float right = other.GetRight();
 
-    float myY = myLocation.GetY();
-    float top = other.GetTop();
-    float bottom = other.GetBottom();
+    const float myY = myLocation.GetY();
+    const float top = other.GetTop();
+    const float bottom = other.GetBottom();
 
     if (myX < left)
     {

@@ -1913,7 +1913,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
 
@@ -1923,10 +1923,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(7, 1);
         FPoint expectedOverlap = FPoint(4, 1);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
-        ASSERT_EQ(1, actual.GetX()) << "Least resitance setup was not correct.";
-        ASSERT_NE(expectedOverlap.GetX(), actual.GetX()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetX()) << "Least resistance setup was not correct.";
+        ASSERT_NE(expectedOverlap.GetX(), actual.GetX()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
@@ -1943,7 +1943,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
         // We are giving a position to the left so it should move 1 to the left.
@@ -1954,10 +1954,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(-7, 1);
         FPoint expectedOverlap = FPoint(1, 1);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
-        ASSERT_EQ(1, actual.GetX()) << "Least resitance setup was not correct.";
-        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetX()) << "Least resistance setup was not correct.";
+        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
@@ -1974,7 +1974,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
 
@@ -1984,10 +1984,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(1, 7);
         FPoint expectedOverlap = FPoint(1, 4);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
-        ASSERT_EQ(1, actual.GetY()) << "Least resitance setup was not correct.";
-        ASSERT_NE(expectedOverlap.GetY(), actual.GetY()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetY()) << "Least resistance setup was not correct.";
+        ASSERT_NE(expectedOverlap.GetY(), actual.GetY()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
@@ -2004,7 +2004,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
         // We are giving a position to the left so it should move 1 to the left.
@@ -2015,10 +2015,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(1, -7);
         FPoint expectedOverlap = FPoint(1, 1);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle);
-        ASSERT_EQ(1, actual.GetY()) << "Least resitance setup was not correct.";
-        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetY()) << "Least resistance setup was not correct.";
+        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangle, givenLocation);
@@ -2037,7 +2037,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
 
@@ -2047,10 +2047,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(7, 1);
         FPoint expectedOverlap = FPoint(4, 1);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal);
-        ASSERT_EQ(1, actual.GetX()) << "Least resitance setup was not correct.";
-        ASSERT_NE(expectedOverlap.GetX(), actual.GetX()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetX()) << "Least resistance setup was not correct.";
+        ASSERT_NE(expectedOverlap.GetX(), actual.GetX()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal, givenLocation);
@@ -2067,7 +2067,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
         // We are giving a position to the left so it should move 1 to the left.
@@ -2078,10 +2078,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(-7, 1);
         FPoint expectedOverlap = FPoint(1, 1);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal);
-        ASSERT_EQ(1, actual.GetX()) << "Least resitance setup was not correct.";
-        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetX()) << "Least resistance setup was not correct.";
+        ASSERT_EQ(expectedOverlap.GetX(), actual.GetX()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal, givenLocation);
@@ -2098,7 +2098,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
 
@@ -2108,10 +2108,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(1, 7);
         FPoint expectedOverlap = FPoint(1, 4);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal);
-        ASSERT_EQ(1, actual.GetY()) << "Least resitance setup was not correct.";
-        ASSERT_NE(expectedOverlap.GetY(), actual.GetY()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetY()) << "Least resistance setup was not correct.";
+        ASSERT_NE(expectedOverlap.GetY(), actual.GetY()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal, givenLocation);
@@ -2128,7 +2128,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // X -> m_testRectangle
         // O -> overlap
         // Y -> m_otherTestRectangle
-        // The path of least resitance is 1 (move to the left)
+        // The path of least resistance is 1 (move to the left)
         // however say test rec moved from the right, it would need to move
         // 4 to the right to not overlap - this is the test.
         // We are giving a position to the left so it should move 1 to the left.
@@ -2139,10 +2139,10 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         FPoint givenLocation = FPoint(1, -7);
         FPoint expectedOverlap = FPoint(1, 1);
 
-        // Check the least resitance path
+        // Check the least resistance path
         FPoint actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal);
-        ASSERT_EQ(1, actual.GetY()) << "Least resitance setup was not correct.";
-        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY()) << "Least resitance setup was not correct.";
+        ASSERT_EQ(1, actual.GetY()) << "Least resistance setup was not correct.";
+        ASSERT_EQ(expectedOverlap.GetY(), actual.GetY()) << "Least resistance setup was not correct.";
 
         // Act
         actual = m_testRectangle->OverlapAmount(*m_otherTestRectangleOriginal, givenLocation);

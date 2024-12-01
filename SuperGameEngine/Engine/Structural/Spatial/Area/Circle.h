@@ -27,7 +27,7 @@ namespace SuperGameEngine
         /// Gets the current location of the circle. 
         /// </summary>
         /// <returns></returns>
-        FVector2D GetLocation() const;
+        [[nodiscard]] FVector2D GetLocation() const;
 
         /// <summary>
         /// Sets the radius of the circle.
