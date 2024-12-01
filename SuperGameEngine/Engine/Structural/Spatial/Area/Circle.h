@@ -1,5 +1,5 @@
 #pragma once
-#include "../../FatedQuestReferences.h"
+#include "../../../FatedQuestReferences.h"
 
 using namespace FatedQuestLibraries;
 
@@ -27,7 +27,7 @@ namespace SuperGameEngine
         /// Gets the current location of the circle. 
         /// </summary>
         /// <returns></returns>
-        [[nodiscard]] FVector2D GetLocation() const;
+        FVector2D GetLocation() const;
 
         /// <summary>
         /// Sets the radius of the circle.

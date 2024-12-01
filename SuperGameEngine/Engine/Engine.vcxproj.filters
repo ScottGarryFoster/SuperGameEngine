@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\DebugEngine">
+      <UniqueIdentifier>{4f705e5e-2d37-4289-9e79-6746123d8dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DebugEngine">
+      <UniqueIdentifier>{fe5108f8-546b-4c73-988c-798c94e87ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{5c243944-71b5-4c54-a504-fcedb73ffcf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{b9f46721-8a1a-4ed2-947e-24881af33fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{7697adcb-39bd-4c7b-a8ce-1211a32cb242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EngineEntry">
+      <UniqueIdentifier>{f0fceb0e-5fba-4fd1-bcc2-c24c87348433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural">
+      <UniqueIdentifier>{c631788e-ac67-4138-9ba2-0a75389e6357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Spatial">
+      <UniqueIdentifier>{a2f74017-46ef-42c9-8ffc-fcb22ea0a9d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Spatial\Area">
+      <UniqueIdentifier>{ab9527c2-0d0a-4813-8c57-ab8ba981440b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EngineEntry">
+      <UniqueIdentifier>{d7509274-0e82-426e-ae0c-c440ce0c6953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{b409a466-fe07-48ba-b3c7-864a69b09b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{3d50dd3f-e1fc-4787-b192-fec5e2259583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{0f7c83fc-3505-48a1-ab52-4e7b7e242b03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural">
+      <UniqueIdentifier>{9d2bbe89-c424-49f6-b116-a8d24e8d44dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Spatial">
+      <UniqueIdentifier>{f2848d31-084f-4149-9a3b-f7ec7a6f6698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Spatial\Area">
+      <UniqueIdentifier>{b9a8fef2-71f4-4bef-ba29-5f341cb73d3d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugEngine\DebugEngine.h">
+      <Filter>Header Files\DebugEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\EngineEntry.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\Engine.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\ApplicationOperationState.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\Circle.h">
+      <Filter>Header Files\Structural\Spatial\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\Rectangle.h">
+      <Filter>Header Files\Structural\Spatial\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
+      <Filter>Header Files\Structural\Spatial\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SDLRendererState.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SuperTexture.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SuperTextureWrapper.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\Texture.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MainEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FatedQuestReferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\TestClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugEngine\DebugEngine.cpp">
+      <Filter>Source Files\DebugEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SuperTexture.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SuperTextureWrapper.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\Texture.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\Circle.cpp">
+      <Filter>Source Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp">
+      <Filter>Source Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
+      <Filter>Source Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineEntry\EngineEntry.cpp">
+      <Filter>Source Files\EngineEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MainEngine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\TestClass.cpp">
+      <Filter>Source Files\Structural</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
