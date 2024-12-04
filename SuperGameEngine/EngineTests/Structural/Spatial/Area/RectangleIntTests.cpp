@@ -21,8 +21,8 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         std::shared_ptr<Circle> m_testCircle;
         std::shared_ptr<Circle> m_otherTestCircle;
 
-        std::shared_ptr<Rectangle> m_testRectangleOriginal;
-        std::shared_ptr<Rectangle> m_otherTestRectangleOriginal;
+        std::shared_ptr<SuperGameEngine::Rectangle> m_testRectangleOriginal;
+        std::shared_ptr<SuperGameEngine::Rectangle> m_otherTestRectangleOriginal;
 
         std::shared_ptr<RectangleInt> m_testRectangle;
         std::shared_ptr<RectangleInt> m_otherTestRectangle;
@@ -438,7 +438,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX - bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangleOriginal);
@@ -457,7 +457,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX + bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangleOriginal);
@@ -476,7 +476,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX - (bothWidthHeight / 2.0f);
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangleOriginal);
@@ -495,7 +495,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY - bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, selfY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangleOriginal);
@@ -514,7 +514,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY + bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, selfY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangleOriginal);
@@ -533,7 +533,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = (int)(selfY - (bothWidthHeight / 2.0f));
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, otherY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->Overlaps(*m_otherTestRectangleOriginal);
@@ -751,7 +751,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX - bothWidthHeight - 1;
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -770,7 +770,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX + bothWidthHeight + 1;
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -789,7 +789,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX - bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -808,7 +808,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = selfX + bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
         ASSERT_EQ(selfX + bothWidthHeight, otherX);
 
         // Act
@@ -828,7 +828,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherX = (int)(selfX - (bothWidthHeight / 2.0f));
 
         m_testRectangle = std::make_shared<RectangleInt>(selfX, bothY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(otherX, bothY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -847,7 +847,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY - bothWidthHeight - 1;
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, selfY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -866,7 +866,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY + bothWidthHeight + 1;
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, selfY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -885,7 +885,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY - bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, selfY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -904,7 +904,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY + bothWidthHeight;
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, selfY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -923,7 +923,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         int otherY = selfY - (bothWidthHeight / 2.0f);
 
         m_testRectangle = std::make_shared<RectangleInt>(bothX, otherY, bothWidthHeight, bothWidthHeight);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(bothX, otherY, bothWidthHeight, bothWidthHeight);
 
         // Act
         bool actual = m_testRectangle->OverlapsOrIsTouching(*m_otherTestRectangleOriginal);
@@ -1266,7 +1266,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 1);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 1);
         FPoint expectedOverlap = FPoint(1, 1);
 
         // Act
@@ -1289,7 +1289,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // Given overlaps 2/3, Other overlaps 1/3
 
         m_testRectangle = std::make_shared<RectangleInt>(1, 0, 3, 1);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(2, 0, 6, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(2, 0, 6, 1);
         FPoint expectedOverlap = FPoint(2, 1);
 
         // Act
@@ -1312,7 +1312,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // Given overlaps 1/3, Other overlaps 2/3
 
         m_testRectangle = std::make_shared<RectangleInt>(1, 0, 6, 1);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 3, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 3, 1);
         FPoint expectedOverlap = FPoint(2, 1);
 
         // Act
@@ -1335,7 +1335,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // Given overlaps 1/3, Other overlaps 2/3
 
         m_testRectangle = std::make_shared<RectangleInt>(5, 0, 3, 1);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(1, 0, 6, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(1, 0, 6, 1);
         FPoint expectedOverlap = FPoint(2, 1);
 
         // Act
@@ -1356,7 +1356,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 1, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 1, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 1, 1);
         FPoint expectedOverlap = FPoint(1, 1);
 
         // Act
@@ -1379,7 +1379,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // Given overlaps 2/3, Other overlaps 1/3
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 1, 1, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 2, 1, 6);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 2, 1, 6);
         FPoint expectedOverlap = FPoint(1, 2);
 
         // Act
@@ -1402,7 +1402,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // Given overlaps 1/3, Other overlaps 2/3
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 1, 1, 6);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 1, 3);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 1, 3);
         FPoint expectedOverlap = FPoint(1, 2);
 
         // Act
@@ -1425,7 +1425,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // Given overlaps 1/3, Other overlaps 2/3
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 5, 1, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 1, 1, 6);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 1, 1, 6);
         FPoint expectedOverlap = FPoint(1, 2);
 
         // Act
@@ -1571,7 +1571,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         int expectedLeft = 2;
         int expectedRight = 5;
 
@@ -1594,7 +1594,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(5, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         int expectedLeft = 6;
         int expectedRight = 9;
 
@@ -1618,7 +1618,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         int expectedTop = 2;
         int expectedBottom = 5;
 
@@ -1642,7 +1642,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 5, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         int expectedTop = 6;
         int expectedBottom = 9;
 
@@ -1665,7 +1665,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         int expectedLeft = 2;
         int expectedRight = 5;
         int expectedTop = 0;
@@ -1805,7 +1805,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         int expectedLeft = 2;
 
         // Act
@@ -1826,7 +1826,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(5, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         int expectedLeft = 6;
 
         // Act
@@ -1848,7 +1848,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         int expectedTop = 2;
 
         // Act
@@ -1870,7 +1870,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(0, 5, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         int expectedTop = 6;
 
         // Act
@@ -1891,7 +1891,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         // O -> overlap
 
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         int expectedLeft = 2;
         int expectedTop = 0;
 
@@ -2043,7 +2043,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 0, 2, 1);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(1, 0, 3, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(1, 0, 3, 1);
         FPoint givenLocation = FPoint(7, 1);
         FPoint expectedOverlap = FPoint(4, 1);
 
@@ -2074,7 +2074,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 0, 2, 1);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(1, 0, 3, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(1, 0, 3, 1);
         FPoint givenLocation = FPoint(-7, 1);
         FPoint expectedOverlap = FPoint(1, 1);
 
@@ -2104,7 +2104,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 0, 1, 2);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 1, 1, 3);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 1, 1, 3);
         FPoint givenLocation = FPoint(1, 7);
         FPoint expectedOverlap = FPoint(1, 4);
 
@@ -2135,7 +2135,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 0, 1, 2);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 1, 1, 3);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 1, 1, 3);
         FPoint givenLocation = FPoint(1, -7);
         FPoint expectedOverlap = FPoint(1, 1);
 
@@ -2256,7 +2256,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         FPoint givenLocation = FPoint(0, 1);
         float expectedLeft = 2;
 
@@ -2279,7 +2279,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         FPoint givenLocation = FPoint(7, 1);
         float expectedLeft = 6;
 
@@ -2301,7 +2301,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         FPoint givenLocation = FPoint(1, 0);
         int expectedTop = 2;
 
@@ -2324,7 +2324,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         FPoint givenLocation = FPoint(1, 7);
         int expectedTop = 6;
 
@@ -2440,7 +2440,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         FPoint givenLocation = FPoint(0, 1);
         int expectedLeft = 2;
 
@@ -2463,7 +2463,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(3, 0, 3, 10);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(5, 0, 1, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(5, 0, 1, 10);
         FPoint givenLocation = FPoint(7, 1);
         int expectedLeft = 6;
 
@@ -2485,7 +2485,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         FPoint givenLocation = FPoint(1, 0);
         int expectedTop = 2;
 
@@ -2508,7 +2508,7 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
         // Arrange
         m_testRectangle = std::make_shared<RectangleInt>(0, 3, 10, 3);
-        m_otherTestRectangleOriginal = std::make_shared<Rectangle>(0, 5, 10, 1);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 5, 10, 1);
         FPoint givenLocation = FPoint(1, 7);
         int expectedTop = 6;
 

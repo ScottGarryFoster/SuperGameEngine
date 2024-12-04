@@ -183,6 +183,15 @@
     <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h">
       <Filter>Header Files\Structural\Packages</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\GameObject\GameObject.h">
+      <Filter>Header Files\Structural\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\SuperGameObject.h">
+      <Filter>Header Files\Structural\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\ComponentFactory.h">
+      <Filter>Header Files\Structural\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -239,11 +248,17 @@
     <ClCompile Include="Engine\Basic\SuperGameTime.cpp">
       <Filter>Source Files\Engine\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="Structural\Component\SuperGameComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp">
       <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Component\SuperGameComponent.cpp">
+      <Filter>Source Files\Structural\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\SuperGameObject.cpp">
+      <Filter>Source Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\ComponentFactory.cpp">
+      <Filter>Source Files\Structural\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

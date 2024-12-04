@@ -18,8 +18,8 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         std::shared_ptr<Circle> m_testCircle;
         std::shared_ptr<Circle> m_otherTestCircle;
 
-        std::shared_ptr<Rectangle> m_testRectangle;
-        std::shared_ptr<Rectangle> m_otherTestRectangle;
+        std::shared_ptr<SuperGameEngine::Rectangle> m_testRectangle;
+        std::shared_ptr<SuperGameEngine::Rectangle> m_otherTestRectangle;
 
         void SetUp() override
         {
@@ -34,11 +34,11 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         /// Creates a basic rectangle for testing.
         /// </summary>
         /// <returns>A Unit 1 by 1 rectangle at (1, 1). </returns>
-        std::shared_ptr<Rectangle> CreateBasicRectangle()
+        std::shared_ptr<SuperGameEngine::Rectangle> CreateBasicRectangle()
         {
             float originalXY = 1;
             float originalWidthHeight = 1;
-            return std::make_shared<Rectangle>(originalXY, originalWidthHeight);
+            return std::make_shared<SuperGameEngine::Rectangle>(originalXY, originalWidthHeight);
         }
 
         /// <summary>

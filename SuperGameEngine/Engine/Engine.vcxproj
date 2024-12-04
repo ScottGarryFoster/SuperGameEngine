@@ -163,6 +163,9 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Structural\Component\GameComponent.h" />
     <ClInclude Include="Structural\Component\SuperGameComponent.h" />
+    <ClInclude Include="Structural\GameObject\ComponentFactory.h" />
+    <ClInclude Include="Structural\GameObject\GameObject.h" />
+    <ClInclude Include="Structural\GameObject\SuperGameObject.h" />
     <ClInclude Include="Structural\Packages\SceneLoadPackage.h" />
     <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
@@ -191,6 +194,8 @@
     </ClCompile>
     <ClCompile Include="Structural\Component\GameComponent.cpp" />
     <ClCompile Include="Structural\Component\SuperGameComponent.cpp" />
+    <ClCompile Include="Structural\GameObject\ComponentFactory.cpp" />
+    <ClCompile Include="Structural\GameObject\SuperGameObject.cpp" />
     <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp" />
     <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />

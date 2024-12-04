@@ -1,4 +1,5 @@
 #include "DebugEngine.h"
+#include "../Structural/GameObject/SuperGameObject.h"
 
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
@@ -25,6 +26,8 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (!m_haveLoaded)
     {
+        m_go = std::make_shared<SuperGameObject>();
+
         m_superTexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
         m_haveLoaded = true;
 

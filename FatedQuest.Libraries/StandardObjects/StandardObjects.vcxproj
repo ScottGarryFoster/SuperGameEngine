@@ -143,11 +143,17 @@
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Object\GUID\GUID.h" />
+    <ClInclude Include="Object\GUID\GUIDHelpers.h" />
+    <ClInclude Include="Object\GUID\WindowsGUID.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Position\FPoint.h" />
     <ClInclude Include="Position\FVector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\GUID\GUID.cpp" />
+    <ClCompile Include="Object\GUID\GUIDHelpers.cpp" />
+    <ClCompile Include="Object\GUID\WindowsGUID.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

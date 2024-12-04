@@ -5,6 +5,11 @@
 #include "../Engine/Graphics/Texture/SDLRendererReader.h"
 #include "../Engine/Content/SuperTextureManager.h"
 
+namespace SuperGameEngine
+{
+    class GameObject;
+}
+
 using namespace SuperGameEngine;
 
 
@@ -81,5 +86,7 @@ namespace SuperEngineDebug
 
         Uint64 t;
         Uint64 curr;
+
+        std::shared_ptr<GameObject> m_go;
     };
 }
