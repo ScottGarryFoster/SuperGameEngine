@@ -145,6 +145,10 @@
     <ClInclude Include="EngineEntry\ApplicationOperationState.h" />
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
+    <ClInclude Include="Engine\Basic\GameTime.h" />
+    <ClInclude Include="Engine\Basic\SuperGameTime.h" />
+    <ClInclude Include="Engine\Content\ContentManager.h" />
+    <ClInclude Include="Engine\Content\SuperContentManager.h" />
     <ClInclude Include="Engine\Content\SuperTextureManager.h" />
     <ClInclude Include="Engine\Content\TextureManager.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h" />
@@ -157,6 +161,11 @@
     <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Structural\Component\GameComponent.h" />
+    <ClInclude Include="Structural\Component\SuperGameComponent.h" />
+    <ClInclude Include="Structural\Packages\SceneLoadPackage.h" />
+    <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h" />
+    <ClInclude Include="Structural\Scene\GrandScene.h" />
     <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h" />
@@ -165,6 +174,8 @@
     <ClCompile Include="DebugEngine\DebugEngine.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineEntry\EngineEntry.cpp" />
+    <ClCompile Include="Engine\Basic\SuperGameTime.cpp" />
+    <ClCompile Include="Engine\Content\SuperContentManager.cpp" />
     <ClCompile Include="Engine\Content\SuperTextureManager.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp" />
@@ -178,6 +189,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Structural\Component\GameComponent.cpp" />
+    <ClCompile Include="Structural\Component\SuperGameComponent.cpp" />
+    <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp" />
+    <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />

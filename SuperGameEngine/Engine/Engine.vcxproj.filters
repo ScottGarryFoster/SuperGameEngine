@@ -67,6 +67,36 @@
     <Filter Include="Source Files\Engine\Content">
       <UniqueIdentifier>{b01b67d7-471e-45f9-85b5-372099ec9df8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural\Scene">
+      <UniqueIdentifier>{43bbd659-917e-4cee-a186-5e4ba45a947a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Scene">
+      <UniqueIdentifier>{99d870bd-931f-4c45-a86e-94b5fb9c859b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\GameObject">
+      <UniqueIdentifier>{09cce4c9-ca8a-47a3-9d19-10608d400910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Component">
+      <UniqueIdentifier>{0e724ce0-924d-45a6-9331-22a1241a7e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Component">
+      <UniqueIdentifier>{71bf2064-c020-4f38-99f6-9fcb4cee23a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\GameObject">
+      <UniqueIdentifier>{35532179-6e12-4114-b874-4e89d42c44a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Basic">
+      <UniqueIdentifier>{982512f0-ce79-4338-be9d-e304931876e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Basic">
+      <UniqueIdentifier>{d3f6dc47-b96e-4c76-9b75-127ed6815eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Packages">
+      <UniqueIdentifier>{425952ee-8b2b-408f-a9e9-d53b062d814c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Packages">
+      <UniqueIdentifier>{ec8554dc-857e-48be-a356-d398526e2f3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -126,6 +156,33 @@
     <ClInclude Include="Engine\Content\SuperTextureManager.h">
       <Filter>Header Files\Engine\Content</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Scene\GrandScene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\ContentManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\SuperContentManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Component\GameComponent.h">
+      <Filter>Header Files\Structural\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\GameTime.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\SuperGameTime.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Component\SuperGameComponent.h">
+      <Filter>Header Files\Structural\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SceneLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -169,6 +226,24 @@
     </ClCompile>
     <ClCompile Include="Engine\Content\SuperTextureManager.cpp">
       <Filter>Source Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\GrandScene.cpp">
+      <Filter>Source Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\SuperContentManager.cpp">
+      <Filter>Source Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Component\GameComponent.cpp">
+      <Filter>Source Files\Structural\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Basic\SuperGameTime.cpp">
+      <Filter>Source Files\Engine\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Component\SuperGameComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

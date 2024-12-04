@@ -88,7 +88,7 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
     ApplicationOperationState operationState = ApplicationOperationState::Running;
     while (operationState == ApplicationOperationState::Running)
     {
-        ApplicationOperationState eventAnswer = ApplicationOperationState::Running;
+        auto eventAnswer = ApplicationOperationState::Running;
 
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
