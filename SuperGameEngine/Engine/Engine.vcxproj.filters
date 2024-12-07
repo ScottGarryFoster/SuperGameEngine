@@ -97,6 +97,18 @@
     <Filter Include="Source Files\Structural\Packages">
       <UniqueIdentifier>{ec8554dc-857e-48be-a356-d398526e2f3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural\InternalComponents">
+      <UniqueIdentifier>{0d00b464-3ea3-428d-b07b-fcf61726b9ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\InternalComponents">
+      <UniqueIdentifier>{8cae8834-787a-4e86-a452-13e6a722a1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\InternalComponents\TestComponent">
+      <UniqueIdentifier>{d7b0727a-4a26-482e-9f04-27ce609e2551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\InternalComponents\TestComponent">
+      <UniqueIdentifier>{e0510e23-6fb9-44f7-ba2b-9a245ce5e385}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -192,6 +204,12 @@
     <ClInclude Include="Structural\GameObject\ComponentFactory.h">
       <Filter>Header Files\Structural\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\InternalComponents\TestComponent\TestComponent.h">
+      <Filter>Header Files\Structural\InternalComponents\TestComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\WeakPointerWrapper.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -259,6 +277,12 @@
     </ClCompile>
     <ClCompile Include="Structural\GameObject\ComponentFactory.cpp">
       <Filter>Source Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp">
+      <Filter>Source Files\Structural\InternalComponents\TestComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Basic\WeakPointerWrapper.cpp">
+      <Filter>Source Files\Engine\Basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

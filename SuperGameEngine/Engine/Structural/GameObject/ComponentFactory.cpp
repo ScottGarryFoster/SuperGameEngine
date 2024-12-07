@@ -1,4 +1,5 @@
 #include "ComponentFactory.h"
+#include "../Component/GameComponent.h"
 
 using namespace SuperGameEngine;
 

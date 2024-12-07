@@ -1,6 +1,8 @@
 #include "SuperGameObject.h"
 
 #include "ComponentFactory.h"
+#include "../Component/GameComponent.h"
+#include "../../Engine/Basic/WeakPointerWrapper.h"
 
 using namespace SuperGameEngine;
 
@@ -41,6 +43,21 @@ void SuperGameObject::Setup(std::shared_ptr<SceneLoadPackage> loadPackage)
 
 void SuperGameObject::Update(const std::shared_ptr<GameTime> gameTime)
 {
+    if (m_componentsAwaitUpdate)
+    {
+        MovePendingToMain();
+        m_componentsAwaitUpdate = false;
+    }
+
+    for (const auto& componentAndType : m_gameComponents)
+    {
+        std::vector<std::shared_ptr<GameComponent>> components = componentAndType.second;
+        for (const auto& component : components)
+        {
+            // TODO: Add 'Is Destroyed'
+            component->Update(gameTime);
+        }
+    }
 }
 
 void SuperGameObject::FixedUpdate(const std::shared_ptr<GameTime> gameTime)
@@ -49,6 +66,17 @@ void SuperGameObject::FixedUpdate(const std::shared_ptr<GameTime> gameTime)
 
 void SuperGameObject::Draw() const
 {
+    for (const auto& componentAndType : m_gameComponents)
+    {
+        std::vector<std::shared_ptr<GameComponent>> components = componentAndType.second;
+        for (const auto& component : components)
+        {
+            if (component->DoRender())
+            {
+                component->Draw();
+            }
+        }
+    }
 }
 
 std::shared_ptr<GameComponent> SuperGameObject::AddComponent(const std::string& type)
@@ -56,15 +84,71 @@ std::shared_ptr<GameComponent> SuperGameObject::AddComponent(const std::string& 
     auto component = ComponentFactory::CreateComponent(type);
     if (component)
     {
+        AddActualComponent(type, component);
         return component;
         // TODO: AddActualComponentFromObject(component);
     }
 
-    return component;
+    return std::shared_ptr<GameComponent>();
+}
+
+void SuperGameObject::Destroy()
+{
+    m_isDestroyed = true;
+}
+
+bool SuperGameObject::IsDestroyed() const
+{
+    return m_isDestroyed;
 }
 
 std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& type) const
 {
     return std::shared_ptr<GameComponent>();
 }
+
+bool SuperGameObject::AddActualComponent(const std::string& type, std::shared_ptr<GameComponent> reference)
+{
+    reference->Setup(m_loadPackage, this);
+
+    AddComponentToDictionary(type, reference, m_pendingGameComponents);
+    m_componentsAwaitUpdate = true;
+
+    return true;
+}
+
+void SuperGameObject::MovePendingToMain()
+{
+    for (auto it = m_pendingGameComponents.begin(); it != m_pendingGameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        for (const auto& reference : references)
+        {
+            AddComponentToDictionary(type, reference, m_gameComponents);
+        }
+    }
+
+    m_pendingGameComponents.clear();
+}
+
+void SuperGameObject::AddComponentToDictionary(
+    const std::string& type, 
+    std::shared_ptr<GameComponent> reference,
+    std::unordered_map<std::string, std::vector<std::shared_ptr<GameComponent>>>& dictionaryToWriteTo)
+{
+    std::vector<std::shared_ptr<GameComponent>> components;
+    auto it = dictionaryToWriteTo.find(type);
+    if (it != dictionaryToWriteTo.end())
+    {
+        components = dictionaryToWriteTo[type];
+    }
+    else
+    {
+        components.push_back(reference);
+    }
+
+    dictionaryToWriteTo.insert_or_assign(type, components);
+}
+
 

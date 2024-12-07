@@ -1,5 +1,11 @@
 #include "DebugEngine.h"
+
+#include "../Engine/Content/SuperContentManager.h"
 #include "../Structural/GameObject/SuperGameObject.h"
+#include "../Structural/Packages/SuperSceneLoadPackage.h"
+#include "../Engine/Basic/SuperGameTime.h"
+
+#include "../Structural/InternalComponents/TestComponent/TestComponent.h"
 
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
@@ -9,7 +15,15 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
     if (!m_textureManager)
     {
-        m_textureManager = std::make_unique<SuperTextureManager>(renderer);
+        m_sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
+
+        auto m_contentManager = std::make_shared<SuperContentManager>();
+        m_textureManager = std::make_shared<SuperTextureManager>(renderer);
+        m_contentManager->GiveSuperTextureManager(m_textureManager);
+
+        m_sceneLoadPackage->SetContentManager(m_contentManager);
+
+        m_gameTime = std::make_shared<SuperGameTime>();
     }
     else
     {
@@ -26,12 +40,24 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (!m_haveLoaded)
     {
-        m_go = std::make_shared<SuperGameObject>();
-
-        m_superTexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
+        //m_superTexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
         m_haveLoaded = true;
 
         curr = ticks;
+    }
+
+    m_gameTime->SetTicksSinceLastFrame(ticks);
+    if (m_go)
+    {
+        
+        m_go = std::shared_ptr<SuperGameObject>();
+    }
+    else
+    {
+        m_go = std::make_shared<SuperGameObject>();
+        m_go->Setup(m_sceneLoadPackage);
+        m_go->AddComponent("TestComponent");
+        m_go->Update(m_gameTime);
     }
 
     curr += ticks;
@@ -43,13 +69,17 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         return ApplicationOperationState::Restart;
     }
 
-
     return ApplicationOperationState::Running;
 }
 
 void DebugEngine::Draw()
 {
-    m_superTexture->Draw();
+    //m_superTexture->Draw();
+    if (m_go)
+    {
+        m_go->Draw();
+    }
+
 }
 
 void DebugEngine::WindowStart()

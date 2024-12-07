@@ -11,8 +11,9 @@ SuperGameComponent::SuperGameComponent()
 
 SuperGameComponent::~SuperGameComponent() = default;
 
-void SuperGameComponent::Setup(std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
-                               std::shared_ptr<GameObject> parent)
+void SuperGameComponent::Setup(
+    std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
+    GameObject* parent)
 {
     m_sceneLoadPackage = sceneLoadPackage;
     m_parent = parent;
@@ -36,7 +37,7 @@ void SuperGameComponent::Draw() const
 {
 }
 
-std::shared_ptr<GameObject> SuperGameComponent::GetParent() const
+GameObject* SuperGameComponent::GetParent() const
 {
     return m_parent;
 }

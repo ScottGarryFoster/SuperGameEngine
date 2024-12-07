@@ -147,6 +147,7 @@
     <ClInclude Include="EngineEntry\EngineEntry.h" />
     <ClInclude Include="Engine\Basic\GameTime.h" />
     <ClInclude Include="Engine\Basic\SuperGameTime.h" />
+    <ClInclude Include="Engine\Basic\WeakPointerWrapper.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Content\SuperContentManager.h" />
     <ClInclude Include="Engine\Content\SuperTextureManager.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Structural\GameObject\ComponentFactory.h" />
     <ClInclude Include="Structural\GameObject\GameObject.h" />
     <ClInclude Include="Structural\GameObject\SuperGameObject.h" />
+    <ClInclude Include="Structural\InternalComponents\TestComponent\TestComponent.h" />
     <ClInclude Include="Structural\Packages\SceneLoadPackage.h" />
     <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
@@ -178,6 +180,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineEntry\EngineEntry.cpp" />
     <ClCompile Include="Engine\Basic\SuperGameTime.cpp" />
+    <ClCompile Include="Engine\Basic\WeakPointerWrapper.cpp" />
     <ClCompile Include="Engine\Content\SuperContentManager.cpp" />
     <ClCompile Include="Engine\Content\SuperTextureManager.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp" />
@@ -196,6 +199,7 @@
     <ClCompile Include="Structural\Component\SuperGameComponent.cpp" />
     <ClCompile Include="Structural\GameObject\ComponentFactory.cpp" />
     <ClCompile Include="Structural\GameObject\SuperGameObject.cpp" />
+    <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp" />
     <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp" />
     <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />

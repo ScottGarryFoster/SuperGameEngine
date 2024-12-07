@@ -7,6 +7,8 @@
 
 namespace SuperGameEngine
 {
+    class SuperGameTime;
+    class SuperSceneLoadPackage;
     class GameObject;
 }
 
@@ -76,7 +78,14 @@ namespace SuperEngineDebug
         /// <summary>
         /// Creates, stores and manages all textures in the engine.
         /// </summary>
-        std::unique_ptr<SuperTextureManager> m_textureManager;
+        std::shared_ptr<SuperTextureManager> m_textureManager;
+
+        /// <summary>
+        /// Everything a component needs to exist and operate.
+        /// </summary>
+        std::shared_ptr<SuperSceneLoadPackage> m_sceneLoadPackage;
+
+        std::shared_ptr<SuperGameTime> m_gameTime;
 
         bool m_haveLoaded = false;
         bool m_haveRestartedWindow = false;

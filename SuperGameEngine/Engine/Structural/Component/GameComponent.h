@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 
+#include "../../Engine/Basic/WeakPointerWrapper.h"
+
 namespace SuperGameEngine
 {
     class GameObject;
@@ -18,7 +20,7 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
-            std::shared_ptr<GameObject> parent) = 0;
+            GameObject* parent) = 0;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.
@@ -46,9 +48,13 @@ namespace SuperGameEngine
 
         /// <summary>
         /// Gets the parent GameObject of this Component.
+        /// This is given and stored as a raw pointer.
+        /// For as long as the component exists this reference should exist.
+        /// This reference however should never be stored or used outside a single method run
+        /// by the game loop, Setup, Updates and Draw.
         /// </summary>
         /// <returns>The parent game object of this parent. </returns>
-        virtual std::shared_ptr<GameObject> GetParent() const = 0;
+        virtual GameObject* GetParent() const = 0;
 
         /// <summary>
         /// True when this component should render.

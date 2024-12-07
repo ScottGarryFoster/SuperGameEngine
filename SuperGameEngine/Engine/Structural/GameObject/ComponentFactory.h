@@ -46,10 +46,8 @@ namespace SuperGameEngine
 // on the component header to register themselves to this factory.
 // Only SGE components can be created natively without a name.
 
-#define REGISTER_COMPONENT(TYPE) \
-    namespace { \
-        auto reg_##TYPE = []() { \
-            ComponentFactory::RegisterComponent(#TYPE, []() { return std::make_shared<TYPE>(); }); \
-            return 0; \
-        }(); \
-    }
+#define REGISTER_COMPONENT(TYPE, CLASS) \
+    static bool CLASS##_registered = []() { \
+        ComponentFactory::RegisterComponent(TYPE, []() { return std::make_shared<CLASS>(); }); \
+        return true; \
+    }()

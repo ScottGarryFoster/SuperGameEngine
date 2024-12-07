@@ -75,6 +75,17 @@ namespace SuperGameEngine
         /// <param name="type">Type to find. </param>
         /// <returns>The component as a Game Component. </returns>
         virtual std::shared_ptr<GameComponent> GetComponent(const std::string& type) const = 0;
+
+        /// <summary>
+        /// Destroys the game object.
+        /// </summary>
+        virtual void Destroy() = 0;
+
+        /// <summary>
+        /// Is this GameObject marks for destruction.
+        /// </summary>
+        /// <returns>True means is marked for Destroyed. </returns>
+        virtual bool IsDestroyed() const = 0;
     };
 }
 

@@ -21,7 +21,7 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
-            std::shared_ptr<GameObject> parent) override;
+            GameObject* parent) override;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.
@@ -51,7 +51,7 @@ namespace SuperGameEngine
         /// Gets the parent GameObject of this Component.
         /// </summary>
         /// <returns>The parent game object of this parent. </returns>
-        virtual std::shared_ptr<GameObject> GetParent() const override;
+        virtual GameObject* GetParent() const override;
 
         /// <summary>
         /// True when this component should render.
@@ -77,8 +77,12 @@ namespace SuperGameEngine
 
         /// <summary>
         /// The parent game object.
+        /// This is given and stored as a raw pointer.
+        /// For as long as the component exists this reference should exist.
+        /// This reference however should never be stored or used outside a single method run
+        /// by the game loop, Setup, Updates and Draw.
         /// </summary>
-        std::shared_ptr<GameObject> m_parent;
+        GameObject* m_parent;
 
         /// <summary>
         /// Everything a component needs to run.
