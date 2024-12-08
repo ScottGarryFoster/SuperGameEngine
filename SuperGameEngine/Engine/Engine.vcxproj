@@ -146,8 +146,9 @@
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
     <ClInclude Include="Engine\Basic\GameTime.h" />
+    <ClInclude Include="Engine\Basic\PointerState.h" />
     <ClInclude Include="Engine\Basic\SuperGameTime.h" />
-    <ClInclude Include="Engine\Basic\WeakPointerWrapper.h" />
+    <ClInclude Include="Engine\Basic\ExtremelyWeakWrapper.h" />
     <ClInclude Include="Engine\Content\ContentManager.h" />
     <ClInclude Include="Engine\Content\SuperContentManager.h" />
     <ClInclude Include="Engine\Content\SuperTextureManager.h" />
@@ -180,7 +181,6 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineEntry\EngineEntry.cpp" />
     <ClCompile Include="Engine\Basic\SuperGameTime.cpp" />
-    <ClCompile Include="Engine\Basic\WeakPointerWrapper.cpp" />
     <ClCompile Include="Engine\Content\SuperContentManager.cpp" />
     <ClCompile Include="Engine\Content\SuperTextureManager.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp" />

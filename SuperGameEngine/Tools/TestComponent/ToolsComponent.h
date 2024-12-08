@@ -22,7 +22,7 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
-            GameObject* parent) override;
+            std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent) override;
 
         /// <summary>
         /// Updates the component this frame.

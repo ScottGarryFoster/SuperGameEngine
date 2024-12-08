@@ -21,7 +21,7 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
-            GameObject* parent) override;
+            std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent) override;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.
@@ -51,7 +51,7 @@ namespace SuperGameEngine
         /// Gets the parent GameObject of this Component.
         /// </summary>
         /// <returns>The parent game object of this parent. </returns>
-        virtual GameObject* GetParent() const override;
+        virtual std::shared_ptr<ExtremelyWeakWrapper<GameObject>> GetParent() const override;
 
         /// <summary>
         /// True when this component should render.
@@ -82,7 +82,7 @@ namespace SuperGameEngine
         /// This reference however should never be stored or used outside a single method run
         /// by the game loop, Setup, Updates and Draw.
         /// </summary>
-        GameObject* m_parent;
+        std::shared_ptr<ExtremelyWeakWrapper<GameObject>> m_parent;
 
         /// <summary>
         /// Everything a component needs to run.

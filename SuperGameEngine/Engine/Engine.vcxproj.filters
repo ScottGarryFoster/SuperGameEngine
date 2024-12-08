@@ -207,7 +207,10 @@
     <ClInclude Include="Structural\InternalComponents\TestComponent\TestComponent.h">
       <Filter>Header Files\Structural\InternalComponents\TestComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Basic\WeakPointerWrapper.h">
+    <ClInclude Include="Engine\Basic\ExtremelyWeakWrapper.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\PointerState.h">
       <Filter>Header Files\Engine\Basic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -280,9 +283,6 @@
     </ClCompile>
     <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp">
       <Filter>Source Files\Structural\InternalComponents\TestComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Basic\WeakPointerWrapper.cpp">
-      <Filter>Source Files\Engine\Basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

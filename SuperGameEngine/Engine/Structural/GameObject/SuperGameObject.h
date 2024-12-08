@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "../../FatedQuestReferences.h"
+#include "../../Engine/Basic/ExtremelyWeakWrapper.h"
 
 using namespace FatedQuestLibraries;
 
@@ -124,6 +125,12 @@ namespace SuperGameEngine
         /// True means destroyed.
         /// </summary>
         bool m_isDestroyed;
+
+        /// <summary>
+        /// An extremely weak pointer to give to the component children.
+        /// We should clean this up and manage it.
+        /// </summary>
+        std::shared_ptr<ExtremelyWeakWrapper<GameObject>> m_pointerToSelf;
 
         /// <summary>
         /// Adds the actual component.

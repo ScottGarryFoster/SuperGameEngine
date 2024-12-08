@@ -12,8 +12,8 @@ int main(int argc, char* args[])
 
     GenerateEnum generator;
     if (!generator.SingleFile(
-        R"(E:\Development\SuperGameEngine-Myriad\SuperGameEngine\SuperGameEngine\EngineEntry\ApplicationOperationState.superenum)",
-        R"(E:\Development\SuperGameEngine-Myriad\SuperGameEngine\SuperGameEngine\EngineEntry\ApplicationOperationState.h)"))
+        R"(E:\Development\SuperGameEngine-Myriad\SuperGameEngine\Engine\Engine\Basic\PointerState.superenum)",
+        R"(E:\Development\SuperGameEngine-Myriad\SuperGameEngine\Engine\Engine\Basic\PointerState.h)"))
     {
         std::cout << "Could not generate file. " << std::endl;
     }

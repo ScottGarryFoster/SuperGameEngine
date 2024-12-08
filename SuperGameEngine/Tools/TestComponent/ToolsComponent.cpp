@@ -13,7 +13,7 @@ ToolsComponent::~ToolsComponent() = default;
 
 void ToolsComponent::Setup(
     std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
-    GameObject* parent)
+    std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
 {
     SuperGameComponent::Setup(sceneLoadPackage, parent);
 
