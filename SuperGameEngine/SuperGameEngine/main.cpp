@@ -11,6 +11,9 @@
 #include "../Engine/Engine/MainEngine.h"
 #include "../Engine/DebugEngine/DebugEngine.h"
 
+// Any external projects should define their components here:
+#include "../Tools/EngineIncludes/EngineInclude.h"
+
 using namespace SuperGameEngine;
 
 // The logic for the engine is split amongst Engine and library projects, with games having their own components.
