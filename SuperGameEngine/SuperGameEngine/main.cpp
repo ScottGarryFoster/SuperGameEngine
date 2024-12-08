@@ -12,7 +12,9 @@
 #include "../Engine/DebugEngine/DebugEngine.h"
 
 // Any external projects should define their components here:
+#ifdef _TOOLS
 #include "../Tools/EngineIncludes/EngineInclude.h"
+#endif
 
 using namespace SuperGameEngine;
 

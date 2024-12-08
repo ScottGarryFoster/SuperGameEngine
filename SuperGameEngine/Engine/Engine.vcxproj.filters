@@ -127,6 +127,12 @@
     <Filter Include="Source Files\Imgui\Internal">
       <UniqueIdentifier>{022436c0-7a25-4ce5-aa4e-8b002aefdce0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Factory">
+      <UniqueIdentifier>{c09f86a4-394b-446e-b0d6-a67a1d2746e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Factory">
+      <UniqueIdentifier>{1fde59ce-1166-4252-8fc3-97a743f7d0bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -258,6 +264,9 @@
     <ClInclude Include="Imgui\External\imstb_truetype.h">
       <Filter>Header Files\Imgui\External</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Factory\EngineFactory.h">
+      <Filter>Header Files\Engine\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -352,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="Imgui\External\imgui_widgets.cpp">
       <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Factory\EngineFactory.cpp">
+      <Filter>Source Files\Engine\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

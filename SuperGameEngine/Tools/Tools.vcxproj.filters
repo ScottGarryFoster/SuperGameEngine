@@ -25,6 +25,12 @@
     <Filter Include="Source Files\TestComponent">
       <UniqueIdentifier>{e204cff9-5852-4870-a71d-4cc0d55378ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ToolsEngine">
+      <UniqueIdentifier>{6da5ab24-cdf3-4105-bdd5-25af56fab00c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine">
+      <UniqueIdentifier>{7b5e824b-76d8-488d-957e-0cd368528b59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -39,6 +45,9 @@
     <ClInclude Include="TestComponent\ToolsComponent.h">
       <Filter>Header Files\TestComponent</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ToolsEngine.h">
+      <Filter>Header Files\ToolsEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tools.cpp">
@@ -52,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="TestComponent\ToolsComponent.cpp">
       <Filter>Source Files\TestComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ToolsEngine.cpp">
+      <Filter>Source Files\ToolsEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

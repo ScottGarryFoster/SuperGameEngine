@@ -29,6 +29,23 @@ void ImGuiContainer::Initialise(SDL_Renderer* renderer, SDL_Window* window)
 
     ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
     ImGui_ImplSDLRenderer2_Init(renderer);
+
+    m_renderer = renderer;
+}
+
+void ImGuiContainer::EventCall(const SDL_Event& e)
+{
+    ImGui_ImplSDL2_ProcessEvent(&e);
+}
+
+void ImGuiContainer::FinishCreatingDraw()
+{
+    ImGui::Render();
+}
+
+void ImGuiContainer::Render()
+{
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), m_renderer);
 }
 
 void ImGuiContainer::Teardown()

@@ -42,5 +42,11 @@ namespace SuperGameEngine
         /// Wraps setup for imgui.
         /// </summary>
         std::shared_ptr<ImGuiContainer> m_imgui;
+
+        /// <summary>
+        /// If tools are used, this is engine.
+        /// Otherwise, it is an empty pointer.
+        /// </summary>
+        std::shared_ptr<Engine> m_toolsEngine;
     };
 }

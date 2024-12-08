@@ -21,6 +21,21 @@ namespace SuperGameEngine
         void Initialise(SDL_Renderer* renderer, SDL_Window* window);
 
         /// <summary>
+        /// Called upon each event in SDL.
+        /// </summary>
+        void EventCall(const SDL_Event& e);
+
+        /// <summary>
+        /// Called at the end of ImGUIs draw before it actually draws.
+        /// </summary>
+        void FinishCreatingDraw();
+
+        /// <summary>
+        /// Called to render the frame itself.
+        /// </summary>
+        void Render();
+
+        /// <summary>
         /// Call when the renderer and window are about to be destroyed to tear
         /// the IMGUI context down.
         /// </summary>
@@ -31,6 +46,11 @@ namespace SuperGameEngine
         /// The IMGUI context. 
         /// </summary>
         ImGuiContext* m_context;
+
+        /// <summary>
+        /// Current renderer.
+        /// </summary>
+        SDL_Renderer* m_renderer;
     };
 
 }
