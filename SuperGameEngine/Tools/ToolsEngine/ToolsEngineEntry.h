@@ -1,17 +1,23 @@
 #pragma once
-#include "Engine.h"
+#include "ToolsEngine.h"
 #include <memory>
-#include "ApplicationOperationState.h"
-#include "../Engine/Graphics/Texture/SDLRenderer.h"
+#include "../../Engine/EngineEntry/ApplicationOperationState.h"
+#include "../../Engine/Engine/Graphics/Texture/SDLRenderer.h"
+#include "../../Engine/Engine/Factory/EngineEntryFactory.h"
+#include "../../Engine/EngineEntry/EngineEntry.h"
 
 namespace SuperGameEngine
 {
     class ImGuiContainer;
+}
+
+namespace SuperGameTools
+{
 
     /// <summary>
     /// The entry point for the engine and the top most level before main.
     /// </summary>
-    class EngineEntry
+    class ToolsEngineEntry : public EngineEntry
     {
     public:
         /// <summary>
@@ -22,7 +28,7 @@ namespace SuperGameEngine
         /// 0 means no errors occured when 
         /// attempting to start the application.
         /// </returns>
-        virtual int RunApplication(std::shared_ptr<Engine> engine);
+        int RunApplication(std::shared_ptr<Engine> engine) override;
 
     private:
 
@@ -49,4 +55,6 @@ namespace SuperGameEngine
         /// </summary>
         std::shared_ptr<Engine> m_toolsEngine;
     };
+
+    REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);
 }

@@ -108,7 +108,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_TOOLS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -147,6 +147,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestComponent\ToolsComponent.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
+    <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClCompile Include="TestComponent\ToolsComponent.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
+    <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
   </ItemGroup>
   <ItemGroup>

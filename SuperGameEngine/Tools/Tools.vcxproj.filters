@@ -75,6 +75,9 @@
     <ClInclude Include="ImGuiIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ToolsEngineEntry.h">
+      <Filter>Header Files\ToolsEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tools.cpp">
@@ -94,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp">
       <Filter>Source Files\Windows\GameViewport</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp">
+      <Filter>Source Files\ToolsEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

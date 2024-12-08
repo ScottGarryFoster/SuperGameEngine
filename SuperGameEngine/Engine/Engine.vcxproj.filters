@@ -267,6 +267,9 @@
     <ClInclude Include="Engine\Factory\EngineFactory.h">
       <Filter>Header Files\Engine\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Factory\EngineEntryFactory.h">
+      <Filter>Header Files\Engine\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -363,6 +366,9 @@
       <Filter>Source Files\Imgui\External</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Factory\EngineFactory.cpp">
+      <Filter>Source Files\Engine\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Factory\EngineEntryFactory.cpp">
       <Filter>Source Files\Engine\Factory</Filter>
     </ClCompile>
   </ItemGroup>

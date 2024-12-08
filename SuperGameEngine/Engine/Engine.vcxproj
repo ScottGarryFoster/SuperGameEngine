@@ -154,6 +154,7 @@
     <ClInclude Include="Engine\Content\SuperContentManager.h" />
     <ClInclude Include="Engine\Content\SuperTextureManager.h" />
     <ClInclude Include="Engine\Content\TextureManager.h" />
+    <ClInclude Include="Engine\Factory\EngineEntryFactory.h" />
     <ClInclude Include="Engine\Factory\EngineFactory.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h" />
     <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Engine\Basic\SuperGameTime.cpp" />
     <ClCompile Include="Engine\Content\SuperContentManager.cpp" />
     <ClCompile Include="Engine\Content\SuperTextureManager.cpp" />
+    <ClCompile Include="Engine\Factory\EngineEntryFactory.cpp" />
     <ClCompile Include="Engine\Factory\EngineFactory.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp" />
