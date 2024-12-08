@@ -108,12 +108,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_TOOLS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -162,6 +163,15 @@
     <ClInclude Include="Engine\MainEngine.h" />
     <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Imgui\External\imconfig.h" />
+    <ClInclude Include="Imgui\External\imgui.h" />
+    <ClInclude Include="Imgui\External\imgui_impl_sdl2.h" />
+    <ClInclude Include="Imgui\External\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="Imgui\External\imgui_internal.h" />
+    <ClInclude Include="Imgui\External\imstb_rectpack.h" />
+    <ClInclude Include="Imgui\External\imstb_textedit.h" />
+    <ClInclude Include="Imgui\External\imstb_truetype.h" />
+    <ClInclude Include="Imgui\Internal\ImGuiContainer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Structural\Component\GameComponent.h" />
     <ClInclude Include="Structural\Component\SuperGameComponent.h" />
@@ -189,6 +199,14 @@
     <ClCompile Include="Engine\Graphics\Texture\SuperTextureWrapper.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\Texture.cpp" />
     <ClCompile Include="Engine\MainEngine.cpp" />
+    <ClCompile Include="Imgui\External\imgui.cpp" />
+    <ClCompile Include="Imgui\External\imgui_demo.cpp" />
+    <ClCompile Include="Imgui\External\imgui_draw.cpp" />
+    <ClCompile Include="Imgui\External\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="Imgui\External\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="Imgui\External\imgui_tables.cpp" />
+    <ClCompile Include="Imgui\External\imgui_widgets.cpp" />
+    <ClCompile Include="Imgui\Internal\ImGuiContainer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

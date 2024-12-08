@@ -6,6 +6,8 @@
 
 namespace SuperGameEngine
 {
+    class ImGuiContainer;
+
     /// <summary>
     /// The entry point for the engine and the top most level before main.
     /// </summary>
@@ -35,5 +37,10 @@ namespace SuperGameEngine
         /// active window.
         /// </summary>
         std::shared_ptr<SDLRenderer> m_renderer;
+
+        /// <summary>
+        /// Wraps setup for imgui.
+        /// </summary>
+        std::shared_ptr<ImGuiContainer> m_imgui;
     };
 }

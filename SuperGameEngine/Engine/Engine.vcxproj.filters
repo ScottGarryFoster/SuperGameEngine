@@ -109,6 +109,24 @@
     <Filter Include="Source Files\Structural\InternalComponents\TestComponent">
       <UniqueIdentifier>{e0510e23-6fb9-44f7-ba2b-9a245ce5e385}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Imgui">
+      <UniqueIdentifier>{7527dd79-1859-4129-bcbb-ef018c764586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui">
+      <UniqueIdentifier>{c7f7ac1d-d0f8-4a3a-beb0-5bc28d7dfc14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui\External">
+      <UniqueIdentifier>{e84fa734-6b7f-477d-90e2-2ba0fa50e7b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui\External">
+      <UniqueIdentifier>{0300464a-27c2-4722-9980-1ef459011efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui\Internal">
+      <UniqueIdentifier>{b5a2f9ae-cf3a-47e1-903f-e9ae69be864f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui\Internal">
+      <UniqueIdentifier>{022436c0-7a25-4ce5-aa4e-8b002aefdce0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,6 +231,33 @@
     <ClInclude Include="Engine\Basic\PointerState.h">
       <Filter>Header Files\Engine\Basic</Filter>
     </ClInclude>
+    <ClInclude Include="Imgui\Internal\ImGuiContainer.h">
+      <Filter>Header Files\Imgui\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imconfig.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui_impl_sdl2.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui_impl_sdlrenderer2.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui_internal.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imstb_rectpack.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imstb_textedit.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imstb_truetype.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -283,6 +328,30 @@
     </ClCompile>
     <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp">
       <Filter>Source Files\Structural\InternalComponents\TestComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\Internal\ImGuiContainer.cpp">
+      <Filter>Source Files\Imgui\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_demo.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_draw.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_impl_sdl2.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_impl_sdlrenderer2.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_tables.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_widgets.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,10 +8,21 @@
 
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 
+#ifdef _TOOLS
+#include "../Imgui/External/imgui.h"
+#include "../Imgui/External/imgui_impl_sdl2.h"
+#include "../Imgui/External/imgui_impl_sdlrenderer2.h"
+#include "../Imgui/Internal/ImGuiContainer.h"
+#endif
+
 using namespace SuperGameEngine;
 
 int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 {
+#ifdef _TOOLS
+    m_imgui = std::make_shared<ImGuiContainer>();
+#endif
+
     m_renderer = std::make_shared<SDLRenderer>();
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
@@ -74,6 +85,12 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
         return ApplicationOperationState::Close;
     }
 
+#ifdef _TOOLS
+    // Initialise IMGUI
+    m_imgui->Initialise(renderer, window);
+#endif
+
+
     // Event handler
     SDL_Event e;
 
@@ -83,6 +100,9 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
     engine->WindowStart();
 
     Uint64 startTime = SDL_GetTicks64();
+
+    SDL_Rect viewport = { 50, 50, 500, 250 };
+    SDL_RenderSetViewport(renderer, &viewport);
 
     // Main loop
     ApplicationOperationState operationState = ApplicationOperationState::Running;
@@ -98,6 +118,10 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
             {
                 operationState = eventAnswer;
             }
+
+#ifdef _TOOLS
+            ImGui_ImplSDL2_ProcessEvent(&e);
+#endif
 
             if (e.type == SDL_QUIT)
             {
@@ -132,10 +156,25 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
         }
 #endif
 
+#ifdef _TOOLS
+        ImGui_ImplSDLRenderer2_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::Begin("Hello, Dear ImGui with SDL2");
+        ImGui::TextColored(ImVec4(150,150,150,150),"This is just a basic Hello World!");
+        ImGui::End();
+
+        ImGui::Render();
+#endif
+
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
         SDL_RenderClear(renderer);
 
+#ifdef _TOOLS
+        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer);
+#endif
         engine->Draw();
 
         // Update screen
@@ -145,8 +184,13 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
         SDL_Delay(3);
     }
 
+
+
     // Wait
     //system("pause");
+#ifdef _TOOLS
+    m_imgui->Teardown();
+#endif
 
     // Ensure the engine knows we no longer have a window
     SDL_DestroyRenderer(m_renderer->GetRenderer());
