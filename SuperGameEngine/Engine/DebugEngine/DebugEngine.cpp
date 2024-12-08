@@ -45,9 +45,15 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_haveLoaded = true;
 
         curr = ticks;
+
+        m_go = std::make_shared<SuperGameObject>();
+        m_go->Setup(m_sceneLoadPackage);
+        m_go->AddComponent("TestComponent");
     }
 
-    m_gameTime->SetTicksSinceLastFrame(ticks);
+    m_go->Update(m_gameTime);
+
+    /*m_gameTime->SetTicksSinceLastFrame(ticks);
     if (m_go)
     {
         
@@ -68,7 +74,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         curr = 0;
         std::cout << "Restart" << std::endl;
         return ApplicationOperationState::Restart;
-    }
+    }*/
 
     return ApplicationOperationState::Running;
 }

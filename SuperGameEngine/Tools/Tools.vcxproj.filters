@@ -31,6 +31,24 @@
     <Filter Include="Header Files\ToolsEngine">
       <UniqueIdentifier>{7b5e824b-76d8-488d-957e-0cd368528b59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{91a5f021-6015-4ebb-9c07-887483044418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\GameViewport">
+      <UniqueIdentifier>{713e30fb-d1ac-4398-ac91-85a98be12fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\UpdatableObject">
+      <UniqueIdentifier>{da26c74b-437a-4f12-af47-38a207268bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows">
+      <UniqueIdentifier>{65fb79ba-bd74-41bc-9e75-c252842b352a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows\GameViewport">
+      <UniqueIdentifier>{117a4abf-e1ea-4308-b07e-bee5faeaec1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows\UpdateableObject">
+      <UniqueIdentifier>{65626704-1139-4e13-aee6-2159c1e56c32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -48,6 +66,15 @@
     <ClInclude Include="ToolsEngine\ToolsEngine.h">
       <Filter>Header Files\ToolsEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\GameViewport\GameViewport.h">
+      <Filter>Header Files\Windows\GameViewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h">
+      <Filter>Header Files\Windows\UpdateableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tools.cpp">
@@ -64,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp">
       <Filter>Source Files\ToolsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\GameViewport\GameViewport.cpp">
+      <Filter>Source Files\Windows\GameViewport</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

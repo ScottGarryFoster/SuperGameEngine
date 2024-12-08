@@ -18,6 +18,7 @@ using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
+    class UpdateableObject;
 
     /// <summary>
     /// An engine just for debugging. It is independent of  other engines.
@@ -85,6 +86,21 @@ namespace SuperGameTools
         /// Everything a component needs to exist and operate.
         /// </summary>
         std::shared_ptr<SuperSceneLoadPackage> m_sceneLoadPackage;
+
+        /// <summary>
+        /// Everything we'll be running.
+        /// </summary>
+        std::vector<std::shared_ptr<UpdateableObject>> m_updatables;
+
+        /// <summary>
+        /// True means setup.
+        /// </summary>
+        bool m_haveSetup;
+
+        /// <summary>
+        /// Stores the renderer in a safe manner.
+        /// </summary>
+        std::shared_ptr<SDLRendererReader> m_renderer;
     };
 
     REGISTER_ENGINE("ToolsEngine", ToolsEngine);

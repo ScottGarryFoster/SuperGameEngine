@@ -143,9 +143,12 @@
   <ItemGroup>
     <ClInclude Include="EngineIncludes\EngineInclude.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestComponent\ToolsComponent.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
+    <ClInclude Include="Windows\GameViewport\GameViewport.h" />
+    <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineIncludes\EngineInclude.cpp" />
@@ -158,6 +161,7 @@
     <ClCompile Include="TestComponent\ToolsComponent.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
+    <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

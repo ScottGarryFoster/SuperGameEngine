@@ -120,9 +120,6 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
 
     Uint64 startTime = SDL_GetTicks64();
 
-    SDL_Rect viewport = { 50, 50, 500, 250 };
-    SDL_RenderSetViewport(renderer, &viewport);
-
     // Main loop
     ApplicationOperationState operationState = ApplicationOperationState::Running;
     while (operationState == ApplicationOperationState::Running)
