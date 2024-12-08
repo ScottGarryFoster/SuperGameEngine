@@ -50,7 +50,7 @@ int main(int argc, char* args[])
         std::cout << "Could not create engine entry: " << "ToolsEngineEntry" << " Please ensure it is added to the factory \n.";
         return 1;
     }
-#elif
+#else
     // No need to use pointers as this is internal.
     EngineEntry engineEntry = EngineEntry();
     std::shared_ptr<Engine> engine = std::make_shared<SuperEngineDebug::DebugEngine>();

@@ -8,32 +8,10 @@
 
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 
-#ifdef _TOOLS
-#include "../Imgui/External/imgui.h"
-#include "../Imgui/External/imgui_impl_sdl2.h"
-#include "../Imgui/External/imgui_impl_sdlrenderer2.h"
-#include "../Imgui/Internal/ImGuiContainer.h"
-#include "../Engine/Factory/EngineFactory.h"
-#endif
-
 using namespace SuperGameEngine;
 
 int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 {
-#ifdef _TOOLS
-    m_imgui = std::make_shared<ImGuiContainer>();
-    // TODO: ToolsEngine should be from a config.
-    auto toolsEngine = EngineFactory::CreateEngine("ToolsEngine");
-    if (toolsEngine)
-    {
-        m_toolsEngine = toolsEngine;
-    }
-    else
-    {
-        std::cout << "Could not create engine: " << "ToolsEngine" << " Please ensure it is added to the factory \n.";
-    }
-#endif
-
     m_renderer = std::make_shared<SDLRenderer>();
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
@@ -44,7 +22,7 @@ int EngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     return 0;
 }
 
-ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
+ApplicationOperationState EngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
 {
     // Pointers to our window and surface
     SDL_Window* window = NULL;
@@ -96,11 +74,6 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
         return ApplicationOperationState::Close;
     }
 
-#ifdef _TOOLS
-    // Initialise IMGUI
-    m_imgui->Initialise(renderer, window);
-#endif
-
 
     // Event handler
     SDL_Event e;
@@ -109,14 +82,6 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
     m_renderer->SetRenderer(renderer);
     engine->GiveRenderer(m_renderer);
     engine->WindowStart();
-
-#ifdef _TOOLS
-    if (m_toolsEngine)
-    {
-        m_toolsEngine->GiveRenderer(m_renderer);
-        m_toolsEngine->WindowStart();
-    }
-#endif
 
     Uint64 startTime = SDL_GetTicks64();
 
@@ -134,20 +99,6 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
             {
                 operationState = eventAnswer;
             }
-
-#ifdef _TOOLS
-            if (m_toolsEngine)
-            {
-                eventAnswer = m_toolsEngine->Event(e);
-                if (eventAnswer != ApplicationOperationState::Running)
-                {
-                    operationState = eventAnswer;
-                }
-            }
-
-            // IMGui also needs events:
-            m_imgui->EventCall(e);
-#endif
 
             if (e.type == SDL_QUIT)
             {
@@ -168,17 +119,6 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
             operationState = updateAnswer;
         }
 
-#ifdef _TOOLS
-        if (m_toolsEngine)
-        {
-            updateAnswer = m_toolsEngine->Update(ticksThisFrame);
-            if (updateAnswer != ApplicationOperationState::Running)
-            {
-                operationState = updateAnswer;
-            }
-        }
-#endif
-
         // Unlikely to occur but in the situation the event and update loop
         // try to override one another we should log this, incase we get a bug
         // here.
@@ -193,28 +133,9 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
         }
 #endif
 
-#ifdef _TOOLS
-        ImGui_ImplSDLRenderer2_NewFrame();
-        ImGui_ImplSDL2_NewFrame();
-        ImGui::NewFrame();
-
-        if (m_toolsEngine)
-        {
-            m_toolsEngine->Draw();
-        }
-
-        // Ensure ImGUI Draws are in buffer
-        m_imgui->FinishCreatingDraw();
-#endif
-
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
         SDL_RenderClear(renderer);
-
-#ifdef _TOOLS
-        // Actually render to the screen.
-        m_imgui->Render();
-#endif
 
         engine->Draw();
 
@@ -229,22 +150,11 @@ ApplicationOperationState SuperGameEngine::EngineEntry::RunSDLWindow(std::shared
 
     // Wait
     //system("pause");
-#ifdef _TOOLS
-    m_imgui->Teardown();
-#endif
 
     // Ensure the engine knows we no longer have a window
     SDL_DestroyRenderer(m_renderer->GetRenderer());
     m_renderer->SetRenderer(nullptr);
     engine->WindowTeardown();
-
-#ifdef _TOOLS
-    if (m_toolsEngine)
-    {
-        // There should be nothing here.
-        engine->WindowTeardown();
-    }
-#endif
 
     // Destroy the window. This will also destroy the surface
     SDL_DestroyWindow(window);
