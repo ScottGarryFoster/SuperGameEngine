@@ -5,6 +5,7 @@
 #include "../../Engine/Engine/Graphics/Texture/SDLRendererReader.h"
 #include "../../Engine/Engine/Content/SuperTextureManager.h"
 #include "../../Engine/Engine/Factory/EngineFactory.h"
+#include "../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
 namespace SuperGameEngine
 {
@@ -19,6 +20,7 @@ using namespace SuperGameEngine;
 namespace SuperGameTools
 {
     class UpdateableObject;
+    class WindowPackage;
 
     /// <summary>
     /// An engine just for debugging. It is independent of  other engines.
@@ -26,6 +28,9 @@ namespace SuperGameTools
     class ToolsEngine : public Engine
     {
     public:
+        ToolsEngine();
+        virtual ~ToolsEngine();
+
         /// <summary>
         /// Gives the engine a renderer.
         /// This can be called multiple times whilst the application is open
@@ -36,6 +41,13 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
         virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
+
+        /// <summary>
+        /// Gives the engine the texture the SDL Render is rendering to.
+        /// This is used to display what the engine is doing.
+        /// </summary>
+        /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
+        virtual void GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
 
         /// <summary>
         /// Handle the current event.
@@ -101,6 +113,17 @@ namespace SuperGameTools
         /// Stores the renderer in a safe manner.
         /// </summary>
         std::shared_ptr<SDLRendererReader> m_renderer;
+
+        /// <summary>
+        /// Gives the engine the texture the SDL Render is rendering to.
+        /// This is used to display what the engine is doing.
+        /// </summary>
+        std::shared_ptr< ExtremelyWeakWrapper<SDL_Texture>> m_sdlRenderTexture;
+
+        /// <summary>
+        /// Everything a window needs to run.
+        /// </summary>
+        std::shared_ptr<WindowPackage> m_windowPackage;
     };
 
     REGISTER_ENGINE("ToolsEngine", ToolsEngine);

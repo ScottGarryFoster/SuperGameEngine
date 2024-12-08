@@ -13,8 +13,8 @@ namespace SuperGameTools
         /// <summary>
         /// Called once on setup.
         /// </summary>
-        /// <param name="renderer">Stores renderer safely. </param>
-        virtual void Setup(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer) override;
+        /// <param name="windowPackage">Everything needed to run a window. </param>
+        virtual void Setup(std::shared_ptr<WindowPackage> windowPackage) override;
 
         /// <summary>
         /// Called every frame.
@@ -43,6 +43,11 @@ namespace SuperGameTools
         /// new texture.
         /// </summary>
         std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
+
+        /// <summary>
+        /// Everything a Window Package might need to run.
+        /// </summary>
+        std::shared_ptr<WindowPackage> m_windowPackage;
 
         /// <summary>
         /// Updates the viewport to match the window.

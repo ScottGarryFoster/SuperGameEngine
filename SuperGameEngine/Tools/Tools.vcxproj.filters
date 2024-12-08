@@ -49,6 +49,12 @@
     <Filter Include="Header Files\Windows\UpdateableObject">
       <UniqueIdentifier>{65626704-1139-4e13-aee6-2159c1e56c32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\Packages">
+      <UniqueIdentifier>{6eeccfdf-6e51-43a3-8d02-80d69e5b7a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\Packages">
+      <UniqueIdentifier>{c54aa7f7-3702-4b11-a625-8d1a44128d54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -78,6 +84,9 @@
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h">
       <Filter>Header Files\ToolsEngine</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\Packages\WindowPackage.h">
+      <Filter>Header Files\ToolsEngine\Packages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tools.cpp">
@@ -100,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp">
       <Filter>Source Files\ToolsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp">
+      <Filter>Source Files\ToolsEngine\Packages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

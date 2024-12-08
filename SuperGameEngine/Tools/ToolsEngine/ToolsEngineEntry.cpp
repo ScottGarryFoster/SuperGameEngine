@@ -17,7 +17,11 @@ int ToolsEngineEntry::RunApplication(std::shared_ptr<Engine> engine)
 #ifdef _TOOLS
     m_imgui = std::make_shared<ImGuiContainer>();
     // TODO: ToolsEngine should be from a config.
-    auto toolsEngine = EngineFactory::CreateEngine("ToolsEngine");
+    m_toolsEngine = std::make_shared<ToolsEngine>();
+    m_sdlTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
+    m_toolsEngine->GiveSDLTexture(m_sdlTexture);
+
+    /*auto toolsEngine = EngineFactory::CreateEngine("ToolsEngine");
     if (toolsEngine)
     {
         m_toolsEngine = toolsEngine;
@@ -25,7 +29,7 @@ int ToolsEngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     else
     {
         std::cout << "Could not create engine: " << "ToolsEngine" << " Please ensure it is added to the factory \n.";
-    }
+    }*/
 #endif
 
     m_renderer = std::make_shared<SDLRenderer>();
@@ -188,6 +192,23 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
 #endif
 
 #ifdef _TOOLS
+
+        SDL_Texture* sdlTexture = SDL_CreateTexture(
+            renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+        SDL_SetRenderTarget(renderer, sdlTexture);
+        SDL_RenderClear(renderer);
+
+        engine->Draw();
+
+        SDL_SetRenderTarget(renderer, NULL); // Reset to default render target
+
+        m_sdlTexture->Set(sdlTexture);
+
+        // Clear the renderer
+        SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
+        SDL_RenderClear(renderer);
+
+
         ImGui_ImplSDLRenderer2_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
@@ -201,22 +222,21 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
         m_imgui->FinishCreatingDraw();
 #endif
 
-        // Clear the renderer
-        SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
-        SDL_RenderClear(renderer);
-
 #ifdef _TOOLS
         // Actually render to the screen.
         m_imgui->Render();
 #endif
 
-        engine->Draw();
+
 
         // Update screen
         SDL_RenderPresent(renderer);
 
         // Add a small delay to avoid 100% CPU usage
         SDL_Delay(3);
+
+        SDL_DestroyTexture(sdlTexture);
+        m_sdlTexture->Set(nullptr);
     }
 
 

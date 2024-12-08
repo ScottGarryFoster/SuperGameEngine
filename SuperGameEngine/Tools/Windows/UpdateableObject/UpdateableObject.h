@@ -8,6 +8,8 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class WindowPackage;
+
     /// <summary>
     /// The basic concept of setup, update and draw.
     /// </summary>
@@ -17,8 +19,8 @@ namespace SuperGameTools
         /// <summary>
         /// Called once on setup.
         /// </summary>
-        /// <param name="renderer">Stores renderer safely. </param>
-        virtual void Setup(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer) = 0;
+        /// <param name="windowPackage">Everything needed to run a window. </param>
+        virtual void Setup(std::shared_ptr<WindowPackage> windowPackage) = 0;
 
         /// <summary>
         /// Called every frame.

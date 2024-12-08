@@ -5,6 +5,7 @@
 #include "../../Engine/Engine/Graphics/Texture/SDLRenderer.h"
 #include "../../Engine/Engine/Factory/EngineEntryFactory.h"
 #include "../../Engine/EngineEntry/EngineEntry.h"
+#include "../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
 namespace SuperGameEngine
 {
@@ -53,7 +54,9 @@ namespace SuperGameTools
         /// If tools are used, this is engine.
         /// Otherwise, it is an empty pointer.
         /// </summary>
-        std::shared_ptr<Engine> m_toolsEngine;
+        std::shared_ptr<ToolsEngine> m_toolsEngine;
+
+        std::shared_ptr<SuperGameEngine::ExtremelyWeakWrapper<SDL_Texture>> m_sdlTexture;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);
