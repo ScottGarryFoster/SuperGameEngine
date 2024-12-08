@@ -56,7 +56,7 @@ namespace SuperGameTools
         /// </summary>
         std::shared_ptr<ToolsEngine> m_toolsEngine;
 
-        std::shared_ptr<SuperGameEngine::ExtremelyWeakWrapper<SDL_Texture>> m_sdlTexture;
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlTexture;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);
