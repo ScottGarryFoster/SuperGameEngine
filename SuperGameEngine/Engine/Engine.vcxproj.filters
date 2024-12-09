@@ -270,6 +270,15 @@
     <ClInclude Include="Engine\Factory\EngineEntryFactory.h">
       <Filter>Header Files\Engine\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Packages\GrandScenePackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperGrandScenePackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SuperGrandScene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -370,6 +379,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Factory\EngineEntryFactory.cpp">
       <Filter>Source Files\Engine\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperGrandScenePackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\SuperGrandScene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
