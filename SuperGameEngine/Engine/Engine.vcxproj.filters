@@ -133,6 +133,12 @@
     <Filter Include="Header Files\Engine\Factory">
       <UniqueIdentifier>{1fde59ce-1166-4252-8fc3-97a743f7d0bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural\InternalComponents\SpriteComponent">
+      <UniqueIdentifier>{0c2953e1-c7a9-4149-9d34-c79d0b0b99fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\InternalComponents\SpriteComponent">
+      <UniqueIdentifier>{2cb5b6fc-f1e8-47bb-bf1f-5d587c643060}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -297,6 +303,9 @@
     <ClInclude Include="Structural\Packages\SuperComponentLoadPackage.h">
       <Filter>Header Files\Structural\Packages</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.h">
+      <Filter>Header Files\Structural\InternalComponents\SpriteComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -409,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="Structural\Packages\SuperComponentLoadPackage.cpp">
       <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.cpp">
+      <Filter>Source Files\Structural\InternalComponents\SpriteComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

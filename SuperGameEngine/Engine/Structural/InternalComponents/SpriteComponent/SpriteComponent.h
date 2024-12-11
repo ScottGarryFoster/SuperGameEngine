@@ -4,16 +4,16 @@
 
 namespace SuperGameEngine
 {
-    class SpriteComponent;
+    class SuperTexture;
 
     /// <summary>
     /// A component to test basic functionality.
     /// </summary>
-    class TestComponent : public SuperGameComponent
+    class SpriteComponent : public SuperGameComponent
     {
     public:
-        TestComponent();
-        virtual ~TestComponent();
+        SpriteComponent();
+        virtual ~SpriteComponent();
 
         /// <summary>
         /// Sets up the game component.
@@ -30,11 +30,17 @@ namespace SuperGameEngine
         /// <param name="gameTime">The current state of time this frame. </param>
         virtual void Update(const std::shared_ptr<GameTime> gameTime) override;
 
+        /// <summary>
+        /// Draws the component.
+        /// For most components this will do nothing.
+        /// </summary>
+        virtual void Draw() const override;
+
     private:
 
-        std::shared_ptr<SpriteComponent> m_sprite;
+        std::shared_ptr<SuperTexture> m_superTexture;
     };
 
-    REGISTER_COMPONENT("TestComponent", TestComponent);
+    REGISTER_COMPONENT("SpriteComponent", SpriteComponent);
 }
 

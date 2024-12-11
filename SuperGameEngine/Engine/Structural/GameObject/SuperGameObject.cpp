@@ -88,12 +88,10 @@ void SuperGameObject::Draw() const
 
 std::shared_ptr<GameComponent> SuperGameObject::AddComponent(const std::string& type)
 {
-    auto component = ComponentFactory::CreateComponent(type);
-    if (component)
+    if (std::shared_ptr<GameComponent> component = ComponentFactory::CreateComponent(type))
     {
         AddActualComponent(type, component);
         return component;
-        // TODO: AddActualComponentFromObject(component);
     }
 
     return std::shared_ptr<GameComponent>();
@@ -111,10 +109,29 @@ bool SuperGameObject::IsDestroyed() const
 
 std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& type) const
 {
-    return std::shared_ptr<GameComponent>();
+    std::vector<std::shared_ptr<GameComponent>> components;
+    auto it = m_gameComponents.find(type);
+    if (it != m_gameComponents.end())
+    {
+        if (!it->second.empty())
+        {
+            return it->second.front();
+        }
+    }
+
+    it = m_pendingGameComponents.find(type);
+    if (it != m_pendingGameComponents.end())
+    {
+        if (!it->second.empty())
+        {
+            return it->second.front();
+        }
+    }
+
+    return {};
 }
 
-bool SuperGameObject::AddActualComponent(const std::string& type, std::shared_ptr<GameComponent> reference)
+bool SuperGameObject::AddActualComponent(const std::string& type, const std::shared_ptr<GameComponent>& reference)
 {
     reference->Setup(m_componentPackage, m_pointerToSelf);
 

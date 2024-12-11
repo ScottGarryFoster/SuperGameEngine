@@ -145,7 +145,7 @@ namespace SuperGameEngine
         /// <param name="type">Type of the component as a string. Used for organisation. </param>
         /// <param name="reference">Reference to the component to save. </param>
         /// <returns>True means added. </returns>
-        bool AddActualComponent(const std::string& type, std::shared_ptr<GameComponent> reference);
+        bool AddActualComponent(const std::string& type, const std::shared_ptr<GameComponent>& reference);
 
         /// <summary>
         /// Moves any pending components into the main loop.
