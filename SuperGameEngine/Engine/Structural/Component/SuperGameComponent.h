@@ -65,6 +65,17 @@ namespace SuperGameEngine
         /// <param name="newValue">True means this component should render. </param>
         virtual void SetDoRender(bool newValue) override;
 
+        /// <summary>
+        /// Destroys the game object.
+        /// </summary>
+        virtual void Destroy() override;
+
+        /// <summary>
+        /// Is this GameObject marks for destruction.
+        /// </summary>
+        /// <returns>True means is marked for Destroyed. </returns>
+        virtual bool IsDestroyed() const override;
+
     protected:
 
         /// <summary>
@@ -100,5 +111,10 @@ namespace SuperGameEngine
         /// True means setup has been called successfully in the base.
         /// </summary>
         bool m_isSetup;
+
+        /// <summary>
+        /// True means marked for destruction.
+        /// </summary>
+        bool m_isDestroyed;
     };
 }

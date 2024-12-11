@@ -56,14 +56,34 @@ void SuperGameObject::Update(const std::shared_ptr<GameTime> gameTime)
         m_componentsAwaitUpdate = false;
     }
 
+    bool isAtLeastOneDestroyed = false;
     for (const auto& componentAndType : m_gameComponents)
     {
         std::vector<std::shared_ptr<GameComponent>> components = componentAndType.second;
         for (const auto& component : components)
         {
-            // TODO: Add 'Is Destroyed'
-            component->Update(gameTime);
+            if (component->IsDestroyed())
+            {
+                isAtLeastOneDestroyed = true;
+            }
+            else
+            {
+                component->Update(gameTime);
+            }
+
         }
+    }
+
+    // Technically we could miss a destroyed component for
+    // one cycle as one component could make another destroyed
+    // which was earlier in the list. However the idea is that
+    // components are destroy when we want to and this method saves
+    // another loop or exposing a method for the component to speak to the GO
+    // to say like "Hey, I'm destroyed clean me up"
+    if (isAtLeastOneDestroyed)
+    {
+        RemoveDestroyedComponents();
+        isAtLeastOneDestroyed = false;
     }
 }
 
@@ -78,7 +98,7 @@ void SuperGameObject::Draw() const
         std::vector<std::shared_ptr<GameComponent>> components = componentAndType.second;
         for (const auto& component : components)
         {
-            if (component->DoRender())
+            if (component->DoRender() && !component->IsDestroyed())
             {
                 component->Draw();
             }
@@ -166,6 +186,7 @@ void SuperGameObject::AddComponentToDictionary(
     if (it != dictionaryToWriteTo.end())
     {
         components = dictionaryToWriteTo[type];
+        components.push_back(reference);
     }
     else
     {
@@ -173,6 +194,20 @@ void SuperGameObject::AddComponentToDictionary(
     }
 
     dictionaryToWriteTo.insert_or_assign(type, components);
+}
+
+void SuperGameObject::RemoveDestroyedComponents()
+{
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+
+        std::erase_if(
+            it->second,
+            [](const std::shared_ptr<GameComponent>& c) 
+            { return c->IsDestroyed(); });
+    }
 }
 
 

@@ -1,6 +1,9 @@
 #pragma once
 #include "../../GameObject/ComponentFactory.h"
 #include "../../Component/SuperGameComponent.h"
+#include "../../../FatedQuestReferences.h"
+
+using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
@@ -36,9 +39,21 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw() const override;
 
+        virtual void Move(int x, int y);
+
+        virtual int GetX() { return m_location.GetX(); }
+        virtual int GetY() { return m_location.GetY(); }
+
     private:
 
         std::shared_ptr<SuperTexture> m_superTexture;
+
+        FPoint m_location;
+
+        /// <summary>
+        /// Take up memory so I can see it being destroyed.
+        /// </summary>
+        char oneMB[1024 * 1024];
     };
 
     REGISTER_COMPONENT("SpriteComponent", SpriteComponent);

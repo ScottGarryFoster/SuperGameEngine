@@ -33,6 +33,8 @@ namespace SuperGameEngine
     private:
 
         std::shared_ptr<SpriteComponent> m_sprite;
+
+        std::vector<std::shared_ptr<SpriteComponent>> m_bunchOfComponents;
     };
 
     REGISTER_COMPONENT("TestComponent", TestComponent);

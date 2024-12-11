@@ -67,5 +67,16 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="newValue">True means this component should render. </param>
         virtual void SetDoRender(bool newValue) = 0;
+
+        /// <summary>
+        /// Destroys the game object.
+        /// </summary>
+        virtual void Destroy() = 0;
+
+        /// <summary>
+        /// Is this GameObject marks for destruction.
+        /// </summary>
+        /// <returns>True means is marked for Destroyed. </returns>
+        virtual bool IsDestroyed() const = 0;
     };
 }

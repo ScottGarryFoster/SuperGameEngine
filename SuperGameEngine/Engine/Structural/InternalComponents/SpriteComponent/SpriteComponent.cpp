@@ -7,6 +7,7 @@ using namespace SuperGameEngine;
 
 SpriteComponent::SpriteComponent()
 {
+    m_location = FPoint();
 }
 
 SpriteComponent::~SpriteComponent() = default;
@@ -36,5 +37,10 @@ void SpriteComponent::Draw() const
 {
     SuperGameComponent::Draw();
 
-    m_superTexture->Draw(FPoint(200, 200));
+    m_superTexture->Draw(m_location);
+}
+
+void SpriteComponent::Move(int x, int y)
+{
+    m_location.SetXYValue(x, y);
 }

@@ -7,6 +7,7 @@ SuperGameComponent::SuperGameComponent()
 {
     m_doRender = false;
     m_isSetup = false;
+    m_isDestroyed = false;
 }
 
 SuperGameComponent::~SuperGameComponent() = default;
@@ -50,6 +51,16 @@ bool SuperGameComponent::DoRender() const
 void SuperGameComponent::SetDoRender(bool newValue)
 {
     m_doRender = newValue;
+}
+
+void SuperGameComponent::Destroy()
+{
+    m_isDestroyed = true;
+}
+
+bool SuperGameComponent::IsDestroyed() const
+{
+    return m_isDestroyed;
 }
 
 std::shared_ptr<ComponentLoadPackage> SuperGameComponent::GetSceneLoadPackage() const

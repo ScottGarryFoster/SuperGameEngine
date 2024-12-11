@@ -161,6 +161,12 @@ namespace SuperGameEngine
         void AddComponentToDictionary(
             const std::string& type, std::shared_ptr<GameComponent> reference,
             std::unordered_map<std::string, std::vector<std::shared_ptr<GameComponent>>>& dictionaryToWriteTo);
+
+        /// <summary>
+        /// Removes destroyed components.
+        /// To be called outside of any loops.
+        /// </summary>
+        void RemoveDestroyedComponents();
     };
 }
 
