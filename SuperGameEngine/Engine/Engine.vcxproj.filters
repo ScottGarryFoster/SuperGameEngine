@@ -279,6 +279,12 @@
     <ClInclude Include="Structural\Scene\SuperGrandScene.h">
       <Filter>Header Files\Structural\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Scene\Scene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SuperScene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -322,9 +328,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Content\SuperTextureManager.cpp">
       <Filter>Source Files\Engine\Content</Filter>
-    </ClCompile>
-    <ClCompile Include="Structural\Scene\GrandScene.cpp">
-      <Filter>Source Files\Structural\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Content\SuperContentManager.cpp">
       <Filter>Source Files\Engine\Content</Filter>
@@ -384,7 +387,10 @@
       <Filter>Source Files\Structural\Packages</Filter>
     </ClCompile>
     <ClCompile Include="Structural\Scene\SuperGrandScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\SuperScene.cpp">
+      <Filter>Source Files\Structural\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

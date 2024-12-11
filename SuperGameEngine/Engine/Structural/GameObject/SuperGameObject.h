@@ -87,7 +87,7 @@ namespace SuperGameEngine
         /// Is this GameObject marks for destruction.
         /// </summary>
         /// <returns>True means is marked for Destroyed. </returns>
-        virtual bool IsDestroyed() const;
+        virtual bool IsDestroyed() const override;
     private:
         /// <summary>
         /// Unique identifier.
@@ -145,6 +145,12 @@ namespace SuperGameEngine
         /// </summary>
         void MovePendingToMain();
 
+        /// <summary>
+        /// Adds component to actual dictionary
+        /// </summary>
+        /// <param name="type">Type as string. </param>
+        /// <param name="reference">Component reference. </param>
+        /// <param name="dictionaryToWriteTo">Dictionary to add to. </param>
         void AddComponentToDictionary(
             const std::string& type, std::shared_ptr<GameComponent> reference,
             std::unordered_map<std::string, std::vector<std::shared_ptr<GameComponent>>>& dictionaryToWriteTo);

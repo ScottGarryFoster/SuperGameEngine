@@ -245,7 +245,9 @@
     <ClInclude Include="Structural\Packages\SuperGrandScenePackage.h" />
     <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
+    <ClInclude Include="Structural\Scene\Scene.h" />
     <ClInclude Include="Structural\Scene\SuperGrandScene.h" />
+    <ClInclude Include="Structural\Scene\SuperScene.h" />
     <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h" />
@@ -288,8 +290,8 @@
     <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp" />
     <ClCompile Include="Structural\Packages\SuperGrandScenePackage.cpp" />
     <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp" />
-    <ClCompile Include="Structural\Scene\GrandScene.cpp" />
     <ClCompile Include="Structural\Scene\SuperGrandScene.cpp" />
+    <ClCompile Include="Structural\Scene\SuperScene.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />
