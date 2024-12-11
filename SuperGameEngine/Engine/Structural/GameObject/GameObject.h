@@ -7,7 +7,7 @@ namespace SuperGameEngine
 {
     class GameComponent;
     class GameTime;
-    class SceneLoadPackage;
+    class GameObjectLoadPackage;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -36,10 +36,9 @@ namespace SuperGameEngine
         /// <summary>
         /// Sets up the GameObject.
         /// </summary>
-        /// <param name="sceneLoadPackage">Contains all the objects a GameObject needs to operate. </param>
+        /// <param name="loadPackage">Contains all the objects a GameObject needs to operate. </param>
         /// <param name="sceneToGameObjectPackage">Contains gameObject specific loading items.</param>
-        virtual void Setup(std::shared_ptr<SceneLoadPackage> loadPackage) = 0;
-        //TODO: Add this SceneToGameObjectPackage* gameObjectPackage
+        virtual void Setup(std::shared_ptr<GameObjectLoadPackage> loadPackage) = 0;
 
         /// <summary>
         /// Entry point for the entire game.

@@ -9,6 +9,8 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
+    class SuperComponentLoadPackage;
+
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
     /// managing how these components move around and collide.
@@ -41,7 +43,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="loadPackage">Contains all the objects a GameObject needs to operate. </param>
         /// <param name="sceneToGameObjectPackage">Contains gameObject specific loading items.</param>
-        virtual void Setup(std::shared_ptr<SceneLoadPackage> loadPackage) override;
+        virtual void Setup(std::shared_ptr<GameObjectLoadPackage> loadPackage) override;
 
         /// <summary>
         /// Entry point for the entire game.
@@ -53,8 +55,8 @@ namespace SuperGameEngine
         /// <summary>
         /// Update which occurs at a set time.
         /// </summary>
-        /// <param name="gameTime">Ticks since last frame. </param>
         virtual void FixedUpdate(const std::shared_ptr<GameTime> gameTime) override;
+        /// <param name="gameTime">Ticks since last frame. </param>
 
         /// <summary>
         /// Draw everything in the game.
@@ -102,7 +104,12 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything passed down from the scene.
         /// </summary>
-        std::shared_ptr<SceneLoadPackage> m_loadPackage;
+        std::shared_ptr<GameObjectLoadPackage> m_loadPackage;
+
+        /// <summary>
+        /// Everything a component needs to operate.
+        /// </summary>
+        std::shared_ptr<SuperComponentLoadPackage> m_componentPackage;
 
         /// <summary>
         /// All components currently loaded.

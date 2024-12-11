@@ -1,7 +1,7 @@
 #include "ToolsComponent.h"
 
 #include "../../Engine/Engine/Content/ContentManager.h"
-#include "../../Engine/Structural/Packages/SceneLoadPackage.h"
+#include "../../Engine/Structural/Packages/ComponentLoadPackage.h"
 
 using namespace SuperGameEngine;
 
@@ -12,12 +12,12 @@ ToolsComponent::ToolsComponent()
 ToolsComponent::~ToolsComponent() = default;
 
 void ToolsComponent::Setup(
-    std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
+    std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
     std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
 {
-    SuperGameComponent::Setup(sceneLoadPackage, parent);
+    SuperGameComponent::Setup(componentLoadPackage, parent);
 
-    m_superTexture = sceneLoadPackage->
+    m_superTexture = componentLoadPackage->
         GetContentManager()->
         Texture()->
         GetTexture(

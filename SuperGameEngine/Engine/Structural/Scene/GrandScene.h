@@ -5,6 +5,7 @@ namespace SuperGameEngine
 {
     class GameTime;
     class GrandScenePackage;
+    class Scene;
 
     /// <summary>
     /// Holds everything in the entire game and manages the objects.
@@ -36,5 +37,11 @@ namespace SuperGameEngine
         /// For most components this will do nothing.
         /// </summary>
         virtual void Draw() const = 0;
+
+        /// <summary>
+        /// Creates new Scene and then adds it to the Grand Scene.
+        /// </summary>
+        /// <returns>New Scene added to the Grand Scene. </returns>
+        virtual std::shared_ptr<Scene> CreateAndAddNewScene() = 0;
     };
 };

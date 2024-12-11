@@ -240,9 +240,13 @@
     <ClInclude Include="Structural\GameObject\GameObject.h" />
     <ClInclude Include="Structural\GameObject\SuperGameObject.h" />
     <ClInclude Include="Structural\InternalComponents\TestComponent\TestComponent.h" />
+    <ClInclude Include="Structural\Packages\ComponentLoadPackage.h" />
     <ClInclude Include="Structural\Packages\GrandScenePackage.h" />
+    <ClInclude Include="Structural\Packages\GameObjectLoadPackage.h" />
     <ClInclude Include="Structural\Packages\SceneLoadPackage.h" />
+    <ClInclude Include="Structural\Packages\SuperComponentLoadPackage.h" />
     <ClInclude Include="Structural\Packages\SuperGrandScenePackage.h" />
+    <ClInclude Include="Structural\Packages\SuperGameObjectLoadPackage.h" />
     <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h" />
     <ClInclude Include="Structural\Scene\GrandScene.h" />
     <ClInclude Include="Structural\Scene\Scene.h" />
@@ -288,7 +292,9 @@
     <ClCompile Include="Structural\GameObject\ComponentFactory.cpp" />
     <ClCompile Include="Structural\GameObject\SuperGameObject.cpp" />
     <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp" />
+    <ClCompile Include="Structural\Packages\SuperComponentLoadPackage.cpp" />
     <ClCompile Include="Structural\Packages\SuperGrandScenePackage.cpp" />
+    <ClCompile Include="Structural\Packages\SuperGameObjectLoadPackage.cpp" />
     <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp" />
     <ClCompile Include="Structural\Scene\SuperGrandScene.cpp" />
     <ClCompile Include="Structural\Scene\SuperScene.cpp" />

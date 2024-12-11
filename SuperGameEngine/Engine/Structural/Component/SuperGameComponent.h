@@ -17,10 +17,10 @@ namespace SuperGameEngine
         /// <summary>
         /// Sets up the game component.
         /// </summary>
-        /// <param name="sceneLoadPackage">Everything a component needs to run. </param>
+        /// <param name="componentLoadPackage">Everything a component needs to run. </param>
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
-            std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
+            std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
             std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent) override;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace SuperGameEngine
         /// Gets the scene load package.
         /// </summary>
         /// <returns>Everything a component needs to run. </returns>
-        [[nodiscard]] std::shared_ptr<SceneLoadPackage> GetSceneLoadPackage() const;
+        [[nodiscard]] std::shared_ptr<ComponentLoadPackage> GetSceneLoadPackage() const;
 
     private:
 
@@ -87,7 +87,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything a component needs to run.
         /// </summary>
-        std::shared_ptr<SceneLoadPackage> m_sceneLoadPackage;
+        std::shared_ptr<ComponentLoadPackage> m_loadPackage;
 
         /// <summary>
         /// True means run a draw loop.

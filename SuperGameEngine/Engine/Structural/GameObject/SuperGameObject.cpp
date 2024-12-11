@@ -3,6 +3,8 @@
 #include "ComponentFactory.h"
 #include "../Component/GameComponent.h"
 #include "../../Engine/Basic/ExtremelyWeakWrapper.h"
+#include "../../Structural/Packages/SuperComponentLoadPackage.h"
+#include "../Packages/GameObjectLoadPackage.h"
 
 using namespace SuperGameEngine;
 
@@ -10,7 +12,6 @@ SuperGameObject::SuperGameObject()
 {
     m_guid = GUIDHelpers::CreateGUID();
 
-    m_sceneGuid = std::shared_ptr<Guid>();
     m_isDestroyed = false;
 
     m_pointerToSelf = std::make_shared<ExtremelyWeakWrapper<GameObject>>(this);
@@ -37,9 +38,12 @@ void SuperGameObject::SetScene(std::shared_ptr<Guid> guid)
     m_sceneGuid = guid;
 }
 
-void SuperGameObject::Setup(std::shared_ptr<SceneLoadPackage> loadPackage)
+void SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage> loadPackage)
 {
     m_loadPackage = loadPackage;
+
+    m_componentPackage = std::make_shared<SuperComponentLoadPackage>();
+    m_componentPackage->SetContentManager(m_loadPackage->GetContentManager());
 
     // TODO: Add transform here: EnsureTransformIsOnGameObject();
 }
@@ -112,7 +116,7 @@ std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& 
 
 bool SuperGameObject::AddActualComponent(const std::string& type, std::shared_ptr<GameComponent> reference)
 {
-    reference->Setup(m_loadPackage, m_pointerToSelf);
+    reference->Setup(m_componentPackage, m_pointerToSelf);
 
     AddComponentToDictionary(type, reference, m_pendingGameComponents);
     m_componentsAwaitUpdate = true;

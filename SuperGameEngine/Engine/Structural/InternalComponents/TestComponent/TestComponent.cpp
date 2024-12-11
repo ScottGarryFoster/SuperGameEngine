@@ -1,7 +1,7 @@
 #include "TestComponent.h"
 
 #include "../../../Engine/Content/ContentManager.h"
-#include "../../Packages/SceneLoadPackage.h"
+#include "../../Packages/ComponentLoadPackage.h"
 
 using namespace SuperGameEngine;
 
@@ -12,12 +12,12 @@ TestComponent::TestComponent()
 TestComponent::~TestComponent() = default;
 
 void TestComponent::Setup(
-    std::shared_ptr<SceneLoadPackage> sceneLoadPackage, 
+    std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
     std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
 {
-    SuperGameComponent::Setup(sceneLoadPackage, parent);
+    SuperGameComponent::Setup(componentLoadPackage, parent);
 
-    m_superTexture = sceneLoadPackage->
+    m_superTexture = componentLoadPackage->
         GetContentManager()->
             Texture()->
                 GetTexture(

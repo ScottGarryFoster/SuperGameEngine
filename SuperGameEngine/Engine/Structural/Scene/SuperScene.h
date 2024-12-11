@@ -8,6 +8,8 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
+    class SuperGameObjectLoadPackage;
+
     /// <summary>
     /// Holds and manages game objects
     /// </summary>
@@ -26,7 +28,7 @@ namespace SuperGameEngine
         /// Sets up the Scene.
         /// </summary>
         /// <param name="grandScenePackage">Everything a grand scene needs to run. </param>
-        virtual void Setup(std::shared_ptr<ScenePackage> grandScenePackage) override;
+        virtual void Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage) override;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.
@@ -84,8 +86,16 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything the scene needs to run from the parent.
         /// </summary>
-        std::shared_ptr<ScenePackage> m_scenePackage;
+        std::shared_ptr<SceneLoadPackage> m_scenePackage;
 
+        /// <summary>
+        /// Everything a game object needs to run.
+        /// </summary>
+        std::shared_ptr<SuperGameObjectLoadPackage> m_gameObjectPackage;
+
+        /// <summary>
+        /// Move pending update objects to the main updates.
+        /// </summary>
         void MovePendingToMain();
     };
 };

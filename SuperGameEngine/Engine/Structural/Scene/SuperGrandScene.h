@@ -1,11 +1,11 @@
 #pragma once
 #include "GrandScene.h"
 #include <memory>
+#include <vector>
 
 namespace SuperGameEngine
 {
     class SceneLoadPackage;
-    class GrandScenePackage;
 
     /// <summary>
     /// Holds everything in the entire game and manages the objects.
@@ -37,6 +37,12 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw() const override;
 
+        /// <summary>
+        /// Creates new Scene and then adds it to the Grand Scene.
+        /// </summary>
+        /// <returns>New Scene added to the Grand Scene. </returns>
+        virtual std::shared_ptr<Scene> CreateAndAddNewScene() override;
+
     private:
         /// <summary>
         /// Everything a grand scene needs to run.
@@ -52,5 +58,27 @@ namespace SuperGameEngine
         /// Everything a scene needs to load and exist.
         /// </summary>
         std::shared_ptr<SceneLoadPackage> m_sceneLoadPackage;
+
+        /// <summary>
+        /// All scenes in the order they will be rendered.
+        /// </summary>
+        std::vector<std::shared_ptr<Scene>> m_scenes;
+
+        /// <summary>
+        /// Scenes created but not yet in the render pool.
+        /// This allows us to add to the scenes whilst updating.
+        /// </summary>
+        std::vector<std::shared_ptr<Scene>> m_pendingScenes;
+
+        /// <summary>
+        /// True means there are Pending scenes to update for
+        /// the first time.
+        /// </summary>
+        bool m_isPendingScenes;
+
+        /// <summary>
+        /// Move pending update objects to the main updates.
+        /// </summary>
+        void MovePendingToMain();
     };
 };

@@ -5,8 +5,8 @@
 
 namespace SuperGameEngine
 {
+    class ComponentLoadPackage;
     class GameObject;
-    class SceneLoadPackage;
     class GameTime;
 
     class GameComponent
@@ -16,10 +16,10 @@ namespace SuperGameEngine
         /// <summary>
         /// Sets up the game component.
         /// </summary>
-        /// <param name="sceneLoadPackage">Everything a component needs to run. </param>
+        /// <param name="componentLoadPackage">Everything a component needs to run. </param>
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
-            std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
+            std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
             std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent) = 0;
 
         /// <summary>

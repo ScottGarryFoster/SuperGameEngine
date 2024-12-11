@@ -2,11 +2,14 @@
 
 #include "../Engine/Content/SuperContentManager.h"
 #include "../Structural/GameObject/SuperGameObject.h"
-#include "../Structural/Packages/SuperSceneLoadPackage.h"
+#include "../Structural/Packages/SuperGrandScenePackage.h"
 #include "../Engine/Basic/SuperGameTime.h"
 
 // TODO: Reference all Components
 #include "../Structural/InternalComponents/TestComponent/TestComponent.h"
+#include "../Structural/Scene/GrandScene.h"
+#include "../Structural/Scene/Scene.h"
+#include "../Structural/Scene/SuperGrandScene.h"
 
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
@@ -16,12 +19,11 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
     if (!m_textureManager)
     {
-        m_sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
+        m_sceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
 
-        auto m_contentManager = std::make_shared<SuperContentManager>();
         m_textureManager = std::make_shared<SuperTextureManager>(renderer);
+        auto m_contentManager = std::make_shared<SuperContentManager>();
         m_contentManager->GiveSuperTextureManager(m_textureManager);
-
         m_sceneLoadPackage->SetContentManager(m_contentManager);
 
         m_gameTime = std::make_shared<SuperGameTime>();
@@ -41,17 +43,21 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (!m_haveLoaded)
     {
-        //m_superTexture = m_textureManager->GetTexture(R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
         m_haveLoaded = true;
 
         curr = ticks;
 
-        m_go = std::make_shared<SuperGameObject>();
-        m_go->Setup(m_sceneLoadPackage);
+        m_grandScene = std::make_shared<SuperGrandScene>();
+        m_grandScene->Setup(m_sceneLoadPackage);
+
+        std::shared_ptr<Scene> scene = m_grandScene->CreateAndAddNewScene();
+        m_go = scene->CreateAndAddNewGameObject();
         m_go->AddComponent("TestComponent");
     }
 
-    m_go->Update(m_gameTime);
+    m_gameTime->SetTicksSinceLastFrame(ticks);
+    m_grandScene->Update(m_gameTime);
+
 
     /*m_gameTime->SetTicksSinceLastFrame(ticks);
     if (m_go)
@@ -62,7 +68,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
     else
     {
         m_go = std::make_shared<SuperGameObject>();
-        m_go->Setup(m_sceneLoadPackage);
+        m_go->Setup(m_loadPackage);
         m_go->AddComponent("TestComponent");
         m_go->Update(m_gameTime);
     }
@@ -81,10 +87,9 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 
 void DebugEngine::Draw()
 {
-    //m_superTexture->Draw();
-    if (m_go)
+    if (m_grandScene)
     {
-        m_go->Draw();
+        m_grandScene->Draw();
     }
 
 }

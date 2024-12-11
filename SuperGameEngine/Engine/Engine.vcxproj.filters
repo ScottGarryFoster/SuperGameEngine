@@ -285,6 +285,18 @@
     <ClInclude Include="Structural\Scene\SuperScene.h">
       <Filter>Header Files\Structural\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Packages\GameObjectLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperGameObjectLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\ComponentLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperComponentLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -391,6 +403,12 @@
     </ClCompile>
     <ClCompile Include="Structural\Scene\SuperScene.cpp">
       <Filter>Source Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperGameObjectLoadPackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperComponentLoadPackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

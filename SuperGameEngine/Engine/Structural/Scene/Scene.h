@@ -8,9 +8,9 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
+    class SceneLoadPackage;
     class GameObject;
     class GameTime;
-    class ScenePackage;
 
     /// <summary>
     /// Holds and manages game objects
@@ -27,7 +27,7 @@ namespace SuperGameEngine
         /// Sets up the Scene.
         /// </summary>
         /// <param name="grandScenePackage">Everything a grand scene needs to run. </param>
-        virtual void Setup(std::shared_ptr<ScenePackage> grandScenePackage) = 0;
+        virtual void Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage) = 0;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.

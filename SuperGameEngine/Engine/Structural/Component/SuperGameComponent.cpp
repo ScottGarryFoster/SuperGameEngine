@@ -12,10 +12,10 @@ SuperGameComponent::SuperGameComponent()
 SuperGameComponent::~SuperGameComponent() = default;
 
 void SuperGameComponent::Setup(
-    std::shared_ptr<SceneLoadPackage> sceneLoadPackage,
+    std::shared_ptr<ComponentLoadPackage> sceneLoadPackage,
     std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
 {
-    m_sceneLoadPackage = sceneLoadPackage;
+    m_loadPackage = sceneLoadPackage;
     m_parent = parent;
     m_isSetup = true;
 }
@@ -52,7 +52,7 @@ void SuperGameComponent::SetDoRender(bool newValue)
     m_doRender = newValue;
 }
 
-std::shared_ptr<SceneLoadPackage> SuperGameComponent::GetSceneLoadPackage() const
+std::shared_ptr<ComponentLoadPackage> SuperGameComponent::GetSceneLoadPackage() const
 {
-    return m_sceneLoadPackage;
+    return m_loadPackage;
 }

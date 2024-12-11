@@ -7,8 +7,9 @@
 
 namespace SuperGameEngine
 {
+    class GrandScene;
     class SuperGameTime;
-    class SuperSceneLoadPackage;
+    class SuperGrandScenePackage;
     class GameObject;
 }
 
@@ -81,9 +82,9 @@ namespace SuperEngineDebug
         std::shared_ptr<SuperTextureManager> m_textureManager;
 
         /// <summary>
-        /// Everything a component needs to exist and operate.
+        /// Everything a grand scene needs to operate.
         /// </summary>
-        std::shared_ptr<SuperSceneLoadPackage> m_sceneLoadPackage;
+        std::shared_ptr<SuperGrandScenePackage> m_sceneLoadPackage;
 
         std::shared_ptr<SuperGameTime> m_gameTime;
 
@@ -97,5 +98,10 @@ namespace SuperEngineDebug
         Uint64 curr;
 
         std::shared_ptr<GameObject> m_go;
+
+        /// <summary>
+        /// Holds all scenes.
+        /// </summary>
+        std::shared_ptr<GrandScene> m_grandScene;
     };
 }

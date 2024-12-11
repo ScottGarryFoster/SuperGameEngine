@@ -1,6 +1,8 @@
 #include "SuperScene.h"
 #include "../../FatedQuestReferences.h"
 #include "../GameObject/SuperGameObject.h"
+#include "../../Structural/Packages/SuperGameObjectLoadPackage.h"
+#include "../../Structural/Packages/SceneLoadPackage.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -22,9 +24,12 @@ std::shared_ptr<Guid> SuperScene::GetGuid() const
     return m_guid;
 }
 
-void SuperScene::Setup(std::shared_ptr<ScenePackage> grandScenePackage)
+void SuperScene::Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage)
 {
     m_scenePackage = grandScenePackage;
+
+    m_gameObjectPackage = std::make_shared<SuperGameObjectLoadPackage>();
+    m_gameObjectPackage->SetContentManager(m_scenePackage->GetContentManager());
 
     m_isSetup = true;
 }
@@ -36,6 +41,8 @@ bool SuperScene::IsSetup() const
 
 void SuperScene::Update(const std::shared_ptr<GameTime> gameTime)
 {
+    if (!m_isSetup) return;
+
     if (m_isPendingGameObjects)
     {
         MovePendingToMain();
@@ -53,6 +60,8 @@ void SuperScene::Update(const std::shared_ptr<GameTime> gameTime)
 
 void SuperScene::Draw() const
 {
+    if (!m_isSetup) return;
+
     for (const std::shared_ptr<GameObject>& go : m_gameObjects)
     {
         if (!go->IsDestroyed())
@@ -67,6 +76,7 @@ std::shared_ptr<GameObject> SuperScene::CreateAndAddNewGameObject()
     std::shared_ptr<GameObject> gameObject =
         std::make_shared<SuperGameObject>();
     gameObject->SetScene(m_guid);
+    gameObject->Setup(m_gameObjectPackage);
 
     m_pendingGameObjects.push_back(gameObject);
     m_isPendingGameObjects = true;
