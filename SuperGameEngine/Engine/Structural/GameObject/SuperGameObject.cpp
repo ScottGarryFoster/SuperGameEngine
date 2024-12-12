@@ -151,6 +151,22 @@ std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& 
     return {};
 }
 
+std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObject::GetAllComponents() const
+{
+    std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> returnVector;
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        for (const std::shared_ptr<GameComponent>& gameComponent : references)
+        {
+            returnVector.emplace_back(type, gameComponent);
+        }
+    }
+
+    return returnVector;
+}
+
 bool SuperGameObject::AddActualComponent(const std::string& type, const std::shared_ptr<GameComponent>& reference)
 {
     reference->Setup(m_componentPackage, m_pointerToSelf);

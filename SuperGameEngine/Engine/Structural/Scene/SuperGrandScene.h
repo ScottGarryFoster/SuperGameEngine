@@ -43,6 +43,17 @@ namespace SuperGameEngine
         /// <returns>New Scene added to the Grand Scene. </returns>
         virtual std::shared_ptr<Scene> CreateAndAddNewScene() override;
 
+        /// <summary>
+        /// Destroy the scene and all the game objects.
+        /// </summary>
+        virtual void Destroy() override;
+
+        /// <summary>
+        /// True means marked for destruction.
+        /// </summary>
+        /// <return>True means marked for destruction. </return>
+        virtual bool IsDestroyed() const override;
+
     private:
         /// <summary>
         /// Everything a grand scene needs to run.
@@ -53,6 +64,11 @@ namespace SuperGameEngine
         /// True means is setup.
         /// </summary>
         bool m_isSetup;
+
+        /// <summary>
+        /// True means grand scene is marked for destruction.
+        /// </summary>
+        bool m_isDestroyed;
 
         /// <summary>
         /// Everything a scene needs to load and exist.

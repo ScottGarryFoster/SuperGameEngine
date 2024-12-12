@@ -59,6 +59,16 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
     m_grandScene->Update(m_gameTime);
 
 
+    if (m_gameTime->AllTime() > 5000)
+    {
+        if (m_go)
+        {
+            m_go->Destroy();
+            m_go = std::shared_ptr<GameObject>();
+        }
+
+    }
+
     /*m_gameTime->SetTicksSinceLastFrame(ticks);
     if (m_go)
     {

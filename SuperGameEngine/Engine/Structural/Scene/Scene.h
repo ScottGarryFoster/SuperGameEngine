@@ -52,5 +52,16 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>New GameObject added to the Scene. </returns>
         virtual std::shared_ptr<GameObject> CreateAndAddNewGameObject() = 0;
+
+        /// <summary>
+        /// Destroy the scene and all the game objects.
+        /// </summary>
+        virtual void Destroy() = 0;
+
+        /// <summary>
+        /// True means marked for destruction.
+        /// </summary>
+        /// <return>True means marked for destruction. </return>
+        virtual bool IsDestroyed() const = 0;
     };
 };

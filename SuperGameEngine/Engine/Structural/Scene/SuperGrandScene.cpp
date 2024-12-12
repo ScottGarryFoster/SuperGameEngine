@@ -61,6 +61,16 @@ std::shared_ptr<Scene> SuperGrandScene::CreateAndAddNewScene()
     return scene;
 }
 
+void SuperGrandScene::Destroy()
+{
+    m_isDestroyed = true;
+}
+
+bool SuperGrandScene::IsDestroyed() const
+{
+    return m_isDestroyed;
+}
+
 void SuperGrandScene::MovePendingToMain()
 {
     for (const std::shared_ptr<Scene>& go : m_pendingScenes)

@@ -3,6 +3,7 @@
 #include "../GameObject/SuperGameObject.h"
 #include "../../Structural/Packages/SuperGameObjectLoadPackage.h"
 #include "../../Structural/Packages/SceneLoadPackage.h"
+#include "../Component/GameComponent.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -49,12 +50,22 @@ void SuperScene::Update(const std::shared_ptr<GameTime> gameTime)
         m_isPendingGameObjects = false;
     }
 
+    bool atLeastOneGameObjectDestroyed = false;
     for (const std::shared_ptr<GameObject>& go : m_gameObjects)
     {
-        if (!go->IsDestroyed())
+        if (go->IsDestroyed())
+        {
+            atLeastOneGameObjectDestroyed = true;
+        }
+        else
         {
             go->Update(gameTime);
         }
+    }
+
+    if (atLeastOneGameObjectDestroyed)
+    {
+        DestroyAllDestroyedGameObjects();
     }
 }
 
@@ -84,6 +95,16 @@ std::shared_ptr<GameObject> SuperScene::CreateAndAddNewGameObject()
     return gameObject;
 }
 
+void SuperScene::Destroy()
+{
+    m_isDestroyed = true;
+}
+
+bool SuperScene::IsDestroyed() const
+{
+    return m_isDestroyed;
+}
+
 void SuperScene::MovePendingToMain()
 {
     for (const std::shared_ptr<GameObject>& go : m_pendingGameObjects)
@@ -92,4 +113,32 @@ void SuperScene::MovePendingToMain()
     }
 
     m_pendingGameObjects.clear();
+}
+
+void SuperScene::DestroyAllDestroyedGameObjects()
+{
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (go->IsDestroyed())
+        {
+            DestroyGameObject(go);
+        }
+    }
+
+    std::erase_if(
+        m_gameObjects,
+        [](const std::shared_ptr<GameObject>& o)
+        { return o->IsDestroyed(); });
+}
+
+void SuperScene::DestroyGameObject(std::shared_ptr<GameObject> gameObject)
+{
+    std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> allComponents =
+        gameObject->GetAllComponents();
+    for (const auto typeComponent : allComponents)
+    {
+        typeComponent.second->Destroy();
+    }
+
+    gameObject->Destroy();
 }

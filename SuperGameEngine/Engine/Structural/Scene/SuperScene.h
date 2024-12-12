@@ -54,6 +54,16 @@ namespace SuperGameEngine
         /// <returns>New GameObject added to the Scene. </returns>
         virtual std::shared_ptr<GameObject> CreateAndAddNewGameObject() override;
 
+        /// <summary>
+        /// Destroy the scene and all the game objects.
+        /// </summary>
+        virtual void Destroy() override;
+
+        /// <summary>
+        /// True means marked for destruction.
+        /// </summary>
+        /// <return>True means marked for destruction. </return>
+        virtual bool IsDestroyed() const override;
     private:
 
         /// <summary>
@@ -65,6 +75,11 @@ namespace SuperGameEngine
         /// True means is setup.
         /// </summary>
         bool m_isSetup;
+
+        /// <summary>
+        /// True means scene is marked for destruction.
+        /// </summary>
+        bool m_isDestroyed;
 
         /// <summary>
         /// All game objects in the order of the scene which
@@ -97,5 +112,16 @@ namespace SuperGameEngine
         /// Move pending update objects to the main updates.
         /// </summary>
         void MovePendingToMain();
+
+        /// <summary>
+        /// Destroy all the GameObjects marked for destruction.
+        /// </summary>
+        void DestroyAllDestroyedGameObjects();
+
+        /// <summary>
+        /// Marks GameObject and linked components as Destroyed.
+        /// </summary>
+        /// <param name="gameObject">Object to mark destroyed. </param>
+        void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
     };
 };

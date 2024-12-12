@@ -48,7 +48,7 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
 
-    if (gameTime->AllTime() > 10000)
+    /*if (gameTime->AllTime() > 10000)
     {
         for (size_t i = 0; i < m_bunchOfComponents.size(); ++i)
         {
@@ -57,6 +57,6 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         }
 
         m_bunchOfComponents.clear();
-    }
+    }*/
 
 }

@@ -81,6 +81,12 @@ namespace SuperGameEngine
         virtual std::shared_ptr<GameComponent> GetComponent(const std::string& type) const override;
 
         /// <summary>
+        /// Gets all components on the GameObject.
+        /// </summary>
+        /// <returns>All components. Could be an empty vector. </returns>
+        virtual std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> GetAllComponents() const override;
+
+        /// <summary>
         /// Destroys the game object.
         /// </summary>
         virtual void Destroy() override;
