@@ -54,6 +54,6 @@ namespace FatedQuestLibraries
         /// period counts as the extension.
         /// </summary>
         /// <returns></returns>
-        virtual std::string Extention() const = 0;
+        virtual std::string Extension() const = 0;
     };
 }
