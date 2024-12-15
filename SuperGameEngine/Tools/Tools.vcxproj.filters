@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\EngineInclude">
+      <UniqueIdentifier>{6a1568e0-0760-43e6-a9a4-891184a7e58b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EngineInclude">
+      <UniqueIdentifier>{5129c733-f37d-4cd7-8c11-f9ae9f7b564a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestComponent">
+      <UniqueIdentifier>{765f5d3f-71e0-4444-ba3f-834e6bb0a1a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestComponent">
+      <UniqueIdentifier>{e204cff9-5852-4870-a71d-4cc0d55378ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine">
+      <UniqueIdentifier>{6da5ab24-cdf3-4105-bdd5-25af56fab00c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine">
+      <UniqueIdentifier>{7b5e824b-76d8-488d-957e-0cd368528b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{91a5f021-6015-4ebb-9c07-887483044418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\GameViewport">
+      <UniqueIdentifier>{713e30fb-d1ac-4398-ac91-85a98be12fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\UpdatableObject">
+      <UniqueIdentifier>{da26c74b-437a-4f12-af47-38a207268bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows">
+      <UniqueIdentifier>{65fb79ba-bd74-41bc-9e75-c252842b352a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows\GameViewport">
+      <UniqueIdentifier>{117a4abf-e1ea-4308-b07e-bee5faeaec1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows\UpdateableObject">
+      <UniqueIdentifier>{65626704-1139-4e13-aee6-2159c1e56c32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\Packages">
+      <UniqueIdentifier>{6eeccfdf-6e51-43a3-8d02-80d69e5b7a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\Packages">
+      <UniqueIdentifier>{c54aa7f7-3702-4b11-a625-8d1a44128d54}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineIncludes\EngineInclude.h">
+      <Filter>Header Files\EngineInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="TestComponent\ToolsComponent.h">
+      <Filter>Header Files\TestComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ToolsEngine.h">
+      <Filter>Header Files\ToolsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\GameViewport\GameViewport.h">
+      <Filter>Header Files\Windows\GameViewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h">
+      <Filter>Header Files\Windows\UpdateableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ToolsEngineEntry.h">
+      <Filter>Header Files\ToolsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Packages\WindowPackage.h">
+      <Filter>Header Files\ToolsEngine\Packages</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineIncludes\EngineInclude.cpp">
+      <Filter>Source Files\EngineInclude</Filter>
+    </ClCompile>
+    <ClCompile Include="TestComponent\ToolsComponent.cpp">
+      <Filter>Source Files\TestComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ToolsEngine.cpp">
+      <Filter>Source Files\ToolsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\GameViewport\GameViewport.cpp">
+      <Filter>Source Files\Windows\GameViewport</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp">
+      <Filter>Source Files\ToolsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp">
+      <Filter>Source Files\ToolsEngine\Packages</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

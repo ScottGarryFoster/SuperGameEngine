@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\DebugEngine">
+      <UniqueIdentifier>{4f705e5e-2d37-4289-9e79-6746123d8dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DebugEngine">
+      <UniqueIdentifier>{fe5108f8-546b-4c73-988c-798c94e87ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{5c243944-71b5-4c54-a504-fcedb73ffcf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{b9f46721-8a1a-4ed2-947e-24881af33fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{7697adcb-39bd-4c7b-a8ce-1211a32cb242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EngineEntry">
+      <UniqueIdentifier>{f0fceb0e-5fba-4fd1-bcc2-c24c87348433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural">
+      <UniqueIdentifier>{c631788e-ac67-4138-9ba2-0a75389e6357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Spatial">
+      <UniqueIdentifier>{a2f74017-46ef-42c9-8ffc-fcb22ea0a9d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Spatial\Area">
+      <UniqueIdentifier>{ab9527c2-0d0a-4813-8c57-ab8ba981440b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EngineEntry">
+      <UniqueIdentifier>{d7509274-0e82-426e-ae0c-c440ce0c6953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{b409a466-fe07-48ba-b3c7-864a69b09b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{3d50dd3f-e1fc-4787-b192-fec5e2259583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Texture">
+      <UniqueIdentifier>{0f7c83fc-3505-48a1-ab52-4e7b7e242b03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural">
+      <UniqueIdentifier>{9d2bbe89-c424-49f6-b116-a8d24e8d44dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Spatial">
+      <UniqueIdentifier>{f2848d31-084f-4149-9a3b-f7ec7a6f6698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Spatial\Area">
+      <UniqueIdentifier>{b9a8fef2-71f4-4bef-ba29-5f341cb73d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Content">
+      <UniqueIdentifier>{35c0ea69-c9b4-4068-b169-75c351b2f4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Content">
+      <UniqueIdentifier>{b01b67d7-471e-45f9-85b5-372099ec9df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Scene">
+      <UniqueIdentifier>{43bbd659-917e-4cee-a186-5e4ba45a947a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Scene">
+      <UniqueIdentifier>{99d870bd-931f-4c45-a86e-94b5fb9c859b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\GameObject">
+      <UniqueIdentifier>{09cce4c9-ca8a-47a3-9d19-10608d400910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Component">
+      <UniqueIdentifier>{0e724ce0-924d-45a6-9331-22a1241a7e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Component">
+      <UniqueIdentifier>{71bf2064-c020-4f38-99f6-9fcb4cee23a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\GameObject">
+      <UniqueIdentifier>{35532179-6e12-4114-b874-4e89d42c44a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Basic">
+      <UniqueIdentifier>{982512f0-ce79-4338-be9d-e304931876e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Basic">
+      <UniqueIdentifier>{d3f6dc47-b96e-4c76-9b75-127ed6815eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\Packages">
+      <UniqueIdentifier>{425952ee-8b2b-408f-a9e9-d53b062d814c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Packages">
+      <UniqueIdentifier>{ec8554dc-857e-48be-a356-d398526e2f3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\InternalComponents">
+      <UniqueIdentifier>{0d00b464-3ea3-428d-b07b-fcf61726b9ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\InternalComponents">
+      <UniqueIdentifier>{8cae8834-787a-4e86-a452-13e6a722a1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\InternalComponents\TestComponent">
+      <UniqueIdentifier>{d7b0727a-4a26-482e-9f04-27ce609e2551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\InternalComponents\TestComponent">
+      <UniqueIdentifier>{e0510e23-6fb9-44f7-ba2b-9a245ce5e385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui">
+      <UniqueIdentifier>{7527dd79-1859-4129-bcbb-ef018c764586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui">
+      <UniqueIdentifier>{c7f7ac1d-d0f8-4a3a-beb0-5bc28d7dfc14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui\External">
+      <UniqueIdentifier>{e84fa734-6b7f-477d-90e2-2ba0fa50e7b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui\External">
+      <UniqueIdentifier>{0300464a-27c2-4722-9980-1ef459011efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui\Internal">
+      <UniqueIdentifier>{b5a2f9ae-cf3a-47e1-903f-e9ae69be864f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui\Internal">
+      <UniqueIdentifier>{022436c0-7a25-4ce5-aa4e-8b002aefdce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Factory">
+      <UniqueIdentifier>{c09f86a4-394b-446e-b0d6-a67a1d2746e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Factory">
+      <UniqueIdentifier>{1fde59ce-1166-4252-8fc3-97a743f7d0bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structural\InternalComponents\SpriteComponent">
+      <UniqueIdentifier>{0c2953e1-c7a9-4149-9d34-c79d0b0b99fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\InternalComponents\SpriteComponent">
+      <UniqueIdentifier>{2cb5b6fc-f1e8-47bb-bf1f-5d587c643060}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugEngine\DebugEngine.h">
+      <Filter>Header Files\DebugEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\EngineEntry.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\Engine.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEntry\ApplicationOperationState.h">
+      <Filter>Header Files\EngineEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\Circle.h">
+      <Filter>Header Files\Structural\Spatial\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\Rectangle.h">
+      <Filter>Header Files\Structural\Spatial\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Spatial\Area\RectangleInt.h">
+      <Filter>Header Files\Structural\Spatial\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SDLRenderer.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SDLRendererReader.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SDLRendererState.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SuperTexture.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\SuperTextureWrapper.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\Texture.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\MainEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FatedQuestReferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\TextureManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\SuperTextureManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\GrandScene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\ContentManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\SuperContentManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Component\GameComponent.h">
+      <Filter>Header Files\Structural\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\GameTime.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\SuperGameTime.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Component\SuperGameComponent.h">
+      <Filter>Header Files\Structural\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SceneLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperSceneLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\GameObject.h">
+      <Filter>Header Files\Structural\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\SuperGameObject.h">
+      <Filter>Header Files\Structural\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\GameObject\ComponentFactory.h">
+      <Filter>Header Files\Structural\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\InternalComponents\TestComponent\TestComponent.h">
+      <Filter>Header Files\Structural\InternalComponents\TestComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\ExtremelyWeakWrapper.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Basic\PointerState.h">
+      <Filter>Header Files\Engine\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\Internal\ImGuiContainer.h">
+      <Filter>Header Files\Imgui\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imconfig.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui_impl_sdl2.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui_impl_sdlrenderer2.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imgui_internal.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imstb_rectpack.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imstb_textedit.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\External\imstb_truetype.h">
+      <Filter>Header Files\Imgui\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Factory\EngineFactory.h">
+      <Filter>Header Files\Engine\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Factory\EngineEntryFactory.h">
+      <Filter>Header Files\Engine\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\GrandScenePackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperGrandScenePackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SuperGrandScene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\Scene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Scene\SuperScene.h">
+      <Filter>Header Files\Structural\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\GameObjectLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperGameObjectLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\ComponentLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Packages\SuperComponentLoadPackage.h">
+      <Filter>Header Files\Structural\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.h">
+      <Filter>Header Files\Structural\InternalComponents\SpriteComponent</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugEngine\DebugEngine.cpp">
+      <Filter>Source Files\DebugEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SDLRenderer.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SDLRendererReader.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SuperTexture.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\SuperTextureWrapper.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Texture\Texture.cpp">
+      <Filter>Source Files\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\Circle.cpp">
+      <Filter>Source Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp">
+      <Filter>Source Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp">
+      <Filter>Source Files\Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineEntry\EngineEntry.cpp">
+      <Filter>Source Files\EngineEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MainEngine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\SuperTextureManager.cpp">
+      <Filter>Source Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\SuperContentManager.cpp">
+      <Filter>Source Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Component\GameComponent.cpp">
+      <Filter>Source Files\Structural\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Basic\SuperGameTime.cpp">
+      <Filter>Source Files\Engine\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Component\SuperGameComponent.cpp">
+      <Filter>Source Files\Structural\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\SuperGameObject.cpp">
+      <Filter>Source Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\GameObject\ComponentFactory.cpp">
+      <Filter>Source Files\Structural\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp">
+      <Filter>Source Files\Structural\InternalComponents\TestComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\Internal\ImGuiContainer.cpp">
+      <Filter>Source Files\Imgui\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_demo.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_draw.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_impl_sdl2.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_impl_sdlrenderer2.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_tables.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\External\imgui_widgets.cpp">
+      <Filter>Source Files\Imgui\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Factory\EngineFactory.cpp">
+      <Filter>Source Files\Engine\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Factory\EngineEntryFactory.cpp">
+      <Filter>Source Files\Engine\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperGrandScenePackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\SuperGrandScene.cpp">
+      <Filter>Source Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Scene\SuperScene.cpp">
+      <Filter>Source Files\Structural\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperGameObjectLoadPackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Packages\SuperComponentLoadPackage.cpp">
+      <Filter>Source Files\Structural\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.cpp">
+      <Filter>Source Files\Structural\InternalComponents\SpriteComponent</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

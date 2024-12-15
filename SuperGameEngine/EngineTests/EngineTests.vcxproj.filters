@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Structural\Spatial\Area\CircleTests.cpp">
+      <Filter>Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleIntTests.cpp">
+      <Filter>Structural\Spatial\Area</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp">
+      <Filter>Structural\Spatial\Area</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Structural">
+      <UniqueIdentifier>{76c61a8d-36fa-48c4-a45a-5ecf4b91fb70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structural\Spatial">
+      <UniqueIdentifier>{012919e9-5b1b-4e92-bac2-07b4157a03ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structural\Spatial\Area">
+      <UniqueIdentifier>{f352fab8-d884-4e79-9e1e-1f9c9bd2ca73}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

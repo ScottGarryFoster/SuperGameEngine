@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Position">
+      <UniqueIdentifier>{125f88a5-4213-4db3-b298-8e841e04e745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Position">
+      <UniqueIdentifier>{8d040e81-a166-479b-81cd-75a5e7e13a33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object">
+      <UniqueIdentifier>{affec2bb-4d1a-4d49-a07b-5fdceb75e978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object">
+      <UniqueIdentifier>{3ead01b6-45ac-4476-a1ac-fec0c45de9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\GUID">
+      <UniqueIdentifier>{d8da4d94-0bbd-4fcb-b40e-00a5563f7bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\GUID">
+      <UniqueIdentifier>{6ebd5202-7c63-4cae-a7b8-04999916a727}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllReferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Position\FPoint.h">
+      <Filter>Header Files\Position</Filter>
+    </ClInclude>
+    <ClInclude Include="Position\FVector2D.h">
+      <Filter>Header Files\Position</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GUID\GUID.h">
+      <Filter>Header Files\Object\GUID</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GUID\GUIDHelpers.h">
+      <Filter>Header Files\Object\GUID</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GUID\WindowsGUID.h">
+      <Filter>Header Files\Object\GUID</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StandardObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Position\FPoint.cpp">
+      <Filter>Source Files\Position</Filter>
+    </ClCompile>
+    <ClCompile Include="Position\FVector2D.cpp">
+      <Filter>Source Files\Position</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GUID\GUID.cpp">
+      <Filter>Source Files\Object\GUID</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GUID\GUIDHelpers.cpp">
+      <Filter>Source Files\Object\GUID</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GUID\WindowsGUID.cpp">
+      <Filter>Source Files\Object\GUID</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="XMLDocument\RapidXMLDocumentTests.cpp">
+      <Filter>XMLDocument</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\StringAdvancedReplaceTests.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLDocument\RapidXMLNodeTests.cpp">
+      <Filter>XMLDocument</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="XMLDocument">
+      <UniqueIdentifier>{4e2e85c6-2c51-4675-842e-c21521f823d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text">
+      <UniqueIdentifier>{55c7d3b8-e6b1-4605-889c-23c56b1e6423}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

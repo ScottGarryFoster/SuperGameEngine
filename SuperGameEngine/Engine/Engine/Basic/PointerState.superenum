@@ -1,0 +1,22 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../../FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        The state the pointer is in.
+        Used to determine if the pointer is safe to use or should be discarded.
+    </EnumComment>
+    <EnumName Name="PointerState">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Active>
+            There is value.
+        </Active>
+        <Destroyed>
+            The pointer is destroyed. This should be discarded.
+        </Destroyed>
+    </EnumName>
+</SuperEnum>
