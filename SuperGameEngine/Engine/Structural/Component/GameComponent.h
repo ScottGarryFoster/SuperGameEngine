@@ -78,5 +78,18 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>True means is marked for Destroyed. </returns>
         virtual bool IsDestroyed() const = 0;
+
+        /// <summary>
+        /// Destroys the component immediately, calling all the code
+        /// to destroy the component and all it owns.
+        /// </summary>
+        virtual void DestroyImmediately() = 0;
+
+        /// <summary>
+        /// Any further cleanup after being destroyed by the parent
+        /// should take place here. This is called after the parent
+        /// has classed you as removed.
+        /// </summary>
+        virtual void OnDestroyed() = 0;
     };
 }

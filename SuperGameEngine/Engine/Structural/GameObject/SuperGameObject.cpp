@@ -127,6 +127,57 @@ bool SuperGameObject::IsDestroyed() const
     return m_isDestroyed;
 }
 
+void SuperGameObject::DestroyImmediately()
+{
+    // Get everything
+    std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> allComponents;
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        for (const std::shared_ptr<GameComponent>& gameComponent : references)
+        {
+            if (!gameComponent->IsDestroyed())
+            {
+                gameComponent->DestroyImmediately();
+                allComponents.emplace_back(type, gameComponent);
+            }
+        }
+    }
+
+    // Components could be waiting to be updated so ensure these are counted.
+    for (auto it = m_pendingGameComponents.begin(); it != m_pendingGameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        for (const std::shared_ptr<GameComponent>& gameComponent : references)
+        {
+            if (!gameComponent->IsDestroyed())
+            {
+                gameComponent->DestroyImmediately();
+                allComponents.emplace_back(type, gameComponent);
+            }
+        }
+    }
+
+    // Mark us as destroyed.
+    Destroy();
+
+    m_gameComponents = std::unordered_map<std::string, std::vector<std::shared_ptr<GameComponent>>>();
+    m_pendingGameComponents = std::unordered_map<std::string, std::vector<std::shared_ptr<GameComponent>>>();
+
+    // Let the component do any last minute destruction.
+    for (const auto typeComponent : allComponents)
+    {
+        typeComponent.second->OnDestroyed();
+    }
+}
+
+void SuperGameObject::OnDestroyed()
+{
+    // Nothing.
+}
+
 std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& type) const
 {
     std::vector<std::shared_ptr<GameComponent>> components;
@@ -233,15 +284,32 @@ void SuperGameObject::AddComponentToDictionary(
 
 void SuperGameObject::RemoveDestroyedComponents()
 {
+    std::vector<std::shared_ptr<GameComponent>> destroyed;
     for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
     {
         std::string type = it->first;
         std::vector<std::shared_ptr<GameComponent>> references = it->second;
 
+        // Allow the component to destroy itself.
+        for (const auto& c : references)
+        {
+            if (c->IsDestroyed())
+            {
+                c->DestroyImmediately();
+                destroyed.push_back(c);
+            }
+        }
+
         std::erase_if(
             it->second,
             [](const std::shared_ptr<GameComponent>& c) 
             { return c->IsDestroyed(); });
+    }
+
+    // Give the components a chance to clean-up
+    for (const auto& c : destroyed)
+    {
+        c->OnDestroyed();
     }
 }
 

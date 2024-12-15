@@ -7,6 +7,7 @@
 
 namespace SuperGameEngine
 {
+    class Scene;
     class GrandScene;
     class SuperGameTime;
     class SuperGrandScenePackage;
@@ -97,6 +98,7 @@ namespace SuperEngineDebug
         Uint64 t;
         Uint64 curr;
 
+        std::shared_ptr<Scene> m_scene;
         std::shared_ptr<GameObject> m_go;
 
         /// <summary>

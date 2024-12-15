@@ -96,5 +96,7 @@ namespace SuperGameEngine
         /// Move pending update objects to the main updates.
         /// </summary>
         void MovePendingToMain();
+
+        void DestroyAllDestroyedScenes();
     };
 };

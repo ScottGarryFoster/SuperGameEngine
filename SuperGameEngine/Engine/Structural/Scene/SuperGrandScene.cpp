@@ -33,9 +33,23 @@ void SuperGrandScene::Update(const std::shared_ptr<GameTime> gameTime)
         m_isPendingScenes = false;
     }
 
+    bool atLeastOneSceneIsDestroyed = false;
     for (const std::shared_ptr<Scene>& scenes : m_scenes)
     {
-        scenes->Update(gameTime);
+        if (scenes->IsDestroyed())
+        {
+            atLeastOneSceneIsDestroyed = true;
+        }
+        else
+        {
+            scenes->Update(gameTime);
+        }
+    }
+
+    // TODO: Consider making this occur once every 5 seconds to avoid lag. As Destroyed objects functionally do not exist it should not matter.
+    if (atLeastOneSceneIsDestroyed)
+    {
+        DestroyAllDestroyedScenes();
     }
 }
 
@@ -79,4 +93,27 @@ void SuperGrandScene::MovePendingToMain()
     }
 
     m_pendingScenes.clear();
+}
+
+void SuperGrandScene::DestroyAllDestroyedScenes()
+{
+    std::vector<std::shared_ptr<Scene>> destroyed;
+    for (const std::shared_ptr<Scene>& scene : m_scenes)
+    {
+        if (scene->IsDestroyed())
+        {
+            scene->DestroyImmediately();
+            destroyed.push_back(scene);
+        }
+    }
+
+    std::erase_if(
+        m_scenes,
+        [](const std::shared_ptr<Scene>& s)
+        { return s->IsDestroyed(); });
+
+    for (const std::shared_ptr<Scene>& scene : destroyed)
+    {
+        scene->OnDestroyed();
+    }
 }

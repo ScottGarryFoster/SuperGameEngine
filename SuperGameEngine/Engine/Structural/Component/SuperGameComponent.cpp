@@ -63,6 +63,16 @@ bool SuperGameComponent::IsDestroyed() const
     return m_isDestroyed;
 }
 
+void SuperGameComponent::DestroyImmediately()
+{
+    Destroy();
+}
+
+void SuperGameComponent::OnDestroyed()
+{
+    // Nothing.
+}
+
 std::shared_ptr<ComponentLoadPackage> SuperGameComponent::GetSceneLoadPackage() const
 {
     return m_loadPackage;

@@ -50,8 +50,8 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_grandScene = std::make_shared<SuperGrandScene>();
         m_grandScene->Setup(m_sceneLoadPackage);
 
-        std::shared_ptr<Scene> scene = m_grandScene->CreateAndAddNewScene();
-        m_go = scene->CreateAndAddNewGameObject();
+        m_scene = m_grandScene->CreateAndAddNewScene();
+        m_go = m_scene->CreateAndAddNewGameObject();
         m_go->AddComponent("TestComponent");
     }
 
@@ -61,10 +61,10 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 
     if (m_gameTime->AllTime() > 5000)
     {
-        if (m_go)
+        if (m_scene)
         {
-            m_go->Destroy();
-            m_go = std::shared_ptr<GameObject>();
+            m_scene->Destroy();
+            m_scene = std::shared_ptr<Scene>();
         }
 
     }

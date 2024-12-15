@@ -64,6 +64,19 @@ namespace SuperGameEngine
         /// </summary>
         /// <return>True means marked for destruction. </return>
         virtual bool IsDestroyed() const override;
+
+        /// <summary>
+        /// Destroys the scene immediately, calling all the code
+        /// to destroy the scene and all it owns.
+        /// </summary>
+        virtual void DestroyImmediately() override;
+
+        /// <summary>
+        /// Any further cleanup after being destroyed by the parent
+        /// should take place here. This is called after the parent
+        /// has classed you as removed.
+        /// </summary>
+        virtual void OnDestroyed() override;
     private:
 
         /// <summary>
@@ -117,11 +130,5 @@ namespace SuperGameEngine
         /// Destroy all the GameObjects marked for destruction.
         /// </summary>
         void DestroyAllDestroyedGameObjects();
-
-        /// <summary>
-        /// Marks GameObject and linked components as Destroyed.
-        /// </summary>
-        /// <param name="gameObject">Object to mark destroyed. </param>
-        void DestroyGameObject(std::shared_ptr<GameObject> gameObject);
     };
 };

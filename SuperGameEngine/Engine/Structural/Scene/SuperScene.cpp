@@ -3,7 +3,6 @@
 #include "../GameObject/SuperGameObject.h"
 #include "../../Structural/Packages/SuperGameObjectLoadPackage.h"
 #include "../../Structural/Packages/SceneLoadPackage.h"
-#include "../Component/GameComponent.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -13,6 +12,7 @@ SuperScene::SuperScene()
     m_guid = GUIDHelpers::CreateGUID();
     m_isSetup = false;
     m_isPendingGameObjects = false;
+    m_isDestroyed = false;
 }
 
 SuperScene::~SuperScene()
@@ -63,6 +63,7 @@ void SuperScene::Update(const std::shared_ptr<GameTime> gameTime)
         }
     }
 
+    // TODO: Consider making this occur once every 5 seconds to avoid lag. As Destroyed objects functionally do not exist it should not matter.
     if (atLeastOneGameObjectDestroyed)
     {
         DestroyAllDestroyedGameObjects();
@@ -105,6 +106,27 @@ bool SuperScene::IsDestroyed() const
     return m_isDestroyed;
 }
 
+void SuperScene::DestroyImmediately()
+{
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        go->DestroyImmediately();
+    }
+
+    m_gameObjects = std::vector<std::shared_ptr<GameObject>>();
+
+    // Let the game object do any last minute destruction.
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        go->OnDestroyed();
+    }
+}
+
+void SuperScene::OnDestroyed()
+{
+    // Nothing.
+}
+
 void SuperScene::MovePendingToMain()
 {
     for (const std::shared_ptr<GameObject>& go : m_pendingGameObjects)
@@ -117,11 +139,13 @@ void SuperScene::MovePendingToMain()
 
 void SuperScene::DestroyAllDestroyedGameObjects()
 {
+    std::vector<std::shared_ptr<GameObject>> destroyed;
     for (const std::shared_ptr<GameObject>& go : m_gameObjects)
     {
         if (go->IsDestroyed())
         {
-            DestroyGameObject(go);
+            go->DestroyImmediately();
+            destroyed.push_back(go);
         }
     }
 
@@ -129,16 +153,9 @@ void SuperScene::DestroyAllDestroyedGameObjects()
         m_gameObjects,
         [](const std::shared_ptr<GameObject>& o)
         { return o->IsDestroyed(); });
-}
 
-void SuperScene::DestroyGameObject(std::shared_ptr<GameObject> gameObject)
-{
-    std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> allComponents =
-        gameObject->GetAllComponents();
-    for (const auto typeComponent : allComponents)
+    for (const std::shared_ptr<GameObject>& go : destroyed)
     {
-        typeComponent.second->Destroy();
+        go->OnDestroyed();
     }
-
-    gameObject->Destroy();
 }
