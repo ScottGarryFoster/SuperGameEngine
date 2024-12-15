@@ -149,7 +149,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -204,6 +204,7 @@
     <ClInclude Include="FileHandling\CopyOptionsFileSystemHelper.h" />
     <ClInclude Include="FileHandling\Directory.h" />
     <ClInclude Include="FileHandling\File.h" />
+    <ClInclude Include="FileHandling\FilePaths.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Number\FloatingPointHelpers.h" />
     <ClInclude Include="Number\IntHelpers.h" />
@@ -221,6 +222,7 @@
   <ItemGroup>
     <ClCompile Include="FileHandling\Directory.cpp" />
     <ClCompile Include="FileHandling\File.cpp" />
+    <ClCompile Include="FileHandling\FilePaths.cpp" />
     <ClCompile Include="Number\FloatingPointHelpers.cpp" />
     <ClCompile Include="Number\IntHelpers.cpp" />
     <ClCompile Include="pch.cpp">

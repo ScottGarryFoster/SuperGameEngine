@@ -124,3 +124,8 @@ bool File::WriteLine(const std::string& filepath, const std::string& contents)
 
     return true;
 }
+
+std::string File::Separator()
+{
+    return "\\";
+}

@@ -2,6 +2,8 @@
 
 #include "FileHandling/File.h"
 #include "FileHandling/Directory.h"
+#include "FileHandling/FilePaths.h"
+
 #include "Text/StringAdvancedReplace.h"
 #include "XMLDocument/SuperXMLDocument.h"
 #include "XMLDocument/XMLNode.h"

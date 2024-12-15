@@ -64,5 +64,11 @@ namespace FatedQuestLibraries
         /// <param name="contents">Contents to write in file. </param>
         /// <returns>True means could write. </returns>
         static bool WriteLine(const std::string& filepath, const std::string& contents);
+
+        /// <summary>
+        /// What separates file paths.
+        /// </summary>
+        /// <returns>The separator with file paths. </returns>
+        static std::string Separator();
     };
 }

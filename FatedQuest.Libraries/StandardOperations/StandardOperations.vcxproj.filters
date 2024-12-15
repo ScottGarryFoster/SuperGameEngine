@@ -93,6 +93,9 @@
     <ClInclude Include="Number\IntHelpers.h">
       <Filter>Header Files\Number</Filter>
     </ClInclude>
+    <ClInclude Include="FileHandling\FilePaths.h">
+      <Filter>Header Files\FileHandling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StandardOperations.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Number\IntHelpers.cpp">
       <Filter>Source Files\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHandling\FilePaths.cpp">
+      <Filter>Source Files\FileHandling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

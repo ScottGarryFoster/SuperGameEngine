@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\GamePackage">
+      <UniqueIdentifier>{c008d8c4-214a-4fb1-8d25-8d851c6da491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GamePackage">
+      <UniqueIdentifier>{087b2b1f-0c01-420e-acb0-fa40703ed1dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -21,13 +27,46 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage\GamePackage.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFile.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileSystem.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileSystemDirectory.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileSystemFile.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileUnarchived.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackagePaths.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\SGEPackagePaths.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFilePathing.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GamePackage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\PackageFileUnarchived.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\SGEPackagePaths.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\PackageFilePathing.cpp">
+      <Filter>Source Files\GamePackage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
