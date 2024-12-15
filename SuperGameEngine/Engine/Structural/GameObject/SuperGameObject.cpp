@@ -135,7 +135,15 @@ std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& 
     {
         if (!it->second.empty())
         {
-            return it->second.front();
+            std::vector<std::shared_ptr<GameComponent>> componentList = it->second;
+            for (const std::shared_ptr<GameComponent>& gameComponent : componentList)
+            {
+                // Destroyed game components do not exist.
+                if (!gameComponent->IsDestroyed())
+                {
+                    return gameComponent;
+                }
+            }
         }
     }
 
@@ -144,7 +152,15 @@ std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& 
     {
         if (!it->second.empty())
         {
-            return it->second.front();
+            std::vector<std::shared_ptr<GameComponent>> componentList = it->second;
+            for (const std::shared_ptr<GameComponent>& gameComponent : componentList)
+            {
+                // Destroyed game components do not exist.
+                if (!gameComponent->IsDestroyed())
+                {
+                    return gameComponent;
+                }
+            }
         }
     }
 
@@ -160,7 +176,10 @@ std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObj
         std::vector<std::shared_ptr<GameComponent>> references = it->second;
         for (const std::shared_ptr<GameComponent>& gameComponent : references)
         {
-            returnVector.emplace_back(type, gameComponent);
+            if (!gameComponent->IsDestroyed())
+            {
+                returnVector.emplace_back(type, gameComponent);
+            }
         }
     }
 

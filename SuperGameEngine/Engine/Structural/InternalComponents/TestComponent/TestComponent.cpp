@@ -29,6 +29,7 @@ void TestComponent::Setup(
     }*/
 
     //auto sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
+    //std::weak_ptr sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
 
 
     for (int i = 0; i < 150; ++i)
