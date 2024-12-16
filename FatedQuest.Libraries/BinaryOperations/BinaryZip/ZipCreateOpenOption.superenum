@@ -1,0 +1,19 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../../StandardOperations/Text/StringHelpers.h"
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        Describes how to open or create a zip.
+    </EnumComment>
+    <EnumName Name="ZipCreateOpenOption">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <CloseAfterOperation />
+        <LeaveOpen />
+        <CreateIfDoesNotExistAndLeaveOpen />
+        <CreateIfDoesNotExistCloseAfter />
+    </EnumName>
+</SuperEnum>
