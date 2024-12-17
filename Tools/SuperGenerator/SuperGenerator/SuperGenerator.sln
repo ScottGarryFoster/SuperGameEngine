@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StandardOperationsTests", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperEnumGenerator", "SuperEnumGenerator\SuperEnumGenerator.vcxproj", "{7E141BAB-0C83-497E-A3AD-49349E2FFD22}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlDocument", "..\..\..\FatedQuest.Libraries\XmlDocument\XmlDocument.vcxproj", "{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlDocumentTests", "..\..\..\FatedQuest.Libraries\XmlDocumentTests\XmlDocumentTests.vcxproj", "{24853D3C-D4C3-48BB-B0E8-08A6867E014A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -63,6 +67,22 @@ Global
 		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x64.Build.0 = Release|x64
 		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x86.ActiveCfg = Release|Win32
 		{7E141BAB-0C83-497E-A3AD-49349E2FFD22}.Release|x86.Build.0 = Release|Win32
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Debug|x64.ActiveCfg = Debug|x64
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Debug|x64.Build.0 = Debug|x64
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Debug|x86.ActiveCfg = Debug|Win32
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Debug|x86.Build.0 = Debug|Win32
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Release|x64.ActiveCfg = Release|x64
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Release|x64.Build.0 = Release|x64
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Release|x86.ActiveCfg = Release|Win32
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8}.Release|x86.Build.0 = Release|Win32
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Debug|x64.ActiveCfg = Debug|x64
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Debug|x64.Build.0 = Debug|x64
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Debug|x86.ActiveCfg = Debug|Win32
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Debug|x86.Build.0 = Debug|Win32
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Release|x64.ActiveCfg = Release|x64
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Release|x64.Build.0 = Release|x64
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Release|x86.ActiveCfg = Release|Win32
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +91,8 @@ Global
 		{3F3CCD80-0310-46B9-A963-285EAC938CD6} = {B0E93500-502F-472E-8A33-434497520CF3}
 		{1AE9E9BE-B55D-4C31-8A6F-7F3220E8D538} = {B0E93500-502F-472E-8A33-434497520CF3}
 		{B19376E1-C964-431D-AD90-664B70946B8E} = {B0E93500-502F-472E-8A33-434497520CF3}
+		{04DB48A3-BCE2-4311-8FC4-ED2B39B5E3B8} = {B0E93500-502F-472E-8A33-434497520CF3}
+		{24853D3C-D4C3-48BB-B0E8-08A6867E014A} = {B0E93500-502F-472E-8A33-434497520CF3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C767DB1-BB65-4D92-B202-0C443A0894C2}

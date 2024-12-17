@@ -9,6 +9,8 @@
 #include "minizip/unzip.h"
 #include <minizip/ioapi.h>
 
+#include "../../StandardOperations/AllReferences.h"
+
 using namespace FatedQuestLibraries;
 namespace FileSystem = std::filesystem;
 

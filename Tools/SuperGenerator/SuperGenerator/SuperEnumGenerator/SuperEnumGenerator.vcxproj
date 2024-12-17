@@ -164,6 +164,9 @@
     <ProjectReference Include="..\..\..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj">
       <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\FatedQuest.Libraries\XmlDocument\XmlDocument.vcxproj">
+      <Project>{04db48a3-bce2-4311-8fc4-ed2b39b5e3b8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

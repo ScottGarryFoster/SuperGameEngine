@@ -19,12 +19,6 @@
     <Filter Include="Source Files\FileHandling">
       <UniqueIdentifier>{5a648048-5cc7-4ecd-848e-1fb1751fc0a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\XMLDocument">
-      <UniqueIdentifier>{be678ae8-a925-46cf-98bf-568cee307bc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\XMLDocument">
-      <UniqueIdentifier>{90545528-aab6-422d-8dd3-cdb332e2711b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Text">
       <UniqueIdentifier>{eeaf2bfc-0444-4abc-ad32-190ffde6b7f0}</UniqueIdentifier>
     </Filter>
@@ -57,29 +51,8 @@
     <ClInclude Include="FileHandling\File.h">
       <Filter>Header Files\FileHandling</Filter>
     </ClInclude>
-    <ClInclude Include="XMLDocument\SuperXMLDocument.h">
-      <Filter>Header Files\XMLDocument</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLDocument\XMLNode.h">
-      <Filter>Header Files\XMLDocument</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLDocument\XMLAttribute.h">
-      <Filter>Header Files\XMLDocument</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLDocument\RapidXMLDocument.h">
-      <Filter>Header Files\XMLDocument</Filter>
-    </ClInclude>
     <ClInclude Include="AllReferences.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLDocument\RapidXML.h">
-      <Filter>Header Files\XMLDocument</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLDocument\RapidXMLNode.h">
-      <Filter>Header Files\XMLDocument</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLDocument\RapidXMLAttribute.h">
-      <Filter>Header Files\XMLDocument</Filter>
     </ClInclude>
     <ClInclude Include="Text\StringHelpers.h">
       <Filter>Header Files\Text</Filter>
@@ -109,24 +82,6 @@
     </ClCompile>
     <ClCompile Include="FileHandling\File.cpp">
       <Filter>Source Files\FileHandling</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLDocument\SuperXMLDocument.cpp">
-      <Filter>Source Files\XMLDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLDocument\XMLNode.cpp">
-      <Filter>Source Files\XMLDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLDocument\XMLAttribute.cpp">
-      <Filter>Source Files\XMLDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLDocument\RapidXMLDocument.cpp">
-      <Filter>Source Files\XMLDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLDocument\RapidXMLNode.cpp">
-      <Filter>Source Files\XMLDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLDocument\RapidXMLAttribute.cpp">
-      <Filter>Source Files\XMLDocument</Filter>
     </ClCompile>
     <ClCompile Include="Text\StringAdvancedReplace.cpp">
       <Filter>Source Files\Text</Filter>

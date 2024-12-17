@@ -159,16 +159,19 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StandardOperations\StandardOperations.vcxproj">
+      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets" Condition="Exists('..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" />
-    <Import Project="..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets" Condition="Exists('..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets'))" />
-    <Error Condition="!Exists('..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets'))" />
   </Target>
 </Project>

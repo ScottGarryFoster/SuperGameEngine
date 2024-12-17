@@ -11,7 +11,7 @@
 using namespace rapidxml;
 namespace RapidXML
 {
-    // Define some shorthand when refering to Rapid Types.
+    // Define some shorthand when referring to Rapid Types.
     using XML_Document = xml_document<>;
     using XML_Node = xml_node<>;
     using XML_Attribute = xml_attribute<>;

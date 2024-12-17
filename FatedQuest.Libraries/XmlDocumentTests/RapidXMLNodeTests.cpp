@@ -1,10 +1,11 @@
-#include "../../StandardOperations/AllReferences.h"
+#include "../XmlDocument/AllReferences.h"
+#include "../XmlDocument/FatedQuestLibraries.h"
 #include <memory>
 #include <gtest/gtest.h>
 
 using namespace FatedQuestLibraries;
 
-namespace FatedQuestLibraries_StandardOperations_XMLDocument
+namespace FatedQuestLibraries_XMLDocument
 {
     class RapidXMLNodeTests : public ::testing::Test
     {
@@ -26,7 +27,7 @@ namespace FatedQuestLibraries_StandardOperations_XMLDocument
         }
 
         std::shared_ptr<XMLAttribute> CreateAttribute(
-            const std::string& name, 
+            const std::string& name,
             const std::string& value)
         {
             std::shared_ptr<RapidXMLAttribute> attribute = std::make_shared<RapidXMLAttribute>();

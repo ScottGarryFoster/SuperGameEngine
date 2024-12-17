@@ -1,10 +1,11 @@
-#include "../../StandardOperations/AllReferences.h"
+#include "../XmlDocument/AllReferences.h"
+#include "../XmlDocument/FatedQuestLibraries.h"
 #include <memory>
 #include <gtest/gtest.h>
 
 using namespace FatedQuestLibraries;
 
-namespace FatedQuestLibraries_StandardOperations_XMLDocument
+namespace FatedQuestLibraries_XMLDocument
 {
     class RapidXMLDocumentTests : public ::testing::Test
     {
@@ -221,18 +222,18 @@ namespace FatedQuestLibraries_StandardOperations_XMLDocument
             ASSERT_TRUE(child);
             switch (i)
             {
-                case 0:
-                    ASSERT_EQ("Inner1", child->Name()) << "Inner1 != " << child->Name() << " index: " << i;
-                    break;
-                case 1:
-                    ASSERT_EQ("Inner2", child->Name()) << "Inner2 != " << child->Name() << " index: " << i;
-                    break;
-                case 2:
-                    ASSERT_EQ("Inner3", child->Name()) << "Inner3 != " << child->Name() << " index: " << i;
-                    break;
-                case 3:
-                    ASSERT_EQ("Inner4", child->Name()) << "Inner4 != " << child->Name() << " index: " << i;
-                    break;
+            case 0:
+                ASSERT_EQ("Inner1", child->Name()) << "Inner1 != " << child->Name() << " index: " << i;
+                break;
+            case 1:
+                ASSERT_EQ("Inner2", child->Name()) << "Inner2 != " << child->Name() << " index: " << i;
+                break;
+            case 2:
+                ASSERT_EQ("Inner3", child->Name()) << "Inner3 != " << child->Name() << " index: " << i;
+                break;
+            case 3:
+                ASSERT_EQ("Inner4", child->Name()) << "Inner4 != " << child->Name() << " index: " << i;
+                break;
             }
 
             ++i;

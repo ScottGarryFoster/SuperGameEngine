@@ -1,5 +1,5 @@
 #include "RapidXMLNode.h"
-#include "../AllReferences.h"
+#include "FatedQuestLibraries.h"
 
 using namespace FatedQuestLibraries;
 
