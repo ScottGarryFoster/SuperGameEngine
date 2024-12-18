@@ -20,7 +20,7 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="paths">Product paths.  </param>
         /// <param name="path">Path from products location. </param>
-        PackageFilePathing(std::weak_ptr<PackagePaths> paths, std::string path);
+        PackageFilePathing(std::weak_ptr<PackagePaths> paths, const std::string& path);
 
         /// <summary>
         /// Returns file path.
@@ -58,7 +58,7 @@ namespace FatedQuestLibraries
         /// <summary>
         /// File path from products folder, given at construction.
         /// </summary>
-        std::string m_productPath;
+        std::string m_relativePath;
 
         /// <summary>
         /// Full filepath.

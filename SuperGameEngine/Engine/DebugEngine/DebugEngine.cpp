@@ -11,6 +11,9 @@
 #include "../Structural/Scene/Scene.h"
 #include "../Structural/Scene/SuperGrandScene.h"
 
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/CombinedGamePackage.h"
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
+
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
 
@@ -53,6 +56,10 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_scene = m_grandScene->CreateAndAddNewScene();
         m_go = m_scene->CreateAndAddNewGameObject();
         m_go->AddComponent("TestComponent");
+
+        m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
+        std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
+        m_combinedGamePackage->Load(paths);
     }
 
     m_gameTime->SetTicksSinceLastFrame(ticks);

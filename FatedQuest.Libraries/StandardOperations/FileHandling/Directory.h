@@ -88,5 +88,19 @@ namespace FatedQuestLibraries
 
             return combinedPath.string();
         }
+
+        /// <summary>
+        /// Lists directories in directory.
+        /// </summary>
+        /// <param name="path">Directory to list. </param>
+        /// <returns>All directories in directory. </returns>
+        static std::vector<std::string> ListDirectories(const std::string& path);
+
+        /// <summary>
+        /// Lists directories in directory and returns just the names.
+        /// </summary>
+        /// <param name="path">Directory to list. </param>
+        /// <returns>All directories in directory as names. </returns>
+        static std::vector<std::string> ListDirectoryNames(const std::string& path);
     };
 }

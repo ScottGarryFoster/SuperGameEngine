@@ -54,6 +54,12 @@
     <ClInclude Include="GamePackage\PackageFilePathing.h">
       <Filter>Header Files\GamePackage</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage\CombinedGamePackage.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileArchived.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -66,6 +72,12 @@
       <Filter>Source Files\GamePackage</Filter>
     </ClCompile>
     <ClCompile Include="GamePackage\PackageFilePathing.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\CombinedGamePackage.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\PackageFileArchived.cpp">
       <Filter>Source Files\GamePackage</Filter>
     </ClCompile>
   </ItemGroup>

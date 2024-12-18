@@ -5,9 +5,9 @@
 
 using namespace FatedQuestLibraries;
 
-PackageFilePathing::PackageFilePathing(std::weak_ptr<PackagePaths> paths, std::string path)
+PackageFilePathing::PackageFilePathing(std::weak_ptr<PackagePaths> paths, const std::string& path)
 {
-    m_productPath = path;
+    m_relativePath = path;
     m_fullPath = "";
 
     if (const std::shared_ptr<PackagePaths> sharedPtr = paths.lock())
@@ -17,7 +17,7 @@ PackageFilePathing::PackageFilePathing(std::weak_ptr<PackagePaths> paths, std::s
         m_fullPath = ss.str();
     }
 
-    std::filesystem::path productPath(m_productPath);
+    std::filesystem::path productPath(m_relativePath);
     std::vector<std::string> allSteps = StringHelpers::Split(productPath.string(), File::Separator());
     for (size_t i = 0; i < allSteps.size() - 1; ++i)
     {
@@ -51,7 +51,7 @@ PackageFilePathing::PackageFilePathing(std::weak_ptr<PackagePaths> paths, std::s
 
 std::string PackageFilePathing::Path() const
 {
-    return m_productPath;
+    return m_relativePath;
 }
 
 std::vector<std::string> PackageFilePathing::PathByDirectory() const

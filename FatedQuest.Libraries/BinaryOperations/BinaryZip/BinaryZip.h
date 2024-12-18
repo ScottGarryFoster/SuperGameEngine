@@ -118,7 +118,8 @@ namespace FatedQuestLibraries
         virtual bool ExtractSingleFileToData(
             const std::string& zipFilePath, 
             const std::string& innerFilepath, 
-            std::vector<unsigned char>& data, std::vector<std::string>& errors) const = 0;
+            std::vector<unsigned char>& data,
+            std::vector<std::string>& errors) const = 0;
 
         /// <summary>
         /// Extracts a single file and reads it back in memory (directly from file).

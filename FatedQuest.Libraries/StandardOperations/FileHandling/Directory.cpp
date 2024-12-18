@@ -168,3 +168,45 @@ std::string Directory::GetTempDirectory()
         return "";
     }
 }
+
+std::vector<std::string> Directory::ListDirectories(const std::string& path)
+{
+    std::vector<std::string> directories;
+    try 
+    {
+        for (const auto& entry : FileSystem::directory_iterator(path))
+        {
+            if (entry.is_directory())
+            {
+                directories.push_back(entry.path().string());
+            }
+        }
+    }
+    catch (const FileSystem::filesystem_error&)
+    {
+
+    }
+
+    return directories;
+}
+
+std::vector<std::string> Directory::ListDirectoryNames(const std::string& path)
+{
+    std::vector<std::string> directories;
+    try
+    {
+        for (const auto& entry : FileSystem::directory_iterator(path))
+        {
+            if (entry.is_directory())
+            {
+                directories.push_back(entry.path().filename().string());
+            }
+        }
+    }
+    catch (const FileSystem::filesystem_error&)
+    {
+
+    }
+
+    return directories;
+}

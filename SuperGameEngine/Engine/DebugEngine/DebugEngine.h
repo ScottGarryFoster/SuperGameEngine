@@ -5,6 +5,11 @@
 #include "../Engine/Graphics/Texture/SDLRendererReader.h"
 #include "../Engine/Content/SuperTextureManager.h"
 
+namespace FatedQuestLibraries
+{
+    class CombinedGamePackage;
+}
+
 namespace SuperGameEngine
 {
     class Scene;
@@ -86,6 +91,8 @@ namespace SuperEngineDebug
         /// Everything a grand scene needs to operate.
         /// </summary>
         std::shared_ptr<SuperGrandScenePackage> m_sceneLoadPackage;
+
+        std::shared_ptr<CombinedGamePackage> m_combinedGamePackage;
 
         std::shared_ptr<SuperGameTime> m_gameTime;
 

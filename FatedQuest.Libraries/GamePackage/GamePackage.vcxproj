@@ -142,8 +142,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GamePackage\CombinedGamePackage.h" />
     <ClInclude Include="GamePackage\GamePackage.h" />
     <ClInclude Include="GamePackage\PackageFile.h" />
+    <ClInclude Include="GamePackage\PackageFileArchived.h" />
     <ClInclude Include="GamePackage\PackageFilePathing.h" />
     <ClInclude Include="GamePackage\PackageFileSystem.h" />
     <ClInclude Include="GamePackage\PackageFileSystemDirectory.h" />
@@ -154,6 +156,8 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GamePackage\CombinedGamePackage.cpp" />
+    <ClCompile Include="GamePackage\PackageFileArchived.cpp" />
     <ClCompile Include="GamePackage\PackageFilePathing.cpp" />
     <ClCompile Include="GamePackage\PackageFileUnarchived.cpp" />
     <ClCompile Include="GamePackage\SGEPackagePaths.cpp" />
@@ -167,11 +171,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BinaryOperations\BinaryOperations.vcxproj">
+      <Project>{7e635ce1-1a46-4c05-b7ca-5dc1e475ec63}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\StandardOperations\StandardOperations.vcxproj">
+      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\SuperGameEngine\packages\zlib_native.redist.1.2.11\build\native\zlib_native.redist.targets" Condition="Exists('..\..\SuperGameEngine\packages\zlib_native.redist.1.2.11\build\native\zlib_native.redist.targets')" />
     <Import Project="..\..\SuperGameEngine\packages\zlib_native.1.2.11\build\native\zlib_native.targets" Condition="Exists('..\..\SuperGameEngine\packages\zlib_native.1.2.11\build\native\zlib_native.targets')" />
     <Import Project="..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets" Condition="Exists('..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets')" />
+    <Import Project="..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets" Condition="Exists('..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -180,5 +193,6 @@
     <Error Condition="!Exists('..\..\SuperGameEngine\packages\zlib_native.redist.1.2.11\build\native\zlib_native.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\SuperGameEngine\packages\zlib_native.redist.1.2.11\build\native\zlib_native.redist.targets'))" />
     <Error Condition="!Exists('..\..\SuperGameEngine\packages\zlib_native.1.2.11\build\native\zlib_native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\SuperGameEngine\packages\zlib_native.1.2.11\build\native\zlib_native.targets'))" />
     <Error Condition="!Exists('..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\SuperGameEngine\packages\rapidxml.1.13\build\native\rapidxml.targets'))" />
+    <Error Condition="!Exists('..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\SuperGameEngine\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets'))" />
   </Target>
 </Project>

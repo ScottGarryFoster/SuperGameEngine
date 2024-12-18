@@ -4,7 +4,7 @@
 
 using namespace FatedQuestLibraries;
 
-PackageFileUnarchived::PackageFileUnarchived(std::weak_ptr<PackagePaths> paths, std::string path) : PackageFilePathing(paths, path)
+PackageFileUnarchived::PackageFileUnarchived(std::weak_ptr<PackagePaths> paths, const std::string& path) : PackageFilePathing(paths, path)
 {
 
 }
