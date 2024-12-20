@@ -102,5 +102,12 @@ namespace FatedQuestLibraries
         /// <param name="path">Directory to list. </param>
         /// <returns>All directories in directory as names. </returns>
         static std::vector<std::string> ListDirectoryNames(const std::string& path);
+
+        /// <summary>
+        /// Gets the parent directory of the given path.
+        /// </summary>
+        /// <param name="path">Path to find the parent. </param>
+        /// <returns>Parent directory of the given path or string empty if there is no parent. </returns>
+        static std::string GetParent(const std::string& path);
     };
 }

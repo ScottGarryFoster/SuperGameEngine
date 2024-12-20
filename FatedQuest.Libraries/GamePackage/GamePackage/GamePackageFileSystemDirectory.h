@@ -1,10 +1,13 @@
 #pragma once
 #include <memory>
+#include <unordered_map>
+#include <unordered_set>
 
 #include "PackageFileSystemDirectory.h"
 
 namespace FatedQuestLibraries
 {
+    class PackageFile;
     class PackageFiles;
 
     /// <summary>
@@ -45,5 +48,26 @@ namespace FatedQuestLibraries
         /// <param name="path">Directory to list. </param>
         /// <returns>All directories in directory as names. </returns>
         virtual std::vector<std::string> ListDirectoryNames(const std::string& path) const override;
+
+        /// <summary>
+        /// Refresh the files in the system.
+        /// Call this after making changes to the PackageFiles.
+        /// </summary>
+        virtual void Refresh();
+
+    private:
+
+        /// <summary>
+        /// All the files in the game package.
+        /// Will be changes outside of this class.
+        /// </summary>
+        std::shared_ptr<PackageFiles> m_packageFiles;
+
+        /// <summary>
+        /// All file paths currently given.
+        /// </summary>
+        std::unordered_map<std::string, std::unordered_set<std::string>> m_filePaths;
+
+        std::unordered_map<std::string, std::unordered_set<std::string>> m_directories;
     };
 }

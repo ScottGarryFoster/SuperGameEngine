@@ -112,6 +112,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GamePackage\GamePackageFileSystemDirectoryTests.cpp" />
     <ClCompile Include="GamePackage\GamePackageFileSystemFileTests.cpp" />
     <ClCompile Include="GamePackage\PackageFileUnarchivedTests.cpp" />
     <ClCompile Include="test.cpp" />

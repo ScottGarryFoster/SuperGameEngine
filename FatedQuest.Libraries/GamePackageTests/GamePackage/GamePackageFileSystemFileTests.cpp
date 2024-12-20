@@ -21,8 +21,6 @@ namespace FatedQuestLibraries_GamePackage
 
         }
 
-    public:
-
     protected:
 
         void SetUp() override

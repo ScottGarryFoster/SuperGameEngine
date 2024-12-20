@@ -9,6 +9,9 @@
     <ClCompile Include="GamePackage\GamePackageFileSystemFileTests.cpp">
       <Filter>GamePackage</Filter>
     </ClCompile>
+    <ClCompile Include="GamePackage\GamePackageFileSystemDirectoryTests.cpp">
+      <Filter>GamePackage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

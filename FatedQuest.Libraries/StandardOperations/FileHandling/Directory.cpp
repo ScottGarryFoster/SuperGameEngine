@@ -210,3 +210,18 @@ std::vector<std::string> Directory::ListDirectoryNames(const std::string& path)
 
     return directories;
 }
+
+std::string Directory::GetParent(const std::string& path)
+{
+    try
+    {
+        FileSystem::path filePath(path);
+        return filePath.parent_path().string();
+    }
+    catch (const FileSystem::filesystem_error&)
+    {
+
+    }
+
+    return {};
+}
