@@ -43,9 +43,9 @@ namespace FatedQuestLibraries
         /// Looks for the given suffix on the filepath.
         /// </summary>
         /// <param name="filepath">Filepath to inspect. </param>
-        /// <param name="extention">Extension to look for. </param>
+        /// <param name="extension">Extension to look for. </param>
         /// <returns>True means has extension. </returns>
-        static bool EndInExtension(const std::string& filepath, const std::string& extention);
+        static bool EndInExtension(const std::string& filepath, const std::string& extension);
 
         /// <summary>
         /// Copies file to directory.
@@ -70,5 +70,12 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <returns>The separator with file paths. </returns>
         static std::string Separator();
+
+        /// <summary>
+        /// Sanitize the path such that it should be comparable to another.
+        /// </summary>
+        /// <param name="path">Path to sanitize. </param>
+        /// <returns>New path. </returns>
+        static std::string Sanitize(const std::string& path);
     };
 }

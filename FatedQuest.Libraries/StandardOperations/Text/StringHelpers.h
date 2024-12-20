@@ -58,5 +58,15 @@ namespace FatedQuestLibraries
         /// <param name="input">Input to convert. </param>
         /// <returns>Uppercase version of the given. </returns>
         static std::string ToUpper(const std::string& input);
+
+        /// <summary>
+        /// Looks at input, searches for find, replaces.
+        /// Replaces all instances.
+        /// </summary>
+        /// <param name="input">Input to replace. </param>
+        /// <param name="find">String to find</param>
+        /// <param name="replace">String to replace</param>
+        /// <returns>String with find replaced if found. </returns>
+        static std::string ReplaceAll(const std::string& input, const std::string& find, const std::string& replace);
     };
 }

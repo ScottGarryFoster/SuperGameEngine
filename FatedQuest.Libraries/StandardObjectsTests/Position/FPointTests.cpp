@@ -10,8 +10,6 @@ namespace FatedQuestLibraries_StandardObjects_Position
     class FPointTests : public ::testing::Test
     {
     public:
-        std::shared_ptr<SuperXMLDocument> m_testClass;
-
         FPointTests()
         {
         }

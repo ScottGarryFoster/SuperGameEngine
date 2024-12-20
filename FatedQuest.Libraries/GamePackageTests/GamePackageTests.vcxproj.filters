@@ -6,10 +6,16 @@
     <ClCompile Include="GamePackage\PackageFileUnarchivedTests.cpp">
       <Filter>GamePackage</Filter>
     </ClCompile>
+    <ClCompile Include="GamePackage\GamePackageFileSystemFileTests.cpp">
+      <Filter>GamePackage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="GamePackage\Stub\StubPackagePaths.h">
+      <Filter>GamePackage\Stub</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\Stub\StubPackageFile.h">
       <Filter>GamePackage\Stub</Filter>
     </ClInclude>
   </ItemGroup>

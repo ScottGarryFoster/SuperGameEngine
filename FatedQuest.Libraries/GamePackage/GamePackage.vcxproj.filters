@@ -60,6 +60,18 @@
     <ClInclude Include="GamePackage\PackageFileArchived.h">
       <Filter>Header Files\GamePackage</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage\GamePackageFileSystem.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\GamePackageFileSystemFile.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\PackageFiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePackage\GamePackageFileSystemDirectory.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -78,6 +90,18 @@
       <Filter>Source Files\GamePackage</Filter>
     </ClCompile>
     <ClCompile Include="GamePackage\PackageFileArchived.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\PackageFiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\GamePackageFileSystemFile.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\GamePackageFileSystem.cpp">
+      <Filter>Source Files\GamePackage</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePackage\GamePackageFileSystemDirectory.cpp">
       <Filter>Source Files\GamePackage</Filter>
     </ClCompile>
   </ItemGroup>

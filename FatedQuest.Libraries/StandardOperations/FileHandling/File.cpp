@@ -64,14 +64,14 @@ bool File::Delete(const std::string& filepath)
     return FileSystem::remove(filepath);
 }
 
-bool File::EndInExtension(const std::string& filepath, const std::string& extention)
+bool File::EndInExtension(const std::string& filepath, const std::string& extension)
 {
-    if (filepath.size() < extention.size())
+    if (filepath.size() < extension.size())
     {
         return false;
     }
 
-    if (filepath.compare(filepath.size() - extention.size(), extention.size(), extention) == 0)
+    if (filepath.compare(filepath.size() - extension.size(), extension.size(), extension) == 0)
     {
         return true;
     }
@@ -128,4 +128,14 @@ bool File::WriteLine(const std::string& filepath, const std::string& contents)
 std::string File::Separator()
 {
     return "\\";
+}
+
+std::string File::Sanitize(const std::string& path)
+{
+    std::string returnPath = StringHelpers::ToLower(path);
+    returnPath = StringHelpers::Trim(returnPath);
+    returnPath = StringHelpers::ReplaceAll(returnPath,"/","\\");
+    returnPath = StringHelpers::ReplaceAll(returnPath,"\\\\","\\");
+
+    return returnPath;
 }

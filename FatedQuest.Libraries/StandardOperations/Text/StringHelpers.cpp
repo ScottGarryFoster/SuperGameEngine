@@ -130,3 +130,29 @@ std::string StringHelpers::ToUpper(const std::string& input)
     ConvertToUpper(output);
     return output;
 }
+
+std::string StringHelpers::ReplaceAll(const std::string& input, const std::string& find, const std::string& replace)
+{
+    if (input.empty())
+    {
+        return {};
+    }
+
+    std::string returnString = input;
+    size_t startPos = 0;
+    while ((startPos = returnString.find(find, startPos)) != std::string::npos)
+    {
+        returnString.replace(startPos, find.length(), replace);
+
+        // Ensure to move the pointer but also ensure to not move it too much in-case
+        // you are replacing something shorter than you are finding it or replacing single
+        // characters.
+        startPos += replace.length();
+        if (replace.length() < find.length())
+        {
+            startPos -= (find.length() - replace.length());
+        }
+    }
+
+    return returnString;
+}

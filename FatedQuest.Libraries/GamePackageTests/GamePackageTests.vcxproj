@@ -107,10 +107,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GamePackage\Stub\StubPackageFile.h" />
     <ClInclude Include="GamePackage\Stub\StubPackagePaths.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GamePackage\GamePackageFileSystemFileTests.cpp" />
     <ClCompile Include="GamePackage\PackageFileUnarchivedTests.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
