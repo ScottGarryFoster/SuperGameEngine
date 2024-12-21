@@ -39,6 +39,17 @@ std::vector<std::string> GamePackageFileSystemDirectory::GetFiles(const std::str
 
 std::vector<std::string> GamePackageFileSystemDirectory::ListDirectories(const std::string& path) const
 {
+    std::string cleanPath = File::Sanitize(path);
+    if (m_directories.contains(cleanPath))
+    {
+        std::vector<std::string> answer;
+        for (const std::string& directoryRelative : m_directories.at(cleanPath))
+        {
+            answer.push_back(Directory::CombinePath(cleanPath, directoryRelative));
+        }
+        return answer;
+    }
+
     return {};
 }
 
@@ -56,22 +67,23 @@ void GamePackageFileSystemDirectory::Refresh()
         std::string path = File::Sanitize(file->Path());
         std::vector<std::string> pathPieces = StringHelpers::Split(path, "\\");
         std::string directory = Directory::GetParent(path);
-        if (!directory.empty())
-        {
-            if (m_filePaths.contains(directory))
-            {
-                if (!m_filePaths.at(directory).contains(pathPieces.back()))
-                {
-                    m_filePaths.at(directory).insert(pathPieces.back());
-                }
-            }
-            else
-            {
-                std::unordered_set<std::string> paths;
-                paths.insert(pathPieces.back());
-                m_filePaths.insert_or_assign(directory, paths);
-            }
 
+        if (m_filePaths.contains(directory))
+        {
+            if (!m_filePaths.at(directory).contains(pathPieces.back()))
+            {
+                m_filePaths.at(directory).insert(pathPieces.back());
+            }
+        }
+        else
+        {
+            std::unordered_set<std::string> paths;
+            paths.insert(pathPieces.back());
+            m_filePaths.insert_or_assign(directory, paths);
+        }
+
+        if (pathPieces.size() > 1)
+        {
             std::string current = pathPieces[0];
             for (size_t i = 0; i < pathPieces.size() - 2; ++i)
             {
@@ -82,10 +94,30 @@ void GamePackageFileSystemDirectory::Refresh()
                     {
                         m_directories.at(current).insert(nextDirectory);
                     }
-
+                }
+                else
+                {
+                    std::unordered_set<std::string> paths;
+                    paths.insert(nextDirectory);
+                    m_directories.insert_or_assign(current, paths);
                 }
 
                 current += "\\" + nextDirectory;
+            }
+
+            // Ensure to add top level directories
+            if (m_directories.contains({}))
+            {
+                if (!m_directories.at({}).contains(pathPieces[0]))
+                {
+                    m_directories.at({}).insert(pathPieces[0]);
+                }
+            }
+            else
+            {
+                std::unordered_set<std::string> paths;
+                paths.insert(pathPieces[0]);
+                m_directories.insert_or_assign({}, paths);
             }
         }
 

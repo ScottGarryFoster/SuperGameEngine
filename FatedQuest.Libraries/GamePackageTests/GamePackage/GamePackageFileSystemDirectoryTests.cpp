@@ -186,6 +186,129 @@ namespace FatedQuestLibraries_GamePackage
         ASSERT_EQ(expected, actual);
     }
 
+    TEST_F(GamePackageFileSystemDirectoryTests, GetFiles_ReturnsFilenames_WhenFileIsInTopDirectory)
+    {
+        // Arrange
+        std::string givenPath = "Folder1/filename.txt";
+        std::string givenPath2 = "filename2.txt";
+        std::string givenPath3 = "Folder1/filename3.txt";
+        std::string givenDirectory = {};
+        std::vector<std::string> expected{ "filename2.txt" };
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::shared_ptr<StubPackageFile> packageFile2 = MockPackageFilepath(givenPath2);
+        std::shared_ptr<StubPackageFile> packageFile3 = MockPackageFilepath(givenPath3);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile, packageFile2, packageFile3 };
+        m_packageFiles->SetFiles(files);
+        m_testClass->Refresh();
+
+        // Act
+        std::vector<std::string> actual = m_testClass->GetFiles(givenDirectory);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+#pragma endregion
+
+#pragma region ListDirectories
+    TEST_F(GamePackageFileSystemDirectoryTests, ListDirectories_ReturnsEmptyString_WhenThereAreNoDirectories)
+    {
+        // Arrange
+        std::string givenPath = "Folder1/filename.txt";
+        std::string givenPath2 = "Folder1/filename2.txt";
+        std::string givenPath3 = "Folder1/filename3.txt";
+        std::string givenDirectory = "Folder1";
+        std::vector<std::string> expected{ };
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::shared_ptr<StubPackageFile> packageFile2 = MockPackageFilepath(givenPath2);
+        std::shared_ptr<StubPackageFile> packageFile3 = MockPackageFilepath(givenPath3);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile, packageFile2, packageFile3 };
+        m_packageFiles->SetFiles(files);
+        m_testClass->Refresh();
+
+        // Act
+        std::vector<std::string> actual = m_testClass->ListDirectories(givenDirectory);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(GamePackageFileSystemDirectoryTests, ListDirectories_ReturnsFullDirectoryPaths_WhenThereAreDirectoryPaths)
+    {
+        // Arrange
+        std::string givenPath = "Folder1/Folder2/Folder3/filename.txt";
+        std::string givenPath2 = "Folder1/Folder2/Folder4/filename2.txt";
+        std::string givenPath3 = "Folder1/Folder2/Folder5/filename3.txt";
+        std::string givenDirectory = "Folder1/Folder2";
+        std::vector<std::string> expected{
+            File::Sanitize("Folder1/Folder2/Folder3"),
+            File::Sanitize("Folder1/Folder2/Folder4"),
+            File::Sanitize("Folder1/Folder2/Folder5") };
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::shared_ptr<StubPackageFile> packageFile2 = MockPackageFilepath(givenPath2);
+        std::shared_ptr<StubPackageFile> packageFile3 = MockPackageFilepath(givenPath3);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile, packageFile2, packageFile3 };
+        m_packageFiles->SetFiles(files);
+        m_testClass->Refresh();
+
+        // Act
+        std::vector<std::string> actual = m_testClass->ListDirectories(givenDirectory);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(GamePackageFileSystemDirectoryTests, ListDirectories_ReturnsFullDirectoryPaths_WhenInspectingTheTopDirectory)
+    {
+        // Arrange
+        std::string givenPath = "Folder1/Folder4/Folder7/filename.txt";
+        std::string givenPath2 = "Folder2/Folder5/Folder8/filename2.txt";
+        std::string givenPath3 = "Folder3/Folder6/Folder9/filename3.txt";
+        std::string givenDirectory = {};
+        std::vector<std::string> expected{
+            File::Sanitize("Folder1"),
+            File::Sanitize("Folder2"),
+            File::Sanitize("Folder3") };
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::shared_ptr<StubPackageFile> packageFile2 = MockPackageFilepath(givenPath2);
+        std::shared_ptr<StubPackageFile> packageFile3 = MockPackageFilepath(givenPath3);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile, packageFile2, packageFile3 };
+        m_packageFiles->SetFiles(files);
+        m_testClass->Refresh();
+
+        // Act
+        std::vector<std::string> actual = m_testClass->ListDirectories(givenDirectory);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(GamePackageFileSystemDirectoryTests, ListDirectories_ReturnsEmpty_WhenThereAreOnlyFilesInTheTopDirectory)
+    {
+        // Arrange
+        std::string givenPath = "filename.txt";
+        std::string givenPath2 = "filename2.txt";
+        std::string givenPath3 = "filename3.txt";
+        std::string givenDirectory = {};
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::shared_ptr<StubPackageFile> packageFile2 = MockPackageFilepath(givenPath2);
+        std::shared_ptr<StubPackageFile> packageFile3 = MockPackageFilepath(givenPath3);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile, packageFile2, packageFile3 };
+        m_packageFiles->SetFiles(files);
+        m_testClass->Refresh();
+
+        // Act
+        std::vector<std::string> actual = m_testClass->ListDirectories(givenDirectory);
+
+        // Assert
+        ASSERT_EQ(0, actual.size());
+    }
+
 #pragma endregion
 
 }
