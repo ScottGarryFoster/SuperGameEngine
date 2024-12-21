@@ -115,7 +115,6 @@
     <ClCompile Include="GamePackage\GamePackageFileSystemDirectoryTests.cpp" />
     <ClCompile Include="GamePackage\GamePackageFileSystemFileTests.cpp" />
     <ClCompile Include="GamePackage\PackageFileUnarchivedTests.cpp" />
-    <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

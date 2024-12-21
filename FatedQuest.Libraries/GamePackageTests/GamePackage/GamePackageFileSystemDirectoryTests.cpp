@@ -109,6 +109,45 @@ namespace FatedQuestLibraries_GamePackage
 
 #pragma endregion
 
+#pragma region Refresh
+
+    TEST_F(GamePackageFileSystemDirectoryTests, Exists_ReturnsTrue_WhenRefreshIsCalledAfterGivingFiles)
+    {
+        // Arrange
+        std::string givenPath = "Folder1\\FOLDER2\\\\Folder3/filename.txt";
+        std::string givenDirectory = "FOLDER1/Folder2\\Folder3";
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile };
+        m_packageFiles->SetFiles(files);
+
+        // Act
+        m_testClass->Refresh();
+        bool actual = m_testClass->Exists(givenDirectory);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(GamePackageFileSystemDirectoryTests, Exists_ReturnsFalse_WhenRefreshIsNotCalled)
+    {
+        // Arrange
+        std::string givenPath = "Folder1\\FOLDER2\\\\Folder3/filename.txt";
+        std::string givenDirectory = "FOLDER1/Folder2\\Folder3";
+
+        std::shared_ptr<StubPackageFile> packageFile = MockPackageFilepath(givenPath);
+        std::vector<std::shared_ptr<PackageFile>> files = { packageFile };
+        m_packageFiles->SetFiles(files);
+
+        // Act
+        bool actual = m_testClass->Exists(givenDirectory);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+#pragma endregion
+
 #pragma region GetFiles
 
     TEST_F(GamePackageFileSystemDirectoryTests, GetFiles_ReturnsFilenames_WhenGivenManyFilesInADirectory)

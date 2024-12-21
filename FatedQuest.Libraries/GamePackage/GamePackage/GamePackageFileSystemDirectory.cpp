@@ -76,21 +76,9 @@ void GamePackageFileSystemDirectory::Refresh()
     {
         std::string path = File::Sanitize(file->Path());
         std::vector<std::string> pathPieces = StringHelpers::Split(path, "\\");
-        std::string directory = Directory::GetParent(path);
 
-        if (m_filePaths.contains(directory))
-        {
-            if (!m_filePaths.at(directory).contains(pathPieces.back()))
-            {
-                m_filePaths.at(directory).insert(pathPieces.back());
-            }
-        }
-        else
-        {
-            std::unordered_set<std::string> paths;
-            paths.insert(pathPieces.back());
-            m_filePaths.insert_or_assign(directory, paths);
-        }
+        std::string directory = Directory::GetParent(path);
+        AddToCollection(m_filePaths, directory, pathPieces.back());
 
         if (pathPieces.size() > 1)
         {
@@ -98,38 +86,34 @@ void GamePackageFileSystemDirectory::Refresh()
             for (size_t i = 0; i < pathPieces.size() - 2; ++i)
             {
                 const std::string& nextDirectory = pathPieces[i + 1];
-                if (m_directories.contains(current))
-                {
-                    if (!m_directories.at(current).contains(nextDirectory))
-                    {
-                        m_directories.at(current).insert(nextDirectory);
-                    }
-                }
-                else
-                {
-                    std::unordered_set<std::string> paths;
-                    paths.insert(nextDirectory);
-                    m_directories.insert_or_assign(current, paths);
-                }
+                AddToCollection(m_directories, current, nextDirectory);
 
                 current += "\\" + nextDirectory;
             }
 
             // Ensure to add top level directories
-            if (m_directories.contains({}))
-            {
-                if (!m_directories.at({}).contains(pathPieces[0]))
-                {
-                    m_directories.at({}).insert(pathPieces[0]);
-                }
-            }
-            else
-            {
-                std::unordered_set<std::string> paths;
-                paths.insert(pathPieces[0]);
-                m_directories.insert_or_assign({}, paths);
-            }
+            AddToCollection(m_directories, {}, pathPieces[0]);
         }
 
+    }
+}
+
+void GamePackageFileSystemDirectory::AddToCollection(
+    std::unordered_map<std::string, std::unordered_set<std::string>>& collection, 
+    const std::string& key, 
+    const std::string& newValue)
+{
+    if (collection.contains(key))
+    {
+        if (!collection.at(key).contains(newValue))
+        {
+            collection.at(key).insert(newValue);
+        }
+    }
+    else
+    {
+        std::unordered_set<std::string> paths;
+        paths.insert(newValue);
+        collection.insert_or_assign(key, paths);
     }
 }

@@ -68,6 +68,25 @@ namespace FatedQuestLibraries
         /// </summary>
         std::unordered_map<std::string, std::unordered_set<std::string>> m_filePaths;
 
+        /// <summary>
+        /// All directories sorted by Directory and then direct subdirectories.
+        /// The key is the path from Products, the values are then the directory names directly
+        /// within that folder.
+        /// Empty string is valid as the top level directory.
+        /// </summary>
         std::unordered_map<std::string, std::unordered_set<std::string>> m_directories;
+
+        /// <summary>
+        /// Adds the given key and value to the collection if it does not currently exist.
+        /// </summary>
+        /// <param name="collection">Collection, meaning the dictionary of dictionaries. </param>
+        /// <param name="key">Key to look for. </param>
+        /// <param name="newValue">
+        /// Value within the Dictionary value to add if it does not exist.
+        /// </param>
+        void AddToCollection(
+            std::unordered_map<std::string, std::unordered_set<std::string>>& collection, 
+            const std::string& key, 
+            const std::string& newValue);
     };
 }
