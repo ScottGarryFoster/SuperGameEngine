@@ -55,6 +55,16 @@ std::vector<std::string> GamePackageFileSystemDirectory::ListDirectories(const s
 
 std::vector<std::string> GamePackageFileSystemDirectory::ListDirectoryNames(const std::string& path) const
 {
+    std::string cleanPath = File::Sanitize(path);
+    if (m_directories.contains(cleanPath))
+    {
+        std::vector<std::string>
+            answer(
+                m_directories.at(cleanPath).begin(),
+                m_directories.at(cleanPath).end());
+        return answer;
+    }
+
     return {};
 }
 
