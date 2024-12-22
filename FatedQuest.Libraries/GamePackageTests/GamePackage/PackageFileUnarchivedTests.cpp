@@ -5,6 +5,8 @@
 
 #include <gtest/gtest.h>
 
+#include "Stub/StubBinaryZip.h"
+
 
 using namespace FatedQuestLibraries;
 
@@ -15,6 +17,7 @@ namespace FatedQuestLibraries_GamePackage
     public:
 
         std::shared_ptr<StubPackagePaths> m_mockPackagePaths;
+        std::shared_ptr<BinaryZip> m_mockBinaryZip;
 
         std::string m_tempPath;
         std::string m_productsPath;
@@ -41,6 +44,7 @@ namespace FatedQuestLibraries_GamePackage
             }
 
             m_mockPackagePaths = std::make_shared<StubPackagePaths>();
+            m_mockBinaryZip = std::make_shared<StubBinaryZip>();
             m_mockPackagePaths->m_productsDirectory = m_tempPath;
         }
 
@@ -81,7 +85,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(givenPath, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass = 
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::string actual = testClass->Path();
@@ -98,7 +102,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(givenPath, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::string actual = testClass->ReadFileContents();
@@ -116,7 +120,7 @@ namespace FatedQuestLibraries_GamePackage
         AddTempFile(givenPath, "");
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::string actual = testClass->ReadFileContents();
@@ -134,7 +138,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(givenPath, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::vector<std::string> actual = testClass->ReadFileContentsByLine();
@@ -152,7 +156,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(givenPath, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::vector<std::string> actual = testClass->PathByDirectory();
@@ -174,7 +178,7 @@ namespace FatedQuestLibraries_GamePackage
         ASSERT_TRUE(Directory::CreateDirectories(fullDirectory));
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::vector<std::string> actual = testClass->PathByDirectory();
@@ -196,7 +200,7 @@ namespace FatedQuestLibraries_GamePackage
         ASSERT_TRUE(Directory::CreateDirectories(fullDirectory));
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, givenPath);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, givenPath);
 
         // Act
         std::string actual = testClass->FileName();
@@ -213,7 +217,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(expected, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, expected);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, expected);
 
         // Act
         std::string actual = testClass->FileName();
@@ -231,7 +235,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(expected, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, path);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, path);
 
         // Act
         std::string actual = testClass->Extension();
@@ -249,7 +253,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(expected, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, path);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, path);
 
         // Act
         std::string actual = testClass->Extension();
@@ -267,7 +271,7 @@ namespace FatedQuestLibraries_GamePackage
         std::string fullPath = AddTempFile(expected, contents);
 
         std::shared_ptr<PackageFileUnarchived> testClass =
-            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, path);
+            std::make_shared<PackageFileUnarchived>(m_mockPackagePaths, m_mockBinaryZip, path);
 
         // Act
         std::string actual = testClass->Extension();

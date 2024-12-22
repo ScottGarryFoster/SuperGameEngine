@@ -120,6 +120,59 @@ bool StandardBinaryZip::BinaryToFile(
     return true;
 }
 
+bool StandardBinaryZip::BinaryToData(const std::string& inputFilepath, std::vector<unsigned char>& data,
+    std::vector<std::string>& errors) const
+{
+    data.clear();
+
+    // Do not allow methods to do anything if there are existing errors.
+    if (errors.size() > 0)
+    {
+        errors.push_back("Called StandardBinaryZip::BinaryToFile with errors already. Handle the errors before continuing. ");
+        return false;
+    }
+
+    std::ifstream readFile = ReadFileContentsToBinaryStream(inputFilepath, errors);
+    if (errors.size() > 0)
+    {
+        return false;
+    }
+
+    std::vector<char> buffer((std::istreambuf_iterator<char>(readFile)), std::istreambuf_iterator<char>());
+    uLong sourceLength = buffer.size();
+
+    // This is unknown at this stage, we perform a loop below to figure this out.
+    uLong destinationLength = sourceLength * 2;
+
+    std::vector<unsigned char> decompressedData(destinationLength);
+
+    // Keep increasing the buffer until it is big enough.
+    int result;
+    while ((result = uncompress(decompressedData.data(), &destinationLength, reinterpret_cast<unsigned char*>(buffer.data()), sourceLength)) == Z_BUF_ERROR)
+    {
+        destinationLength *= 2;
+        decompressedData.resize(destinationLength);
+
+        if (result != Z_BUF_ERROR && result != Z_OK)
+        {
+            break;
+        }
+    }
+
+    // The last loop above we might not have increased this.
+    decompressedData.resize(destinationLength);
+
+    // We catch the buffer size in the loop.
+    if (result != Z_OK)
+    {
+        errors.push_back("Decompression failed!");
+        return false;
+    }
+
+    data = decompressedData;
+    return true;
+}
+
 bool StandardBinaryZip::DirectoryToBinary(
     const std::string& input, 
     const std::string& output, 

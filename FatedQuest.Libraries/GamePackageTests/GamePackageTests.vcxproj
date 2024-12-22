@@ -107,6 +107,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GamePackage\Stub\StubBinaryZip.h" />
     <ClInclude Include="GamePackage\Stub\StubPackageFile.h" />
     <ClInclude Include="GamePackage\Stub\StubPackagePaths.h" />
     <ClInclude Include="pch.h" />

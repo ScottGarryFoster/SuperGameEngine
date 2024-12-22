@@ -35,6 +35,18 @@ namespace FatedQuestLibraries
             std::vector<std::string>& errors) const = 0;
 
         /// <summary>
+        /// Takes a binary file and outputs the raw data.
+        /// </summary>
+        /// <param name="inputFilepath">A binary filepath. </param>
+        /// <param name="data">Data read from the binary file. </param>
+        /// <param name="errors">If not created successfully this contains the errors. </param>
+        /// <returns>True means created.</returns>
+        virtual bool BinaryToData(
+            const std::string& inputFilepath,
+            std::vector<unsigned char>& data,
+            std::vector<std::string>& errors) const = 0;
+
+        /// <summary>
         /// Takes all the files in a directory and makes them binary.
         /// </summary>
         /// <param name="input">A directory path with files. </param>

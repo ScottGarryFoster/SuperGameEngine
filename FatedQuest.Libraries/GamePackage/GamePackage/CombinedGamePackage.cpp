@@ -43,7 +43,7 @@ bool CombinedGamePackage::Load(const std::shared_ptr<PackagePaths>& paths)
 
         for (const std::string& file : files)
         {
-            auto newFile = std::make_shared<PackageFileUnarchived>(paths, file);
+            auto newFile = std::make_shared<PackageFileUnarchived>(paths, m_binaryZip, file);
             gamePackageFiles.emplace_back(PackageFileOrigin::Unarchived, newFile);
         }
     }

@@ -39,6 +39,18 @@ namespace FatedQuestLibraries
             std::vector<std::string>& errors) const override;
 
         /// <summary>
+        /// Takes a binary file and outputs the raw data.
+        /// </summary>
+        /// <param name="inputFilepath">A binary filepath. </param>
+        /// <param name="outputFilepath">The destination file path.</param>
+        /// <param name="errors">If not created successfully this contains the errors. </param>
+        /// <returns>True means created.</returns>
+        virtual bool BinaryToData(
+            const std::string& inputFilepath,
+            std::vector<unsigned char>& data,
+            std::vector<std::string>& errors) const override;
+
+        /// <summary>
         /// Takes all the files in a directory and makes them binary.
         /// </summary>
         /// <param name="inputPath">A directory path with files. </param>

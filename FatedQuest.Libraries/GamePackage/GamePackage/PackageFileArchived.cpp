@@ -36,23 +36,20 @@ PackageFileArchived::PackageFileArchived(
 
 std::string PackageFileArchived::ReadFileContents()
 {
-    if (m_packageFileStorageType == PackageFileStorageType::Untouched)
+    std::vector<unsigned char> data;
+    std::vector<std::string> error;
+    if (m_packageFileStorageType == PackageFileStorageType::Binary)
     {
-        std::vector<unsigned char> data;
-        std::vector<std::string> error;
+        m_binaryZip->ExtractSingleBinaryFileToData(
+            m_zipPath, m_relativePath,
+            data, error);
+    }
+    else
+    {
         m_binaryZip->ExtractSingleFileToData(
             m_zipPath, m_relativePath,
             data, error);
-
-        std::string contents(data.begin(), data.end());
-        return contents;
     }
-
-    std::vector<unsigned char> data;
-    std::vector<std::string> error;
-    m_binaryZip->ExtractSingleBinaryFileToData(
-        m_zipPath, m_relativePath,
-        data, error);
 
     std::string contents(data.begin(), data.end());
     return contents;
@@ -62,9 +59,18 @@ std::vector<std::string> PackageFileArchived::ReadFileContentsByLine()
 {
     std::vector<unsigned char> data;
     std::vector<std::string> error;
-    m_binaryZip->ExtractSingleFileToData(
-        m_zipPath, m_relativePath,
-        data, error);
+    if (m_packageFileStorageType == PackageFileStorageType::Binary)
+    {
+        m_binaryZip->ExtractSingleBinaryFileToData(
+            m_zipPath, m_relativePath,
+            data, error);
+    }
+    else
+    {
+        m_binaryZip->ExtractSingleFileToData(
+            m_zipPath, m_relativePath,
+            data, error);
+    }
 
     std::vector<std::string> result;
     std::string current_string;

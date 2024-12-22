@@ -7,6 +7,7 @@
 
 namespace FatedQuestLibraries
 {
+    class BinaryZip;
     class PackagePaths;
 
     /// <summary>
@@ -19,8 +20,11 @@ namespace FatedQuestLibraries
         /// Constructor.
         /// </summary>
         /// <param name="paths">Product paths.  </param>
+        /// <param name="binaryZip">
+        /// Binary methods, largely not used for zip in this object.
+        /// </param>
         /// <param name="path">Path from products location. </param>
-        PackageFileUnarchived(std::weak_ptr<PackagePaths> paths, const std::string& path);
+        PackageFileUnarchived(const std::weak_ptr<PackagePaths>& paths, const std::shared_ptr<BinaryZip>& binaryZip, const std::string& path);
 
         /// <summary>
         /// Reads file contents.
@@ -33,5 +37,11 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <returns>File contents. </returns>
         virtual std::vector<std::string> ReadFileContentsByLine() override;
+
+    private:
+        /// <summary>
+        /// Methods to zip and unzip binary files.
+        /// </summary>
+        std::shared_ptr<BinaryZip> m_binaryZip;
     };
 }

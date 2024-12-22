@@ -23,6 +23,9 @@
     <ClInclude Include="GamePackage\Stub\StubPackageFile.h">
       <Filter>GamePackage\Stub</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage\Stub\StubBinaryZip.h">
+      <Filter>GamePackage\Stub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GamePackage">
