@@ -11,9 +11,9 @@ int main()
 
     ProductsPackager::Packager packager;
     packager.PackageProductFolder(
+        "E:\\Development\\SuperGameEngine-Myriad\\Products_", 
         "E:\\Development\\SuperGameEngine-Myriad\\Products", 
-        "E:\\Development\\SuperGameEngine-Myriad\\Products", 
-        ProductsPackager::PackageFileType::Untouched);
+        ProductsPackager::PackageFileType::Binary);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

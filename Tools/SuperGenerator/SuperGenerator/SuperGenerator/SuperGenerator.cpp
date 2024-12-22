@@ -12,8 +12,8 @@ int main(int argc, char* args[])
 
     GenerateEnum generator;
     if (!generator.SingleFile(
-        R"(E:\Development\SuperGameEngine-Myriad\Tools\ProductsPackager\ProductsPackager\PackageFileType.superenum)",
-        R"(E:\Development\SuperGameEngine-Myriad\Tools\ProductsPackager\ProductsPackager\PackageFileType.h)"))
+        R"(E:\Development\SuperGameEngine-Myriad\FatedQuest.Libraries\GamePackage\GamePackage\PackageFileStorageType.superenum)",
+        R"(E:\Development\SuperGameEngine-Myriad\FatedQuest.Libraries\GamePackage\GamePackage\PackageFileStorageType.h)"))
     {
         std::cout << "Could not generate file. " << std::endl;
     }

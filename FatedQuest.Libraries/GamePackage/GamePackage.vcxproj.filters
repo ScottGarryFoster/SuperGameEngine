@@ -81,8 +81,11 @@
     <ClInclude Include="GamePackage\FileSystem\PackageFileSystemFile.h">
       <Filter>Header Files\GamePackage\FileSystem</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileStorageType.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
     <ClInclude Include="GamePackage\FileSystem\PackageFiles.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GamePackage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

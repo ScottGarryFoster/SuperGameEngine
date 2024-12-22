@@ -1,4 +1,4 @@
-<ControllerLayout>
+_<ControllerLayout>
   <Metadata Name="Nintendo N64 Controller" Controller="NintendoN64Controller" Axis="6" Buttons="20" />
   <SDLToUniversalButtons>
     <SDLToUniversalButton SDLButton="0" UniversalControllerButton="FaceButtonDown" /> <!-- A Button -->

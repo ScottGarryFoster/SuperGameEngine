@@ -156,6 +156,7 @@
     <ClInclude Include="GamePackage\PackageFile.h" />
     <ClInclude Include="GamePackage\PackageFileArchived.h" />
     <ClInclude Include="GamePackage\PackageFilePathing.h" />
+    <ClInclude Include="GamePackage\PackageFileStorageType.h" />
     <ClInclude Include="GamePackage\PackageFileUnarchived.h" />
     <ClInclude Include="GamePackage\PackagePaths.h" />
     <ClInclude Include="GamePackage\SGEPackagePaths.h" />

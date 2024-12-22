@@ -84,5 +84,10 @@ void GamePackageFileSystem::AddToCollection(std::unordered_map<std::string, std:
                                             const std::shared_ptr<PackageFile>& potentialNewEntry) const
 {
     std::string path = File::Sanitize(potentialNewEntry->Path());
+    if (path.ends_with(".gz"))
+    {
+        path = path.substr(0, path.length() - 3);
+    }
+
     collection.insert_or_assign(path, potentialNewEntry);
 }
