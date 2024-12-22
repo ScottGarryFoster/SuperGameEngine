@@ -1,0 +1,21 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="ProductsPackager" />
+    <EnumComment>
+        The form the file should take once packaged.
+    </EnumComment>
+    <EnumName Name="PackageFileType">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Untouched>
+            Raw unbinary file form. The files will not be changed.
+        </Untouched>
+        <Binary>
+            The files will be converted to raw binary.
+        </Binary>
+    </EnumName>
+</SuperEnum>

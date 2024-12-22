@@ -18,5 +18,19 @@
     <ClCompile Include="ProductsPackager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Packager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Packager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PackageFileType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FatedQuestReferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

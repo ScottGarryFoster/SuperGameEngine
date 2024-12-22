@@ -3,9 +3,17 @@
 
 #include <iostream>
 
+#include "Packager.h"
+
 int main()
 {
     std::cout << "Hello World!\n";
+
+    ProductsPackager::Packager packager;
+    packager.PackageProductFolder(
+        "E:\\Development\\SuperGameEngine-Myriad\\Products", 
+        "E:\\Development\\SuperGameEngine-Myriad\\Products", 
+        ProductsPackager::PackageFileType::Untouched);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

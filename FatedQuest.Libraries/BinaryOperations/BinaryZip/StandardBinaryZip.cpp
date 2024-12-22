@@ -778,7 +778,7 @@ bool StandardBinaryZip::AddFileToZip(zipFile zipFile, const std::string& filenam
 
 
     zip_fileinfo zi = { 0 };
-    zipOpenNewFileInZip(zipFile, entryname.c_str(), &zi, NULL, 0, NULL, 0, NULL, Z_DEFLATED, Z_DEFAULT_COMPRESSION);
+    zipOpenNewFileInZip(zipFile, entryname.c_str(), &zi, NULL, 0, NULL, 0, NULL, Z_DEFLATED, Z_BEST_COMPRESSION);
 
     char buffer[4096];
     size_t bytes_read;
