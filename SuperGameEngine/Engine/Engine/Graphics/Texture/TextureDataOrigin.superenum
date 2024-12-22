@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../../../FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        How the texture was loaded in last.
+        This is used to understand how to recreate the texture
+        if the renderer was ever torn down.
+    </EnumComment>
+    <EnumName Name="TextureDataOrigin">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <FromFile>
+            Created from a file on disk.
+        </FromFile>
+        <FromData>
+            Created from data within memory.
+        </FromData>
+    </EnumName>
+</SuperEnum>

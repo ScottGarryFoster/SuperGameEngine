@@ -306,6 +306,9 @@
     <ClInclude Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.h">
       <Filter>Header Files\Structural\InternalComponents\SpriteComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Graphics\Texture\TextureDataOrigin.h">
+      <Filter>Header Files\Engine\Graphics\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">

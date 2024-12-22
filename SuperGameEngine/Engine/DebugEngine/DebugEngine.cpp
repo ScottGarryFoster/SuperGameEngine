@@ -27,7 +27,14 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 
         m_textureManager = std::make_shared<SuperTextureManager>(renderer);
         auto m_contentManager = std::make_shared<SuperContentManager>();
+
         m_contentManager->GiveSuperTextureManager(m_textureManager);
+
+        m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
+        std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
+        m_combinedGamePackage->Load(paths);
+        m_contentManager->GiveGamePackage(m_combinedGamePackage);
+
         m_sceneLoadPackage->SetContentManager(m_contentManager);
 
         m_gameTime = std::make_shared<SuperGameTime>();
@@ -58,9 +65,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_go = m_scene->CreateAndAddNewGameObject();
         m_go->AddComponent("TestComponent");
 
-        m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
-        std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
-        m_combinedGamePackage->Load(paths);
+        
 
         std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
         if (m_combinedGamePackage->File()->Exists(testPath))

@@ -221,6 +221,7 @@
     <ClInclude Include="Engine\Graphics\Texture\SuperTexture.h" />
     <ClInclude Include="Engine\Graphics\Texture\SuperTextureWrapper.h" />
     <ClInclude Include="Engine\Graphics\Texture\Texture.h" />
+    <ClInclude Include="Engine\Graphics\Texture\TextureDataOrigin.h" />
     <ClInclude Include="Engine\MainEngine.h" />
     <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />

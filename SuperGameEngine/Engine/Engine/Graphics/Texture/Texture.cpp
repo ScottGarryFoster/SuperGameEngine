@@ -82,6 +82,9 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
     // TODO: Implement this: UpdateTextureMetaData(m_texture);
 
     m_filePath = filePath;
+    m_textureData.clear();
+    m_textureDataOrigin = TextureDataOrigin::FromFile;
+
     UpdateTextureMetaData(m_texture);
 
     return true;
@@ -89,7 +92,66 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
 
 bool Texture::LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors)
 {
-    return false;
+    if (data.empty())
+    {
+        errors.emplace_back("No data to create texture. ");
+        return false;
+    }
+
+    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    {
+        std::string error = "Renderer is not active. Window might not exist. Try giving the textures an active renderer.";
+        // TODO: ADD Logger for this error.
+        errors.push_back(error);
+        return false;
+    }
+
+    SDL_RWops* rwOps = SDL_RWFromMem(data.data(), data.size());
+    if (!rwOps)
+    {
+        errors.emplace_back("Failed to create RWops from memory.");
+        return false;
+    }
+
+    SDL_Surface* imageSurface = IMG_Load_RW(rwOps, 1); // 1 means SDL will close the RWops for us
+    if (!imageSurface)
+    {
+        std::string imageError = IMG_GetError();
+        errors.emplace_back("Failed to load image from RWops: " + imageError);
+        return false;
+    }
+
+    // Create texture
+    // Keep in mind that texture here should only be trusted as long as the
+    // renderer exists however we only render anyway with an active renderer
+    // so this should not be an issue.
+    if (m_texture != nullptr)
+    {
+        SDL_DestroyTexture(m_texture);
+    }
+
+    // Create texture
+    m_texture = SDL_CreateTextureFromSurface(m_sdlRenderer->GetRenderer(), imageSurface);
+
+    // Free surface as it's no longer needed
+    SDL_FreeSurface(imageSurface);
+    imageSurface = nullptr;
+    if (!m_texture)
+    {
+        std::stringstream ss;
+        ss << "Error creating texture: " << SDL_GetError();
+        errors.push_back(ss.str());
+        // TODO: Add logger for this.
+        return false;
+    }
+
+    UpdateTextureMetaData(m_texture);
+
+    m_filePath = filepath;
+    m_textureData = data;
+    m_textureDataOrigin = TextureDataOrigin::FromData;
+
+    return true;
 }
 
 void Texture::Draw() const
@@ -175,7 +237,7 @@ void Texture::Draw(const RectangleInt& textureRectangle, const RectangleInt& scr
     SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, m_textureRect.get(), m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
 }
 
-std::string SuperGameEngine::Texture::GetLoadedFilePath() const
+std::string Texture::GetLoadedFilePath() const
 {
     return m_filePath;
 }
@@ -187,6 +249,11 @@ FPoint Texture::Size() const
 
 bool Texture::Remake(std::vector<std::string>& errors)
 {
+    if (m_textureDataOrigin == TextureDataOrigin::FromData)
+    {
+        return LoadImageFromData(m_textureData, m_filePath, errors);
+    }
+
     return LoadImageFromFile(m_filePath, errors);
 }
 

@@ -34,11 +34,30 @@ namespace SuperGameEngine
         /// <returns>Returns the Texture Manager. </returns>
         std::shared_ptr<SuperTextureManager> GetSuperTextureManager();
 
+        /// <summary>
+        /// Holds the content for the game.
+        /// </summary>
+        /// <returns>Holds the content for the game. </returns>
+        virtual const std::shared_ptr<FatedQuestLibraries::GamePackage> GamePackage() override;
+
+        /// <summary>
+        /// Give the game package.
+        /// </summary>
+        /// <param name="gamePackage">
+        /// The new game package.
+        /// </param>
+        void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage);
+
     private:
         /// <summary>
         /// Creates, stores and manages all textures in the engine.
         /// </summary>
         std::shared_ptr<SuperTextureManager> m_superTextureManager;
+
+        /// <summary>
+        /// Holds the content for the game.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
     };
 }
 

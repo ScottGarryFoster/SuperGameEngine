@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <memory>
 #include "SDLRendererReader.h"
+#include "TextureDataOrigin.h"
 #include "../../../FatedQuestReferences.h"
 #include "../../../Structural/Spatial/Area/RectangleInt.h"
 
@@ -100,6 +101,19 @@ namespace SuperGameEngine
         /// File path of the texture loaded.
         /// </summary>
         std::string m_filePath;
+
+        /// <summary>
+        /// If the texture was last loaded from data,
+        /// this is the data to use to recreate it.
+        /// </summary>
+        std::vector<unsigned char> m_textureData;
+
+        /// <summary>
+        /// How the texture was loaded in last.
+        /// This is used to understand how to recreate the texture
+        /// if the renderer was ever torn down.
+        /// </summary>
+        TextureDataOrigin m_textureDataOrigin;
 
         /// <summary>
         /// The size of the Texture.
