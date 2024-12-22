@@ -1,9 +1,9 @@
 #include "GamePackageFileSystemDirectory.h"
 
-#include "PackageFile.h"
+#include "../PackageFile.h"
 #include "PackageFiles.h"
-#include "../../StandardOperations/FileHandling/File.h"
-#include "../../StandardOperations/FileHandling/Directory.h"
+#include "../../../StandardOperations/FileHandling/File.h"
+#include "../../../StandardOperations/FileHandling/Directory.h"
 
 using namespace FatedQuestLibraries;
 

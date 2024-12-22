@@ -141,19 +141,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GamePackage\CombinedGamePackage.h" />
+    <ClInclude Include="GamePackage\FileSystem\GamePackageFileSystem.h" />
+    <ClInclude Include="GamePackage\FileSystem\GamePackageFileSystemDirectory.h" />
+    <ClInclude Include="GamePackage\FileSystem\GamePackageFileSystemFile.h" />
+    <ClInclude Include="GamePackage\FileSystem\PackageFileOrigin.h" />
+    <ClInclude Include="GamePackage\FileSystem\PackageFiles.h" />
+    <ClInclude Include="GamePackage\FileSystem\PackageFileSystem.h" />
+    <ClInclude Include="GamePackage\FileSystem\PackageFileSystemDirectory.h" />
+    <ClInclude Include="GamePackage\FileSystem\PackageFileSystemFile.h" />
     <ClInclude Include="GamePackage\GamePackage.h" />
-    <ClInclude Include="GamePackage\GamePackageFileSystem.h" />
-    <ClInclude Include="GamePackage\GamePackageFileSystemDirectory.h" />
-    <ClInclude Include="GamePackage\GamePackageFileSystemFile.h" />
     <ClInclude Include="GamePackage\PackageFile.h" />
     <ClInclude Include="GamePackage\PackageFileArchived.h" />
     <ClInclude Include="GamePackage\PackageFilePathing.h" />
-    <ClInclude Include="GamePackage\PackageFiles.h" />
-    <ClInclude Include="GamePackage\PackageFileSystem.h" />
-    <ClInclude Include="GamePackage\PackageFileSystemDirectory.h" />
-    <ClInclude Include="GamePackage\PackageFileSystemFile.h" />
     <ClInclude Include="GamePackage\PackageFileUnarchived.h" />
     <ClInclude Include="GamePackage\PackagePaths.h" />
     <ClInclude Include="GamePackage\SGEPackagePaths.h" />
@@ -161,12 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GamePackage\CombinedGamePackage.cpp" />
-    <ClCompile Include="GamePackage\GamePackageFileSystem.cpp" />
-    <ClCompile Include="GamePackage\GamePackageFileSystemDirectory.cpp" />
-    <ClCompile Include="GamePackage\GamePackageFileSystemFile.cpp" />
+    <ClCompile Include="GamePackage\FileSystem\GamePackageFileSystem.cpp" />
+    <ClCompile Include="GamePackage\FileSystem\GamePackageFileSystemDirectory.cpp" />
+    <ClCompile Include="GamePackage\FileSystem\GamePackageFileSystemFile.cpp" />
+    <ClCompile Include="GamePackage\FileSystem\PackageFiles.cpp" />
     <ClCompile Include="GamePackage\PackageFileArchived.cpp" />
     <ClCompile Include="GamePackage\PackageFilePathing.cpp" />
-    <ClCompile Include="GamePackage\PackageFiles.cpp" />
     <ClCompile Include="GamePackage\PackageFileUnarchived.cpp" />
     <ClCompile Include="GamePackage\SGEPackagePaths.cpp" />
     <ClCompile Include="pch.cpp">

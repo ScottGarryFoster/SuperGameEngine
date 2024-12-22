@@ -1,5 +1,5 @@
-#include "../../GamePackage/GamePackage/GamePackageFileSystemFile.h"
-#include "../../GamePackage/GamePackage/PackageFiles.h"
+#include "../../GamePackage/GamePackage/FileSystem/GamePackageFileSystemFile.h"
+#include "../../GamePackage/GamePackage/FileSystem/PackageFiles.h"
 #include "../../StandardOperations/AllReferences.h"
 #include "Stub/StubPackageFile.h"
 #include <memory>

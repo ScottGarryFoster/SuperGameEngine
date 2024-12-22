@@ -1,0 +1,21 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        The type and priority the package file needs to take within a game package.
+    </EnumComment>
+    <EnumName Name="PackageFileOrigin">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Unarchived>
+            The file is unarchived and sits as a standalone file on disk.
+        </Unarchived>
+        <Archived>
+            The file is archived within a package and must be accessed via the archive file.
+        </Archived>
+    </EnumName>
+</SuperEnum>

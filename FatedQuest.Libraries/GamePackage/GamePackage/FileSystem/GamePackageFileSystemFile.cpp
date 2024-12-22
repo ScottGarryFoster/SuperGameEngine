@@ -1,9 +1,9 @@
 #include "GamePackageFileSystemFile.h"
-#include "../../StandardOperations/AllReferences.h"
+#include "../../../StandardOperations/AllReferences.h"
 
 #include <iostream>
 
-#include "PackageFile.h"
+#include "../PackageFile.h"
 
 #include "PackageFiles.h"
 
