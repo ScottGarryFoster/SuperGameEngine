@@ -13,6 +13,7 @@
 
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/CombinedGamePackage.h"
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/FileSystem/PackageFileSystemFile.h"
 
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
@@ -60,6 +61,16 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
         std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
         m_combinedGamePackage->Load(paths);
+
+        std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
+        if (m_combinedGamePackage->File()->Exists(testPath))
+        {
+            std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
+            if (1 == 1)
+            {
+                
+            }
+        }
     }
 
     m_gameTime->SetTicksSinceLastFrame(ticks);

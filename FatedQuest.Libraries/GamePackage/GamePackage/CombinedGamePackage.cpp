@@ -7,20 +7,34 @@
 
 #include "../../BinaryOperations/BinaryZip/StandardBinaryZip.h"
 #include "PackageFile.h"
+#include "FileSystem/GamePackageFileSystem.h"
 
 using namespace FatedQuestLibraries;
 
 CombinedGamePackage::CombinedGamePackage()
 {
     m_binaryZip = std::make_shared<StandardBinaryZip>();
+    m_fileSystem = std::make_shared<GamePackageFileSystem>();
 }
 
 CombinedGamePackage::~CombinedGamePackage()
 {
 }
 
-bool CombinedGamePackage::Load(std::shared_ptr<PackagePaths> paths)
+const std::shared_ptr<PackageFileSystemFile> CombinedGamePackage::File() const
 {
+    return m_fileSystem->File();
+}
+
+const std::shared_ptr<PackageFileSystemDirectory> CombinedGamePackage::Directory() const
+{
+    return m_fileSystem->Directory();
+}
+
+bool CombinedGamePackage::Load(const std::shared_ptr<PackagePaths>& paths)
+{
+    std::vector<std::pair<PackageFileOrigin, std::shared_ptr<PackageFile>>> gamePackageFiles;
+
     std::string productsOnFile = Directory::CombinePath(paths->ProductsDirectory(), "Products");
     if (Directory::Exists(productsOnFile))
     {
@@ -29,9 +43,8 @@ bool CombinedGamePackage::Load(std::shared_ptr<PackagePaths> paths)
 
         for (const std::string& file : files)
         {
-            std::string f = file;
-            m_systemFile.push_back(
-                std::make_shared<PackageFileUnarchived>(paths, f));
+            auto newFile = std::make_shared<PackageFileUnarchived>(paths, file);
+            gamePackageFiles.emplace_back(PackageFileOrigin::Unarchived, newFile);
         }
     }
 
@@ -43,11 +56,14 @@ bool CombinedGamePackage::Load(std::shared_ptr<PackagePaths> paths)
             m_binaryZip->ListFilesInArchive(
                 productArchive, errors);
 
-        std::shared_ptr<PackageFile> packageFile = std::make_shared<PackageFileArchived>(paths, m_binaryZip,
-            "Engine\\Input\\ControllerMappings\\NintendoN64Controller.xml");
-        std::string contents = packageFile->ReadFileContents();
-        std::vector<std::string> contentsLines = packageFile->ReadFileContentsByLine();
+        for (const std::string& file : files)
+        {
+            auto newFile = std::make_shared<PackageFileUnarchived>(paths, file);
+            gamePackageFiles.emplace_back(PackageFileOrigin::Archived, newFile);
+        }
     }
+
+    m_fileSystem->GiveFiles(gamePackageFiles);
 
     return true;
 }

@@ -18,9 +18,20 @@ PackageFileArchived::PackageFileArchived(
     {
         m_productsPath = sharedPtr->ProductsDirectory();
         m_zipPath = Directory::CombinePath(m_productsPath, "Products.zip");
+
+        std::string directoryName = sharedPtr->ProductsArchiveName();
+        if (directoryName.empty())
+        {
+            m_fullPath = Directory::CombinePath(sharedPtr->ProductsDirectory(), path);
+        }
+        else
+        {
+            m_fullPath = Directory::CombinePath(sharedPtr->ProductsDirectory(), directoryName, path);
+        }
     }
 
     m_binaryZip = std::move(binaryZip);
+
 }
 
 std::string PackageFileArchived::ReadFileContents()

@@ -24,5 +24,17 @@ namespace FatedQuestLibraries_GamePackage
         };
 
         std::string m_productsDirectory = std::string();
+
+        /// <summary>
+        /// The actual name of the Products Directory if loose on file.
+        /// </summary>
+        /// <returns>The actual name of the Products Directory if loose on file.</returns>
+        inline virtual std::string ProductsDirectoryName() const override { return {}; }
+
+        /// <summary>
+        /// The actual name of the Products Archive stored in the products directory.
+        /// </summary>
+        /// <returns>The actual name of the Products Archive stored in the products directory.</returns>
+        inline virtual std::string ProductsArchiveName() const override { return {}; }
     };
 }

@@ -13,3 +13,13 @@ std::string SGEPackagePaths::ProductsDirectory() const
 #endif
     return exeFilepath.string();
 }
+
+std::string SGEPackagePaths::ProductsDirectoryName() const
+{
+    return "Products";
+}
+
+std::string SGEPackagePaths::ProductsArchiveName() const
+{
+    return "Products.zip";
+}
