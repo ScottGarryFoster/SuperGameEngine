@@ -28,13 +28,13 @@ namespace FatedQuestLibraries
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::string ReadFileContents() override;
+        virtual std::string ReadFileContents() const override;
 
         /// <summary>
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::vector<std::string> ReadFileContentsByLine() override;
+        virtual std::vector<std::string> ReadFileContentsByLine() const override;
 
         /// <summary>
         /// Reads file contents.
@@ -47,7 +47,7 @@ namespace FatedQuestLibraries
         /// This is the one most likely for retail outside of mods so
         /// ensure this version is kept relatively quick.
         /// </remarks>
-        virtual std::vector<unsigned char> ReadFileContentsExplicitly() override;
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly() const override;
 
     private:
         /// <summary>

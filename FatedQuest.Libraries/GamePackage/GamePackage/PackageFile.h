@@ -30,7 +30,7 @@ namespace FatedQuestLibraries
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::string ReadFileContents() = 0;
+        virtual std::string ReadFileContents() const = 0;
 
         /// <summary>
         /// Reads file contents.
@@ -39,13 +39,13 @@ namespace FatedQuestLibraries
         /// object).
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::vector<unsigned char> ReadFileContentsExplicitly() = 0;
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly() const = 0;
 
         /// <summary>
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::vector<std::string> ReadFileContentsByLine() = 0;
+        virtual std::vector<std::string> ReadFileContentsByLine() const = 0;
 
         /// <summary>
         /// Looks for the given suffix on the filepath.

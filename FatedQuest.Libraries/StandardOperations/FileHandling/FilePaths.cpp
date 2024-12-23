@@ -1,5 +1,6 @@
 #include "FilePaths.h"
 #include <filesystem>
+#include <iostream>
 
 #if defined(_WINDOWS)
 #include <windows.h>
@@ -17,7 +18,7 @@ std::string FilePaths::ApplicationDirectory()
 {
     char buffer[MAX_PATH];
 
-#if defined(_WIN32)
+#if defined(_WINDOWS)
     GetModuleFileNameA(NULL, buffer, MAX_PATH);
 #elif defined(__APPLE__)
     uint32_t size = sizeof(buffer);
@@ -32,5 +33,5 @@ std::string FilePaths::ApplicationDirectory()
     buffer[length] = '\0';
 #endif
 
-    return std::filesystem::path(buffer).string();
+    return std::filesystem::path(buffer).parent_path().string();
 }

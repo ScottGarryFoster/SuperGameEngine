@@ -1,5 +1,7 @@
 #include "TestComponent.h"
 
+#include <iostream>
+
 #include "../../../Engine/Basic/GameTime.h"
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../GameObject/GameObject.h"

@@ -30,13 +30,13 @@ namespace FatedQuestLibraries
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::string ReadFileContents() override;
+        virtual std::string ReadFileContents() const override;
 
         /// <summary>
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::vector<std::string> ReadFileContentsByLine() override;
+        virtual std::vector<std::string> ReadFileContentsByLine() const override;
 
         /// <summary>
         /// Reads file contents.

@@ -7,6 +7,7 @@
 
 // TODO: Reference all Components
 #include "../Structural/InternalComponents/TestComponent/TestComponent.h"
+#include "../Structural/InternalComponents/SpriteComponent/SpriteComponent.h"
 #include "../Structural/Scene/GrandScene.h"
 #include "../Structural/Scene/Scene.h"
 #include "../Structural/Scene/SuperGrandScene.h"
@@ -71,9 +72,10 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         if (m_combinedGamePackage->File()->Exists(testPath))
         {
             std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
-            if (1 == 1)
+            if (contents[0] == '<')
             {
-                
+                auto sprite = std::static_pointer_cast<SpriteComponent>(m_go->AddComponent("SpriteComponent"));
+                sprite->Move(400, 400);
             }
         }
     }

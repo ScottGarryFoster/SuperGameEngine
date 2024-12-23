@@ -11,7 +11,7 @@ int main()
 
     ProductsPackager::Packager packager;
     packager.PackageProductFolder(
-        "E:\\Development\\SuperGameEngine-Myriad\\Products_", 
+        "E:\\Development\\SuperGameEngine-Myriad\\Products", 
         "E:\\Development\\SuperGameEngine-Myriad\\Products", 
         ProductsPackager::PackageFileType::Binary);
 }
