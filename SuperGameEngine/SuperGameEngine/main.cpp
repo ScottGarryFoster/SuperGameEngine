@@ -12,6 +12,7 @@
 #include "../Engine/DebugEngine/DebugEngine.h"
 
 // Any external projects should define their components here:
+#define _TOOLS // Figure out what is going on here [#88]
 #ifdef _TOOLS
 #include "../Tools/EngineIncludes/EngineInclude.h"
 #endif
