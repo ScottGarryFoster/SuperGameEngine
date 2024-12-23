@@ -55,6 +55,12 @@
     <Filter Include="Source Files\ToolsEngine\Packages">
       <UniqueIdentifier>{c54aa7f7-3702-4b11-a625-8d1a44128d54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Windows\LoggerOutput">
+      <UniqueIdentifier>{a662c1cf-e6a5-42c9-9225-a6066e443360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\LoggerOutput">
+      <UniqueIdentifier>{753803c4-6eb0-41c0-b137-e2fd2c09d941}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -87,6 +93,9 @@
     <ClInclude Include="ToolsEngine\Packages\WindowPackage.h">
       <Filter>Header Files\ToolsEngine\Packages</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h">
+      <Filter>Header Files\Windows\LoggerOutput</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tools.cpp">
@@ -112,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp">
       <Filter>Source Files\ToolsEngine\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp">
+      <Filter>Source Files\Windows\LoggerOutput</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

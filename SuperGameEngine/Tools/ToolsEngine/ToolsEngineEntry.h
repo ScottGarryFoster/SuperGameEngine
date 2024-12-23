@@ -39,11 +39,18 @@ namespace SuperGameTools
         ApplicationOperationState RunSDLWindow(std::shared_ptr<Engine> engine);
 
         /// <summary>
+        /// Renderer given to the game engine.
+        /// This will act as though it is destroyed when the game is
+        /// 'stopped' to simulate the game restarting.
+        /// </summary>
+        std::shared_ptr<SDLRenderer> m_gameRenderer;
+
+        /// <summary>
         /// The renderer for the current window.
         /// This will flip flop and change with windows but is the
         /// active window.
         /// </summary>
-        std::shared_ptr<SDLRenderer> m_renderer;
+        std::shared_ptr<SDLRenderer> m_Toolsrenderer;
 
         /// <summary>
         /// Wraps setup for imgui.

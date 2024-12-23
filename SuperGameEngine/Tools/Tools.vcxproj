@@ -213,6 +213,7 @@
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
+    <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +232,7 @@
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
+    <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

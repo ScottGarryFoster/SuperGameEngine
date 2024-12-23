@@ -1,15 +1,19 @@
 #pragma once
-#include <SDL_rect.h>
-
 #include "../UpdateableObject/UpdateableObject.h"
+
+struct ImGuiTable;
 
 namespace SuperGameTools
 {
     /// <summary>
     /// Holds the viewport.
     /// </summary>
-    class GameViewport : public UpdateableObject
+    class LoggerOutput : public UpdateableObject
     {
+    public:
+        LoggerOutput();
+        virtual ~LoggerOutput();
+
         /// <summary>
         /// Called once on setup.
         /// </summary>
@@ -32,26 +36,10 @@ namespace SuperGameTools
         virtual void TearDown() override;
 
     private:
-        /// <summary>
-        /// Where to position the SDL Viewport.
-        /// </summary>
-        SDL_Rect m_viewport;
 
         /// <summary>
-        /// Wraps the SDL Renderer such that upon the death of the
-        /// SDL Window this becomes invalid and the textures wait for a
-        /// new texture.
-        /// </summary>
-        std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
-
-        /// <summary>
-        /// Everything a Window Package might need to run.
+        /// Services to run a window.
         /// </summary>
         std::shared_ptr<WindowPackage> m_windowPackage;
-
-        /// <summary>
-        /// Updates the viewport to match the window.
-        /// </summary>
-        void UpdateTheSDLViewport();
     };
 }

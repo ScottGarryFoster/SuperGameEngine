@@ -6,7 +6,7 @@
 using namespace SuperGameEngine;
 using namespace SuperGameTools;
 
-void GameViewport::Setup(std::shared_ptr<WindowPackage> windowPackage)
+void GameViewport::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_viewport = { 50, 50, 500, 250 };;
     m_renderer = windowPackage->GetRenderer();
@@ -15,7 +15,7 @@ void GameViewport::Setup(std::shared_ptr<WindowPackage> windowPackage)
 
 void GameViewport::Update()
 {
-    
+
 }
 
 void GameViewport::Draw()

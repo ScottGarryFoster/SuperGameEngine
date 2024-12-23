@@ -16,7 +16,8 @@ int ToolsEngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     m_sdlTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
     m_toolsEngine->GiveSDLTexture(m_sdlTexture);
 
-    m_renderer = std::make_shared<SDLRenderer>();
+    m_gameRenderer = std::make_shared<SDLRenderer>();
+    m_Toolsrenderer = std::make_shared<SDLRenderer>();
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
     {
@@ -85,14 +86,15 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
     SDL_Event e;
 
     // Setup the engine.
-    m_renderer->SetRenderer(renderer);
-    engine->GiveRenderer(m_renderer);
+    m_gameRenderer->SetRenderer(renderer);
+    engine->GiveRenderer(m_gameRenderer);
     engine->WindowStart();
 
     // Setup the Tools Engine
     if (m_toolsEngine)
     {
-        m_toolsEngine->GiveRenderer(m_renderer);
+        m_Toolsrenderer->SetRenderer(renderer);
+        m_toolsEngine->GiveRenderer(m_Toolsrenderer);
         m_toolsEngine->WindowStart();
     }
 
@@ -221,14 +223,15 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
     m_imgui->Teardown();
 
     // Ensure the engine knows we no longer have a window
-    SDL_DestroyRenderer(m_renderer->GetRenderer());
-    m_renderer->SetRenderer(nullptr);
+    SDL_DestroyRenderer(m_gameRenderer->GetRenderer());
+    m_gameRenderer->SetRenderer(nullptr);
     engine->WindowTeardown();
 
     // Cleanup Tools
     if (m_toolsEngine)
     {
         // There should be nothing here.
+        m_Toolsrenderer->SetRenderer(nullptr);
         engine->WindowTeardown();
     }
 
