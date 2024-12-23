@@ -12,7 +12,7 @@ namespace FileSystem = std::filesystem;
 
 using namespace FatedQuestLibraries;
 
-bool FatedQuestLibraries::File::Exists(const std::string& filepath)
+bool File::Exists(const std::string& filepath)
 {
     struct stat buffer;
     return (stat(filepath.c_str(), &buffer) == 0);
@@ -42,6 +42,38 @@ std::string File::ReadFileContents(const std::string& filepath)
     }
 
     return fileContent;
+}
+
+std::vector<unsigned char> File::ReadFileContentsCharArray(const std::string& filepath)
+{
+    std::ifstream file(filepath, std::ios::binary | std::ios::ate);
+
+    if (!file.is_open())
+    {
+#ifdef _DEBUG
+        // TODO: Consider throwing an exception here.
+        std::cout << "EXCEPTION: " << ": [File::ReadFileContentsCharArray] "
+            << "File was already open: " << filepath << std::endl;
+        return {};
+#endif
+    }
+
+    std::streamsize fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+    std::vector<unsigned char> buffer(fileSize);
+
+    if (!file.read(reinterpret_cast<char*>(buffer.data()), fileSize))
+    {
+#ifdef _DEBUG
+        // TODO: Consider throwing an exception here.
+        std::cout << "EXCEPTION: " << ": [File::ReadFileContentsCharArray] "
+            << "Failed to read the file: " << filepath << std::endl;
+        return {};
+#endif
+
+    }
+
+    return buffer;
 }
 
 bool File::IsFile(const std::string& filepath)

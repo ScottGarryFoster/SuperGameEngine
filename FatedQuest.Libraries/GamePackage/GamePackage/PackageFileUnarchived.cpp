@@ -1,4 +1,5 @@
 #include "PackageFileUnarchived.h"
+
 #include "../../StandardOperations/AllReferences.h"
 #include "PackagePaths.h"
 #include "../../BinaryOperations/BinaryZip/BinaryZip.h"
@@ -27,7 +28,7 @@ PackageFileUnarchived::PackageFileUnarchived(
     m_binaryZip = binaryZip;
 }
 
-std::string PackageFileUnarchived::ReadFileContents()
+std::string PackageFileUnarchived::ReadFileContents() const
 {
     if (m_packageFileStorageType == PackageFileStorageType::Binary)
     {
@@ -43,8 +44,22 @@ std::string PackageFileUnarchived::ReadFileContents()
     return File::ReadFileContents(m_fullPath);
 }
 
-std::vector<std::string> PackageFileUnarchived::ReadFileContentsByLine()
+std::vector<std::string> PackageFileUnarchived::ReadFileContentsByLine() const
 {
     std::string fileContents = ReadFileContents();
     return StringHelpers::Split(fileContents, "\n");
+}
+
+std::vector<unsigned char> PackageFileUnarchived::ReadFileContentsExplicitly() const
+{
+    if (m_packageFileStorageType == PackageFileStorageType::Binary)
+    {
+        std::vector<unsigned char> data;
+        std::vector<std::string> error;
+        m_binaryZip->BinaryToData(
+            m_fullPath, data, error);
+        return data;
+    }
+
+    return File::ReadFileContentsCharArray(m_fullPath);
 }

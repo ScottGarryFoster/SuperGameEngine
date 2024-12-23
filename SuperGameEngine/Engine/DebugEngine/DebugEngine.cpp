@@ -25,15 +25,15 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     {
         m_sceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
 
-        m_textureManager = std::make_shared<SuperTextureManager>(renderer);
         auto m_contentManager = std::make_shared<SuperContentManager>();
-
-        m_contentManager->GiveSuperTextureManager(m_textureManager);
 
         m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
         std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
         m_combinedGamePackage->Load(paths);
         m_contentManager->GiveGamePackage(m_combinedGamePackage);
+
+        m_textureManager = std::make_shared<SuperTextureManager>(renderer, m_combinedGamePackage);
+        m_contentManager->GiveSuperTextureManager(m_textureManager);
 
         m_sceneLoadPackage->SetContentManager(m_contentManager);
 

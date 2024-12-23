@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllReferences.h" />
     <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GamePackage\CombinedGamePackage.h" />

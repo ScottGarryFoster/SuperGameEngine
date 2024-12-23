@@ -38,6 +38,15 @@ namespace FatedQuestLibraries
         /// <returns>File contents. </returns>
         virtual std::vector<std::string> ReadFileContentsByLine() override;
 
+        /// <summary>
+        /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <returns>File contents. </returns>
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly() const override;
+
     private:
         /// <summary>
         /// Methods to zip and unzip binary files.

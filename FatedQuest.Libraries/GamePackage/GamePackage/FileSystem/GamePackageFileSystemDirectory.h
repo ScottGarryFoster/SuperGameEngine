@@ -16,7 +16,7 @@ namespace FatedQuestLibraries
     class GamePackageFileSystemDirectory : public PackageFileSystemDirectory
     {
     public:
-        GamePackageFileSystemDirectory(const std::shared_ptr<PackageFiles>& files);
+        explicit GamePackageFileSystemDirectory(const std::shared_ptr<PackageFiles>& files);
         virtual ~GamePackageFileSystemDirectory() override;
 
         /// <summary>

@@ -32,5 +32,14 @@ namespace FatedQuestLibraries
         /// <param name="filepath">Direct file path. This should be a full file path. </param>
         /// <returns>File contents. </returns>
         virtual std::vector<std::string> ReadFileContentsByLine(const std::string& filepath) const = 0;
+
+        /// <summary>
+        /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <returns>File contents. </returns>
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly(const std::string& filepath) const = 0;
     };
 }

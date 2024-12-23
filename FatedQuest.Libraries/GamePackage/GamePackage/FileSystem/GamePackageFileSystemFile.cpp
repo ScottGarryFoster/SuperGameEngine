@@ -28,7 +28,7 @@ bool GamePackageFileSystemFile::Exists(const std::string& filepath) const
 
 std::string GamePackageFileSystemFile::ReadFileContents(const std::string& filepath) const
 {
-    std::string path = StringHelpers::ToLower(filepath);
+    std::string path = File::Sanitize(filepath);
     if (m_filePaths.contains(path))
     {
         return m_filePaths.at(path)->ReadFileContents();
@@ -39,10 +39,21 @@ std::string GamePackageFileSystemFile::ReadFileContents(const std::string& filep
 
 std::vector<std::string> GamePackageFileSystemFile::ReadFileContentsByLine(const std::string& filepath) const
 {
-    std::string path = StringHelpers::ToLower(filepath);
+    std::string path = File::Sanitize(filepath);
     if (m_filePaths.contains(path))
     {
         return m_filePaths.at(path)->ReadFileContentsByLine();
+    }
+
+    return {};
+}
+
+std::vector<unsigned char> GamePackageFileSystemFile::ReadFileContentsExplicitly(const std::string& filepath) const
+{
+    std::string path = File::Sanitize(filepath);
+    if (m_filePaths.contains(path))
+    {
+        return m_filePaths.at(path)->ReadFileContentsExplicitly();
     }
 
     return {};

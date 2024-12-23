@@ -32,15 +32,25 @@ namespace FatedQuestLibraries_GamePackage
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::string ReadFileContents() override { return m_fileContents; }
+        virtual std::string ReadFileContents() const override { return m_fileContents; }
         std::string m_fileContents = {};
 
         /// <summary>
         /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
-        virtual std::vector<std::string> ReadFileContentsByLine() override { return m_fileContentsByLine; }
+        virtual std::vector<std::string> ReadFileContentsByLine() const override { return m_fileContentsByLine; }
         std::vector<std::string> m_fileContentsByLine = {};
+
+        /// <summary>
+        /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <returns>File contents. </returns>
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly() const override { return m_readFileContentsExplicitly; }
+        std::vector<unsigned char> m_readFileContentsExplicitly = {};
 
         /// <summary>
         /// Looks for the given suffix on the filepath.

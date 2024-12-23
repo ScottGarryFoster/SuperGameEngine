@@ -5,6 +5,11 @@
 #include "../Graphics/Texture/SDLRendererReader.h"
 #include "../Graphics/Texture/SuperTextureWrapper.h"
 
+namespace FatedQuestLibraries
+{
+    class GamePackage;
+}
+
 namespace SuperGameEngine
 {
     /// <summary>
@@ -13,8 +18,10 @@ namespace SuperGameEngine
     class SuperTextureManager : public TextureManager
     {
     public:
-        SuperTextureManager(const std::shared_ptr<SDLRendererReader>& renderer);
-        virtual ~SuperTextureManager();
+        explicit SuperTextureManager(
+            const std::shared_ptr<SDLRendererReader>& renderer,
+            const std::shared_ptr<GamePackage>& gamePackage);
+        virtual ~SuperTextureManager() override;
 
         /// <summary>
         /// Creates or gets the given Texture.
@@ -44,7 +51,12 @@ namespace SuperGameEngine
         /// </summary>
         std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<SuperTextureWrapper>>> m_storedTextures;
 
-        std::shared_ptr<SuperTextureWrapper> AddTextureToStore(std::string path, std::shared_ptr<Texture> texture);
+        /// <summary>
+        /// Gives us access to all the files the game cares about as these are 'on file'.
+        /// </summary>
+        std::shared_ptr<GamePackage> m_gamePackage;
+
+        std::shared_ptr<SuperTextureWrapper> AddTextureToStore(const std::string& path, const std::shared_ptr<Texture>& texture) const;
     };
 
 }

@@ -41,6 +41,15 @@ namespace FatedQuestLibraries
         virtual std::vector<std::string> ReadFileContentsByLine(const std::string& filepath) const override;
 
         /// <summary>
+        /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <returns>File contents. </returns>
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly(const std::string& filepath) const override;
+
+        /// <summary>
         /// Refresh the files in the system.
         /// Call this after making changes to the PackageFiles.
         /// </summary>

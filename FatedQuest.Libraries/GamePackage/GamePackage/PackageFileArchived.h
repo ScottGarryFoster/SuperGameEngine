@@ -36,6 +36,19 @@ namespace FatedQuestLibraries
         /// <returns>File contents. </returns>
         virtual std::vector<std::string> ReadFileContentsByLine() override;
 
+        /// <summary>
+        /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <returns>File contents. </returns>
+        /// <remarks>
+        /// This is the one most likely for retail outside of mods so
+        /// ensure this version is kept relatively quick.
+        /// </remarks>
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly() override;
+
     private:
         /// <summary>
         /// The location the products folder is.

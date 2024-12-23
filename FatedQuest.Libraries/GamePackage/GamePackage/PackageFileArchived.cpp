@@ -34,7 +34,7 @@ PackageFileArchived::PackageFileArchived(
 
 }
 
-std::string PackageFileArchived::ReadFileContents()
+std::string PackageFileArchived::ReadFileContents() const
 {
     std::vector<unsigned char> data;
     std::vector<std::string> error;
@@ -55,7 +55,7 @@ std::string PackageFileArchived::ReadFileContents()
     return contents;
 }
 
-std::vector<std::string> PackageFileArchived::ReadFileContentsByLine()
+std::vector<std::string> PackageFileArchived::ReadFileContentsByLine() const
 {
     std::vector<unsigned char> data;
     std::vector<std::string> error;
@@ -93,4 +93,24 @@ std::vector<std::string> PackageFileArchived::ReadFileContentsByLine()
     }
 
     return result;
+}
+
+std::vector<unsigned char> PackageFileArchived::ReadFileContentsExplicitly() const
+{
+    std::vector<unsigned char> data;
+    std::vector<std::string> error;
+    if (m_packageFileStorageType == PackageFileStorageType::Binary)
+    {
+        m_binaryZip->ExtractSingleBinaryFileToData(
+            m_zipPath, m_relativePath,
+            data, error);
+    }
+    else
+    {
+        m_binaryZip->ExtractSingleFileToData(
+            m_zipPath, m_relativePath,
+            data, error);
+    }
+
+    return data;
 }

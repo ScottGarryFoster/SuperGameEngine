@@ -9,6 +9,8 @@ namespace SuperGameEngine
     class TextureManager
     {
     public:
+        virtual ~TextureManager() = default;
+
         /// <summary>
         /// Creates or gets the given Texture.
         /// </summary>

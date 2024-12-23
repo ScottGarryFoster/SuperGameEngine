@@ -34,6 +34,15 @@ namespace FatedQuestLibraries
 
         /// <summary>
         /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <returns>File contents. </returns>
+        virtual std::vector<unsigned char> ReadFileContentsExplicitly() = 0;
+
+        /// <summary>
+        /// Reads file contents.
         /// </summary>
         /// <returns>File contents. </returns>
         virtual std::vector<std::string> ReadFileContentsByLine() = 0;

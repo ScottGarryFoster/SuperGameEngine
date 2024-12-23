@@ -22,7 +22,7 @@ void SpriteComponent::Setup(
         GetContentManager()->
         Texture()->
         GetTexture(
-            R"(E:\Development\SuperGameEngine-Myriad\Products\Engine\TestImages\A_pressed.png)");
+            R"(Engine\TestImages\A_pressed.png)");
 
     // Ensure we render.
     SetDoRender(true);

@@ -25,6 +25,16 @@ namespace FatedQuestLibraries
         static std::string ReadFileContents(const std::string& filepath);
 
         /// <summary>
+        /// Reads file contents.
+        /// This will read it explicitly, with no conversions
+        /// directly into a char array (vector in this case to package the size in one
+        /// object).
+        /// </summary>
+        /// <param name="filepath">Direct file path. This should be a full file path. </param>
+        /// <returns>File contents. </returns>
+        static std::vector<unsigned char> ReadFileContentsCharArray(const std::string& filepath);
+
+        /// <summary>
         /// Determines if the given path is a file.
         /// File must exist.
         /// </summary>
