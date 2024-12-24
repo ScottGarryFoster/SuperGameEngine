@@ -16,8 +16,12 @@
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/FileSystem/PackageFileSystemFile.h"
 
+#include "../FatedQuestReferences.h"
+#include "../../../FatedQuest.Libraries/Logger/Logger/Log.h"
+
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
+using namespace FatedQuestLibraries;
 
 void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 {
@@ -39,6 +43,7 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_sceneLoadPackage->SetContentManager(m_contentManager);
 
         m_gameTime = std::make_shared<SuperGameTime>();
+        curr = m_gameTime->AllTime() + 5000;
     }
     else
     {
@@ -84,8 +89,10 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
     m_grandScene->Update(m_gameTime);
 
 
-    if (m_gameTime->AllTime() > 5000)
+    if (m_gameTime->AllTime() > curr)
     {
+        curr = m_gameTime->AllTime() + 5000;
+        Log::Info("Test 1");
         if (m_scene)
         {
             m_scene->Destroy();

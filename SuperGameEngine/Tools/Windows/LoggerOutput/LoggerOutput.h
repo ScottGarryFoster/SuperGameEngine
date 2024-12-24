@@ -1,5 +1,6 @@
 #pragma once
 #include "../UpdateableObject/UpdateableObject.h"
+#include "../../FatedQuestLibraries.h"
 
 namespace SuperGameEngine
 {
@@ -7,13 +8,17 @@ namespace SuperGameEngine
 }
 
 using namespace SuperGameEngine;
+using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
 {
+    class LogEntry;
+    class LoggerCallback;
+
     /// <summary>
     /// Holds the viewport.
     /// </summary>
-    class LoggerOutput : public UpdateableObject
+    class LoggerOutput : public UpdateableObject, public FEventObserver
     {
     public:
         LoggerOutput();
@@ -40,6 +45,12 @@ namespace SuperGameTools
         /// </summary>
         virtual void TearDown() override;
 
+        /// <summary>
+        /// Subscribed to the logger events.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+
     private:
 
         /// <summary>
@@ -61,5 +72,10 @@ namespace SuperGameTools
         /// Shown for error logs.
         /// </summary>
         std::shared_ptr<SuperTexture> m_errorIcon;
+
+        /// <summary>
+        /// All logs sent.
+        /// </summary>
+        std::vector<std::shared_ptr<LogEntry>> m_logEntries;
     };
 }

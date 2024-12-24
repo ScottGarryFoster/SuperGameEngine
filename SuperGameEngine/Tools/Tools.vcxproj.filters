@@ -126,6 +126,12 @@
     <ClInclude Include="Engine\Graphics\ImGuiSuperTextureWrapper.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="FatedQuestLibraries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\LoggerOutput\LogEntry.h">
+      <Filter>Header Files\Windows\LoggerOutput</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tools.cpp">
@@ -166,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Graphics\ImGuiTexture.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp">
+      <Filter>Source Files\Windows\LoggerOutput</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,8 +12,8 @@ int main(int argc, char* args[])
 
     GenerateEnum generator;
     if (!generator.SingleFile(
-        R"(E:\Development\SuperGameEngine-Myriad\SuperGameEngine\Engine\Engine\Graphics\Texture\TextureDataOrigin.superenum)",
-        R"(E:\Development\SuperGameEngine-Myriad\SuperGameEngine\Engine\Engine\Graphics\Texture\TextureDataOrigin.h)"))
+        R"(E:\Development\SuperGameEngine-Myriad\FatedQuest.Libraries\Logger\Logger\LogLevel.superenum)",
+        R"(E:\Development\SuperGameEngine-Myriad\FatedQuest.Libraries\Logger\Logger\LogLevel.h)"))
     {
         std::cout << "Could not generate file. " << std::endl;
     }

@@ -13,7 +13,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// An event which can be subscribed to and can invoke a message to observers.
     /// </summary>
-    class FEvent : public FEventSubscriptions, FEventAction
+    class FEvent : public FEventSubscriptions, public FEventAction
     {
     public:
         FEvent();

@@ -6,3 +6,5 @@
 #include "Object/GUID/GUID.h"
 #include "Object/GUID/GUIDHelpers.h"
 #include "Object/GUID/WindowsGUID.h"
+
+#include "Events/FEvent.h"

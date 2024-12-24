@@ -209,6 +209,7 @@
     <ClInclude Include="Engine\Graphics\ImGuiSuperTexture.h" />
     <ClInclude Include="Engine\Graphics\ImGuiSuperTextureWrapper.h" />
     <ClInclude Include="Engine\Graphics\ImGuiTexture.h" />
+    <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
+    <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
@@ -240,6 +242,7 @@
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
+    <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
   </ItemGroup>
   <ItemGroup>

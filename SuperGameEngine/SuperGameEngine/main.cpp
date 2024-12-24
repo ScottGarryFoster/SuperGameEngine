@@ -10,6 +10,7 @@
 #include "../Engine/EngineEntry/EngineEntry.h"
 #include "../Engine/Engine/MainEngine.h"
 #include "../Engine/DebugEngine/DebugEngine.h"
+#include "../../FatedQuest.Libraries/Logger/Logger/Log.h"
 
 // Any external projects should define their components here:
 #define _TOOLS // Figure out what is going on here [#88]
@@ -27,6 +28,9 @@ using namespace SuperGameEngine;
 // within the GameEngine.
 int main(int argc, char* args[])
 {
+#ifdef _DEBUG | _TOOLS
+    Log::Initialise();
+#endif
 
 #ifdef _DEBUG
     AllocConsole();

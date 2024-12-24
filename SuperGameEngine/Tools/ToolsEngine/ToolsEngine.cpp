@@ -103,5 +103,12 @@ void ToolsEngine::Setup()
 
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
     loggerWindow->Setup(m_windowPackage);
+
+    if (auto shared = Log::GetEvent().lock())
+    {
+        std::weak_ptr<FEventObserver> weak = loggerWindow;
+        shared->Subscribe(weak);
+    }
+
     m_updatables.push_back(loggerWindow);
 }
