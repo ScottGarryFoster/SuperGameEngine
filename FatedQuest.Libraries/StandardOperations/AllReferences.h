@@ -8,3 +8,5 @@
 #include "Text/StringHelpers.h"
 #include "Number/IntHelpers.h"
 #include "Number/FloatingPointHelpers.h"
+
+#include "Collection/Vector/VectorHelpers.h"

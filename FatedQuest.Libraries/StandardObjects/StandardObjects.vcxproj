@@ -205,6 +205,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
+    <ClInclude Include="Events\FEvent.h" />
+    <ClInclude Include="Events\FEventAction.h" />
+    <ClInclude Include="Events\FEventArguments.h" />
+    <ClInclude Include="Events\FEventObserver.h" />
+    <ClInclude Include="Events\FEventSubscriptions.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Object\GUID\GUID.h" />
     <ClInclude Include="Object\GUID\GUIDHelpers.h" />
@@ -214,6 +219,7 @@
     <ClInclude Include="Position\FVector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Events\FEvent.cpp" />
     <ClCompile Include="Object\GUID\GUID.cpp" />
     <ClCompile Include="Object\GUID\GUIDHelpers.cpp" />
     <ClCompile Include="Object\GUID\WindowsGUID.cpp" />

@@ -205,6 +205,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
+    <ClInclude Include="Collection\Vector\VectorHelpers.h" />
     <ClInclude Include="FileHandling\CopyFileOptions.h" />
     <ClInclude Include="FileHandling\CopyOptionsFileSystemHelper.h" />
     <ClInclude Include="FileHandling\Directory.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Text\StringAdvancedReplace.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collection\Vector\VectorHelpers.cpp" />
     <ClCompile Include="FileHandling\Directory.cpp" />
     <ClCompile Include="FileHandling\File.cpp" />
     <ClCompile Include="FileHandling\FilePaths.cpp" />
