@@ -124,11 +124,11 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         }
         ++t;
 
-        if (m_scene)
-        {
-            m_scene->Destroy();
-            m_scene = std::shared_ptr<Scene>();
-        }
+        //if (m_scene)
+        //{
+        //    m_scene->Destroy();
+        //    m_scene = std::shared_ptr<Scene>();
+        //}
 
     }
 

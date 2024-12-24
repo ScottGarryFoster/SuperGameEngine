@@ -12,6 +12,6 @@ void SuperGameEngine::DebugLogger::Invoke(std::shared_ptr<FEventArguments> argum
             std::cout << "[" << logArguments->GetFrom() << "] ";
         }
 
-        std::cout << logArguments->GetLogMessage();
+        std::cout << logArguments->GetLogMessage() << "\n";
     }
 }
