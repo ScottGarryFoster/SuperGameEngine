@@ -11,6 +11,8 @@
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
 
+#include "../Engine/Content/ImGuiTextureManager.h"
+
 using namespace SuperGameTools;
 
 ToolsEngine::ToolsEngine()
@@ -37,7 +39,7 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         gamePackage->Load(paths);
         m_superContentManager->GiveGamePackage(gamePackage);
 
-        auto textureManager = std::make_shared<SuperTextureManager>(renderer, gamePackage);
+        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, gamePackage);
         m_superContentManager->GiveSuperTextureManager(textureManager);
 
         m_windowPackage->SetContentManager(m_superContentManager);

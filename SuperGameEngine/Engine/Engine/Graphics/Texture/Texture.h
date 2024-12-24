@@ -84,7 +84,8 @@ namespace SuperGameEngine
         /// </summary>
         bool Remake(std::vector<std::string>& errors);
 
-    private:
+    protected:
+
         /// <summary>
         /// Wraps the SDL Renderer such that upon the death of the
         /// SDL Window this becomes invalid and the textures wait for a
@@ -96,6 +97,8 @@ namespace SuperGameEngine
         /// The actual texture.
         /// </summary>
         SDL_Texture* m_texture;
+
+    private:
 
         /// <summary>
         /// File path of the texture loaded.

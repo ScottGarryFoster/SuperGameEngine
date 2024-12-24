@@ -205,6 +205,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EngineIncludes\EngineInclude.h" />
+    <ClInclude Include="Engine\Content\ImGuiTextureManager.h" />
+    <ClInclude Include="Engine\Graphics\ImGuiSuperTexture.h" />
+    <ClInclude Include="Engine\Graphics\ImGuiSuperTextureWrapper.h" />
+    <ClInclude Include="Engine\Graphics\ImGuiTexture.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
@@ -218,6 +222,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineIncludes\EngineInclude.cpp" />
+    <ClCompile Include="Engine\Content\ImGuiTextureManager.cpp" />
+    <ClCompile Include="Engine\Graphics\ImGuiSuperTexture.cpp" />
+    <ClCompile Include="Engine\Graphics\ImGuiSuperTextureWrapper.cpp" />
+    <ClCompile Include="Engine\Graphics\ImGuiTexture.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Tools_Debug|x64'">Create</PrecompiledHeader>

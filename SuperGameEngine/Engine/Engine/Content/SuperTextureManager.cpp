@@ -56,10 +56,6 @@ std::shared_ptr<SuperTexture> SuperTextureManager::GetTexture(const std::string&
             // TODO: Log this.
         }
     }
-    else
-    {
-        // TODO: Add zip loading here.
-    }
 
     return nullptr;
 }

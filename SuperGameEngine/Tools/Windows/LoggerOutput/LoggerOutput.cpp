@@ -2,7 +2,10 @@
 
 #include <string>
 
+#include "../../../Engine/Engine/Content/ContentManager.h"
 #include "../../../Engine/Imgui/External/imgui_internal.h"
+#include "../../Engine/Graphics/ImGuiSuperTexture.h"
+#include "../../ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameTools;
 
@@ -19,6 +22,9 @@ LoggerOutput::~LoggerOutput()
 void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
+
+    auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture("Engine\\TestImages\\A_pressed.png");
+    m_textureTest = std::static_pointer_cast<ImGuiSuperTexture>(texture);
 }
 
 void LoggerOutput::Update()
@@ -57,6 +63,8 @@ void LoggerOutput::Draw()
         }
         ImGui::EndTable();
     }
+
+    m_textureTest->Draw();
 
     ImGui::End();
 }

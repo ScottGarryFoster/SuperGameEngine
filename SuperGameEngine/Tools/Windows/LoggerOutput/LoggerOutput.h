@@ -1,7 +1,12 @@
 #pragma once
 #include "../UpdateableObject/UpdateableObject.h"
 
-struct ImGuiTable;
+namespace SuperGameEngine
+{
+    class SuperTexture;
+}
+
+using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
@@ -12,7 +17,7 @@ namespace SuperGameTools
     {
     public:
         LoggerOutput();
-        virtual ~LoggerOutput();
+        virtual ~LoggerOutput() override;
 
         /// <summary>
         /// Called once on setup.
@@ -41,5 +46,11 @@ namespace SuperGameTools
         /// Services to run a window.
         /// </summary>
         std::shared_ptr<WindowPackage> m_windowPackage;
+
+        /// <summary>
+        /// Testing a texture.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_textureTest;
+
     };
 }
