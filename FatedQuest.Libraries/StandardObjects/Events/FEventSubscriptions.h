@@ -13,13 +13,13 @@ namespace FatedQuestLibraries
         /// Subscribes to the event.
         /// </summary>
         /// <param name="observer">Observer to subscribe. </param>
-        virtual void Subscribe(FEventObserver* observer) = 0;
+        virtual void Subscribe(std::weak_ptr<FEventObserver> observer) = 0;
 
         /// <summary>
         /// Unsubscribes from the event.
         /// </summary>
         /// <param name="observer">Observer to unsubscribe. </param>
-        virtual void Unsubscribe(FEventObserver* observer) = 0;
+        virtual void Unsubscribe(std::weak_ptr<FEventObserver> observer) = 0;
     };
 }
 

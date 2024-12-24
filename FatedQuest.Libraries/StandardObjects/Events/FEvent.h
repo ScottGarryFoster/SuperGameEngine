@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "FEventSubscriptions.h"
 #include "FEventAction.h"
 #include "FEventArguments.h"
@@ -21,19 +23,19 @@ namespace FatedQuestLibraries
         /// Subscribes to the event.
         /// </summary>
         /// <param name="observer">Observer to subscribe. </param>
-        virtual void Subscribe(FEventObserver* observer) override;
+        virtual void Subscribe(std::weak_ptr<FEventObserver> observer) override;
 
         /// <summary>
         /// Unsubscribes from the event.
         /// </summary>
         /// <param name="observer">Observer to unsubscribe. </param>
-        virtual void Unsubscribe(FEventObserver* observer) override;
+        virtual void Unsubscribe(std::weak_ptr<FEventObserver> observer) override;
 
         /// <summary>
         /// Invoke the event on all observers.
         /// </summary>
         /// <param name="arguments">Arguments to send to all observers. </param>
-        virtual void Invoke(FEventArguments* arguments) override;
+        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
 
     private:
 
@@ -41,6 +43,6 @@ namespace FatedQuestLibraries
         /// List of observers.
         /// </summary>
         /// <remark>Consider linked list. </remark>
-        std::vector<FEventObserver*> m_observers;
+        std::vector<std::weak_ptr<FEventObserver>> m_observers;
     };
 }

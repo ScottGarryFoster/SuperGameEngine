@@ -16,6 +16,6 @@ namespace FatedQuestLibraries
         /// Invoke the event on all observers.
         /// </summary>
         /// <param name="arguments">Arguments to send to all observers. </param>
-        virtual void Invoke(FEventArguments* arguments) = 0;
+        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) = 0;
     };
 }
