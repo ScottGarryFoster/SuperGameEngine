@@ -3,7 +3,6 @@
 #include <string>
 
 #include "LogEntry.h"
-#include "LoggerCallback.h"
 #include "../../../Engine/Engine/Content/ContentManager.h"
 #include "../../../Engine/Imgui/External/imgui_internal.h"
 #include "../../Engine/Graphics/ImGuiSuperTexture.h"

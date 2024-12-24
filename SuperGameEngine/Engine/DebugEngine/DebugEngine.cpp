@@ -44,6 +44,8 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 
         m_gameTime = std::make_shared<SuperGameTime>();
         curr = m_gameTime->AllTime() + 5000;
+
+        t = 0;
     }
     else
     {
@@ -92,7 +94,26 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
     if (m_gameTime->AllTime() > curr)
     {
         curr = m_gameTime->AllTime() + 5000;
-        Log::Info("Test 1");
+
+        if (t == 0)
+        {
+            Log::Info("Test 1");
+        }
+        else if (t == 1)
+        {
+            Log::Warning("Warning Message");
+        }
+        else if (t == 2)
+        {
+            Log::Error("Error Message");
+        }
+        else if (t == 3)
+        {
+            Log::Exception("Exception Message");
+            t = -1;
+        }
+        ++t;
+
         if (m_scene)
         {
             m_scene->Destroy();
