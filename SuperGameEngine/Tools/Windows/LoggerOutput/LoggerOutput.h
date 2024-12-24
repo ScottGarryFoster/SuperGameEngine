@@ -48,9 +48,18 @@ namespace SuperGameTools
         std::shared_ptr<WindowPackage> m_windowPackage;
 
         /// <summary>
-        /// Testing a texture.
+        /// Shown for warning logs.
         /// </summary>
-        std::shared_ptr<SuperTexture> m_textureTest;
+        std::shared_ptr<SuperTexture> m_warningIcon;
 
+        /// <summary>
+        /// Shown for info logs.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_infoIcon;
+
+        /// <summary>
+        /// Shown for error logs.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_errorIcon;
     };
 }

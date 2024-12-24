@@ -23,8 +23,14 @@ void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
 
-    auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture("Engine\\TestImages\\A_pressed.png");
-    m_textureTest = std::static_pointer_cast<ImGuiSuperTexture>(texture);
+    auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Warning\Warning-25.png)");
+    m_warningIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
+
+    texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Info\Info-25.png)");
+    m_infoIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
+
+    texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Error\Error-25.png)");
+    m_errorIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
 }
 
 void LoggerOutput::Update()
@@ -33,7 +39,7 @@ void LoggerOutput::Update()
 
 void LoggerOutput::Draw()
 {
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
 
     ImGui::Begin("Logger Output");
     if (!ImGui::IsWindowDocked())
@@ -49,22 +55,37 @@ void LoggerOutput::Draw()
         ImGui::SetWindowSize(window, ImVec2(400, 200));
     }
 
-    ImGuiTableFlags flags = ImGuiTableFlags_BordersH | ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable;
+    ImGuiTableFlags flags = ImGuiTableFlags_BordersH | ImGuiTableFlags_BordersOuterV | ImGuiTableFlags_RowBg | ImGuiTableFlags_SizingFixedFit;
     if (ImGui::BeginTable("table1", 2, flags))
     {
         for (int row = 0; row < 5; row++)
         {
-            ImGui::TableNextRow();
+            ImGui::TableNextRow(0, 30);
             for (int column = 0; column < 2; column++)
             {
                 ImGui::TableSetColumnIndex(column);
-                ImGui::TextUnformatted("Col");
+                if (column == 0)
+                {
+
+                    m_errorIcon->Draw();
+                }
+                else
+                {
+                    // Move down slightly to ensure the text is in the center or close to.
+                    float cellHeight = ImGui::GetTextLineHeightWithSpacing();
+                    float textHeight = ImGui::GetTextLineHeight();
+                    float verticalOffset = (cellHeight - textHeight) * 0.5f;
+                    float cursorY = ImGui::GetCursorPosY();
+                    ImGui::SetCursorPosY(cursorY + verticalOffset);
+
+                    ImGui::TextUnformatted("Col");
+                }
+
             }
         }
+
         ImGui::EndTable();
     }
-
-    m_textureTest->Draw();
 
     ImGui::End();
 }
