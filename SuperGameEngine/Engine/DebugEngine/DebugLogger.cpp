@@ -3,6 +3,7 @@
 
 void SuperGameEngine::DebugLogger::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
+#ifdef _DEBUG
     std::shared_ptr<LogEventArguments> logArguments = std::static_pointer_cast<LogEventArguments>(arguments);
     if (logArguments)
     {
@@ -14,4 +15,6 @@ void SuperGameEngine::DebugLogger::Invoke(std::shared_ptr<FEventArguments> argum
 
         std::cout << logArguments->GetLogMessage() << "\n";
     }
+#endif
+
 }

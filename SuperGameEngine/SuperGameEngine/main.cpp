@@ -51,7 +51,9 @@ int main(int argc, char* args[])
     }
     else
     {
+#ifdef _DEBUG
         std::cout << "Could not create engine entry: " << "ToolsEngineEntry" << " Please ensure it is added to the factory \n.";
+#endif
         return 1;
     }
 #else

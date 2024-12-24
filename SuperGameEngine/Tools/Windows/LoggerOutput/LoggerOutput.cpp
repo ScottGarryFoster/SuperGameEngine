@@ -41,6 +41,12 @@ void LoggerOutput::Draw()
 {
     ImGui::ShowDemoWindow();
 
+    if (!m_warningIcon)
+    {
+        // TODO: Have an actual setup var
+        return;
+    }
+
     ImGui::Begin("Logger Output");
     if (!ImGui::IsWindowDocked())
     {
