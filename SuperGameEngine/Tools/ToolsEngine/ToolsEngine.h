@@ -9,6 +9,7 @@
 
 namespace SuperGameEngine
 {
+    class SuperContentManager;
     class SuperGameTime;
     class SuperSceneLoadPackage;
     class GameObject;
@@ -124,6 +125,16 @@ namespace SuperGameTools
         /// Everything a window needs to run.
         /// </summary>
         std::shared_ptr<WindowPackage> m_windowPackage;
+
+        /// <summary>
+        /// Holds content for the tools.
+        /// </summary>
+        std::shared_ptr<SuperContentManager> m_superContentManager;
+
+        /// <summary>
+        /// Sets up the engine.
+        /// </summary>
+        void Setup();
     };
 
     REGISTER_ENGINE("ToolsEngine", ToolsEngine);

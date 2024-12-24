@@ -55,6 +55,30 @@
     <Filter Include="Source Files\ToolsEngine\Packages">
       <UniqueIdentifier>{c54aa7f7-3702-4b11-a625-8d1a44128d54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Windows\LoggerOutput">
+      <UniqueIdentifier>{a662c1cf-e6a5-42c9-9225-a6066e443360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\LoggerOutput">
+      <UniqueIdentifier>{753803c4-6eb0-41c0-b137-e2fd2c09d941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{66225305-e1a4-4554-8aeb-f3302734cd1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{4e2d1ea9-27ba-4a3d-9d30-03c59b689018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Content">
+      <UniqueIdentifier>{6471e9e8-a42b-4120-8d84-4f9e658070f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{a7c7ce39-e675-471a-8a2e-b6a7a44d2d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{eee3adee-5911-4168-aa94-fceaf4189202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Content">
+      <UniqueIdentifier>{43bb57c9-f417-403c-9d57-6ade16443090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -87,11 +111,29 @@
     <ClInclude Include="ToolsEngine\Packages\WindowPackage.h">
       <Filter>Header Files\ToolsEngine\Packages</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h">
+      <Filter>Header Files\Windows\LoggerOutput</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\ImGuiTextureManager.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\ImGuiSuperTexture.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\ImGuiTexture.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\ImGuiSuperTextureWrapper.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="FatedQuestLibraries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\LoggerOutput\LogEntry.h">
+      <Filter>Header Files\Windows\LoggerOutput</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,6 +154,24 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp">
       <Filter>Source Files\ToolsEngine\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp">
+      <Filter>Source Files\Windows\LoggerOutput</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\ImGuiTextureManager.cpp">
+      <Filter>Source Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\ImGuiSuperTexture.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\ImGuiSuperTextureWrapper.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\ImGuiTexture.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp">
+      <Filter>Source Files\Windows\LoggerOutput</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

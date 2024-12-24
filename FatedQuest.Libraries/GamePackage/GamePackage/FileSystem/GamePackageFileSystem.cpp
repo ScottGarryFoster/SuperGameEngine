@@ -6,6 +6,7 @@
 #include "GamePackageFileSystemFile.h"
 #include "PackageFiles.h"
 #include "../PackageFile.h"
+#include "../../../Logger/Logger/Log.h"
 
 using namespace FatedQuestLibraries;
 
@@ -45,7 +46,7 @@ void GamePackageFileSystem::GiveFiles(
             AddToCollection(m_unarchivedFiles, pair.second);
             break;
         default:
-            // TODO: Add logging here for unknowns.
+            Log::Exception("No implementation for: " + EPackageFileOrigin::ToString(pair.first), "GamePackageFileSystem::GiveFiles", "NotImplementedException");
             break;
         }
     }

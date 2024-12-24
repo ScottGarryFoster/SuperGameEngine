@@ -19,7 +19,13 @@ std::shared_ptr<SuperTexture> SuperTextureManager::GetTexture(const std::string&
 {
     if (!m_renderer)
     {
-        //TODO: Log this.
+        Log::Error("Requested texture but renderer was not given.", "SuperTextureManager::GetTexture");
+        return nullptr;
+    }
+
+    if (m_renderer->RendererState() != SDLRendererState::Active)
+    {
+        Log::Error("Requested texture but renderer was destroyed.", "SuperTextureManager::GetTexture");
         return nullptr;
     }
 
@@ -37,11 +43,7 @@ std::shared_ptr<SuperTexture> SuperTextureManager::GetTexture(const std::string&
         std::vector<unsigned char> fileData = m_gamePackage->File()->ReadFileContentsExplicitly(path);
         if (fileData.empty())
         {
-            // TODO: Log this.
-#ifdef _DEBUG
-            std::cout << "SuperTextureManager::GetTexture: Attempted to ReadFileContentsExplicitly and got nothing. File: " << path << "\n";
-#endif
-
+            Log::Error("Attempted to ReadFileContentsExplicitly and got nothing. File: " + path, "SuperTextureManager::GetTexture");
             return nullptr;
         }
 
@@ -53,12 +55,10 @@ std::shared_ptr<SuperTexture> SuperTextureManager::GetTexture(const std::string&
         }
         else
         {
-            // TODO: Log this.
+            std::string errorsAsLine = StringHelpers::Join("\n", errors);
+            Log::Error("Attempted to load texture from data and failed. \n" + errorsAsLine, "SuperTextureManager::GetTexture");
+            return nullptr;
         }
-    }
-    else
-    {
-        // TODO: Add zip loading here.
     }
 
     return nullptr;

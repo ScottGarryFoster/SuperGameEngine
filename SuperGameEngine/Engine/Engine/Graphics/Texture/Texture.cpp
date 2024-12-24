@@ -13,6 +13,7 @@ Texture::Texture(const std::shared_ptr<SDLRendererReader>& renderer)
     m_textureSize = std::make_shared<FPoint>();
     m_screenRect = std::make_shared <SDL_Rect>();
     m_textureRect = std::make_shared <SDL_Rect>();
+    m_textureDataOrigin = TextureDataOrigin::Unknown;
 }
 
 Texture::~Texture()
@@ -34,7 +35,6 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
     if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
     {
         std::string error = "Renderer is not active. Window might not exist. Try giving the textures an active renderer.";
-        // TODO: ADD Logger for this error.
         errors.push_back(error);
         return false;
     }
@@ -42,7 +42,6 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
     if (!File::Exists(filePath))
     {
         std::string error = "File not found: " + filePath;
-        // TODO: ADD Logger for this error.
         errors.push_back(error);
         return false;
     }
@@ -52,7 +51,6 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
     if (surface == nullptr)
     {
         std::string error = "Unable to load image! SDL_Error: ", IMG_GetError();
-        // TODO: ADD Logger for this error.
         errors.push_back(error);
         return false;
     }
@@ -74,12 +72,9 @@ bool Texture::LoadImageFromFile(const std::string& filePath, std::vector<std::st
     if (!m_texture)
     {
         std::string error = "Error creating texture: ", SDL_GetError();
-        // TODO: ADD Logger for this error.
         errors.push_back(error);
         return false;
     }
-
-    // TODO: Implement this: UpdateTextureMetaData(m_texture);
 
     m_filePath = filePath;
     m_textureData.clear();
@@ -101,7 +96,6 @@ bool Texture::LoadImageFromData(std::vector<unsigned char>& data, const std::str
     if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
     {
         std::string error = "Renderer is not active. Window might not exist. Try giving the textures an active renderer.";
-        // TODO: ADD Logger for this error.
         errors.push_back(error);
         return false;
     }
@@ -141,7 +135,6 @@ bool Texture::LoadImageFromData(std::vector<unsigned char>& data, const std::str
         std::stringstream ss;
         ss << "Error creating texture: " << SDL_GetError();
         errors.push_back(ss.str());
-        // TODO: Add logger for this.
         return false;
     }
 
@@ -156,15 +149,8 @@ bool Texture::LoadImageFromData(std::vector<unsigned char>& data, const std::str
 
 void Texture::Draw() const
 {
-    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    if (!ValidateRendererAndTexture("Texture::Draw()"))
     {
-        // TODO: ADD Logger for this error.
-        return;
-    }
-
-    if (!m_texture)
-    {
-        // TODO: ADD Logger for this error.;
         return;
     }
 
@@ -185,15 +171,8 @@ void Texture::Draw(const FPoint& location) const
 
 void Texture::Draw(const FPoint& location, const FPoint& size) const
 {
-    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    if (!ValidateRendererAndTexture("Texture::Draw(const FPoint&, const FPoint&)"))
     {
-        // TODO: ADD Logger for this error.
-        return;
-    }
-
-    if (!m_texture)
-    {
-        // TODO: ADD Logger for this error.
         return;
     }
 
@@ -209,15 +188,8 @@ void Texture::Draw(const FPoint& location, const FPoint& size) const
 
 void Texture::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
 {
-    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    if (!ValidateRendererAndTexture("Texture::Draw(const RectangleInt&, const RectangleInt&)"))
     {
-        // TODO: ADD Logger for this error.
-        return;
-    }
-
-    if (!m_texture)
-    {
-        // TODO: ADD Logger for this error.
         return;
     }
 
@@ -262,4 +234,41 @@ void Texture::UpdateTextureMetaData(SDL_Texture* texture) const
     int textureWidth, textureHeight;
     SDL_QueryTexture(texture, NULL, NULL, &textureWidth, &textureHeight);
     m_textureSize->SetXYValue(textureWidth, textureHeight);
+}
+
+bool Texture::ValidateRendererAndTexture(const std::string& methodName) const
+{
+    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    {
+        if (m_filePath.empty())
+        {
+            Log::Error("Attempting to draw texture but there is no renderer. "
+                "Filepath (potentially old): " + m_filePath,
+                methodName);
+        }
+        else
+        {
+            Log::Error("Attempting to draw texture but there is no renderer.", "Texture::Draw");
+        }
+
+        return false;
+    }
+
+    if (!m_texture)
+    {
+        if (m_filePath.empty())
+        {
+            Log::Error("Requested to draw Texture but it does not exist. "
+                "Filepath (potentially old): " + m_filePath,
+                methodName);
+        }
+        else
+        {
+            Log::Error("Requested to draw Texture but it does not exist.", "Texture::Draw");
+        }
+
+        return false;
+    }
+
+    return true;
 }

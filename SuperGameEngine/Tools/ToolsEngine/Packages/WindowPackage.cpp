@@ -21,3 +21,13 @@ std::shared_ptr<SDLRendererReader> WindowPackage::GetRenderer() const
 {
     return m_renderer;
 }
+
+std::shared_ptr<ContentManager> WindowPackage::GetContentManager() const
+{
+    return m_contentManager;
+}
+
+void WindowPackage::SetContentManager(const std::shared_ptr<ContentManager>& contentManager)
+{
+    m_contentManager = contentManager;
+}

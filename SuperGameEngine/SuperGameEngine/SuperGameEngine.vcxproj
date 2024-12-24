@@ -140,9 +140,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_WINDOWS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,7 +153,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_TOOLS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_TOOLS;_DEBUG;_CONSOLE;_WINDOWS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -191,6 +191,12 @@
     </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\GamePackage\GamePackage.vcxproj">
       <Project>{272a3aeb-be9f-4219-919d-701c0a4a996f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\Logger\Logger.vcxproj">
+      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\Observer\Observer.vcxproj">
+      <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
       <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>

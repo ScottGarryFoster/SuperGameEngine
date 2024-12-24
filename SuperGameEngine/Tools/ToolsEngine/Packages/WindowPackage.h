@@ -5,6 +5,7 @@
 
 namespace SuperGameEngine
 {
+    class ContentManager;
     class SDLRendererReader;
 }
 
@@ -44,6 +45,18 @@ namespace SuperGameTools
         /// <returns>The renderer SDL is using for the whole window. </returns>
         std::shared_ptr<SDLRendererReader> GetRenderer() const;
 
+        /// <summary>
+        /// Gets a content manager which will be alive for the entire time the tools will be.
+        /// </summary>
+        /// <returns>The content manager. </returns>
+        std::shared_ptr<ContentManager> GetContentManager() const;
+
+        /// <summary>
+        /// Sets the content Manager.
+        /// </summary>
+        /// <param name="contentManager">New content manager. </param>
+        void SetContentManager(const std::shared_ptr<ContentManager>& contentManager);
+
     private:
 
         /// <summary>
@@ -57,5 +70,10 @@ namespace SuperGameTools
         /// new texture.
         /// </summary>
         std::shared_ptr<SDLRendererReader> m_renderer;
+
+        /// <summary>
+        /// The content manager for the game.
+        /// </summary>
+        std::shared_ptr<ContentManager> m_contentManager;
     };
 }

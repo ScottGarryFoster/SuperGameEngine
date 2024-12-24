@@ -13,6 +13,8 @@ namespace SuperGameEngine
     class SuperTexture
     {
     public:
+        virtual ~SuperTexture() = default;
+
         /// <summary>
         /// Draws to screen.
         /// </summary>

@@ -31,6 +31,18 @@
     <Filter Include="Source Files\Number">
       <UniqueIdentifier>{fd0f5d9a-e0eb-4ee7-85ba-c3f8dc890a85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Collection">
+      <UniqueIdentifier>{d8b39d45-3d95-47c1-b492-a01303854d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Collection\Vector">
+      <UniqueIdentifier>{915b8e55-4bce-42db-8869-840e6ae33cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collection">
+      <UniqueIdentifier>{5c9508db-e7f3-4076-b2e5-9a823e5a67cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collection\Vector">
+      <UniqueIdentifier>{a5303afa-23e8-457d-9456-93f75f31bbc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -69,11 +81,11 @@
     <ClInclude Include="FileHandling\FilePaths.h">
       <Filter>Header Files\FileHandling</Filter>
     </ClInclude>
+    <ClInclude Include="Collection\Vector\VectorHelpers.h">
+      <Filter>Header Files\Collection\Vector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StandardOperations.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="FileHandling\FilePaths.cpp">
       <Filter>Source Files\FileHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="Collection\Vector\VectorHelpers.cpp">
+      <Filter>Source Files\Collection\Vector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

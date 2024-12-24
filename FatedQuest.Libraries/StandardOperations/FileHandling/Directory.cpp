@@ -1,6 +1,7 @@
 #include "Directory.h"
 #include <filesystem>
 #include "CopyOptionsFileSystemHelper.h"
+#include "../../Logger/AllReferences.h"
 
 #ifdef DEBUG
 #include <iostream>
@@ -141,10 +142,7 @@ bool Directory::CopyDirectory(const std::string& inputPath, const std::string& o
     }
     catch (const std::exception e)
     {
-#ifdef _DEBUG
-        // TODO: Log the error here
-        std::cout << "Directory::CopyDirectory: Exception thrown: " << e.what() << std::endl;
-#endif
+        Log::Exception("Could not copy directory", "Directory::CopyDirectory", e.what());
         return false;
     }
 
@@ -160,11 +158,7 @@ std::string Directory::GetTempDirectory()
     }
     catch (const std::exception e)
     {
-
-#ifdef _DEBUG
-        // TODO: Log the error here
-        std::cout << "Directory::GetTempDirectory: Exception thrown: " << e.what() << std::endl;
-#endif
+        Log::Exception("Could not get temp directory", "Directory::GetTempDirectory", e.what());
         return "";
     }
 }

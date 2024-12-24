@@ -16,11 +16,13 @@ namespace SuperGameTools
     class UpdateableObject
     {
     public:
+        virtual ~UpdateableObject() = default;
+
         /// <summary>
         /// Called once on setup.
         /// </summary>
         /// <param name="windowPackage">Everything needed to run a window. </param>
-        virtual void Setup(std::shared_ptr<WindowPackage> windowPackage) = 0;
+        virtual void Setup(const std::shared_ptr<WindowPackage>& windowPackage) = 0;
 
         /// <summary>
         /// Called every frame.

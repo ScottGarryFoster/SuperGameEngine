@@ -1,8 +1,17 @@
 #include "ToolsEngine.h"
 #include <SDL.h>
+
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/CombinedGamePackage.h"
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/PackagePaths.h"
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
+#include "../../Engine/Engine/Content/ContentManager.h"
+#include "../../Engine/Engine/Content/SuperContentManager.h"
 #include "../../Engine/Imgui/External/imgui.h"
 #include "../Windows/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
+#include "../Windows/LoggerOutput/LoggerOutput.h"
+
+#include "../Engine/Content/ImGuiTextureManager.h"
 
 using namespace SuperGameTools;
 
@@ -10,6 +19,7 @@ ToolsEngine::ToolsEngine()
 {
     m_windowPackage = std::make_shared<WindowPackage>();
     m_haveSetup = false;
+    m_superContentManager = std::make_shared<SuperContentManager>();
 }
 
 ToolsEngine::~ToolsEngine()
@@ -21,6 +31,19 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
     
     m_windowPackage->SetRenderer(m_renderer);
+
+    if (!m_superContentManager->GetSuperTextureManager())
+    {
+        auto paths = std::make_shared<SGEPackagePaths>();
+        auto gamePackage = std::make_shared<CombinedGamePackage>();
+        gamePackage->Load(paths);
+        m_superContentManager->GiveGamePackage(gamePackage);
+
+        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, gamePackage);
+        m_superContentManager->GiveSuperTextureManager(textureManager);
+
+        m_windowPackage->SetContentManager(m_superContentManager);
+    }
 }
 
 void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
@@ -39,9 +62,7 @@ ApplicationOperationState ToolsEngine::Update(Uint64 ticks)
 {
     if (!m_haveSetup)
     {
-        std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
-        gameViewport->Setup(m_windowPackage);
-        m_updatables.push_back(gameViewport);
+        Setup();
         m_haveSetup = true;
     }
 
@@ -67,8 +88,27 @@ void ToolsEngine::Draw()
 
 void ToolsEngine::WindowStart()
 {
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 }
 
 void ToolsEngine::WindowTeardown()
 {
+}
+
+void ToolsEngine::Setup()
+{
+    std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
+    gameViewport->Setup(m_windowPackage);
+    m_updatables.push_back(gameViewport);
+
+    std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
+    loggerWindow->Setup(m_windowPackage);
+
+    if (auto shared = Log::GetEvent().lock())
+    {
+        std::weak_ptr<FEventObserver> weak = loggerWindow;
+        shared->Subscribe(weak);
+    }
+
+    m_updatables.push_back(loggerWindow);
 }

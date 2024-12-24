@@ -152,7 +152,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_WINDOWS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_WINDOWS;_TOOLS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -169,7 +169,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -205,6 +205,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
+    <ClInclude Include="Collection\Vector\VectorHelpers.h" />
     <ClInclude Include="FileHandling\CopyFileOptions.h" />
     <ClInclude Include="FileHandling\CopyOptionsFileSystemHelper.h" />
     <ClInclude Include="FileHandling\Directory.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Text\StringAdvancedReplace.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collection\Vector\VectorHelpers.cpp" />
     <ClCompile Include="FileHandling\Directory.cpp" />
     <ClCompile Include="FileHandling\File.cpp" />
     <ClCompile Include="FileHandling\FilePaths.cpp" />
@@ -231,12 +233,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="StandardOperations.cpp" />
     <ClCompile Include="Text\StringAdvancedReplace.cpp" />
     <ClCompile Include="Text\StringHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logger\Logger.vcxproj">
+      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

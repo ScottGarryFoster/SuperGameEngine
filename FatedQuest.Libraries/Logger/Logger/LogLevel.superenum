@@ -1,0 +1,27 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    #include "../FatedQuestReferences.h"
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        The level of severity of the log.
+    </EnumComment>
+    <EnumName Name="LogLevel">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Info>
+            The event is something to be concerned about but was handled.
+        </Info>
+        <Warning>
+            The event has changed what occured and is indictive of something wrong.
+        </Warning>
+        <Error>
+            The event shows something has gone wrong and logic has changed route to work around it.
+        </Error>
+        <Exception>
+            There was an exception which should be brought to the users attention.
+        </Exception>
+    </EnumName>
+</SuperEnum>

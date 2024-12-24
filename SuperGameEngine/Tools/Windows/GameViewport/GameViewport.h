@@ -14,7 +14,7 @@ namespace SuperGameTools
         /// Called once on setup.
         /// </summary>
         /// <param name="windowPackage">Everything needed to run a window. </param>
-        virtual void Setup(std::shared_ptr<WindowPackage> windowPackage) override;
+        virtual void Setup(const std::shared_ptr<WindowPackage>& windowPackage) override;
 
         /// <summary>
         /// Called every frame.

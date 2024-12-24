@@ -6,6 +6,7 @@
 #include "../Engine/Basic/SuperGameTime.h"
 
 // TODO: Reference all Components
+#include "DebugLogger.h"
 #include "../Structural/InternalComponents/TestComponent/TestComponent.h"
 #include "../Structural/InternalComponents/SpriteComponent/SpriteComponent.h"
 #include "../Structural/Scene/GrandScene.h"
@@ -16,8 +17,12 @@
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/FileSystem/PackageFileSystemFile.h"
 
+#include "../FatedQuestReferences.h"
+#include "../../../FatedQuest.Libraries/Logger/Logger/Log.h"
+
 using namespace SuperEngineDebug;
 using namespace SuperGameEngine;
+using namespace FatedQuestLibraries;
 
 void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 {
@@ -39,6 +44,9 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_sceneLoadPackage->SetContentManager(m_contentManager);
 
         m_gameTime = std::make_shared<SuperGameTime>();
+        curr = m_gameTime->AllTime() + 5000;
+
+        t = 0;
     }
     else
     {
@@ -78,19 +86,49 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
                 sprite->Move(400, 400);
             }
         }
+
+#ifdef _DEBUG
+        m_logger = std::make_shared<DebugLogger>();
+        if (auto shared = Log::GetEvent().lock())
+        {
+            shared->Subscribe(m_logger);
+        }
+#endif
+
     }
 
     m_gameTime->SetTicksSinceLastFrame(ticks);
     m_grandScene->Update(m_gameTime);
 
 
-    if (m_gameTime->AllTime() > 5000)
+    if (m_gameTime->AllTime() > curr)
     {
-        if (m_scene)
+        curr = m_gameTime->AllTime() + 5000;
+
+        if (t == 0)
         {
-            m_scene->Destroy();
-            m_scene = std::shared_ptr<Scene>();
+            Log::Info("Test 1");
         }
+        else if (t == 1)
+        {
+            Log::Warning("Warning Message");
+        }
+        else if (t == 2)
+        {
+            Log::Error("Error Message");
+        }
+        else if (t == 3)
+        {
+            Log::Exception("Exception Message");
+            t = -1;
+        }
+        ++t;
+
+        //if (m_scene)
+        //{
+        //    m_scene->Destroy();
+        //    m_scene = std::shared_ptr<Scene>();
+        //}
 
     }
 

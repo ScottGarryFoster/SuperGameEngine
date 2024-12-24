@@ -38,7 +38,8 @@ namespace SuperGameEngine
         /// <param name="errors">Any errors which occured after remaking textures. </param>
         /// <returns>True means there were not errors. </returns>
         virtual bool RemakeAllTextures(std::vector<std::string>& errors);
-    private:
+
+    protected:
         /// <summary>
         /// Wraps the SDL Renderer such that upon the death of the
         /// SDL Window this becomes invalid and the textures wait for a
@@ -47,16 +48,26 @@ namespace SuperGameEngine
         std::shared_ptr<SDLRendererReader> m_renderer;
 
         /// <summary>
+        /// Gives us access to all the files the game cares about as these are 'on file'.
+        /// </summary>
+        std::shared_ptr<GamePackage> m_gamePackage;
+
+    private:
+
+        /// <summary>
         /// All textures stored as filepath names and pointers to the wrappers.
         /// </summary>
         std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<SuperTextureWrapper>>> m_storedTextures;
 
         /// <summary>
-        /// Gives us access to all the files the game cares about as these are 'on file'.
+        /// Adds a texture to the cache.
         /// </summary>
-        std::shared_ptr<GamePackage> m_gamePackage;
-
-        std::shared_ptr<SuperTextureWrapper> AddTextureToStore(const std::string& path, const std::shared_ptr<Texture>& texture) const;
+        /// <param name="path">Path of the Texture. </param>
+        /// <param name="texture">Texture. </param>
+        /// <returns>A Super Texture. </returns>
+        std::shared_ptr<SuperTextureWrapper> AddTextureToStore(
+            const std::string& path, 
+            const std::shared_ptr<Texture>& texture) const;
     };
 
 }
