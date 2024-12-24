@@ -395,9 +395,16 @@ bool StandardBinaryZip::DirectoryToZipWithFileToBinary(
         return false;
     }
 
-    if (!Directory::CreateDirectories(output))
+    if (!Directory::CreateDirectories(Directory::GetParent(output)))
     {
-        errors.push_back("Could not create directory " + output);
+        errors.push_back("Could not create directory " + Directory::GetParent(output));
+        return false;
+    }
+
+    std::string newOutput = Directory::CombinePath(Directory::GetParent(output), "Binary");
+    if (!Directory::CreateDirectories(newOutput))
+    {
+        errors.push_back("Could not create directory " + newOutput);
         return false;
     }
 
@@ -416,7 +423,7 @@ bool StandardBinaryZip::DirectoryToZipWithFileToBinary(
         if (File::IsFile(entry.path().string()))
         {
             FileSystem::path relativePath = FileSystem::relative(entry.path(), input);
-            FileSystem::path destPath = output / relativePath;
+            FileSystem::path destPath = newOutput / relativePath;
 
             std::string directory = destPath.parent_path().string();
             if (!Directory::CreateDirectories(directory))
@@ -442,7 +449,7 @@ bool StandardBinaryZip::DirectoryToZipWithFileToBinary(
     }
 
     zipClose(zf, NULL);
-    if (!Directory::RemoveAll(output))
+    if (!Directory::RemoveAll(newOutput))
     {
         errors.push_back("Could not delete directory after zipping.");
         return false;

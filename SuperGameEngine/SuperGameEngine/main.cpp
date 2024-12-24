@@ -27,7 +27,7 @@ using namespace SuperGameEngine;
 // within the GameEngine.
 int main(int argc, char* args[])
 {
-#ifdef _DEBUG | _TOOLS
+#ifdef _DEBUG || _TOOLS
     Log::Initialise();
 #endif
 

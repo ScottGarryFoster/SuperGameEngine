@@ -138,6 +138,12 @@
     <ProjectReference Include="..\..\..\FatedQuest.Libraries\GamePackage\GamePackage.vcxproj">
       <Project>{272a3aeb-be9f-4219-919d-701c0a4a996f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FatedQuest.Libraries\Logger\Logger.vcxproj">
+      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FatedQuest.Libraries\Observer\Observer.vcxproj">
+      <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj">
       <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
     </ProjectReference>

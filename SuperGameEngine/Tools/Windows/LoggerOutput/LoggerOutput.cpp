@@ -48,11 +48,6 @@ void LoggerOutput::Draw()
     }
 
     ImGui::Begin("Logger Output");
-    if (!ImGui::IsWindowDocked())
-    {
-        ImGui::End();
-        return;
-    }
 
     ImGuiWindow* window = ImGui::FindWindowByName("Logger Output");
     if (window->Size.x < 50 || window->Size.y < 50)
