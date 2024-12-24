@@ -3,6 +3,7 @@
 #include <sstream>
 #include <filesystem>
 #include "CopyOptionsFileSystemHelper.h"
+#include "../../Logger/AllReferences.h"
 
 #ifdef _DEBUG
 #include <iostream>
@@ -34,11 +35,8 @@ std::string File::ReadFileContents(const std::string& filepath)
     }
     else
     {
-#ifdef _DEBUG
-        // TODO: Consider throwing an exception here.
-        std::cout << "EXCEPTION: " << ": [File::ReadFileContents] "
-            << "File was already open: " << filepath << std::endl;
-#endif
+        Log::Error("File was already open: " + filepath, "File::ReadFileContents");
+        return {};
     }
 
     return fileContent;
@@ -50,12 +48,8 @@ std::vector<unsigned char> File::ReadFileContentsCharArray(const std::string& fi
 
     if (!file.is_open())
     {
-#ifdef _DEBUG
-        // TODO: Consider throwing an exception here.
-        std::cout << "EXCEPTION: " << ": [File::ReadFileContentsCharArray] "
-            << "File was already open: " << filepath << std::endl;
+        Log::Error("File was already open: " + filepath, "File::ReadFileContentsCharArray");
         return {};
-#endif
     }
 
     std::streamsize fileSize = file.tellg();
@@ -64,13 +58,8 @@ std::vector<unsigned char> File::ReadFileContentsCharArray(const std::string& fi
 
     if (!file.read(reinterpret_cast<char*>(buffer.data()), fileSize))
     {
-#ifdef _DEBUG
-        // TODO: Consider throwing an exception here.
-        std::cout << "EXCEPTION: " << ": [File::ReadFileContentsCharArray] "
-            << "Failed to read the file: " << filepath << std::endl;
+        Log::Error("Failed to read the file: " + filepath, "File::ReadFileContentsCharArray");
         return {};
-#endif
-
     }
 
     return buffer;
@@ -111,7 +100,8 @@ bool File::EndInExtension(const std::string& filepath, const std::string& extens
     return false;
 }
 
-bool FatedQuestLibraries::File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
+#undef CopyFile
+bool File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
 {
     try
     {
@@ -126,8 +116,9 @@ bool FatedQuestLibraries::File::CopyFile(const std::string& inputFilepath, const
 
         return FileSystem::copy_file(inputPathAsPath, destinationAsPath, copyOption);
     }
-    catch (const std::exception)
+    catch (const std::exception e)
     {
+        Log::Exception("Failed to copy file: " + inputFilepath + " to " + outputDirectoryPath, "File::CopyFile", e.what());
         return false;
     }
 
@@ -149,8 +140,9 @@ bool File::WriteLine(const std::string& filepath, const std::string& contents)
         outFile << contents;
         outFile.close();
     }
-    catch (const std::exception)
+    catch (const std::exception e)
     {
+        Log::Exception("Failed to WriteLine: " + filepath, "File::WriteLine", e.what());
         return false;
     }
 

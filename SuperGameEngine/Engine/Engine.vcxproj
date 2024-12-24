@@ -207,6 +207,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DebugEngine\DebugEngine.h" />
+    <ClInclude Include="DebugEngine\DebugLogger.h" />
     <ClInclude Include="EngineEntry\ApplicationOperationState.h" />
     <ClInclude Include="EngineEntry\Engine.h" />
     <ClInclude Include="EngineEntry\EngineEntry.h" />
@@ -265,7 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DebugEngine\DebugEngine.cpp" />
-    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="DebugEngine\DebugLogger.cpp" />
     <ClCompile Include="EngineEntry\EngineEntry.cpp" />
     <ClCompile Include="Engine\Basic\SuperGameTime.cpp" />
     <ClCompile Include="Engine\Content\SuperContentManager.cpp" />

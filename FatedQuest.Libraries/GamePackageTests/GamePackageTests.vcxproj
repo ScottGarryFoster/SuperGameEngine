@@ -188,6 +188,9 @@
     <ProjectReference Include="..\GamePackage\GamePackage.vcxproj">
       <Project>{272a3aeb-be9f-4219-919d-701c0a4a996f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Logger\Logger.vcxproj">
+      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\StandardObjects\StandardObjects.vcxproj">
       <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
     </ProjectReference>

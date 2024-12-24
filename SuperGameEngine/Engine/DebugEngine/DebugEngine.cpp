@@ -6,6 +6,7 @@
 #include "../Engine/Basic/SuperGameTime.h"
 
 // TODO: Reference all Components
+#include "DebugLogger.h"
 #include "../Structural/InternalComponents/TestComponent/TestComponent.h"
 #include "../Structural/InternalComponents/SpriteComponent/SpriteComponent.h"
 #include "../Structural/Scene/GrandScene.h"
@@ -85,6 +86,15 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
                 sprite->Move(400, 400);
             }
         }
+
+#ifdef _DEBUG
+        m_logger = std::make_shared<DebugLogger>();
+        if (auto shared = Log::GetEvent().lock())
+        {
+            shared->Subscribe(m_logger);
+        }
+#endif
+
     }
 
     m_gameTime->SetTicksSinceLastFrame(ticks);

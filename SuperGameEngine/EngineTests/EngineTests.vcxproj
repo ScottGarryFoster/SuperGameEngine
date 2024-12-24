@@ -159,6 +159,9 @@
     <ClCompile Include="Structural\Spatial\Area\RectangleTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\Logger\Logger.vcxproj">
+      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
       <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
     </ProjectReference>

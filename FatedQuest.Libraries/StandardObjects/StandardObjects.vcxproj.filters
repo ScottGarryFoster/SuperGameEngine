@@ -31,12 +31,6 @@
     <Filter Include="Header Files\Object\GUID">
       <UniqueIdentifier>{6ebd5202-7c63-4cae-a7b8-04999916a727}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Events">
-      <UniqueIdentifier>{d07ffab3-2d41-4b50-8760-c09f2a2fe1a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Events">
-      <UniqueIdentifier>{777e1078-1cd3-48eb-ad26-f0566cb13057}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,26 +57,8 @@
     <ClInclude Include="Object\GUID\WindowsGUID.h">
       <Filter>Header Files\Object\GUID</Filter>
     </ClInclude>
-    <ClInclude Include="Events\FEvent.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\FEventSubscriptions.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\FEventAction.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\FEventArguments.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\FEventObserver.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StandardObjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="Object\GUID\WindowsGUID.cpp">
       <Filter>Source Files\Object\GUID</Filter>
-    </ClCompile>
-    <ClCompile Include="Events\FEvent.cpp">
-      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

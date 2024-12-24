@@ -189,6 +189,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -220,11 +222,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StandardObjects\StandardObjects.vcxproj">
-      <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\StandardOperations\StandardOperations.vcxproj">
-      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    <ProjectReference Include="..\Observer\Observer.vcxproj">
+      <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

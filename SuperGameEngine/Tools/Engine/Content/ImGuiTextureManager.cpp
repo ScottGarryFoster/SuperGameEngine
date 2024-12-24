@@ -35,10 +35,7 @@ std::shared_ptr<SuperTexture> ImGuiTextureManager::GetTexture(const std::string&
         std::vector<unsigned char> fileData = m_gamePackage->File()->ReadFileContentsExplicitly(path);
         if (fileData.empty())
         {
-            // TODO: Log this.
-#ifdef _DEBUG
-            std::cout << "ImGuiTextureManager::GetTexture: Attempted to ReadFileContentsExplicitly and got nothing. File: " << path << "\n";
-#endif
+            Log::Error("Attempted to ReadFileContentsExplicitly and got nothing. File: " + path, "ImGuiTextureManager::GetTexture");
 
             return nullptr;
         }
@@ -51,7 +48,9 @@ std::shared_ptr<SuperTexture> ImGuiTextureManager::GetTexture(const std::string&
         }
         else
         {
-            // TODO: Log this.
+            std::string errorsAsLine = StringHelpers::Join("\n", errors);
+            Log::Error("Attempted to load texture from data and failed. \n" + errorsAsLine, "ImGuiTextureManager::GetTexture");
+            return nullptr;
         }
     }
 

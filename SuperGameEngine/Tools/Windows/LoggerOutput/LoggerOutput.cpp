@@ -90,7 +90,7 @@ void LoggerOutput::Draw()
                     float cursorY = ImGui::GetCursorPosY();
                     ImGui::SetCursorPosY(cursorY + verticalOffset);
 
-                    ImGui::TextUnformatted(logEntry->GetLogMessage().c_str());
+                    ImGui::TextUnformatted(logEntry->Write().c_str());
                 }
 
             }

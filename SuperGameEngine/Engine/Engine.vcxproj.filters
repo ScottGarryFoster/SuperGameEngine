@@ -309,11 +309,11 @@
     <ClInclude Include="Engine\Graphics\Texture\TextureDataOrigin.h">
       <Filter>Header Files\Engine\Graphics\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="DebugEngine\DebugLogger.h">
+      <Filter>Header Files\DebugEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -424,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.cpp">
       <Filter>Source Files\Structural\InternalComponents\SpriteComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugEngine\DebugLogger.cpp">
+      <Filter>Source Files\DebugEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

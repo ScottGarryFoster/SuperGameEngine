@@ -141,5 +141,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="texture">Texture to extract metadata. </param>
         void UpdateTextureMetaData(SDL_Texture* texture) const;
+
+        bool ValidateRendererAndTexture(const std::string& methodName) const;
     };
 }

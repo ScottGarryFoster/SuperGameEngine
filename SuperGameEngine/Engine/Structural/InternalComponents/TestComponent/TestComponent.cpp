@@ -39,9 +39,9 @@ void TestComponent::Setup(
         auto sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
 
         sprite->Move((int)(i * 2), i);
-        std::cout << sprite->GetX();
-        std::cout << sprite->GetY();
-        std::cout << "\n";
+        //std::cout << sprite->GetX();
+        //std::cout << sprite->GetY();
+        //std::cout << "\n";
 
         m_bunchOfComponents.push_back(sprite);
     }

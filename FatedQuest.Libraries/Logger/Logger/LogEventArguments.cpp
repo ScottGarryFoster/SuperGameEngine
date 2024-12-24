@@ -27,3 +27,23 @@ void LogEventArguments::SetLogMessage(const std::string& message)
 {
     m_message = message;
 }
+
+std::string LogEventArguments::GetFrom() const
+{
+    return m_from;
+}
+
+void LogEventArguments::SetFrom(const std::string& message)
+{
+    m_from = message;
+}
+
+std::string LogEventArguments::GetException() const
+{
+    return m_exception;
+}
+
+void LogEventArguments::SetException(const std::string& message)
+{
+    m_exception = message;
+}

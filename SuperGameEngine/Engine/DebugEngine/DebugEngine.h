@@ -12,6 +12,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
+    class DebugLogger;
     class Scene;
     class GrandScene;
     class SuperGameTime;
@@ -93,6 +94,8 @@ namespace SuperEngineDebug
         std::shared_ptr<SuperGrandScenePackage> m_sceneLoadPackage;
 
         std::shared_ptr<CombinedGamePackage> m_combinedGamePackage;
+
+        std::shared_ptr<DebugLogger> m_logger;
 
         std::shared_ptr<SuperGameTime> m_gameTime;
 

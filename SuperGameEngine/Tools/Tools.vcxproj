@@ -237,7 +237,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestComponent\ToolsComponent.cpp" />
-    <ClCompile Include="Tools.cpp" />
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
