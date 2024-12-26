@@ -6,12 +6,16 @@
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
 #include "../../Engine/Engine/Content/ContentManager.h"
 #include "../../Engine/Engine/Content/SuperContentManager.h"
-#include "../../Engine/Imgui/External/imgui.h"
+#include "../ImGuiIncludes.h"
 #include "../Windows/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
+#include "../Windows/MainMenuBar/MainMenuBar.h"
 
 #include "../Engine/Content/ImGuiTextureManager.h"
+#include "../Windows/DockableContainer/DockableContainer.h"
+#include "../Windows/SceneHierarchy/SceneHierarchy.h"
+#include "../Windows/InspectorWindow/InspectorWindow.h"
 
 using namespace SuperGameTools;
 
@@ -20,6 +24,7 @@ ToolsEngine::ToolsEngine()
     m_windowPackage = std::make_shared<WindowPackage>();
     m_haveSetup = false;
     m_superContentManager = std::make_shared<SuperContentManager>();
+    m_dockableContainer = std::make_shared<DockableContainer>();
 }
 
 ToolsEngine::~ToolsEngine()
@@ -82,13 +87,15 @@ ApplicationOperationState ToolsEngine::Update(Uint64 ticks)
 
 void ToolsEngine::Draw()
 {
+    m_dockableContainer->DrawDockableContainer();
+
+    ImGui::ShowDemoWindow();
     for (const std::shared_ptr<UpdateableObject>& obj : m_updatables)
     {
         obj->Draw();
     }
 
-    ImGui::Begin("Hello, Dear ImGui with SDL2");
-    ImGui::TextColored(ImVec4(150, 150, 150, 150), "This is just a basic Hello World!");
+    // Stop drawing the dockable container.
     ImGui::End();
 }
 
@@ -115,6 +122,17 @@ void ToolsEngine::Setup()
         std::weak_ptr<FEventObserver> weak = loggerWindow;
         shared->Subscribe(weak);
     }
-
     m_updatables.push_back(loggerWindow);
+
+    auto menuBar = std::make_shared<MainMenuBar>();
+    menuBar->Setup(m_windowPackage);
+    m_updatables.push_back(menuBar);
+
+    std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
+    sceneHierarchy->Setup(m_windowPackage);
+    m_updatables.push_back(sceneHierarchy);//InspectorWindow
+
+    std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
+    inspectorWindow->Setup(m_windowPackage);
+    m_updatables.push_back(inspectorWindow);
 }
