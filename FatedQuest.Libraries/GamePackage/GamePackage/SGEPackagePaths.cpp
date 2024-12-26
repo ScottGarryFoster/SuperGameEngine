@@ -10,7 +10,17 @@ std::string SGEPackagePaths::ProductsDirectory() const
 #ifdef _DEBUG
     std::filesystem::path threeAbove = exeFilepath.parent_path().parent_path().parent_path();
     return threeAbove.string();
+#else
+
+    // TODO: Add 'FINAL' Define to remove this check during development.
+    if (!Directory::Exists(Directory::CombinePath(exeFilepath.string(), ProductsDirectoryName())) && 
+        !Directory::Exists(Directory::CombinePath(exeFilepath.string(), ProductsArchiveName())))
+    {
+        std::filesystem::path threeAbove = exeFilepath.parent_path().parent_path().parent_path();
+        return threeAbove.string();
+    }
 #endif
+
     return exeFilepath.string();
 }
 
