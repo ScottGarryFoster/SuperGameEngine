@@ -79,6 +79,12 @@
     <Filter Include="Source Files\Engine\Content">
       <UniqueIdentifier>{43bb57c9-f417-403c-9d57-6ade16443090}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\Communication">
+      <UniqueIdentifier>{93be3adf-f1af-4842-8998-7b9667ce8251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\Communication">
+      <UniqueIdentifier>{b7f0c2c3-6eb4-4cad-81da-31053159ed5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -132,6 +138,24 @@
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h">
       <Filter>Header Files\Windows\LoggerOutput</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\Communication\EngineEntryCommunication.h">
+      <Filter>Header Files\ToolsEngine\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Communication\EnginePlayControl.h">
+      <Filter>Header Files\ToolsEngine\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Communication\ToolsEngineControl.h">
+      <Filter>Header Files\ToolsEngine\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.h">
+      <Filter>Header Files\ToolsEngine\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Communication\EngineFlowControl.h">
+      <Filter>Header Files\ToolsEngine\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Communication\EngineFlowPlayControl.h">
+      <Filter>Header Files\ToolsEngine\Communication</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -173,8 +197,16 @@
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp">
       <Filter>Source Files\Windows\LoggerOutput</Filter>
     </ClCompile>
+    <ClCompile Include="ToolsEngine\Communication\ToolsEngineControl.cpp">
+      <Filter>Source Files\ToolsEngine\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.cpp">
+      <Filter>Source Files\ToolsEngine\Communication</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

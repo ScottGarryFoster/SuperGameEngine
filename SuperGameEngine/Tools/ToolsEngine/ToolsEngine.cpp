@@ -53,6 +53,12 @@ void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Textur
     m_windowPackage->SetSDLRenderTexture(m_sdlRenderTexture);
 }
 
+void ToolsEngine::GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication)
+{
+    m_engineEntryCommunication = engineEntryCommunication;
+    m_windowPackage->SetEngineEntryCommunication(m_engineEntryCommunication);
+}
+
 ApplicationOperationState ToolsEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;

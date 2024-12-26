@@ -14,12 +14,11 @@ namespace SuperGameEngine
     class EngineEntry
     {
     public:
+        virtual ~EngineEntry() = default;
+
         /// <summary>
         /// The entry to the engine.
         /// </summary>
-        /// <param name="engineFactory">
-        /// Gives you the ability to create engines.
-        /// </param>
         /// <param name="engineType">
         /// The type of the engine to create.
         /// The factory uses the type name to define which to create.
@@ -35,9 +34,6 @@ namespace SuperGameEngine
         /// <summary>
         /// Creates the SDL Window loop.
         /// </summary>
-        /// <param name="engineFactory">
-        /// Gives you the ability to create engines.
-        /// </param>
         /// <param name="engineType">
         /// The type of the engine to create.
         /// The factory uses the type name to define which to create.

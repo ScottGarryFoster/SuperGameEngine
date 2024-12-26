@@ -139,6 +139,9 @@
     <Filter Include="Source Files\Structural\InternalComponents\SpriteComponent">
       <UniqueIdentifier>{2cb5b6fc-f1e8-47bb-bf1f-5d587c643060}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Tools">
+      <UniqueIdentifier>{fe31c853-56a2-4a78-b508-c5457a1ba016}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -311,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="DebugEngine\DebugLogger.h">
       <Filter>Header Files\DebugEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Tools\ToolsCommunication.h">
+      <Filter>Header Files\Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

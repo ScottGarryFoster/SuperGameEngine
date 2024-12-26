@@ -13,6 +13,8 @@ using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
+    class EngineEntryCommunication;
+
     /// <summary>
     /// Everything a Window Package might need to run.
     /// </summary>
@@ -57,6 +59,18 @@ namespace SuperGameTools
         /// <param name="contentManager">New content manager. </param>
         void SetContentManager(const std::shared_ptr<ContentManager>& contentManager);
 
+        /// <summary>
+        /// Gets a EngineEntryCommunication which allows communication with the Engine Entry.
+        /// </summary>
+        /// <returns>EngineEntryCommunication which allows communication with the Engine Entry. </returns>
+        std::shared_ptr<EngineEntryCommunication> GetEngineEntryCommunication() const;
+
+        /// <summary>
+        /// Sets the EngineEntryCommunication.
+        /// </summary>
+        /// <param name="engineEntryCommunication">New EngineEntryCommunication. </param>
+        void SetEngineEntryCommunication(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication);
+
     private:
 
         /// <summary>
@@ -75,5 +89,10 @@ namespace SuperGameTools
         /// The content manager for the game.
         /// </summary>
         std::shared_ptr<ContentManager> m_contentManager;
+
+        /// <summary>
+        /// Communication with the Engine Entry.
+        /// </summary>
+        std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
     };
 }

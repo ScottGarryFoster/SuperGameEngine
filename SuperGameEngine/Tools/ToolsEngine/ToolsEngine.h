@@ -20,6 +20,7 @@ using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
+    class EngineEntryCommunication;
     class UpdateableObject;
     class WindowPackage;
 
@@ -42,13 +43,6 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
         virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
-
-        /// <summary>
-        /// Gives the engine the texture the SDL Render is rendering to.
-        /// This is used to display what the engine is doing.
-        /// </summary>
-        /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
-        virtual void GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
 
         /// <summary>
         /// Handle the current event.
@@ -88,6 +82,22 @@ namespace SuperGameTools
         /// Called when the window is torndown.
         /// </summary>
         virtual void WindowTeardown() override;
+
+        /// <summary>
+        /// Gives the engine the texture the SDL Render is rendering to.
+        /// This is used to display what the engine is doing.
+        /// </summary>
+        /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
+        virtual void GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
+
+        /// <summary>
+        /// Gives the ability for the tools engine to control
+        /// the flow for the game engine.
+        /// </summary>
+        /// <param name="engineEntryCommunication">
+        /// Communication with the Engine Entry.
+        /// </param>
+        virtual void GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication);
 
     private:
         /// <summary>
@@ -130,6 +140,11 @@ namespace SuperGameTools
         /// Holds content for the tools.
         /// </summary>
         std::shared_ptr<SuperContentManager> m_superContentManager;
+
+        /// <summary>
+        /// Communication with the Engine Entry.
+        /// </summary>
+        std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
 
         /// <summary>
         /// Sets up the engine.

@@ -14,6 +14,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class EngineFlowPlayControl;
 
     /// <summary>
     /// The entry point for the engine and the top most level before main.
@@ -21,6 +22,9 @@ namespace SuperGameTools
     class ToolsEngineEntry : public EngineEntry
     {
     public:
+        ToolsEngineEntry();
+        virtual ~ToolsEngineEntry() override = default;
+
         /// <summary>
         /// The entry to the engine.
         /// </summary>
@@ -73,7 +77,20 @@ namespace SuperGameTools
         /// </summary>
         std::shared_ptr<ToolsEngine> m_toolsEngine;
 
+        /// <summary>
+        /// The last frame rendered by the game engine.
+        /// </summary>
         std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlTexture;
+
+        /// <summary>
+        /// Complete control over how and when the game engine runs.
+        /// </summary>
+        std::shared_ptr<EngineFlowPlayControl> m_engineFlow;
+
+        /// <summary>
+        /// Communication with the tools engine.
+        /// </summary>
+        std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);

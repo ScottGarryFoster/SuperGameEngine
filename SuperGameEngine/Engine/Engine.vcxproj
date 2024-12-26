@@ -229,6 +229,7 @@
     <ClInclude Include="Engine\Graphics\Texture\Texture.h" />
     <ClInclude Include="Engine\Graphics\Texture\TextureDataOrigin.h" />
     <ClInclude Include="Engine\MainEngine.h" />
+    <ClInclude Include="Engine\Tools\ToolsCommunication.h" />
     <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Imgui\External\imconfig.h" />

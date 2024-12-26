@@ -214,6 +214,12 @@
     <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestComponent\ToolsComponent.h" />
+    <ClInclude Include="ToolsEngine\Communication\EngineEntryCommunication.h" />
+    <ClInclude Include="ToolsEngine\Communication\EngineFlowControl.h" />
+    <ClInclude Include="ToolsEngine\Communication\EngineFlowPlayControl.h" />
+    <ClInclude Include="ToolsEngine\Communication\EnginePlayControl.h" />
+    <ClInclude Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.h" />
+    <ClInclude Include="ToolsEngine\Communication\ToolsEngineControl.h" />
     <ClInclude Include="ToolsEngine\Packages\WindowPackage.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
@@ -237,6 +243,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestComponent\ToolsComponent.cpp" />
+    <ClCompile Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.cpp" />
+    <ClCompile Include="ToolsEngine\Communication\ToolsEngineControl.cpp" />
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />

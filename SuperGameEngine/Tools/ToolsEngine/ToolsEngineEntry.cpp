@@ -6,13 +6,27 @@
 #endif
 
 #include "../ImGuiIncludes.h"
+#include "Communication/ToolsEngineEntryCommunication.h"
+#include "Communication/EngineFlowPlayControl.h"
+#include "Communication/ToolsEngineControl.h"
 
 using namespace SuperGameTools;
+
+ToolsEngineEntry::ToolsEngineEntry()
+{
+    auto toolsEngineEntry = std::make_shared<ToolsEngineEntryCommunication>();
+    m_engineEntryCommunication = toolsEngineEntry;
+
+    m_engineFlow = std::make_shared<ToolsEngineControl>();
+    toolsEngineEntry->SetPlayControls(m_engineFlow);
+}
 
 int ToolsEngineEntry::RunApplication(const std::string& engineType)
 {
     m_imgui = std::make_shared<ImGuiContainer>();
     m_toolsEngine = std::make_shared<ToolsEngine>();
+    m_toolsEngine->GiveEnginePlayControls(m_engineEntryCommunication);
+
     m_sdlTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
     m_toolsEngine->GiveSDLTexture(m_sdlTexture);
 

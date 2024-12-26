@@ -29,8 +29,8 @@ namespace SuperGameEngine
         /// <param name="event">Current event. </param>
         /// <returns>
         /// ApplicationOperationState::Running will keep the window running.
-        /// ApplicationOperationState::Restart will restart the window at the next opertunity.
-        /// ApplicationOperationState::Close will close the game window at the next opertunity.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
         /// </returns>
         virtual ApplicationOperationState Event(SDL_Event event) = 0;
 
@@ -41,8 +41,8 @@ namespace SuperGameEngine
         /// <param name="ticks">Ticks between this frame and the last. </param>
         /// <returns>
         /// ApplicationOperationState::Running will keep the window running.
-        /// ApplicationOperationState::Restart will restart the window at the next opertunity.
-        /// ApplicationOperationState::Close will close the game window at the next opertunity.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
         /// </returns>
         virtual ApplicationOperationState Update(Uint64 ticks) = 0;
 
@@ -57,7 +57,7 @@ namespace SuperGameEngine
         virtual void WindowStart() = 0;
 
         /// <summary>
-        /// Called when the window is torndown.
+        /// Called when the window is torn down.
         /// </summary>
         virtual void WindowTeardown() = 0;
     };

@@ -1,6 +1,7 @@
 #include "GameViewport.h"
 #include "../../ImGuiIncludes.h"
 #include "../../../Engine/Engine/Graphics/Texture/SDLRendererReader.h"
+#include "../../ToolsEngine/Communication/EngineEntryCommunication.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameEngine;
@@ -21,6 +22,43 @@ void GameViewport::Update()
 void GameViewport::Draw()
 {
     ImGui::Begin("My Window");
+
+    if (m_windowPackage->GetEngineEntryCommunication())
+    {
+        int i = 1;
+        ImGui::PushID(i);
+
+        if (m_windowPackage->GetEngineEntryCommunication()->GetPlayControls()->DoRunUpdate())
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(48 / 255.0f, 48 / 255.0f, 48 / 255.0f, 255 / 255.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(140 / 255.0f, 140 / 255.0f, 140 / 255.0f, 255 / 255.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(97 / 255.0f, 97 / 255.0f, 97 / 255.0f, 255 / 255.0f));
+        }
+        else
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(140 / 255.0f, 140 / 255.0f, 140 / 255.0f, 255 / 255.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(48 / 255.0f, 48 / 255.0f, 48 / 255.0f, 255 / 255.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(97 / 255.0f, 97 / 255.0f, 97 / 255.0f, 255 / 255.0f));
+        }
+
+        if (ImGui::Button("Play"))
+        {
+            if (m_windowPackage->GetEngineEntryCommunication()->GetPlayControls()->DoRunUpdate())
+            {
+                m_windowPackage->GetEngineEntryCommunication()->GetPlayControls()->Stop();
+            }
+            else
+            {
+                m_windowPackage->GetEngineEntryCommunication()->GetPlayControls()->Play();
+            }
+
+        }
+
+        ImGui::PopStyleColor(3);
+        ImGui::PopID();
+    }
+
+
     ImVec2 windowPos = ImGui::GetWindowPos();
     ImVec2 windowTopLeftBelowTitleBar = ImVec2(windowPos.x, windowPos.y + ImGui::GetFrameHeight());
     ImVec2 windowSize = ImGui::GetContentRegionAvail();
