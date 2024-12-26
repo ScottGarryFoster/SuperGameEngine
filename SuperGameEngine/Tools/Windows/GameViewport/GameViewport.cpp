@@ -51,7 +51,6 @@ void GameViewport::Draw()
             {
                 m_windowPackage->GetEngineEntryCommunication()->GetPlayControls()->Play();
             }
-
         }
 
         ImGui::PopStyleColor(3);

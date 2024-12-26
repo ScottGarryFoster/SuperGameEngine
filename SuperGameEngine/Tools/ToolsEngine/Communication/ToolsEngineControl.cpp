@@ -8,6 +8,7 @@ ToolsEngineControl::ToolsEngineControl()
     m_eventsHaveRunSinceAskingForOneFrame = false;
     m_playForOneFrame = false;
     m_stoppedPlayingLastFrame = false;
+    m_neverCreated = true;
 }
 
 void ToolsEngineControl::Stop()
@@ -47,6 +48,10 @@ bool ToolsEngineControl::DoRecreate() const
     {
         return true;
     }
+    else if (m_arePlaying && m_neverCreated)
+    {
+        return true;
+    }
 
     return false;
 }
@@ -77,10 +82,13 @@ void ToolsEngineControl::RanEvents()
     {
         m_eventsHaveRunSinceAskingForOneFrame = true;
     }
+
+    m_neverCreated = false;
 }
 
 void ToolsEngineControl::RanUpdate()
 {
+    m_neverCreated = false;
 }
 
 void ToolsEngineControl::RanDraw()
@@ -97,4 +105,6 @@ void ToolsEngineControl::RanDraw()
     {
         m_stoppedPlayingLastFrame = false;
     }
+
+    m_neverCreated = false;
 }

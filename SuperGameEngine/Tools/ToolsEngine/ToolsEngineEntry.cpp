@@ -92,18 +92,6 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     // Event handler
     SDL_Event e;
 
-    // Setup the engine.
-    std::shared_ptr<Engine> engine = EngineFactory::CreateEngine(engineType);
-    if (engine == nullptr)
-    {
-        Log::Error("Could not create Engine from factory: " + engineType);
-        return ApplicationOperationState::Close;
-    }
-
-    m_gameRenderer->SetRenderer(renderer);
-    engine->GiveRenderer(m_gameRenderer);
-    engine->WindowStart();
-
     // Setup the Tools Engine
     if (m_toolsEngine)
     {
@@ -114,20 +102,44 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
     Uint64 startTime = SDL_GetTicks64();
 
+    std::shared_ptr<Engine> engine = {};
+
     // Main loop
     ApplicationOperationState operationState = ApplicationOperationState::Running;
     while (operationState == ApplicationOperationState::Running)
     {
         auto eventAnswer = ApplicationOperationState::Running;
 
+        if (m_engineFlow->DoRecreate())
+        {
+            engine = EngineFactory::CreateEngine(engineType);
+            if (!engine)
+            {
+                Log::Error("Could not create Engine from factory, mid flow: " + engineType);
+                return ApplicationOperationState::Close;
+            }
+
+            if (engine)
+            {
+                m_gameRenderer->SetRenderer(renderer);
+                engine->GiveRenderer(m_gameRenderer);
+                engine->WindowStart();
+            }
+
+        }
+
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
-            eventAnswer = engine->Event(e);
-            if (eventAnswer != ApplicationOperationState::Running)
+            if (engine && m_engineFlow->DoRunEvents())
             {
-                operationState = eventAnswer;
+                eventAnswer = engine->Event(e);
+                if (eventAnswer != ApplicationOperationState::Running)
+                {
+                    operationState = eventAnswer;
+                }
             }
+
 
             // Tools Engine should also take events
             if (m_toolsEngine)
@@ -149,15 +161,30 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             }
         }
 
+        // Let the flow know this occured.
+        if (engine && m_engineFlow->DoRunEvents())
+        {
+            m_engineFlow->RanEvents();
+        }
+
+
         Uint64 currentTime = SDL_GetTicks64();
         Uint64 ticksThisFrame = currentTime - startTime;
         startTime = currentTime;
 
-        ApplicationOperationState updateAnswer = engine->Update(ticksThisFrame);
-        if (updateAnswer != ApplicationOperationState::Running)
+        ApplicationOperationState updateAnswer = ApplicationOperationState::Running;
+
+        if (engine && m_engineFlow->DoRunUpdate())
         {
-            operationState = updateAnswer;
+            updateAnswer = engine->Update(ticksThisFrame);
+            if (updateAnswer != ApplicationOperationState::Running)
+            {
+                operationState = updateAnswer;
+            }
+
+            m_engineFlow->RanUpdate();
         }
+
 
         // Predraw update for Tools.
         if (m_toolsEngine)
@@ -183,19 +210,32 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         }
 #endif
 
+        SDL_Texture* sdlTexture = nullptr;
+        if (engine && m_engineFlow->DoRunDraw())
+        {
+            // We only want to refresh this if we have a new frame.
+            // This is so we can move one frame at a time.
+            if (m_sdlTexture->GetState() == PointerState::Active)
+            {
+                SDL_DestroyTexture(m_sdlTexture->Get());
+                m_sdlTexture->Set(nullptr);
+            }
 
-        // Make texture to render the SDL Viewport
-        SDL_Texture* sdlTexture = SDL_CreateTexture(
-            renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
-        SDL_SetRenderTarget(renderer, sdlTexture);
-        SDL_RenderClear(renderer);
+            // Make texture to render the SDL Viewport
+            sdlTexture = SDL_CreateTexture(
+                renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+            SDL_SetRenderTarget(renderer, sdlTexture);
+            SDL_RenderClear(renderer);
 
-        // Render the game itself
-        engine->Draw();
-        SDL_SetRenderTarget(renderer, NULL);
+            // Render the game itself
+            engine->Draw();
+            SDL_SetRenderTarget(renderer, nullptr);
 
-        // Give the texture the tools
-        m_sdlTexture->Set(sdlTexture);
+            // Give the texture the tools
+            m_sdlTexture->Set(sdlTexture);
+
+            m_engineFlow->RanDraw();
+        }
 
         // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
@@ -221,12 +261,19 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         // Update screen
         SDL_RenderPresent(renderer);
 
+        if (engine && m_engineFlow->DoDestroy())
+        {
+            m_gameRenderer->SetRenderer(nullptr);
+            engine->WindowTeardown();
+            engine = {};
+        }
+
         // Add a small delay to avoid 100% CPU usage
         SDL_Delay(3);
 
         // Cleanup Texture
-        SDL_DestroyTexture(sdlTexture);
-        m_sdlTexture->Set(nullptr);
+        //SDL_DestroyTexture(sdlTexture);
+        //m_sdlTexture->Set(nullptr);
     }
 
 

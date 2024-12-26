@@ -100,5 +100,11 @@ namespace SuperGameTools
         /// False when game is playing but only set at creation.
         /// </summary>
         bool m_stoppedPlayingLastFrame;
+
+        /// <summary>
+        /// True at the start.
+        /// False after any operation.
+        /// </summary>
+        bool m_neverCreated;
     };
 }
