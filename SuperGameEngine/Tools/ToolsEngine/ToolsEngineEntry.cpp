@@ -9,7 +9,7 @@
 
 using namespace SuperGameTools;
 
-int ToolsEngineEntry::RunApplication(std::shared_ptr<Engine> engine)
+int ToolsEngineEntry::RunApplication(const std::string& engineType)
 {
     m_imgui = std::make_shared<ImGuiContainer>();
     m_toolsEngine = std::make_shared<ToolsEngine>();
@@ -21,34 +21,30 @@ int ToolsEngineEntry::RunApplication(std::shared_ptr<Engine> engine)
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
     {
-        windowState = RunSDLWindow(engine);
+        windowState = RunSDLWindow(engineType);
     }
 
     return 0;
 }
 
-ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine> engine)
+ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engineType)
 {
     // Pointers to our window and surface
-    SDL_Window* window = NULL;
+    SDL_Window* window = nullptr;
 
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0)
     {
-#ifdef _DEBUG
-        std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
-        system("pause");
-#endif
-
+        std::string sdlError = SDL_GetError();
+        Log::Error("Error initializing SDL: " + sdlError);
         return ApplicationOperationState::Close;
     }
 
     // Set SDL hint to enable VSync
     if (!SDL_SetHint(SDL_HINT_RENDER_VSYNC, "0"))
     {
-#ifdef _DEBUG
-        std::cout << "Warning: VSync not enabled!" << std::endl;
-#endif
+        Log::Error("Warning: VSync not enabled!");
+        return ApplicationOperationState::Close;
     }
 
     // Create our window
@@ -57,11 +53,8 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
     // Make sure creating the window succeeded
     if (!window)
     {
-#ifdef _DEBUG
-        std::cout << "Error creating window: " << SDL_GetError() << std::endl;
-        system("pause");
-#endif
-
+        std::string sdlError = SDL_GetError();
+        Log::Error("Error creating window: " + sdlError);
         return ApplicationOperationState::Close;
     }
 
@@ -69,9 +62,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr)
     {
-#ifdef _DEBUG
-        std::cout << "Could not create Renderer: " << SDL_GetError() << std::endl;
-#endif
+        std::string sdlError = SDL_GetError();
+        Log::Error("Could not create Renderer: " + sdlError);
+
         // Handle renderer creation failure
         SDL_DestroyWindow(window);
         SDL_Quit();
@@ -86,6 +79,13 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
     SDL_Event e;
 
     // Setup the engine.
+    std::shared_ptr<Engine> engine = EngineFactory::CreateEngine(engineType);
+    if (engine == nullptr)
+    {
+        Log::Error("Could not create Engine from factory: " + engineType);
+        return ApplicationOperationState::Close;
+    }
+
     m_gameRenderer->SetRenderer(renderer);
     engine->GiveRenderer(m_gameRenderer);
     engine->WindowStart();
@@ -130,9 +130,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
 
             if (e.type == SDL_QUIT)
             {
-#ifdef _DEBUG
-                std::cout << "SDL Quit" << std::endl;
-#endif
+                Log::Info("Engine has indicated from Events it would like to QUIT.");
                 operationState = ApplicationOperationState::Close;
             }
         }
@@ -165,9 +163,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(std::shared_ptr<Engine>
             updateAnswer != ApplicationOperationState::Running &&
             eventAnswer != updateAnswer)
         {
-            std::cout << "The event update and the update loop are both trying to affect the application state but do not agree on what to do." << std::endl;
-            std::cout << "Event State: " << EApplicationOperationState::ToString(eventAnswer) << ". ";
-            std::cout << "Update State: " << EApplicationOperationState::ToString(updateAnswer) << "." << std::endl;
+            Log::Warning("The event update and the update loop are both trying to affect the application state but do not agree on what to do."
+                "Event State: " + EApplicationOperationState::ToString(eventAnswer) +
+                "Update State: " + EApplicationOperationState::ToString(updateAnswer));
         }
 #endif
 

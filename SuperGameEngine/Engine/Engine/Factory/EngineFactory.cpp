@@ -5,7 +5,7 @@ using namespace SuperGameEngine;
 
 void EngineFactory::RegisterEngine(
     const std::string& type,
-    std::function<std::shared_ptr<Engine>()> constructor)
+    const std::function<std::shared_ptr<Engine>()>& constructor)
 {
     GetMap()[type] = constructor;
 }

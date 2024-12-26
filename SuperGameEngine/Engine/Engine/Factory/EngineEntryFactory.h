@@ -11,7 +11,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Provides the ability to create components within the engine.
     /// </summary>
-    static class EngineEntryFactory
+    class EngineEntryFactory
     {
     public:
         /// <summary>
@@ -19,7 +19,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="type">Type of the component. </param>
         /// <param name="constructor">Construction method. Must have no parameters. </param>
-        static void RegisterEngineEntry(const std::string& type, std::function<std::shared_ptr<EngineEntry>()> constructor);
+        static void RegisterEngineEntry(const std::string& type, const std::function<std::shared_ptr<EngineEntry>()>& constructor);
 
         /// <summary>
         /// Create the given component type. 
@@ -42,7 +42,7 @@ namespace SuperGameEngine
     };
 }
 
-// All components should use:     REGISTER_COMPONENT(TYPENAME)
+// All components should use:     REGISTER_ENGINE_ENTRY(TYPE, CLASS)
 // on the component header to register themselves to this factory.
 // Only SGE components can be created natively without a name.
 

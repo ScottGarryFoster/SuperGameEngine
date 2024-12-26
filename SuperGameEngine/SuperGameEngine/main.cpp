@@ -27,9 +27,8 @@ using namespace SuperGameEngine;
 // within the GameEngine.
 int main(int argc, char* args[])
 {
-#ifdef _DEBUG || _TOOLS
+    // Is not required but is nice to get this in early.
     Log::Initialise();
-#endif
 
 #ifdef _DEBUG
     AllocConsole();
@@ -37,7 +36,7 @@ int main(int argc, char* args[])
     FILE* pCerr;
     freopen_s(&pCout, "CONOUT$", "w", stdout);
     freopen_s(&pCerr, "CONOUT$", "w", stderr);
-    std::cout << "Super Game Engine Version 0.0.1 Pre-Alpha" << std::endl;
+    std::cout << "Super Game Engine Version 0.0.3 Dev" << std::endl;
 #else
     FreeConsole();
 #endif
@@ -46,8 +45,7 @@ int main(int argc, char* args[])
     // Attempt to load the tools project.
     if (auto entryEntryPtr = EngineEntryFactory::CreateEngineEntry("ToolsEngineEntry"))
     {
-        std::shared_ptr<Engine> engine = std::make_shared<SuperEngineDebug::DebugEngine>();
-        return entryEntryPtr->RunApplication(engine);
+        return entryEntryPtr->RunApplication("DebugEngine");
     }
     else
     {
@@ -57,9 +55,8 @@ int main(int argc, char* args[])
         return 1;
     }
 #else
-    // No need to use pointers as this is internal.
+    // No need to use pointers this high in the stack.
     EngineEntry engineEntry = EngineEntry();
-    std::shared_ptr<Engine> engine = std::make_shared<SuperEngineDebug::DebugEngine>();
-    return engineEntry.RunApplication(engine);
+    return engineEntry.RunApplication("DebugEngine");
 #endif
 }

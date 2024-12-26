@@ -24,19 +24,29 @@ namespace SuperGameTools
         /// <summary>
         /// The entry to the engine.
         /// </summary>
-        /// <param name="engine">Engine to run. </param>
+        /// <param name="engineType">
+        /// The type of the engine to create.
+        /// The factory uses the type name to define which to create.
+        /// </param>
         /// <returns>
         /// 0 means no errors occured when 
         /// attempting to start the application.
         /// </returns>
-        int RunApplication(std::shared_ptr<Engine> engine) override;
+        virtual int RunApplication(const std::string& engineType) override;
 
     private:
 
         /// <summary>
         /// Creates the SDL Window loop.
         /// </summary>
-        ApplicationOperationState RunSDLWindow(std::shared_ptr<Engine> engine);
+        /// <param name="engineType">
+        /// The type of the engine to create.
+        /// The factory uses the type name to define which to create.
+        /// </param>
+        /// <returns>
+        /// How to handle exiting the game loop.
+        /// </returns>
+        ApplicationOperationState RunSDLWindow(const std::string& engineType);
 
         /// <summary>
         /// Renderer given to the game engine.

@@ -4,6 +4,7 @@
 #include "../EngineEntry/Engine.h"
 #include "../Engine/Graphics/Texture/SDLRendererReader.h"
 #include "../Engine/Content/SuperTextureManager.h"
+#include "../Engine/Factory/EngineFactory.h"
 
 namespace FatedQuestLibraries
 {
@@ -23,7 +24,7 @@ namespace SuperGameEngine
 using namespace SuperGameEngine;
 
 
-namespace SuperEngineDebug
+namespace SuperGameEngine
 {
 
     /// <summary>
@@ -116,4 +117,6 @@ namespace SuperEngineDebug
         /// </summary>
         std::shared_ptr<GrandScene> m_grandScene;
     };
+
+    REGISTER_ENGINE("DebugEngine", DebugEngine);
 }
