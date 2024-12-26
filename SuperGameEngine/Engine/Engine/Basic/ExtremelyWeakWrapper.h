@@ -13,6 +13,10 @@ namespace SuperGameEngine
     /// the safe elements to ensure you access actual memory which is cleaned up.
     /// </summary>
     /// <typeparam name="T">Type to wrap. </typeparam>
+    /// <remarks>
+    /// Always prefer to use weak_ptr over this if possible, this is for particular situations and
+    /// particular bits of SDL we cannot change easily.
+    /// </remarks>
     template <typename T>
     class ExtremelyWeakWrapper
     {

@@ -1,4 +1,4 @@
-#include "WindowPackage.h"
+#include "WindowPackage.h"}
 
 using namespace SuperGameTools;
 
@@ -30,4 +30,14 @@ std::shared_ptr<ContentManager> WindowPackage::GetContentManager() const
 void WindowPackage::SetContentManager(const std::shared_ptr<ContentManager>& contentManager)
 {
     m_contentManager = contentManager;
+}
+
+std::shared_ptr<EngineEntryCommunication> WindowPackage::GetEngineEntryCommunication() const
+{
+    return m_engineEntryCommunication;
+}
+
+void WindowPackage::SetEngineEntryCommunication(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication)
+{
+    m_engineEntryCommunication = engineEntryCommunication;
 }

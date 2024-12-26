@@ -23,6 +23,11 @@ void SpriteComponent::Setup(
         Texture()->
         GetTexture(
             R"(Engine\TestImages\A_pressed.png)");
+    if (!m_superTexture)
+    {
+        Log::Error("Could not create texture: Engine\TestImages\A_pressed.png", "SpriteComponent::Setup()");
+        return;
+    }
 
     // Ensure we render.
     SetDoRender(true);

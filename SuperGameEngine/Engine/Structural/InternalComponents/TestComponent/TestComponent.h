@@ -4,6 +4,7 @@
 
 namespace SuperGameEngine
 {
+    class SuperTexture;
     class SpriteComponent;
 
     /// <summary>
@@ -13,7 +14,7 @@ namespace SuperGameEngine
     {
     public:
         TestComponent();
-        virtual ~TestComponent();
+        virtual ~TestComponent() override;
 
         /// <summary>
         /// Sets up the game component.
@@ -30,11 +31,28 @@ namespace SuperGameEngine
         /// <param name="gameTime">The current state of time this frame. </param>
         virtual void Update(const std::shared_ptr<GameTime> gameTime) override;
 
+        /// <summary>
+        /// Draws the component.
+        /// For most components this will do nothing.
+        /// </summary>
+        virtual void Draw() const override;
+
     private:
 
         std::shared_ptr<SpriteComponent> m_sprite;
 
         std::vector<std::shared_ptr<SpriteComponent>> m_bunchOfComponents;
+
+        /// <summary>
+        /// A Texture which will move.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_testTexture;
+
+        /// <summary>
+        /// Testing Y position to give a little movement to the
+        /// viewport.
+        /// </summary>
+        int m_yPosition;
     };
 
     REGISTER_COMPONENT("TestComponent", TestComponent);

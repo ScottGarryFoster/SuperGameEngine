@@ -14,6 +14,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class EngineFlowPlayControl;
 
     /// <summary>
     /// The entry point for the engine and the top most level before main.
@@ -21,22 +22,35 @@ namespace SuperGameTools
     class ToolsEngineEntry : public EngineEntry
     {
     public:
+        ToolsEngineEntry();
+        virtual ~ToolsEngineEntry() override = default;
+
         /// <summary>
         /// The entry to the engine.
         /// </summary>
-        /// <param name="engine">Engine to run. </param>
+        /// <param name="engineType">
+        /// The type of the engine to create.
+        /// The factory uses the type name to define which to create.
+        /// </param>
         /// <returns>
         /// 0 means no errors occured when 
         /// attempting to start the application.
         /// </returns>
-        int RunApplication(std::shared_ptr<Engine> engine) override;
+        virtual int RunApplication(const std::string& engineType) override;
 
     private:
 
         /// <summary>
         /// Creates the SDL Window loop.
         /// </summary>
-        ApplicationOperationState RunSDLWindow(std::shared_ptr<Engine> engine);
+        /// <param name="engineType">
+        /// The type of the engine to create.
+        /// The factory uses the type name to define which to create.
+        /// </param>
+        /// <returns>
+        /// How to handle exiting the game loop.
+        /// </returns>
+        ApplicationOperationState RunSDLWindow(const std::string& engineType);
 
         /// <summary>
         /// Renderer given to the game engine.
@@ -63,7 +77,20 @@ namespace SuperGameTools
         /// </summary>
         std::shared_ptr<ToolsEngine> m_toolsEngine;
 
+        /// <summary>
+        /// The last frame rendered by the game engine.
+        /// </summary>
         std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlTexture;
+
+        /// <summary>
+        /// Complete control over how and when the game engine runs.
+        /// </summary>
+        std::shared_ptr<EngineFlowPlayControl> m_engineFlow;
+
+        /// <summary>
+        /// Communication with the tools engine.
+        /// </summary>
+        std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);

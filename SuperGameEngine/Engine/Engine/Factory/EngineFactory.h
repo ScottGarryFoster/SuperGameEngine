@@ -11,7 +11,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Provides the ability to create components within the engine.
     /// </summary>
-    static class EngineFactory
+    class EngineFactory
     {
     public:
         /// <summary>
@@ -19,7 +19,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="type">Type of the component. </param>
         /// <param name="constructor">Construction method. Must have no parameters. </param>
-        static void RegisterEngine(const std::string& type, std::function<std::shared_ptr<Engine>()> constructor);
+        static void RegisterEngine(const std::string& type, const std::function<std::shared_ptr<Engine>()>& constructor);
 
         /// <summary>
         /// Create the given component type. 

@@ -11,6 +11,7 @@ std::string SGEPackagePaths::ProductsDirectory() const
     std::filesystem::path threeAbove = exeFilepath.parent_path().parent_path().parent_path();
     return threeAbove.string();
 #endif
+
     return exeFilepath.string();
 }
 

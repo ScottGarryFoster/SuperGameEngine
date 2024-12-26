@@ -6,28 +6,42 @@
 
 namespace SuperGameEngine
 {
+    class EngineFactory;
+
     /// <summary>
     /// The entry point for the engine and the top most level before main.
     /// </summary>
     class EngineEntry
     {
     public:
+        virtual ~EngineEntry() = default;
+
         /// <summary>
         /// The entry to the engine.
         /// </summary>
-        /// <param name="engine">Engine to run. </param>
+        /// <param name="engineType">
+        /// The type of the engine to create.
+        /// The factory uses the type name to define which to create.
+        /// </param>
         /// <returns>
         /// 0 means no errors occured when 
         /// attempting to start the application.
         /// </returns>
-        virtual int RunApplication(std::shared_ptr<Engine> engine);
+        virtual int RunApplication(const std::string& engineType);
 
     private:
 
         /// <summary>
         /// Creates the SDL Window loop.
         /// </summary>
-        ApplicationOperationState RunSDLWindow(std::shared_ptr<Engine> engine);
+        /// <param name="engineType">
+        /// The type of the engine to create.
+        /// The factory uses the type name to define which to create.
+        /// </param>
+        /// <returns>
+        /// How to handle exiting the game loop.
+        /// </returns>
+        ApplicationOperationState RunSDLWindow(const std::string& engineType);
 
         /// <summary>
         /// The renderer for the current window.
@@ -35,5 +49,10 @@ namespace SuperGameEngine
         /// active window.
         /// </summary>
         std::shared_ptr<SDLRenderer> m_renderer;
+
+        /// <summary>
+        /// If the engine is not destroyed between loops this is the engine.
+        /// </summary>
+        std::shared_ptr<Engine> m_engine;
     };
 }
