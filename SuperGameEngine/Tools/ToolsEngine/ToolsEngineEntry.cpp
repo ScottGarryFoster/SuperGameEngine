@@ -210,7 +210,6 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         }
 #endif
 
-        SDL_Texture* sdlTexture = nullptr;
         if (engine && m_engineFlow->DoRunDraw())
         {
             // We only want to refresh this if we have a new frame.
@@ -222,8 +221,15 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             }
 
             // Make texture to render the SDL Viewport
-            sdlTexture = SDL_CreateTexture(
+            SDL_Texture* sdlTexture = SDL_CreateTexture(
                 renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+            if (sdlTexture == nullptr)
+            {
+                std::string sdlError = SDL_GetError();
+                Log::Error("Could not create Viewport texture: " + sdlError);
+                return ApplicationOperationState::Close;
+            }
+
             SDL_SetRenderTarget(renderer, sdlTexture);
             SDL_RenderClear(renderer);
 
