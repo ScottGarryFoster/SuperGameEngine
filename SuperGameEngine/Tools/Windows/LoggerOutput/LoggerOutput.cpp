@@ -31,6 +31,16 @@ void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
     texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Error\Error-25.png)");
     m_errorIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
+
+    if (!m_warningIcon)
+    {
+        auto logEntry = std::make_shared<LogEntry>();
+        logEntry->SetLevel(LogLevel::Error);
+        logEntry->SetLogMessage("LoggerOutput::Setup(const std::shared_ptr<WindowPackage>): Could not load logger images. Little ironic as this is the logger.");
+
+        m_logEntries.emplace_back(logEntry);
+    }
+
 }
 
 void LoggerOutput::Update()
@@ -40,12 +50,6 @@ void LoggerOutput::Update()
 void LoggerOutput::Draw()
 {
     ImGui::ShowDemoWindow();
-
-    if (!m_warningIcon)
-    {
-        // TODO: Have an actual setup var
-        return;
-    }
 
     ImGui::Begin("Logger Output");
 
@@ -67,8 +71,10 @@ void LoggerOutput::Draw()
                 ImGui::TableSetColumnIndex(column);
                 if (column == 0)
                 {
-                    switch (logEntry->GetLevel())
+                    if (m_warningIcon)
                     {
+                        switch (logEntry->GetLevel())
+                        {
                         case LogLevel::Unknown:
                         case LogLevel::Info:
                             m_infoIcon->Draw();
@@ -80,7 +86,9 @@ void LoggerOutput::Draw()
                         case LogLevel::Exception:
                             m_errorIcon->Draw();
                             break;
+                        }
                     }
+
                 }
                 else
                 {
