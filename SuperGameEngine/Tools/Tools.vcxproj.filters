@@ -115,6 +115,12 @@
     <Filter Include="Source Files\ToolsEngine\GenericProperties">
       <UniqueIdentifier>{b3aef9ba-9b14-44b6-8c3b-62523fd16d23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Windows\DockableContainer">
+      <UniqueIdentifier>{abf1fcd1-de82-4778-a2f4-266585aefa5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\DockableContainer">
+      <UniqueIdentifier>{561d282c-16cd-467e-87a2-0179affdb297}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,6 +222,9 @@
     <ClInclude Include="ToolsEngine\GenericProperties\FunctionProperty.h">
       <Filter>Header Files\ToolsEngine\GenericProperties</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\DockableContainer\DockableContainer.h">
+      <Filter>Header Files\Windows\DockableContainer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -274,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp">
       <Filter>Source Files\ToolsEngine\PropertyChanged</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp">
+      <Filter>Source Files\Windows\DockableContainer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

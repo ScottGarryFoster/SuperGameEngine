@@ -6,13 +6,15 @@
 #include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
 #include "../../Engine/Engine/Content/ContentManager.h"
 #include "../../Engine/Engine/Content/SuperContentManager.h"
-#include "../../Engine/Imgui/External/imgui.h"
+#include "../ImGuiIncludes.h"
+#include "../../Engine/Imgui/External/imgui_internal.h"
 #include "../Windows/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
 #include "../Windows/MainMenuBar/MainMenuBar.h"
 
 #include "../Engine/Content/ImGuiTextureManager.h"
+#include "../Windows/DockableContainer/DockableContainer.h"
 
 using namespace SuperGameTools;
 
@@ -21,6 +23,7 @@ ToolsEngine::ToolsEngine()
     m_windowPackage = std::make_shared<WindowPackage>();
     m_haveSetup = false;
     m_superContentManager = std::make_shared<SuperContentManager>();
+    m_dockableContainer = std::make_shared<DockableContainer>();
 }
 
 ToolsEngine::~ToolsEngine()
@@ -83,6 +86,8 @@ ApplicationOperationState ToolsEngine::Update(Uint64 ticks)
 
 void ToolsEngine::Draw()
 {
+    m_dockableContainer->DrawDockableContainer();
+
     for (const std::shared_ptr<UpdateableObject>& obj : m_updatables)
     {
         obj->Draw();
@@ -90,6 +95,9 @@ void ToolsEngine::Draw()
 
     ImGui::Begin("Hello, Dear ImGui with SDL2");
     ImGui::TextColored(ImVec4(150, 150, 150, 150), "This is just a basic Hello World!");
+    ImGui::End();
+
+    // Stop drawing the dockable container.
     ImGui::End();
 }
 
@@ -118,7 +126,7 @@ void ToolsEngine::Setup()
     }
     m_updatables.push_back(loggerWindow);
 
-    std::shared_ptr<MainMenuBar> menuBar = std::make_shared<MainMenuBar>();
+    auto menuBar = std::make_shared<MainMenuBar>();
     menuBar->Setup(m_windowPackage);
     m_updatables.push_back(menuBar);
 }

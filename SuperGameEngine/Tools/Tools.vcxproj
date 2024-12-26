@@ -232,6 +232,7 @@
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h" />
     <ClInclude Include="ToolsEngine\ViewElements\MenuView.h" />
+    <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp" />
+    <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />

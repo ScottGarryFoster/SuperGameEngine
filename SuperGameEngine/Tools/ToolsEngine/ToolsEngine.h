@@ -20,6 +20,8 @@ using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
+    class DockableContainer;
+    class MainMenuBar;
     class EngineEntryCommunication;
     class UpdateableObject;
     class WindowPackage;
@@ -145,6 +147,12 @@ namespace SuperGameTools
         /// Communication with the Engine Entry.
         /// </summary>
         std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
+
+        /// <summary>
+        /// Enables docking in the entire window.
+        /// Must be called first and you must call End() after all dockable windows.
+        /// </summary>
+        std::shared_ptr<DockableContainer> m_dockableContainer;
 
         /// <summary>
         /// Sets up the engine.
