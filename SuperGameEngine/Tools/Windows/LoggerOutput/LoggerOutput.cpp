@@ -49,8 +49,6 @@ void LoggerOutput::Update()
 
 void LoggerOutput::Draw()
 {
-    ImGui::ShowDemoWindow();
-
     ImGui::Begin("Logger Output");
 
     ImGuiWindow* window = ImGui::FindWindowByName("Logger Output");

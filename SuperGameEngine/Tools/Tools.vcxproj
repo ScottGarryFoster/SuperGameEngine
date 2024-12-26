@@ -234,9 +234,11 @@
     <ClInclude Include="ToolsEngine\ViewElements\MenuView.h" />
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
+    <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h" />
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
+    <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -264,9 +266,11 @@
     <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp" />
     <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
+    <ClCompile Include="Windows\InspectorWindow\InspectorWindow.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp" />
+    <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

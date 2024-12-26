@@ -121,6 +121,18 @@
     <Filter Include="Source Files\Windows\DockableContainer">
       <UniqueIdentifier>{561d282c-16cd-467e-87a2-0179affdb297}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Windows\InspectorWindow">
+      <UniqueIdentifier>{5931dd26-a927-4466-b963-646885ea8050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\InspectorWindow">
+      <UniqueIdentifier>{a161830e-c122-46b8-a585-b375d78fa1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\SceneHeirachy">
+      <UniqueIdentifier>{5a02399d-5330-4568-b009-f908479bb409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows\SceneHierarchy">
+      <UniqueIdentifier>{1e279ea1-dff3-4ec8-84e7-b529e527cb73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,6 +237,12 @@
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h">
       <Filter>Header Files\Windows\DockableContainer</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h">
+      <Filter>Header Files\Windows\InspectorWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -286,6 +304,12 @@
     </ClCompile>
     <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp">
       <Filter>Source Files\Windows\DockableContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\InspectorWindow\InspectorWindow.cpp">
+      <Filter>Source Files\Windows\InspectorWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

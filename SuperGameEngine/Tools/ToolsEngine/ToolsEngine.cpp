@@ -7,7 +7,6 @@
 #include "../../Engine/Engine/Content/ContentManager.h"
 #include "../../Engine/Engine/Content/SuperContentManager.h"
 #include "../ImGuiIncludes.h"
-#include "../../Engine/Imgui/External/imgui_internal.h"
 #include "../Windows/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
@@ -15,6 +14,8 @@
 
 #include "../Engine/Content/ImGuiTextureManager.h"
 #include "../Windows/DockableContainer/DockableContainer.h"
+#include "../Windows/SceneHierarchy/SceneHierarchy.h"
+#include "../Windows/InspectorWindow/InspectorWindow.h"
 
 using namespace SuperGameTools;
 
@@ -88,14 +89,11 @@ void ToolsEngine::Draw()
 {
     m_dockableContainer->DrawDockableContainer();
 
+    ImGui::ShowDemoWindow();
     for (const std::shared_ptr<UpdateableObject>& obj : m_updatables)
     {
         obj->Draw();
     }
-
-    ImGui::Begin("Hello, Dear ImGui with SDL2");
-    ImGui::TextColored(ImVec4(150, 150, 150, 150), "This is just a basic Hello World!");
-    ImGui::End();
 
     // Stop drawing the dockable container.
     ImGui::End();
@@ -129,4 +127,12 @@ void ToolsEngine::Setup()
     auto menuBar = std::make_shared<MainMenuBar>();
     menuBar->Setup(m_windowPackage);
     m_updatables.push_back(menuBar);
+
+    std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
+    sceneHierarchy->Setup(m_windowPackage);
+    m_updatables.push_back(sceneHierarchy);//InspectorWindow
+
+    std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
+    inspectorWindow->Setup(m_windowPackage);
+    m_updatables.push_back(inspectorWindow);
 }
