@@ -85,6 +85,36 @@
     <Filter Include="Source Files\ToolsEngine\Communication">
       <UniqueIdentifier>{b7f0c2c3-6eb4-4cad-81da-31053159ed5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Windows\MainMenuBar">
+      <UniqueIdentifier>{3755084a-460f-4c2d-bdac-240c231490c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\MainMenuBar">
+      <UniqueIdentifier>{8edbf84d-9b0f-4f3c-8764-81c42f37b75c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements">
+      <UniqueIdentifier>{f288e3be-d22e-4c25-8b6b-2c0723988b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements">
+      <UniqueIdentifier>{6001e7d3-c395-43a2-81eb-66341337448c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ModelElements">
+      <UniqueIdentifier>{46a5ce89-8c6b-4bc3-90de-4fdb55b076b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ModelElements">
+      <UniqueIdentifier>{9d95da45-8219-4841-bbf3-8617384c5a69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\PropertyChanged">
+      <UniqueIdentifier>{578a8250-29cc-468f-a5e9-33f119cada6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\PropertyChanged">
+      <UniqueIdentifier>{eebbe9d8-0420-4e94-964d-12d3c5c5baa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\GenericProperties">
+      <UniqueIdentifier>{bc37fcea-50be-4893-8697-1174d66ed6d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\GenericProperties">
+      <UniqueIdentifier>{b3aef9ba-9b14-44b6-8c3b-62523fd16d23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -156,6 +186,36 @@
     <ClInclude Include="ToolsEngine\Communication\EngineFlowPlayControl.h">
       <Filter>Header Files\ToolsEngine\Communication</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h">
+      <Filter>Header Files\Windows\MainMenuBar</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\MenuView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ModelElements\FunctionModel.h">
+      <Filter>Header Files\ToolsEngine\ModelElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedSubscriptions.h">
+      <Filter>Header Files\ToolsEngine\PropertyChanged</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.h">
+      <Filter>Header Files\ToolsEngine\PropertyChanged</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedAction.h">
+      <Filter>Header Files\ToolsEngine\PropertyChanged</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedObserver.h">
+      <Filter>Header Files\ToolsEngine\PropertyChanged</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\GenericProperties\ValueProperty.h">
+      <Filter>Header Files\ToolsEngine\GenericProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\GenericProperties\FunctionProperty.h">
+      <Filter>Header Files\ToolsEngine\GenericProperties</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -202,6 +262,18 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.cpp">
       <Filter>Source Files\ToolsEngine\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp">
+      <Filter>Source Files\Windows\MainMenuBar</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp">
+      <Filter>Source Files\ToolsEngine\PropertyChanged</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

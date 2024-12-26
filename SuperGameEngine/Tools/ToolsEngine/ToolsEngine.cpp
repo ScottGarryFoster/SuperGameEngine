@@ -10,6 +10,7 @@
 #include "../Windows/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
+#include "../Windows/MainMenuBar/MainMenuBar.h"
 
 #include "../Engine/Content/ImGuiTextureManager.h"
 
@@ -115,6 +116,9 @@ void ToolsEngine::Setup()
         std::weak_ptr<FEventObserver> weak = loggerWindow;
         shared->Subscribe(weak);
     }
-
     m_updatables.push_back(loggerWindow);
+
+    std::shared_ptr<MainMenuBar> menuBar = std::make_shared<MainMenuBar>();
+    menuBar->Setup(m_windowPackage);
+    m_updatables.push_back(menuBar);
 }

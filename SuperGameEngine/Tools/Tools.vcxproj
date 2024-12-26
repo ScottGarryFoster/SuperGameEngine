@@ -220,12 +220,22 @@
     <ClInclude Include="ToolsEngine\Communication\EnginePlayControl.h" />
     <ClInclude Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.h" />
     <ClInclude Include="ToolsEngine\Communication\ToolsEngineControl.h" />
+    <ClInclude Include="ToolsEngine\GenericProperties\FunctionProperty.h" />
+    <ClInclude Include="ToolsEngine\GenericProperties\ValueProperty.h" />
+    <ClInclude Include="ToolsEngine\ModelElements\FunctionModel.h" />
     <ClInclude Include="ToolsEngine\Packages\WindowPackage.h" />
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.h" />
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedAction.h" />
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedObserver.h" />
+    <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedSubscriptions.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\MenuView.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
+    <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -246,11 +256,15 @@
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.cpp" />
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineControl.cpp" />
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp" />
+    <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
+    <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
