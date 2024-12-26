@@ -86,7 +86,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
             }
         }
 
-#ifdef _DEBUG
+#ifdef defined(_DEBUG) && !defined(_TOOLS)
         m_logger = std::make_shared<DebugLogger>();
         if (auto shared = Log::GetEvent().lock())
         {

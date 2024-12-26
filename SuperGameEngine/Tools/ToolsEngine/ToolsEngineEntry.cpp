@@ -210,6 +210,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         }
 #endif
 
+        // Game Engine Color
+        SDL_SetRenderDrawColor(renderer, 103, 125, 106, 255);
+
         if (engine && m_engineFlow->DoRunDraw())
         {
             // We only want to refresh this if we have a new frame.
@@ -243,8 +246,10 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             m_engineFlow->RanDraw();
         }
 
+        // ImGui Background Colour
+        SDL_SetRenderDrawColor(renderer, 30, 33, 36, 255);
+
         // Clear the renderer
-        SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
         SDL_RenderClear(renderer);
 
         // Start Tools Draw

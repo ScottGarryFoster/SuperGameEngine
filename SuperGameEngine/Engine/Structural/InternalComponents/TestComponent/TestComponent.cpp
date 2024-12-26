@@ -12,6 +12,7 @@ using namespace SuperGameEngine;
 
 TestComponent::TestComponent()
 {
+    m_yPosition = 0;
 }
 
 TestComponent::~TestComponent() = default;
@@ -45,11 +46,30 @@ void TestComponent::Setup(
 
         m_bunchOfComponents.push_back(sprite);
     }
+
+    m_testTexture = componentLoadPackage->GetContentManager()->Texture()->GetTexture("Engine\\TestImages\\A_pressed.png");
+    if (!m_testTexture)
+    {
+        Log::Error("Could not create texture in test component.");
+    }
+
+    SetDoRender(true);
 }
 
 void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
+
+    if (!m_testTexture)
+    {
+        return;
+    }
+
+    ++m_yPosition;
+    if (m_yPosition == 720)
+    {
+        m_yPosition = 0;
+    }
 
     /*if (gameTime->AllTime() > 10000)
     {
@@ -62,4 +82,17 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         m_bunchOfComponents.clear();
     }*/
 
+}
+
+
+void TestComponent::Draw() const
+{
+    SuperGameComponent::Draw();
+
+    if (!m_testTexture)
+    {
+        return;
+    }
+
+    m_testTexture->Draw(FPoint(200, m_yPosition));
 }
