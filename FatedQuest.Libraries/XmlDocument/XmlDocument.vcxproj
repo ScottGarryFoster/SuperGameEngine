@@ -231,14 +231,12 @@
     <ClCompile Include="RapidXMLAttribute.cpp" />
     <ClCompile Include="RapidXMLDocument.cpp" />
     <ClCompile Include="RapidXMLNode.cpp" />
-    <ClCompile Include="XMLAttribute.cpp" />
-    <ClCompile Include="XMLNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperXMLDocument\SuperXMLDocument.vcxproj">
+    <ProjectReference Include="..\StoredDocument\StoredDocument.vcxproj">
       <Project>{f54f462a-6a7e-4273-8f91-9098242ae380}</Project>
     </ProjectReference>
   </ItemGroup>

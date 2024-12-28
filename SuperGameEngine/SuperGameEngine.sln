@@ -37,7 +37,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Observer", "..\FatedQuest.L
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClassTypes", "..\FatedQuest.Libraries\ClassTypes\ClassTypes.vcxproj", "{4CC4DD9B-C53C-4467-87F2-23942F26256A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperXMLDocument", "..\FatedQuest.Libraries\SuperXMLDocument\SuperXMLDocument.vcxproj", "{F54F462A-6A7E-4273-8F91-9098242AE380}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperXMLDocument", "..\FatedQuest.Libraries\StoredDocument\StoredDocument.vcxproj", "{F54F462A-6A7E-4273-8F91-9098242AE380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

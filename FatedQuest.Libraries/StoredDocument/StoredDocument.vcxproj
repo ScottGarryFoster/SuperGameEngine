@@ -22,8 +22,9 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{f54f462a-6a7e-4273-8f91-9098242ae380}</ProjectGuid>
-    <RootNamespace>SuperXMLDocument</RootNamespace>
+    <RootNamespace>StoredDocument</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>StoredDocument</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -146,9 +147,9 @@
     <ClInclude Include="AllReferences.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SuperXMLDocument.h" />
-    <ClInclude Include="XMLAttribute.h" />
-    <ClInclude Include="XMLNode.h" />
+    <ClInclude Include="StoredDocument.h" />
+    <ClInclude Include="StoredDocumentAttribute.h" />
+    <ClInclude Include="StoredDocumentNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

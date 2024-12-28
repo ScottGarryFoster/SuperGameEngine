@@ -10,15 +10,15 @@ SuperEnum::SuperEnum()
 
 bool SuperEnum::FromString(const std::string& superEnumFile)
 {
-    std::shared_ptr<SuperXMLDocument> xml = std::make_shared<RapidXMLDocument>();
+    std::shared_ptr<StoredDocument> xml = std::make_shared<RapidXMLDocument>();
     if (!xml->Load(superEnumFile))
     {
         // Could not parse.
         return false;
     }
 
-    std::shared_ptr<XMLNode> root = xml->GetRoot();
-    for (std::shared_ptr<XMLNode> child = root->GetFirstChild(); child; child = child->GetAdjacentNode())
+    std::shared_ptr<StoredDocumentNode> root = xml->GetRoot();
+    for (std::shared_ptr<StoredDocumentNode> child = root->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         std::string name = StringHelpers::Trim(StringHelpers::ToLower(child->Name()));
         if (name == "header")
@@ -87,7 +87,7 @@ std::string SuperEnum::ToString()
     return output;
 }
 
-bool SuperEnum::ParseHeader(std::shared_ptr<XMLNode> headerNode)
+bool SuperEnum::ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode)
 {
     std::string header = StringHelpers::Trim(headerNode->Inner());
     if (header == "")
@@ -101,9 +101,9 @@ bool SuperEnum::ParseHeader(std::shared_ptr<XMLNode> headerNode)
     return true;
 }
 
-bool SuperEnum::ParseNamespace(std::shared_ptr<XMLNode> namespaceNode)
+bool SuperEnum::ParseNamespace(std::shared_ptr<StoredDocumentNode> namespaceNode)
 {
-    for (std::shared_ptr<XMLAttribute> attribute : namespaceNode->Attributes())
+    for (std::shared_ptr<StoredDocumentAttribute> attribute : namespaceNode->Attributes())
     {
         if (StringHelpers::ToLower(attribute->Name()) == "name")
         {
@@ -120,7 +120,7 @@ bool SuperEnum::ParseNamespace(std::shared_ptr<XMLNode> namespaceNode)
     return m_namespace.Parsed;
 }
 
-bool SuperEnum::ParseEnumComment(std::shared_ptr<XMLNode> enumNode)
+bool SuperEnum::ParseEnumComment(std::shared_ptr<StoredDocumentNode> enumNode)
 {
     std::string comment = StringHelpers::Trim(enumNode->Inner());
     if (comment == "")
@@ -134,9 +134,9 @@ bool SuperEnum::ParseEnumComment(std::shared_ptr<XMLNode> enumNode)
     return true;
 }
 
-bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
+bool SuperEnum::ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode)
 {
-    for (std::shared_ptr<XMLAttribute> attribute : enumNode->Attributes())
+    for (std::shared_ptr<StoredDocumentAttribute> attribute : enumNode->Attributes())
     {
         std::string name = StringHelpers::ToLower(attribute->Name());
         if (name == "name")
@@ -150,7 +150,7 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
         }
     }
 
-    for (std::shared_ptr<XMLNode> child = enumNode->GetFirstChild(); child; child = child->GetAdjacentNode())
+    for (std::shared_ptr<StoredDocumentNode> child = enumNode->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         std::shared_ptr<EnumValueString> enumValue = std::make_shared<EnumValueString>();
         
@@ -159,7 +159,7 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<XMLNode> enumNode)
         enumValue->Comment = child->Inner();
 
         bool parsedAttributes = true;
-        for (std::shared_ptr<XMLAttribute> attribute : child->Attributes())
+        for (std::shared_ptr<StoredDocumentAttribute> attribute : child->Attributes())
         {
             std::string name = StringHelpers::ToLower(attribute->Name());
             if (name == "value")

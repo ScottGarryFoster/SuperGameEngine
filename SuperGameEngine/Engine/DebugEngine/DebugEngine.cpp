@@ -76,6 +76,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         std::optional<std::shared_ptr<void>> fromFactory = ClassTypes::GetInstance().Create("SuperGameObject");
         if (fromFactory.has_value())
         {
+            std::shared_ptr<void> sgov = fromFactory.value();
             std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(fromFactory.value());
             if (1 == 1)
             {

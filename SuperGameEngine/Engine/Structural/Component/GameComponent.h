@@ -3,6 +3,13 @@
 
 #include "../../Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace FatedQuestLibraries
+{
+    class XmlNode;
+}
+
+using namespace FatedQuestLibraries;
+
 namespace SuperGameEngine
 {
     class ComponentLoadPackage;

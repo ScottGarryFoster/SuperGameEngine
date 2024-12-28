@@ -21,13 +21,13 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SuperXMLDocument.h">
+    <ClInclude Include="StoredDocument.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XMLAttribute.h">
+    <ClInclude Include="StoredDocumentAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XMLNode.h">
+    <ClInclude Include="StoredDocumentNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllReferences.h">

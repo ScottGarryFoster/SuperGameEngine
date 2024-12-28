@@ -30,13 +30,13 @@
     <ClInclude Include="RapidXMLDocument.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RapidXMLNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AllReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FatedQuestLibraries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidXMLNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,12 +51,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RapidXMLNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

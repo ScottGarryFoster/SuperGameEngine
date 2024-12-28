@@ -6,7 +6,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// Represents an XML Attribute
     /// </summary>
-    class XMLAttribute
+    class StoredDocumentAttribute
     {
     public:
         /// <summary>

@@ -2,14 +2,14 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "../SuperXMLDocument/XMLAttribute.h"
+#include "../StoredDocument/StoredDocumentAttribute.h"
 
 namespace FatedQuestLibraries
 {
     /// <summary>
     /// A single XML Node within a document.
     /// </summary>
-    class XMLNode
+    class StoredDocumentNode
     {
     public:
         /// <summary>
@@ -22,14 +22,14 @@ namespace FatedQuestLibraries
         /// Gets the attributes for this node.
         /// </summary>
         /// <returns>All attributes for this node or an empty list. </returns>
-        virtual const std::vector<std::shared_ptr<XMLAttribute>> Attributes() const = 0;
+        virtual const std::vector<std::shared_ptr<StoredDocumentAttribute>> Attributes() const = 0;
 
         /// <summary>
         /// Searches for attribute of the given name.
         /// </summary>
         /// <param name="criteria">Name to search for.</param>
         /// <returns>Attribute if found, or empty if not. </returns>
-        virtual const std::shared_ptr<XMLAttribute> Attribute(const std::string& criteria) const = 0;
+        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria) const = 0;
 
         /// <summary>
         /// Searches for attribute of the given name.
@@ -37,19 +37,19 @@ namespace FatedQuestLibraries
         /// <param name="criteria">Name to search for.</param>
         /// <param name="caseSensitive">True means any case is acceptable. </param>
         /// <returns>Attribute if found, or empty if not. </returns>
-        virtual const std::shared_ptr<XMLAttribute> Attribute(const std::string& criteria, bool caseSensitive) const = 0;
+        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, bool caseSensitive) const = 0;
 
         /// <summary>
         /// Gets the first child node.
         /// </summary>
         /// <returns>First child or empty pointer. </returns>
-        virtual const std::shared_ptr<XMLNode> GetFirstChild() const = 0;
+        virtual const std::shared_ptr<StoredDocumentNode> GetFirstChild() const = 0;
 
         /// <summary>
         /// Gets the last child node.
         /// </summary>
         /// <returns>Last child or empty pointer. </returns>
-        virtual const std::shared_ptr<XMLNode> GetLastChild() const = 0;
+        virtual const std::shared_ptr<StoredDocumentNode> GetLastChild() const = 0;
 
         /// <summary>
         /// Gets the node next to this one.
@@ -57,7 +57,7 @@ namespace FatedQuestLibraries
         /// <returns>
         /// Node next to this one or empty pointer.
         /// </returns>
-        virtual const std::shared_ptr<XMLNode> GetAdjacentNode() const = 0;
+        virtual const std::shared_ptr<StoredDocumentNode> GetAdjacentNode() const = 0;
 
         /// <summary>
         /// Get the inner text.

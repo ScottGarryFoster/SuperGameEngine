@@ -1,4 +1,4 @@
 #pragma once
 
-#include "../SuperXMLDocument/AllReferences.h"
+#include "../StoredDocument/AllReferences.h"
 #include "RapidXMLDocument.h"
