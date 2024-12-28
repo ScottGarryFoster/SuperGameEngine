@@ -171,6 +171,9 @@
     <ProjectReference Include="..\StandardOperations\StandardOperations.vcxproj">
       <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\SuperXMLDocument\SuperXMLDocument.vcxproj">
+      <Project>{f54f462a-6a7e-4273-8f91-9098242ae380}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\XmlDocument\XmlDocument.vcxproj">
       <Project>{04db48a3-bce2-4311-8fc4-ed2b39b5e3b8}</Project>
     </ProjectReference>

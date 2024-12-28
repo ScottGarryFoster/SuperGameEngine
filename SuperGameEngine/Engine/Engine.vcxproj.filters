@@ -142,6 +142,9 @@
     <Filter Include="Header Files\Engine\Tools">
       <UniqueIdentifier>{fe31c853-56a2-4a78-b508-c5457a1ba016}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural\Serializable">
+      <UniqueIdentifier>{4c313646-f93e-40bb-aa5c-89228433b48a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

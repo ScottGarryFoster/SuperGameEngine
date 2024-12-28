@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "XMLAttribute.h"
+#include "../SuperXMLDocument/XMLAttribute.h"
 
 namespace FatedQuestLibraries
 {

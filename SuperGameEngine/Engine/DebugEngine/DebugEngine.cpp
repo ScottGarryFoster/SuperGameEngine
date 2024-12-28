@@ -73,7 +73,15 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_go = m_scene->CreateAndAddNewGameObject();
         m_go->AddComponent("TestComponent");
 
-        
+        std::optional<std::shared_ptr<void>> fromFactory = ClassTypes::GetInstance().Create("SuperGameObject");
+        if (fromFactory.has_value())
+        {
+            std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(fromFactory.value());
+            if (1 == 1)
+            {
+                
+            }
+        }
 
         std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
         if (m_combinedGamePackage->File()->Exists(testPath))

@@ -1,5 +1,5 @@
 #pragma once
-#include "XMLAttribute.h"
+#include "../SuperXMLDocument/XMLAttribute.h"
 #include <string>
 
 namespace FatedQuestLibraries

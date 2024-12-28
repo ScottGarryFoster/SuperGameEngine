@@ -1,6 +1,4 @@
 #pragma once
 
-#include "SuperXMLDocument.h"
-#include "XMLNode.h"
-#include "XMLAttribute.h"
+#include "../SuperXMLDocument/AllReferences.h"
 #include "RapidXMLDocument.h"

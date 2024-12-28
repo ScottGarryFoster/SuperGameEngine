@@ -1,5 +1,5 @@
 #pragma once
-#include "XMLNode.h"
+#include "../SuperXMLDocument/XMLNode.h"
 #include <memory>
 #include "RapidXMLAttribute.h"
 

@@ -6,3 +6,4 @@
 #include "../../FatedQuest.Libraries/GamePackage/AllReferences.h"
 #include "../../FatedQuest.Libraries/Observer/AllReferences.h"
 #include "../../FatedQuest.Libraries/Logger/Logger/Log.h"
+#include "../../FatedQuest.Libraries/ClassTypes/ClassTypes.h"

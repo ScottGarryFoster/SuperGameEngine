@@ -189,6 +189,9 @@
     <ProjectReference Include="..\..\FatedQuest.Libraries\BinaryOperations\BinaryOperations.vcxproj">
       <Project>{7e635ce1-1a46-4c05-b7ca-5dc1e475ec63}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\ClassTypes\ClassTypes.vcxproj">
+      <Project>{4cc4dd9b-c53c-4467-87f2-23942f26256a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\GamePackage\GamePackage.vcxproj">
       <Project>{272a3aeb-be9f-4219-919d-701c0a4a996f}</Project>
     </ProjectReference>
@@ -203,6 +206,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\StandardOperations\StandardOperations.vcxproj">
       <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\SuperXMLDocument\SuperXMLDocument.vcxproj">
+      <Project>{f54f462a-6a7e-4273-8f91-9098242ae380}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\XmlDocument\XmlDocument.vcxproj">
       <Project>{04db48a3-bce2-4311-8fc4-ed2b39b5e3b8}</Project>

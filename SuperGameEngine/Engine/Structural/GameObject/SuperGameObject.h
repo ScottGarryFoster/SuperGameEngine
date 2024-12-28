@@ -187,5 +187,7 @@ namespace SuperGameEngine
         /// </summary>
         void RemoveDestroyedComponents();
     };
+
+    REGISTER_CLASS(SuperGameObject)
 }
 
