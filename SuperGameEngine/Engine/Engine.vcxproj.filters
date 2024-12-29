@@ -145,6 +145,12 @@
     <Filter Include="Header Files\Structural\Serializable">
       <UniqueIdentifier>{4c313646-f93e-40bb-aa5c-89228433b48a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural\Loaders">
+      <UniqueIdentifier>{228aa095-9aba-4715-b4f2-af619fe1b7f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Structural\Loaders">
+      <UniqueIdentifier>{96cb9873-51b3-4172-a19a-469d9d26c272}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -321,6 +327,18 @@
     <ClInclude Include="Engine\Tools\ToolsCommunication.h">
       <Filter>Header Files\Engine\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Loaders\SceneLoader.h">
+      <Filter>Header Files\Structural\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Loaders\SuperSceneLoader.h">
+      <Filter>Header Files\Structural\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\SceneStorageCache.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Content\SuperSceneStorageCache.h">
+      <Filter>Header Files\Engine\Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -436,6 +454,12 @@
     </ClCompile>
     <ClCompile Include="DebugEngine\DebugLogger.cpp">
       <Filter>Source Files\DebugEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Loaders\SuperSceneLoader.cpp">
+      <Filter>Source Files\Structural\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Content\SuperSceneStorageCache.cpp">
+      <Filter>Source Files\Engine\Content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

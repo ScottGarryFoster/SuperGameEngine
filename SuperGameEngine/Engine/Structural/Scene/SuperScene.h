@@ -17,7 +17,7 @@ namespace SuperGameEngine
     {
     public:
         SuperScene();
-        virtual ~SuperScene();
+        virtual ~SuperScene() override;
 
         /// <summary>
         /// A unique identifier.
@@ -77,6 +77,18 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() override;
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() override;
     private:
 
         /// <summary>

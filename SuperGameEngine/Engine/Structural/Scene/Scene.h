@@ -3,8 +3,11 @@
 
 namespace FatedQuestLibraries
 {
+    class StoredDocumentNode;
     class Guid;
 }
+
+using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
@@ -18,10 +21,12 @@ namespace SuperGameEngine
     class Scene
     {
     public:
+        virtual ~Scene() = default;
+
         /// <summary>
         /// A unique identifier.
         /// </summary>
-        virtual std::shared_ptr<FatedQuestLibraries::Guid> GetGuid() const = 0;
+        virtual std::shared_ptr<Guid> GetGuid() const = 0;
 
         /// <summary>
         /// Sets up the Scene.
@@ -76,5 +81,17 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() = 0;
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) = 0;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() = 0;
     };
 };

@@ -13,8 +13,8 @@ SpriteComponent::SpriteComponent()
 SpriteComponent::~SpriteComponent() = default;
 
 void SpriteComponent::Setup(
-    std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
-    std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
+    const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
+    const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
 

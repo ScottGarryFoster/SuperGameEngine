@@ -5,7 +5,7 @@
 
 namespace FatedQuestLibraries
 {
-    class XmlNode;
+    class StoredDocumentNode;
 }
 
 using namespace FatedQuestLibraries;
@@ -19,6 +19,7 @@ namespace SuperGameEngine
     class GameComponent
     {
     public:
+        virtual ~GameComponent() = default;
 
         /// <summary>
         /// Sets up the game component.
@@ -26,8 +27,8 @@ namespace SuperGameEngine
         /// <param name="componentLoadPackage">Everything a component needs to run. </param>
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
-            std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
-            std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent) = 0;
+            const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
+            const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) = 0;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.
@@ -98,5 +99,17 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() = 0;
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) = 0;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() = 0;
     };
 }

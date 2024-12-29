@@ -25,7 +25,7 @@ const std::vector<std::shared_ptr<StoredDocumentAttribute>> RapidXMLNode::Attrib
     return m_attributes;
 }
 
-const std::shared_ptr<StoredDocumentAttribute> FatedQuestLibraries::RapidXMLNode::Attribute(const std::string& criteria) const
+const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std::string& criteria) const
 {
     for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
     {
@@ -38,7 +38,7 @@ const std::shared_ptr<StoredDocumentAttribute> FatedQuestLibraries::RapidXMLNode
     return std::shared_ptr<StoredDocumentAttribute>();
 }
 
-const std::shared_ptr<StoredDocumentAttribute> FatedQuestLibraries::RapidXMLNode::Attribute(const std::string& criteria, bool caseSensitive) const
+const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std::string& criteria, bool caseSensitive) const
 {
     if (!caseSensitive)
     {
@@ -92,12 +92,61 @@ void RapidXMLNode::GiveAdjacentNode(std::shared_ptr<StoredDocumentNode> next)
     m_nextChild = next;
 }
 
-const std::string FatedQuestLibraries::RapidXMLNode::Inner() const
+const std::string RapidXMLNode::Inner() const
 {
     return m_innerText;
 }
 
-void FatedQuestLibraries::RapidXMLNode::SetInner(const std::string& inner)
+void RapidXMLNode::SetInner(const std::string& inner)
 {
     m_innerText = inner;
+}
+
+bool RapidXMLNode::AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& attribute)
+{
+    if (!attribute)
+    {
+        Log::Warning("Attribute given was empty.", "RapidXMLNode::AddAttribute");
+        return false;
+    }
+
+    std::string lowerCriteria = StringHelpers::ToLower(attribute->Name());
+    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
+    {
+        if (StringHelpers::ToLower(attribute->Name()) == lowerCriteria)
+        {
+            return false;
+        }
+    }
+
+    m_attributes.emplace_back(attribute);
+    return true;
+}
+
+bool RapidXMLNode::RemoveAttribute(const std::string& attributeName)
+{
+    if (attributeName.empty())
+    {
+        Log::Warning("Attribute Name given was empty.", "RapidXMLNode::RemoveAttribute");
+        return false;
+    }
+
+    std::shared_ptr<StoredDocumentAttribute> foundValue = {};
+    std::string lowerCriteria = StringHelpers::ToLower(attributeName);
+    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
+    {
+        if (StringHelpers::ToLower(attribute->Name()) == lowerCriteria)
+        {
+            foundValue = attribute;
+            break;
+        }
+    }
+
+    if (!foundValue)
+    {
+        return false;
+    }
+
+    VectorHelpers::RemoveValue(m_attributes, foundValue);
+    return true;
 }

@@ -127,6 +127,15 @@ void SuperScene::OnDestroyed()
     // Nothing.
 }
 
+void SuperScene::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
+{
+}
+
+std::shared_ptr<StoredDocumentNode> SuperScene::Save()
+{
+    return std::shared_ptr<StoredDocumentNode>();
+}
+
 void SuperScene::MovePendingToMain()
 {
     for (const std::shared_ptr<GameObject>& go : m_pendingGameObjects)

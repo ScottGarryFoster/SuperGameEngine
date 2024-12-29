@@ -18,8 +18,8 @@ TestComponent::TestComponent()
 TestComponent::~TestComponent() = default;
 
 void TestComponent::Setup(
-    std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
-    std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
+    const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
+    const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
 
@@ -95,4 +95,14 @@ void TestComponent::Draw() const
     }
 
     m_testTexture->Draw(FPoint(200, m_yPosition));
+}
+
+void TestComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
+{
+    SuperGameComponent::Load(documentNode);
+}
+
+std::shared_ptr<StoredDocumentNode> TestComponent::Save()
+{
+    return {};
 }
