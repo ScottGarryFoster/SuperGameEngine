@@ -27,6 +27,12 @@ namespace SuperGameEngine
         virtual std::shared_ptr<Guid> GetGuid() const override;
 
         /// <summary>
+        /// Sets the Guid on the GameObject.
+        /// </summary>
+        /// <param name="guid">New Guid. </param>
+        virtual void SetGuid(const std::shared_ptr<Guid>& guid);
+
+        /// <summary>
         /// A unique identifier.
         /// </summary>
         /// <returns>Guid of the Scene. </returns>

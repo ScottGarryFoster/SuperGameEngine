@@ -9,6 +9,7 @@
 #include "../../../Engine/Structural/Scene/Scene.h"
 #include "../../../Engine/Structural/Scene/SuperScene.h"
 #include "../../../Engine/Engine/Basic/SuperGameTime.h"
+#include "../../../Engine/Structural/GameObject/GameObject.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -123,5 +124,28 @@ namespace SuperGameEngineTests_Structural_Loaders
         std::shared_ptr<StoredDocumentNode> firstChild = actualNode->GetFirstChild();
         ASSERT_TRUE(firstChild);
         ASSERT_EQ("GameObject", firstChild->Name());
+    }
+
+    TEST_F(SuperSceneLoaderSaveTests, Save_SaveGuidInGameObject_WhenGiven)
+    {
+        // Arrange
+        auto givenScene = std::make_shared<SuperScene>();
+        givenScene->Setup(m_sceneLoadPackage);
+        std::shared_ptr<GameObject> go = givenScene->CreateAndAddNewGameObject();
+
+        // Ensures all objects are 'alive'
+        givenScene->Update(std::make_shared<SuperGameTime>());
+
+        // Act
+        std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);
+
+        // Assert
+        std::shared_ptr<StoredDocumentNode> actualNode = actual->GetRoot();
+        std::shared_ptr<StoredDocumentNode> firstChild = actualNode->GetFirstChild();
+        std::shared_ptr<StoredDocumentAttribute> actualGuid = firstChild->Attribute("Guid", false);
+        ASSERT_TRUE(actualGuid);
+        ASSERT_TRUE(GUIDHelpers::ToString(*go->GetGuid()) == actualGuid->Value())
+            << GUIDHelpers::ToString(*go->GetGuid()) << " != "
+            << actualGuid->Value();
     }
 }

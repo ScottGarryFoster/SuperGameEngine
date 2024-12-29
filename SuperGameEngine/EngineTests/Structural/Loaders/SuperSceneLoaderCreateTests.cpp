@@ -7,6 +7,7 @@
 #include "../../../Engine/Structural/Scene/Scene.h"
 #include "../../../Engine/Structural/Packages/SuperSceneLoadPackage.h"
 #include "../../../Engine/DebugEngine/DebugLogger.h"
+#include "../../../Engine/Structural/GameObject/GameObject.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -139,5 +140,40 @@ namespace SuperGameEngineTests_Structural_Loaders
         std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
         ASSERT_EQ(1, actualGo.size());
         ASSERT_TRUE(actualGo.at(0));
+    }
+
+    TEST_F(SuperSceneLoaderCreateTests, Create_SetsGameObjectGuid_WhenGiven)
+    {
+        // Arrange
+        std::shared_ptr<Guid> givenGuid = GUIDHelpers::CreateGUID();
+
+        auto givenRootNode = std::make_shared<ModifiableNode>();
+        givenRootNode->SetName("Scene");
+
+        auto givenGameObject = std::make_shared<ModifiableNode>();
+        givenGameObject->SetName("GameObject");
+
+        auto attributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Guid", GUIDHelpers::ToString(*givenGuid)));
+        givenGameObject->SetAttributes(attributes);
+
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+        givenDocument->SetRootElement(givenRootNode);
+
+        givenRootNode->SetFirstChild(givenGameObject);
+
+        // Act
+        std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
+
+        // Assert
+        // Ensures all objects are 'alive'
+        actual->Update({});
+
+        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        ASSERT_EQ(1, actualGo.size());
+        ASSERT_EQ(GUIDHelpers::ToString(*givenGuid), GUIDHelpers::ToString(*actualGo.at(0)->GetGuid()))
+            << GUIDHelpers::ToString(*givenGuid) << " != "
+            << GUIDHelpers::ToString(*actualGo.at(0)->GetGuid());
     }
 }

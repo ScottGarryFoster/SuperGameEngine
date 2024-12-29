@@ -28,6 +28,17 @@ std::shared_ptr<Guid> SuperGameObject::GetGuid() const
     return m_guid;
 }
 
+void SuperGameObject::SetGuid(const std::shared_ptr<Guid>& guid)
+{
+    if (!guid)
+    {
+        Log::Error("Empty Guid given.", "SuperGameObject::SetGuid(std::shared_ptr<Guid>)");
+        return;
+    }
+
+    m_guid = guid;
+}
+
 std::shared_ptr<Guid> SuperGameObject::GetSceneGuid() const
 {
     return m_sceneGuid;

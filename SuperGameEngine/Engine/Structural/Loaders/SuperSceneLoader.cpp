@@ -74,7 +74,25 @@ void SuperSceneLoader::CreateSceneLevelAttributesAndNodes(
         }
 
         std::shared_ptr<GameObject> go = scene->CreateAndAddNewGameObject();
+        if (std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(go))
+        {
+            CreateGameObjectAttributesAndNodes(child, sgo);
+        }
     }
+}
+
+void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
+    const std::shared_ptr<StoredDocumentNode>& gameObjectNode,
+    const std::shared_ptr<SuperGameObject>& superGameObject) const
+{
+    if (auto guid = gameObjectNode->Attribute("Guid", false))
+    {
+        if (std::shared_ptr<Guid> parsed = GUIDHelpers::CreateFromString(guid->Value()))
+        {
+            superGameObject->SetGuid(parsed);
+        }
+    }
+
 }
 
 void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
@@ -100,6 +118,7 @@ void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
         bool setAdjacent = current != nullptr;
         auto node = std::make_shared<ModifiableNode>();
         node->SetName("GameObject");
+        SaveGameObjectAttributesAndNodes(node, go);
 
         if (setAdjacent)
         {
@@ -110,6 +129,26 @@ void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
         allNodes.emplace_back(current);
     }
 
-    sceneNode->SetFirstChild(allNodes.front());
-    sceneNode->SetLastChild(allNodes.back());
+    if (!allNodes.empty())
+    {
+        sceneNode->SetFirstChild(allNodes.front());
+        sceneNode->SetLastChild(allNodes.back());
+    }
+
+}
+
+void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
+    const std::shared_ptr<ModifiableNode>& gameObjectNode,
+    const std::shared_ptr<GameObject>& gameObject) const
+{
+    auto sceneAttributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+    if (std::shared_ptr<Guid> guid = gameObject->GetGuid())
+    {
+        std::string guidString = GUIDHelpers::ToString(*guid);
+        auto attribute = std::make_shared<ModifiableAttribute>
+            ("Guid", guidString);
+        sceneAttributes.emplace_back(attribute);
+    }
+
+    gameObjectNode->SetAttributes(sceneAttributes);
 }
