@@ -40,10 +40,25 @@ void SuperGameObject::SetScene(std::shared_ptr<Guid> guid)
 
 void SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage> loadPackage)
 {
+    if (!loadPackage)
+    {
+        Log::Error("No load package found when setting up GameObject.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+        return;
+    }
+
     m_loadPackage = loadPackage;
 
     m_componentPackage = std::make_shared<SuperComponentLoadPackage>();
-    m_componentPackage->SetContentManager(m_loadPackage->GetContentManager());
+    if (std::shared_ptr<ContentManager> contentManager = m_loadPackage->GetContentManager())
+    {
+        m_componentPackage->SetContentManager(contentManager);
+    }
+    else
+    {
+        Log::Error("No content manager found when setting up GameObject.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+    }
 
     // TODO: Add transform here: EnsureTransformIsOnGameObject();
 }

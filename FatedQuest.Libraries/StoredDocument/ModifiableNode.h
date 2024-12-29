@@ -1,17 +1,16 @@
 #pragma once
-#include "../StoredDocument/StoredDocumentNode.h"
-#include <memory>
-#include "RapidXMLAttribute.h"
+#include "StoredDocumentNode.h"
 
 namespace FatedQuestLibraries
 {
     /// <summary>
-    /// A single XML Node within a document.
+    /// A document node which can be modified.
     /// </summary>
-    class RapidXMLNode : public StoredDocumentNode
+    class ModifiableNode : public StoredDocumentNode
     {
     public:
-        RapidXMLNode();
+        ModifiableNode();
+        virtual ~ModifiableNode() = default;
 
         /// <summary>
         /// Gets the name for the XML Node.
@@ -20,16 +19,22 @@ namespace FatedQuestLibraries
         virtual const std::string Name() const override;
 
         /// <summary>
-        /// Sets the name of the XML Node.
+        /// Sets the name.
         /// </summary>
-        /// <param name="name">New name for the XML Node. </param>
-        virtual void SetName(const std::string& name);
+        /// <param name="newName">New name to set. </param>
+        void SetName(const std::string& newName);
 
         /// <summary>
         /// Gets the attributes for this node.
         /// </summary>
         /// <returns>All attributes for this node or an empty list. </returns>
         virtual const std::vector<std::shared_ptr<StoredDocumentAttribute>> Attributes() const override;
+
+        /// <summary>
+        /// Set the attributes on this node.
+        /// </summary>
+        /// <param name="newAttributes">New attributes. </param>
+        void SetAttributes(const std::vector<std::shared_ptr<StoredDocumentAttribute>>& newAttributes);
 
         /// <summary>
         /// Searches for attribute of the given name.
@@ -47,22 +52,16 @@ namespace FatedQuestLibraries
         virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, bool caseSensitive) const override;
 
         /// <summary>
-        /// Sets attributes on the Node.
-        /// </summary>
-        /// <param name="attributes">Attributes to update. Will override not add. </param>
-        virtual void SetAttributes(std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes);
-
-        /// <summary>
         /// Gets the first child node.
         /// </summary>
         /// <returns>First child or empty pointer. </returns>
         virtual const std::shared_ptr<StoredDocumentNode> GetFirstChild() const override;
 
         /// <summary>
-        /// Give the XMLNode it's first child.
+        /// Set the first child. This is the first node within this one.
         /// </summary>
-        /// <param name="child">First child within this node. </param>
-        virtual void GiveFirstChild(std::shared_ptr<StoredDocumentNode> child);
+        /// <param name="firstChild">New first child. </param>
+        void SetFirstChild(const std::shared_ptr<StoredDocumentNode>& firstChild);
 
         /// <summary>
         /// Gets the last child node.
@@ -71,10 +70,10 @@ namespace FatedQuestLibraries
         virtual const std::shared_ptr<StoredDocumentNode> GetLastChild() const override;
 
         /// <summary>
-        /// Give the XMLNode it's last child.
+        /// Set the last child. This is the last child within the node.
         /// </summary>
-        /// <param name="child">Last child within this node. </param>
-        virtual void GiveLastChild(std::shared_ptr<StoredDocumentNode> child);
+        /// <param name="lastChild">New Last Child. </param>
+        void SetLastChild(const std::shared_ptr<StoredDocumentNode>& lastChild);
 
         /// <summary>
         /// Gets the node next to this one.
@@ -85,10 +84,10 @@ namespace FatedQuestLibraries
         virtual const std::shared_ptr<StoredDocumentNode> GetAdjacentNode() const override;
 
         /// <summary>
-        /// Give the node next to this one.
+        /// Set the node adjacent to this one. This is not the child but on the same level.
         /// </summary>
-        /// <param name="next">The next node to this one. </param>
-        virtual void GiveAdjacentNode(std::shared_ptr<StoredDocumentNode> next);
+        /// <param name="adjacentNode"></param>
+        void SetAdjacentNode(const std::shared_ptr<StoredDocumentNode>& adjacentNode);
 
         /// <summary>
         /// Get the inner text.
@@ -97,58 +96,41 @@ namespace FatedQuestLibraries
         virtual const std::string Inner() const override;
 
         /// <summary>
-        /// Sets the inner text.
+        /// Set the text contained within this node.
         /// </summary>
-        /// <param name="inner">Text inside the node. </param>
-        virtual void SetInner(const std::string& inner);
-
-        /// <summary>
-        /// Adds an attribute.
-        /// Will fail if an attribute of exactly the same name is added.
-        /// </summary>
-        /// <param name="attribute">New attribute. </param>
-        /// <param name="caseSensitive">True means case will be checked </param>
-        /// <returns>True means added. </returns>
-        virtual bool AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& attribute, bool caseSensitive = true);
-
-        /// <summary>
-        /// Remove Attribute by name.
-        /// Will fail if attribute does not exist.
-        /// </summary>
-        /// <param name="attributeName">Attribute to remove. </param>
-        /// <param name="caseSensitive">True means case will be checked </param>
-        /// <returns>True means removed. </returns>
-        virtual bool RemoveAttribute(const std::string& attributeName, bool caseSensitive = true);
+        /// <param name="innerText">Inner text. </param>
+        void SetInnerText(const std::string& innerText);
 
     private:
         /// <summary>
-        /// Name of the XML Node.
+        /// Name of the node.
         /// </summary>
         std::string m_name;
 
         /// <summary>
-        /// Attributes
+        /// Attributes on the node.
         /// </summary>
         std::vector<std::shared_ptr<StoredDocumentAttribute>> m_attributes;
 
         /// <summary>
-        /// The first direct child of this node.
+        /// First child within this node.
         /// </summary>
         std::shared_ptr<StoredDocumentNode> m_firstChild;
 
         /// <summary>
-        /// The last direct child of this node.
+        /// Last child within this node.
         /// </summary>
         std::shared_ptr<StoredDocumentNode> m_lastChild;
 
         /// <summary>
-        /// The child next to this one.
+        /// Get the next sibling to this one. This is not the child but on the same level.
         /// </summary>
-        std::shared_ptr<StoredDocumentNode> m_nextChild;
+        std::shared_ptr<StoredDocumentNode> m_adjacentNode;
 
         /// <summary>
-        /// The text inside this node.
+        /// The inner text within this node.
         /// </summary>
         std::string m_innerText;
     };
 }
+

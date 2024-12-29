@@ -60,43 +60,9 @@ namespace FatedQuestLibraries
         virtual const std::shared_ptr<StoredDocumentNode> GetAdjacentNode() const = 0;
 
         /// <summary>
-        /// Give the XMLNode it's first child.
-        /// </summary>
-        /// <param name="child">First child within this node. </param>
-        virtual void GiveFirstChild(std::shared_ptr<StoredDocumentNode> child) = 0;
-
-        /// <summary>
-        /// Give the XMLNode it's last child.
-        /// </summary>
-        /// <param name="child">Last child within this node. </param>
-        virtual void GiveLastChild(std::shared_ptr<StoredDocumentNode> child) = 0;
-
-        /// <summary>
-        /// Give the node next to this one.
-        /// </summary>
-        /// <param name="next">The next node to this one. </param>
-        virtual void GiveAdjacentNode(std::shared_ptr<StoredDocumentNode> next) = 0;
-
-        /// <summary>
         /// Get the inner text.
         /// </summary>
         /// <returns>Get the inner text. </returns>
         virtual const std::string Inner() const = 0;
-
-        /// <summary>
-        /// Adds an attribute.
-        /// Will fail if an attribute of exactly the same name is added.
-        /// </summary>
-        /// <param name="attribute">New attribute. </param>
-        /// <returns>True means added. </returns>
-        virtual bool AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& attribute) = 0;
-
-        /// <summary>
-        /// Remove Attribute by name.
-        /// Will fail if attribute does not exist.
-        /// </summary>
-        /// <param name="attributeName">Attribute to remove. </param>
-        /// <returns>True means removed. </returns>
-        virtual bool RemoveAttribute(const std::string& attributeName) = 0;
     };
 }

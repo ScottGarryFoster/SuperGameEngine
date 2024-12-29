@@ -55,8 +55,8 @@ namespace SuperGameEngine
         /// <summary>
         /// Update which occurs at a set time.
         /// </summary>
-        virtual void FixedUpdate(const std::shared_ptr<GameTime> gameTime) override;
         /// <param name="gameTime">Ticks since last frame. </param>
+        virtual void FixedUpdate(const std::shared_ptr<GameTime> gameTime) override;
 
         /// <summary>
         /// Draw everything in the game.
@@ -109,6 +109,8 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() override;
+
+
     private:
         /// <summary>
         /// Unique identifier.
@@ -167,11 +169,6 @@ namespace SuperGameEngine
         bool AddActualComponent(const std::string& type, const std::shared_ptr<GameComponent>& reference);
 
         /// <summary>
-        /// Moves any pending components into the main loop.
-        /// </summary>
-        void MovePendingToMain();
-
-        /// <summary>
         /// Adds component to actual dictionary
         /// </summary>
         /// <param name="type">Type as string. </param>
@@ -186,6 +183,11 @@ namespace SuperGameEngine
         /// To be called outside of any loops.
         /// </summary>
         void RemoveDestroyedComponents();
+
+        /// <summary>
+        /// Moves any pending components into the main loop.
+        /// </summary>
+        void MovePendingToMain();
     };
 
     REGISTER_CLASS(SuperGameObject)

@@ -11,6 +11,8 @@ namespace SuperGameEngine
     class SuperSceneLoadPackage : public SceneLoadPackage
     {
     public:
+        SuperSceneLoadPackage();
+
         /// <summary>
         /// Provides and manages all shared resources.
         /// </summary>

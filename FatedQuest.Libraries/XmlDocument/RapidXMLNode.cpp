@@ -35,7 +35,7 @@ const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std
         }
     }
 
-    return std::shared_ptr<StoredDocumentAttribute>();
+    return {};
 }
 
 const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std::string& criteria, bool caseSensitive) const
@@ -54,7 +54,7 @@ const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std
         }
     }
 
-    return std::shared_ptr<StoredDocumentAttribute>();
+    return {};
 }
 
 void RapidXMLNode::SetAttributes(std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes)
@@ -102,7 +102,7 @@ void RapidXMLNode::SetInner(const std::string& inner)
     m_innerText = inner;
 }
 
-bool RapidXMLNode::AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& attribute)
+bool RapidXMLNode::AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& attribute, bool caseSensitive)
 {
     if (!attribute)
     {
@@ -110,12 +110,27 @@ bool RapidXMLNode::AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& 
         return false;
     }
 
-    std::string lowerCriteria = StringHelpers::ToLower(attribute->Name());
-    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
+    std::string criteria = attribute->Name();
+    if (!caseSensitive)
     {
-        if (StringHelpers::ToLower(attribute->Name()) == lowerCriteria)
+        criteria = StringHelpers::ToLower(criteria);
+    }
+
+    for (const std::shared_ptr<StoredDocumentAttribute>& currentAttribute : m_attributes)
+    {
+        if (caseSensitive)
         {
-            return false;
+            if (currentAttribute->Name() == criteria)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (StringHelpers::ToLower(currentAttribute->Name()) == criteria)
+            {
+                return false;
+            }
         }
     }
 
@@ -123,7 +138,7 @@ bool RapidXMLNode::AddAttribute(const std::shared_ptr<StoredDocumentAttribute>& 
     return true;
 }
 
-bool RapidXMLNode::RemoveAttribute(const std::string& attributeName)
+bool RapidXMLNode::RemoveAttribute(const std::string& attributeName, bool caseSensitive)
 {
     if (attributeName.empty())
     {
@@ -131,14 +146,30 @@ bool RapidXMLNode::RemoveAttribute(const std::string& attributeName)
         return false;
     }
 
+    std::string criteria = attributeName;
+    if (!caseSensitive)
+    {
+        criteria = StringHelpers::ToLower(criteria);
+    }
+
     std::shared_ptr<StoredDocumentAttribute> foundValue = {};
-    std::string lowerCriteria = StringHelpers::ToLower(attributeName);
     for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
     {
-        if (StringHelpers::ToLower(attribute->Name()) == lowerCriteria)
+        if (caseSensitive)
         {
-            foundValue = attribute;
-            break;
+            if (attribute->Name() == attributeName)
+            {
+                foundValue = attribute;
+                break;
+            }
+        }
+        else
+        {
+            if (StringHelpers::ToLower(attribute->Name()) == attributeName)
+            {
+                foundValue = attribute;
+                break;
+            }
         }
     }
 

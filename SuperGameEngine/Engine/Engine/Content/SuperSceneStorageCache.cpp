@@ -37,7 +37,7 @@ std::shared_ptr<Scene> SuperSceneStorageCache::GetScene(const std::string& fileP
         return {};
     }
 
-    std::shared_ptr<Scene> scene = m_sceneLoader->Load(storedDocument);
+    std::shared_ptr<Scene> scene = m_sceneLoader->Create(storedDocument);
     if (!scene)
     {
         Log::Error("Could not create scene from stored document. File path: " + filePath,

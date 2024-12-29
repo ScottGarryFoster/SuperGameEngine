@@ -25,6 +25,24 @@ std::shared_ptr<Guid> SuperScene::GetGuid() const
     return m_guid;
 }
 
+void SuperScene::SetGuid(const std::shared_ptr<Guid>& guid)
+{
+    if (!guid)
+    {
+        Log::Error("Given empty guid.", "SuperScene::SetGuid(std::shared_ptr<Guid>)");
+        return;
+    }
+
+    m_guid = guid;
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (auto sgo = std::dynamic_pointer_cast<SuperGameObject>(go))
+        {
+            sgo->SetScene(m_guid);
+        }
+    }
+}
+
 void SuperScene::Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage)
 {
     m_scenePackage = grandScenePackage;
@@ -124,7 +142,12 @@ void SuperScene::DestroyImmediately()
 
 void SuperScene::OnDestroyed()
 {
-    // Nothing.
+    // No reaction.
+}
+
+std::vector<std::shared_ptr<GameObject>> SuperScene::GetChildren() const
+{
+    return m_gameObjects;
 }
 
 void SuperScene::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)

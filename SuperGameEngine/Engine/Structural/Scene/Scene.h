@@ -83,6 +83,12 @@ namespace SuperGameEngine
         virtual void OnDestroyed() = 0;
 
         /// <summary>
+        /// Get children game object.
+        /// </summary>
+        /// <returns>All children of the scene. </returns>
+        virtual std::vector<std::shared_ptr<GameObject>> GetChildren() const = 0;
+
+        /// <summary>
         /// Load component from a stored document.
         /// </summary>
         /// <param name="documentNode">Document node to load from.</param>

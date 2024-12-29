@@ -64,7 +64,7 @@ namespace SuperGameEngine
         std::unordered_map<std::string, std::shared_ptr<StoredDocument>> m_sceneFileCache;
 
         /// <summary>
-        /// Load the scene directly from the file contents.
+        /// Create the scene directly from the file contents.
         /// </summary>
         /// <param name="filePath">File path.</param>
         /// <returns>A stored document representing the file or empty. </returns>

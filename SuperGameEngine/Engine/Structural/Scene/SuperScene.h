@@ -25,6 +25,15 @@ namespace SuperGameEngine
         virtual std::shared_ptr<Guid> GetGuid() const override;
 
         /// <summary>
+        /// Sets Guid for this Scene.
+        /// </summary>
+        /// <param name="guid">Guid to update. </param>
+        /// <remarks>
+        /// Avoid calling this too often. It should be for setup.
+        /// </remarks>
+        void SetGuid(const std::shared_ptr<Guid>& guid);
+
+        /// <summary>
         /// Sets up the Scene.
         /// </summary>
         /// <param name="grandScenePackage">Everything a grand scene needs to run. </param>
@@ -77,6 +86,12 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() override;
+
+        /// <summary>
+        /// Get children game object.
+        /// </summary>
+        /// <returns>All children of the scene. </returns>
+        virtual std::vector<std::shared_ptr<GameObject>> GetChildren() const override;
 
         /// <summary>
         /// Load component from a stored document.

@@ -15,26 +15,26 @@ namespace SuperGameEngine
         /// <summary>
         /// The ticks since the last non-physics based updated loop.
         /// </summary>
-        [[nodiscard]] virtual Uint64 TimeDelta() const override;
+        [[nodiscard]] virtual std::uint64_t TimeDelta() const override;
 
         /// <summary>
         /// Time the application has been running.
         /// </summary>
         /// <returns>Ticks the application has been running. </returns>
-        [[nodiscard]] virtual Uint64 AllTime() const override;
+        [[nodiscard]] virtual std::uint64_t AllTime() const override;
 
         /// <summary>
         /// Time the current window/renderer has been running.
         /// </summary>
         /// <returns>Ticks the current window/renderer has been running. </returns>
-        [[nodiscard]] virtual Uint64 WindowTime() const override;
+        [[nodiscard]] virtual std::uint64_t WindowTime() const override;
 
         /// <summary>
         /// Set the ticks since last frame.
         /// Will update the above.
         /// </summary>
         /// <param name="ticks">Ticks since last frame. </param>
-        void SetTicksSinceLastFrame(Uint64 ticks);
+        void SetTicksSinceLastFrame(uint64_t ticks);
 
         /// <summary>
         /// Reset window time.
@@ -47,17 +47,17 @@ namespace SuperGameEngine
         /// This is a prediction of how much you need to factor in when adjusting in
         /// the update loop.
         /// </summary>
-        Uint64 m_timeDelta;
+        uint64_t m_timeDelta;
 
         /// <summary>
         /// Uptime for the entire application.
         /// </summary>
-        Uint64 m_allTime;
+        uint64_t m_allTime;
 
         /// <summary>
         /// Window uptime.
         /// </summary>
-        Uint64 m_windowUpTime;
+        uint64_t m_windowUpTime;
     };
 }
 

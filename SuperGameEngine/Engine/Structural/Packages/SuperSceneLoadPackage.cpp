@@ -3,6 +3,11 @@
 
 using namespace SuperGameEngine;
 
+SuperSceneLoadPackage::SuperSceneLoadPackage()
+{
+    m_contentManager = {};
+}
+
 std::shared_ptr<ContentManager> SuperSceneLoadPackage::GetContentManager() const
 {
     return m_contentManager;
