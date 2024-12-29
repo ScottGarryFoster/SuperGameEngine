@@ -4,7 +4,7 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
-std::shared_ptr<Scene> SuperSceneLoader::Load(
+std::shared_ptr<Scene> SuperSceneLoader::Create(
     const std::shared_ptr<StoredDocument>& storedDocument)
 {
 
