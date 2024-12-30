@@ -1,6 +1,8 @@
 #include "SuperGameComponent.h"
 #include "../../Engine/Basic/GameTime.h"
 #include "../../FatedQuestReferences.h"
+#include "../../Engine/Content/ContentManager.h"
+#include "../Packages/ComponentLoadPackage.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -67,12 +69,37 @@ SuperGameComponent& SuperGameComponent::operator=(SuperGameComponent&& other) no
 }
 
 void SuperGameComponent::Setup(
-    const std::shared_ptr<ComponentLoadPackage>& sceneLoadPackage,
+    const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
     const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
-    m_loadPackage = sceneLoadPackage;
+    m_loadPackage = componentLoadPackage;
     m_parent = parent;
+
+    const std::string thisMethod = "SuperGameComponent::Setup(std::shared_ptr<ComponentLoadPackage>,std::shared_ptr<ExtremelyWeakWrapper<GameObject>>)";
+    if (!componentLoadPackage->GetContentManager())
+    {
+        Log::Error("Could not find Content Manager.", thisMethod);
+        return;
+    }
+
+    if (!componentLoadPackage->GetContentManager()->Texture())
+    {
+        Log::Error("Could not find Texture Manager.", thisMethod);
+        return;
+    }
+
+    if (!componentLoadPackage->GetContentManager()->GamePackage())
+    {
+        Log::Error("Could not find Game Package.", thisMethod);
+        return;
+    }
+
     m_isSetup = true;
+}
+
+std::string SuperGameComponent::TypeName() const
+{
+    return "SuperGameComponent";
 }
 
 bool SuperGameComponent::IsSetup() const

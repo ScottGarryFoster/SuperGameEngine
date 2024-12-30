@@ -10,6 +10,7 @@
 #include "../../../Engine/Structural/Scene/SuperScene.h"
 #include "../../../Engine/Engine/Basic/SuperGameTime.h"
 #include "../../../Engine/Structural/GameObject/GameObject.h"
+#include "../../../Engine/Structural/InternalComponents/TestComponent/TestComponent.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -147,5 +148,57 @@ namespace SuperGameEngineTests_Structural_Loaders
         ASSERT_TRUE(GUIDHelpers::ToString(*go->GetGuid()) == actualGuid->Value())
             << GUIDHelpers::ToString(*go->GetGuid()) << " != "
             << actualGuid->Value();
+    }
+
+    TEST_F(SuperSceneLoaderSaveTests, Save_SavesTestComponent_WhenGameObjectHasOne)
+    {
+        // Arrange
+        const std::string testComponent = "TestComponent";
+
+        auto givenScene = std::make_shared<SuperScene>();
+        givenScene->Setup(m_sceneLoadPackage);
+        std::shared_ptr<GameObject> go = givenScene->CreateAndAddNewGameObject();
+        go->AddComponent(testComponent);
+
+        // Ensures all objects are 'alive'
+        givenScene->Update(std::make_shared<SuperGameTime>());
+
+        // Act
+        std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);
+
+        // Assert
+        std::shared_ptr<StoredDocumentNode> actualNode = actual->GetRoot();
+        std::shared_ptr<StoredDocumentNode> gameObjectNode = actualNode->GetFirstChild();
+        std::shared_ptr<StoredDocumentNode> componentNode = gameObjectNode->GetFirstChild();
+        ASSERT_TRUE(componentNode);
+        ASSERT_EQ("Component", componentNode->Name());
+
+        std::shared_ptr<StoredDocumentAttribute> actualType = componentNode->Attribute("Type", false);
+        ASSERT_TRUE(actualType);
+        ASSERT_TRUE(testComponent == actualType->Value())
+            << testComponent << " != "
+            << actualType->Value();
+    }
+
+    TEST_F(SuperSceneLoaderSaveTests, Save_DoesNotSaveTestComponent_IfNoComponentAdded)
+    {
+        // Arrange
+        const std::string testComponent = "TestComponent";
+
+        auto givenScene = std::make_shared<SuperScene>();
+        givenScene->Setup(m_sceneLoadPackage);
+        std::shared_ptr<GameObject> go = givenScene->CreateAndAddNewGameObject();
+
+        // Ensures all objects are 'alive'
+        givenScene->Update(std::make_shared<SuperGameTime>());
+
+        // Act
+        std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);
+
+        // Assert
+        std::shared_ptr<StoredDocumentNode> actualNode = actual->GetRoot();
+        std::shared_ptr<StoredDocumentNode> gameObjectNode = actualNode->GetFirstChild();
+        std::shared_ptr<StoredDocumentNode> componentNode = gameObjectNode->GetFirstChild();
+        ASSERT_FALSE(componentNode);
     }
 }

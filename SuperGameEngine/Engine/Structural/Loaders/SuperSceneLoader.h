@@ -9,6 +9,8 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
+    class GameComponent;
+    class SuperGameComponent;
     class GameObject;
     class SuperGameObject;
     class SceneLoadPackage;
@@ -49,8 +51,10 @@ namespace SuperGameEngine
 
         void CreateSceneLevelAttributesAndNodes(const std::shared_ptr<StoredDocumentNode>& sceneNode, const std::shared_ptr<SuperScene>& scene) const;
         void CreateGameObjectAttributesAndNodes(const std::shared_ptr<StoredDocumentNode>& gameObjectNode, const std::shared_ptr<SuperGameObject>& superGameObject) const;
+        void CreateGameComponentAttributesAndNodes(const std::shared_ptr<StoredDocumentNode>& componentNode, const std::shared_ptr<SuperGameComponent>& superGameComponent) const;
 
         void SaveSceneLevelAttributesAndNodes(const std::shared_ptr<ModifiableNode>& sceneNode, const std::shared_ptr<Scene>& scene) const;
         void SaveGameObjectAttributesAndNodes(const std::shared_ptr<ModifiableNode>& gameObjectNode, const std::shared_ptr<GameObject>& gameObject) const;
+        void SaveGameComponentAttributesAndNodes(const std::shared_ptr<ModifiableNode>& componentNode, const std::shared_ptr<GameComponent>& component) const;
     };
 }

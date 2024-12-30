@@ -17,6 +17,7 @@ void SpriteComponent::Setup(
     const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
+    if (!IsSetup()) return;
 
     m_superTexture = componentLoadPackage->
         GetContentManager()->
@@ -33,14 +34,21 @@ void SpriteComponent::Setup(
     SetDoRender(true);
 }
 
+std::string SpriteComponent::TypeName() const
+{
+    return "SpriteComponent";
+}
+
 void SpriteComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
+    if (!IsSetup()) return;
 }
 
 void SpriteComponent::Draw() const
 {
     SuperGameComponent::Draw();
+    if (!IsSetup()) return;
 
     m_superTexture->Draw(m_location);
 }

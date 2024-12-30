@@ -2,6 +2,7 @@
 #include "../../FatedQuestReferences.h"
 #include "../../Structural/Scene/SuperScene.h"
 #include "../GameObject/SuperGameObject.h"
+#include "../Component/SuperGameComponent.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -93,6 +94,37 @@ void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
         }
     }
 
+    for (std::shared_ptr<StoredDocumentNode> child = gameObjectNode->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        if (child->Name() != "Component")
+        {
+            continue;
+        }
+
+        std::string componentType = {};
+        if (auto typeAttribute = child->Attribute("Type", false))
+        {
+            componentType = typeAttribute->Value();
+        }
+
+        // If there is no type on component skip.
+        if (componentType.empty())
+        {
+            continue;
+        }
+
+        std::shared_ptr<GameComponent> component = superGameObject->AddComponent(componentType);
+        if (std::shared_ptr<SuperGameComponent> sgc = std::static_pointer_cast<SuperGameComponent>(component))
+        {
+            CreateGameComponentAttributesAndNodes(child, sgc);
+        }
+    }
+}
+
+void SuperSceneLoader::CreateGameComponentAttributesAndNodes(const std::shared_ptr<StoredDocumentNode>& componentNode,
+    const std::shared_ptr<SuperGameComponent>& superGameComponent) const
+{
+
 }
 
 void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
@@ -113,7 +145,7 @@ void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
     std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
 
     std::shared_ptr<ModifiableNode> current;
-    for (std::shared_ptr<GameObject> go : scene->GetChildren())
+    for (const std::shared_ptr<GameObject>& go : scene->GetChildren())
     {
         bool setAdjacent = current != nullptr;
         auto node = std::make_shared<ModifiableNode>();
@@ -151,4 +183,41 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
     }
 
     gameObjectNode->SetAttributes(sceneAttributes);
+
+    std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
+    std::shared_ptr<ModifiableNode> current;
+    for (const std::shared_ptr<GameComponent>& component : gameObject->GetAllComponents())
+    {
+        bool setAdjacent = current != nullptr;
+        auto node = std::make_shared<ModifiableNode>();
+        node->SetName("Component");
+        SaveGameComponentAttributesAndNodes(node, component);
+
+        if (setAdjacent)
+        {
+            node->SetAdjacentNode(current);
+        }
+
+        current = node;
+        allNodes.emplace_back(current);
+    }
+
+    if (!allNodes.empty())
+    {
+        gameObjectNode->SetFirstChild(allNodes.front());
+        gameObjectNode->SetLastChild(allNodes.back());
+    }
+}
+
+void SuperSceneLoader::SaveGameComponentAttributesAndNodes(const std::shared_ptr<ModifiableNode>& componentNode,
+    const std::shared_ptr<GameComponent>& component) const
+{
+    auto componentAttributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+    {
+        auto attribute = std::make_shared<ModifiableAttribute>
+            ("Type", component->TypeName());
+        componentAttributes.emplace_back(attribute);
+    }
+
+    componentNode->SetAttributes(componentAttributes);
 }

@@ -244,7 +244,26 @@ std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& 
     return {};
 }
 
-std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObject::GetAllComponents() const
+std::vector<std::shared_ptr<GameComponent>> SuperGameObject::GetAllComponents() const
+{
+    std::vector<std::shared_ptr<GameComponent>> returnVector;
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        for (const std::shared_ptr<GameComponent>& gameComponent : references)
+        {
+            if (!gameComponent->IsDestroyed())
+            {
+                returnVector.emplace_back(gameComponent);
+            }
+        }
+    }
+
+    return returnVector;
+}
+
+std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObject::GetAllComponentsByType() const
 {
     std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> returnVector;
     for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)

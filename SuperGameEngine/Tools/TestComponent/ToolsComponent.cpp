@@ -16,6 +16,7 @@ void ToolsComponent::Setup(
     const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
+    if (!IsSetup()) return;
 
     m_superTexture = componentLoadPackage->
         GetContentManager()->
@@ -27,14 +28,21 @@ void ToolsComponent::Setup(
     SetDoRender(true);
 }
 
+std::string ToolsComponent::TypeName() const
+{
+    return "ToolsComponent";
+}
+
 void ToolsComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
+    if (!IsSetup()) return;
 }
 
 void ToolsComponent::Draw() const
 {
     SuperGameComponent::Draw();
+    if (!IsSetup()) return;
 
     m_superTexture->Draw();
 }

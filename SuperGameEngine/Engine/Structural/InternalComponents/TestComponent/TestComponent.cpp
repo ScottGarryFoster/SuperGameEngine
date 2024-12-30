@@ -22,6 +22,7 @@ void TestComponent::Setup(
     const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
+    if (!IsSetup()) return;
 
     /*m_sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
 
@@ -56,9 +57,15 @@ void TestComponent::Setup(
     SetDoRender(true);
 }
 
+std::string TestComponent::TypeName() const
+{
+    return "TestComponent";
+}
+
 void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
+    if (!IsSetup()) return;
 
     if (!m_testTexture)
     {
@@ -88,6 +95,7 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 void TestComponent::Draw() const
 {
     SuperGameComponent::Draw();
+    if (!IsSetup()) return;
 
     if (!m_testTexture)
     {

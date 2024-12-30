@@ -28,6 +28,13 @@ namespace SuperGameEngine
             const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
 
         /// <summary>
+        /// The type to create to recreate this component.
+        /// Override this on each component so that it always matches the type name for the class.
+        /// </summary>
+        /// <returns>The type to create to recreate this component. </returns>
+        virtual std::string TypeName() const override;
+
+        /// <summary>
         /// Updates the component this frame.
         /// </summary>
         /// <param name="gameTime">The current state of time this frame. </param>

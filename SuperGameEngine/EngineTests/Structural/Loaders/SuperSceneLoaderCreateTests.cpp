@@ -8,6 +8,7 @@
 #include "../../../Engine/Structural/Packages/SuperSceneLoadPackage.h"
 #include "../../../Engine/DebugEngine/DebugLogger.h"
 #include "../../../Engine/Structural/GameObject/GameObject.h"
+#include "../../../Engine/Structural/InternalComponents/TestComponent/TestComponent.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -175,5 +176,78 @@ namespace SuperGameEngineTests_Structural_Loaders
         ASSERT_EQ(GUIDHelpers::ToString(*givenGuid), GUIDHelpers::ToString(*actualGo.at(0)->GetGuid()))
             << GUIDHelpers::ToString(*givenGuid) << " != "
             << GUIDHelpers::ToString(*actualGo.at(0)->GetGuid());
+    }
+
+    TEST_F(SuperSceneLoaderCreateTests, Create_AddsTestComponent_WhenGiven)
+    {
+        // Arrange
+        const std::string componentTestType = "TestComponent";
+
+        auto givenRootNode = std::make_shared<ModifiableNode>();
+        givenRootNode->SetName("Scene");
+
+        auto givenGameObject = std::make_shared<ModifiableNode>();
+        givenGameObject->SetName("GameObject");
+
+        auto givenComponent = std::make_shared<ModifiableNode>();
+        givenComponent->SetName("Component");
+
+        auto attributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Type", componentTestType));
+        givenComponent->SetAttributes(attributes);
+
+        // Setup chain
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+        givenDocument->SetRootElement(givenRootNode);
+        givenRootNode->SetFirstChild(givenGameObject);
+        givenGameObject->SetFirstChild(givenComponent);
+
+        // Act
+        std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
+
+        // Assert
+        // Ensures all objects are 'alive'
+        actual->Update({});
+
+        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        std::shared_ptr<GameComponent> actualComponent = actualGo.at(0)->GetComponent(componentTestType);
+        ASSERT_TRUE(actualComponent);
+
+        std::shared_ptr<TestComponent> testComponent = std::static_pointer_cast<TestComponent>(actualComponent);
+        ASSERT_TRUE(testComponent);
+        ASSERT_EQ(componentTestType, testComponent->TypeName());
+    }
+
+    TEST_F(SuperSceneLoaderCreateTests, Create_DoesNotAddComponent_WhenTypeIsNotAdded)
+    {
+        // Arrange
+        const std::string componentTestType = "TestComponent";
+
+        auto givenRootNode = std::make_shared<ModifiableNode>();
+        givenRootNode->SetName("Scene");
+
+        auto givenGameObject = std::make_shared<ModifiableNode>();
+        givenGameObject->SetName("GameObject");
+
+        auto givenComponent = std::make_shared<ModifiableNode>();
+        givenComponent->SetName("Component");
+
+        // Setup chain
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+        givenDocument->SetRootElement(givenRootNode);
+        givenRootNode->SetFirstChild(givenGameObject);
+        givenGameObject->SetFirstChild(givenComponent);
+
+        // Act
+        std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
+
+        // Assert
+        // Ensures all objects are 'alive'
+        actual->Update({});
+
+        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        std::shared_ptr<GameComponent> actualComponent = actualGo.at(0)->GetComponent(componentTestType);
+        ASSERT_FALSE(actualComponent);
     }
 }

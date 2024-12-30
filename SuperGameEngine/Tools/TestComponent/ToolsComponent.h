@@ -13,7 +13,7 @@ namespace SuperGameEngine
     {
     public:
         ToolsComponent();
-        virtual ~ToolsComponent();
+        virtual ~ToolsComponent() override;
 
         /// <summary>
         /// Sets up the game component.
@@ -23,6 +23,13 @@ namespace SuperGameEngine
         virtual void Setup(
             const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
             const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
+
+        /// <summary>
+        /// The type to create to recreate this component.
+        /// Override this on each component so that it always matches the type name for the class.
+        /// </summary>
+        /// <returns>The type to create to recreate this component. </returns>
+        virtual std::string TypeName() const override;
 
         /// <summary>
         /// Updates the component this frame.
