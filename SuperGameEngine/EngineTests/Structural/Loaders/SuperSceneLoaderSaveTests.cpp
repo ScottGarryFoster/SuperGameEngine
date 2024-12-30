@@ -114,9 +114,6 @@ namespace SuperGameEngineTests_Structural_Loaders
         givenScene->Setup(m_sceneLoadPackage);
         givenScene->CreateAndAddNewGameObject();
 
-        // Ensures all objects are 'alive'
-        givenScene->Update(std::make_shared<SuperGameTime>());
-
         // Act
         std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);
 
@@ -133,9 +130,6 @@ namespace SuperGameEngineTests_Structural_Loaders
         auto givenScene = std::make_shared<SuperScene>();
         givenScene->Setup(m_sceneLoadPackage);
         std::shared_ptr<GameObject> go = givenScene->CreateAndAddNewGameObject();
-
-        // Ensures all objects are 'alive'
-        givenScene->Update(std::make_shared<SuperGameTime>());
 
         // Act
         std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);
@@ -159,9 +153,6 @@ namespace SuperGameEngineTests_Structural_Loaders
         givenScene->Setup(m_sceneLoadPackage);
         std::shared_ptr<GameObject> go = givenScene->CreateAndAddNewGameObject();
         go->AddComponent(testComponent);
-
-        // Ensures all objects are 'alive'
-        givenScene->Update(std::make_shared<SuperGameTime>());
 
         // Act
         std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);
@@ -188,9 +179,6 @@ namespace SuperGameEngineTests_Structural_Loaders
         auto givenScene = std::make_shared<SuperScene>();
         givenScene->Setup(m_sceneLoadPackage);
         std::shared_ptr<GameObject> go = givenScene->CreateAndAddNewGameObject();
-
-        // Ensures all objects are 'alive'
-        givenScene->Update(std::make_shared<SuperGameTime>());
 
         // Act
         std::shared_ptr<StoredDocument> actual = m_testClass->Save(givenScene);

@@ -93,6 +93,13 @@ namespace SuperGameEngine
         virtual std::vector<std::shared_ptr<GameComponent>> GetAllComponents() const override;
 
         /// <summary>
+        /// Gets the components on the GameObject.
+        /// This includes pending components which have not gone through an update.
+        /// </summary>
+        /// <returns>Components on the GameObject. Only top level/direct are returned. </returns>
+        virtual std::vector<std::shared_ptr<GameComponent>> GetComponentsIncludingPending() const;
+
+        /// <summary>
         /// Gets all components on the GameObject.
         /// </summary>
         /// <returns>All components. Could be an empty vector. </returns>

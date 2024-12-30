@@ -263,6 +263,30 @@ std::vector<std::shared_ptr<GameComponent>> SuperGameObject::GetAllComponents() 
     return returnVector;
 }
 
+std::vector<std::shared_ptr<GameComponent>> SuperGameObject::GetComponentsIncludingPending() const
+{
+    std::vector<std::shared_ptr<GameComponent>> returnVector;
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        returnVector.insert(returnVector.end(), references.begin(), references.end());
+    }
+
+    for (auto it = m_pendingGameComponents.begin(); it != m_pendingGameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        returnVector.insert(returnVector.end(), references.begin(), references.end());
+    }
+
+    // Ensure destroyed ones are not counted.
+    erase_if(returnVector, [](const std::shared_ptr<GameComponent>& component) 
+        { return component->IsDestroyed(); });
+
+    return returnVector;
+}
+
 std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObject::GetAllComponentsByType() const
 {
     std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> returnVector;

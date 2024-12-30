@@ -147,7 +147,24 @@ void SuperScene::OnDestroyed()
 
 std::vector<std::shared_ptr<GameObject>> SuperScene::GetChildren() const
 {
-    return m_gameObjects;
+    std::vector<std::shared_ptr<GameObject>> returnVector;
+    returnVector.insert(returnVector.end(), m_gameObjects.begin(), m_gameObjects.end());
+
+    // Ensure destroyed ones are not counted.
+    erase_if(returnVector, [](const std::shared_ptr<GameObject>& go) { return go->IsDestroyed(); });
+    return returnVector;
+}
+
+std::vector<std::shared_ptr<GameObject>> SuperScene::GetChildrenIncludingPending() const
+{
+    std::vector<std::shared_ptr<GameObject>> returnVector;
+    returnVector.insert(returnVector.end(), m_gameObjects.begin(), m_gameObjects.end());
+    returnVector.insert(returnVector.end(), m_pendingGameObjects.begin(), m_pendingGameObjects.end());
+
+    // Ensure destroyed ones are not counted.
+    erase_if(returnVector, [](const std::shared_ptr<GameObject>& go) { return go->IsDestroyed(); });
+
+    return returnVector;
 }
 
 void SuperScene::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)

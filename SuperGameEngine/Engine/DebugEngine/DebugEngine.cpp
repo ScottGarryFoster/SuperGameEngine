@@ -70,8 +70,8 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (m_haveLoaded && !m_haveSavedScene)
     {
-        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut.txt");
-        m_haveSavedScene = true;
+        
+        //m_haveSavedScene = true;
     }
 
     if (!m_haveLoaded)
@@ -85,6 +85,9 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 
         //m_scene = m_grandScene->CreateAndAddNewScene("TestScene.txt");
         m_scene = m_grandScene->CreateAndAddNewScene("savedOut.txt");
+
+        // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
+        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut2.txt");
         
 
         //m_scene = m_grandScene->CreateAndAddNewScene();

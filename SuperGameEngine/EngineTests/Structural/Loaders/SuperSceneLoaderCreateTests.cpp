@@ -4,7 +4,7 @@
 
 #include "../../../../FatedQuest.Libraries/StandardObjects/Object/GUID/GUIDHelpers.h"
 #include "../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
-#include "../../../Engine/Structural/Scene/Scene.h"
+#include "../../../Engine/Structural/Scene/SuperScene.h"
 #include "../../../Engine/Structural/Packages/SuperSceneLoadPackage.h"
 #include "../../../Engine/DebugEngine/DebugLogger.h"
 #include "../../../Engine/Structural/GameObject/GameObject.h"
@@ -135,10 +135,10 @@ namespace SuperGameEngineTests_Structural_Loaders
         std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
 
         // Assert
-        // Ensures all objects are 'alive'
-        actual->Update({});
+        auto superScene = std::static_pointer_cast<SuperScene>(actual);
+        ASSERT_TRUE(superScene) << "Scene was not a super scene";
 
-        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        std::vector<std::shared_ptr<GameObject>> actualGo = superScene->GetChildrenIncludingPending();
         ASSERT_EQ(1, actualGo.size());
         ASSERT_TRUE(actualGo.at(0));
     }
@@ -168,10 +168,10 @@ namespace SuperGameEngineTests_Structural_Loaders
         std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
 
         // Assert
-        // Ensures all objects are 'alive'
-        actual->Update({});
+        auto superScene = std::static_pointer_cast<SuperScene>(actual);
+        ASSERT_TRUE(superScene) << "Scene was not a super scene";
 
-        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        std::vector<std::shared_ptr<GameObject>> actualGo = superScene->GetChildrenIncludingPending();
         ASSERT_EQ(1, actualGo.size());
         ASSERT_EQ(GUIDHelpers::ToString(*givenGuid), GUIDHelpers::ToString(*actualGo.at(0)->GetGuid()))
             << GUIDHelpers::ToString(*givenGuid) << " != "
@@ -207,10 +207,10 @@ namespace SuperGameEngineTests_Structural_Loaders
         std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
 
         // Assert
-        // Ensures all objects are 'alive'
-        actual->Update({});
+        auto superScene = std::static_pointer_cast<SuperScene>(actual);
+        ASSERT_TRUE(superScene) << "Scene was not a super scene";
 
-        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        std::vector<std::shared_ptr<GameObject>> actualGo = superScene->GetChildrenIncludingPending();
         std::shared_ptr<GameComponent> actualComponent = actualGo.at(0)->GetComponent(componentTestType);
         ASSERT_TRUE(actualComponent);
 
@@ -243,10 +243,10 @@ namespace SuperGameEngineTests_Structural_Loaders
         std::shared_ptr<Scene> actual = m_testClass->Create(givenDocument);
 
         // Assert
-        // Ensures all objects are 'alive'
-        actual->Update({});
+        auto superScene = std::static_pointer_cast<SuperScene>(actual);
+        ASSERT_TRUE(superScene) << "Scene was not a super scene";
 
-        std::vector<std::shared_ptr<GameObject>> actualGo = actual->GetChildren();
+        std::vector<std::shared_ptr<GameObject>> actualGo = superScene->GetChildrenIncludingPending();
         std::shared_ptr<GameComponent> actualComponent = actualGo.at(0)->GetComponent(componentTestType);
         ASSERT_FALSE(actualComponent);
     }

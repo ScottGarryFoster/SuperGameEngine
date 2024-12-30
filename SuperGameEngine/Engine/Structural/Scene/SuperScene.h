@@ -94,6 +94,13 @@ namespace SuperGameEngine
         virtual std::vector<std::shared_ptr<GameObject>> GetChildren() const override;
 
         /// <summary>
+        /// Gets the children on the Scene.
+        /// This includes pending gameobjects which have not gone through an update.
+        /// </summary>
+        /// <returns>Gameobjects in scene. Only top level/direct are returned. </returns>
+        virtual std::vector<std::shared_ptr<GameObject>> GetChildrenIncludingPending() const;
+
+        /// <summary>
         /// Load component from a stored document.
         /// </summary>
         /// <param name="documentNode">Document node to load from.</param>

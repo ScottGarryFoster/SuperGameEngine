@@ -142,11 +142,21 @@ void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
 
     sceneNode->SetAttributes(sceneAttributes);
 
-    std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
+    // Get all gameobjects.
+    std::vector<std::shared_ptr<GameObject>> gameObjectChildren = {};
+    if (auto superScene = std::static_pointer_cast<SuperScene>(scene))
+    {
+        gameObjectChildren = superScene->GetChildrenIncludingPending();
+    }
+    else
+    {
+        gameObjectChildren = scene->GetChildren();
+    }
 
+    std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
     bool haveAdjacent = false;
     std::shared_ptr<ModifiableNode> current;
-    for (const std::shared_ptr<GameObject>& go : scene->GetChildren())
+    for (const std::shared_ptr<GameObject>& go : gameObjectChildren)
     {
         auto node = std::make_shared<ModifiableNode>();
         node->SetName("GameObject");
@@ -188,10 +198,21 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
 
     gameObjectNode->SetAttributes(sceneAttributes);
 
+    // Get all components.
+    std::vector<std::shared_ptr<GameComponent>> componentChildren = {};
+    if (auto superGameObject = std::static_pointer_cast<SuperGameObject>(gameObject))
+    {
+        componentChildren = superGameObject->GetComponentsIncludingPending();
+    }
+    else
+    {
+        componentChildren = gameObject->GetAllComponents();
+    }
+
     std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
     std::shared_ptr<ModifiableNode> current;
     bool haveAdjacent = false;
-    for (const std::shared_ptr<GameComponent>& component : gameObject->GetAllComponents())
+    for (const std::shared_ptr<GameComponent>& component : componentChildren)
     {
         auto node = std::make_shared<ModifiableNode>();
         node->SetName("Component");
