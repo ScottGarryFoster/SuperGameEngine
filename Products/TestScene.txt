@@ -1,0 +1,7 @@
+<Scene>
+    <GameObject>
+        <Component Type="TestComponent">
+        
+        </Component>
+    </GameObject>
+</Scene>

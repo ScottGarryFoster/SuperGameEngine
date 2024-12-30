@@ -19,6 +19,9 @@
 
 #include "../FatedQuestReferences.h"
 #include "../../../FatedQuest.Libraries/Logger/Logger/Log.h"
+#include "../Engine/Content/SuperSceneStorageCache.h"
+#include "../Structural/Loaders/SuperSceneLoader.h"
+#include "../Structural/Packages/EnginePackageConverter.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -41,6 +44,12 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_contentManager->GiveSuperTextureManager(m_textureManager);
 
         m_sceneLoadPackage->SetContentManager(m_contentManager);
+
+        std::shared_ptr<SceneLoadPackage> sceneLoadPackage = EnginePackageConverter::Convert(m_sceneLoadPackage);
+        auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
+        auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
+        sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
+        m_contentManager->GiveSceneCache(sceneLoadCache);
 
         m_gameTime = std::make_shared<SuperGameTime>();
         curr = m_gameTime->AllTime() + 5000;
@@ -69,31 +78,33 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_grandScene = std::make_shared<SuperGrandScene>();
         m_grandScene->Setup(m_sceneLoadPackage);
 
-        m_scene = m_grandScene->CreateAndAddNewScene();
-        m_go = m_scene->CreateAndAddNewGameObject();
-        m_go->AddComponent("TestComponent");
+        m_grandScene->CreateAndAddNewScene("TestScene.txt");
 
-        std::optional<std::shared_ptr<void>> fromFactory = ClassTypes::GetInstance().Create("SuperGameObject");
-        if (fromFactory.has_value())
-        {
-            std::shared_ptr<void> sgov = fromFactory.value();
-            std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(fromFactory.value());
-            if (1 == 1)
-            {
-                
-            }
-        }
+        //m_scene = m_grandScene->CreateAndAddNewScene();
+        //m_go = m_scene->CreateAndAddNewGameObject();
+        //m_go->AddComponent("TestComponent");
 
-        std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
-        if (m_combinedGamePackage->File()->Exists(testPath))
-        {
-            std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
-            if (contents[0] == '<')
-            {
-                auto sprite = std::static_pointer_cast<SpriteComponent>(m_go->AddComponent("SpriteComponent"));
-                sprite->Move(400, 400);
-            }
-        }
+        //std::optional<std::shared_ptr<void>> fromFactory = ClassTypes::GetInstance().Create("SuperGameObject");
+        //if (fromFactory.has_value())
+        //{
+        //    std::shared_ptr<void> sgov = fromFactory.value();
+        //    std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(fromFactory.value());
+        //    if (1 == 1)
+        //    {
+        //        
+        //    }
+        //}
+
+        //std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
+        //if (m_combinedGamePackage->File()->Exists(testPath))
+        //{
+        //    std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
+        //    if (contents[0] == '<')
+        //    {
+        //        auto sprite = std::static_pointer_cast<SpriteComponent>(m_go->AddComponent("SpriteComponent"));
+        //        sprite->Move(400, 400);
+        //    }
+        //}
 
 #ifdef defined(_DEBUG) && !defined(_TOOLS)
         m_logger = std::make_shared<DebugLogger>();

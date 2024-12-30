@@ -48,6 +48,20 @@ namespace SuperGameEngine
         /// </param>
         void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage);
 
+        /// <summary>
+        /// Provides new scenes for the Grand Scene to create.
+        /// This is preferred to avoid reading and parsing data from file
+        /// multiple times.
+        /// </summary>
+        /// <returns>Loads Scenes from File. </returns>
+        virtual const std::shared_ptr<SceneStorageCache> Scene() override;
+
+        /// <summary>
+        /// Gives the scene storage cache.
+        /// </summary>
+        /// <param name="sceneStorageCache">New scene storage cache. </param>
+        void GiveSceneCache(const std::shared_ptr<SceneStorageCache>& sceneStorageCache);
+
     private:
         /// <summary>
         /// Creates, stores and manages all textures in the engine.
@@ -58,6 +72,13 @@ namespace SuperGameEngine
         /// Holds the content for the game.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
+
+        /// <summary>
+        /// Provides new scenes for the Grand Scene to create.
+        /// This is preferred to avoid reading and parsing data from file
+        /// multiple times.
+        /// </summary>
+        std::shared_ptr<SceneStorageCache> m_sceneStorageCache;
     };
 }
 

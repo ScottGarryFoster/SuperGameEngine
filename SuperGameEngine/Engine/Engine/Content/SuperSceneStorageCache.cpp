@@ -6,8 +6,13 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
+SuperSceneStorageCache::SuperSceneStorageCache()
+{
+
+}
+
 void SuperSceneStorageCache::Setup(const std::shared_ptr<SceneLoader>& sceneLoader,
-    const std::shared_ptr<GamePackage>& gamePackage)
+                                   const std::shared_ptr<GamePackage>& gamePackage)
 {
     m_sceneLoader = sceneLoader;
     m_gamePackage = gamePackage;

@@ -10,6 +10,8 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
+    class SceneStorageCache;
+
     /// <summary>
     /// Provides and manages all shared resources.
     /// </summary>
@@ -28,6 +30,14 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>Holds the content for the game. </returns>
         virtual const std::shared_ptr<GamePackage> GamePackage() = 0;
+
+        /// <summary>
+        /// Provides new scenes for the Grand Scene to create.
+        /// This is preferred to avoid reading and parsing data from file
+        /// multiple times.
+        /// </summary>
+        /// <returns>Loads Scenes from File. </returns>
+        virtual const std::shared_ptr<SceneStorageCache> Scene() = 0;
     };
 }
 
