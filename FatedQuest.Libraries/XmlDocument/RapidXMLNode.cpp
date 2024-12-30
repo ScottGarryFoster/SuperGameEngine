@@ -29,7 +29,8 @@ const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std
 {
     for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
     {
-        if (attribute->Name() == criteria)
+        std::string adjustedName = SanitizeAttribute(attribute->Name());
+        if (adjustedName == criteria)
         {
             return attribute;
         }
@@ -48,7 +49,8 @@ const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std
     std::string lowerCriteria = StringHelpers::ToLower(criteria);
     for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
     {
-        if (StringHelpers::ToLower(attribute->Name()) == lowerCriteria)
+        std::string adjustedName = SanitizeAttribute(attribute->Name());
+        if (StringHelpers::ToLower(adjustedName) == lowerCriteria)
         {
             return attribute;
         }
@@ -180,4 +182,19 @@ bool RapidXMLNode::RemoveAttribute(const std::string& attributeName, bool caseSe
 
     VectorHelpers::RemoveValue(m_attributes, foundValue);
     return true;
+}
+
+std::string RapidXMLNode::SanitizeAttribute(const std::string& input) const
+{
+    if (input.size() < 4)
+    {
+        return input;
+    }
+
+    if (input.front() == '"' && input.back() == '"')
+    {
+        return input.substr(1, input.length() - 2);
+    }
+
+    return input;
 }

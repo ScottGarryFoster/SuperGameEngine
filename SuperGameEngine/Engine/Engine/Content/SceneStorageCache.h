@@ -28,7 +28,7 @@ namespace SuperGameEngine
         /// <param name="scene">Scene to save. </param>
         /// <param name="filePath">File path to save to. If null or empty will use Scene for filename. </param>
         /// <returns>True means could save. </returns>
-        virtual bool SaveScene(const std::shared_ptr<Scene>& scene, const std::string& filePath = {}) = 0;
+        virtual bool SaveScene(const std::shared_ptr<Scene>& scene, const std::string& filePath) = 0;
     };
 }
 

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Converters">
+      <UniqueIdentifier>{80f629a9-efd6-4e74-9d7d-408b95127d11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Converters">
+      <UniqueIdentifier>{1c670306-4b36-4e99-be6c-a3eba5bcd32d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -39,6 +45,9 @@
     <ClInclude Include="RapidXMLNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Converters\RapidDocumentToXml.h">
+      <Filter>Header Files\Converters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -52,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="RapidXMLNode.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Converters\RapidDocumentToXml.cpp">
+      <Filter>Source Files\Converters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

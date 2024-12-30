@@ -68,6 +68,12 @@ ApplicationOperationState DebugEngine::Event(SDL_Event event)
 
 ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
+    if (m_haveLoaded && !m_haveSavedScene)
+    {
+        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut.txt");
+        m_haveSavedScene = true;
+    }
+
     if (!m_haveLoaded)
     {
         m_haveLoaded = true;
@@ -77,7 +83,9 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_grandScene = std::make_shared<SuperGrandScene>();
         m_grandScene->Setup(m_grandSceneLoadPackage);
 
-        m_grandScene->CreateAndAddNewScene("TestScene.txt");
+        //m_scene = m_grandScene->CreateAndAddNewScene("TestScene.txt");
+        m_scene = m_grandScene->CreateAndAddNewScene("savedOut.txt");
+        
 
         //m_scene = m_grandScene->CreateAndAddNewScene();
         //m_go = m_scene->CreateAndAddNewGameObject();

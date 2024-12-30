@@ -20,6 +20,7 @@ std::shared_ptr<ContentManager> SuperGrandScenePackage::GetContentManager() cons
 void SuperGrandScenePackage::SetContentManager(std::shared_ptr<ContentManager> contentManager)
 {
     m_contentManager = std::move(contentManager);
+    AttemptToCreateASceneLoadPackage();
 }
 
 std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() const
@@ -29,7 +30,7 @@ std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() 
 
 void SuperGrandScenePackage::AttemptToCreateASceneLoadPackage()
 {
-    if (m_contentManager)
+    if (!m_createdSceneLoadPackage)
     {
         auto sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
         sceneLoadPackage->SetContentManager(m_contentManager);

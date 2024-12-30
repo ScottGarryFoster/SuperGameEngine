@@ -82,6 +82,12 @@ std::shared_ptr<Scene> SuperGrandScene::CreateAndAddNewScene(const std::string& 
     }
 
     std::shared_ptr<Scene> newScene = m_sceneLoadPackage->GetContentManager()->Scene()->GetScene(filepath);
+    if (!newScene)
+    {
+        Log::Error("Could not load scene. Potentially the file is incorrect. Path: " + filepath, "SuperGrandScene::CreateAndAddNewScene(std::string)");
+        return {};
+    }
+
     m_pendingScenes.push_back(newScene);
     m_isPendingScenes = true;
 

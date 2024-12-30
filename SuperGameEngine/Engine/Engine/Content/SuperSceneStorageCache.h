@@ -6,6 +6,7 @@
 
 namespace FatedQuestLibraries
 {
+    class DocumentToXml;
     class GamePackage;
     class StoredDocument;
 }
@@ -45,7 +46,7 @@ namespace SuperGameEngine
         /// <param name="scene">Scene to save. </param>
         /// <param name="filePath">File path to save to. If null or empty will use Scene for filename. </param>
         /// <returns>True means could save. </returns>
-        virtual bool SaveScene(const std::shared_ptr<Scene>& scene, const std::string& filePath = {}) override;
+        virtual bool SaveScene(const std::shared_ptr<Scene>& scene, const std::string& filePath) override;
 
     private:
         /// <summary>
@@ -62,6 +63,11 @@ namespace SuperGameEngine
         /// Actual cache for scenes.
         /// </summary>
         std::unordered_map<std::string, std::shared_ptr<StoredDocument>> m_sceneFileCache;
+
+        /// <summary>
+        /// Assists in writing out XML documents.
+        /// </summary>
+        std::shared_ptr<DocumentToXml> m_documentToXml;
 
         /// <summary>
         /// Create the scene directly from the file contents.

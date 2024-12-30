@@ -144,27 +144,31 @@ void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
 
     std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
 
+    bool haveAdjacent = false;
     std::shared_ptr<ModifiableNode> current;
     for (const std::shared_ptr<GameObject>& go : scene->GetChildren())
     {
-        bool setAdjacent = current != nullptr;
         auto node = std::make_shared<ModifiableNode>();
         node->SetName("GameObject");
         SaveGameObjectAttributesAndNodes(node, go);
 
-        if (setAdjacent)
+        if (haveAdjacent)
         {
-            node->SetAdjacentNode(current);
+            current->SetAdjacentNode(node);
         }
 
         current = node;
         allNodes.emplace_back(current);
+        haveAdjacent = true;
     }
 
     if (!allNodes.empty())
     {
         sceneNode->SetFirstChild(allNodes.front());
-        sceneNode->SetLastChild(allNodes.back());
+        if (allNodes.size() > 1)
+        {
+            sceneNode->SetLastChild(allNodes.back());
+        }
     }
 
 }
@@ -186,26 +190,30 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
 
     std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
     std::shared_ptr<ModifiableNode> current;
+    bool haveAdjacent = false;
     for (const std::shared_ptr<GameComponent>& component : gameObject->GetAllComponents())
     {
-        bool setAdjacent = current != nullptr;
         auto node = std::make_shared<ModifiableNode>();
         node->SetName("Component");
         SaveGameComponentAttributesAndNodes(node, component);
 
-        if (setAdjacent)
+        if (haveAdjacent)
         {
-            node->SetAdjacentNode(current);
+            current->SetAdjacentNode(node);
         }
 
         current = node;
         allNodes.emplace_back(current);
+        haveAdjacent = true;
     }
 
     if (!allNodes.empty())
     {
         gameObjectNode->SetFirstChild(allNodes.front());
-        gameObjectNode->SetLastChild(allNodes.back());
+        if (allNodes.size() > 1)
+        {
+            gameObjectNode->SetLastChild(allNodes.back());
+        }
     }
 }
 

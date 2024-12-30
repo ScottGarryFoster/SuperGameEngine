@@ -131,6 +131,13 @@ namespace FatedQuestLibraries
         /// The inner text within this node.
         /// </summary>
         std::string m_innerText;
+
+        /// <summary>
+        /// Ensures attribute does not contain xml escaped strings which cause it to not match plain text.
+        /// </summary>
+        /// <param name="input">Raw input. </param>
+        /// <returns>Input which should match outsider strings. </returns>
+        std::string SanitizeAttribute(const std::string& input) const;
     };
 }
 

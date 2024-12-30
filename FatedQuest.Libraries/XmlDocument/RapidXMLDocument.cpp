@@ -81,6 +81,8 @@ std::shared_ptr<RapidXML::XML_Document> RapidXMLDocument::TryParseXMLDocument(co
     }
     catch (rapidxml::parse_error e)
     {
+        std::string what = e.what();
+        Log::Error("Could not parse XML Document." + what, e.where<char>());
     }
 
     return document;

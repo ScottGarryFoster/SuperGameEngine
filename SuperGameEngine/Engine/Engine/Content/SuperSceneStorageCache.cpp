@@ -1,5 +1,6 @@
 #include "SuperSceneStorageCache.h"
 #include "../../FatedQuestReferences.h"
+#include "../../../../FatedQuest.Libraries/StoredDocument/Converters/SimpleDocumentToXml.h"
 #include "../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
 #include "../../Structural/Loaders/SceneLoader.h"
 
@@ -8,8 +9,9 @@ using namespace FatedQuestLibraries;
 
 SuperSceneStorageCache::SuperSceneStorageCache()
 {
-
+    m_documentToXml = std::make_shared<SimpleDocumentToXml>();
 }
+
 
 void SuperSceneStorageCache::Setup(const std::shared_ptr<SceneLoader>& sceneLoader,
                                    const std::shared_ptr<GamePackage>& gamePackage)
@@ -48,6 +50,7 @@ std::shared_ptr<Scene> SuperSceneStorageCache::GetScene(const std::string& fileP
         Log::Error("Could not create scene from stored document. File path: " + filePath,
             "SuperSceneStorageCache::GetScene(std::string)");
         m_sceneFileCache.erase(filePath);
+        return {};
     }
 
     return scene;
@@ -73,6 +76,16 @@ bool SuperSceneStorageCache::SaveScene(const std::shared_ptr<Scene>& scene, cons
     {
         m_sceneFileCache.insert_or_assign(filePath, document);
     }
+
+    std::string documentXml = m_documentToXml->ConvertToXml(document);
+    if (documentXml.empty())
+    {
+        Log::Error("Could not convert Scene to Xml. File path: " + filePath,
+            "SuperSceneStorageCache::SaveScene(std::shared_ptr<Scene>,std::string)");
+        return false;
+    }
+
+    File::WriteLine(filePath, documentXml);
 
     return true;
 }

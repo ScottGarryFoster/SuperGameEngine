@@ -111,6 +111,7 @@ namespace SuperGameEngine
 
         std::shared_ptr<Scene> m_scene;
         std::shared_ptr<GameObject> m_go;
+        bool m_haveSavedScene = false;
 
         /// <summary>
         /// Holds all scenes.

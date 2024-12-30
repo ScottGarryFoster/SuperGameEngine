@@ -145,6 +145,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
+    <ClInclude Include="Converters\DocumentToXml.h" />
+    <ClInclude Include="Converters\SimpleDocumentToXml.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="ModifiableAttribute.h" />
     <ClInclude Include="ModifiableDocument.h" />
@@ -155,6 +157,7 @@
     <ClInclude Include="StoredDocumentNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Converters\SimpleDocumentToXml.cpp" />
     <ClCompile Include="ModifiableAttribute.cpp" />
     <ClCompile Include="ModifiableDocument.cpp" />
     <ClCompile Include="ModifiableNode.cpp" />
