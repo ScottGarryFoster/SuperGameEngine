@@ -1,7 +1,16 @@
 #include "SuperGrandScenePackage.h"
 #include <utility>
 
+#include "SuperSceneLoadPackage.h"
+
 using namespace SuperGameEngine;
+
+SuperGrandScenePackage::SuperGrandScenePackage()
+{
+    m_createdSceneLoadPackage = false;
+    m_contentManager = {};
+    m_sceneLoadPackage = {};
+}
 
 std::shared_ptr<ContentManager> SuperGrandScenePackage::GetContentManager() const
 {
@@ -11,4 +20,21 @@ std::shared_ptr<ContentManager> SuperGrandScenePackage::GetContentManager() cons
 void SuperGrandScenePackage::SetContentManager(std::shared_ptr<ContentManager> contentManager)
 {
     m_contentManager = std::move(contentManager);
+}
+
+std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() const
+{
+    return m_sceneLoadPackage;
+}
+
+void SuperGrandScenePackage::AttemptToCreateASceneLoadPackage()
+{
+    if (m_contentManager)
+    {
+        auto sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
+        sceneLoadPackage->SetContentManager(m_contentManager);
+        m_sceneLoadPackage = sceneLoadPackage;
+
+        m_createdSceneLoadPackage = true;
+    }
 }

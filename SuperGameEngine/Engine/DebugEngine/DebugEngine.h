@@ -92,7 +92,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything a grand scene needs to operate.
         /// </summary>
-        std::shared_ptr<SuperGrandScenePackage> m_sceneLoadPackage;
+        std::shared_ptr<SuperGrandScenePackage> m_grandSceneLoadPackage;
 
         std::shared_ptr<CombinedGamePackage> m_combinedGamePackage;
 

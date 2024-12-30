@@ -254,7 +254,6 @@
     <ClInclude Include="Structural\Loaders\SceneLoader.h" />
     <ClInclude Include="Structural\Loaders\SuperSceneLoader.h" />
     <ClInclude Include="Structural\Packages\ComponentLoadPackage.h" />
-    <ClInclude Include="Structural\Packages\EnginePackageConverter.h" />
     <ClInclude Include="Structural\Packages\GrandScenePackage.h" />
     <ClInclude Include="Structural\Packages\GameObjectLoadPackage.h" />
     <ClInclude Include="Structural\Packages\SceneLoadPackage.h" />
@@ -309,7 +308,6 @@
     <ClCompile Include="Structural\InternalComponents\SpriteComponent\SpriteComponent.cpp" />
     <ClCompile Include="Structural\InternalComponents\TestComponent\TestComponent.cpp" />
     <ClCompile Include="Structural\Loaders\SuperSceneLoader.cpp" />
-    <ClCompile Include="Structural\Packages\EnginePackageConverter.cpp" />
     <ClCompile Include="Structural\Packages\SuperComponentLoadPackage.cpp" />
     <ClCompile Include="Structural\Packages\SuperGrandScenePackage.cpp" />
     <ClCompile Include="Structural\Packages\SuperGameObjectLoadPackage.cpp" />

@@ -3,7 +3,6 @@
 #include "SuperScene.h"
 #include "../../Engine/Content/ContentManager.h"
 #include "../../Engine/Content/SceneStorageCache.h"
-#include "../Packages/EnginePackageConverter.h"
 #include "../Packages/GrandScenePackage.h"
 #include "../Packages/SuperSceneLoadPackage.h"
 
@@ -12,7 +11,7 @@ using namespace SuperGameEngine;
 void SuperGrandScene::Setup(std::shared_ptr<GrandScenePackage> grandScenePackage)
 {
     m_grandScenePackage = grandScenePackage;
-    m_sceneLoadPackage = EnginePackageConverter::Convert(grandScenePackage);
+    m_sceneLoadPackage = grandScenePackage->GetSceneLoadPackage();
 
     m_isSetup = true;
 }

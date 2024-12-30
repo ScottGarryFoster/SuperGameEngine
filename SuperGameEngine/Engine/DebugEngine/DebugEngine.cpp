@@ -21,7 +21,6 @@
 #include "../../../FatedQuest.Libraries/Logger/Logger/Log.h"
 #include "../Engine/Content/SuperSceneStorageCache.h"
 #include "../Structural/Loaders/SuperSceneLoader.h"
-#include "../Structural/Packages/EnginePackageConverter.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -31,7 +30,7 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
     if (!m_textureManager)
     {
-        m_sceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
+        m_grandSceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
 
         auto m_contentManager = std::make_shared<SuperContentManager>();
 
@@ -43,9 +42,9 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_textureManager = std::make_shared<SuperTextureManager>(renderer, m_combinedGamePackage);
         m_contentManager->GiveSuperTextureManager(m_textureManager);
 
-        m_sceneLoadPackage->SetContentManager(m_contentManager);
+        m_grandSceneLoadPackage->SetContentManager(m_contentManager);
 
-        std::shared_ptr<SceneLoadPackage> sceneLoadPackage = EnginePackageConverter::Convert(m_sceneLoadPackage);
+        std::shared_ptr<SceneLoadPackage> sceneLoadPackage = m_grandSceneLoadPackage->GetSceneLoadPackage();
         auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
         auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
         sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
@@ -76,7 +75,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         curr = ticks;
 
         m_grandScene = std::make_shared<SuperGrandScene>();
-        m_grandScene->Setup(m_sceneLoadPackage);
+        m_grandScene->Setup(m_grandSceneLoadPackage);
 
         m_grandScene->CreateAndAddNewScene("TestScene.txt");
 

@@ -339,9 +339,6 @@
     <ClInclude Include="Engine\Content\SuperSceneStorageCache.h">
       <Filter>Header Files\Engine\Content</Filter>
     </ClInclude>
-    <ClInclude Include="Structural\Packages\EnginePackageConverter.h">
-      <Filter>Header Files\Structural\Packages</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -463,9 +460,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Content\SuperSceneStorageCache.cpp">
       <Filter>Source Files\Engine\Content</Filter>
-    </ClCompile>
-    <ClCompile Include="Structural\Packages\EnginePackageConverter.cpp">
-      <Filter>Source Files\Structural\Packages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

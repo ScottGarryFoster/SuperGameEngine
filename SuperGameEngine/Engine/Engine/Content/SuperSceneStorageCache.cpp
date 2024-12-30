@@ -60,7 +60,7 @@ bool SuperSceneStorageCache::SaveScene(const std::shared_ptr<Scene>& scene, cons
     std::shared_ptr<StoredDocument> document = m_sceneLoader->Save(scene);
     if (!document)
     {
-        Log::Error("Could not save scene from file. File path: " + filePath, 
+        Log::Error("Could not save scene. File path: " + filePath, 
             "SuperSceneStorageCache::SaveScene(std::shared_ptr<Scene>,std::string)");
         return false;
     }
