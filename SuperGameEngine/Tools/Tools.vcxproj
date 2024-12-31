@@ -228,6 +228,10 @@
     <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedAction.h" />
     <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedObserver.h" />
     <ClInclude Include="ToolsEngine\PropertyChanged\PropertyChangedSubscriptions.h" />
+    <ClInclude Include="ToolsEngine\Settings\LayoutSettings.h" />
+    <ClInclude Include="ToolsEngine\Settings\SettingsPaths.h" />
+    <ClInclude Include="ToolsEngine\Settings\ToolsLayoutSettings.h" />
+    <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h" />
@@ -260,6 +264,8 @@
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineControl.cpp" />
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp" />
     <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp" />
+    <ClCompile Include="ToolsEngine\Settings\ToolsLayoutSettings.cpp" />
+    <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp" />

@@ -6,9 +6,12 @@
 #endif
 
 #include "../ImGuiIncludes.h"
+#include "../../../FatedQuest.Libraries/StoredDocument/Converters/SimpleDocumentToXml.h"
 #include "Communication/ToolsEngineEntryCommunication.h"
 #include "Communication/EngineFlowPlayControl.h"
 #include "Communication/ToolsEngineControl.h"
+#include "Settings/ToolsLayoutSettings.h"
+#include "Settings/ToolsSettingsPaths.h"
 
 using namespace SuperGameTools;
 
@@ -19,6 +22,11 @@ ToolsEngineEntry::ToolsEngineEntry()
 
     m_engineFlow = std::make_shared<ToolsEngineControl>();
     toolsEngineEntry->SetPlayControls(m_engineFlow);
+
+    m_layoutSettings = std::make_shared<ToolsLayoutSettings>(
+        std::make_shared<ToolsSettingsPaths>(), 
+        "layoutSettings.xml", 
+        std::make_shared<SimpleDocumentToXml>());
 }
 
 int ToolsEngineEntry::RunApplication(const std::string& engineType)
@@ -46,6 +54,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     // Pointers to our window and surface
     SDL_Window* window = nullptr;
 
+    // Read latest settings.
+    m_layoutSettings->ReadSettings();
+
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0)
     {
@@ -62,7 +73,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     }
 
     // Create our window
-    window = SDL_CreateWindow("Example", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Example", m_layoutSettings->WindowX(), m_layoutSettings->WindowY(), m_layoutSettings->WindowWidth(), m_layoutSettings->WindowHeight(), SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
     // Make sure creating the window succeeded
     if (!window)
@@ -153,6 +164,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
             // IMGui also needs events:
             m_imgui->EventCall(e);
+            m_layoutSettings->Event(e);
 
             if (e.type == SDL_QUIT)
             {
@@ -160,6 +172,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
                 operationState = ApplicationOperationState::Close;
             }
         }
+
+        // Will only write if it needs to.
+        m_layoutSettings->WriteSettings();
 
         // Let the flow know this occured.
         if (engine && m_engineFlow->DoRunEvents())
@@ -281,28 +296,31 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
         // Add a small delay to avoid 100% CPU usage
         SDL_Delay(3);
-
-        // Cleanup Texture
-        //SDL_DestroyTexture(sdlTexture);
-        //m_sdlTexture->Set(nullptr);
     }
 
 
-    // Wait
     // Cleanup Imgui
     m_imgui->Teardown();
 
     // Ensure the engine knows we no longer have a window
     SDL_DestroyRenderer(m_gameRenderer->GetRenderer());
     m_gameRenderer->SetRenderer(nullptr);
-    engine->WindowTeardown();
+
+    if (engine)
+    {
+        engine->WindowTeardown();
+    }
+
 
     // Cleanup Tools
     if (m_toolsEngine)
     {
         // There should be nothing here.
         m_Toolsrenderer->SetRenderer(nullptr);
-        engine->WindowTeardown();
+        if (engine)
+        {
+            engine->WindowTeardown();
+        }
     }
 
     // Destroy the window. This will also destroy the surface

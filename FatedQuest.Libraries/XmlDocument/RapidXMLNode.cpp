@@ -41,7 +41,7 @@ const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std
 
 const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std::string& criteria, bool caseSensitive) const
 {
-    if (!caseSensitive)
+    if (caseSensitive)
     {
         return Attribute(criteria);
     }
@@ -186,7 +186,7 @@ bool RapidXMLNode::RemoveAttribute(const std::string& attributeName, bool caseSe
 
 std::string RapidXMLNode::SanitizeAttribute(const std::string& input) const
 {
-    if (input.size() < 4)
+    if (input.size() < 3)
     {
         return input;
     }

@@ -50,7 +50,7 @@ const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(const s
 const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(const std::string& criteria,
     bool caseSensitive) const
 {
-    if (!caseSensitive)
+    if (caseSensitive)
     {
         return Attribute(criteria);
     }
@@ -110,7 +110,7 @@ void ModifiableNode::SetInnerText(const std::string& innerText)
 
 std::string ModifiableNode::SanitizeAttribute(const std::string& input) const
 {
-    if (input.size() < 4)
+    if (input.size() < 3)
     {
         return input;
     }

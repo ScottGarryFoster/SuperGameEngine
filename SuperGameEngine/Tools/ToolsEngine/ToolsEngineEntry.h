@@ -14,6 +14,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class ToolsLayoutSettings;
     class EngineFlowPlayControl;
 
     /// <summary>
@@ -91,6 +92,11 @@ namespace SuperGameTools
         /// Communication with the tools engine.
         /// </summary>
         std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
+
+        /// <summary>
+        /// Helps to keep settings for the main window.
+        /// </summary>
+        std::shared_ptr<ToolsLayoutSettings> m_layoutSettings;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);
