@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "../../Engine/Basic/ExtremelyWeakWrapper.h"
+#include "../Serializable/Serializable.h"
 
 namespace FatedQuestLibraries
 {
@@ -16,7 +17,7 @@ namespace SuperGameEngine
     class GameObject;
     class GameTime;
 
-    class GameComponent
+    class GameComponent : public Serializable
     {
     public:
         virtual ~GameComponent() = default;
@@ -106,17 +107,5 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() = 0;
-
-        /// <summary>
-        /// Load component from a stored document.
-        /// </summary>
-        /// <param name="documentNode">Document node to load from.</param>
-        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) = 0;
-
-        /// <summary>
-        /// Save component to stored document node ready to move to file.
-        /// </summary>
-        /// <returns>Document node to save to. </returns>
-        virtual std::shared_ptr<StoredDocumentNode> Save() = 0;
     };
 }

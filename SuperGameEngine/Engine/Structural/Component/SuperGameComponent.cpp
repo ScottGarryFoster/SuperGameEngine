@@ -156,21 +156,21 @@ void SuperGameComponent::OnDestroyed()
 
 void SuperGameComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
 {
-    
+
 }
 
 std::shared_ptr<StoredDocumentNode> SuperGameComponent::Save()
 {
-    Log::Error("Save called on SuperGameComponent.");
+    //Log::Error("Save called on SuperGameComponent.");
     return {};
 }
 
-std::shared_ptr<ComponentLoadPackage> SuperGameComponent::GetSceneLoadPackage() const
+std::shared_ptr<ComponentLoadPackage> SuperGameComponent::LoadPackage() const
 {
     return m_loadPackage;
 }
 
-void SuperGameComponent::AddAnySuperGameComponentSaves(const std::shared_ptr<StoredDocumentNode>& documentNode)
+void SuperGameComponent::AddAnySuperGameComponentSaves(const std::shared_ptr<ModifiableNode>& documentNode)
 {
     if (!documentNode)
     {

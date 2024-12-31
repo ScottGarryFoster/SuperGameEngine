@@ -133,13 +133,13 @@ namespace SuperGameEngine
         /// Gets the scene load package.
         /// </summary>
         /// <returns>Everything a component needs to run. </returns>
-        [[nodiscard]] std::shared_ptr<ComponentLoadPackage> GetSceneLoadPackage() const;
+        [[nodiscard]] std::shared_ptr<ComponentLoadPackage> LoadPackage() const;
 
         /// <summary>
         /// When saving call this method to add items stores at this level of the component.
         /// </summary>
         /// <param name="documentNode">Document node already created. </param>
-        void AddAnySuperGameComponentSaves(const std::shared_ptr<StoredDocumentNode>& documentNode);
+        void AddAnySuperGameComponentSaves(const std::shared_ptr<ModifiableNode>& documentNode);
     private:
 
         /// <summary>

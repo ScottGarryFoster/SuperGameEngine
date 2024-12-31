@@ -8,7 +8,7 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-    class SuperGameObjectLoadPackage;
+    class GameObjectLoadPackage;
 
     /// <summary>
     /// Holds and manages game objects
@@ -153,7 +153,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything a game object needs to run.
         /// </summary>
-        std::shared_ptr<SuperGameObjectLoadPackage> m_gameObjectPackage;
+        std::shared_ptr<GameObjectLoadPackage> m_gameObjectPackage;
 
         /// <summary>
         /// Move pending update objects to the main updates.

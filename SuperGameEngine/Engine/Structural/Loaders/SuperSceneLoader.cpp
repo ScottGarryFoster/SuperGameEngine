@@ -114,10 +114,7 @@ void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
         }
 
         std::shared_ptr<GameComponent> component = superGameObject->AddComponent(componentType);
-        if (std::shared_ptr<SuperGameComponent> sgc = std::static_pointer_cast<SuperGameComponent>(component))
-        {
-            CreateGameComponentAttributesAndNodes(child, sgc);
-        }
+        component->Load(child);
     }
 }
 
@@ -214,16 +211,28 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
     bool haveAdjacent = false;
     for (const std::shared_ptr<GameComponent>& component : componentChildren)
     {
-        auto node = std::make_shared<ModifiableNode>();
-        node->SetName("Component");
-        SaveGameComponentAttributesAndNodes(node, component);
-
-        if (haveAdjacent)
+        // Attempt to see if the component can save itself
+        std::shared_ptr<StoredDocumentNode> node = component->Save();
+        std::shared_ptr<ModifiableNode> modifiableNode;
+        if (node)
         {
-            current->SetAdjacentNode(node);
+            modifiableNode = std::static_pointer_cast<ModifiableNode>(node);
         }
 
-        current = node;
+        // If not then create an empty component
+        if (!modifiableNode)
+        {
+            modifiableNode = std::make_shared<ModifiableNode>();
+            SaveGameComponentAttributesAndNodes(modifiableNode, component);
+        }
+
+        // Then link it in the list.
+        if (haveAdjacent)
+        {
+            current->SetAdjacentNode(modifiableNode);
+        }
+
+        current = modifiableNode;
         allNodes.emplace_back(current);
         haveAdjacent = true;
     }
@@ -241,6 +250,8 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
 void SuperSceneLoader::SaveGameComponentAttributesAndNodes(const std::shared_ptr<ModifiableNode>& componentNode,
     const std::shared_ptr<GameComponent>& component) const
 {
+    componentNode->SetName("Component");
+
     auto componentAttributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
     {
         auto attribute = std::make_shared<ModifiableAttribute>

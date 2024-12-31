@@ -3,7 +3,7 @@
 #include "ComponentFactory.h"
 #include "../Component/GameComponent.h"
 #include "../../Engine/Basic/ExtremelyWeakWrapper.h"
-#include "../../Structural/Packages/SuperComponentLoadPackage.h"
+#include "../../Structural/Packages/ComponentLoadPackage.h"
 #include "../Packages/GameObjectLoadPackage.h"
 
 using namespace SuperGameEngine;
@@ -60,12 +60,8 @@ void SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage> loadPackage)
 
     m_loadPackage = loadPackage;
 
-    m_componentPackage = std::make_shared<SuperComponentLoadPackage>();
-    if (std::shared_ptr<ContentManager> contentManager = m_loadPackage->GetContentManager())
-    {
-        m_componentPackage->SetContentManager(contentManager);
-    }
-    else
+    m_componentPackage = loadPackage->GetComponentLoadPackage();
+    if (!m_componentPackage->GetContentManager())
     {
         Log::Error("No content manager found when setting up GameObject.",
             "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");

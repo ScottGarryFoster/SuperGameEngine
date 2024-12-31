@@ -265,6 +265,9 @@
     <ClInclude Include="Structural\Scene\Scene.h" />
     <ClInclude Include="Structural\Scene\SuperGrandScene.h" />
     <ClInclude Include="Structural\Scene\SuperScene.h" />
+    <ClInclude Include="Structural\Serializable\Serializable.h" />
+    <ClInclude Include="Structural\Serializable\SerializableParser.h" />
+    <ClInclude Include="Structural\Serializable\SuperSerializableParser.h" />
     <ClInclude Include="Structural\Spatial\Area\Circle.h" />
     <ClInclude Include="Structural\Spatial\Area\Rectangle.h" />
     <ClInclude Include="Structural\Spatial\Area\RectangleInt.h" />
@@ -314,6 +317,7 @@
     <ClCompile Include="Structural\Packages\SuperSceneLoadPackage.cpp" />
     <ClCompile Include="Structural\Scene\SuperGrandScene.cpp" />
     <ClCompile Include="Structural\Scene\SuperScene.cpp" />
+    <ClCompile Include="Structural\Serializable\SuperSerializableParser.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\RectangleInt.cpp" />

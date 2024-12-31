@@ -26,6 +26,18 @@ namespace SuperGameEngine
             const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
 
         /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() override;
+
+        /// <summary>
         /// The type to create to recreate this component.
         /// Override this on each component so that it always matches the type name for the class.
         /// </summary>
@@ -44,18 +56,6 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw() const override;
 
-        /// <summary>
-        /// Load component from a stored document.
-        /// </summary>
-        /// <param name="documentNode">Document node to load from.</param>
-        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
-
-        /// <summary>
-        /// Save component to stored document node ready to move to file.
-        /// </summary>
-        /// <returns>Document node to save to. </returns>
-        virtual std::shared_ptr<StoredDocumentNode> Save() override;
-
     private:
 
         std::shared_ptr<SpriteComponent> m_sprite;
@@ -72,6 +72,8 @@ namespace SuperGameEngine
         /// viewport.
         /// </summary>
         int m_yPosition;
+
+        std::string m_serial;
     };
 
     REGISTER_COMPONENT("TestComponent", TestComponent);

@@ -21,6 +21,7 @@
 #include "../../../FatedQuest.Libraries/Logger/Logger/Log.h"
 #include "../Engine/Content/SuperSceneStorageCache.h"
 #include "../Structural/Loaders/SuperSceneLoader.h"
+#include "../Structural/Serializable/SuperSerializableParser.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -31,6 +32,8 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     if (!m_textureManager)
     {
         m_grandSceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
+
+
 
         auto m_contentManager = std::make_shared<SuperContentManager>();
 
@@ -44,11 +47,16 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 
         m_grandSceneLoadPackage->SetContentManager(m_contentManager);
 
+        m_grandSceneLoadPackage->SetSerializableParser(
+            std::make_shared<SuperSerializableParser>());
+
+
         std::shared_ptr<SceneLoadPackage> sceneLoadPackage = m_grandSceneLoadPackage->GetSceneLoadPackage();
         auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
         auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
         sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
         m_contentManager->GiveSceneCache(sceneLoadCache);
+
 
         m_gameTime = std::make_shared<SuperGameTime>();
         curr = m_gameTime->AllTime() + 5000;
@@ -70,8 +78,8 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (m_haveLoaded && !m_haveSavedScene)
     {
-        
-        //m_haveSavedScene = true;
+        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut2.txt");
+        m_haveSavedScene = true;
     }
 
     if (!m_haveLoaded)
@@ -87,7 +95,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_scene = m_grandScene->CreateAndAddNewScene("savedOut.txt");
 
         // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
-        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut2.txt");
+
         
 
         //m_scene = m_grandScene->CreateAndAddNewScene();

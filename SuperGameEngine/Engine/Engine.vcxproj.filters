@@ -151,6 +151,9 @@
     <Filter Include="Source Files\Structural\Loaders">
       <UniqueIdentifier>{96cb9873-51b3-4172-a19a-469d9d26c272}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Structural\Serializable">
+      <UniqueIdentifier>{b7005083-ea41-4a96-b050-406e72e850d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -339,6 +342,15 @@
     <ClInclude Include="Engine\Content\SuperSceneStorageCache.h">
       <Filter>Header Files\Engine\Content</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Serializable\Serializable.h">
+      <Filter>Header Files\Structural\Serializable</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Serializable\SerializableParser.h">
+      <Filter>Header Files\Structural\Serializable</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Serializable\SuperSerializableParser.h">
+      <Filter>Header Files\Structural\Serializable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -460,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Content\SuperSceneStorageCache.cpp">
       <Filter>Source Files\Engine\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Serializable\SuperSerializableParser.cpp">
+      <Filter>Source Files\Structural\Serializable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

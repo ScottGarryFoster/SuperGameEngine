@@ -17,10 +17,21 @@ std::shared_ptr<ContentManager> SuperGrandScenePackage::GetContentManager() cons
     return m_contentManager;
 }
 
-void SuperGrandScenePackage::SetContentManager(std::shared_ptr<ContentManager> contentManager)
+void SuperGrandScenePackage::SetContentManager(const std::shared_ptr<ContentManager>& contentManager)
 {
-    m_contentManager = std::move(contentManager);
-    AttemptToCreateASceneLoadPackage();
+    m_contentManager = contentManager;
+    AttemptToCreateAGameObjectLoadPackage();
+}
+
+std::shared_ptr<SerializableParser> SuperGrandScenePackage::GetParser() const
+{
+    return m_serializableParser;
+}
+
+void SuperGrandScenePackage::SetSerializableParser(const std::shared_ptr<SerializableParser>& serializableParser)
+{
+    m_serializableParser = serializableParser;
+    AttemptToCreateAGameObjectLoadPackage();
 }
 
 std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() const
@@ -28,14 +39,13 @@ std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() 
     return m_sceneLoadPackage;
 }
 
-void SuperGrandScenePackage::AttemptToCreateASceneLoadPackage()
+void SuperGrandScenePackage::AttemptToCreateAGameObjectLoadPackage()
 {
-    if (!m_createdSceneLoadPackage)
+    if (m_contentManager && m_serializableParser)
     {
         auto sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
         sceneLoadPackage->SetContentManager(m_contentManager);
+        sceneLoadPackage->SetSerializableParser(m_serializableParser);
         m_sceneLoadPackage = sceneLoadPackage;
-
-        m_createdSceneLoadPackage = true;
     }
 }

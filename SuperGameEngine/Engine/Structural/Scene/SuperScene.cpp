@@ -1,7 +1,7 @@
 #include "SuperScene.h"
 #include "../../FatedQuestReferences.h"
 #include "../GameObject/SuperGameObject.h"
-#include "../../Structural/Packages/SuperGameObjectLoadPackage.h"
+#include "../../Structural/Packages/GameObjectLoadPackage.h"
 #include "../../Structural/Packages/SceneLoadPackage.h"
 
 using namespace SuperGameEngine;
@@ -47,8 +47,12 @@ void SuperScene::Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage)
 {
     m_scenePackage = grandScenePackage;
 
-    m_gameObjectPackage = std::make_shared<SuperGameObjectLoadPackage>();
-    m_gameObjectPackage->SetContentManager(m_scenePackage->GetContentManager());
+    m_gameObjectPackage = m_scenePackage->GetGameObjectLoadPackage();
+    if (!m_gameObjectPackage->GetContentManager())
+    {
+        Log::Error("No content manager found when setting up GameObject.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+    }
 
     m_isSetup = true;
 }

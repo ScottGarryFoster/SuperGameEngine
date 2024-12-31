@@ -9,7 +9,7 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-    class SuperComponentLoadPackage;
+    class ComponentLoadPackage;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -149,7 +149,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything a component needs to operate.
         /// </summary>
-        std::shared_ptr<SuperComponentLoadPackage> m_componentPackage;
+        std::shared_ptr<ComponentLoadPackage> m_componentPackage;
 
         /// <summary>
         /// All components currently loaded.

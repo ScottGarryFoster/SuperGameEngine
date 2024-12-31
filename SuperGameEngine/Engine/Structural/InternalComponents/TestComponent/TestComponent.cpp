@@ -6,6 +6,7 @@
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../GameObject/GameObject.h"
 #include "../../Packages/ComponentLoadPackage.h"
+#include "../../Serializable/SerializableParser.h"
 #include "../SpriteComponent/SpriteComponent.h"
 
 using namespace SuperGameEngine;
@@ -13,6 +14,7 @@ using namespace SuperGameEngine;
 TestComponent::TestComponent()
 {
     m_yPosition = 0;
+    m_serial = "default";
 }
 
 TestComponent::~TestComponent() = default;
@@ -57,6 +59,24 @@ void TestComponent::Setup(
     SetDoRender(true);
 }
 
+void TestComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
+{
+    m_serial = LoadPackage()->GetParser()->ParseFromParent("Serial", "default", documentNode);
+}
+
+std::shared_ptr<StoredDocumentNode> TestComponent::Save()
+{
+    std::shared_ptr<ModifiableNode> node = LoadPackage()->GetParser()->Serialize(std::make_shared<TestComponent>(*this));
+    AddAnySuperGameComponentSaves(node);
+
+    std::vector<std::shared_ptr<ModifiableNode>> children;
+    children.emplace_back(LoadPackage()->GetParser()->Serialize("Serial", m_serial, "default"));
+
+    node->SetFirstChild(children.at(0));
+
+    return node;
+}
+
 std::string TestComponent::TypeName() const
 {
     return "TestComponent";
@@ -66,6 +86,8 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
     if (!IsSetup()) return;
+
+    m_serial = "FromUpdate";
 
     if (!m_testTexture)
     {
@@ -103,14 +125,4 @@ void TestComponent::Draw() const
     }
 
     m_testTexture->Draw(FPoint(200, m_yPosition));
-}
-
-void TestComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
-{
-    SuperGameComponent::Load(documentNode);
-}
-
-std::shared_ptr<StoredDocumentNode> TestComponent::Save()
-{
-    return {};
 }
