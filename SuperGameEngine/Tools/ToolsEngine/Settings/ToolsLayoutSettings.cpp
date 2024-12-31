@@ -137,11 +137,6 @@ int ToolsLayoutSettings::WindowY() const
     return m_mainWindow->GetTop();
 }
 
-bool ToolsLayoutSettings::StartMaximised() const
-{
-    return false;
-}
-
 bool ToolsLayoutSettings::ParseSize(const std::shared_ptr<StoredDocumentNode>& node) const
 {
     std::shared_ptr<StoredDocumentAttribute> xAttribute = node->Attribute("X", false);

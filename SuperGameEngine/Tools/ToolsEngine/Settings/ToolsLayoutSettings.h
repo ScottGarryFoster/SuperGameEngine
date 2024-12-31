@@ -76,12 +76,6 @@ namespace SuperGameTools
         /// <returns>The Y position to start the window in. </returns>
         virtual int WindowY() const override;
 
-        /// <summary>
-        /// True means the window should start maximised.
-        /// </summary>
-        /// <returns>True means the window should start maximised. </returns>
-        virtual bool StartMaximised() const override;
-
     private:
 
         /// <summary>

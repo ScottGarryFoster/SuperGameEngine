@@ -33,11 +33,5 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>The Y position to start the window in. </returns>
         virtual int WindowY() const = 0;
-
-        /// <summary>
-        /// True means the window should start maximised.
-        /// </summary>
-        /// <returns>True means the window should start maximised. </returns>
-        virtual bool StartMaximised() const = 0;
     };
 }
