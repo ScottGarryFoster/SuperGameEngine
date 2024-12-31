@@ -150,33 +150,16 @@ void SuperSceneLoader::SaveSceneLevelAttributesAndNodes(
         gameObjectChildren = scene->GetChildren();
     }
 
-    std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
-    bool haveAdjacent = false;
-    std::shared_ptr<ModifiableNode> current;
+    std::vector<std::shared_ptr<ModifiableNode>> allNodes;
     for (const std::shared_ptr<GameObject>& go : gameObjectChildren)
     {
         auto node = std::make_shared<ModifiableNode>();
         node->SetName("GameObject");
         SaveGameObjectAttributesAndNodes(node, go);
-
-        if (haveAdjacent)
-        {
-            current->SetAdjacentNode(node);
-        }
-
-        current = node;
-        allNodes.emplace_back(current);
-        haveAdjacent = true;
+        allNodes.emplace_back(node);
     }
 
-    if (!allNodes.empty())
-    {
-        sceneNode->SetFirstChild(allNodes.front());
-        if (allNodes.size() > 1)
-        {
-            sceneNode->SetLastChild(allNodes.back());
-        }
-    }
+    sceneNode->SetAllChildrenNodes(allNodes);
 
 }
 
@@ -206,9 +189,7 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
         componentChildren = gameObject->GetAllComponents();
     }
 
-    std::vector<std::shared_ptr<StoredDocumentNode>> allNodes;
-    std::shared_ptr<ModifiableNode> current;
-    bool haveAdjacent = false;
+    std::vector<std::shared_ptr<ModifiableNode>> allNodes;
     for (const std::shared_ptr<GameComponent>& component : componentChildren)
     {
         // Attempt to see if the component can save itself
@@ -226,25 +207,11 @@ void SuperSceneLoader::SaveGameObjectAttributesAndNodes(
             SaveGameComponentAttributesAndNodes(modifiableNode, component);
         }
 
-        // Then link it in the list.
-        if (haveAdjacent)
-        {
-            current->SetAdjacentNode(modifiableNode);
-        }
-
-        current = modifiableNode;
-        allNodes.emplace_back(current);
-        haveAdjacent = true;
+        allNodes.emplace_back(modifiableNode);
     }
 
-    if (!allNodes.empty())
-    {
-        gameObjectNode->SetFirstChild(allNodes.front());
-        if (allNodes.size() > 1)
-        {
-            gameObjectNode->SetLastChild(allNodes.back());
-        }
-    }
+    gameObjectNode->SetAllChildrenNodes(allNodes);
+
 }
 
 void SuperSceneLoader::SaveGameComponentAttributesAndNodes(const std::shared_ptr<ModifiableNode>& componentNode,

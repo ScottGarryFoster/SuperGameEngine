@@ -90,6 +90,13 @@ namespace FatedQuestLibraries
         void SetAdjacentNode(const std::shared_ptr<StoredDocumentNode>& adjacentNode);
 
         /// <summary>
+        /// Sets the children of this node.
+        /// Will also ensure that each child knows about one another.
+        /// </summary>
+        /// <param name="allNodes">All children nodes.</param>
+        void SetAllChildrenNodes(const std::vector<std::shared_ptr<ModifiableNode>>& allNodes);
+
+        /// <summary>
         /// Get the inner text.
         /// </summary>
         /// <returns>Get the inner text. </returns>

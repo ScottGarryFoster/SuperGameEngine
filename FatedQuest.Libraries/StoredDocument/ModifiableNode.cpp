@@ -98,6 +98,39 @@ void ModifiableNode::SetAdjacentNode(const std::shared_ptr<StoredDocumentNode>& 
     m_adjacentNode = adjacentNode;
 }
 
+void ModifiableNode::SetAllChildrenNodes(const std::vector<std::shared_ptr<ModifiableNode>>& allNodes)
+{
+    if (allNodes.empty())
+    {
+        m_firstChild = {};
+        m_lastChild = {};
+    }
+
+    std::shared_ptr<ModifiableNode> last;
+    for (const std::shared_ptr<ModifiableNode>& node : allNodes)
+    {
+        if (last)
+        {
+            last->SetAdjacentNode(node);
+        }
+
+        last = node;
+    }
+
+    if (last)
+    {
+        m_firstChild = allNodes.front();
+        if (allNodes.size() > 1)
+        {
+            m_lastChild = allNodes.back();
+        }
+        else
+        {
+            m_lastChild = {};
+        }
+    }
+}
+
 const std::string ModifiableNode::Inner() const
 {
     return m_innerText;
