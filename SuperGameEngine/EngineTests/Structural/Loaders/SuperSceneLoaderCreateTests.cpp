@@ -9,6 +9,7 @@
 #include "../../../Engine/DebugEngine/DebugLogger.h"
 #include "../../../Engine/Structural/GameObject/GameObject.h"
 #include "../../../Engine/Structural/InternalComponents/TestComponent/TestComponent.h"
+#include "../../../Engine/Structural/Serializable/SuperSerializableParser.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -36,6 +37,7 @@ namespace SuperGameEngineTests_Structural_Loaders
             }
 
             m_sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
+            m_sceneLoadPackage->SetSerializableParser(std::make_shared<SuperSerializableParser>());
             m_testClass = std::make_shared<SuperSceneLoader>(m_sceneLoadPackage);
         }
 

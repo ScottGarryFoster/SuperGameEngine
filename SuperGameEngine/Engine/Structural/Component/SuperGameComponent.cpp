@@ -76,6 +76,12 @@ void SuperGameComponent::Setup(
     m_parent = parent;
 
     const std::string thisMethod = "SuperGameComponent::Setup(std::shared_ptr<ComponentLoadPackage>,std::shared_ptr<ExtremelyWeakWrapper<GameObject>>)";
+    if (!componentLoadPackage)
+    {
+        Log::Error("Could not find Component Load Package.", thisMethod);
+        return;
+    }
+
     if (!componentLoadPackage->GetContentManager())
     {
         Log::Error("Could not find Content Manager.", thisMethod);

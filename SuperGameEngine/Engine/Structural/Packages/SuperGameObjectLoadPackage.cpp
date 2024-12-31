@@ -35,7 +35,7 @@ std::shared_ptr<ComponentLoadPackage> SuperGameObjectLoadPackage::GetComponentLo
 
 void SuperGameObjectLoadPackage::AttemptToCreateAComponentLoadPackage()
 {
-    if (m_contentManager && m_serializableParser)
+    if (m_contentManager || m_serializableParser)
     {
         auto sceneLoadPackage = std::make_shared<SuperComponentLoadPackage>();
         sceneLoadPackage->SetContentManager(m_contentManager);

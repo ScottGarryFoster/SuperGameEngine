@@ -39,7 +39,7 @@ std::shared_ptr<GameObjectLoadPackage> SuperSceneLoadPackage::GetGameObjectLoadP
 
 void SuperSceneLoadPackage::AttemptToCreateASceneLoadPackage()
 {
-    if (m_contentManager && m_serializableParser)
+    if (m_contentManager || m_serializableParser)
     {
         auto sceneLoadPackage = std::make_shared<SuperGameObjectLoadPackage>();
         sceneLoadPackage->SetContentManager(m_contentManager);

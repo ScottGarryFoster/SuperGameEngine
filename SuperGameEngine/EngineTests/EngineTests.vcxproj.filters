@@ -34,6 +34,9 @@
     <Filter Include="Structural\Loaders">
       <UniqueIdentifier>{5e3bb9b1-f1ca-4b73-a3a6-0239aab3071b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stubs">
+      <UniqueIdentifier>{a7abc2a3-bdb5-4149-b89e-0d25171bea65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

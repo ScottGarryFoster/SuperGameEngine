@@ -48,9 +48,16 @@ void SuperScene::Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage)
     m_scenePackage = grandScenePackage;
 
     m_gameObjectPackage = m_scenePackage->GetGameObjectLoadPackage();
+    if (!m_gameObjectPackage)
+    {
+        Log::Error("No m_gameObjectPackage found when setting up Scene.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+        return;
+    }
+
     if (!m_gameObjectPackage->GetContentManager())
     {
-        Log::Error("No content manager found when setting up GameObject.",
+        Log::Error("No content manager found when setting up Scene.",
             "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
     }
 
