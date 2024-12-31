@@ -133,6 +133,12 @@
     <Filter Include="Header Files\Windows\SceneHierarchy">
       <UniqueIdentifier>{1e279ea1-dff3-4ec8-84e7-b529e527cb73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\Settings">
+      <UniqueIdentifier>{2a69ec0d-3d41-469d-b148-71209c1e9215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\Settings">
+      <UniqueIdentifier>{84081eed-ce6e-4b68-922b-730e3bf14ec6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -243,6 +249,18 @@
     <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h">
       <Filter>Header Files\Windows\SceneHierarchy</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\Settings\LayoutSettings.h">
+      <Filter>Header Files\ToolsEngine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Settings\ToolsLayoutSettings.h">
+      <Filter>Header Files\ToolsEngine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Settings\SettingsPaths.h">
+      <Filter>Header Files\ToolsEngine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h">
+      <Filter>Header Files\ToolsEngine\Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -310,6 +328,12 @@
     </ClCompile>
     <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\Settings\ToolsLayoutSettings.cpp">
+      <Filter>Source Files\ToolsEngine\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
