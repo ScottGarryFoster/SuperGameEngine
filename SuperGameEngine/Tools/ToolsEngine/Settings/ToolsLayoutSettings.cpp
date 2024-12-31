@@ -52,16 +52,18 @@ void ToolsLayoutSettings::WriteSettings()
         return;
     }
 
+    // Setup document
     auto document = std::make_shared<ModifiableDocument>();
     auto root = std::make_shared<ModifiableNode>();
     root->SetName("Settings");
     document->SetRootElement(root);
 
-    // TODO: Update this with #96
-    std::shared_ptr<ModifiableNode> size = SerialiseSize();
-    root->SetFirstChild(size);
+    // Gather all settings
+    std::vector<std::shared_ptr<ModifiableNode>> children;
+    children.emplace_back(SerialiseSize());
+    root->SetAllChildrenNodes(children);
 
-    
+    // Write file
     std::string asFile = m_documentToXml->ConvertToXml(document);
     if (asFile.empty())
     {
