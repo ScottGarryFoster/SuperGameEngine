@@ -1,7 +1,11 @@
 #include "SuperGameComponent.h"
 #include "../../Engine/Basic/GameTime.h"
+#include "../../FatedQuestReferences.h"
+#include "../../Engine/Content/ContentManager.h"
+#include "../Packages/ComponentLoadPackage.h"
 
 using namespace SuperGameEngine;
+using namespace FatedQuestLibraries;
 
 SuperGameComponent::SuperGameComponent()
 {
@@ -12,13 +16,90 @@ SuperGameComponent::SuperGameComponent()
 
 SuperGameComponent::~SuperGameComponent() = default;
 
-void SuperGameComponent::Setup(
-    std::shared_ptr<ComponentLoadPackage> sceneLoadPackage,
-    std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
+SuperGameComponent::SuperGameComponent(const SuperGameComponent& other)
 {
-    m_loadPackage = sceneLoadPackage;
+    m_doRender = other.m_doRender;
+    m_isSetup = other.m_isSetup;
+    m_isDestroyed = other.m_isDestroyed;
+    m_parent = other.m_parent;
+    m_loadPackage = other.m_loadPackage;
+}
+
+SuperGameComponent& SuperGameComponent::operator=(const SuperGameComponent& other)
+{
+    if(this == &other) return *this;
+
+    m_doRender = other.m_doRender;
+    m_isSetup = other.m_isSetup;
+    m_isDestroyed = other.m_isDestroyed;
+    m_parent = other.m_parent;
+    m_loadPackage = other.m_loadPackage;
+
+    return *this;
+}
+
+SuperGameComponent::SuperGameComponent(SuperGameComponent&& other) noexcept
+{
+    m_doRender = other.m_doRender;
+    m_isSetup = other.m_isSetup;
+    m_isDestroyed = other.m_isDestroyed;
+    m_parent = other.m_parent;
+    m_loadPackage = other.m_loadPackage;
+
+    other.m_parent = {};
+    other.m_loadPackage = {};
+    other.m_isDestroyed = true;
+}
+
+SuperGameComponent& SuperGameComponent::operator=(SuperGameComponent&& other) noexcept
+{
+    if (this == &other) return *this;
+
+    m_doRender = other.m_doRender;
+    m_isSetup = other.m_isSetup;
+    m_isDestroyed = other.m_isDestroyed;
+    m_parent = other.m_parent;
+    m_loadPackage = other.m_loadPackage;
+
+    other.m_parent = {};
+    other.m_loadPackage = {};
+    other.m_isDestroyed = true;
+
+    return *this;
+}
+
+void SuperGameComponent::Setup(
+    const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
+    const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
+{
+    m_loadPackage = componentLoadPackage;
     m_parent = parent;
+
+    const std::string thisMethod = "SuperGameComponent::Setup(std::shared_ptr<ComponentLoadPackage>,std::shared_ptr<ExtremelyWeakWrapper<GameObject>>)";
+    if (!componentLoadPackage->GetContentManager())
+    {
+        Log::Error("Could not find Content Manager.", thisMethod);
+        return;
+    }
+
+    if (!componentLoadPackage->GetContentManager()->Texture())
+    {
+        Log::Error("Could not find Texture Manager.", thisMethod);
+        return;
+    }
+
+    if (!componentLoadPackage->GetContentManager()->GamePackage())
+    {
+        Log::Error("Could not find Game Package.", thisMethod);
+        return;
+    }
+
     m_isSetup = true;
+}
+
+std::string SuperGameComponent::TypeName() const
+{
+    return "SuperGameComponent";
 }
 
 bool SuperGameComponent::IsSetup() const
@@ -73,7 +154,28 @@ void SuperGameComponent::OnDestroyed()
     // Nothing.
 }
 
-std::shared_ptr<ComponentLoadPackage> SuperGameComponent::GetSceneLoadPackage() const
+void SuperGameComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
+{
+
+}
+
+std::shared_ptr<StoredDocumentNode> SuperGameComponent::Save()
+{
+    //Log::Error("Save called on SuperGameComponent.");
+    return {};
+}
+
+std::shared_ptr<ComponentLoadPackage> SuperGameComponent::LoadPackage() const
 {
     return m_loadPackage;
+}
+
+void SuperGameComponent::AddAnySuperGameComponentSaves(const std::shared_ptr<ModifiableNode>& documentNode)
+{
+    if (!documentNode)
+    {
+        return;
+    }
+
+
 }

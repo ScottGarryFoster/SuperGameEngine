@@ -10,7 +10,7 @@ namespace FatedQuestLibraries_XMLDocument
     class RapidXMLDocumentTests : public ::testing::Test
     {
     public:
-        std::shared_ptr<SuperXMLDocument> m_testClass;
+        std::shared_ptr<StoredDocument> m_testClass;
 
         RapidXMLDocumentTests()
         {
@@ -105,10 +105,10 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->LoadFromFile(testFile);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        XMLNode* properActual = actual.get();
+        StoredDocumentNode* properActual = actual.get();
         ASSERT_NE(nullptr, properActual);
         ASSERT_EQ("Node", actual->Name()) << "Node != " << actual->Name();
     }
@@ -125,14 +125,14 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->LoadFromFile(testFile);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        XMLNode* properActual = actual.get();
+        StoredDocumentNode* properActual = actual.get();
         ASSERT_NE(nullptr, properActual);
         ASSERT_EQ("Node", actual->Name()) << "Node != " << actual->Name();
 
-        std::vector<std::shared_ptr<XMLAttribute>> attributes = actual->Attributes();
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes = actual->Attributes();
         ASSERT_EQ(2, attributes.size()) << "It did not parse both elements.";
 
         ASSERT_EQ("AttributeName", attributes[0]->Name()) << "AttributeName != " << attributes[0]->Name();
@@ -154,14 +154,14 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->LoadFromFile(testFile);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        XMLNode* properActual = actual.get();
+        StoredDocumentNode* properActual = actual.get();
         ASSERT_NE(nullptr, properActual);
         ASSERT_EQ("Node", actual->Name()) << "Node != " << actual->Name();
 
-        std::shared_ptr<XMLNode> firstChild = actual->GetFirstChild();
+        std::shared_ptr<StoredDocumentNode> firstChild = actual->GetFirstChild();
         ASSERT_TRUE(firstChild);
         ASSERT_EQ("Inner", firstChild->Name()) << "Inner != " << firstChild->Name();
     }
@@ -178,14 +178,14 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->LoadFromFile(testFile);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        std::shared_ptr<XMLNode> firstChild = actual->GetFirstChild();
+        std::shared_ptr<StoredDocumentNode> firstChild = actual->GetFirstChild();
         ASSERT_TRUE(firstChild);
         ASSERT_EQ("Inner", firstChild->Name()) << "Inner != " << firstChild->Name();
 
-        std::vector<std::shared_ptr<XMLAttribute>> attributes = firstChild->Attributes();
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes = firstChild->Attributes();
         ASSERT_EQ(2, attributes.size()) << "It did not parse both elements.";
 
         ASSERT_EQ("AttributeName", attributes[0]->Name()) << "AttributeName != " << attributes[0]->Name();
@@ -213,11 +213,11 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->LoadFromFile(testFile);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
         int i = 0;
-        for (std::shared_ptr<XMLNode> child = actual->GetFirstChild(); child; child = actual->GetAdjacentNode())
+        for (std::shared_ptr<StoredDocumentNode> child = actual->GetFirstChild(); child; child = actual->GetAdjacentNode())
         {
             ASSERT_TRUE(child);
             switch (i)
@@ -258,10 +258,10 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->LoadFromFile(testFile);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        std::shared_ptr<XMLNode> last = actual->GetLastChild();
+        std::shared_ptr<StoredDocumentNode> last = actual->GetLastChild();
         ASSERT_TRUE(last);
         ASSERT_EQ("Inner4", last->Name()) << "Inner4 != " << last->Name();
     }
@@ -300,10 +300,10 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->Load(given);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        XMLNode* properActual = actual.get();
+        StoredDocumentNode* properActual = actual.get();
         ASSERT_NE(nullptr, properActual);
         ASSERT_EQ("Node", actual->Name()) << "Node != " << actual->Name();
     }
@@ -315,14 +315,14 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->Load(given);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        XMLNode* properActual = actual.get();
+        StoredDocumentNode* properActual = actual.get();
         ASSERT_NE(nullptr, properActual);
         ASSERT_EQ("Node", actual->Name()) << "Node != " << actual->Name();
 
-        std::vector<std::shared_ptr<XMLAttribute>> attributes = actual->Attributes();
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes = actual->Attributes();
         ASSERT_EQ(2, attributes.size()) << "It did not parse both elements.";
 
         ASSERT_EQ("AttributeName", attributes[0]->Name()) << "AttributeName != " << attributes[0]->Name();
@@ -339,14 +339,14 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->Load(given);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        XMLNode* properActual = actual.get();
+        StoredDocumentNode* properActual = actual.get();
         ASSERT_NE(nullptr, properActual);
         ASSERT_EQ("Node", actual->Name()) << "Node != " << actual->Name();
 
-        std::shared_ptr<XMLNode> firstChild = actual->GetFirstChild();
+        std::shared_ptr<StoredDocumentNode> firstChild = actual->GetFirstChild();
         ASSERT_TRUE(firstChild);
         ASSERT_EQ("Inner", firstChild->Name()) << "Inner != " << firstChild->Name();
     }
@@ -358,14 +358,14 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->Load(given);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        std::shared_ptr<XMLNode> firstChild = actual->GetFirstChild();
+        std::shared_ptr<StoredDocumentNode> firstChild = actual->GetFirstChild();
         ASSERT_TRUE(firstChild);
         ASSERT_EQ("Inner", firstChild->Name()) << "Inner != " << firstChild->Name();
 
-        std::vector<std::shared_ptr<XMLAttribute>> attributes = firstChild->Attributes();
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes = firstChild->Attributes();
         ASSERT_EQ(2, attributes.size()) << "It did not parse both elements.";
 
         ASSERT_EQ("AttributeName", attributes[0]->Name()) << "AttributeName != " << attributes[0]->Name();
@@ -388,11 +388,11 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->Load(given);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
         int i = 0;
-        for (std::shared_ptr<XMLNode> child = actual->GetFirstChild(); child; child = actual->GetAdjacentNode())
+        for (std::shared_ptr<StoredDocumentNode> child = actual->GetFirstChild(); child; child = actual->GetAdjacentNode())
         {
             ASSERT_TRUE(child);
             switch (i)
@@ -428,10 +428,10 @@ namespace FatedQuestLibraries_XMLDocument
         m_testClass->Load(given);
 
         // Act
-        std::shared_ptr<XMLNode> actual = m_testClass->GetRoot();
+        std::shared_ptr<StoredDocumentNode> actual = m_testClass->GetRoot();
 
         // Assert
-        std::shared_ptr<XMLNode> last = actual->GetLastChild();
+        std::shared_ptr<StoredDocumentNode> last = actual->GetLastChild();
         ASSERT_TRUE(last);
         ASSERT_EQ("Inner4", last->Name()) << "Inner4 != " << last->Name();
     }

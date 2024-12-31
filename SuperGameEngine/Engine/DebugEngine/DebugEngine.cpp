@@ -19,6 +19,9 @@
 
 #include "../FatedQuestReferences.h"
 #include "../../../FatedQuest.Libraries/Logger/Logger/Log.h"
+#include "../Engine/Content/SuperSceneStorageCache.h"
+#include "../Structural/Loaders/SuperSceneLoader.h"
+#include "../Structural/Serializable/SuperSerializableParser.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -28,7 +31,9 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
     if (!m_textureManager)
     {
-        m_sceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
+        m_grandSceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
+
+
 
         auto m_contentManager = std::make_shared<SuperContentManager>();
 
@@ -40,7 +45,18 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_textureManager = std::make_shared<SuperTextureManager>(renderer, m_combinedGamePackage);
         m_contentManager->GiveSuperTextureManager(m_textureManager);
 
-        m_sceneLoadPackage->SetContentManager(m_contentManager);
+        m_grandSceneLoadPackage->SetContentManager(m_contentManager);
+
+        m_grandSceneLoadPackage->SetSerializableParser(
+            std::make_shared<SuperSerializableParser>());
+
+
+        std::shared_ptr<SceneLoadPackage> sceneLoadPackage = m_grandSceneLoadPackage->GetSceneLoadPackage();
+        auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
+        auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
+        sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
+        m_contentManager->GiveSceneCache(sceneLoadCache);
+
 
         m_gameTime = std::make_shared<SuperGameTime>();
         curr = m_gameTime->AllTime() + 5000;
@@ -60,6 +76,12 @@ ApplicationOperationState DebugEngine::Event(SDL_Event event)
 
 ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
+    if (m_haveLoaded && !m_haveSavedScene)
+    {
+        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut2.txt");
+        m_haveSavedScene = true;
+    }
+
     if (!m_haveLoaded)
     {
         m_haveLoaded = true;
@@ -67,24 +89,40 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         curr = ticks;
 
         m_grandScene = std::make_shared<SuperGrandScene>();
-        m_grandScene->Setup(m_sceneLoadPackage);
+        m_grandScene->Setup(m_grandSceneLoadPackage);
 
-        m_scene = m_grandScene->CreateAndAddNewScene();
-        m_go = m_scene->CreateAndAddNewGameObject();
-        m_go->AddComponent("TestComponent");
+        //m_scene = m_grandScene->CreateAndAddNewScene("TestScene.txt");
+        m_scene = m_grandScene->CreateAndAddNewScene("savedOut.txt");
+
+        // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
 
         
 
-        std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
-        if (m_combinedGamePackage->File()->Exists(testPath))
-        {
-            std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
-            if (contents[0] == '<')
-            {
-                auto sprite = std::static_pointer_cast<SpriteComponent>(m_go->AddComponent("SpriteComponent"));
-                sprite->Move(400, 400);
-            }
-        }
+        //m_scene = m_grandScene->CreateAndAddNewScene();
+        //m_go = m_scene->CreateAndAddNewGameObject();
+        //m_go->AddComponent("TestComponent");
+
+        //std::optional<std::shared_ptr<void>> fromFactory = ClassTypes::GetInstance().Create("SuperGameObject");
+        //if (fromFactory.has_value())
+        //{
+        //    std::shared_ptr<void> sgov = fromFactory.value();
+        //    std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(fromFactory.value());
+        //    if (1 == 1)
+        //    {
+        //        
+        //    }
+        //}
+
+        //std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
+        //if (m_combinedGamePackage->File()->Exists(testPath))
+        //{
+        //    std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
+        //    if (contents[0] == '<')
+        //    {
+        //        auto sprite = std::static_pointer_cast<SpriteComponent>(m_go->AddComponent("SpriteComponent"));
+        //        sprite->Move(400, 400);
+        //    }
+        //}
 
 #ifdef defined(_DEBUG) && !defined(_TOOLS)
         m_logger = std::make_shared<DebugLogger>();

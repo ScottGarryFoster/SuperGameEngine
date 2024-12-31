@@ -12,7 +12,27 @@ namespace SuperGameEngine
     {
     public:
         SuperGameComponent();
-        virtual ~SuperGameComponent();
+        virtual ~SuperGameComponent() override;
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        SuperGameComponent(const SuperGameComponent& other);
+
+        /// <summary>
+        /// Copy assignment operator
+        /// </summary>
+        SuperGameComponent& operator=(const SuperGameComponent& other);
+
+        /// <summary>
+        /// Move constructor
+        /// </summary>
+        SuperGameComponent(SuperGameComponent&& other) noexcept;
+
+        /// <summary>
+        /// Move assignment operator
+        /// </summary>
+        SuperGameComponent& operator=(SuperGameComponent&& other) noexcept;
 
         /// <summary>
         /// Sets up the game component.
@@ -20,8 +40,15 @@ namespace SuperGameEngine
         /// <param name="componentLoadPackage">Everything a component needs to run. </param>
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
-            std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
-            std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent) override;
+            const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
+            const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
+
+        /// <summary>
+        /// The type to create to recreate this component.
+        /// Override this on each component so that it always matches the type name for the class.
+        /// </summary>
+        /// <returns>The type to create to recreate this component. </returns>
+        virtual std::string TypeName() const override;
 
         /// <summary>
         /// True means Setup was run and it is ready to be used.
@@ -88,14 +115,31 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() override;
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() override;
     protected:
 
         /// <summary>
         /// Gets the scene load package.
         /// </summary>
         /// <returns>Everything a component needs to run. </returns>
-        [[nodiscard]] std::shared_ptr<ComponentLoadPackage> GetSceneLoadPackage() const;
+        [[nodiscard]] std::shared_ptr<ComponentLoadPackage> LoadPackage() const;
 
+        /// <summary>
+        /// When saving call this method to add items stores at this level of the component.
+        /// </summary>
+        /// <param name="documentNode">Document node already created. </param>
+        void AddAnySuperGameComponentSaves(const std::shared_ptr<ModifiableNode>& documentNode);
     private:
 
         /// <summary>

@@ -1,7 +1,7 @@
 #include "SuperScene.h"
 #include "../../FatedQuestReferences.h"
 #include "../GameObject/SuperGameObject.h"
-#include "../../Structural/Packages/SuperGameObjectLoadPackage.h"
+#include "../../Structural/Packages/GameObjectLoadPackage.h"
 #include "../../Structural/Packages/SceneLoadPackage.h"
 
 using namespace SuperGameEngine;
@@ -25,12 +25,34 @@ std::shared_ptr<Guid> SuperScene::GetGuid() const
     return m_guid;
 }
 
+void SuperScene::SetGuid(const std::shared_ptr<Guid>& guid)
+{
+    if (!guid)
+    {
+        Log::Error("Given empty guid.", "SuperScene::SetGuid(std::shared_ptr<Guid>)");
+        return;
+    }
+
+    m_guid = guid;
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (auto sgo = std::dynamic_pointer_cast<SuperGameObject>(go))
+        {
+            sgo->SetScene(m_guid);
+        }
+    }
+}
+
 void SuperScene::Setup(std::shared_ptr<SceneLoadPackage> grandScenePackage)
 {
     m_scenePackage = grandScenePackage;
 
-    m_gameObjectPackage = std::make_shared<SuperGameObjectLoadPackage>();
-    m_gameObjectPackage->SetContentManager(m_scenePackage->GetContentManager());
+    m_gameObjectPackage = m_scenePackage->GetGameObjectLoadPackage();
+    if (!m_gameObjectPackage->GetContentManager())
+    {
+        Log::Error("No content manager found when setting up GameObject.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+    }
 
     m_isSetup = true;
 }
@@ -124,7 +146,38 @@ void SuperScene::DestroyImmediately()
 
 void SuperScene::OnDestroyed()
 {
-    // Nothing.
+    // No reaction.
+}
+
+std::vector<std::shared_ptr<GameObject>> SuperScene::GetChildren() const
+{
+    std::vector<std::shared_ptr<GameObject>> returnVector;
+    returnVector.insert(returnVector.end(), m_gameObjects.begin(), m_gameObjects.end());
+
+    // Ensure destroyed ones are not counted.
+    erase_if(returnVector, [](const std::shared_ptr<GameObject>& go) { return go->IsDestroyed(); });
+    return returnVector;
+}
+
+std::vector<std::shared_ptr<GameObject>> SuperScene::GetChildrenIncludingPending() const
+{
+    std::vector<std::shared_ptr<GameObject>> returnVector;
+    returnVector.insert(returnVector.end(), m_gameObjects.begin(), m_gameObjects.end());
+    returnVector.insert(returnVector.end(), m_pendingGameObjects.begin(), m_pendingGameObjects.end());
+
+    // Ensure destroyed ones are not counted.
+    erase_if(returnVector, [](const std::shared_ptr<GameObject>& go) { return go->IsDestroyed(); });
+
+    return returnVector;
+}
+
+void SuperScene::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
+{
+}
+
+std::shared_ptr<StoredDocumentNode> SuperScene::Save()
+{
+    return std::shared_ptr<StoredDocumentNode>();
 }
 
 void SuperScene::MovePendingToMain()

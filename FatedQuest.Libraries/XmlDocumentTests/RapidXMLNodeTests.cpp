@@ -10,7 +10,7 @@ namespace FatedQuestLibraries_XMLDocument
     class RapidXMLNodeTests : public ::testing::Test
     {
     public:
-        std::shared_ptr<SuperXMLDocument> m_testClass;
+        std::shared_ptr<StoredDocument> m_testClass;
 
         RapidXMLNodeTests()
         {
@@ -26,7 +26,7 @@ namespace FatedQuestLibraries_XMLDocument
         {
         }
 
-        std::shared_ptr<XMLAttribute> CreateAttribute(
+        std::shared_ptr<StoredDocumentAttribute> CreateAttribute(
             const std::string& name,
             const std::string& value)
         {
@@ -44,14 +44,14 @@ namespace FatedQuestLibraries_XMLDocument
         // Arrange
         std::string lookfor = "LookFor";
         std::string expected = "Expected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(lookfor, expected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(lookfor);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor);
 
         // Assert
         ASSERT_TRUE(actual);
@@ -65,14 +65,14 @@ namespace FatedQuestLibraries_XMLDocument
         std::string lookfor = "LookFor";
         std::string inArray = "inArray";
         std::string unexpected = "unexpected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(inArray, unexpected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(lookfor);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor);
 
         // Assert
         ASSERT_FALSE(actual);
@@ -84,14 +84,14 @@ namespace FatedQuestLibraries_XMLDocument
         std::string lookfor = "LookFor";
         std::string givenLookFor = "LOoKFOr";
         std::string unexpected = "unexpected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(lookfor, unexpected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(givenLookFor);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(givenLookFor);
 
         // Assert
         ASSERT_FALSE(actual);
@@ -106,14 +106,14 @@ namespace FatedQuestLibraries_XMLDocument
         // Arrange
         std::string lookfor = "LookFor";
         std::string expected = "Expected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(lookfor, expected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(lookfor, false);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, false);
 
         // Assert
         ASSERT_TRUE(actual);
@@ -127,14 +127,14 @@ namespace FatedQuestLibraries_XMLDocument
         std::string lookfor = "LookFor";
         std::string inArray = "inArray";
         std::string unexpected = "unexpected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(inArray, unexpected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(lookfor, false);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, false);
 
         // Assert
         ASSERT_FALSE(actual);
@@ -146,14 +146,14 @@ namespace FatedQuestLibraries_XMLDocument
         std::string lookfor = "LookFor";
         std::string givenLookFor = "LOoKFOr";
         std::string unexpected = "unexpected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(lookfor, unexpected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(givenLookFor, false);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(givenLookFor, false);
 
         // Assert
         ASSERT_FALSE(actual);
@@ -165,14 +165,14 @@ namespace FatedQuestLibraries_XMLDocument
         std::string lookfor = "LookFor";
         std::string givenLookFor = "LOoKFOr";
         std::string expected = "Expected";
-        std::vector<std::shared_ptr<XMLAttribute>> given;
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> given;
         given.push_back(CreateAttribute(lookfor, expected));
 
         std::shared_ptr<RapidXMLNode> rapidNode = std::make_shared<RapidXMLNode>();
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<XMLAttribute> actual = rapidNode->Attribute(lookfor, true);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, true);
 
         // Assert
         ASSERT_TRUE(actual);

@@ -9,7 +9,7 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-    class SuperComponentLoadPackage;
+    class ComponentLoadPackage;
 
     /// <summary>
     /// Core object in the Engine holding Components with Logic and
@@ -25,6 +25,12 @@ namespace SuperGameEngine
         /// A unique identifier.
         /// </summary>
         virtual std::shared_ptr<Guid> GetGuid() const override;
+
+        /// <summary>
+        /// Sets the Guid on the GameObject.
+        /// </summary>
+        /// <param name="guid">New Guid. </param>
+        virtual void SetGuid(const std::shared_ptr<Guid>& guid);
 
         /// <summary>
         /// A unique identifier.
@@ -55,8 +61,8 @@ namespace SuperGameEngine
         /// <summary>
         /// Update which occurs at a set time.
         /// </summary>
-        virtual void FixedUpdate(const std::shared_ptr<GameTime> gameTime) override;
         /// <param name="gameTime">Ticks since last frame. </param>
+        virtual void FixedUpdate(const std::shared_ptr<GameTime> gameTime) override;
 
         /// <summary>
         /// Draw everything in the game.
@@ -84,7 +90,20 @@ namespace SuperGameEngine
         /// Gets all components on the GameObject.
         /// </summary>
         /// <returns>All components. Could be an empty vector. </returns>
-        virtual std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> GetAllComponents() const override;
+        virtual std::vector<std::shared_ptr<GameComponent>> GetAllComponents() const override;
+
+        /// <summary>
+        /// Gets the components on the GameObject.
+        /// This includes pending components which have not gone through an update.
+        /// </summary>
+        /// <returns>Components on the GameObject. Only top level/direct are returned. </returns>
+        virtual std::vector<std::shared_ptr<GameComponent>> GetComponentsIncludingPending() const;
+
+        /// <summary>
+        /// Gets all components on the GameObject.
+        /// </summary>
+        /// <returns>All components. Could be an empty vector. </returns>
+        virtual std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> GetAllComponentsByType() const override;
 
         /// <summary>
         /// Destroys the game object.
@@ -109,6 +128,8 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() override;
+
+
     private:
         /// <summary>
         /// Unique identifier.
@@ -128,7 +149,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything a component needs to operate.
         /// </summary>
-        std::shared_ptr<SuperComponentLoadPackage> m_componentPackage;
+        std::shared_ptr<ComponentLoadPackage> m_componentPackage;
 
         /// <summary>
         /// All components currently loaded.
@@ -167,11 +188,6 @@ namespace SuperGameEngine
         bool AddActualComponent(const std::string& type, const std::shared_ptr<GameComponent>& reference);
 
         /// <summary>
-        /// Moves any pending components into the main loop.
-        /// </summary>
-        void MovePendingToMain();
-
-        /// <summary>
         /// Adds component to actual dictionary
         /// </summary>
         /// <param name="type">Type as string. </param>
@@ -186,6 +202,13 @@ namespace SuperGameEngine
         /// To be called outside of any loops.
         /// </summary>
         void RemoveDestroyedComponents();
+
+        /// <summary>
+        /// Moves any pending components into the main loop.
+        /// </summary>
+        void MovePendingToMain();
     };
+
+    REGISTER_CLASS(SuperGameObject)
 }
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "SuperXMLDocument.h"
+#include "../StoredDocument/StoredDocument.h"
 #include "RapidXMLNode.h"
 #include "RapidXML.h"
 
@@ -8,7 +8,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// Parses document into XML via the Rapid Libraries.
     /// </summary>
-    class RapidXMLDocument : public SuperXMLDocument
+    class RapidXMLDocument : public StoredDocument
     {
     public:
         RapidXMLDocument();
@@ -34,7 +34,7 @@ namespace FatedQuestLibraries
         /// If could not parse, then an empty pointer.
         /// If could parse then the root XMLNode.
         /// </returns>
-        virtual std::shared_ptr<XMLNode> GetRoot() override;
+        virtual std::shared_ptr<StoredDocumentNode> GetRoot() override;
 
     private:
         /// <summary>

@@ -1,5 +1,5 @@
 #pragma once
-#include "XMLAttribute.h"
+#include "../StoredDocument/StoredDocumentAttribute.h"
 #include <string>
 
 namespace FatedQuestLibraries
@@ -7,7 +7,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// An XML Attribute created with RapidXML.
     /// </summary>
-    class RapidXMLAttribute : public XMLAttribute
+    class RapidXMLAttribute : public StoredDocumentAttribute
     {
     public:
         RapidXMLAttribute();

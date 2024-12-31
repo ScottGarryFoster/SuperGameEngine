@@ -11,22 +11,22 @@ SuperGameTime::SuperGameTime()
 
 SuperGameTime::~SuperGameTime() = default;
 
-Uint64 SuperGameTime::TimeDelta() const
+uint64_t SuperGameTime::TimeDelta() const
 {
     return m_timeDelta;
 }
 
-Uint64 SuperGameTime::AllTime() const
+uint64_t SuperGameTime::AllTime() const
 {
     return m_allTime;
 }
 
-Uint64 SuperGameTime::WindowTime() const
+uint64_t SuperGameTime::WindowTime() const
 {
     return m_windowUpTime;
 }
 
-void SuperGameTime::SetTicksSinceLastFrame(Uint64 ticks)
+void SuperGameTime::SetTicksSinceLastFrame(uint64_t ticks)
 {
     m_timeDelta = ticks;
     m_allTime += ticks;

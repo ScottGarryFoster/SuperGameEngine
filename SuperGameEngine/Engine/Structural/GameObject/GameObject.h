@@ -79,7 +79,13 @@ namespace SuperGameEngine
         /// Gets all components on the GameObject.
         /// </summary>
         /// <returns>All components. Could be an empty vector. </returns>
-        virtual std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> GetAllComponents() const = 0;
+        virtual std::vector<std::shared_ptr<GameComponent>> GetAllComponents() const = 0;
+
+        /// <summary>
+        /// Gets all components on the GameObject.
+        /// </summary>
+        /// <returns>All components. Could be an empty vector. </returns>
+        virtual std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> GetAllComponentsByType() const = 0;
 
         /// <summary>
         /// Destroys the game object.

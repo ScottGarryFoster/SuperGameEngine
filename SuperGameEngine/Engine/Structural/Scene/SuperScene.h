@@ -8,7 +8,7 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-    class SuperGameObjectLoadPackage;
+    class GameObjectLoadPackage;
 
     /// <summary>
     /// Holds and manages game objects
@@ -17,12 +17,21 @@ namespace SuperGameEngine
     {
     public:
         SuperScene();
-        virtual ~SuperScene();
+        virtual ~SuperScene() override;
 
         /// <summary>
         /// A unique identifier.
         /// </summary>
         virtual std::shared_ptr<Guid> GetGuid() const override;
+
+        /// <summary>
+        /// Sets Guid for this Scene.
+        /// </summary>
+        /// <param name="guid">Guid to update. </param>
+        /// <remarks>
+        /// Avoid calling this too often. It should be for setup.
+        /// </remarks>
+        void SetGuid(const std::shared_ptr<Guid>& guid);
 
         /// <summary>
         /// Sets up the Scene.
@@ -77,6 +86,31 @@ namespace SuperGameEngine
         /// has classed you as removed.
         /// </summary>
         virtual void OnDestroyed() override;
+
+        /// <summary>
+        /// Get children game object.
+        /// </summary>
+        /// <returns>All children of the scene. </returns>
+        virtual std::vector<std::shared_ptr<GameObject>> GetChildren() const override;
+
+        /// <summary>
+        /// Gets the children on the Scene.
+        /// This includes pending gameobjects which have not gone through an update.
+        /// </summary>
+        /// <returns>Gameobjects in scene. Only top level/direct are returned. </returns>
+        virtual std::vector<std::shared_ptr<GameObject>> GetChildrenIncludingPending() const;
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() override;
     private:
 
         /// <summary>
@@ -119,7 +153,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Everything a game object needs to run.
         /// </summary>
-        std::shared_ptr<SuperGameObjectLoadPackage> m_gameObjectPackage;
+        std::shared_ptr<GameObjectLoadPackage> m_gameObjectPackage;
 
         /// <summary>
         /// Move pending update objects to the main updates.

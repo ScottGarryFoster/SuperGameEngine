@@ -4,6 +4,9 @@ using namespace SuperGameEngine;
 
 SuperContentManager::SuperContentManager()
 {
+    m_sceneStorageCache = {};
+    m_superTextureManager = {};
+    m_gamePackage = {};
 }
 
 SuperContentManager::~SuperContentManager()
@@ -34,4 +37,14 @@ const std::shared_ptr<FatedQuestLibraries::GamePackage> SuperContentManager::Gam
 void SuperContentManager::GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage)
 {
     m_gamePackage = gamePackage;
+}
+
+const std::shared_ptr<SceneStorageCache> SuperContentManager::Scene()
+{
+    return m_sceneStorageCache;
+}
+
+void SuperContentManager::GiveSceneCache(const std::shared_ptr<SceneStorageCache>& sceneStorageCache)
+{
+    m_sceneStorageCache = sceneStorageCache;
 }

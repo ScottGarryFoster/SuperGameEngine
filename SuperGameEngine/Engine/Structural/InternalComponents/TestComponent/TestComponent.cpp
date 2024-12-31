@@ -6,6 +6,7 @@
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../GameObject/GameObject.h"
 #include "../../Packages/ComponentLoadPackage.h"
+#include "../../Serializable/SerializableParser.h"
 #include "../SpriteComponent/SpriteComponent.h"
 
 using namespace SuperGameEngine;
@@ -13,15 +14,17 @@ using namespace SuperGameEngine;
 TestComponent::TestComponent()
 {
     m_yPosition = 0;
+    m_serial = "default";
 }
 
 TestComponent::~TestComponent() = default;
 
 void TestComponent::Setup(
-    std::shared_ptr<ComponentLoadPackage> componentLoadPackage,
-    std::shared_ptr<ExtremelyWeakWrapper<GameObject>> parent)
+    const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
+    const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
+    if (!IsSetup()) return;
 
     /*m_sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
 
@@ -56,9 +59,35 @@ void TestComponent::Setup(
     SetDoRender(true);
 }
 
+void TestComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
+{
+    m_serial = LoadPackage()->GetParser()->ParseFromParent("Serial", "default", documentNode);
+}
+
+std::shared_ptr<StoredDocumentNode> TestComponent::Save()
+{
+    std::shared_ptr<ModifiableNode> node = LoadPackage()->GetParser()->Serialize(std::make_shared<TestComponent>(*this));
+    AddAnySuperGameComponentSaves(node);
+
+    std::vector<std::shared_ptr<ModifiableNode>> children;
+    children.emplace_back(LoadPackage()->GetParser()->Serialize("Serial", m_serial, "default"));
+
+    node->SetFirstChild(children.at(0));
+
+    return node;
+}
+
+std::string TestComponent::TypeName() const
+{
+    return "TestComponent";
+}
+
 void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
+    if (!IsSetup()) return;
+
+    m_serial = "FromUpdate";
 
     if (!m_testTexture)
     {
@@ -88,6 +117,7 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 void TestComponent::Draw() const
 {
     SuperGameComponent::Draw();
+    if (!IsSetup()) return;
 
     if (!m_testTexture)
     {

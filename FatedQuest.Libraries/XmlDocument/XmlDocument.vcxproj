@@ -211,6 +211,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
+    <ClInclude Include="Converters\RapidDocumentToXml.h" />
     <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -218,11 +219,9 @@
     <ClInclude Include="RapidXMLAttribute.h" />
     <ClInclude Include="RapidXMLDocument.h" />
     <ClInclude Include="RapidXMLNode.h" />
-    <ClInclude Include="SuperXMLDocument.h" />
-    <ClInclude Include="XMLAttribute.h" />
-    <ClInclude Include="XMLNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Converters\RapidDocumentToXml.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Tools_Debug|x64'">Create</PrecompiledHeader>
@@ -234,11 +233,20 @@
     <ClCompile Include="RapidXMLAttribute.cpp" />
     <ClCompile Include="RapidXMLDocument.cpp" />
     <ClCompile Include="RapidXMLNode.cpp" />
-    <ClCompile Include="XMLAttribute.cpp" />
-    <ClCompile Include="XMLNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logger\Logger.vcxproj">
+      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\StandardOperations\StandardOperations.vcxproj">
+      <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\StoredDocument\StoredDocument.vcxproj">
+      <Project>{f54f462a-6a7e-4273-8f91-9098242ae380}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

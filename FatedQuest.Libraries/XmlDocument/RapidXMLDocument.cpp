@@ -64,7 +64,7 @@ bool RapidXMLDocument::Load(const std::string& fileContents)
     return node;
 }
 
-std::shared_ptr<XMLNode> RapidXMLDocument::GetRoot()
+std::shared_ptr<StoredDocumentNode> RapidXMLDocument::GetRoot()
 {
     return m_rootNode;
 }
@@ -81,6 +81,8 @@ std::shared_ptr<RapidXML::XML_Document> RapidXMLDocument::TryParseXMLDocument(co
     }
     catch (rapidxml::parse_error e)
     {
+        std::string what = e.what();
+        Log::Error("Could not parse XML Document." + what, e.where<char>());
     }
 
     return document;
@@ -93,7 +95,7 @@ std::shared_ptr<RapidXMLNode> RapidXMLDocument::ParseNode(RapidXML::XML_Node* cu
     parseNode->SetName(name);
     parseNode->SetInner(currentNode->value());
 
-    std::vector<std::shared_ptr<XMLAttribute>> attributesInNode;
+    std::vector<std::shared_ptr<StoredDocumentAttribute>> attributesInNode;
     for (RapidXML::XML_Attribute* child = currentNode->first_attribute(); child; child = child->next_attribute())
     {
         std::string name(child->name());

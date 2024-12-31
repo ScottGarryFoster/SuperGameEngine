@@ -13,3 +13,13 @@ void SuperComponentLoadPackage::SetContentManager(std::shared_ptr<ContentManager
 {
     m_contentManager = std::move(contentManager);
 }
+
+std::shared_ptr<SerializableParser> SuperComponentLoadPackage::GetParser() const
+{
+    return m_serializableParser;
+}
+
+void SuperComponentLoadPackage::SetSerializableParser(const std::shared_ptr<SerializableParser>& serializableParser)
+{
+    m_serializableParser = serializableParser;
+}

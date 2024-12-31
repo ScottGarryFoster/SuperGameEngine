@@ -1,6 +1,8 @@
 #include "SuperGrandScene.h"
 
 #include "SuperScene.h"
+#include "../../Engine/Content/ContentManager.h"
+#include "../../Engine/Content/SceneStorageCache.h"
 #include "../Packages/GrandScenePackage.h"
 #include "../Packages/SuperSceneLoadPackage.h"
 
@@ -9,11 +11,7 @@ using namespace SuperGameEngine;
 void SuperGrandScene::Setup(std::shared_ptr<GrandScenePackage> grandScenePackage)
 {
     m_grandScenePackage = grandScenePackage;
-
-    // Setup Scene load package
-    auto superSceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
-    superSceneLoadPackage->SetContentManager(m_grandScenePackage->GetContentManager());
-    m_sceneLoadPackage = superSceneLoadPackage;
+    m_sceneLoadPackage = grandScenePackage->GetSceneLoadPackage();
 
     m_isSetup = true;
 }
@@ -73,6 +71,27 @@ std::shared_ptr<Scene> SuperGrandScene::CreateAndAddNewScene()
     m_isPendingScenes = true;
 
     return scene;
+}
+
+std::shared_ptr<Scene> SuperGrandScene::CreateAndAddNewScene(const std::string& filepath)
+{
+    if (!m_sceneLoadPackage->GetContentManager()->Scene())
+    {
+        Log::Error("No scene cache was found.", "SuperGrandScene::CreateAndAddNewScene(std::string)");
+        return {};
+    }
+
+    std::shared_ptr<Scene> newScene = m_sceneLoadPackage->GetContentManager()->Scene()->GetScene(filepath);
+    if (!newScene)
+    {
+        Log::Error("Could not load scene. Potentially the file is incorrect. Path: " + filepath, "SuperGrandScene::CreateAndAddNewScene(std::string)");
+        return {};
+    }
+
+    m_pendingScenes.push_back(newScene);
+    m_isPendingScenes = true;
+
+    return newScene;
 }
 
 void SuperGrandScene::Destroy()

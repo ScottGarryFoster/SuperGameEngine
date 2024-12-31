@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 
 namespace SuperGameEngine
 {
@@ -43,6 +44,13 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>New Scene added to the Grand Scene. </returns>
         virtual std::shared_ptr<Scene> CreateAndAddNewScene() = 0;
+
+        /// <summary>
+        /// Creates new Scene and then adds it to the Grand Scene.
+        /// </summary>
+        /// <param name="filepath">Filepath to the scene asset. </param>
+        /// <returns>New Scene added to the Grand Scene. </returns>
+        virtual std::shared_ptr<Scene> CreateAndAddNewScene(const std::string& filepath) = 0;
 
         /// <summary>
         /// Destroy the scene and all the game objects.

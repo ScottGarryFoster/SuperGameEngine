@@ -84,13 +84,13 @@ namespace SuperEnumGenerator
         /// </summary>
         std::vector<std::shared_ptr<EnumValueString>> m_enumValues;
 
-        bool ParseHeader(std::shared_ptr<XMLNode> headerNode);
+        bool ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode);
 
-        bool ParseNamespace(std::shared_ptr<XMLNode> namespaceNode);
+        bool ParseNamespace(std::shared_ptr<StoredDocumentNode> namespaceNode);
 
-        bool ParseEnumComment(std::shared_ptr<XMLNode> enumNode);
+        bool ParseEnumComment(std::shared_ptr<StoredDocumentNode> enumNode);
 
-        bool ParseEnumName(std::shared_ptr<XMLNode> enumNode);
+        bool ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode);
 
         bool SetUpImpliedEnumValues();
 

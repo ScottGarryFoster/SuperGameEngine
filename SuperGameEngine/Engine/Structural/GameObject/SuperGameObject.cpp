@@ -3,7 +3,7 @@
 #include "ComponentFactory.h"
 #include "../Component/GameComponent.h"
 #include "../../Engine/Basic/ExtremelyWeakWrapper.h"
-#include "../../Structural/Packages/SuperComponentLoadPackage.h"
+#include "../../Structural/Packages/ComponentLoadPackage.h"
 #include "../Packages/GameObjectLoadPackage.h"
 
 using namespace SuperGameEngine;
@@ -28,6 +28,17 @@ std::shared_ptr<Guid> SuperGameObject::GetGuid() const
     return m_guid;
 }
 
+void SuperGameObject::SetGuid(const std::shared_ptr<Guid>& guid)
+{
+    if (!guid)
+    {
+        Log::Error("Empty Guid given.", "SuperGameObject::SetGuid(std::shared_ptr<Guid>)");
+        return;
+    }
+
+    m_guid = guid;
+}
+
 std::shared_ptr<Guid> SuperGameObject::GetSceneGuid() const
 {
     return m_sceneGuid;
@@ -40,10 +51,21 @@ void SuperGameObject::SetScene(std::shared_ptr<Guid> guid)
 
 void SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage> loadPackage)
 {
+    if (!loadPackage)
+    {
+        Log::Error("No load package found when setting up GameObject.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+        return;
+    }
+
     m_loadPackage = loadPackage;
 
-    m_componentPackage = std::make_shared<SuperComponentLoadPackage>();
-    m_componentPackage->SetContentManager(m_loadPackage->GetContentManager());
+    m_componentPackage = loadPackage->GetComponentLoadPackage();
+    if (!m_componentPackage->GetContentManager())
+    {
+        Log::Error("No content manager found when setting up GameObject.",
+            "SuperGameObject::Setup(std::shared_ptr<GameObjectLoadPackage>)");
+    }
 
     // TODO: Add transform here: EnsureTransformIsOnGameObject();
 }
@@ -218,7 +240,50 @@ std::shared_ptr<GameComponent> SuperGameObject::GetComponent(const std::string& 
     return {};
 }
 
-std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObject::GetAllComponents() const
+std::vector<std::shared_ptr<GameComponent>> SuperGameObject::GetAllComponents() const
+{
+    std::vector<std::shared_ptr<GameComponent>> returnVector;
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        for (const std::shared_ptr<GameComponent>& gameComponent : references)
+        {
+            if (!gameComponent->IsDestroyed())
+            {
+                returnVector.emplace_back(gameComponent);
+            }
+        }
+    }
+
+    return returnVector;
+}
+
+std::vector<std::shared_ptr<GameComponent>> SuperGameObject::GetComponentsIncludingPending() const
+{
+    std::vector<std::shared_ptr<GameComponent>> returnVector;
+    for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        returnVector.insert(returnVector.end(), references.begin(), references.end());
+    }
+
+    for (auto it = m_pendingGameComponents.begin(); it != m_pendingGameComponents.end(); ++it)
+    {
+        std::string type = it->first;
+        std::vector<std::shared_ptr<GameComponent>> references = it->second;
+        returnVector.insert(returnVector.end(), references.begin(), references.end());
+    }
+
+    // Ensure destroyed ones are not counted.
+    erase_if(returnVector, [](const std::shared_ptr<GameComponent>& component) 
+        { return component->IsDestroyed(); });
+
+    return returnVector;
+}
+
+std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObject::GetAllComponentsByType() const
 {
     std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> returnVector;
     for (auto it = m_gameComponents.begin(); it != m_gameComponents.end(); ++it)
