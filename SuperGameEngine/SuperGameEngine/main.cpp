@@ -36,7 +36,7 @@ int main(int argc, char* args[])
     FILE* pCerr;
     freopen_s(&pCout, "CONOUT$", "w", stdout);
     freopen_s(&pCerr, "CONOUT$", "w", stderr);
-    std::cout << "Super Game Engine Version 0.0.3 Dev" << std::endl;
+    std::cout << "Super Game Engine Version 0.0.5 Dev" << std::endl;
 #else
     FreeConsole();
 #endif
