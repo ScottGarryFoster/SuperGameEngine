@@ -3,6 +3,8 @@
 
 namespace FatedQuestLibraries
 {
+    class ModifiableAttribute;
+
     /// <summary>
     /// A document node which can be modified.
     /// </summary>
@@ -108,6 +110,14 @@ namespace FatedQuestLibraries
         /// <param name="innerText">Inner text. </param>
         void SetInnerText(const std::string& innerText);
 
+        /// <summary>
+        /// Loads the information from the stored node in this one such
+        /// that you can now modify it.
+        /// </summary>
+        /// <param name="storedNode">Stored node. </param>
+        /// <returns>True means parsed. </returns>
+        bool Load(const std::shared_ptr<StoredDocumentNode>& storedNode);
+
     private:
         /// <summary>
         /// Name of the node.
@@ -117,7 +127,12 @@ namespace FatedQuestLibraries
         /// <summary>
         /// Attributes on the node.
         /// </summary>
-        std::vector<std::shared_ptr<StoredDocumentAttribute>> m_attributes;
+        std::vector<std::shared_ptr<ModifiableAttribute>> m_attributes;
+
+        /// <summary>
+        /// Precast stored document attributes.
+        /// </summary>
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> m_attributesStored;
 
         /// <summary>
         /// First child within this node.

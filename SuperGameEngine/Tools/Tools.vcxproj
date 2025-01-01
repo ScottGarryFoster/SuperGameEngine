@@ -245,6 +245,8 @@
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h" />
+    <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h" />
+    <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +283,7 @@
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp" />
+    <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

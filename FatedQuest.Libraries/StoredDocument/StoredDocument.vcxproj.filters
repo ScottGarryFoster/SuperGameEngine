@@ -52,7 +52,7 @@
       <Filter>Header Files\Converters</Filter>
     </ClInclude>
     <ClInclude Include="Converters\SimpleDocumentToXml.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Converters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -69,7 +69,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Converters\SimpleDocumentToXml.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Converters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

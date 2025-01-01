@@ -4,16 +4,17 @@
 namespace SuperGameTools
 {
     class TreeView;
-}
+    class SceneLoader;
 
-namespace SuperGameTools
-{
     /// <summary>
     /// Contains the scenes and game objects.
     /// </summary>
     class SceneHierarchy : public UpdateableObject
     {
     public:
+        SceneHierarchy();
+        virtual ~SceneHierarchy() override = default;
+
         /// <summary>
         /// Called once on setup.
         /// </summary>
@@ -40,6 +41,11 @@ namespace SuperGameTools
         /// The tree.
         /// </summary>
         std::shared_ptr<TreeView> m_tree;
+
+        /// <summary>
+        /// Loads scene for the Tools.
+        /// </summary>
+        std::shared_ptr<SceneLoader> m_sceneLoader;
     };
 }
 

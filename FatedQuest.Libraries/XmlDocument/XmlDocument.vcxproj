@@ -212,6 +212,7 @@
   <ItemGroup>
     <ClInclude Include="AllReferences.h" />
     <ClInclude Include="Converters\RapidDocumentToXml.h" />
+    <ClInclude Include="Converters\XmlToModifiableDocument.h" />
     <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -222,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Converters\RapidDocumentToXml.cpp" />
+    <ClCompile Include="Converters\XmlToModifiableDocument.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Tools_Debug|x64'">Create</PrecompiledHeader>

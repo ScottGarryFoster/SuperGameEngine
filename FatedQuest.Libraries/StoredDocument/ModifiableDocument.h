@@ -24,6 +24,14 @@ namespace FatedQuestLibraries
         virtual bool Load(const std::string& fileContents) override;
 
         /// <summary>
+        /// Loads the information from the stored document in this one such
+        /// that you can now modify it.
+        /// </summary>
+        /// <param name="storedDocument">Stored document. </param>
+        /// <returns>True means parsed. </returns>
+        bool Load(const std::shared_ptr<StoredDocument>& storedDocument);
+
+        /// <summary>
         /// Gets the root StoredDocumentNode for the document.
         /// </summary>
         /// <returns>

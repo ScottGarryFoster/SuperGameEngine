@@ -267,6 +267,12 @@
     <ClInclude Include="ToolsEngine\ViewElements\TreeViewItem.h">
       <Filter>Header Files\ToolsEngine\ViewElements</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -339,13 +345,16 @@
       <Filter>Source Files\ToolsEngine\Settings</Filter>
     </ClCompile>
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ToolsEngine\Settings</Filter>
     </ClCompile>
     <ClCompile Include="ToolsEngine\ViewElements\TreeView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
     </ClCompile>
     <ClCompile Include="ToolsEngine\ViewElements\TreeViewItem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
