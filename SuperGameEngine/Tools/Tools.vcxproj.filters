@@ -261,6 +261,12 @@
     <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h">
       <Filter>Header Files\ToolsEngine\Settings</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItem.h">
+      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -333,6 +339,12 @@
       <Filter>Source Files\ToolsEngine\Settings</Filter>
     </ClCompile>
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\TreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\TreeViewItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

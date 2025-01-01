@@ -7,6 +7,7 @@
 #include "../../Engine/Engine/Content/ContentManager.h"
 #include "../../Engine/Engine/Content/SuperContentManager.h"
 #include "../ImGuiIncludes.h"
+#include "../../Engine/Structural/Serializable/SuperSerializableParser.h"
 #include "../Windows/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
@@ -48,6 +49,7 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_superContentManager->GiveSuperTextureManager(textureManager);
 
         m_windowPackage->SetContentManager(m_superContentManager);
+        m_windowPackage->SetParser(std::make_shared<SuperSerializableParser>());
     }
 }
 

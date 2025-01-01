@@ -3,6 +3,11 @@
 
 namespace SuperGameTools
 {
+    class TreeView;
+}
+
+namespace SuperGameTools
+{
     /// <summary>
     /// Contains the scenes and game objects.
     /// </summary>
@@ -13,7 +18,7 @@ namespace SuperGameTools
         /// Called once on setup.
         /// </summary>
         /// <param name="windowPackage">Everything needed to run a window. </param>
-        virtual void Setup(const std::shared_ptr<WindowPackage>& windowPackage) override {}
+        virtual void Setup(const std::shared_ptr<WindowPackage>& windowPackage) override;
 
         /// <summary>
         /// Called every frame.
@@ -29,6 +34,12 @@ namespace SuperGameTools
         /// Called on destroy.
         /// </summary>
         virtual void TearDown() override {}
+
+    private:
+        /// <summary>
+        /// The tree.
+        /// </summary>
+        std::shared_ptr<TreeView> m_tree;
     };
 }
 

@@ -41,3 +41,13 @@ void WindowPackage::SetEngineEntryCommunication(const std::shared_ptr<EngineEntr
 {
     m_engineEntryCommunication = engineEntryCommunication;
 }
+
+std::shared_ptr<SerializableParser> WindowPackage::GetParser() const
+{
+    return m_serializableParser;
+}
+
+void WindowPackage::SetParser(const std::shared_ptr<SerializableParser>& parser)
+{
+    m_serializableParser = parser;
+}

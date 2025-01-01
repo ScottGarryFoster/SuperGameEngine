@@ -236,6 +236,8 @@
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h" />
     <ClInclude Include="ToolsEngine\ViewElements\MenuView.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItem.h" />
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h" />
@@ -270,6 +272,8 @@
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\TreeView.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\TreeViewItem.cpp" />
     <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
     <ClCompile Include="Windows\InspectorWindow\InspectorWindow.cpp" />

@@ -5,6 +5,7 @@
 
 namespace SuperGameEngine
 {
+    class SerializableParser;
     class ContentManager;
     class SDLRendererReader;
 }
@@ -71,6 +72,18 @@ namespace SuperGameTools
         /// <param name="engineEntryCommunication">New EngineEntryCommunication. </param>
         void SetEngineEntryCommunication(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication);
 
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        /// <returns>Helps to parse serializable objects. </returns>
+        std::shared_ptr<SerializableParser> GetParser() const;
+
+        /// <summary>
+        /// Set parser.
+        /// </summary>
+        /// <param name="parser">New parser. </param>
+        void SetParser(const std::shared_ptr<SerializableParser>& parser);
+
     private:
 
         /// <summary>
@@ -94,5 +107,10 @@ namespace SuperGameTools
         /// Communication with the Engine Entry.
         /// </summary>
         std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
+
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        std::shared_ptr<SerializableParser> m_serializableParser;
     };
 }
