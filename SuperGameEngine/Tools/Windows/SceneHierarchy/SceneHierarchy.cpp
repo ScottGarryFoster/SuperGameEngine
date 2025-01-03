@@ -56,6 +56,9 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
         for (std::shared_ptr<StoredDocumentNode> compChild = child->GetFirstChild(); compChild; compChild = compChild->GetAdjacentNode())
         {
             auto compItem = std::make_shared<TreeViewItem>();
+            compItem->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::NoIcon);
+            compItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::AlwaysShown);
+
             std::shared_ptr<StoredDocumentAttribute> typeAtt = compChild->Attribute("Type", CaseSensitivity::IgnoreCase);
             if (typeAtt)
             {

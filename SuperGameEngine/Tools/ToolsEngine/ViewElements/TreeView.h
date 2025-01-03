@@ -44,6 +44,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="current">Current item to render. </param>
         /// <param name="isRoot">True means this is the first element in the tree. </param>
-        void RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isRoot) const;
+        /// <param name="depth">How deep we are in the tree. 0 is the root. </param>
+        void RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isRoot, int depth) const;
     };
 }

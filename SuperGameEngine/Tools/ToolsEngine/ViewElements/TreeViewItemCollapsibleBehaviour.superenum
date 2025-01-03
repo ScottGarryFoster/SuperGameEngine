@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        How the tree view item should open or close.
+    </EnumComment>
+    <EnumName Name="TreeViewItemCollapsibleBehaviour">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <CanOpenClose>
+            Will open and close with a click or action from the user.
+        </OpenAndCloseWithAnArrow>
+        <AlwaysShown>
+            Always shown the user and cannot be collapsed.
+        </AlwaysShown>
+    </EnumName>
+</SuperEnum>

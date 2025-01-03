@@ -273,6 +273,12 @@
     <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h">
       <Filter>Header Files\Windows\SceneHierarchy</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleBehaviour.h">
+      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleIcon.h">
+      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

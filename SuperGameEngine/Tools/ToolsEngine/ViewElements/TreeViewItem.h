@@ -1,5 +1,8 @@
 #pragma once
 #include <memory>
+
+#include "TreeViewItemCollapsibleBehaviour.h"
+#include "TreeViewItemCollapsibleIcon.h"
 #include "../../FatedQuestLibraries.h"
 #include "../GenericProperties/FunctionProperty.h"
 #include "../GenericProperties/ValueProperty.h"
@@ -35,10 +38,28 @@ namespace SuperGameTools
         virtual std::shared_ptr<ValueProperty<std::string>> GetLabel() const;
 
         /// <summary>
+        /// How the item should open and close.
+        /// </summary>
+        /// <returns>How the item should open and close. </returns>
+        virtual std::shared_ptr<ValueProperty<TreeViewItemCollapsibleBehaviour>> GetCollapsibleType() const;
+
+        /// <summary>
+        /// How the item should display its indentation / open and close status.
+        /// </summary>
+        /// <returns>How the item should display its indentation / open and close status. </returns>
+        virtual std::shared_ptr<ValueProperty<TreeViewItemCollapsibleIcon>> GetCollapsibleIcon() const;
+
+        /// <summary>
         /// Children of this tree view item.
         /// </summary>
         /// <returns>Children of this tree view item. </returns>
         virtual std::shared_ptr<ValueProperty<std::vector<std::shared_ptr<TreeViewItem>>>> GetChildren() const;
+
+        /// <summary>
+        /// True means is open.
+        /// </summary>
+        /// <returns>True means is currently open. </returns>
+        virtual std::shared_ptr<ValueProperty<bool>> GetIsOpen() const;
 
         /// <summary>
         /// Called when selected.
@@ -62,5 +83,21 @@ namespace SuperGameTools
         /// Children of the tree view item.
         /// </summary>
         std::shared_ptr<ValueProperty<std::vector<std::shared_ptr<TreeViewItem>>>> m_children;
+
+        /// <summary>
+        /// How the tree view item should open or close.
+        /// </summary>
+        std::shared_ptr<ValueProperty<TreeViewItemCollapsibleBehaviour>> m_treeViewItemCollapsibleBehaviour;
+
+        /// <summary>
+        /// How the tree view item should display with an icon.
+        /// Does not affect if the element can open or close.
+        /// </summary>
+        std::shared_ptr<ValueProperty<TreeViewItemCollapsibleIcon>> m_treeViewItemCollapsibleIcon;
+
+        /// <summary>
+        /// True means is open.
+        /// </summary>
+        std::shared_ptr<ValueProperty<bool>> m_isOpen;
     };
 }
