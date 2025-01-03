@@ -55,7 +55,21 @@ namespace FatedQuestLibraries
         /// Set the root element of the document.
         /// </summary>
         /// <param name="rootDocument">New root element. </param>
+        /// <remarks>
+        /// This is a copy operation and expects the data you would like to exist
+        /// to be within this node at the time you give it to the document.
+        /// </remarks>
         virtual void SetRootElement(const std::shared_ptr<StoredDocumentNode>& rootDocument);
+
+        /// <summary>
+        /// Set the root element from a modifiable node.
+        /// </summary>
+        /// <param name="rootNode">Root node to update. </param>
+        /// <remarks>
+        /// This version assumes you have already loaded any data you would like and will not
+        /// inspect the modifiable node for data.
+        /// </remarks>
+        virtual void SetRootElement(const std::shared_ptr<ModifiableNode>& rootNode);
 
     private:
         /// <summary>

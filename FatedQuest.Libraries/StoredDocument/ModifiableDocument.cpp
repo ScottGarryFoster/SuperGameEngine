@@ -71,3 +71,8 @@ void ModifiableDocument::SetRootElement(const std::shared_ptr<StoredDocumentNode
             "ModifiableDocument::SetRootElement(std::shared_ptr<StoredDocumentNode>)");
     }
 }
+
+void ModifiableDocument::SetRootElement(const std::shared_ptr<ModifiableNode>& rootNode)
+{
+    m_root = rootNode;
+}
