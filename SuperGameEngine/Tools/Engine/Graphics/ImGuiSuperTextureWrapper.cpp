@@ -28,10 +28,47 @@ void ImGuiSuperTextureWrapper::Draw() const
 
 void ImGuiSuperTextureWrapper::Draw(const FPoint& location) const
 {
+    ImVec2 position = ImGui::GetCursorPos();
+    ImGui::SetCursorPos(ImVec2(
+        static_cast<int>(static_cast<int>(position.x) + location.GetX()),
+        static_cast<int>(static_cast<int>(position.y) + location.GetY())));
+
+    ImTextureID textureID = 0;
+    if (!m_texture->GetTextureID(textureID))
+    {
+        return;
+    }
+
+    FPoint size = m_texture->Size();
+    auto imageSize = ImVec2(
+        static_cast<float>(size.GetX()),
+        static_cast<float>(size.GetY()));
+
+    ImGui::Image(textureID, imageSize);
+
+    ImGui::SetCursorPos(ImVec2(position.x, position.y));
 }
 
 void ImGuiSuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) const
 {
+    ImVec2 position = ImGui::GetCursorPos();
+    ImGui::SetCursorPos(ImVec2(
+        static_cast<int>(static_cast<int>(position.x) + location.GetX()),
+        static_cast<int>(static_cast<int>(position.y) + location.GetY())));
+
+    ImTextureID textureID = 0;
+    if (!m_texture->GetTextureID(textureID))
+    {
+        return;
+    }
+
+    auto imageSize = ImVec2(
+        static_cast<float>(size.GetX()),
+        static_cast<float>(size.GetY()));
+
+    ImGui::Image(textureID, imageSize);
+
+    ImGui::SetCursorPos(ImVec2(position.x, position.y));
 }
 
 void ImGuiSuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const

@@ -17,6 +17,7 @@ TreeViewItem::TreeViewItem()
         "CollapsibleIcon", TreeViewItemCollapsibleIcon::Arrow);
 
     m_isOpen = std::make_shared<ValueProperty<bool>>("IsOpen", false);
+    m_isSelected = std::make_shared<ValueProperty<bool>>("IsSelected", false);
 }
 
 std::shared_ptr<Guid> TreeViewItem::GetUniqueID() const
@@ -51,5 +52,10 @@ std::shared_ptr<ValueProperty<std::vector<std::shared_ptr<TreeViewItem>>>> TreeV
 std::shared_ptr<ValueProperty<bool>> TreeViewItem::GetIsOpen() const
 {
     return m_isOpen;
+}
+
+std::shared_ptr<ValueProperty<bool>> TreeViewItem::GetIsSelected() const
+{
+    return m_isSelected;
 }
 

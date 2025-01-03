@@ -30,6 +30,9 @@ void WindowsGUID::FromString(std::string value)
     {
         m_asNumber = ToNumber(m_guid);
     }
+
+    delete[] wstr;
+    wstr = nullptr;
 }
 
 std::string WindowsGUID::ToString() const
@@ -40,8 +43,12 @@ std::string WindowsGUID::ToString() const
     int len = WideCharToMultiByte(CP_UTF8, 0, guidString, -1, NULL, 0, NULL, NULL);
     char* narrowStr = new char[len];
     WideCharToMultiByte(CP_UTF8, 0, guidString, -1, narrowStr, len, NULL, NULL);
+    std::string returnString = narrowStr;
 
-    return narrowStr;
+    delete[] narrowStr;
+    narrowStr = nullptr;
+
+    return returnString;
 }
 
 uint64_t WindowsGUID::AsNumber() const

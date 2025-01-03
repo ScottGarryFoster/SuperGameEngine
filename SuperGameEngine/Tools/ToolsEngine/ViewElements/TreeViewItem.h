@@ -62,6 +62,12 @@ namespace SuperGameTools
         virtual std::shared_ptr<ValueProperty<bool>> GetIsOpen() const;
 
         /// <summary>
+        /// True means is selected.
+        /// </summary>
+        /// <returns>True means is currently selected. </returns>
+        virtual std::shared_ptr<ValueProperty<bool>> GetIsSelected() const;
+
+        /// <summary>
         /// Called when selected.
         /// </summary>
         /// <returns>Called when selected. </returns>
@@ -99,5 +105,10 @@ namespace SuperGameTools
         /// True means is open.
         /// </summary>
         std::shared_ptr<ValueProperty<bool>> m_isOpen;
+
+        /// <summary>
+        /// True means is selected.
+        /// </summary>
+        std::shared_ptr<ValueProperty<bool>> m_isSelected;
     };
 }

@@ -132,7 +132,7 @@ void ToolsEngine::Setup()
 
     std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
     sceneHierarchy->Setup(m_windowPackage);
-    m_updatables.push_back(sceneHierarchy);//InspectorWindow
+    m_updatables.push_back(sceneHierarchy);
 
     std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
     inspectorWindow->Setup(m_windowPackage);

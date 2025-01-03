@@ -1,5 +1,14 @@
 #pragma once
 #include <memory>
+#include "../../ImGuiIncludes.h"
+
+namespace SuperGameEngine
+{
+    class SuperTexture;
+    class ContentManager;
+}
+
+using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
@@ -11,7 +20,9 @@ namespace SuperGameTools
     class TreeView
     {
     public:
-        TreeView(const std::shared_ptr<TreeViewItem>& treeViewItem);
+        TreeView(
+            const std::shared_ptr<ContentManager>& contentManager,
+            const std::shared_ptr<TreeViewItem>& treeViewItem);
 
         /// <summary>
         /// Draws the menu.
@@ -55,11 +66,43 @@ namespace SuperGameTools
         int m_indentationDepth;
 
         /// <summary>
+        /// Holds the content for the game.
+        /// </summary>
+        std::shared_ptr<ContentManager> m_contentManager;
+
+        /// <summary>
+        /// Texture for up arrow.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_upArrow;
+
+        /// <summary>
+        /// Texture for down arrow.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_downArrow;
+
+        /// <summary>
+        /// The size of the arrow.
+        /// </summary>
+        ImVec2 m_arrowSize;
+
+        /// <summary>
         /// Renders a single item in the list.
         /// </summary>
         /// <param name="current">Current item to render. </param>
-        /// <param name="isRoot">True means this is the first element in the tree. </param>
         /// <param name="depth">How deep we are in the tree. 0 is the root. </param>
-        void RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isRoot, int depth) const;
+        void RenderItem(const std::shared_ptr<TreeViewItem>& current, int depth) const;
+
+        /// <summary>
+        /// Render a single row.
+        /// </summary>
+        /// <param name="current">Current item. </param>
+        /// <param name="depth">Depth in the tree. </param>
+        void RenderRow(const std::shared_ptr<TreeViewItem>& current, int depth) const;
+
+        void RenderSelectableArrow(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
+        void RenderFullBackground(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
+        void RenderSelectableRow(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
+        void RenderArrowImage(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
+        void RenderRowText(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
     };
 }
