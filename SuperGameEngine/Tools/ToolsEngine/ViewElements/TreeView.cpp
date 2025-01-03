@@ -35,7 +35,15 @@ void TreeView::RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isR
     ImGui::PushID(current->GetUniqueID()->ToString().c_str());
 
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_NoTreePushOnOpen;
-    if (current->GetCollapsibleType()->GetValue() == TreeViewItemCollapsibleBehaviour::CanOpenClose)
+    if (current->GetCollapsibleType()->GetValue() == TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly)
+    {
+        flags |= ImGuiTreeNodeFlags_OpenOnArrow;
+    }
+    else if (current->GetCollapsibleType()->GetValue() == TreeViewItemCollapsibleBehaviour::OpenCloseFromDoubleClickOnly)
+    {
+        flags |= ImGuiTreeNodeFlags_OpenOnDoubleClick;
+    }
+    else if (current->GetCollapsibleType()->GetValue() == TreeViewItemCollapsibleBehaviour::CanOpenClose)
     {
         flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
     }

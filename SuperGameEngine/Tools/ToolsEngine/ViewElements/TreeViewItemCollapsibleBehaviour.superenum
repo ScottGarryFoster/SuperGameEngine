@@ -11,8 +11,14 @@
             Only used for unsuccessful parsing.
         </Unknown>
         <CanOpenClose>
-            Will open and close with a click or action from the user.
-        </OpenAndCloseWithAnArrow>
+            Will open and close with a click or action from the user such as the arrow.
+        </CanOpenClose>
+        <OpenCloseFromArrowOnly>
+            Will only open if the arrow is used.
+        </OpenCloseFromArrowOnly>
+        <OpenCloseFromDoubleClickOnly>
+            Will only open if the item is selected with a double click.
+        </OpenCloseFromDoubleClickOnly>
         <AlwaysShown>
             Always shown the user and cannot be collapsed.
         </AlwaysShown>

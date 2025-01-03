@@ -20,9 +20,19 @@ namespace SuperGameTools
         Unknown = -1,
 
         /// <summary>
-        /// Will open and close with a click or action from the user.
+        /// Will open and close with a click or action from the user such as the arrow.
         /// </summary>
         CanOpenClose,
+
+        /// <summary>
+        /// Will only open if the arrow is used.
+        /// </summary>
+        OpenCloseFromArrowOnly,
+
+        /// <summary>
+        /// Will only open if the item is selected with a double click.
+        /// </summary>
+        OpenCloseFromDoubleClickOnly,
 
         /// <summary>
         /// Always shown the user and cannot be collapsed.
@@ -44,6 +54,8 @@ namespace SuperGameTools
             static TreeViewItemCollapsibleBehaviour returnArray[] =
             {
                 TreeViewItemCollapsibleBehaviour::CanOpenClose,
+                TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly,
+                TreeViewItemCollapsibleBehaviour::OpenCloseFromDoubleClickOnly,
                 TreeViewItemCollapsibleBehaviour::AlwaysShown,
             };
             
@@ -55,6 +67,8 @@ namespace SuperGameTools
             static std::vector<TreeViewItemCollapsibleBehaviour> returnVector =
             {
                 TreeViewItemCollapsibleBehaviour::CanOpenClose,
+                TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly,
+                TreeViewItemCollapsibleBehaviour::OpenCloseFromDoubleClickOnly,
                 TreeViewItemCollapsibleBehaviour::AlwaysShown,
             };
             
@@ -67,6 +81,8 @@ namespace SuperGameTools
             {
                 case TreeViewItemCollapsibleBehaviour::Unknown: return "Unknown";
                 case TreeViewItemCollapsibleBehaviour::CanOpenClose: return "CanOpenClose";
+                case TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly: return "OpenCloseFromArrowOnly";
+                case TreeViewItemCollapsibleBehaviour::OpenCloseFromDoubleClickOnly: return "OpenCloseFromDoubleClickOnly";
                 case TreeViewItemCollapsibleBehaviour::AlwaysShown: return "AlwaysShown";
             }
             
@@ -79,6 +95,8 @@ namespace SuperGameTools
             {
                 if (value == "Unknown") return TreeViewItemCollapsibleBehaviour::Unknown;
                 if (value == "CanOpenClose") return TreeViewItemCollapsibleBehaviour::CanOpenClose;
+                if (value == "OpenCloseFromArrowOnly") return TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly;
+                if (value == "OpenCloseFromDoubleClickOnly") return TreeViewItemCollapsibleBehaviour::OpenCloseFromDoubleClickOnly;
                 if (value == "AlwaysShown") return TreeViewItemCollapsibleBehaviour::AlwaysShown;
             }
             else
@@ -86,6 +104,8 @@ namespace SuperGameTools
                 std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return TreeViewItemCollapsibleBehaviour::Unknown;
                 if (valueLower == "canopenclose") return TreeViewItemCollapsibleBehaviour::CanOpenClose;
+                if (valueLower == "openclosefromarrowonly") return TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly;
+                if (valueLower == "openclosefromdoubleclickonly") return TreeViewItemCollapsibleBehaviour::OpenCloseFromDoubleClickOnly;
                 if (valueLower == "alwaysshown") return TreeViewItemCollapsibleBehaviour::AlwaysShown;
             }
             

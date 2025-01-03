@@ -50,6 +50,7 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
         auto childItem = std::make_shared<TreeViewItem>();
         childItem->GetLabel()->SetValue("Game Object");
         children.emplace_back(childItem);
+        childItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
 
         // Add components. This will be removed when we move these to the inspector.
         auto compChildren = std::vector<std::shared_ptr<TreeViewItem>>();
