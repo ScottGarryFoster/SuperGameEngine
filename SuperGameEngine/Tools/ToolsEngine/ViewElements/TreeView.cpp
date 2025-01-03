@@ -10,6 +10,7 @@ TreeView::TreeView(const std::shared_ptr<TreeViewItem>& treeViewItem)
 {
     m_treeViewItemRoot = treeViewItem;
     m_shouldRootBeFramed = false;
+    m_indentationDepth = 0;
 }
 
 void TreeView::Draw() const
@@ -24,11 +25,16 @@ void TreeView::ShouldRootBeFrame(bool shouldRootBeFrame)
     m_shouldRootBeFramed = shouldRootBeFrame;
 }
 
+void TreeView::SetDepthToStartIndentation(int depth)
+{
+    m_indentationDepth = depth < 0 ? 0 : depth;
+}
+
 void TreeView::RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isRoot, int depth) const
 {
     ImGui::PushID(current->GetUniqueID()->ToString().c_str());
 
-    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_NoTreePushOnOpen;
     if (current->GetCollapsibleType()->GetValue() == TreeViewItemCollapsibleBehaviour::CanOpenClose)
     {
         flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
@@ -52,7 +58,7 @@ void TreeView::RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isR
         flags |= ImGuiTreeNodeFlags_Framed;
     }
 
-    if (!isRoot)
+    if (depth > m_indentationDepth)
     {
         ImGui::Indent();
     }
@@ -86,12 +92,10 @@ void TreeView::RenderItem(const std::shared_ptr<TreeViewItem>& current, bool isR
             {
                 RenderItem(child, false, depth + 1);
             }
-
-            ImGui::TreePop();
         }
     }
 
-    if (!isRoot)
+    if (depth > m_indentationDepth)
     {
         ImGui::Unindent();
     }

@@ -77,6 +77,7 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
     m_tree = std::make_shared<TreeView>(root);
     m_tree->ShouldRootBeFrame(true);
+    m_tree->SetDepthToStartIndentation(1);
 }
 
 void SceneHierarchy::Draw()

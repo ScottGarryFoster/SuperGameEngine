@@ -27,6 +27,14 @@ namespace SuperGameTools
         /// </param>
         void ShouldRootBeFrame(bool shouldRootBeFrame);
 
+        /// <summary>
+        /// The depth at which indentations should occur.
+        /// If set to 0 or below then indentations will occur from the start of the tree but not including the root.
+        /// If set above 0, this depth will be the first level (and above) indentations will happen.
+        /// </summary>
+        /// <param name="depth">The depth at which indentations should occur. </param>
+        void SetDepthToStartIndentation(int depth);
+
     private:
         /// <summary>
         /// The top element of the tree.
@@ -38,6 +46,13 @@ namespace SuperGameTools
         /// Useful for multiple trees which should be distinguished.
         /// </summary>
         bool m_shouldRootBeFramed;
+
+        /// <summary>
+        /// The depth at which indentations should occur.
+        /// If set to 0 or below then indentations will occur from the start of the tree.
+        /// If set above 0, this depth will be the first level (and above) indentations will happen.
+        /// </summary>
+        int m_indentationDepth;
 
         /// <summary>
         /// Renders a single item in the list.
