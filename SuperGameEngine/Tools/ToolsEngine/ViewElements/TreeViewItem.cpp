@@ -18,6 +18,8 @@ TreeViewItem::TreeViewItem()
 
     m_isOpen = std::make_shared<ValueProperty<bool>>("IsOpen", false);
     m_isSelected = std::make_shared<ValueProperty<bool>>("IsSelected", false);
+
+    m_onSelectedEvent = std::make_shared<FEvent>();
 }
 
 std::shared_ptr<Guid> TreeViewItem::GetUniqueID() const
@@ -57,5 +59,10 @@ std::shared_ptr<ValueProperty<bool>> TreeViewItem::GetIsOpen() const
 std::shared_ptr<ValueProperty<bool>> TreeViewItem::GetIsSelected() const
 {
     return m_isSelected;
+}
+
+std::shared_ptr<FEvent> TreeViewItem::OnSelected()
+{
+    return m_onSelectedEvent;
 }
 

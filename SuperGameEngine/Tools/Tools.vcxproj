@@ -240,6 +240,7 @@
     <ClInclude Include="ToolsEngine\ViewElements\TreeViewItem.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleBehaviour.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleIcon.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemOnSelectedEventArguments.h" />
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h" />

@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 #include "FEventArguments.h"
 
@@ -7,7 +8,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// Any class which is able to observe events.
     /// </summary>
-    class FEventObserver
+    class FEventObserver : public std::enable_shared_from_this<FEventObserver>
     {
     public:
         virtual ~FEventObserver() = default;

@@ -7,11 +7,14 @@
 #include "../../ToolsEngine/Packages/WindowPackage.h"
 #include "../../ToolsEngine/ViewElements/TreeView.h"
 #include "../../ToolsEngine/ViewElements/TreeViewItem.h"
+#include "../../ToolsEngine/ViewElements/TreeViewItemOnSelectedEventArguments.h"
 
 using namespace SuperGameTools;
 
 SceneHierarchy::SceneHierarchy()
 {
+    m_testPopup = false;
+    m_testPopupText = {};
 }
 
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -41,14 +44,19 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
         return;
     }
 
-    auto root = std::make_shared<TreeViewItem>();
-    root->GetLabel()->SetValue("Scene");
+    m_treeViewItem = std::make_shared<TreeViewItem>();
+    m_treeViewItem->GetLabel()->SetValue("Scene");
 
     auto children = std::vector<std::shared_ptr<TreeViewItem>>();
     for (std::shared_ptr<StoredDocumentNode> child = document->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         auto childItem = std::make_shared<TreeViewItem>();
         childItem->GetLabel()->SetValue("Game Object");
+
+        // Subscribe to OnSelected.
+        std::weak_ptr<FEventObserver> weak = shared_from_this();
+        childItem->OnSelected()->Subscribe(weak);
+
         children.emplace_back(childItem);
 
         // Add components. This will be removed when we move these to the inspector.
@@ -69,13 +77,16 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
                 compItem->GetLabel()->SetValue("Component");
             }
 
+            // Subscribe to OnSelected.
+            std::weak_ptr<FEventObserver> weak = shared_from_this();
+            compItem->OnSelected()->Subscribe(weak);
             compChildren.emplace_back(compItem);
         }
         childItem->GetChildren()->SetValue(compChildren);
     }
-    root->GetChildren()->SetValue(children);
+    m_treeViewItem->GetChildren()->SetValue(children);
 
-    m_tree = std::make_shared<TreeView>(windowPackage->GetContentManager(), root);
+    m_tree = std::make_shared<TreeView>(windowPackage->GetContentManager(), m_treeViewItem);
     m_tree->ShouldRootBeFrame(true);
     m_tree->SetDepthToStartIndentation(1);
 }
@@ -86,5 +97,33 @@ void SceneHierarchy::Draw()
 
     m_tree->Draw();
 
+    // Test popup
+    if (m_testPopup)
+    {
+        ImGui::OpenPopup("Selectable Popup");
+    }
+
+    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::Text(m_testPopupText.c_str());
+        if (ImGui::Button("Close")) {
+            ImGui::CloseCurrentPopup();
+            m_testPopup = false;
+        }
+        ImGui::EndPopup();
+    }
+
     ImGui::End();
+
+
+
+}
+
+void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
+{
+    if (auto treeViewItemArgs = std::static_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
+    {
+        // Test Popup
+        m_testPopup = true;
+        m_testPopupText = treeViewItemArgs->GetTreeViewItem()->GetLabel()->GetValue();
+    }
 }

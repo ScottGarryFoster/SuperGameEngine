@@ -279,6 +279,9 @@
     <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleIcon.h">
       <Filter>Header Files\ToolsEngine\ViewElements</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemOnSelectedEventArguments.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

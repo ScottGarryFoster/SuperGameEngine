@@ -4,6 +4,7 @@
 
 #include <string>
 
+#include "TreeViewItemOnSelectedEventArguments.h"
 #include "../../../Engine/Engine/Content/ContentManager.h"
 
 using namespace SuperGameTools;
@@ -175,6 +176,11 @@ void TreeView::RenderSelectableRow(const std::shared_ptr<TreeViewItem>& current,
         else
         {
             isSelected = !isSelected;
+            if (isSelected)
+            {
+                auto arguments = std::make_shared<TreeViewItemOnSelectedEventArguments>(current);
+                current->OnSelected()->Invoke(arguments);
+            }
         }
     }
     current->GetIsSelected()->SetValue(isSelected);

@@ -71,7 +71,7 @@ namespace SuperGameTools
         /// Called when selected.
         /// </summary>
         /// <returns>Called when selected. </returns>
-        //virtual std::shared_ptr<FEventSubscriptions> OnSelected();
+        virtual std::shared_ptr<FEvent> OnSelected();
 
     private:
 
@@ -110,5 +110,10 @@ namespace SuperGameTools
         /// True means is selected.
         /// </summary>
         std::shared_ptr<ValueProperty<bool>> m_isSelected;
+
+        /// <summary>
+        /// Called when item is selected.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onSelectedEvent;
     };
 }
