@@ -3,6 +3,8 @@
 
 namespace FatedQuestLibraries
 {
+    class ModifiableNode;
+
     /// <summary>
     /// A modifiable version of a stored document.
     /// </summary>
@@ -41,16 +43,25 @@ namespace FatedQuestLibraries
         virtual std::shared_ptr<StoredDocumentNode> GetRoot() override;
 
         /// <summary>
+        /// Gets the root StoredDocumentNode for the document.
+        /// </summary>
+        /// <returns>
+        /// If could not parse, then an empty pointer.
+        /// If could parse then the root StoredDocumentNode.
+        /// </returns>
+        virtual std::shared_ptr<ModifiableNode> GetModifiableRoot();
+
+        /// <summary>
         /// Set the root element of the document.
         /// </summary>
         /// <param name="rootDocument">New root element. </param>
-        void SetRootElement(const std::shared_ptr<StoredDocumentNode>& rootDocument);
+        virtual void SetRootElement(const std::shared_ptr<StoredDocumentNode>& rootDocument);
 
     private:
         /// <summary>
         /// Root element of the document.
         /// </summary>
-        std::shared_ptr<StoredDocumentNode> m_root;
+        std::shared_ptr<ModifiableNode> m_root;
     };
 
 

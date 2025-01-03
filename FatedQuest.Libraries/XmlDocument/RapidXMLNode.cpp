@@ -39,9 +39,9 @@ const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std
     return {};
 }
 
-const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std::string& criteria, bool caseSensitive) const
+const std::shared_ptr<StoredDocumentAttribute> RapidXMLNode::Attribute(const std::string& criteria, CaseSensitivity caseSensitive) const
 {
-    if (caseSensitive)
+    if (caseSensitive == CaseSensitivity::CaseSensitive)
     {
         return Attribute(criteria);
     }

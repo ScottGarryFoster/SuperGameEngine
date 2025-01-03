@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f54f462a-6a7e-4273-8f91-9098242ae380}</ProjectGuid>
-    <RootNamespace>StoredDocument</RootNamespace>
+    <ProjectGuid>{231d6f13-1d66-435d-adf1-810e7ebb056a}</ProjectGuid>
+    <RootNamespace>SharedEnums</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>StoredDocument</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -144,40 +143,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AllReferences.h" />
-    <ClInclude Include="Converters\DocumentToXml.h" />
-    <ClInclude Include="Converters\SimpleDocumentToXml.h" />
+    <ClInclude Include="CaseSensitivity.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="ModifiableAttribute.h" />
-    <ClInclude Include="ModifiableDocument.h" />
-    <ClInclude Include="ModifiableNode.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="StoredDocument.h" />
-    <ClInclude Include="StoredDocumentAttribute.h" />
-    <ClInclude Include="StoredDocumentNode.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Converters\SimpleDocumentToXml.cpp" />
-    <ClCompile Include="ModifiableAttribute.cpp" />
-    <ClCompile Include="ModifiableDocument.cpp" />
-    <ClCompile Include="ModifiableNode.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Logger\Logger.vcxproj">
-      <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Observer\Observer.vcxproj">
-      <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\SharedEnums\SharedEnums.vcxproj">
-      <Project>{231d6f13-1d66-435d-adf1-810e7ebb056a}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

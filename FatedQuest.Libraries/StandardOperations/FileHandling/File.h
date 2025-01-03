@@ -58,6 +58,15 @@ namespace FatedQuestLibraries
         static bool EndInExtension(const std::string& filepath, const std::string& extension);
 
         /// <summary>
+        /// Changes the extension of the given filepath.
+        /// </summary>
+        /// <param name="filepath">Filepath to change. </param>
+        /// <param name="originalExtension">Original extension to change. </param>
+        /// <param name="newExtension">New extension to replace with. </param>
+        /// <returns>Filepath with the extension or the same filepath if not found. </returns>
+        static std::string ChangeExtension(const std::string& filepath, const std::string& originalExtension, const std::string& newExtension);
+
+        /// <summary>
         /// Copies file to directory.
         /// </summary>
         /// <param name="inputFilepath">Filepath to copy. </param>

@@ -2,21 +2,27 @@
 //
 
 #include <iostream>
+
+#include "DebugLogger.h"
+#include "../../../../FatedQuest.Libraries/Logger/Logger/Log.h"
+#include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
 #include "../SuperEnumGenerator/GenerateEnum.h"
 
 using namespace SuperEnumGenerator;
 
 int main(int argc, char* args[])
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Super Generator!\n";
+
+    auto debugLogger = std::make_shared<DebugLogger>();
+    if (auto event = Log::GetEvent().lock())
+    {
+        event->Subscribe(debugLogger);
+    }
 
     GenerateEnum generator;
-    if (!generator.SingleFile(
-        R"(E:\Development\SuperGameEngine-Myriad\FatedQuest.Libraries\Logger\Logger\LogLevel.superenum)",
-        R"(E:\Development\SuperGameEngine-Myriad\FatedQuest.Libraries\Logger\Logger\LogLevel.h)"))
-    {
-        std::cout << "Could not generate file. " << std::endl;
-    }
+    generator.AllEnums("E:\\Development\\SuperGameEngine-Myriad\\", ".superenum", ".h");
+    Log::Info("Generated Enums");
 
     return 0;
 }

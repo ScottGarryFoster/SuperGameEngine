@@ -201,6 +201,9 @@
     <ProjectReference Include="..\..\FatedQuest.Libraries\Observer\Observer.vcxproj">
       <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\SharedEnums\SharedEnums.vcxproj">
+      <Project>{231d6f13-1d66-435d-adf1-810e7ebb056a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
       <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
     </ProjectReference>

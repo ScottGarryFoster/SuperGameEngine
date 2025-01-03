@@ -42,9 +42,9 @@ namespace FatedQuestLibraries
         /// Searches for attribute of the given name.
         /// </summary>
         /// <param name="criteria">Name to search for.</param>
-        /// <param name="caseSensitive">True means any case is acceptable. </param>
+        /// <param name="caseSensitive">How to match the string. </param>
         /// <returns>Attribute if found, or empty if not. </returns>
-        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, bool caseSensitive) const override;
+        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, CaseSensitivity caseSensitive) const override;
 
         /// <summary>
         /// Sets attributes on the Node.

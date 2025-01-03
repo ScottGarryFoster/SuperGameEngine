@@ -1,5 +1,6 @@
 #pragma once
 #include "StoredDocumentNode.h"
+#include "../SharedEnums/CaseSensitivity.h"
 
 namespace FatedQuestLibraries
 {
@@ -51,7 +52,7 @@ namespace FatedQuestLibraries
         /// <param name="criteria">Name to search for.</param>
         /// <param name="caseSensitive">True means any case is acceptable. </param>
         /// <returns>Attribute if found, or empty if not. </returns>
-        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, bool caseSensitive) const override;
+        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, CaseSensitivity caseSensitive) const override;
 
         /// <summary>
         /// Gets the first child node.

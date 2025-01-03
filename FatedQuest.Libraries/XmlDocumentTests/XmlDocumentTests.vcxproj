@@ -168,6 +168,9 @@
     <ProjectReference Include="..\Logger\Logger.vcxproj">
       <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\SharedEnums\SharedEnums.vcxproj">
+      <Project>{231d6f13-1d66-435d-adf1-810e7ebb056a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\StandardOperations\StandardOperations.vcxproj">
       <Project>{1ae9e9be-b55d-4c31-8a6f-7f3220e8d538}</Project>
     </ProjectReference>

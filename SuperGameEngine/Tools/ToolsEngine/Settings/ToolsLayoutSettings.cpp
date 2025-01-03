@@ -141,7 +141,7 @@ int ToolsLayoutSettings::WindowY() const
 
 bool ToolsLayoutSettings::ParseSize(const std::shared_ptr<StoredDocumentNode>& node) const
 {
-    std::shared_ptr<StoredDocumentAttribute> xAttribute = node->Attribute("X", false);
+    std::shared_ptr<StoredDocumentAttribute> xAttribute = node->Attribute("X", CaseSensitivity::IgnoreCase);
     if (!xAttribute)
     {
         return false;
@@ -154,7 +154,7 @@ bool ToolsLayoutSettings::ParseSize(const std::shared_ptr<StoredDocumentNode>& n
         return false;
     }
 
-    std::shared_ptr<StoredDocumentAttribute> yAttribute = node->Attribute("Y", false);
+    std::shared_ptr<StoredDocumentAttribute> yAttribute = node->Attribute("Y", CaseSensitivity::IgnoreCase);
     if (!yAttribute)
     {
         return false;
@@ -167,7 +167,7 @@ bool ToolsLayoutSettings::ParseSize(const std::shared_ptr<StoredDocumentNode>& n
         return false;
     }
 
-    std::shared_ptr<StoredDocumentAttribute> widthAttribute = node->Attribute("Width", false);
+    std::shared_ptr<StoredDocumentAttribute> widthAttribute = node->Attribute("Width", CaseSensitivity::IgnoreCase);
     if (!widthAttribute)
     {
         return false;
@@ -180,7 +180,7 @@ bool ToolsLayoutSettings::ParseSize(const std::shared_ptr<StoredDocumentNode>& n
         return false;
     }
 
-    std::shared_ptr<StoredDocumentAttribute> heightAttribute = node->Attribute("Height", false);
+    std::shared_ptr<StoredDocumentAttribute> heightAttribute = node->Attribute("Height", CaseSensitivity::IgnoreCase);
     if (!heightAttribute)
     {
         return false;

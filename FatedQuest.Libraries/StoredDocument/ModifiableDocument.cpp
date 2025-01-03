@@ -53,7 +53,21 @@ std::shared_ptr<StoredDocumentNode> ModifiableDocument::GetRoot()
     return m_root;
 }
 
+std::shared_ptr<ModifiableNode> ModifiableDocument::GetModifiableRoot()
+{
+    return m_root;
+}
+
 void ModifiableDocument::SetRootElement(const std::shared_ptr<StoredDocumentNode>& rootDocument)
 {
-    m_root = rootDocument;
+    auto modNode = std::make_shared<ModifiableNode>();
+    if (modNode->Load(rootDocument))
+    {
+        m_root = modNode;
+    }
+    else
+    {
+        Log::Error("Could not parse root stored node into a modifiable node.",
+            "ModifiableDocument::SetRootElement(std::shared_ptr<StoredDocumentNode>)");
+    }
 }

@@ -56,7 +56,7 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
         for (std::shared_ptr<StoredDocumentNode> compChild = child->GetFirstChild(); compChild; compChild = compChild->GetAdjacentNode())
         {
             auto compItem = std::make_shared<TreeViewItem>();
-            std::shared_ptr<StoredDocumentAttribute> typeAtt = compChild->Attribute("Type", false);
+            std::shared_ptr<StoredDocumentAttribute> typeAtt = compChild->Attribute("Type", CaseSensitivity::IgnoreCase);
             if (typeAtt)
             {
                 compItem->GetLabel()->SetValue(typeAtt->Value());

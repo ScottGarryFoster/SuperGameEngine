@@ -3,6 +3,11 @@
 
 #include "GameComponent.h"
 
+namespace FatedQuestLibraries
+{
+    class ModifiableNode;
+}
+
 namespace SuperGameEngine
 {
     /// <summary>

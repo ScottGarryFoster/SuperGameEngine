@@ -100,6 +100,23 @@ bool File::EndInExtension(const std::string& filepath, const std::string& extens
     return false;
 }
 
+std::string File::ChangeExtension(
+    const std::string& filepath, 
+    const std::string& originalExtension,
+    const std::string& newExtension)
+{
+    // In case sent in is nonsense.
+    if (!EndInExtension(filepath, originalExtension))
+    {
+        return filepath;
+    }
+
+    std::string newFilepath = filepath.substr(0, filepath.length() - originalExtension.length());
+    newFilepath += newExtension;
+
+    return newFilepath;
+}
+
 #undef CopyFile
 bool File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
 {

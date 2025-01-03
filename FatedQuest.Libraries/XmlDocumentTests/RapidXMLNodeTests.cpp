@@ -101,7 +101,7 @@ namespace FatedQuestLibraries_XMLDocument
 
 #pragma region Attribute with bool
 
-    TEST_F(RapidXMLNodeTests, AttributeWithFalse_ReturnsAttribute_WhenAttributeIsInList)
+    TEST_F(RapidXMLNodeTests, AttributeWithCaseSensitive_ReturnsAttribute_WhenAttributeIsInList)
     {
         // Arrange
         std::string lookfor = "LookFor";
@@ -113,7 +113,7 @@ namespace FatedQuestLibraries_XMLDocument
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, false);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, CaseSensitivity::CaseSensitive);
 
         // Assert
         ASSERT_TRUE(actual);
@@ -121,7 +121,7 @@ namespace FatedQuestLibraries_XMLDocument
         ASSERT_EQ(expected, actual->Value());
     }
 
-    TEST_F(RapidXMLNodeTests, AttributeWithFalse_DoesNotReturnAttribute_WhenAttributeIsNotInList)
+    TEST_F(RapidXMLNodeTests, AttributeWithCaseSensitive_DoesNotReturnAttribute_WhenAttributeIsNotInList)
     {
         // Arrange
         std::string lookfor = "LookFor";
@@ -134,13 +134,13 @@ namespace FatedQuestLibraries_XMLDocument
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, false);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, CaseSensitivity::CaseSensitive);
 
         // Assert
         ASSERT_FALSE(actual);
     }
 
-    TEST_F(RapidXMLNodeTests, AttributeWithFalse_DoesNotReturnAttribute_WhenCaseDoesNotMatch)
+    TEST_F(RapidXMLNodeTests, AttributeWithCaseSensitive_DoesNotReturnAttribute_WhenCaseDoesNotMatch)
     {
         // Arrange
         std::string lookfor = "LookFor";
@@ -153,13 +153,13 @@ namespace FatedQuestLibraries_XMLDocument
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(givenLookFor, false);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(givenLookFor, CaseSensitivity::CaseSensitive);
 
         // Assert
         ASSERT_FALSE(actual);
     }
 
-    TEST_F(RapidXMLNodeTests, AttributeWithTrue_ReturnsAttribute_WhenCaseDoesNotMatch)
+    TEST_F(RapidXMLNodeTests, AttributeWithIgnoreCase_ReturnsAttribute_WhenCaseDoesNotMatch)
     {
         // Arrange
         std::string lookfor = "LookFor";
@@ -172,7 +172,7 @@ namespace FatedQuestLibraries_XMLDocument
         rapidNode->SetAttributes(given);
 
         // Act
-        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, true);
+        std::shared_ptr<StoredDocumentAttribute> actual = rapidNode->Attribute(lookfor, CaseSensitivity::IgnoreCase);
 
         // Assert
         ASSERT_TRUE(actual);
