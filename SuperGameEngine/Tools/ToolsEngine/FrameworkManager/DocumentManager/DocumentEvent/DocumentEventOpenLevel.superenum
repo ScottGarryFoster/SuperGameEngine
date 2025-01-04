@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        How the document suggests being opened.
+    </EnumComment>
+    <EnumName Name="DocumentEventOpenLevel">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <EitherOr>
+            Upto the system taking the document.
+        </EitherOr>
+        <Exclusive>
+            Opened from a place which demand exclusivity.
+        </Exclusive>
+        <Additive>
+            Can be added to existing documents of the same type.
+        </Additive>
+    </EnumName>
+</SuperEnum>

@@ -7,7 +7,6 @@ using namespace SuperGameTools;
 
 void MainMenuBar::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
-    m_windowPackage = windowPackage;
     m_mainView = std::make_shared<MenuView>();
 
     m_mainView->AddTopLevelMenuItem("File");
@@ -18,28 +17,16 @@ void MainMenuBar::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
 void MainMenuBar::Update()
 {
-    if (!m_windowPackage)
-    {
-        return;
-    }
 }
 
 void MainMenuBar::Draw()
 {
-    if (!m_windowPackage)
-    {
-        return;
-    }
 
     m_mainView->Draw();
 }
 
 void MainMenuBar::TearDown()
 {
-    if (!m_windowPackage)
-    {
-        return;
-    }
 }
 
 std::shared_ptr<MenuView> MainMenuBar::GetTopMenuBar() const

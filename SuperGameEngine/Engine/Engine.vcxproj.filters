@@ -154,6 +154,18 @@
     <Filter Include="Source Files\Structural\Serializable">
       <UniqueIdentifier>{b7005083-ea41-4a96-b050-406e72e850d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\External">
+      <UniqueIdentifier>{78ee077e-4b39-4be7-b8c3-7727889822d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\External\TinyFileDialog">
+      <UniqueIdentifier>{206c6276-4e7d-42bc-b1f7-dc5c4c51125b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\External">
+      <UniqueIdentifier>{9e408129-5fc3-4543-a9c3-432a4124d158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\External\TinyFileDialog">
+      <UniqueIdentifier>{a5b35cad-6cd1-43da-a53f-06dd6f515541}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -351,6 +363,9 @@
     <ClInclude Include="Structural\Serializable\SuperSerializableParser.h">
       <Filter>Header Files\Structural\Serializable</Filter>
     </ClInclude>
+    <ClInclude Include="External\TinyFileDialog\tinyfiledialogs.h">
+      <Filter>Header Files\External\TinyFileDialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -475,6 +490,9 @@
     </ClCompile>
     <ClCompile Include="Structural\Serializable\SuperSerializableParser.cpp">
       <Filter>Source Files\Structural\Serializable</Filter>
+    </ClCompile>
+    <ClCompile Include="External\TinyFileDialog\tinyfiledialogs.cpp">
+      <Filter>Source Files\External\TinyFileDialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

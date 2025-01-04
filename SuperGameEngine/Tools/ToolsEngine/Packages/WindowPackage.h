@@ -3,6 +3,11 @@
 #include <SDL_render.h>
 #include "../../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace FatedQuestLibraries
+{
+    class PackagePaths;
+}
+
 namespace SuperGameEngine
 {
     class SerializableParser;
@@ -11,9 +16,11 @@ namespace SuperGameEngine
 }
 
 using namespace SuperGameEngine;
+using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
 {
+    class FrameworkManager;
     class MenuView;
     class EngineEntryCommunication;
 
@@ -98,6 +105,30 @@ namespace SuperGameTools
         /// <param name="menuView">The top menu. </param>
         void SetTopMenu(const std::shared_ptr<MenuView>& menuView);
 
+        /// <summary>
+        /// Manages and holds the larger services for the entire tools engine.
+        /// </summary>
+        /// <returns>Manages and holds the larger services for the entire tools engine. </returns>
+        std::shared_ptr<FrameworkManager> GetFrameworkManager() const;
+
+        /// <summary>
+        /// Manages and holds the larger services for the entire tools engine.
+        /// </summary>
+        /// <param name="frameworkManager">New framework manager. </param>
+        void SetFrameworkManager(const std::shared_ptr<FrameworkManager>& frameworkManager);
+
+        /// <summary>
+        /// Helper class to grab paths.
+        /// </summary>
+        /// <returns>Helper class to grab paths. </returns>
+        std::shared_ptr<PackagePaths> GetPackagePaths() const;
+
+        /// <summary>
+        /// Set package paths.
+        /// </summary>
+        /// <param name="packagePaths">Helper class to grab paths. </param>
+        void SetPackagePaths(const std::shared_ptr<PackagePaths>& packagePaths);
+
     private:
 
         /// <summary>
@@ -131,5 +162,15 @@ namespace SuperGameTools
         /// The top menu bar.
         /// </summary>
         std::shared_ptr<MenuView> m_menuView;
+
+        /// <summary>
+        /// Manages and holds the larger services for the entire tools engine.
+        /// </summary>
+        std::shared_ptr<FrameworkManager> m_frameworkManager;
+
+        /// <summary>
+        /// Helper class to grab paths.
+        /// </summary>
+        std::shared_ptr<PackagePaths> m_packagePaths;
     };
 }

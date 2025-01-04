@@ -213,6 +213,9 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SystemActions\FileDialog\FileDialog.h" />
+    <ClInclude Include="SystemActions\FileDialog\FileDialogProvider.h" />
+    <ClInclude Include="SystemActions\FileDialog\TinyFileDialogs.h" />
     <ClInclude Include="TestComponent\ToolsComponent.h" />
     <ClInclude Include="ToolsEngine\Communication\EngineEntryCommunication.h" />
     <ClInclude Include="ToolsEngine\Communication\EngineFlowControl.h" />
@@ -220,6 +223,19 @@
     <ClInclude Include="ToolsEngine\Communication\EnginePlayControl.h" />
     <ClInclude Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.h" />
     <ClInclude Include="ToolsEngine\Communication\ToolsEngineControl.h" />
+    <ClInclude Include="ToolsEngine\Documents\Scene\SceneDocument.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\Document.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentCriteria.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentActionEventArguments.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventAction.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventOpenLevel.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentFactory.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentManager.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentMatcher.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\FrameworkManager.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\ToolsFrameworkManager.h" />
     <ClInclude Include="ToolsEngine\GenericProperties\FunctionProperty.h" />
     <ClInclude Include="ToolsEngine\GenericProperties\ValueProperty.h" />
     <ClInclude Include="ToolsEngine\ModelElements\FunctionModel.h" />
@@ -267,9 +283,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SystemActions\FileDialog\FileDialogProvider.cpp" />
+    <ClCompile Include="SystemActions\FileDialog\TinyFileDialogs.cpp" />
     <ClCompile Include="TestComponent\ToolsComponent.cpp" />
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.cpp" />
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineControl.cpp" />
+    <ClCompile Include="ToolsEngine\Documents\Scene\SceneDocument.cpp" />
+    <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentFactory.cpp" />
+    <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.cpp" />
+    <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.cpp" />
+    <ClCompile Include="ToolsEngine\FrameworkManager\ToolsFrameworkManager.cpp" />
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp" />
     <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp" />
     <ClCompile Include="ToolsEngine\Settings\ToolsLayoutSettings.cpp" />

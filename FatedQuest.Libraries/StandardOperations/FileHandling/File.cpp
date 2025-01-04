@@ -5,10 +5,6 @@
 #include "CopyOptionsFileSystemHelper.h"
 #include "../../Logger/AllReferences.h"
 
-#ifdef _DEBUG
-#include <iostream>
-#endif
-
 namespace FileSystem = std::filesystem;
 
 using namespace FatedQuestLibraries;
@@ -179,4 +175,33 @@ std::string File::Sanitize(const std::string& path)
     returnPath = StringHelpers::ReplaceAll(returnPath,"\\\\","\\");
 
     return returnPath;
+}
+
+std::string File::GetFilename(const std::string& path)
+{
+    try
+    {
+        FileSystem::path asPath(path);
+        return asPath.filename().string();
+    }
+    catch (const std::exception& e)
+    {
+        Log::Exception("Path did not have a filename " + path, "File::GetFilename", e.what());
+        return {};
+    }
+}
+
+std::string File::MakeRelative(const std::string& base, const std::string& target)
+{
+    FileSystem::path absBasePath = FileSystem::absolute(base);
+    FileSystem::path absTargetPath = FileSystem::absolute(target);
+
+    // Is target within base?
+    if (!equivalent(absBasePath, absBasePath.root_path()) &&
+        !relative(absTargetPath, absBasePath).empty())
+    {
+        return relative(absTargetPath, absBasePath).string();
+    }
+
+    return {};
 }

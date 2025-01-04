@@ -61,3 +61,23 @@ void WindowPackage::SetTopMenu(const std::shared_ptr<MenuView>& menuView)
 {
     m_menuView = menuView;
 }
+
+std::shared_ptr<FrameworkManager> WindowPackage::GetFrameworkManager() const
+{
+    return m_frameworkManager;
+}
+
+void WindowPackage::SetFrameworkManager(const std::shared_ptr<FrameworkManager>& frameworkManager)
+{
+    m_frameworkManager = frameworkManager;
+}
+
+std::shared_ptr<PackagePaths> WindowPackage::GetPackagePaths() const
+{
+    return m_packagePaths;
+}
+
+void WindowPackage::SetPackagePaths(const std::shared_ptr<PackagePaths>& packagePaths)
+{
+    m_packagePaths = packagePaths;
+}

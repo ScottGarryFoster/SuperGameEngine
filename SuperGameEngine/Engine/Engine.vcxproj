@@ -232,6 +232,7 @@
     <ClInclude Include="Engine\Graphics\Texture\TextureDataOrigin.h" />
     <ClInclude Include="Engine\MainEngine.h" />
     <ClInclude Include="Engine\Tools\ToolsCommunication.h" />
+    <ClInclude Include="External\TinyFileDialog\tinyfiledialogs.h" />
     <ClInclude Include="FatedQuestReferences.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Imgui\External\imconfig.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="Engine\Graphics\Texture\SuperTextureWrapper.cpp" />
     <ClCompile Include="Engine\Graphics\Texture\Texture.cpp" />
     <ClCompile Include="Engine\MainEngine.cpp" />
+    <ClCompile Include="External\TinyFileDialog\tinyfiledialogs.cpp" />
     <ClCompile Include="Imgui\External\imgui.cpp" />
     <ClCompile Include="Imgui\External\imgui_demo.cpp" />
     <ClCompile Include="Imgui\External\imgui_draw.cpp" />

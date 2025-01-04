@@ -42,11 +42,6 @@ namespace SuperGameTools
 
     private:
         /// <summary>
-        /// Everything you need to run a window.
-        /// </summary>
-        std::shared_ptr<WindowPackage> m_windowPackage;
-
-        /// <summary>
         /// Entire top menu bar.
         /// </summary>
         std::shared_ptr<MenuView> m_mainView;

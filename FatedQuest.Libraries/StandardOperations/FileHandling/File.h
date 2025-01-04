@@ -96,5 +96,25 @@ namespace FatedQuestLibraries
         /// <param name="path">Path to sanitize. </param>
         /// <returns>New path. </returns>
         static std::string Sanitize(const std::string& path);
+
+        /// <summary>
+        /// Get the filename from a given path.
+        /// </summary>
+        /// <param name="path">Path to look for. </param>
+        /// <returns>Filename or empty if this is not possible. </returns>
+        static std::string GetFilename(const std::string& path);
+
+        /// <summary>
+        /// Creates a path which is relative of the base.
+        /// This means you could send in this input:
+        /// Base: folder1/folder2/
+        /// Target: folder1/folder2/folder3/folder4/file.txt
+        /// and get folder3/folder4/file.txt
+        /// Will return empty if the target is not in the base path.
+        /// </summary>
+        /// <param name="base">Base path to match. </param>
+        /// <param name="target">Target to make relative. </param>
+        /// <returns>Target path relative to base or empty if target is not in base. </returns>
+        static std::string MakeRelative(const std::string& base, const std::string& target);
     };
 }

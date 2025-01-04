@@ -4,6 +4,10 @@
 #include "ToolsSceneLoader.h"
 #include "../../ImGuiIncludes.h"
 #include "../../../Engine/Engine/Content/ContentManager.h"
+#include "../../ToolsEngine/Documents/Scene/SceneDocument.h"
+#include "../../ToolsEngine/FrameworkManager/FrameworkManager.h"
+#include "../../ToolsEngine/FrameworkManager/DocumentManager/DocumentManager.h"
+#include "../../ToolsEngine/FrameworkManager/DocumentManager/DocumentEvent/DocumentActionEventArguments.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuItemView.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuItemViewEventArguments.h"
@@ -24,21 +28,48 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
 
-    m_windowPackage->GetTopMenu()->GetMenuItem("FileOpen")->OnSelected()->Subscribe(shared_from_this());
+    const std::string method = "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)";
+    if (!m_windowPackage->GetFrameworkManager())
+    {
+        Log::Error("No framework manager. Cannot load scenes.", method);
+        return;
+    }
 
-    LoadScene("savedOut.txt");
+    if (!m_windowPackage->GetFrameworkManager()->GetDocumentManager())
+    {
+        Log::Error("No document manager. Cannot load scenes.", method);
+        return;
+    }
+
+    if (!m_windowPackage->GetFrameworkManager()->GetDocumentManager()->OnDocumentAction())
+    {
+        Log::Error("No document action event. Cannot load scenes.", method);
+        return;
+    }
+
+    m_windowPackage->GetFrameworkManager()->GetDocumentManager()->OnDocumentAction()->Subscribe(shared_from_this());
+
+    // TODO: Automatically load a scene when you open tools from a preferences file #113
 }
 
 void SceneHierarchy::Update()
 {
-    m_tree->Update();
+    if (m_tree)
+    {
+        m_tree->Update();
+    }
+
 }
 
 void SceneHierarchy::Draw()
 {
     ImGui::Begin("Scene Hierarchy");
 
-    m_tree->Draw();
+    if (m_tree)
+    {
+        m_tree->Draw();
+    }
+
 
     // Test popup
     if (m_testPopup)
@@ -69,12 +100,28 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
         m_testPopup = true;
         m_testPopupText = treeViewItemArgs->GetTreeViewItem()->GetLabel()->GetValue();
     }
-    else if (auto menuItemSelected = std::dynamic_pointer_cast<MenuItemViewEventArguments>(arguments))
+    else if (auto menuItemSelected = std::dynamic_pointer_cast<DocumentActionEventArguments>(arguments))
     {
-        if (auto menuItem = menuItemSelected->GetMenuItem().lock())
+        if (menuItemSelected->GetDocument())
+        {
+            if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(menuItemSelected->GetDocument()))
+            {
+                if (LoadScene(menuItemSelected->GetDocument()->GetFilepath()))
+                {
+                    m_testPopup = true;
+                    m_testPopupText = "Loaded";
+                }
+            }
+            else
+            {
+                m_testPopup = true;
+                m_testPopupText = "Not a scene document.";
+            }
+        }
+        else
         {
             m_testPopup = true;
-            m_testPopupText = menuItem->GetLabel()->GetValue() + " | " + menuItem->GetKey();
+            m_testPopupText = "Empty document.";
         }
     }
 }

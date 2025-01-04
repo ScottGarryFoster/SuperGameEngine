@@ -17,6 +17,7 @@
 #include "../Windows/DockableContainer/DockableContainer.h"
 #include "../Windows/SceneHierarchy/SceneHierarchy.h"
 #include "../Windows/InspectorWindow/InspectorWindow.h"
+#include "FrameworkManager/ToolsFrameworkManager.h"
 
 using namespace SuperGameTools;
 
@@ -50,6 +51,7 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 
         m_windowPackage->SetContentManager(m_superContentManager);
         m_windowPackage->SetParser(std::make_shared<SuperSerializableParser>());
+        m_windowPackage->SetPackagePaths(paths);
     }
 }
 
@@ -133,10 +135,18 @@ void ToolsEngine::Setup()
     m_updatables.push_back(loggerWindow);
 
     std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
-    sceneHierarchy->Setup(m_windowPackage);
     m_updatables.push_back(sceneHierarchy);
 
     std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
     inspectorWindow->Setup(m_windowPackage);
     m_updatables.push_back(inspectorWindow);
+
+    // The last thing should be framework as this subscribes to things above.
+    std::weak_ptr<WindowPackage> weak = m_windowPackage;
+    auto framework = std::make_shared<ToolsFrameworkManager>(weak);
+    framework->Setup();
+    m_windowPackage->SetFrameworkManager(framework);
+
+    // Has to be setup after framework.
+    sceneHierarchy->Setup(m_windowPackage);
 }
