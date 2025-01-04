@@ -14,6 +14,7 @@ using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
+    class MenuView;
     class EngineEntryCommunication;
 
     /// <summary>
@@ -84,6 +85,19 @@ namespace SuperGameTools
         /// <param name="parser">New parser. </param>
         void SetParser(const std::shared_ptr<SerializableParser>& parser);
 
+        /// <summary>
+        /// Get the menu which is the menu going across the top of the
+        /// application.
+        /// </summary>
+        /// <returns>The top menu. </returns>
+        std::shared_ptr<MenuView> GetTopMenu() const;
+
+        /// <summary>
+        /// Set the new top menu.
+        /// </summary>
+        /// <param name="menuView">The top menu. </param>
+        void SetTopMenu(const std::shared_ptr<MenuView>& menuView);
+
     private:
 
         /// <summary>
@@ -112,5 +126,10 @@ namespace SuperGameTools
         /// Helps to parse serializable objects.
         /// </summary>
         std::shared_ptr<SerializableParser> m_serializableParser;
+
+        /// <summary>
+        /// The top menu bar.
+        /// </summary>
+        std::shared_ptr<MenuView> m_menuView;
     };
 }

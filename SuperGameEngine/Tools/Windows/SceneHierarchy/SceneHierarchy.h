@@ -53,6 +53,11 @@ namespace SuperGameTools
         virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
     private:
         /// <summary>
+        /// Everything a Window Package might need to run.
+        /// </summary>
+        std::shared_ptr<WindowPackage> m_windowPackage;
+
+        /// <summary>
         /// The tree.
         /// </summary>
         std::shared_ptr<TreeView> m_tree;
@@ -66,6 +71,14 @@ namespace SuperGameTools
         /// All items in the tree.
         /// </summary>
         std::shared_ptr<TreeViewItem> m_treeViewItem;
+
+        /// <summary>
+        /// Loads a scene from file.
+        /// This will not add a scene it simply loads it as the only scene.
+        /// </summary>
+        /// <param name="path">Path to load. Relative to game package.</param>
+        /// <returns>True means loaded. </returns>
+        bool LoadScene(const std::string& path);
 
         bool m_testPopup;
         std::string m_testPopupText;

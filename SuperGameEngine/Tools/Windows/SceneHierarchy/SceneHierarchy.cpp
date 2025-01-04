@@ -19,29 +19,79 @@ SceneHierarchy::SceneHierarchy()
 
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
-    if (!windowPackage->GetContentManager())
+    m_windowPackage = windowPackage;
+
+    LoadScene("savedOut.txt");
+}
+
+void SceneHierarchy::Update()
+{
+    m_tree->Update();
+}
+
+void SceneHierarchy::Draw()
+{
+    ImGui::Begin("Scene Hierarchy");
+
+    m_tree->Draw();
+
+    // Test popup
+    if (m_testPopup)
     {
-        Log::Error("No Content Manager found.", "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
-        return;
+        ImGui::OpenPopup("Selectable Popup");
     }
 
-    if (!windowPackage->GetContentManager()->GamePackage())
+    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::Text(m_testPopupText.c_str());
+        if (ImGui::Button("Close")) {
+            ImGui::CloseCurrentPopup();
+            m_testPopup = false;
+        }
+        ImGui::EndPopup();
+    }
+
+    ImGui::End();
+
+
+
+}
+
+void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
+{
+    if (auto treeViewItemArgs = std::static_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
+    {
+        // Test Popup
+        m_testPopup = true;
+        m_testPopupText = treeViewItemArgs->GetTreeViewItem()->GetLabel()->GetValue();
+    }
+}
+
+bool SceneHierarchy::LoadScene(const std::string& path)
+{
+    if (!m_windowPackage->GetContentManager())
+    {
+        Log::Error("No Content Manager found.", "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
+        return false;
+    }
+
+    if (!m_windowPackage->GetContentManager()->GamePackage())
     {
         Log::Error("No Game Package found.", "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
-        return;
+        return false;
     }
 
     m_sceneLoader = std::make_shared<ToolsSceneLoader>(
-        windowPackage->GetContentManager()->GamePackage());
+        m_windowPackage->GetContentManager()->GamePackage());
 
-    std::string path = "savedOut.txt";
-    std::shared_ptr<ModifiableDocument> document = 
-        m_sceneLoader->LoadScene(path);
+    std::string properPath = File::Sanitize(path);
+
+    std::shared_ptr<ModifiableDocument> document =
+        m_sceneLoader->LoadScene(properPath);
     if (!document)
     {
-        Log::Error("Could not load scene. Path: " + path, 
+        Log::Error("Could not load scene. Path: " + properPath,
             "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
-        return;
+        return false;
     }
 
     m_treeViewItem = std::make_shared<TreeViewItem>();
@@ -87,49 +137,9 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     }
     m_treeViewItem->GetChildren()->SetValue(children);
 
-    m_tree = std::make_shared<TreeView>(windowPackage->GetContentManager(), m_treeViewItem);
+    m_tree = std::make_shared<TreeView>(m_windowPackage->GetContentManager(), m_treeViewItem);
     m_tree->ShouldRootBeFrame(true);
     m_tree->SetDepthToStartIndentation(1);
-}
 
-void SceneHierarchy::Update()
-{
-    m_tree->Update();
-}
-
-void SceneHierarchy::Draw()
-{
-    ImGui::Begin("Scene Hierarchy");
-
-    m_tree->Draw();
-
-    // Test popup
-    if (m_testPopup)
-    {
-        ImGui::OpenPopup("Selectable Popup");
-    }
-
-    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-        ImGui::Text(m_testPopupText.c_str());
-        if (ImGui::Button("Close")) {
-            ImGui::CloseCurrentPopup();
-            m_testPopup = false;
-        }
-        ImGui::EndPopup();
-    }
-
-    ImGui::End();
-
-
-
-}
-
-void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
-{
-    if (auto treeViewItemArgs = std::static_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
-    {
-        // Test Popup
-        m_testPopup = true;
-        m_testPopupText = treeViewItemArgs->GetTreeViewItem()->GetLabel()->GetValue();
-    }
+    return true;
 }

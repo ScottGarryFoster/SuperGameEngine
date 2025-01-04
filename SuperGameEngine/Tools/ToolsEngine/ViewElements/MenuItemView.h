@@ -16,9 +16,9 @@ namespace SuperGameTools
     {
     public:
         MenuItemView();
-        MenuItemView(const std::string& label);
-        MenuItemView(const std::string& label, const std::function<bool()>& enabled);
-        MenuItemView(const std::string& label, const std::function<bool()>& enabled, const std::function<bool()>& selected);
+        MenuItemView(const std::string& key, const std::string& label);
+        MenuItemView(const std::string& key, const std::string& label, const std::function<bool()>& enabled);
+        MenuItemView(const std::string& key, const std::string& label, const std::function<bool()>& enabled, const std::function<bool()>& selected);
         virtual ~MenuItemView() override = default;
 
         /// <summary>
@@ -26,6 +26,15 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="name">Property which has changed. </param>
         virtual void OnPropertyChanged(const std::string& name) override;
+
+        /// <summary>
+        /// A key you can give to a menu item which you should ideally not change.
+        /// This allows you to change a label or the display of an item without
+        /// changing the link to elements in the tools.
+        /// The key is what you search for from the MenuView.
+        /// </summary>
+        /// <returns>A unique identification, given at construction. </returns>
+        virtual std::string GetKey() const;
 
         /// <summary>
         /// Label shown to the user.
@@ -48,11 +57,25 @@ namespace SuperGameTools
         virtual std::shared_ptr<FunctionProperty<bool>> GetSelected();
 
         /// <summary>
+        /// Called when the item is selected.
+        /// </summary>
+        /// <returns>Called when the item is selected. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnSelected();
+
+        /// <summary>
         /// Call to draw the menu item. 
         /// </summary>
         virtual void Draw();
 
     private:
+        /// <summary>
+        /// A key you can give to a menu item which you should ideally not change.
+        /// This allows you to change a label or the display of an item without
+        /// changing the link to elements in the tools.
+        /// The key is what you search for from the MenuView.
+        /// </summary>
+        std::string m_key;
+
         /// <summary>
         /// Label shown to the user.
         /// </summary>
@@ -69,5 +92,10 @@ namespace SuperGameTools
         /// True means shows as selected.
         /// </summary>
         std::shared_ptr<FunctionProperty<bool>> m_selected;
+
+        /// <summary>
+        /// Called when the item is selected.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onSelected;
     };
 }

@@ -112,6 +112,12 @@ void ToolsEngine::WindowTeardown()
 
 void ToolsEngine::Setup()
 {
+    // Must be made first as other things latch on to it.
+    auto menuBar = std::make_shared<MainMenuBar>();
+    menuBar->Setup(m_windowPackage);
+    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
+    m_updatables.push_back(menuBar);
+
     std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
     gameViewport->Setup(m_windowPackage);
     m_updatables.push_back(gameViewport);
@@ -125,10 +131,6 @@ void ToolsEngine::Setup()
         shared->Subscribe(weak);
     }
     m_updatables.push_back(loggerWindow);
-
-    auto menuBar = std::make_shared<MainMenuBar>();
-    menuBar->Setup(m_windowPackage);
-    m_updatables.push_back(menuBar);
 
     std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
     sceneHierarchy->Setup(m_windowPackage);
