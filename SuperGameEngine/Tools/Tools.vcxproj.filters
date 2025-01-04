@@ -139,6 +139,18 @@
     <Filter Include="Source Files\ToolsEngine\Settings">
       <UniqueIdentifier>{84081eed-ce6e-4b68-922b-730e3bf14ec6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\Menu">
+      <UniqueIdentifier>{7cbbb88b-1f8c-4fbb-87f3-134db73e64a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\Menu">
+      <UniqueIdentifier>{6576d1ed-50f5-40c6-8b80-34021a9cc479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\TreeView">
+      <UniqueIdentifier>{97d74af8-f98f-445b-98e2-67f3db92252b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\TreeView">
+      <UniqueIdentifier>{d080dfda-2300-4c68-a86c-09898d3c9b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,12 +225,6 @@
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h">
       <Filter>Header Files\Windows\MainMenuBar</Filter>
     </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\MenuView.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
-    </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
-    </ClInclude>
     <ClInclude Include="ToolsEngine\ModelElements\FunctionModel.h">
       <Filter>Header Files\ToolsEngine\ModelElements</Filter>
     </ClInclude>
@@ -261,26 +267,32 @@
     <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h">
       <Filter>Header Files\ToolsEngine\Settings</Filter>
     </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\TreeView.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
-    </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItem.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
-    </ClInclude>
     <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h">
       <Filter>Header Files\Windows\SceneHierarchy</Filter>
     </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleBehaviour.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemCollapsibleIcon.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\TreeViewItemOnSelectedEventArguments.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleBehaviour.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleIcon.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemOnSelectedEventArguments.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -332,12 +344,6 @@
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp">
       <Filter>Source Files\Windows\MainMenuBar</Filter>
     </ClCompile>
-    <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp">
-      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp">
-      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
-    </ClCompile>
     <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp">
       <Filter>Source Files\ToolsEngine\PropertyChanged</Filter>
     </ClCompile>
@@ -356,14 +362,20 @@
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp">
       <Filter>Source Files\ToolsEngine\Settings</Filter>
     </ClCompile>
-    <ClCompile Include="ToolsEngine\ViewElements\TreeView.cpp">
-      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolsEngine\ViewElements\TreeViewItem.cpp">
-      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
-    </ClCompile>
     <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuItemView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\TreeView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,9 @@
 
 #include "TreeViewItemCollapsibleBehaviour.h"
 #include "TreeViewItemCollapsibleIcon.h"
-#include "../../FatedQuestLibraries.h"
-#include "../GenericProperties/FunctionProperty.h"
-#include "../GenericProperties/ValueProperty.h"
+#include "../../../FatedQuestLibraries.h"
+#include "../../GenericProperties/FunctionProperty.h"
+#include "../../GenericProperties/ValueProperty.h"
 
 using namespace FatedQuestLibraries;
 

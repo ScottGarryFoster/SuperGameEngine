@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
 #include <string>
-#include "../ModelElements/FunctionModel.h"
-#include "../PropertyChanged/PropertyChangedEvent.h"
-#include "../PropertyChanged/PropertyChangedObserver.h"
-#include "../GenericProperties/FunctionProperty.h"
-#include "../GenericProperties/ValueProperty.h"
+#include "../../ModelElements/FunctionModel.h"
+#include "../../PropertyChanged/PropertyChangedEvent.h"
+#include "../../PropertyChanged/PropertyChangedObserver.h"
+#include "../../GenericProperties/FunctionProperty.h"
+#include "../../GenericProperties/ValueProperty.h"
 
 namespace SuperGameTools
 {

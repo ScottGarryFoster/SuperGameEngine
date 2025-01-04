@@ -5,9 +5,9 @@
 #include "../../ImGuiIncludes.h"
 #include "../../../Engine/Engine/Content/ContentManager.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
-#include "../../ToolsEngine/ViewElements/TreeView.h"
-#include "../../ToolsEngine/ViewElements/TreeViewItem.h"
-#include "../../ToolsEngine/ViewElements/TreeViewItemOnSelectedEventArguments.h"
+#include "../../ToolsEngine/ViewElements/TreeView/TreeView.h"
+#include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
+#include "../../ToolsEngine/ViewElements/TreeView/TreeViewItemOnSelectedEventArguments.h"
 
 using namespace SuperGameTools;
 

@@ -1,6 +1,6 @@
 #include "MenuItemView.h"
-#include "../../ImGuiIncludes.h"
-#include "../../FatedQuestLibraries.h"
+#include "../../../ImGuiIncludes.h"
+#include "../../../FatedQuestLibraries.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;

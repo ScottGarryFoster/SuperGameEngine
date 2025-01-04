@@ -1,7 +1,7 @@
 #include "MainMenuBar.h"
 #include "../../ImGuiIncludes.h"
-#include "../../ToolsEngine/ViewElements/MenuView.h"
-#include "../../ToolsEngine/ViewElements/MenuItemView.h"
+#include "../../ToolsEngine/ViewElements/Menu/MenuView.h"
+#include "../../ToolsEngine/ViewElements/Menu/MenuItemView.h"
 
 using namespace SuperGameTools;
 

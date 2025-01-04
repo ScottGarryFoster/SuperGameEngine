@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-#include "../../../../FatedQuest.Libraries/Observer/FEventArguments.h"
+#include "../../../../../FatedQuest.Libraries/Observer/FEventArguments.h"
 
 namespace SuperGameTools
 {
