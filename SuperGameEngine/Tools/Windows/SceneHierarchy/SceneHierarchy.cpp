@@ -46,6 +46,7 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
     m_treeViewItem = std::make_shared<TreeViewItem>();
     m_treeViewItem->GetLabel()->SetValue("Scene");
+    m_treeViewItem->GetOpenOnLoad()->SetValue(true);
 
     auto children = std::vector<std::shared_ptr<TreeViewItem>>();
     for (std::shared_ptr<StoredDocumentNode> child = document->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
@@ -89,6 +90,11 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_tree = std::make_shared<TreeView>(windowPackage->GetContentManager(), m_treeViewItem);
     m_tree->ShouldRootBeFrame(true);
     m_tree->SetDepthToStartIndentation(1);
+}
+
+void SceneHierarchy::Update()
+{
+    m_tree->Update();
 }
 
 void SceneHierarchy::Draw()

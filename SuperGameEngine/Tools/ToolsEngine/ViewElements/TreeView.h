@@ -25,6 +25,11 @@ namespace SuperGameTools
             const std::shared_ptr<TreeViewItem>& treeViewItem);
 
         /// <summary>
+        /// Called each frame.
+        /// </summary>
+        void Update();
+
+        /// <summary>
         /// Draws the menu.
         /// </summary>
         void Draw() const;
@@ -84,6 +89,25 @@ namespace SuperGameTools
         /// The size of the arrow.
         /// </summary>
         ImVec2 m_arrowSize;
+
+        /// <summary>
+        /// True means the final setup step has taken place and the tree can draw.
+        /// </summary>
+        bool m_haveSetup;
+
+        /// <summary>
+        /// Called once during an update to set-up the tree.
+        /// </summary>
+        void Setup();
+
+        /// <summary>
+        /// During the setup we need to take any defaults and make them actually come true.
+        /// This method does so, it takes the defaults and makes them actual values.
+        /// For instance default open.
+        /// </summary>
+        /// <param name="current">Current tree view item, send in root to begin with. </param>
+        /// <param name="depth">The depth in the tree. </param>
+        void SetAnyDefaultsAsActuals(const std::shared_ptr<TreeViewItem>& current, int depth) const;
 
         /// <summary>
         /// Renders a single item in the list.

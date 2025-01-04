@@ -18,6 +18,7 @@ TreeView::TreeView(
     m_shouldRootBeFramed = false;
     m_indentationDepth = 0;
     m_arrowSize = ImVec2(13, 13);
+    m_haveSetup = false;
 
     const std::string methodName = "TreeView::TreeView(std::shared_ptr<ContentManager>, std::shared_ptr<TreeViewItem>)";
     if (!m_contentManager)
@@ -44,8 +45,22 @@ TreeView::TreeView(
     }
 }
 
+void TreeView::Update()
+{
+    if (!m_haveSetup)
+    {
+        Setup();
+        m_haveSetup = true;
+    }
+}
+
 void TreeView::Draw() const
 {
+    if (!m_haveSetup)
+    {
+        return;
+    }
+
     RenderItem(m_treeViewItemRoot, 0);
 }
 
@@ -57,6 +72,24 @@ void TreeView::ShouldRootBeFrame(bool shouldRootBeFrame)
 void TreeView::SetDepthToStartIndentation(int depth)
 {
     m_indentationDepth = depth < 0 ? 0 : depth;
+}
+
+void TreeView::Setup()
+{
+    SetAnyDefaultsAsActuals(m_treeViewItemRoot, 0);
+}
+
+void TreeView::SetAnyDefaultsAsActuals(const std::shared_ptr<TreeViewItem>& current, int depth) const
+{
+    if (current->GetOpenOnLoad()->GetValue())
+    {
+        current->GetIsOpen()->SetValue(true);
+    }
+
+    for (const std::shared_ptr<TreeViewItem>& child : current->GetChildren()->GetValue())
+    {
+        SetAnyDefaultsAsActuals(child, depth + 1);
+    }
 }
 
 void TreeView::RenderItem(const std::shared_ptr<TreeViewItem>& current, int depth) const

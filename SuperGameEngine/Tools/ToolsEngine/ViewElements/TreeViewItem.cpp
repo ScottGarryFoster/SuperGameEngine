@@ -18,6 +18,7 @@ TreeViewItem::TreeViewItem()
 
     m_isOpen = std::make_shared<ValueProperty<bool>>("IsOpen", false);
     m_isSelected = std::make_shared<ValueProperty<bool>>("IsSelected", false);
+    m_openOnStart = std::make_shared<ValueProperty<bool>>("OpenOnStart", false);
 
     m_onSelectedEvent = std::make_shared<FEvent>();
 }
@@ -34,6 +35,11 @@ void TreeViewItem::OnPropertyChanged(const std::string& name)
 std::shared_ptr<ValueProperty<std::string>> TreeViewItem::GetLabel() const
 {
     return m_label;
+}
+
+std::shared_ptr<ValueProperty<bool>> TreeViewItem::GetOpenOnLoad() const
+{
+    return m_openOnStart;
 }
 
 std::shared_ptr<ValueProperty<TreeViewItemCollapsibleBehaviour>> TreeViewItem::GetCollapsibleType() const

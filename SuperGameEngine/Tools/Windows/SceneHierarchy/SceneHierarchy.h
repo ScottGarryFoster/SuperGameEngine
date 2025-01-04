@@ -32,7 +32,7 @@ namespace SuperGameTools
         /// <summary>
         /// Called every frame.
         /// </summary>
-        virtual void Update() override {}
+        virtual void Update() override;
 
         /// <summary>
         /// Called on draw.

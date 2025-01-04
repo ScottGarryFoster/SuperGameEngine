@@ -38,6 +38,13 @@ namespace SuperGameTools
         virtual std::shared_ptr<ValueProperty<std::string>> GetLabel() const;
 
         /// <summary>
+        /// True means this should be open when the item loads.
+        /// False is default.
+        /// </summary>
+        /// <returns>True means this should be open when the item loads. </returns>
+        virtual std::shared_ptr<ValueProperty<bool>> GetOpenOnLoad() const;
+
+        /// <summary>
         /// How the item should open and close.
         /// </summary>
         /// <returns>How the item should open and close. </returns>
@@ -84,6 +91,12 @@ namespace SuperGameTools
         /// Label shown to the user.
         /// </summary>
         std::shared_ptr<ValueProperty<std::string>> m_label;
+
+        /// <summary>
+        /// True means this should be open when the item loads.
+        /// False is default.
+        /// </summary>
+        std::shared_ptr<ValueProperty<bool>> m_openOnStart;
 
         /// <summary>
         /// Children of the tree view item.
