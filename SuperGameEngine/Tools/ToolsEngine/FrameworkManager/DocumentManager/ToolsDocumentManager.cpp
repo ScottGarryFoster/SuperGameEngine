@@ -107,7 +107,7 @@ void ToolsDocumentManager::OpenFile(DocumentEventOpenLevel level)
     if (!document)
     {
         // TODO: Create an error / general message box for the user. #114
-        Log::Warning("The file opened could not be loaded because it was not registered as a valid type."
+        Log::Error("The file opened could not be loaded because it was not registered as a valid type."
                      " Filepath: " + gamePackagePath,
             "ToolsDocumentManager::OpenFile(DocumentEventOpenLevel)");
         return;
@@ -116,7 +116,25 @@ void ToolsDocumentManager::OpenFile(DocumentEventOpenLevel level)
     // We need to set this up.
     // This needs to occur now because Windows Package is not static,
     // and we do not want it to be.
-    document->Setup(gamePackagePath, m_windowsPackage);
+    if (auto windowsPackage = m_windowsPackage.lock())
+    {
+        document->Setup(gamePackagePath, 
+            windowsPackage->GetContentManager()->GamePackage(), 
+            windowsPackage->GetPackagePaths());
+    }
+    else
+    {
+        Log::Error("Windows package is no longer alive. Cannot create/open document.",
+            "ToolsDocumentManager::OpenFile(DocumentEventOpenLevel)");
+        return;
+    }
+
+    if (!document->Load())
+    {
+        Log::Error("Could not load document. Filepath: " + gamePackagePath,
+            "ToolsDocumentManager::OpenFile(DocumentEventOpenLevel)");
+        return;
+    }
 
     auto args = std::make_shared<DocumentActionEventArguments>(
         document, DocumentEventAction::Open, level);

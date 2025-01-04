@@ -6,6 +6,11 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "../UpdateableObject/UpdateableObject.h"
 
+namespace SuperGameTools
+{
+    class SceneDocument;
+}
+
 using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
@@ -73,12 +78,20 @@ namespace SuperGameTools
         std::shared_ptr<TreeViewItem> m_treeViewItem;
 
         /// <summary>
+        /// The current open document.
+        /// </summary>
+        /// <remark>
+        /// Will change when we add multi-scenes to a vector.
+        /// </remark>
+        std::shared_ptr<SceneDocument> m_sceneDocument;
+
+        /// <summary>
         /// Loads a scene from file.
         /// This will not add a scene it simply loads it as the only scene.
         /// </summary>
-        /// <param name="path">Path to load. Relative to game package.</param>
+        /// <param name="document">Scene document. </param>
         /// <returns>True means loaded. </returns>
-        bool LoadScene(const std::string& path);
+        bool LoadScene(const std::shared_ptr<SceneDocument>& document);
 
         bool m_testPopup;
         std::string m_testPopupText;

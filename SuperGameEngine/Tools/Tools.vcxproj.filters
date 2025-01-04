@@ -455,9 +455,6 @@
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp">
       <Filter>Source Files\ToolsEngine\Settings</Filter>
     </ClCompile>
-    <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
-      <Filter>Source Files\Windows\SceneHeirachy</Filter>
-    </ClCompile>
     <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuItemView.cpp">
       <Filter>Source Files\ToolsEngine\ViewElements\Menu</Filter>
     </ClCompile>
@@ -490,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.cpp">
       <Filter>Source Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

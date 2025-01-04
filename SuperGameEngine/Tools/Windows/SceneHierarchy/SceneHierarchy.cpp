@@ -106,7 +106,7 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
         {
             if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(menuItemSelected->GetDocument()))
             {
-                if (LoadScene(menuItemSelected->GetDocument()->GetFilepath()))
+                if (LoadScene(sceneDocument))
                 {
                     m_testPopup = true;
                     m_testPopupText = "Loaded";
@@ -126,31 +126,22 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
 }
 
-bool SceneHierarchy::LoadScene(const std::string& path)
+bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
 {
-    if (!m_windowPackage->GetContentManager())
-    {
-        Log::Error("No Content Manager found.", "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
-        return false;
-    }
-
-    if (!m_windowPackage->GetContentManager()->GamePackage())
-    {
-        Log::Error("No Game Package found.", "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
-        return false;
-    }
-
-    m_sceneLoader = std::make_shared<ToolsSceneLoader>(
-        m_windowPackage->GetContentManager()->GamePackage());
-
-    std::string properPath = File::Sanitize(path);
-
-    std::shared_ptr<ModifiableDocument> document =
-        m_sceneLoader->LoadScene(properPath);
     if (!document)
     {
-        Log::Error("Could not load scene. Path: " + properPath,
-            "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)");
+        Log::Error("No document given.",
+            "bool SceneHierarchy::LoadScene(std::shared_ptr<SceneDocument>)");
+        return false;
+    }
+    m_sceneDocument = document;
+    m_sceneDocument->Save();
+
+    std::shared_ptr<ModifiableDocument> sceneDocument = document->GetDocument();
+    if (!sceneDocument)
+    {
+        Log::Error("No document loaded into the scene document.",
+            "bool SceneHierarchy::LoadScene(std::shared_ptr<SceneDocument>)");
         return false;
     }
 
@@ -159,7 +150,7 @@ bool SceneHierarchy::LoadScene(const std::string& path)
     m_treeViewItem->GetOpenOnLoad()->SetValue(true);
 
     auto children = std::vector<std::shared_ptr<TreeViewItem>>();
-    for (std::shared_ptr<StoredDocumentNode> child = document->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
+    for (std::shared_ptr<StoredDocumentNode> child = sceneDocument->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         auto childItem = std::make_shared<TreeViewItem>();
         childItem->GetLabel()->SetValue("Game Object");

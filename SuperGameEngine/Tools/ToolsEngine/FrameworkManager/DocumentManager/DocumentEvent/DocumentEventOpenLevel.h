@@ -10,7 +10,7 @@
 namespace SuperGameTools
 {
     /// <summary>
-    /// How the document suggests being openned.
+    /// How the document suggests being opened.
     /// </summary>
     enum class DocumentEventOpenLevel
     {

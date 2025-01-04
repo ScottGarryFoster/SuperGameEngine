@@ -51,7 +51,7 @@ const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(const s
 {
     for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributesStored)
     {
-        std::string adjustedName = SanitizeAttribute(attribute->Name());
+        std::string adjustedName = attribute->Name();
         if (adjustedName == criteria)
         {
             return attribute;
@@ -73,7 +73,7 @@ const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(
     std::string lowerCriteria = StringHelpers::ToLower(criteria);
     for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributesStored)
     {
-        std::string adjustedName = SanitizeAttribute(attribute->Name());
+        std::string adjustedName = attribute->Name();
         if (StringHelpers::ToLower(adjustedName) == lowerCriteria)
         {
             return attribute;
@@ -199,19 +199,4 @@ bool ModifiableNode::Load(const std::shared_ptr<StoredDocumentNode>& storedNode)
     SetAllChildrenNodes(modifiableNode);
 
     return true;
-}
-
-std::string ModifiableNode::SanitizeAttribute(const std::string& input) const
-{
-    if (input.size() < 3)
-    {
-        return input;
-    }
-
-    if (input.front() == '"' && input.back() == '"')
-    {
-        return input.substr(1, input.length() - 2);
-    }
-
-    return input;
 }

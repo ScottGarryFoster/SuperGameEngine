@@ -2,10 +2,16 @@
 #include <memory>
 #include <string>
 
+namespace FatedQuestLibraries
+{
+    class PackagePaths;
+    class GamePackage;
+}
+
+using namespace FatedQuestLibraries;
+
 namespace SuperGameTools
 {
-    class WindowPackage;
-
     /// <summary>
     /// An asset which can be loaded into the tools.
     /// </summary>
@@ -18,9 +24,13 @@ namespace SuperGameTools
         /// Called directly after construction.
         /// Required as only certain things have certain elements of the setup.
         /// </summary>
-        /// <param name="filepath">Filepath from game package. </param>
-        /// <param name="m_windowsPackage">Everything needed to load and save. </param>
-        virtual void Setup(const std::string& filepath, const std::weak_ptr<WindowPackage>& m_windowsPackage) = 0;
+        /// <param name="filepath">Holds the content for the game. </param>
+        /// <param name="gamePackage">Holds the content for the game. </param>
+        /// <param name="packagePaths">Helper class to grab paths. </param>
+        virtual void Setup(
+            const std::string& filepath, 
+            const std::shared_ptr<GamePackage>& gamePackage,
+            const std::shared_ptr<PackagePaths>& packagePaths) = 0;
 
         /// <summary>
         /// Gets the filepath from the game package source.
@@ -37,12 +47,14 @@ namespace SuperGameTools
         /// <summary>
         /// Loads the document.
         /// </summary>
-        virtual void Load() = 0;
+        /// <returns>True means loaded. </returns>
+        virtual bool Load() = 0;
 
         /// <summary>
         /// Saves the document.
         /// </summary>
-        virtual void Save() = 0;
+        /// <returns>True means saved. </returns>
+        virtual bool Save() = 0;
     };
 }
 

@@ -3,6 +3,11 @@
 #include "../../FrameworkManager/DocumentManager/DocumentFactory.h"
 #include "../../FrameworkManager/DocumentManager/DocumentMatcher.h"
 
+namespace FatedQuestLibraries
+{
+    class ModifiableDocument;
+}
+
 namespace SuperGameTools
 {
     /// <summary>
@@ -16,12 +21,14 @@ namespace SuperGameTools
         /// <summary>
         /// Loads the document.
         /// </summary>
-        virtual void Load() override {}
+        /// <returns>True means loaded. </returns>
+        virtual bool Load() override;
 
         /// <summary>
         /// Saves the document.
         /// </summary>
-        virtual void Save() override {}
+        /// <returns>True means saved. </returns>
+        virtual bool Save() override;
 
         /// <summary>
         /// True when the path means this document matches the document.
@@ -39,6 +46,18 @@ namespace SuperGameTools
         /// <param name="documentContents">Document contents. </param>
         /// <returns>True when the path means this document matches the document. </returns>
         virtual bool IsDocument(const std::string& path, const std::weak_ptr<StoredDocument>& documentContents) const override;
+
+        /// <summary>
+        /// Get the actual stored document.
+        /// </summary>
+        /// <returns>The actual stored document. </returns>
+        std::shared_ptr<ModifiableDocument> GetDocument() const;
+
+    private:
+        /// <summary>
+        /// Actual document.
+        /// </summary>
+        std::shared_ptr<ModifiableDocument> m_storedDocument;
     };
 
     REGISTER_DOCUMENT(std::make_shared<SceneDocument>(), SceneDocument);
