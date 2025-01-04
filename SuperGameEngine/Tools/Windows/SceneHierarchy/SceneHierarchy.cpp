@@ -135,7 +135,6 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         return false;
     }
     m_sceneDocument = document;
-    m_sceneDocument->Save();
 
     std::shared_ptr<ModifiableDocument> sceneDocument = document->GetDocument();
     if (!sceneDocument)
