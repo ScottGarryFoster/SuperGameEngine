@@ -25,7 +25,7 @@ namespace SuperGameTools
         EitherOr,
 
         /// <summary>
-        /// Openned from a place which demand exclusivity.
+        /// Opened from a place which demand exclusivity.
         /// </summary>
         Exclusive,
 
