@@ -294,6 +294,9 @@
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemOnSelectedEventArguments.h">
       <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemViewEventArguments.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

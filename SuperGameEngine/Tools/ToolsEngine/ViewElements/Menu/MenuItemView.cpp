@@ -1,4 +1,6 @@
 #include "MenuItemView.h"
+
+#include "MenuItemViewEventArguments.h"
 #include "../../../ImGuiIncludes.h"
 #include "../../../FatedQuestLibraries.h"
 
@@ -112,6 +114,8 @@ void MenuItemView::Draw()
         m_selected->GetValue(),
         m_enabled->GetValue()))
     {
-        m_onSelected->Invoke(nullptr);
+        // This is only a weak pointer.
+        auto args = std::make_shared<MenuItemViewEventArguments>(shared_from_this());
+        m_onSelected->Invoke(args);
     }
 }

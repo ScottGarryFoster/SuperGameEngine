@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// A single item on a menu.
     /// </summary>
-    class MenuItemView : public PropertyChangedEvent, public PropertyChangedObserver
+    class MenuItemView : public PropertyChangedEvent, public PropertyChangedObserver, public std::enable_shared_from_this<MenuItemView>
     {
     public:
         MenuItemView();

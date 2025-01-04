@@ -5,6 +5,9 @@
 #include "../../ImGuiIncludes.h"
 #include "../../../Engine/Engine/Content/ContentManager.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
+#include "../../ToolsEngine/ViewElements/Menu/MenuItemView.h"
+#include "../../ToolsEngine/ViewElements/Menu/MenuItemViewEventArguments.h"
+#include "../../ToolsEngine/ViewElements/Menu/MenuView.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeView.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItemOnSelectedEventArguments.h"
@@ -20,6 +23,8 @@ SceneHierarchy::SceneHierarchy()
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
+
+    m_windowPackage->GetTopMenu()->GetMenuItem("FileOpen")->OnSelected()->Subscribe(shared_from_this());
 
     LoadScene("savedOut.txt");
 }
@@ -58,11 +63,19 @@ void SceneHierarchy::Draw()
 
 void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
-    if (auto treeViewItemArgs = std::static_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
+    if (auto treeViewItemArgs = std::dynamic_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
     {
         // Test Popup
         m_testPopup = true;
         m_testPopupText = treeViewItemArgs->GetTreeViewItem()->GetLabel()->GetValue();
+    }
+    else if (auto menuItemSelected = std::dynamic_pointer_cast<MenuItemViewEventArguments>(arguments))
+    {
+        if (auto menuItem = menuItemSelected->GetMenuItem().lock())
+        {
+            m_testPopup = true;
+            m_testPopupText = menuItem->GetLabel()->GetValue() + " | " + menuItem->GetKey();
+        }
     }
 }
 

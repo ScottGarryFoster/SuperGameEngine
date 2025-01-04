@@ -235,6 +235,7 @@
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemView.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemViewEventArguments.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuView.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeView.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.h" />
