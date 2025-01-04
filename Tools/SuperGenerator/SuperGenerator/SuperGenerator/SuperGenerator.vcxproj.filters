@@ -18,9 +18,15 @@
     <ClCompile Include="SuperGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DebugLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FatedQuestLibraries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

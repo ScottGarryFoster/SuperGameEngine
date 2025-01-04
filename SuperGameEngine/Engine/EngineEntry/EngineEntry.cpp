@@ -5,6 +5,7 @@
 
 #include "../Engine/Factory/EngineFactory.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
+#include "../.././../FatedQuest.Libraries/Logger/AllReferences.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;

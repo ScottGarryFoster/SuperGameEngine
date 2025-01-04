@@ -139,7 +139,7 @@ namespace SuperGameEngineTests_Structural_Loaders
         // Assert
         std::shared_ptr<StoredDocumentNode> actualNode = actual->GetRoot();
         std::shared_ptr<StoredDocumentNode> firstChild = actualNode->GetFirstChild();
-        std::shared_ptr<StoredDocumentAttribute> actualGuid = firstChild->Attribute("Guid", false);
+        std::shared_ptr<StoredDocumentAttribute> actualGuid = firstChild->Attribute("Guid", CaseSensitivity::IgnoreCase);
         ASSERT_TRUE(actualGuid);
         ASSERT_TRUE(GUIDHelpers::ToString(*go->GetGuid()) == actualGuid->Value())
             << GUIDHelpers::ToString(*go->GetGuid()) << " != "
@@ -166,7 +166,7 @@ namespace SuperGameEngineTests_Structural_Loaders
         ASSERT_TRUE(componentNode);
         ASSERT_EQ("Component", componentNode->Name());
 
-        std::shared_ptr<StoredDocumentAttribute> actualType = componentNode->Attribute("Type", false);
+        std::shared_ptr<StoredDocumentAttribute> actualType = componentNode->Attribute("Type", CaseSensitivity::IgnoreCase);
         ASSERT_TRUE(actualType);
         ASSERT_TRUE(testComponent == actualType->Value())
             << testComponent << " != "

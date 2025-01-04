@@ -225,6 +225,7 @@
     <ClInclude Include="GamePackage\GamePackage.h" />
     <ClInclude Include="GamePackage\PackageFile.h" />
     <ClInclude Include="GamePackage\PackageFileArchived.h" />
+    <ClInclude Include="GamePackage\PackageFileOrigin.h" />
     <ClInclude Include="GamePackage\PackageFilePathing.h" />
     <ClInclude Include="GamePackage\PackageFileStorageType.h" />
     <ClInclude Include="GamePackage\PackageFileUnarchived.h" />

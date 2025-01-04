@@ -4,7 +4,7 @@
 namespace SuperGameTools
 {
     /// <summary>
-    /// Holds a string as part of a larger View/Model.
+    /// Holds a property as part of a larger View/Model.
     /// </summary>
     template <typename ValueType>
     class ValueProperty

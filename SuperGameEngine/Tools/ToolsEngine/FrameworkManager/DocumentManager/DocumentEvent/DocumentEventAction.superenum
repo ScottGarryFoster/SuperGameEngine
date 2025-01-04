@@ -1,0 +1,26 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        What occured to trigger the event.
+    </EnumComment>
+    <EnumName Name="DocumentEventAction">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Open>
+            Document is being openned.
+        </Open>
+        <Save>
+            Document needs to be saved.
+        </Save>
+        <Close>
+            Document is being closed.
+        </Close>
+        <Reload>
+            Document contents has changed and should be reloaded.
+        </Reload>
+    </EnumName>
+</SuperEnum>

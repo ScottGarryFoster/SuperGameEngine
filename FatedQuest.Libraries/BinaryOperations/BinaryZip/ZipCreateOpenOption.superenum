@@ -1,7 +1,6 @@
 <SuperEnum Type="Standard">
     <Header>
     #pragma once
-    #include "../../StandardOperations/Text/StringHelpers.h"
     </Header>
     <Namespace Name="FatedQuestLibraries" />
     <EnumComment>

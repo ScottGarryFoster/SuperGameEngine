@@ -1,5 +1,8 @@
 #include "MenuView.h"
-#include "../../ImGuiIncludes.h"
+
+#include <ranges>
+
+#include "../../../ImGuiIncludes.h"
 #include "MenuItemView.h"
 
 using namespace SuperGameTools;
@@ -64,4 +67,26 @@ void MenuView::Draw() const
         }
         ImGui::EndMainMenuBar();
     }
+}
+
+std::shared_ptr<MenuItemView> MenuView::GetMenuItem(const std::string& key) const
+{
+    if (key.empty())
+    {
+        Log::Error("Key is empty.", "MenuView::GetMenuItem(std::string)");
+        return {};
+    }
+
+    for (const auto& menuItemViews : m_menuItems | std::views::values)
+    {
+        for (const std::shared_ptr<MenuItemView>& menuItem: menuItemViews)
+        {
+            if (menuItem->GetKey() == key)
+            {
+                return menuItem;
+            }
+        }
+    }
+
+    return {};
 }

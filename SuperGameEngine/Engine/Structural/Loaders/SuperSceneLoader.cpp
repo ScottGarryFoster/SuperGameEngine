@@ -59,7 +59,7 @@ void SuperSceneLoader::CreateSceneLevelAttributesAndNodes(
     const std::shared_ptr<StoredDocumentNode>& sceneNode, 
     const std::shared_ptr<SuperScene>& scene) const
 {
-    if (auto guid = sceneNode->Attribute("Guid", false))
+    if (auto guid = sceneNode->Attribute("Guid", CaseSensitivity::IgnoreCase))
     {
         if (std::shared_ptr<Guid> parsed = GUIDHelpers::CreateFromString(guid->Value()))
         {
@@ -86,7 +86,7 @@ void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
     const std::shared_ptr<StoredDocumentNode>& gameObjectNode,
     const std::shared_ptr<SuperGameObject>& superGameObject) const
 {
-    if (auto guid = gameObjectNode->Attribute("Guid", false))
+    if (auto guid = gameObjectNode->Attribute("Guid", CaseSensitivity::IgnoreCase))
     {
         if (std::shared_ptr<Guid> parsed = GUIDHelpers::CreateFromString(guid->Value()))
         {
@@ -102,7 +102,7 @@ void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
         }
 
         std::string componentType = {};
-        if (auto typeAttribute = child->Attribute("Type", false))
+        if (auto typeAttribute = child->Attribute("Type", CaseSensitivity::IgnoreCase))
         {
             componentType = typeAttribute->Value();
         }

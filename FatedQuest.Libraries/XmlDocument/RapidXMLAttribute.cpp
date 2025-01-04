@@ -21,7 +21,7 @@ const std::string RapidXMLAttribute::Name() const
 
 void RapidXMLAttribute::SetName(const std::string& name)
 {
-    m_name = name;
+    m_name = SanitizeAttribute(name);
 }
 
 const std::string RapidXMLAttribute::Value() const
@@ -31,5 +31,20 @@ const std::string RapidXMLAttribute::Value() const
 
 void RapidXMLAttribute::SetValue(const std::string& value)
 {
-    m_value = value;
+    m_value = SanitizeAttribute(value);
+}
+
+std::string RapidXMLAttribute::SanitizeAttribute(const std::string& input) const
+{
+    if (input.size() < 3)
+    {
+        return input;
+    }
+
+    if (input.front() == '"' && input.back() == '"')
+    {
+        return input.substr(1, input.length() - 2);
+    }
+
+    return input;
 }

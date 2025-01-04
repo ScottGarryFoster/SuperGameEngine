@@ -17,7 +17,7 @@ namespace FatedQuestLibraries
         /// Returns the name of the attribute.
         /// </summary>
         /// <returns>The name of the attribute. </returns>
-        virtual const std::string Name() const;
+        virtual const std::string Name() const override;
 
         /// <summary>
         /// Sets name of the attribute.
@@ -32,7 +32,7 @@ namespace FatedQuestLibraries
         /// The value of the attribute.
         /// Could be empty if nothing is given.
         /// </returns>
-        virtual const std::string Value() const;
+        virtual const std::string Value() const override;
 
         /// <summary>
         /// Sets the value for the attribute.
@@ -51,6 +51,13 @@ namespace FatedQuestLibraries
         /// Value of the attribute.
         /// </summary>
         std::string m_value;
+
+        /// <summary>
+        /// Ensures attribute does not contain xml escaped strings which cause it to not match plain text.
+        /// </summary>
+        /// <param name="input">Raw input. </param>
+        /// <returns>Input which should match outsider strings. </returns>
+        std::string SanitizeAttribute(const std::string& input) const;
     };
 }
 

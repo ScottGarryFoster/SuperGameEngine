@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <memory>
+
+#include "../SharedEnums/CaseSensitivity.h"
 #include "../StoredDocument/StoredDocumentAttribute.h"
 
 namespace FatedQuestLibraries
@@ -37,7 +39,7 @@ namespace FatedQuestLibraries
         /// <param name="criteria">Name to search for.</param>
         /// <param name="caseSensitive">True means any case is acceptable. </param>
         /// <returns>Attribute if found, or empty if not. </returns>
-        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, bool caseSensitive) const = 0;
+        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, CaseSensitivity caseSensitive) const = 0;
 
         /// <summary>
         /// Gets the first child node.

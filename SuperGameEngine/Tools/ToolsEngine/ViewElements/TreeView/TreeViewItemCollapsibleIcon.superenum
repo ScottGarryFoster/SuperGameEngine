@@ -1,0 +1,24 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        How the tree view item should display with an icon.
+        Does not affect if the element can open or close.
+    </EnumComment>
+    <EnumName Name="TreeViewItemCollapsibleIcon">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <NoIcon>
+            Nothing is displayed next to it.
+        </NoIcon>
+        <Arrow>
+            Arrow is displayed next to it. Will change on open/close.
+        </Arrow>
+        <Bullet>
+            Bullet point is displayed next to it.
+        </Bullet>
+    </EnumName>
+</SuperEnum>

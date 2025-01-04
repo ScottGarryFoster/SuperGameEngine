@@ -34,12 +34,13 @@ namespace SuperGameTools
         /// </summary>
         virtual void TearDown() override;
 
-    private:
         /// <summary>
-        /// Everything you need to run a window.
+        /// Gets the top menu bar.
         /// </summary>
-        std::shared_ptr<WindowPackage> m_windowPackage;
+        /// <returns>The top menu bar. </returns>
+        std::shared_ptr<MenuView> GetTopMenuBar() const;
 
+    private:
         /// <summary>
         /// Entire top menu bar.
         /// </summary>

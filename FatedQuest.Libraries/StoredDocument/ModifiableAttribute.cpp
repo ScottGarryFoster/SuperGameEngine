@@ -26,10 +26,25 @@ const std::string ModifiableAttribute::Value() const
 
 void ModifiableAttribute::SetName(const std::string& newName)
 {
-    m_name = newName;
+    m_name = SanitizeAttribute(newName);
 }
 
 void ModifiableAttribute::SetValue(const std::string& newValue)
 {
-    m_value = newValue;
+    m_value = SanitizeAttribute(newValue);
+}
+
+std::string ModifiableAttribute::SanitizeAttribute(const std::string& input) const
+{
+    if (input.size() < 3)
+    {
+        return input;
+    }
+
+    if (input.front() == '"' && input.back() == '"')
+    {
+        return input.substr(1, input.length() - 2);
+    }
+
+    return input;
 }

@@ -1,8 +1,11 @@
 #pragma once
 #include "StoredDocumentNode.h"
+#include "../SharedEnums/CaseSensitivity.h"
 
 namespace FatedQuestLibraries
 {
+    class ModifiableAttribute;
+
     /// <summary>
     /// A document node which can be modified.
     /// </summary>
@@ -49,7 +52,7 @@ namespace FatedQuestLibraries
         /// <param name="criteria">Name to search for.</param>
         /// <param name="caseSensitive">True means any case is acceptable. </param>
         /// <returns>Attribute if found, or empty if not. </returns>
-        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, bool caseSensitive) const override;
+        virtual const std::shared_ptr<StoredDocumentAttribute> Attribute(const std::string& criteria, CaseSensitivity caseSensitive) const override;
 
         /// <summary>
         /// Gets the first child node.
@@ -108,6 +111,14 @@ namespace FatedQuestLibraries
         /// <param name="innerText">Inner text. </param>
         void SetInnerText(const std::string& innerText);
 
+        /// <summary>
+        /// Loads the information from the stored node in this one such
+        /// that you can now modify it.
+        /// </summary>
+        /// <param name="storedNode">Stored node. </param>
+        /// <returns>True means parsed. </returns>
+        bool Load(const std::shared_ptr<StoredDocumentNode>& storedNode);
+
     private:
         /// <summary>
         /// Name of the node.
@@ -117,7 +128,12 @@ namespace FatedQuestLibraries
         /// <summary>
         /// Attributes on the node.
         /// </summary>
-        std::vector<std::shared_ptr<StoredDocumentAttribute>> m_attributes;
+        std::vector<std::shared_ptr<ModifiableAttribute>> m_attributes;
+
+        /// <summary>
+        /// Precast stored document attributes.
+        /// </summary>
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> m_attributesStored;
 
         /// <summary>
         /// First child within this node.
@@ -138,13 +154,6 @@ namespace FatedQuestLibraries
         /// The inner text within this node.
         /// </summary>
         std::string m_innerText;
-
-        /// <summary>
-        /// Ensures attribute does not contain xml escaped strings which cause it to not match plain text.
-        /// </summary>
-        /// <param name="input">Raw input. </param>
-        /// <returns>Input which should match outsider strings. </returns>
-        std::string SanitizeAttribute(const std::string& input) const;
     };
 }
 

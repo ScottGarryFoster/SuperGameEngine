@@ -41,3 +41,43 @@ void WindowPackage::SetEngineEntryCommunication(const std::shared_ptr<EngineEntr
 {
     m_engineEntryCommunication = engineEntryCommunication;
 }
+
+std::shared_ptr<SerializableParser> WindowPackage::GetParser() const
+{
+    return m_serializableParser;
+}
+
+void WindowPackage::SetParser(const std::shared_ptr<SerializableParser>& parser)
+{
+    m_serializableParser = parser;
+}
+
+std::shared_ptr<MenuView> WindowPackage::GetTopMenu() const
+{
+    return m_menuView;
+}
+
+void WindowPackage::SetTopMenu(const std::shared_ptr<MenuView>& menuView)
+{
+    m_menuView = menuView;
+}
+
+std::shared_ptr<FrameworkManager> WindowPackage::GetFrameworkManager() const
+{
+    return m_frameworkManager;
+}
+
+void WindowPackage::SetFrameworkManager(const std::shared_ptr<FrameworkManager>& frameworkManager)
+{
+    m_frameworkManager = frameworkManager;
+}
+
+std::shared_ptr<PackagePaths> WindowPackage::GetPackagePaths() const
+{
+    return m_packagePaths;
+}
+
+void WindowPackage::SetPackagePaths(const std::shared_ptr<PackagePaths>& packagePaths)
+{
+    m_packagePaths = packagePaths;
+}

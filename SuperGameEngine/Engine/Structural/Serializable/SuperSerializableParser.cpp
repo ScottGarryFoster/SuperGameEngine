@@ -69,7 +69,7 @@ std::string SuperSerializableParser::ParseFromParent(
             continue;
         }
 
-        std::shared_ptr<StoredDocumentAttribute> nameAttribute = child->Attribute("Name", false);
+        std::shared_ptr<StoredDocumentAttribute> nameAttribute = child->Attribute("Name", CaseSensitivity::IgnoreCase);
         if (!nameAttribute)
         {
             continue;
@@ -90,7 +90,7 @@ std::string SuperSerializableParser::Parse(
     const std::string& defaultValue,
     const std::shared_ptr<StoredDocumentNode>& data) const
 {
-    std::shared_ptr<StoredDocumentAttribute> valueAttribute = data->Attribute("Value", false);
+    std::shared_ptr<StoredDocumentAttribute> valueAttribute = data->Attribute("Value", CaseSensitivity::IgnoreCase);
     if (!valueAttribute)
     {
         return defaultValue;

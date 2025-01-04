@@ -48,6 +48,9 @@
     <ClInclude Include="Converters\RapidDocumentToXml.h">
       <Filter>Header Files\Converters</Filter>
     </ClInclude>
+    <ClInclude Include="Converters\XmlToModifiableDocument.h">
+      <Filter>Header Files\Converters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Converters\RapidDocumentToXml.cpp">
+      <Filter>Source Files\Converters</Filter>
+    </ClCompile>
+    <ClCompile Include="Converters\XmlToModifiableDocument.cpp">
       <Filter>Source Files\Converters</Filter>
     </ClCompile>
   </ItemGroup>

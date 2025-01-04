@@ -3,16 +3,25 @@
 #include <SDL_render.h>
 #include "../../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace FatedQuestLibraries
+{
+    class PackagePaths;
+}
+
 namespace SuperGameEngine
 {
+    class SerializableParser;
     class ContentManager;
     class SDLRendererReader;
 }
 
 using namespace SuperGameEngine;
+using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
 {
+    class FrameworkManager;
+    class MenuView;
     class EngineEntryCommunication;
 
     /// <summary>
@@ -71,6 +80,55 @@ namespace SuperGameTools
         /// <param name="engineEntryCommunication">New EngineEntryCommunication. </param>
         void SetEngineEntryCommunication(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication);
 
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        /// <returns>Helps to parse serializable objects. </returns>
+        std::shared_ptr<SerializableParser> GetParser() const;
+
+        /// <summary>
+        /// Set parser.
+        /// </summary>
+        /// <param name="parser">New parser. </param>
+        void SetParser(const std::shared_ptr<SerializableParser>& parser);
+
+        /// <summary>
+        /// Get the menu which is the menu going across the top of the
+        /// application.
+        /// </summary>
+        /// <returns>The top menu. </returns>
+        std::shared_ptr<MenuView> GetTopMenu() const;
+
+        /// <summary>
+        /// Set the new top menu.
+        /// </summary>
+        /// <param name="menuView">The top menu. </param>
+        void SetTopMenu(const std::shared_ptr<MenuView>& menuView);
+
+        /// <summary>
+        /// Manages and holds the larger services for the entire tools engine.
+        /// </summary>
+        /// <returns>Manages and holds the larger services for the entire tools engine. </returns>
+        std::shared_ptr<FrameworkManager> GetFrameworkManager() const;
+
+        /// <summary>
+        /// Manages and holds the larger services for the entire tools engine.
+        /// </summary>
+        /// <param name="frameworkManager">New framework manager. </param>
+        void SetFrameworkManager(const std::shared_ptr<FrameworkManager>& frameworkManager);
+
+        /// <summary>
+        /// Helper class to grab paths.
+        /// </summary>
+        /// <returns>Helper class to grab paths. </returns>
+        std::shared_ptr<PackagePaths> GetPackagePaths() const;
+
+        /// <summary>
+        /// Set package paths.
+        /// </summary>
+        /// <param name="packagePaths">Helper class to grab paths. </param>
+        void SetPackagePaths(const std::shared_ptr<PackagePaths>& packagePaths);
+
     private:
 
         /// <summary>
@@ -94,5 +152,25 @@ namespace SuperGameTools
         /// Communication with the Engine Entry.
         /// </summary>
         std::shared_ptr<EngineEntryCommunication> m_engineEntryCommunication;
+
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        std::shared_ptr<SerializableParser> m_serializableParser;
+
+        /// <summary>
+        /// The top menu bar.
+        /// </summary>
+        std::shared_ptr<MenuView> m_menuView;
+
+        /// <summary>
+        /// Manages and holds the larger services for the entire tools engine.
+        /// </summary>
+        std::shared_ptr<FrameworkManager> m_frameworkManager;
+
+        /// <summary>
+        /// Helper class to grab paths.
+        /// </summary>
+        std::shared_ptr<PackagePaths> m_packagePaths;
     };
 }

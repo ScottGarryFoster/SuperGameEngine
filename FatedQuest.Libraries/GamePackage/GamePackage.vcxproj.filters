@@ -90,6 +90,9 @@
     <ClInclude Include="AllReferences.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GamePackage\PackageFileOrigin.h">
+      <Filter>Header Files\GamePackage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

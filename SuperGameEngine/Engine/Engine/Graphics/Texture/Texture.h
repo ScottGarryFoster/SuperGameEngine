@@ -25,7 +25,7 @@ namespace SuperGameEngine
         /// <param name="filePath">File path to the texture. </param>
         /// <param name="errors">If there are errors this is the reason why the texture could not be created. </param>
         /// <returns>True means created, false means not. </returns>
-        bool LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors);
+        virtual bool LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors);
 
         /// <summary>
         /// Loads a texture from raw data.
@@ -37,7 +37,7 @@ namespace SuperGameEngine
         /// </param>
         /// <param name="errors">Errors if not created. </param>
         /// <returns>True means created. </returns>
-        bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors);
+        virtual bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors);
 
         /// <summary>
         /// Draws to screen.

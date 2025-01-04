@@ -1,4 +1,7 @@
 #include "ModifiableNode.h"
+
+#include "ModifiableAttribute.h"
+#include "../Logger/Logger/Log.h"
 #include "../StandardOperations/AllReferences.h"
 
 using namespace FatedQuestLibraries;
@@ -7,6 +10,7 @@ ModifiableNode::ModifiableNode()
 {
     m_name = {};
     m_attributes = {};
+    m_attributesStored = {};
     m_firstChild = {};
     m_lastChild = {};
     m_adjacentNode = {};
@@ -25,19 +29,29 @@ void ModifiableNode::SetName(const std::string& newName)
 
 const std::vector<std::shared_ptr<StoredDocumentAttribute>> ModifiableNode::Attributes() const
 {
-    return m_attributes;
+    return m_attributesStored;
 }
 
 void ModifiableNode::SetAttributes(const std::vector<std::shared_ptr<StoredDocumentAttribute>>& newAttributes)
 {
-    m_attributes = newAttributes;
+    m_attributesStored = newAttributes;
+
+    std::vector<std::shared_ptr<ModifiableAttribute>> attributes;
+    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributesStored)
+    {
+        auto modAttribute = std::make_shared<ModifiableAttribute>();
+        modAttribute->SetName(attribute->Name());
+        modAttribute->SetValue(attribute->Value());
+        attributes.emplace_back(modAttribute);
+    }
+    m_attributes = attributes;
 }
 
 const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(const std::string& criteria) const
 {
-    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
+    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributesStored)
     {
-        std::string adjustedName = SanitizeAttribute(attribute->Name());
+        std::string adjustedName = attribute->Name();
         if (adjustedName == criteria)
         {
             return attribute;
@@ -47,18 +61,19 @@ const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(const s
     return {};
 }
 
-const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(const std::string& criteria,
-    bool caseSensitive) const
+const std::shared_ptr<StoredDocumentAttribute> ModifiableNode::Attribute(
+    const std::string& criteria,
+    CaseSensitivity caseSensitive) const
 {
-    if (caseSensitive)
+    if (caseSensitive == CaseSensitivity::CaseSensitive)
     {
         return Attribute(criteria);
     }
 
     std::string lowerCriteria = StringHelpers::ToLower(criteria);
-    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributes)
+    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : m_attributesStored)
     {
-        std::string adjustedName = SanitizeAttribute(attribute->Name());
+        std::string adjustedName = attribute->Name();
         if (StringHelpers::ToLower(adjustedName) == lowerCriteria)
         {
             return attribute;
@@ -141,17 +156,47 @@ void ModifiableNode::SetInnerText(const std::string& innerText)
     m_innerText = innerText;
 }
 
-std::string ModifiableNode::SanitizeAttribute(const std::string& input) const
+bool ModifiableNode::Load(const std::shared_ptr<StoredDocumentNode>& storedNode)
 {
-    if (input.size() < 3)
+    if (!storedNode)
     {
-        return input;
+        Log::Error("Node is empty when parsing Stored Node into Modifiable Node.",
+            "ModifiableNode::Load(std::shared_ptr<StoredDocumentNode>)");
+        return false;
     }
 
-    if (input.front() == '"' && input.back() == '"')
+    // Set node parameters.
+    SetName(storedNode->Name());
+    SetInnerText(storedNode->Inner());
+
+    // Copy the attributes
+    m_attributes.clear();
+    m_attributesStored.clear();
+    for (const std::shared_ptr<StoredDocumentAttribute>& attribute : storedNode->Attributes())
     {
-        return input.substr(1, input.length() - 2);
+        auto modAttribute = std::make_shared<ModifiableAttribute>();
+        modAttribute->SetName(attribute->Name());
+        modAttribute->SetValue(attribute->Value());
+        m_attributes.emplace_back(modAttribute);
+        m_attributesStored.emplace_back(modAttribute);
     }
 
-    return input;
+    // Copy all inner nodes.
+    std::vector<std::shared_ptr<ModifiableNode>> modifiableNode;
+    for (std::shared_ptr<StoredDocumentNode> child = storedNode->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        auto modNode = std::make_shared<ModifiableNode>();
+        if (modNode->Load(child))
+        {
+            modifiableNode.emplace_back(modNode);
+        }
+        else
+        {
+            Log::Error("Could not load a modifiable node from a stored document node.",
+                "ModifiableNode::Load(std::shared_ptr<StoredDocumentNode>)");
+        }
+    }
+    SetAllChildrenNodes(modifiableNode);
+
+    return true;
 }

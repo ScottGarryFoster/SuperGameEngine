@@ -92,7 +92,7 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
         m_grandScene->Setup(m_grandSceneLoadPackage);
 
         //m_scene = m_grandScene->CreateAndAddNewScene("TestScene.txt");
-        m_scene = m_grandScene->CreateAndAddNewScene("savedOut.txt");
+        m_scene = m_grandScene->CreateAndAddNewScene("savedOut.scene");
 
         // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
 

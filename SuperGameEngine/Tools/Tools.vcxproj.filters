@@ -139,6 +139,60 @@
     <Filter Include="Source Files\ToolsEngine\Settings">
       <UniqueIdentifier>{84081eed-ce6e-4b68-922b-730e3bf14ec6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\Menu">
+      <UniqueIdentifier>{7cbbb88b-1f8c-4fbb-87f3-134db73e64a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\Menu">
+      <UniqueIdentifier>{6576d1ed-50f5-40c6-8b80-34021a9cc479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\TreeView">
+      <UniqueIdentifier>{97d74af8-f98f-445b-98e2-67f3db92252b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\TreeView">
+      <UniqueIdentifier>{d080dfda-2300-4c68-a86c-09898d3c9b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\FrameworkManager">
+      <UniqueIdentifier>{1ec5279f-4f2c-4b1a-a87e-0537375a01cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\FrameworkManager">
+      <UniqueIdentifier>{2c2a448a-6ea5-4d77-90c6-92aa1c1bd2e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\FrameworkManager\DocumentManager">
+      <UniqueIdentifier>{635f4475-58d7-4eef-a06d-ec7e50ff1359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\FrameworkManager\DocumentManager">
+      <UniqueIdentifier>{376e35bf-6fe0-4936-872b-ee3c432f53a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent">
+      <UniqueIdentifier>{25e7fef4-1e0a-470e-b544-a7860ca31679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent">
+      <UniqueIdentifier>{b4701d74-f1c4-45ff-b6b3-e5c5c60dace1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SystemActions">
+      <UniqueIdentifier>{41b36c7e-bce5-4885-b73b-49353276a012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SystemActions\FileDialog">
+      <UniqueIdentifier>{3f995dd7-6a99-4565-b15c-8d36bffc1afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SystemActions">
+      <UniqueIdentifier>{33259973-4eff-4b46-981d-a5d384f9583a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SystemActions\FileDialog">
+      <UniqueIdentifier>{2fc4dd78-65a3-454a-a293-9c20bf1d16d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\Documents">
+      <UniqueIdentifier>{d5c446d0-6f21-449c-b72d-56c48e15ace4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\Documents\Scene">
+      <UniqueIdentifier>{263cda17-29a8-4905-a80b-2f7cb412c5cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\Documents">
+      <UniqueIdentifier>{0e0acbe3-5cc2-4b69-8d41-f062d79a5889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\Documents\Scene">
+      <UniqueIdentifier>{781d2afc-9ae1-4685-9d09-596ed6cd82ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,12 +267,6 @@
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h">
       <Filter>Header Files\Windows\MainMenuBar</Filter>
     </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\MenuView.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
-    </ClInclude>
-    <ClInclude Include="ToolsEngine\ViewElements\MenuItemView.h">
-      <Filter>Header Files\ToolsEngine\ViewElements</Filter>
-    </ClInclude>
     <ClInclude Include="ToolsEngine\ModelElements\FunctionModel.h">
       <Filter>Header Files\ToolsEngine\ModelElements</Filter>
     </ClInclude>
@@ -260,6 +308,84 @@
     </ClInclude>
     <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h">
       <Filter>Header Files\ToolsEngine\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeView.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleBehaviour.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleIcon.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemOnSelectedEventArguments.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemViewEventArguments.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\FrameworkManager.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\ToolsFrameworkManager.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentManager.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentActionEventArguments.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventAction.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventOpenLevel.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\Document.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemActions\FileDialog\FileDialog.h">
+      <Filter>Header Files\SystemActions\FileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemActions\FileDialog\FileDialogProvider.h">
+      <Filter>Header Files\SystemActions\FileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemActions\FileDialog\TinyFileDialogs.h">
+      <Filter>Header Files\SystemActions\FileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentFactory.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentMatcher.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\Documents\Scene\SceneDocument.h">
+      <Filter>Header Files\ToolsEngine\Documents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentCriteria.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,12 +437,6 @@
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp">
       <Filter>Source Files\Windows\MainMenuBar</Filter>
     </ClCompile>
-    <ClCompile Include="ToolsEngine\ViewElements\MenuView.cpp">
-      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolsEngine\ViewElements\MenuItemView.cpp">
-      <Filter>Source Files\ToolsEngine\ViewElements</Filter>
-    </ClCompile>
     <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp">
       <Filter>Source Files\ToolsEngine\PropertyChanged</Filter>
     </ClCompile>
@@ -333,7 +453,43 @@
       <Filter>Source Files\ToolsEngine\Settings</Filter>
     </ClCompile>
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ToolsEngine\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuItemView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeView.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\FrameworkManager\ToolsFrameworkManager.cpp">
+      <Filter>Source Files\ToolsEngine\FrameworkManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.cpp">
+      <Filter>Source Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemActions\FileDialog\FileDialogProvider.cpp">
+      <Filter>Source Files\SystemActions\FileDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemActions\FileDialog\TinyFileDialogs.cpp">
+      <Filter>Source Files\SystemActions\FileDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentFactory.cpp">
+      <Filter>Source Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\Documents\Scene\SceneDocument.cpp">
+      <Filter>Source Files\ToolsEngine\Documents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.cpp">
+      <Filter>Source Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

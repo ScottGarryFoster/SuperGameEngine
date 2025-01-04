@@ -44,6 +44,15 @@ namespace SuperGameTools
         /// </summary>
         void Draw() const;
 
+        /// <summary>
+        /// Get menu item from the key.
+        /// This is the preferred way to grab a menu item to link events as
+        /// the key does not change once created and should not be changed often.
+        /// </summary>
+        /// <param name="key">Unique identifier. </param>
+        /// <returns>The item from the list or empty if could not find. </returns>
+        std::shared_ptr<MenuItemView> GetMenuItem(const std::string& key) const;
+
     private:
         /// <summary>
         /// All menu items.
