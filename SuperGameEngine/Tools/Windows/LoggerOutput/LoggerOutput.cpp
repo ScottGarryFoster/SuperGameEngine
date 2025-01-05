@@ -22,6 +22,7 @@ LoggerOutput::~LoggerOutput()
 void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
+    WindowElement::Setup(m_windowPackage->GetColourPalette());
 
     auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Warning\Warning-25.png)");
     m_warningIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
@@ -49,7 +50,8 @@ void LoggerOutput::Update()
 
 void LoggerOutput::Draw()
 {
-    ImGui::Begin("Logger Output");
+    const char* windowName = "Logger Output";
+    RenderWindow(windowName);
 
     ImGuiWindow* window = ImGui::FindWindowByName("Logger Output");
     if (window->Size.x < 50 || window->Size.y < 50)
@@ -106,7 +108,7 @@ void LoggerOutput::Draw()
         ImGui::EndTable();
     }
 
-    ImGui::End();
+    EndWindowRender(windowName);
 }
 
 void LoggerOutput::TearDown()

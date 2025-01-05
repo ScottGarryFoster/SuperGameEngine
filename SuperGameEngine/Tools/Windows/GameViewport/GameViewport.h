@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL_rect.h>
 
+#include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
 #include "../UpdateableObject/UpdateableObject.h"
 
 namespace SuperGameTools
@@ -8,7 +9,7 @@ namespace SuperGameTools
     /// <summary>
     /// Holds the viewport.
     /// </summary>
-    class GameViewport : public UpdateableObject
+    class GameViewport : public UpdateableObject, public WindowElement
     {
         /// <summary>
         /// Called once on setup.

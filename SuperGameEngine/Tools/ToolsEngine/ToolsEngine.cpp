@@ -18,6 +18,7 @@
 #include "../Windows/SceneHierarchy/SceneHierarchy.h"
 #include "../Windows/InspectorWindow/InspectorWindow.h"
 #include "FrameworkManager/ToolsFrameworkManager.h"
+#include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 using namespace SuperGameTools;
 
@@ -38,10 +39,10 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     m_renderer = renderer;
     
     m_windowPackage->SetRenderer(m_renderer);
-
     if (!m_superContentManager->GetSuperTextureManager())
     {
         auto paths = std::make_shared<SGEPackagePaths>();
+        m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
         auto gamePackage = std::make_shared<CombinedGamePackage>();
         gamePackage->Load(paths);
         m_superContentManager->GiveGamePackage(gamePackage);
@@ -114,6 +115,8 @@ void ToolsEngine::WindowTeardown()
 
 void ToolsEngine::Setup()
 {
+    m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
+
     // Must be made first as other things latch on to it.
     auto menuBar = std::make_shared<MainMenuBar>();
     menuBar->Setup(m_windowPackage);

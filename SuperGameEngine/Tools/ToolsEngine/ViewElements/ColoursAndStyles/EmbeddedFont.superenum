@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        A list of fonts included in the package.
+    </EnumComment>
+    <EnumName Name="EmbeddedFont">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <NotoSansVariableFont>
+            Sans Google Font.
+        </NotoSansVariableFont>
+    </EnumName>
+</SuperEnum>

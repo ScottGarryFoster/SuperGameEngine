@@ -7,6 +7,7 @@
 namespace SuperGameTools
 {
     class MenuItemView;
+    class ColoursAndStyles;
 
     /// <summary>
     /// Entire top menu bar.
@@ -14,7 +15,7 @@ namespace SuperGameTools
     class MenuView
     {
     public:
-        MenuView();
+        MenuView(const std::shared_ptr<ColoursAndStyles>& coloursAndStyles);
         ~MenuView();
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace SuperGameTools
         /// <summary>
         /// Draws the menu.
         /// </summary>
-        void Draw() const;
+        void Draw();
 
         /// <summary>
         /// Get menu item from the key.
@@ -58,6 +59,43 @@ namespace SuperGameTools
         /// All menu items.
         /// </summary>
         std::unordered_map<std::string, std::vector<std::shared_ptr<MenuItemView>>> m_menuItems;
+
+        /// <summary>
+        /// Helps to keep the colours and styles uniform.
+        /// </summary>
+        std::shared_ptr<ColoursAndStyles> m_coloursAndStyles;
+
+        /// <summary>
+        /// Current open state.
+        /// </summary>
+        bool m_menuBarState;
+
+        /// <summary>
+        /// Current hover state of the top level.
+        /// </summary>
+        bool m_menuBarHoverState;
+
+        /// <summary>
+        /// Currently is menu bar option open.
+        /// </summary>
+        std::unordered_map<std::string, bool> m_isOpen;
+
+        /// <summary>
+        /// Currently is menu bar option open.
+        /// </summary>
+        std::unordered_map<std::string, bool> m_isHovered;
+
+        /// <summary>
+        /// Create a top main menu.
+        /// </summary>
+        /// <param name="name">Menu name. </param>
+        /// <returns>True means open. </returns>
+        bool CreateMenuMenu(const char* name);
+
+        /// <summary>
+        /// Stop rendering main menu.
+        /// </summary>
+        void EndMenuMenu();
     };
 }
 

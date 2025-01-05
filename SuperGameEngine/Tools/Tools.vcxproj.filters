@@ -193,6 +193,15 @@
     <Filter Include="Header Files\ToolsEngine\Documents\Scene">
       <UniqueIdentifier>{781d2afc-9ae1-4685-9d09-596ed6cd82ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\ColoursAndStyles">
+      <UniqueIdentifier>{99e2898e-8c40-474e-bd0f-921dd5c4c177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\ColoursAndStyles">
+      <UniqueIdentifier>{1619e39f-92e6-43be-b1dc-ff32a3fa6462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\Window">
+      <UniqueIdentifier>{d3055b0a-a9ac-4bdd-8f69-0ebaa5b2cf5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -387,6 +396,24 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.h">
       <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColoursAndStyles.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourIdentity.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourPalette.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\Window\WindowElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\EmbeddedFont.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -490,6 +517,12 @@
     </ClCompile>
     <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\Window\WindowElement.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

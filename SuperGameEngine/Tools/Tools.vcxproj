@@ -250,6 +250,11 @@
     <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourIdentity.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourPalette.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColoursAndStyles.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\EmbeddedFont.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemView.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemViewEventArguments.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuView.h" />
@@ -258,6 +263,7 @@
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleBehaviour.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleIcon.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemOnSelectedEventArguments.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\Window\WindowElement.h" />
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h" />
@@ -299,10 +305,12 @@
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuItemView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\Window\WindowElement.cpp" />
     <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
     <ClCompile Include="Windows\InspectorWindow\InspectorWindow.cpp" />

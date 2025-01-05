@@ -12,6 +12,7 @@ void GameViewport::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_viewport = { 50, 50, 500, 250 };;
     m_renderer = windowPackage->GetRenderer();
     m_windowPackage = windowPackage;
+    WindowElement::Setup(m_windowPackage->GetColourPalette());
 }
 
 void GameViewport::Update()
@@ -21,7 +22,8 @@ void GameViewport::Update()
 
 void GameViewport::Draw()
 {
-    ImGui::Begin("My Window");
+    const char* windowName = "My Window";
+    RenderWindow(windowName);
 
     if (m_windowPackage->GetEngineEntryCommunication())
     {
@@ -80,7 +82,7 @@ void GameViewport::Draw()
 
 
     UpdateTheSDLViewport();
-    ImGui::End();
+    EndWindowRender(windowName);
 }
 
 void GameViewport::TearDown()

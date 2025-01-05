@@ -10,8 +10,8 @@ RapidXMLAttribute::RapidXMLAttribute()
 
 RapidXMLAttribute::RapidXMLAttribute(const std::string& name, const std::string& value)
 {
-    m_name = name;
-    m_value = value;
+    SetName(name);
+    SetValue(value);
 }
 
 const std::string RapidXMLAttribute::Name() const
