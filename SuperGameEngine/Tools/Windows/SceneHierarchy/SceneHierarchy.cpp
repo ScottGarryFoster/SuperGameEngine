@@ -147,6 +147,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
     m_treeViewItem = std::make_shared<TreeViewItem>();
     m_treeViewItem->GetLabel()->SetValue("Scene");
     m_treeViewItem->GetOpenOnLoad()->SetValue(true);
+    m_treeViewItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
 
     auto children = std::vector<std::shared_ptr<TreeViewItem>>();
     for (std::shared_ptr<StoredDocumentNode> child = sceneDocument->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
@@ -157,7 +158,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         // Subscribe to OnSelected.
         std::weak_ptr<FEventObserver> weak = shared_from_this();
         childItem->OnSelected()->Subscribe(weak);
-
+        childItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
         children.emplace_back(childItem);
 
         // Add components. This will be removed when we move these to the inspector.
