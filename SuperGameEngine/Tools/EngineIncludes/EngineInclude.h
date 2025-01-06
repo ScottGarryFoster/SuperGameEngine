@@ -5,4 +5,4 @@
 
 #include "../ToolsEngine/ToolsEngineEntry.h"
 #include "../ToolsEngine/ToolsEngine.h"
-#include "../TestComponent/ToolsComponent.h"
+#include "../TestComponent/ToolsGameComponent.h"

@@ -9,11 +9,11 @@ namespace SuperGameEngine
     /// <summary>
     /// A component to test basic functionality.
     /// </summary>
-    class ToolsComponent : public SuperGameComponent
+    class ToolsGameComponent : public SuperGameComponent
     {
     public:
-        ToolsComponent();
-        virtual ~ToolsComponent() override;
+        ToolsGameComponent();
+        virtual ~ToolsGameComponent() override;
 
         /// <summary>
         /// Sets up the game component.
@@ -48,5 +48,5 @@ namespace SuperGameEngine
         std::shared_ptr<SuperTexture> m_superTexture;
     };
 
-    REGISTER_COMPONENT("ToolsComponent", ToolsComponent);
+    REGISTER_COMPONENT("ToolsComponent", ToolsGameComponent);
 }
