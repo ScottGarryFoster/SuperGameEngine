@@ -1,6 +1,7 @@
 #pragma once
 #include "../UpdateableObject/UpdateableObject.h"
 #include "../../FatedQuestLibraries.h"
+#include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
 
 namespace SuperGameEngine
 {
@@ -18,7 +19,7 @@ namespace SuperGameTools
     /// <summary>
     /// Holds the viewport.
     /// </summary>
-    class LoggerOutput : public UpdateableObject, public FEventObserver
+    class LoggerOutput : public UpdateableObject, public FEventObserver, public WindowElement
     {
     public:
         LoggerOutput();

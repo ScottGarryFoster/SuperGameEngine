@@ -1,5 +1,6 @@
 #include "MainMenuBar.h"
 #include "../../ImGuiIncludes.h"
+#include "../../ToolsEngine/Packages/WindowPackage.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuView.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuItemView.h"
 
@@ -7,7 +8,7 @@ using namespace SuperGameTools;
 
 void MainMenuBar::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
-    m_mainView = std::make_shared<MenuView>();
+    m_mainView = std::make_shared<MenuView>(windowPackage->GetColourPalette());
 
     m_mainView->AddTopLevelMenuItem("File");
     m_mainView->AddInnerMenuItem("File", std::make_shared<MenuItemView>("FileOpen","Open"));

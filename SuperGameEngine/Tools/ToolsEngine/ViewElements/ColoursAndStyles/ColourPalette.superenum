@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        The colour palette used.
+    </EnumComment>
+    <EnumName Name="ColourPalette">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Dark>
+            Darkmode default.
+        </Dark>
+        <Light>
+            Lightmode default.
+        </Light>
+    </EnumName>
+</SuperEnum>

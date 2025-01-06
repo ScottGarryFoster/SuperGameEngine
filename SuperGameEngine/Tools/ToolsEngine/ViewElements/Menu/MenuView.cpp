@@ -4,12 +4,17 @@
 
 #include "../../../ImGuiIncludes.h"
 #include "MenuItemView.h"
+#include "../ColoursAndStyles/ColoursAndStyles.h"
 
 using namespace SuperGameTools;
 
-MenuView::MenuView()
+MenuView::MenuView(const std::shared_ptr<ColoursAndStyles>& coloursAndStyles)
 {
     m_menuItems = {};
+    m_coloursAndStyles = coloursAndStyles;
+
+    m_menuBarState = false;
+    m_menuBarHoverState = false;
 }
 
 MenuView::~MenuView()
@@ -32,6 +37,17 @@ bool MenuView::AddTopLevelMenuItem(const std::string& topLevelMenu)
     }
 
     m_menuItems.try_emplace(topLevelMenu, std::vector<std::shared_ptr<MenuItemView>>());
+
+    if (!m_isHovered.contains(topLevelMenu))
+    {
+        m_isHovered.insert_or_assign(topLevelMenu, false);
+    }
+
+    if (!m_isOpen.contains(topLevelMenu))
+    {
+        m_isOpen.insert_or_assign(topLevelMenu, false);
+    }
+
     return true;
 }
 
@@ -45,16 +61,28 @@ bool MenuView::AddInnerMenuItem(const std::string& topLevelMenu, const std::shar
     }
 
     m_menuItems.at(topLevelMenu).emplace_back(menuItem);
+
+    if (!m_isHovered.contains(topLevelMenu))
+    {
+        m_isHovered.insert_or_assign(topLevelMenu, false);
+    }
+
+    if (!m_isOpen.contains(topLevelMenu))
+    {
+        m_isOpen.insert_or_assign(topLevelMenu, false);
+    }
+
     return true;
 }
 
-void MenuView::Draw() const
+void MenuView::Draw()
 {
+    m_coloursAndStyles->SetTopMenuColoursAndStyles();
     if (ImGui::BeginMainMenuBar())
     {
         for (const auto& topLevelMenu : m_menuItems)
         {
-            if (ImGui::BeginMenu(topLevelMenu.first.c_str()))
+            if (CreateMenuMenu(topLevelMenu.first.c_str()))
             {
                 std::vector<std::shared_ptr<MenuItemView>> menuItems = topLevelMenu.second;
                 for (const auto& menuItem : menuItems)
@@ -64,9 +92,12 @@ void MenuView::Draw() const
 
                 ImGui::EndMenu();
             }
+            EndMenuMenu();
         }
-        ImGui::EndMainMenuBar();
     }
+    ImGui::EndMainMenuBar();
+    m_coloursAndStyles->PopTopMenuColoursAndStyles();
+
 }
 
 std::shared_ptr<MenuItemView> MenuView::GetMenuItem(const std::string& key) const
@@ -89,4 +120,19 @@ std::shared_ptr<MenuItemView> MenuView::GetMenuItem(const std::string& key) cons
     }
 
     return {};
+}
+
+bool MenuView::CreateMenuMenu(const char* name)
+{
+    m_coloursAndStyles->SetMenuColoursAndStyles(m_isOpen.at(name), m_isHovered.at(name));
+    m_isOpen.at(name) = ImGui::BeginMenu(name);
+    m_isHovered.at(name) = ImGui::IsItemHovered();
+
+    return m_isOpen.at(name);
+}
+
+void MenuView::EndMenuMenu()
+{
+
+    m_coloursAndStyles->PopMenuColoursAndStyles();
 }

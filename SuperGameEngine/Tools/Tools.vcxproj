@@ -211,12 +211,16 @@
     <ClInclude Include="Engine\Graphics\ImGuiTexture.h" />
     <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GameEngineEquivalents\Component\Component.h" />
+    <ClInclude Include="GameEngineEquivalents\Component\ToolsComponent.h" />
+    <ClInclude Include="GameEngineEquivalents\GameObject\GameObject.h" />
+    <ClInclude Include="GameEngineEquivalents\GameObject\ToolsGameObject.h" />
     <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SystemActions\FileDialog\FileDialog.h" />
     <ClInclude Include="SystemActions\FileDialog\FileDialogProvider.h" />
     <ClInclude Include="SystemActions\FileDialog\TinyFileDialogs.h" />
-    <ClInclude Include="TestComponent\ToolsComponent.h" />
+    <ClInclude Include="TestComponent\ToolsGameComponent.h" />
     <ClInclude Include="ToolsEngine\Communication\EngineEntryCommunication.h" />
     <ClInclude Include="ToolsEngine\Communication\EngineFlowControl.h" />
     <ClInclude Include="ToolsEngine\Communication\EngineFlowPlayControl.h" />
@@ -250,6 +254,11 @@
     <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourIdentity.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourPalette.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColoursAndStyles.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\EmbeddedFont.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemView.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuItemViewEventArguments.h" />
     <ClInclude Include="ToolsEngine\ViewElements\Menu\MenuView.h" />
@@ -258,6 +267,7 @@
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleBehaviour.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemCollapsibleIcon.h" />
     <ClInclude Include="ToolsEngine\ViewElements\TreeView\TreeViewItemOnSelectedEventArguments.h" />
+    <ClInclude Include="ToolsEngine\ViewElements\Window\WindowElement.h" />
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
     <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h" />
@@ -275,6 +285,8 @@
     <ClCompile Include="Engine\Graphics\ImGuiSuperTexture.cpp" />
     <ClCompile Include="Engine\Graphics\ImGuiSuperTextureWrapper.cpp" />
     <ClCompile Include="Engine\Graphics\ImGuiTexture.cpp" />
+    <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp" />
+    <ClCompile Include="GameEngineEquivalents\GameObject\ToolsGameObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Tools_Debug|x64'">Create</PrecompiledHeader>
@@ -285,7 +297,7 @@
     </ClCompile>
     <ClCompile Include="SystemActions\FileDialog\FileDialogProvider.cpp" />
     <ClCompile Include="SystemActions\FileDialog\TinyFileDialogs.cpp" />
-    <ClCompile Include="TestComponent\ToolsComponent.cpp" />
+    <ClCompile Include="TestComponent\ToolsGameComponent.cpp" />
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineEntryCommunication.cpp" />
     <ClCompile Include="ToolsEngine\Communication\ToolsEngineControl.cpp" />
     <ClCompile Include="ToolsEngine\Documents\Scene\SceneDocument.cpp" />
@@ -299,10 +311,12 @@
     <ClCompile Include="ToolsEngine\Settings\ToolsSettingsPaths.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp" />
     <ClCompile Include="ToolsEngine\ToolsEngineEntry.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuItemView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\Menu\MenuView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeView.cpp" />
     <ClCompile Include="ToolsEngine\ViewElements\TreeView\TreeViewItem.cpp" />
+    <ClCompile Include="ToolsEngine\ViewElements\Window\WindowElement.cpp" />
     <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
     <ClCompile Include="Windows\InspectorWindow\InspectorWindow.cpp" />

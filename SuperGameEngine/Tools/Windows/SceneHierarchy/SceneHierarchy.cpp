@@ -9,6 +9,7 @@
 #include "../../ToolsEngine/FrameworkManager/DocumentManager/DocumentManager.h"
 #include "../../ToolsEngine/FrameworkManager/DocumentManager/DocumentEvent/DocumentActionEventArguments.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
+#include "../../ToolsEngine/ViewElements/ColoursAndStyles/ColoursAndStyles.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuItemView.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuItemViewEventArguments.h"
 #include "../../ToolsEngine/ViewElements/Menu/MenuView.h"
@@ -18,7 +19,7 @@
 
 using namespace SuperGameTools;
 
-SceneHierarchy::SceneHierarchy()
+SceneHierarchy::SceneHierarchy() : WindowElement()
 {
     m_testPopup = false;
     m_testPopupText = {};
@@ -27,6 +28,7 @@ SceneHierarchy::SceneHierarchy()
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
+    WindowElement::Setup(m_windowPackage->GetColourPalette());
 
     const std::string method = "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)";
     if (!m_windowPackage->GetFrameworkManager())
@@ -63,13 +65,18 @@ void SceneHierarchy::Update()
 
 void SceneHierarchy::Draw()
 {
-    ImGui::Begin("Scene Hierarchy");
-
-    if (m_tree)
+    const char* windowName = "Scene Hierarchy";
+    if (RenderWindow(windowName))
     {
-        m_tree->Draw();
-    }
+        if (m_tree)
+        {
+            m_tree->Draw();
+        }
 
+
+    }
+    EndWindowRender(windowName);
+        
 
     // Test popup
     if (m_testPopup)
@@ -86,9 +93,8 @@ void SceneHierarchy::Draw()
         ImGui::EndPopup();
     }
 
-    ImGui::End();
-
-
+    
+    
 
 }
 

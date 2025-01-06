@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
+#include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
 #include "../UpdateableObject/UpdateableObject.h"
 
 namespace SuperGameTools
@@ -22,7 +23,7 @@ namespace SuperGameTools
     /// <summary>
     /// Contains the scenes and game objects.
     /// </summary>
-    class SceneHierarchy : public UpdateableObject, public FEventObserver
+    class SceneHierarchy : public UpdateableObject, public FEventObserver, public WindowElement
     {
     public:
         SceneHierarchy();

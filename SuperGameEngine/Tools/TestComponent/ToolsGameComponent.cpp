@@ -1,17 +1,17 @@
-#include "ToolsComponent.h"
+#include "ToolsGameComponent.h"
 
 #include "../../Engine/Engine/Content/ContentManager.h"
 #include "../../Engine/Structural/Packages/ComponentLoadPackage.h"
 
 using namespace SuperGameEngine;
 
-ToolsComponent::ToolsComponent()
+ToolsGameComponent::ToolsGameComponent()
 {
 }
 
-ToolsComponent::~ToolsComponent() = default;
+ToolsGameComponent::~ToolsGameComponent() = default;
 
-void ToolsComponent::Setup(
+void ToolsGameComponent::Setup(
     const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
     const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
 {
@@ -28,18 +28,18 @@ void ToolsComponent::Setup(
     SetDoRender(true);
 }
 
-std::string ToolsComponent::TypeName() const
+std::string ToolsGameComponent::TypeName() const
 {
     return "ToolsComponent";
 }
 
-void ToolsComponent::Update(const std::shared_ptr<GameTime> gameTime)
+void ToolsGameComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
     SuperGameComponent::Update(gameTime);
     if (!IsSetup()) return;
 }
 
-void ToolsComponent::Draw() const
+void ToolsGameComponent::Draw() const
 {
     SuperGameComponent::Draw();
     if (!IsSetup()) return;

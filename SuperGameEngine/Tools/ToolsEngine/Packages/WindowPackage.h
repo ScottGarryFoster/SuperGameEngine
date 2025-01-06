@@ -3,6 +3,11 @@
 #include <SDL_render.h>
 #include "../../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace SuperGameTools
+{
+    class ColoursAndStyles;
+}
+
 namespace FatedQuestLibraries
 {
     class PackagePaths;
@@ -23,6 +28,7 @@ namespace SuperGameTools
     class FrameworkManager;
     class MenuView;
     class EngineEntryCommunication;
+    class ColoursAndStyles;
 
     /// <summary>
     /// Everything a Window Package might need to run.
@@ -129,6 +135,17 @@ namespace SuperGameTools
         /// <param name="packagePaths">Helper class to grab paths. </param>
         void SetPackagePaths(const std::shared_ptr<PackagePaths>& packagePaths);
 
+        /// <summary>
+        /// The colour palette used.
+        /// </summary>
+        /// <returns>The colour palette used. </returns>
+        std::shared_ptr<ColoursAndStyles> GetColourPalette() const;
+
+        /// <summary>
+        /// Gives a colour palette.
+        /// </summary>
+        /// <param name="colourPalette">New palette. </param>
+        void SetColourPalette(const std::shared_ptr<ColoursAndStyles>& colourPalette);
     private:
 
         /// <summary>
@@ -172,5 +189,10 @@ namespace SuperGameTools
         /// Helper class to grab paths.
         /// </summary>
         std::shared_ptr<PackagePaths> m_packagePaths;
+
+        /// <summary>
+        /// The colour palette used.
+        /// </summary>
+        std::shared_ptr<ColoursAndStyles> m_colorPalette;
     };
 }

@@ -193,6 +193,33 @@
     <Filter Include="Header Files\ToolsEngine\Documents\Scene">
       <UniqueIdentifier>{781d2afc-9ae1-4685-9d09-596ed6cd82ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\ColoursAndStyles">
+      <UniqueIdentifier>{99e2898e-8c40-474e-bd0f-921dd5c4c177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\ColoursAndStyles">
+      <UniqueIdentifier>{1619e39f-92e6-43be-b1dc-ff32a3fa6462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\ViewElements\Window">
+      <UniqueIdentifier>{d3055b0a-a9ac-4bdd-8f69-0ebaa5b2cf5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameEngineEquivalents">
+      <UniqueIdentifier>{89038a93-4b2b-428e-bc1a-0c289d163c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameEngineEquivalents\GameObject">
+      <UniqueIdentifier>{2137b9cf-21d5-4cae-82a4-5350f2f5890a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ToolsEngine\ViewElements\Window">
+      <UniqueIdentifier>{1ac2c456-f8a0-497a-b945-0bbcbf4454ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameEngineEquivalents">
+      <UniqueIdentifier>{0ee8a10d-1362-474c-96f8-76799d1847ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameEngineEquivalents\GameObject">
+      <UniqueIdentifier>{9dd7d635-4060-4743-887f-ee87c5671a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameEngineEquivalents\Component">
+      <UniqueIdentifier>{d02614f7-7cd4-42b4-a89d-677c8f65ed4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -204,7 +231,7 @@
     <ClInclude Include="EngineIncludes\EngineInclude.h">
       <Filter>Header Files\EngineInclude</Filter>
     </ClInclude>
-    <ClInclude Include="TestComponent\ToolsComponent.h">
+    <ClInclude Include="TestComponent\ToolsGameComponent.h">
       <Filter>Header Files\TestComponent</Filter>
     </ClInclude>
     <ClInclude Include="ToolsEngine\ToolsEngine.h">
@@ -387,6 +414,36 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.h">
       <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColoursAndStyles.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourIdentity.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourPalette.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\EmbeddedFont.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\GameObject\GameObject.h">
+      <Filter>Header Files\GameEngineEquivalents\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\ViewElements\Window\WindowElement.h">
+      <Filter>Header Files\ToolsEngine\ViewElements\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\GameObject\ToolsGameObject.h">
+      <Filter>Header Files\GameEngineEquivalents\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Component\Component.h">
+      <Filter>Header Files\GameEngineEquivalents\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Component\ToolsComponent.h">
+      <Filter>Header Files\GameEngineEquivalents\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -395,7 +452,7 @@
     <ClCompile Include="EngineIncludes\EngineInclude.cpp">
       <Filter>Source Files\EngineInclude</Filter>
     </ClCompile>
-    <ClCompile Include="TestComponent\ToolsComponent.cpp">
+    <ClCompile Include="TestComponent\ToolsGameComponent.cpp">
       <Filter>Source Files\TestComponent</Filter>
     </ClCompile>
     <ClCompile Include="ToolsEngine\ToolsEngine.cpp">
@@ -490,6 +547,18 @@
     </ClCompile>
     <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\ColoursAndStyles\ToolsColoursAndStyles.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\ColoursAndStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsEngine\ViewElements\Window\WindowElement.cpp">
+      <Filter>Source Files\ToolsEngine\ViewElements\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\GameObject\ToolsGameObject.cpp">
+      <Filter>Source Files\GameEngineEquivalents\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

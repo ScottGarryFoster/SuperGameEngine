@@ -81,3 +81,13 @@ void WindowPackage::SetPackagePaths(const std::shared_ptr<PackagePaths>& package
 {
     m_packagePaths = packagePaths;
 }
+
+std::shared_ptr<ColoursAndStyles> WindowPackage::GetColourPalette() const
+{
+    return m_colorPalette;
+}
+
+void WindowPackage::SetColourPalette(const std::shared_ptr<ColoursAndStyles>& colourPalette)
+{
+    m_colorPalette = colourPalette;
+}
