@@ -3,6 +3,11 @@
 
 #include "SelectionGroup.h"
 
+namespace FatedQuestLibraries
+{
+    class Guid;
+}
+
 namespace SuperGameTools
 {
     /// <summary>
@@ -18,6 +23,13 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>The group or groups for this selectable. </returns>
         virtual std::unordered_set<SelectionGroup> GetSelectionGroup() const = 0;
+
+        /// <summary>
+        /// The Guid for this Selectable.
+        /// It should be unique among selectables.
+        /// </summary>
+        /// <returns>A unique Guid. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::Guid> GetGuid() const = 0;
     };
 
 }
