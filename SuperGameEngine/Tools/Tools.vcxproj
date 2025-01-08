@@ -239,6 +239,10 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\FrameworkManager.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\Selectable.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionGroup.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionManager.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\ToolsSelectionManager.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\ToolsFrameworkManager.h" />
     <ClInclude Include="ToolsEngine\GenericProperties\FunctionProperty.h" />
     <ClInclude Include="ToolsEngine\GenericProperties\ValueProperty.h" />
@@ -304,6 +308,7 @@
     <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentFactory.cpp" />
     <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocument.cpp" />
     <ClCompile Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.cpp" />
+    <ClCompile Include="ToolsEngine\FrameworkManager\SelectionManager\ToolsSelectionManager.cpp" />
     <ClCompile Include="ToolsEngine\FrameworkManager\ToolsFrameworkManager.cpp" />
     <ClCompile Include="ToolsEngine\Packages\WindowPackage.cpp" />
     <ClCompile Include="ToolsEngine\PropertyChanged\PropertyChangedEvent.cpp" />
