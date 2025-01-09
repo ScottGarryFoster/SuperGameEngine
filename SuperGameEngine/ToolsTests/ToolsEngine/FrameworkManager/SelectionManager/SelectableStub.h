@@ -14,7 +14,7 @@ namespace SuperGameToolsTests
         SelectableStub(SelectionGroup group)
         {
             m_selectionGroups.insert(group);
-            GUIDHelpers::CreateGUID();
+            m_guid = GUIDHelpers::CreateGUID();
         }
 
         /// <summary>

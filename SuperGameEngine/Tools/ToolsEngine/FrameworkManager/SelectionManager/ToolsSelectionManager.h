@@ -1,5 +1,8 @@
 #pragma once
 #include <memory>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include "SelectionManager.h"
 
@@ -62,5 +65,11 @@ namespace SuperGameTools
         /// <param name="selectionGroup">Groups to check. </param>
         /// <returns>All selectables in the groups. </returns>
         virtual std::vector<std::weak_ptr<Selectable>> GetSelection(std::vector<SelectionGroup> selectionGroup) const override;
+
+    private:
+        /// <summary>
+        /// All selectables by group.
+        /// </summary>
+        std::unordered_map<SelectionGroup, std::unordered_map<std::string, std::weak_ptr<Selectable>>> m_selectables;
     };
 }
