@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="QuestLauncher" />
+    <EnumComment>
+        How to align text
+    </EnumComment>
+    <EnumName Name="TextAlignment">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Left>
+            Left side.
+        </Left>
+        <Center>
+            In the center.
+        </Center>
+        <Right>
+            Right side.
+        </Right>
+    </EnumName>
+</SuperEnum>

@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="QuestLauncher" />
+    <EnumComment>
+        The method to display the menu item.
+    </EnumComment>
+    <EnumName Name="MenuType">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Simple>
+            Just a text option
+        </Simple>
+        <Separator>
+            A line between menu items.
+        </Separator>
+        <Header>
+            Header item
+        </Header>
+    </EnumName>
+</SuperEnum>

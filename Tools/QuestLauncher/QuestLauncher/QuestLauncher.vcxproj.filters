@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Window">
       <UniqueIdentifier>{e3522a8c-ec54-485c-b80b-da306abc2c62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MenuItem">
+      <UniqueIdentifier>{982d490b-8b4a-45a1-b824-428f87446e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DebugMenuItem">
+      <UniqueIdentifier>{f14a2eb3-b7a3-4055-bb42-014c36ff8db5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestLauncher.cpp">
@@ -27,6 +33,9 @@
     <ClCompile Include="Window\WindowsTrayWindow.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Menu\DebugMenuItem.cpp">
+      <Filter>Source Files\DebugMenuItem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\TrayWindow.h">
@@ -34,6 +43,21 @@
     </ClInclude>
     <ClInclude Include="Window\WindowsTrayWindow.h">
       <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\MenuItem.h">
+      <Filter>Header Files\MenuItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\DebugMenuItem.h">
+      <Filter>Header Files\MenuItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\ActionType.h">
+      <Filter>Header Files\MenuItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\MenuType.h">
+      <Filter>Header Files\MenuItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\TextAlignment.h">
+      <Filter>Header Files\MenuItem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

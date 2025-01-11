@@ -1,10 +1,15 @@
 #pragma once
 #include <AsyncInfo.h>
+#include <memory>
+#include <vector>
 
 #include "TrayWindow.h"
+#include "../Menu/TextAlignment.h"
 
 namespace QuestLauncher
 {
+    class MenuItem;
+
     /// <summary>
     /// Creates and manages a window only used in the tray.
     /// </summary>
@@ -41,11 +46,23 @@ namespace QuestLauncher
         /// </summary>
         static inline NOTIFYICONDATA m_notifyIcon;
 
+        /// <summary>
+        /// The side for header alignment.
+        /// </summary>
+        static inline TextAlignment m_headerAlignment;
+
+        static inline std::vector<std::shared_ptr<MenuItem>> m_menuItems;
+
         static void LoadIconImageFile(const std::string& path, int widthHeight);
 
         static void CreateNewWindow(HINSTANCE handleInstance, HICON icon, const std::string& title);
 
         static LRESULT CALLBACK WindowProcess(HWND handleWindow, UINT messageCode, WPARAM additionalInfo, LPARAM additionalInfoLong);
+
+        static void DrawItem(LPDRAWITEMSTRUCT& drawDeconstruct, const std::shared_ptr<MenuItem>& item);
+        static void DrawHeader(LPDRAWITEMSTRUCT& drawDeconstruct, const std::shared_ptr<MenuItem>& item);
+
+        static int GetXPosition(const HDC& hdc, const RECT& rect, const std::wstring& text, TextAlignment alignment);
     };
 }
 

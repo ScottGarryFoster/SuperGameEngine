@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="QuestLauncher" />
+    <EnumComment>
+        The method to handle running this menu item.
+    </EnumComment>
+    <EnumName Name="ActionType">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Custom>
+            Run a custom method.
+        </Custom>
+        <ShowWindow>
+            Show the application window
+        </ShowWindow>
+        <Close>
+            Close the application
+        </Close>
+    </EnumName>
+</SuperEnum>

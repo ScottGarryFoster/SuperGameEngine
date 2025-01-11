@@ -128,10 +128,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Menu\DebugMenuItem.cpp" />
     <ClCompile Include="QuestLauncher.cpp" />
     <ClCompile Include="Window\WindowsTrayWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Menu\ActionType.h" />
+    <ClInclude Include="Menu\DebugMenuItem.h" />
+    <ClInclude Include="Menu\MenuItem.h" />
+    <ClInclude Include="Menu\MenuType.h" />
+    <ClInclude Include="Menu\TextAlignment.h" />
     <ClInclude Include="Window\TrayWindow.h" />
     <ClInclude Include="Window\WindowsTrayWindow.h" />
   </ItemGroup>
