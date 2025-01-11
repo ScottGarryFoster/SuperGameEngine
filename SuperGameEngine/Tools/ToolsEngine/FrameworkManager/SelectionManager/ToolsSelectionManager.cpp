@@ -15,6 +15,19 @@ void ToolsSelectionManager::AddToSelection(const std::weak_ptr<Selectable>& sele
 {
     if (auto shared = selectable.lock())
     {
+        // Get the guid as this is the key for the dictionaries.
+        std::string guidKey = {};
+        if (std::shared_ptr<Guid> guidPointer = shared->GetGuid())
+        {
+            guidKey = guidPointer->ToString();
+        }
+        else
+        {
+            Log::Error("No Guid found on selectable. Could not add to selection.",
+                "ToolsSelectionManager::AddToSelection(std::weak_ptr<Selectable>)");
+            return;
+        }
+
         std::unordered_set<SelectionGroup> selectableGroup = shared->GetSelectionGroup();
         for (const SelectionGroup& group : selectableGroup)
         {
@@ -24,17 +37,7 @@ void ToolsSelectionManager::AddToSelection(const std::weak_ptr<Selectable>& sele
             }
 
             std::unordered_map<std::string, std::weak_ptr<Selectable>>& selectables = m_selectables.at(group);
-            if (std::shared_ptr<Guid> guidPointer = shared->GetGuid())
-            {
-                std::string guid = guidPointer->ToString();
-                selectables.insert_or_assign(guid, selectable);
-            }
-            else
-            {
-                Log::Error("No Guid found on selectable. Could not add to selection.",
-                    "ToolsSelectionManager::AddToSelection(std::weak_ptr<Selectable>)");
-                return;
-            }
+            selectables.insert_or_assign(guidKey, selectable);
         }
     }
 }
@@ -43,6 +46,19 @@ void ToolsSelectionManager::SetSelection(const std::weak_ptr<Selectable>& select
 {
     if (auto shared = selectable.lock())
     {
+        // Get the guid as this is the key for the dictionaries.
+        std::string guidKey = {};
+        if (std::shared_ptr<Guid> guidPointer = shared->GetGuid())
+        {
+            guidKey = guidPointer->ToString();
+        }
+        else
+        {
+            Log::Error("No Guid found on selectable. Could not add to selection.",
+                "ToolsSelectionManager::SetSelection(std::weak_ptr<Selectable>)");
+            return;
+        }
+
         std::unordered_set<SelectionGroup> selectableGroup = shared->GetSelectionGroup();
         for (const SelectionGroup& group : selectableGroup)
         {
@@ -52,25 +68,45 @@ void ToolsSelectionManager::SetSelection(const std::weak_ptr<Selectable>& select
             }
 
             std::unordered_map<std::string, std::weak_ptr<Selectable>>& selectables = m_selectables.at(group);
-            if (std::shared_ptr<Guid> guidPointer = shared->GetGuid())
-            {
-                std::string guid = guidPointer->ToString();
-                selectables.clear();
-                selectables.insert_or_assign(guid, selectable);
-            }
-            else
-            {
-                Log::Error("No Guid found on selectable. Could not add to selection.",
-                    "ToolsSelectionManager::SetSelection(std::weak_ptr<Selectable>)");
-                return;
-            }
+            selectables.clear();
+            selectables.insert_or_assign(guidKey, selectable);
         }
     }
 }
 
 void ToolsSelectionManager::RemoveFromSelection(const std::weak_ptr<Selectable>& selectable)
 {
-    Log::Error("Not implemented.", "ToolsSelectionManager::RemoveFromSelection(std::weak_ptr<Selectable>)");
+
+    if (auto shared = selectable.lock())
+    {
+        // Get the guid as this is the key for the dictionaries.
+        std::string guidKey = {};
+        if (std::shared_ptr<Guid> guidPointer = shared->GetGuid())
+        {
+            guidKey = guidPointer->ToString();
+        }
+        else
+        {
+            Log::Error("No Guid found on selectable. Could not remove from selection.",
+                "ToolsSelectionManager::RemoveFromSelection(std::weak_ptr<Selectable>)");
+            return;
+        }
+
+        std::unordered_set<SelectionGroup> selectableGroup = shared->GetSelectionGroup();
+        for (const SelectionGroup& group : selectableGroup)
+        {
+            if (!m_selectables.contains(group))
+            {
+                m_selectables.insert_or_assign(group, std::unordered_map<std::string, std::weak_ptr<Selectable>>());
+            }
+
+            std::unordered_map<std::string, std::weak_ptr<Selectable>>& selectables = m_selectables.at(group);
+            erase_if(selectables, [guidKey](const std::pair<std::string, std::weak_ptr<Selectable>>& pair)
+                {
+                    return pair.first == guidKey;
+                });
+        }
+    }
 }
 
 void ToolsSelectionManager::AddToSelection(const std::vector<std::weak_ptr<Selectable>>& selectable)
