@@ -86,7 +86,7 @@ ToolsColoursAndStyles::ToolsColoursAndStyles(const std::shared_ptr<PackagePaths>
     m_fontPaths.insert_or_assign(
         EmbeddedFont::NotoSansVariableFont, 
         Directory::CombinePath(fullProductsPath, 
-            "Tools\\Fonts\\NotoSans-VariableFont_wdth,wght.ttf"));
+            "Tools","Fonts","NotoSans-VariableFont_wdth,wght.ttf"));
     CreateFontImGui(EmbeddedFont::NotoSansVariableFont, 18);
 }
 
@@ -181,6 +181,14 @@ void ToolsColoursAndStyles::CreateFontImGui(EmbeddedFont font, float size)
     ImGuiIO& io = ImGui::GetIO();
 
     const char* path = m_fontPaths.at(font).c_str();
+    if (!File::Exists(m_fontPaths.at(font)))
+    {
+        Log::Error("Could not load font, does not exist: " + m_fontPaths.at(font)
+            + " type: " + EEmbeddedFont::ToString(font),
+            "ToolsColoursAndStyles::CreateFontImGui(EmbeddedFont,float)");
+        return;
+    }
+
     ImFont* newFont = io.Fonts->AddFontFromFileTTF(path, size);
     if (newFont == nullptr)
     {

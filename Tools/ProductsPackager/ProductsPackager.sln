@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Observer", "..\..\FatedQues
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logger", "..\..\FatedQuest.Libraries\Logger\Logger.vcxproj", "{40283B7B-524E-4753-9617-FF1DA95CD9D0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedEnums", "..\..\FatedQuest.Libraries\SharedEnums\SharedEnums.vcxproj", "{231D6F13-1D66-435D-ADF1-810E7EBB056A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -99,6 +101,18 @@ Global
 		{40283B7B-524E-4753-9617-FF1DA95CD9D0}.Tools_Debug|x64.Build.0 = Tools_Debug|x64
 		{40283B7B-524E-4753-9617-FF1DA95CD9D0}.Tools_Debug|x86.ActiveCfg = Tools_Debug|Win32
 		{40283B7B-524E-4753-9617-FF1DA95CD9D0}.Tools_Debug|x86.Build.0 = Tools_Debug|Win32
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Debug|x64.ActiveCfg = Debug|x64
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Debug|x64.Build.0 = Debug|x64
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Debug|x86.ActiveCfg = Debug|Win32
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Debug|x86.Build.0 = Debug|Win32
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Release|x64.ActiveCfg = Release|x64
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Release|x64.Build.0 = Release|x64
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Release|x86.ActiveCfg = Release|Win32
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Release|x86.Build.0 = Release|Win32
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Tools_Debug|x64.ActiveCfg = Debug|x64
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Tools_Debug|x64.Build.0 = Debug|x64
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Tools_Debug|x86.ActiveCfg = Debug|Win32
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A}.Tools_Debug|x86.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +123,7 @@ Global
 		{272A3AEB-BE9F-4219-919D-701C0A4A996F} = {AAC127EB-3D0F-430B-BEC3-C505428759C9}
 		{82E4F919-75B9-4614-B7B9-BAC8ECB40834} = {AAC127EB-3D0F-430B-BEC3-C505428759C9}
 		{40283B7B-524E-4753-9617-FF1DA95CD9D0} = {AAC127EB-3D0F-430B-BEC3-C505428759C9}
+		{231D6F13-1D66-435D-ADF1-810E7EBB056A} = {AAC127EB-3D0F-430B-BEC3-C505428759C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C184972-1F4D-4110-BF2A-2E76EDC077D4}

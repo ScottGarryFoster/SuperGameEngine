@@ -265,3 +265,14 @@ Non-Library assets in this context refers to all the items included which are no
 * No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
 
 See this link for more details: [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
+
+### Google Fonts
+Several google foots are used. These are lisenced under the [https://openfontlicense.org/](https://openfontlicense.org/) which means you can use them in your products & projects – print or digital, commercial or otherwise.
+
+Copyright 2022 The Noto Project Authors ([https://github.com/notofonts/latin-greek-cyrillic](https://github.com/notofonts/latin-greek-cyrillic))
+This Font Software is licensed under the SIL Open Font License, Version 1.1 . This license is copied below, and is also available with a FAQ at: [https://openfontlicense.org](https://openfontlicense.org)
+
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+
+**Fonts used**
+* Noto Sans [https://fonts.google.com/noto/specimen/Noto+Sans](https://fonts.google.com/noto/specimen/Noto+Sans)
