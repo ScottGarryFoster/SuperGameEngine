@@ -35,21 +35,21 @@ namespace SuperGameTools
         /// <summary>
         /// Add selectable to selections.
         /// </summary>
-        /// <param name="selectable">New selections. </param>
-        virtual void AddToSelection(const std::vector<std::weak_ptr<Selectable>>& selectable) = 0;
+        /// <param name="selectables">New selections. </param>
+        virtual void AddToSelection(const std::vector<std::weak_ptr<Selectable>>& selectables) = 0;
 
         /// <summary>
         /// Set the selection to this.
         /// Will only affect the groups these selections are in.
         /// </summary>
-        /// <param name="selectable">New selections. </param>
-        virtual void SetSelection(const std::vector<std::weak_ptr<Selectable>>& selectable) = 0;
+        /// <param name="selectables">New selections. </param>
+        virtual void SetSelection(const std::vector<std::weak_ptr<Selectable>>& selectables) = 0;
 
         /// <summary>
         /// Remove selectable from selections.
         /// </summary>
-        /// <param name="selectable">Removable selections. </param>
-        virtual void RemoveFromSelection(const std::vector<std::weak_ptr<Selectable>>& selectable) = 0;
+        /// <param name="selectables">Removable selections. </param>
+        virtual void RemoveFromSelection(const std::vector<std::weak_ptr<Selectable>>& selectables) = 0;
 
         /// <summary>
         /// Get selection within given group.

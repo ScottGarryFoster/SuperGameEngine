@@ -17,6 +17,12 @@ namespace SuperGameToolsTests
             m_guid = GUIDHelpers::CreateGUID();
         }
 
+        SelectableStub(const std::unordered_set<SelectionGroup>& groups)
+        {
+            m_selectionGroups = groups;
+            m_guid = GUIDHelpers::CreateGUID();
+        }
+
         /// <summary>
         /// Describes the group for the selectable which helps to decide the
         /// buckets that the selectable will be added to.
