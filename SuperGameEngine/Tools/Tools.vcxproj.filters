@@ -465,6 +465,12 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionGroup.h">
       <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangedEventArguments.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangeType.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

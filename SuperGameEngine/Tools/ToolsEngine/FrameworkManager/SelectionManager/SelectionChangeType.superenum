@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        How the selection changed.
+    </EnumComment>
+    <EnumName Name="SelectionChangeType">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Add>
+            A selectable was added.
+        </Add>
+        <Remove>
+            A selectable was removed.
+        </Remove>
+        <Set>
+            A selectable group was set to another set of selectables.
+        </Set>
+    </EnumName>
+</SuperEnum>

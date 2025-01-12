@@ -6,14 +6,36 @@
 #include <vector>
 #include "SelectionManager.h"
 
+namespace FatedQuestLibraries
+{
+    class FEvent;
+}
+
 namespace SuperGameTools
 {
+    enum class SelectionChangeType;
+
     /// <summary>
     /// Manages selection across multiple windows.
     /// </summary>
     class ToolsSelectionManager : public SelectionManager
     {
     public:
+        ToolsSelectionManager();
+
+        /// <summary>
+        /// Event called when a selection has changed.
+        /// </summary>
+        /// <returns>Event called when a selection has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnSelectionChanged() const override;
+
+        /// <summary>
+        /// Event called when a selection has changed in the groups given.
+        /// </summary>
+        /// <param name="selectionGroup">Group to filter for. </param>
+        /// <returns>Event called when a selection has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnSelectionChanged(SelectionGroup selectionGroup) const override;
+
         /// <summary>
         /// Add selectable to selection.
         /// </summary>
@@ -71,5 +93,19 @@ namespace SuperGameTools
         /// All selectables by group.
         /// </summary>
         std::unordered_map<SelectionGroup, std::unordered_map<std::string, std::weak_ptr<Selectable>>> m_selectables;
+
+        /// <summary>
+        /// Events for OnSelectionChanged sorted by group.
+        /// </summary>
+        std::unordered_map<SelectionGroup, std::shared_ptr<FEvent>> m_onSelectionByGroup;
+
+        /// <summary>
+        /// Called for all groups.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onSelectionForAllGroups;
+
+        void CallOnSelection(SelectionChangeType change, const std::weak_ptr<Selectable>& selectable) const;
+
+        void CallOnSelection(SelectionChangeType change, const std::vector<std::weak_ptr<Selectable>>& selectables) const;
     };
 }

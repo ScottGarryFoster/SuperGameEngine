@@ -240,6 +240,8 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\ToolsDocumentManager.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\FrameworkManager.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\Selectable.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangedEventArguments.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangeType.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionGroup.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionManager.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\ToolsSelectionManager.h" />

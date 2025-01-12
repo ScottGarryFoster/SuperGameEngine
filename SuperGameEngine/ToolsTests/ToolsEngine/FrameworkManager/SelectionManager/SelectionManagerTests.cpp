@@ -324,6 +324,30 @@ namespace ToolsTests_ToolsEngine_FrameworkManager
         ASSERT_EQ(givenSelection->m_guid, shared->GetGuid()) << "Guids did not match. ";
     }
 
+    TEST_F(SelectionManagerTests, AddToSelectionMultiple_AddsCorrectly_WhenTheFirstInTheListHasNoGuid)
+    {
+        // Arrange
+        SelectionGroup givenGroup = SelectionGroup::Inspectable;
+        auto givenSelection = std::make_shared<SelectableStub>(SelectionGroup::Inspectable);
+        givenSelection->m_guid = {};
+        auto givenSelection2 = std::make_shared<SelectableStub>(SelectionGroup::Inspectable);
+
+        std::vector<std::weak_ptr<Selectable>> selectables;
+        selectables.emplace_back(givenSelection);
+        selectables.emplace_back(givenSelection2);
+
+        // Act
+        m_selectionManager->AddToSelection(selectables);
+
+        // Assert
+        std::vector<std::weak_ptr<Selectable>> actual = m_selectionManager->GetSelection(givenGroup);
+        ASSERT_EQ(1, actual.size()) << "The correct number of selectables was not found.";
+
+        auto shared = actual.at(0).lock();
+        ASSERT_TRUE(shared) << "Pointer to selection did not exist.";
+        ASSERT_EQ(givenSelection2->m_guid, shared->GetGuid()) << "Guids did not match. ";
+    }
+
 #pragma endregion
 
 #pragma region SelectSelection-Multiple
@@ -502,6 +526,50 @@ namespace ToolsTests_ToolsEngine_FrameworkManager
         auto shared3 = actual.at(2).lock();
         ASSERT_TRUE(shared3) << "Pointer to selection did not exist.";
         ASSERT_EQ(toBeRemoved2->m_guid, shared3->GetGuid()) << "Guids did not match. ";
+    }
+
+    TEST_F(SelectionManagerTests, RemoveFromSelectionMutliple_ContinuesToRemove_WhenTheSelectableWithoutAGuidIsFirst)
+    {
+        // Arrange
+        SelectionGroup givenGroup = SelectionGroup::Inspectable;
+        auto inSelection = std::make_shared<SelectableStub>(SelectionGroup::Inspectable);
+        auto inSelection2 = std::make_shared<SelectableStub>(SelectionGroup::Inspectable);
+
+        auto toBeRemoved = std::make_shared<SelectableStub>(SelectionGroup::Inspectable);
+        auto toBeRemoved2 = std::make_shared<SelectableStub>(SelectionGroup::Inspectable);
+
+        std::vector<std::weak_ptr<Selectable>> selectionFromTheStart;
+        selectionFromTheStart.emplace_back(inSelection);
+        selectionFromTheStart.emplace_back(inSelection2);
+        selectionFromTheStart.emplace_back(toBeRemoved);
+        selectionFromTheStart.emplace_back(toBeRemoved2);
+        m_selectionManager->SetSelection(selectionFromTheStart);
+
+        std::vector<std::weak_ptr<Selectable>> givenToRemove;
+        givenToRemove.emplace_back(toBeRemoved);
+        givenToRemove.emplace_back(toBeRemoved2);
+
+        // Expect this to still exist.
+        toBeRemoved->m_guid = {};
+
+        // Act
+        m_selectionManager->RemoveFromSelection(givenToRemove);
+
+        // Assert
+        std::vector<std::weak_ptr<Selectable>> actual = m_selectionManager->GetSelection(givenGroup);
+        ASSERT_EQ(3, actual.size()) << "The correct number of selectables was not found.";
+
+        auto shared = actual.at(0).lock();
+        ASSERT_TRUE(shared) << "Pointer to selection did not exist.";
+        ASSERT_EQ(inSelection->m_guid, shared->GetGuid()) << "Guids did not match. ";
+
+        auto shared2 = actual.at(1).lock();
+        ASSERT_TRUE(shared2) << "Pointer to selection did not exist.";
+        ASSERT_EQ(inSelection2->m_guid, shared2->GetGuid()) << "Guids did not match. ";
+
+        auto shared3 = actual.at(2).lock();
+        ASSERT_TRUE(shared3) << "Pointer to selection did not exist.";
+        ASSERT_EQ(toBeRemoved->m_guid, shared3->GetGuid()) << "Guids did not match. ";
     }
 
 #pragma endregion

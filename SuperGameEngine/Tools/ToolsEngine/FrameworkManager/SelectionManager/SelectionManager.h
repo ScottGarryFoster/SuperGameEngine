@@ -2,6 +2,13 @@
 #include <memory>
 #include <vector>
 
+namespace FatedQuestLibraries
+{
+    class FEventSubscriptions;
+}
+
+using namespace FatedQuestLibraries;
+
 namespace SuperGameTools
 {
     class Selectable;
@@ -13,6 +20,19 @@ namespace SuperGameTools
     class SelectionManager
     {
     public:
+        /// <summary>
+        /// Event called when a selection has changed.
+        /// </summary>
+        /// <returns>Event called when a selection has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnSelectionChanged() const = 0;
+
+        /// <summary>
+        /// Event called when a selection has changed in the groups given.
+        /// </summary>
+        /// <param name="selectionGroup">Group to filter for. </param>
+        /// <returns>Event called when a selection has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnSelectionChanged(SelectionGroup selectionGroup) const = 0;
+
         /// <summary>
         /// Add selectable to selection.
         /// </summary>
