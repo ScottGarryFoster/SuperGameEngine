@@ -79,5 +79,6 @@ void Log::LogMessage(LogLevel level, const std::string& message, const std::stri
     auto arguments = std::make_shared<LogEventArguments>();
     arguments->SetLevel(level);
     arguments->SetLogMessage(message);
+    arguments->SetFrom(from);
     m_logEvent->Invoke(arguments);
 }

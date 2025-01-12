@@ -19,6 +19,13 @@ namespace SuperGameTools
         virtual std::shared_ptr<Guid> GetGuid() const override;
 
         /// <summary>
+        /// Describes the group for the selectable which helps to decide the
+        /// buckets that the selectable will be added to.
+        /// </summary>
+        /// <returns>The group or groups for this selectable. </returns>
+        virtual std::unordered_set<SelectionGroup> GetSelectionGroup() const override;
+
+        /// <summary>
         /// Set guid for the game object.
         /// </summary>
         /// <param name="guid">New guid. </param>
@@ -40,5 +47,10 @@ namespace SuperGameTools
         /// Guid for the game object.
         /// </summary>
         std::shared_ptr<Guid> m_guid;
+
+        /// <summary>
+        /// The groups for this selectable.
+        /// </summary>
+        std::unordered_set<SelectionGroup> m_selectionGroups;
     };
 }

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionManagerTests.cpp">
+      <Filter>ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectableStub.h">
+      <Filter>ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ToolsEngine">
+      <UniqueIdentifier>{9588b70c-dec2-4fe7-a2d4-07404030d175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ToolsEngine\FrameworkManager">
+      <UniqueIdentifier>{6473c9ed-3451-4719-a44c-c856b4e87c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ToolsEngine\FrameworkManager\SelectionManager">
+      <UniqueIdentifier>{c88c58f0-6b0d-448e-a938-dfc7fe64a576}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

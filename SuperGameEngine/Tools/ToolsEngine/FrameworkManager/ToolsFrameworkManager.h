@@ -3,16 +3,10 @@
 
 namespace SuperGameTools
 {
-    class WindowPackage;
-}
-
-namespace SuperGameTools
-{
     class ToolsDocumentManager;
-}
+    class ToolsSelectionManager;
+    class WindowPackage;
 
-namespace SuperGameTools
-{
     /// <summary>
     /// Manages and holds the larger services for the entire tools engine.
     /// </summary>
@@ -34,11 +28,22 @@ namespace SuperGameTools
         /// <returns>Manages actions around documents. </returns>
         virtual std::shared_ptr<DocumentManager> GetDocumentManager() const override;
 
+        /// <summary>
+        /// Manages selection across multiple windows.
+        /// </summary>
+        /// <returns>Manages selection across multiple windows. </returns>
+        virtual std::shared_ptr<SelectionManager> GetSelectionManager() const override;
+
     private:
         /// <summary>
         /// Manages actions around documents.
         /// </summary>
         std::shared_ptr<ToolsDocumentManager> m_documentManager;
+
+        /// <summary>
+        /// Manages selection across multiple windows.
+        /// </summary>
+        std::shared_ptr<ToolsSelectionManager> m_selectionManager;
 
         /// <summary>
         /// Everything a Window Package might need to run.

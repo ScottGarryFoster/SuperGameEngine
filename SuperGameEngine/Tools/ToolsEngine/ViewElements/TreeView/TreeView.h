@@ -115,18 +115,5 @@ namespace SuperGameTools
         /// <param name="current">Current item to render. </param>
         /// <param name="depth">How deep we are in the tree. 0 is the root. </param>
         void RenderItem(const std::shared_ptr<TreeViewItem>& current, int depth) const;
-
-        /// <summary>
-        /// Render a single row.
-        /// </summary>
-        /// <param name="current">Current item. </param>
-        /// <param name="depth">Depth in the tree. </param>
-        void RenderRow(const std::shared_ptr<TreeViewItem>& current, int depth) const;
-
-        void RenderSelectableArrow(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
-        void RenderFullBackground(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
-        void RenderSelectableRow(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
-        void RenderArrowImage(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
-        void RenderRowText(const std::shared_ptr<TreeViewItem>& current, ImVec2 originalPosition) const;
     };
 }

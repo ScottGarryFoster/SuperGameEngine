@@ -3,6 +3,7 @@
 
 namespace SuperGameTools
 {
+    class SelectionManager;
     class DocumentManager;
 }
 
@@ -21,5 +22,11 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Manages actions around documents. </returns>
         virtual std::shared_ptr<DocumentManager> GetDocumentManager() const = 0;
+
+        /// <summary>
+        /// Manages selection across multiple windows.
+        /// </summary>
+        /// <returns>Manages selection across multiple windows. </returns>
+        virtual std::shared_ptr<SelectionManager> GetSelectionManager() const = 0;
     };
 }

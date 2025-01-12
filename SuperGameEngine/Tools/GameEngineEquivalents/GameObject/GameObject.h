@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include "../../ToolsEngine/FrameworkManager/SelectionManager/Selectable.h"
+
 namespace FatedQuestLibraries
 {
     class Guid;
@@ -16,7 +18,7 @@ namespace SuperGameTools
     /// <summary>
     /// A game object with the things which Tools are concerned with.
     /// </summary>
-    class GameObject
+    class GameObject : public Selectable
     {
     public:
         virtual ~GameObject() = default;
@@ -25,7 +27,14 @@ namespace SuperGameTools
         /// Guid for the game object.
         /// </summary>
         /// <returns>Guid for the game object. </returns>
-        virtual std::shared_ptr<Guid> GetGuid() const = 0;
+        virtual std::shared_ptr<Guid> GetGuid() const override = 0;
+
+        /// <summary>
+        /// Describes the group for the selectable which helps to decide the
+        /// buckets that the selectable will be added to.
+        /// </summary>
+        /// <returns>The group or groups for this selectable. </returns>
+        virtual std::unordered_set<SelectionGroup> GetSelectionGroup() const override = 0;
 
         /// <summary>
         /// Set guid for the game object.

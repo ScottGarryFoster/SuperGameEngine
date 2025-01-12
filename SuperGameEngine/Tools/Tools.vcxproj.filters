@@ -220,6 +220,15 @@
     <Filter Include="Header Files\GameEngineEquivalents\Component">
       <UniqueIdentifier>{d02614f7-7cd4-42b4-a89d-677c8f65ed4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\FrameworkManager\SelectionManager">
+      <UniqueIdentifier>{2b6c323d-990f-4564-a193-8508a9ed88d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ToolsEngine\FrameworkManager\SelectionManager">
+      <UniqueIdentifier>{99529520-38b3-49fd-840f-dde04f60ebae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameEngineEquivalents\Component">
+      <UniqueIdentifier>{63acdbb8-d7ef-4e02-bfd4-2c4e6c5ad5db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -444,6 +453,27 @@
     <ClInclude Include="GameEngineEquivalents\Component\ToolsComponent.h">
       <Filter>Header Files\GameEngineEquivalents\Component</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionManager.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\ToolsSelectionManager.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\Selectable.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionGroup.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangedEventArguments.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangeType.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -557,8 +587,14 @@
     <ClCompile Include="GameEngineEquivalents\GameObject\ToolsGameObject.cpp">
       <Filter>Source Files\GameEngineEquivalents\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="ToolsEngine\FrameworkManager\SelectionManager\ToolsSelectionManager.cpp">
+      <Filter>Source Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
+    </ClCompile>
     <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameEngineEquivalents\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
