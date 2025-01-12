@@ -115,21 +115,16 @@ void ToolsEngine::WindowTeardown()
 
 void ToolsEngine::Setup()
 {
+    auto menuBar = std::make_shared<MainMenuBar>();
+    std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
+    std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
+    std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
+    std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
+
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
-    // Must be made first as other things latch on to it.
-    auto menuBar = std::make_shared<MainMenuBar>();
-    menuBar->Setup(m_windowPackage);
-    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
-    m_updatables.push_back(menuBar);
-
-    std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
-    gameViewport->Setup(m_windowPackage);
-    m_updatables.push_back(gameViewport);
-
-    std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
+    // Ensure we listen to logs early.
     loggerWindow->Setup(m_windowPackage);
-
     if (auto shared = Log::GetEvent().lock())
     {
         std::weak_ptr<FEventObserver> weak = loggerWindow;
@@ -137,19 +132,23 @@ void ToolsEngine::Setup()
     }
     m_updatables.push_back(loggerWindow);
 
-    std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
-    m_updatables.push_back(sceneHierarchy);
+    // Must be made first as other things latch on to it.
+    menuBar->Setup(m_windowPackage);
+    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
+    m_updatables.push_back(menuBar);
 
-    std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
-    inspectorWindow->Setup(m_windowPackage);
-    m_updatables.push_back(inspectorWindow);
-
-    // The last thing should be framework as this subscribes to things above.
-    std::weak_ptr<WindowPackage> weak = m_windowPackage;
-    auto framework = std::make_shared<ToolsFrameworkManager>(weak);
+    // Then framework
+    auto framework = std::make_shared<ToolsFrameworkManager>(m_windowPackage);
     framework->Setup();
     m_windowPackage->SetFrameworkManager(framework);
 
-    // Has to be setup after framework.
+    // Everything else should be able to be in any order
+    gameViewport->Setup(m_windowPackage);
+    m_updatables.push_back(gameViewport);
+
+    inspectorWindow->Setup(m_windowPackage);
+    m_updatables.push_back(inspectorWindow);
+
     sceneHierarchy->Setup(m_windowPackage);
+    m_updatables.push_back(sceneHierarchy);
 }

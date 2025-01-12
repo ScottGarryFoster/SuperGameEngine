@@ -471,6 +471,9 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangeType.h">
       <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -589,6 +592,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp">
       <Filter>Source Files\GameEngineEquivalents\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

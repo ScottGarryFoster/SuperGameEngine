@@ -8,6 +8,8 @@ namespace FatedQuestLibraries
     class Guid;
 }
 
+using namespace FatedQuestLibraries;
+
 namespace SuperGameTools
 {
     /// <summary>
@@ -29,7 +31,7 @@ namespace SuperGameTools
         /// It should be unique among selectables.
         /// </summary>
         /// <returns>A unique Guid. </returns>
-        virtual std::shared_ptr<FatedQuestLibraries::Guid> GetGuid() const = 0;
+        virtual std::shared_ptr<Guid> GetGuid() const = 0;
     };
 
 }

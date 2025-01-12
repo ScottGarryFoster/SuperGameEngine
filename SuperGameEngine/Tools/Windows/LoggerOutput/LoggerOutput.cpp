@@ -123,6 +123,7 @@ void LoggerOutput::Invoke(std::shared_ptr<FEventArguments> arguments)
         auto logEntry = std::make_shared<LogEntry>();
         logEntry->SetLevel(logArguments->GetLevel());
         logEntry->SetLogMessage(logArguments->GetLogMessage());
+        logEntry->SetFrom(logArguments->GetFrom());
 
         m_logEntries.emplace_back(logEntry);
     }

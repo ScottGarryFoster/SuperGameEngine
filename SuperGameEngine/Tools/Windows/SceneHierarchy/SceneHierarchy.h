@@ -7,6 +7,11 @@
 #include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
 #include "../UpdateableObject/UpdateableObject.h"
 
+namespace FatedQuestLibraries
+{
+    class Guid;
+}
+
 namespace SuperGameTools
 {
     class SceneDocument;
@@ -93,6 +98,13 @@ namespace SuperGameTools
         /// <param name="document">Scene document. </param>
         /// <returns>True means loaded. </returns>
         bool LoadScene(const std::shared_ptr<SceneDocument>& document);
+
+        /// <summary>
+        /// Stop selecting all tree view items but the given.
+        /// </summary>
+        /// <param name="treeViewItem">Item to remain selected. </param>
+        /// <param name="root">Root to select from. </param>
+        void RemoveSelectionFromAllBut(const std::shared_ptr<TreeViewItem>& treeViewItem, const std::shared_ptr<TreeViewItem>& root);
 
         bool m_testPopup;
         std::string m_testPopupText;

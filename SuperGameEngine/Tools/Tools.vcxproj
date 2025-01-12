@@ -280,6 +280,7 @@
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
+    <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h" />
     <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp" />
+    <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp" />
   </ItemGroup>
