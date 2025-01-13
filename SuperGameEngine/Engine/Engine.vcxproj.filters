@@ -366,6 +366,15 @@
     <ClInclude Include="External\TinyFileDialog\tinyfiledialogs.h">
       <Filter>Header Files\External\TinyFileDialog</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Serializable\SerializableProperty.h">
+      <Filter>Header Files\Structural\Serializable</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Serializable\SerializableDataType.h">
+      <Filter>Header Files\Structural\Serializable</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Serializable\BasicSerializableProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -493,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="External\TinyFileDialog\tinyfiledialogs.cpp">
       <Filter>Source Files\External\TinyFileDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Serializable\BasicSerializableProperty.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

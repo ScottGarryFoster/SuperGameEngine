@@ -171,6 +171,11 @@ std::shared_ptr<StoredDocumentNode> SuperGameComponent::Save()
     return {};
 }
 
+std::vector<std::shared_ptr<SerializableProperty>> SuperGameComponent::Properties() const
+{
+    return m_serializableProperties;
+}
+
 std::shared_ptr<ComponentLoadPackage> SuperGameComponent::LoadPackage() const
 {
     return m_loadPackage;

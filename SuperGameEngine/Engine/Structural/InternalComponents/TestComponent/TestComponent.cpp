@@ -6,6 +6,7 @@
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../GameObject/GameObject.h"
 #include "../../Packages/ComponentLoadPackage.h"
+#include "../../Serializable/BasicSerializableProperty.h"
 #include "../../Serializable/SerializableParser.h"
 #include "../SpriteComponent/SpriteComponent.h"
 
@@ -15,6 +16,13 @@ TestComponent::TestComponent()
 {
     m_yPosition = 0;
     m_serial = "default";
+
+    {
+        auto property = std::make_shared<BasicSerializableProperty>();
+        property->SetName("Serial");
+        property->SetType(SerializableDataType::Text);
+        m_serializableProperties.emplace_back(property);
+    }
 }
 
 TestComponent::~TestComponent() = default;
