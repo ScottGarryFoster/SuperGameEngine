@@ -10,6 +10,7 @@ namespace SuperGameTools
 
 namespace SuperGameEngine
 {
+    class SerializableParser;
     class SerializableProperty;
 }
 
@@ -21,6 +22,8 @@ namespace SuperGameTools
     class SerializablePropertyLoader
     {
     public:
+        SerializablePropertyLoader(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser);
+
         /// <summary>
         /// Extracts the properties from the given component.
         /// </summary>
@@ -34,6 +37,12 @@ namespace SuperGameTools
         /// <param name="typeName">Type to extract from. </param>
         /// <returns>Properties on the component. </returns>
         std::vector<std::shared_ptr<ToolsSerializableProperty>> ToolsFromComponent(const std::string& typeName) const;
+
+    private:
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SerializableParser> m_serializableParser;
     };
 }
 

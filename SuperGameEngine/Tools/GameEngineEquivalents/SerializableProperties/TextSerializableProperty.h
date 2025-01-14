@@ -3,6 +3,11 @@
 
 #include "ToolsSerializableProperty.h"
 
+namespace SuperGameEngine
+{
+    class SerializableParser;
+}
+
 namespace SuperGameTools
 {
     /// <summary>
@@ -11,7 +16,9 @@ namespace SuperGameTools
     class TextSerializableProperty : public ToolsSerializableProperty
     {
     public:
-        TextSerializableProperty(const std::shared_ptr<SuperGameEngine::SerializableProperty>& property);
+        TextSerializableProperty(
+            const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
+            const std::shared_ptr<SuperGameEngine::SerializableProperty>& property);
 
         /// <summary>
         /// Gets the engine side property.
@@ -24,11 +31,28 @@ namespace SuperGameTools
         /// </summary>
         virtual void Draw() override;
 
+        /// <summary>
+        /// Load the property from stored data.
+        /// </summary>
+        /// <param name="node">Node for this property. </param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) override;
+
+        /// <summary>
+        /// Save this property.
+        /// </summary>
+        /// <returns>A node which contains the data, this is the property node. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save() const override;
+
     private:
         /// <summary>
         /// The engine side property.
         /// </summary>
         std::shared_ptr<SuperGameEngine::SerializableProperty> m_property;
+
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SerializableParser> m_serializableParser;
 
         /// <summary>
         /// The text stored.

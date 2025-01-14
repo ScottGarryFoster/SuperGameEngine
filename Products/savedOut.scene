@@ -6,10 +6,10 @@
     </GameObject>
     <GameObject "Guid"="{418A83D4-19A4-42B8-A8C0-470A2DF829BB}">
         <Component "type"="TestComponent">
-            <Property "Name"="Serial" "Value"="NotDefault" />
+            <Property "Name"="Serial" "Value"="Number two" />
         </Component>
         <Component "type"="TestComponent">
-            <Property "Name"="Serial" "Value"="NotDefault" />
+            <Property "Name"="Serial" "Value"="Number three" />
         </Component>
     </GameObject>
 </Scene>

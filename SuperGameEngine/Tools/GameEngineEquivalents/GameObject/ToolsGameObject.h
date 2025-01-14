@@ -1,6 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
+namespace SuperGameEngine
+{
+    class SerializableParser;
+}
+
 namespace SuperGameTools
 {
     /// <summary>
@@ -10,7 +15,7 @@ namespace SuperGameTools
     {
     public:
         virtual ~ToolsGameObject() override = default;
-        ToolsGameObject();
+        ToolsGameObject(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser);
 
         /// <summary>
         /// Guid for the game object.
@@ -37,7 +42,24 @@ namespace SuperGameTools
         /// <returns>Components on game object. </returns>
         virtual std::shared_ptr<std::vector<std::shared_ptr<Component>>> GetComponents() const override;
 
+        /// <summary>
+        /// Load the game object from stored data.
+        /// </summary>
+        /// <param name="node">Node for this game object. </param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) override;
+
+        /// <summary>
+        /// Save this game object.
+        /// </summary>
+        /// <returns>A node which contains the data, this is the game object node. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save() const override;
+
     private:
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SerializableParser> m_serializableParser;
+
         /// <summary>
         /// Components on the game object.
         /// </summary>

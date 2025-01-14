@@ -8,6 +8,12 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
+SerializablePropertyLoader::SerializablePropertyLoader(
+    const std::shared_ptr<SuperGameEngine::SerializableParser>& parser)
+{
+    m_serializableParser = parser;
+}
+
 std::vector<std::shared_ptr<SuperGameEngine::SerializableProperty>>
     SerializablePropertyLoader::EngineFromComponent(const std::string& typeName) const
 {
@@ -35,7 +41,8 @@ std::vector<std::shared_ptr<ToolsSerializableProperty>> SerializablePropertyLoad
         switch (property->GetType())
         {
         case SuperGameEngine::SerializableDataType::Text:
-            toolsProperties.emplace_back(std::make_shared<TextSerializableProperty>(property));
+            toolsProperties.emplace_back(std::make_shared<TextSerializableProperty>
+                (m_serializableParser, property));
             break;
         default:
             Log::Error("Could not find a Tools Property for type: " + 

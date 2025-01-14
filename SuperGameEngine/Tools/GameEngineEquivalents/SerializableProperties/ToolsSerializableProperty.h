@@ -1,10 +1,18 @@
 #pragma once
 #include <memory>
 
+namespace FatedQuestLibraries
+{
+    class ModifiableNode;
+    class StoredDocumentNode;
+}
+
 namespace SuperGameEngine
 {
     class SerializableProperty;
 }
+
+using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
 {
@@ -26,10 +34,16 @@ namespace SuperGameTools
         virtual void Draw() = 0;
 
         /// <summary>
+        /// Load the property from stored data.
+        /// </summary>
+        /// <param name="node">Node for this property. </param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
+
+        /// <summary>
         /// Save this property.
         /// </summary>
-        /// This is a reminder for the next commit.
-        //virtual void Save() = 0;
+        /// <returns>A node which contains the data, this is the property node. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save() const = 0;
     };
 
 }

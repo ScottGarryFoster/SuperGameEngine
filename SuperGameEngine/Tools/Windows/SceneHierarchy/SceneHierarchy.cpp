@@ -187,22 +187,9 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         childItem->GetIsFramed()->SetValue(false);
 
         // Create the game object
-        auto gameObject = std::make_shared<ToolsGameObject>();
+        auto gameObject = std::make_shared<ToolsGameObject>(m_windowPackage->GetParser());
         childItem->SetGameObject(gameObject);
-        bool createdGuid = false;
-        if (std::shared_ptr<StoredDocumentAttribute> attribute = child->Attribute("Guid", CaseSensitivity::IgnoreCase))
-        {
-            if (!attribute->Value().empty())
-            {
-                gameObject->SetGuid(GUIDHelpers::CreateFromString(attribute->Value()));
-                createdGuid = true;
-            }
-        }
-
-        if (!createdGuid)
-        {
-            gameObject->SetGuid(GUIDHelpers::CreateGUID());
-        }
+        gameObject->Load(child);
 
         // Subscribe to OnSelected.
         std::weak_ptr<FEventObserver> weak = shared_from_this();
@@ -210,25 +197,6 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         childItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
         childItem->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::NoIcon);
         children.emplace_back(childItem);
-
-        for (std::shared_ptr<StoredDocumentNode> compChild = child->GetFirstChild(); compChild; compChild = compChild->GetAdjacentNode())
-        {
-            std::string typeName = {};
-            std::shared_ptr<StoredDocumentAttribute> typeAtt = compChild->Attribute("Type", CaseSensitivity::IgnoreCase);
-            if (typeAtt)
-            {
-                typeName = typeAtt->Value();
-            }
-            else
-            {
-                typeName = "Component";
-            }
-
-            // The component to the game object.
-            auto componentObject = std::make_shared<ToolsComponent>();
-            componentObject->SetType(typeName);
-            gameObject->GetComponents()->emplace_back(componentObject);
-        }
     }
     m_treeViewItem->GetChildren()->SetValue(children);
 

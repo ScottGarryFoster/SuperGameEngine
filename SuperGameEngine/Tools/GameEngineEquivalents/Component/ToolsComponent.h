@@ -5,6 +5,7 @@
 
 namespace SuperGameEngine
 {
+    class SerializableParser;
     class SerializableProperty;
 }
 
@@ -22,6 +23,7 @@ namespace SuperGameTools
     {
     public:
         virtual ~ToolsComponent() override = default;
+        ToolsComponent(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser);
 
         /// <summary>
         /// The type of the component.
@@ -47,7 +49,24 @@ namespace SuperGameTools
         /// <returns>Properties exposed and serialised in the Tools. </returns>
         virtual std::vector<std::shared_ptr<ToolsSerializableProperty>> GetToolsProperties() const override;
 
+        /// <summary>
+        /// Load the component from stored data.
+        /// </summary>
+        /// <param name="node">Node for this component. </param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) override;
+
+        /// <summary>
+        /// Save this component.
+        /// </summary>
+        /// <returns>A node which contains the data, this is the component node. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save() const override;
+
     private:
+        /// <summary>
+        /// Helps to parse serializable objects.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SerializableParser> m_serializableParser;
+
         /// <summary>
         /// The type of the component.
         /// </summary>
