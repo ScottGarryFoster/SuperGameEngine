@@ -42,3 +42,18 @@ std::string TextSerializableProperty::Load(const std::shared_ptr<SerializablePar
 
     return parser->Parse(m_defaultValue, node);
 }
+
+std::shared_ptr<ModifiableNode> TextSerializableProperty::Save(
+    const std::shared_ptr<SerializableParser>& parser,
+    const std::string& valueToSave) const
+{
+    if (!parser)
+    {
+        Log::Error("Parser given was null.",
+            "TextSerializableProperty::Save"
+            "(std::shared_ptr<SerializableParser>,std::string)");
+        return {};
+    }
+
+    return parser->Serialize(GetName(), valueToSave, GetDefault());
+}

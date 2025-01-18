@@ -74,6 +74,13 @@ namespace SuperGameTools
         /// The text stored.
         /// </summary>
         char m_value[1024];
+
+        /// <summary>
+        /// Set stored value from string.
+        /// </summary>
+        /// <param name="newValue">New value to set. </param>
+        /// <returns>True means could set. </returns>
+        bool SetValueFromString(const std::string& newValue);
     };
 }
 

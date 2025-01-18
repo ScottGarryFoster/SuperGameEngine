@@ -5,6 +5,7 @@
 
 namespace FatedQuestLibraries
 {
+    class ModifiableNode;
     class StoredDocumentNode;
 }
 
@@ -40,6 +41,16 @@ namespace SuperGameEngine
         virtual std::string Load(
             const std::shared_ptr<SerializableParser>& parser,
             const std::shared_ptr<StoredDocumentNode>& node) const;
+
+        /// <summary>
+        /// Saves the property data to a format you can write out.
+        /// </summary>
+        /// <param name="parser">Parser to use. </param>
+        /// <param name="valueToSave">Value to save in the property. </param>
+        /// <returns>The node to save or empty if there is nothing to save. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save(
+            const std::shared_ptr<SerializableParser>& parser,
+            const std::string& valueToSave) const;
 
     private:
         /// <summary>
