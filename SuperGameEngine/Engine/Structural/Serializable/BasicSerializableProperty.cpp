@@ -22,8 +22,3 @@ SerializableDataType BasicSerializableProperty::GetType() const
 {
     return m_type;
 }
-
-void BasicSerializableProperty::SetType(SerializableDataType type)
-{
-    m_type = type;
-}

@@ -2,22 +2,37 @@
 #include "../../ImGuiIncludes.h"
 #include "../../../Engine/Structural/Serializable/SerializableProperty.h"
 #include "../../../Engine/Structural/Serializable/SerializableParser.h"
+#include "../../../Engine/Structural/Serializable/PropertyByType/TextSerializableProperty.h"
+
 #include "../../FatedQuestLibraries.h"
 
 using namespace SuperGameTools;
-using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
 TextSerializableProperty::TextSerializableProperty(
-    const std::shared_ptr<SerializableParser>& parser, 
-    const std::shared_ptr<SerializableProperty>& property)
+    const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
+    const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
     m_property = property;
     m_value[0] = '\0';
     m_serializableParser = parser;
+    if (std::shared_ptr<SuperGameEngine::TextSerializableProperty> textProperty = 
+        std::dynamic_pointer_cast<SuperGameEngine::TextSerializableProperty>(m_property))
+    {
+        m_textSerializableProperty = textProperty;
+    }
+    else
+    {
+        Log::Warning("Property is not actually a text property but was created as one. Name: " + property->GetName(),
+            "TextSerializableProperty::TextSerializableProperty("
+            "std::shared_ptr<SuperGameEngine::SerializableParser>,std::shared_ptr<SuperGameEngine::SerializableProperty>)");
+        m_textSerializableProperty = std::make_shared<SuperGameEngine::TextSerializableProperty>();
+        m_textSerializableProperty->SetName(property->GetName());
+        m_property = m_textSerializableProperty;
+    }
 }
 
-std::shared_ptr<SerializableProperty> TextSerializableProperty::GetEngineProperty() const
+std::shared_ptr<SuperGameEngine::SerializableProperty> TextSerializableProperty::GetEngineProperty() const
 {
     return m_property;
 }
@@ -36,7 +51,7 @@ void TextSerializableProperty::Draw()
 
 void TextSerializableProperty::Load(const std::shared_ptr<StoredDocumentNode>& node)
 {
-    std::string value = m_serializableParser->Parse("default", node);
+    std::string value = m_textSerializableProperty->Load(m_serializableParser, node);
     size_t written = std::snprintf(m_value, sizeof(m_value), "%s", value.c_str());
 
     if (written >= sizeof(m_value))

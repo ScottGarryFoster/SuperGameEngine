@@ -166,6 +166,9 @@
     <Filter Include="Source Files\External\TinyFileDialog">
       <UniqueIdentifier>{a5b35cad-6cd1-43da-a53f-06dd6f515541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural\Serializable\PropertyByType">
+      <UniqueIdentifier>{faa1a621-95b2-42d6-b165-bac5bb2ad311}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -373,6 +376,9 @@
       <Filter>Header Files\Structural\Serializable</Filter>
     </ClInclude>
     <ClInclude Include="Structural\Serializable\BasicSerializableProperty.h">
+      <Filter>Header Files\Structural\Serializable</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\Serializable\PropertyByType\TextSerializableProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -504,6 +510,9 @@
       <Filter>Source Files\External\TinyFileDialog</Filter>
     </ClCompile>
     <ClCompile Include="Structural\Serializable\BasicSerializableProperty.cpp">
+      <Filter>Source Files\Structural\Serializable</Filter>
+    </ClCompile>
+    <ClCompile Include="Structural\Serializable\PropertyByType\TextSerializableProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

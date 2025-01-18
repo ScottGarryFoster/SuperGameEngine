@@ -273,6 +273,7 @@
     <ClInclude Include="Structural\Scene\SuperGrandScene.h" />
     <ClInclude Include="Structural\Scene\SuperScene.h" />
     <ClInclude Include="Structural\Serializable\BasicSerializableProperty.h" />
+    <ClInclude Include="Structural\Serializable\PropertyByType\TextSerializableProperty.h" />
     <ClInclude Include="Structural\Serializable\Serializable.h" />
     <ClInclude Include="Structural\Serializable\SerializableDataType.h" />
     <ClInclude Include="Structural\Serializable\SerializableParser.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="Structural\Scene\SuperGrandScene.cpp" />
     <ClCompile Include="Structural\Scene\SuperScene.cpp" />
     <ClCompile Include="Structural\Serializable\BasicSerializableProperty.cpp" />
+    <ClCompile Include="Structural\Serializable\PropertyByType\TextSerializableProperty.cpp" />
     <ClCompile Include="Structural\Serializable\SuperSerializableParser.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Circle.cpp" />
     <ClCompile Include="Structural\Spatial\Area\Rectangle.cpp" />

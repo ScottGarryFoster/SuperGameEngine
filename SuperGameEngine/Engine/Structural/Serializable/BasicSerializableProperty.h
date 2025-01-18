@@ -30,22 +30,17 @@ namespace SuperGameEngine
         /// <returns>The data type. </returns>
         virtual SerializableDataType GetType() const;
 
+    protected:
         /// <summary>
-        /// Set a new type.
+        /// How treat the data entry for the property.
         /// </summary>
-        /// <param name="type">New type. </param>
-        void SetType(SerializableDataType type);
+        SerializableDataType m_type;
 
     private:
         /// <summary>
         /// The name of the property.
         /// </summary>
         std::string m_name;
-
-        /// <summary>
-        /// How treat the data entry for the property.
-        /// </summary>
-        SerializableDataType m_type;
     };
 }
 
