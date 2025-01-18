@@ -20,6 +20,7 @@
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItemOnSelectedEventArguments.h"
 #include "../SceneHeirachy/GameObjectTreeViewItem.h"
+#include "../../GameEngineEquivalents/Scene/ToolsScene.h"
 
 using namespace SuperGameTools;
 
@@ -125,28 +126,40 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
 
         RemoveSelectionFromAllBut(treeViewItemArgs->GetTreeViewItem(), m_treeViewItem);
     }
-    else if (auto menuItemSelected = std::dynamic_pointer_cast<DocumentActionEventArguments>(arguments))
+    else if (auto documentAction = std::dynamic_pointer_cast<DocumentActionEventArguments>(arguments))
     {
-        if (menuItemSelected->GetDocument())
+        if (documentAction->GetAction() == DocumentEventAction::Open)
         {
-            if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(menuItemSelected->GetDocument()))
+            if (documentAction->GetDocument())
             {
-                if (LoadScene(sceneDocument))
+                if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(documentAction->GetDocument()))
+                {
+                    if (LoadScene(sceneDocument))
+                    {
+                        m_testPopup = true;
+                        m_testPopupText = "Loaded";
+                    }
+                }
+                else
                 {
                     m_testPopup = true;
-                    m_testPopupText = "Loaded";
+                    m_testPopupText = "Not a scene document.";
                 }
             }
             else
             {
                 m_testPopup = true;
-                m_testPopupText = "Not a scene document.";
+                m_testPopupText = "Empty document.";
             }
         }
-        else
+        else if (documentAction->GetAction() == DocumentEventAction::Save)
         {
-            m_testPopup = true;
-            m_testPopupText = "Empty document.";
+            if (documentAction->GetSaveContext() != DocumentEventSaveContext::Everything)
+            {
+                return;
+            }
+
+            SaveAllScenes();
         }
     }
 }
@@ -159,10 +172,9 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
             "bool SceneHierarchy::LoadScene(std::shared_ptr<SceneDocument>)");
         return false;
     }
-    m_sceneDocument = document;
 
-    std::shared_ptr<ModifiableDocument> sceneDocument = document->GetDocument();
-    if (!sceneDocument)
+    m_scene = std::make_shared<ToolsScene>(m_windowPackage->GetParser(), document);
+    if (!m_scene->Load())
     {
         Log::Error("No document loaded into the scene document.",
             "bool SceneHierarchy::LoadScene(std::shared_ptr<SceneDocument>)");
@@ -180,16 +192,12 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
     m_treeViewItem->OnSelected()->Subscribe(weak);
 
     auto children = std::vector<std::shared_ptr<TreeViewItem>>();
-    for (std::shared_ptr<StoredDocumentNode> child = sceneDocument->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
+    for (const std::shared_ptr<GameObject>& gameObject : m_scene->GetGameObjects())
     {
         auto childItem = std::make_shared<GameObjectTreeViewItem>(m_windowPackage->GetContentManager());
         childItem->GetLabel()->SetValue("Game Object");
         childItem->GetIsFramed()->SetValue(false);
-
-        // Create the game object
-        auto gameObject = std::make_shared<ToolsGameObject>(m_windowPackage->GetParser());
         childItem->SetGameObject(gameObject);
-        gameObject->Load(child);
 
         // Subscribe to OnSelected.
         std::weak_ptr<FEventObserver> weak = shared_from_this();
@@ -217,5 +225,21 @@ void SceneHierarchy::RemoveSelectionFromAllBut(const std::shared_ptr<TreeViewIte
     for (const std::shared_ptr<TreeViewItem>& child : root->GetChildren()->GetValue())
     {
         RemoveSelectionFromAllBut(treeViewItem, child);
+    }
+}
+
+void SceneHierarchy::SaveAllScenes()
+{
+    if (m_scene)
+    {
+        if (!m_scene->Save())
+        {
+            Log::Error("Asked to save scene but could not.",
+                "SceneHierarchy::SaveAllScenes()");
+            return;
+        }
+
+        m_testPopup = true;
+        m_testPopupText = "Saved";
     }
 }

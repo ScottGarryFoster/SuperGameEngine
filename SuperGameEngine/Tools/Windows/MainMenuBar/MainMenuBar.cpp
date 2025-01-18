@@ -12,6 +12,7 @@ void MainMenuBar::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
     m_mainView->AddTopLevelMenuItem("File");
     m_mainView->AddInnerMenuItem("File", std::make_shared<MenuItemView>("FileOpen","Open"));
+    m_mainView->AddInnerMenuItem("File", std::make_shared<MenuItemView>("FileSave","Save"));
     m_mainView->AddTopLevelMenuItem("Windows");
     m_mainView->AddInnerMenuItem("Windows", std::make_shared<MenuItemView>("WindowLogger","Logger"));
 }
@@ -22,7 +23,6 @@ void MainMenuBar::Update()
 
 void MainMenuBar::Draw()
 {
-
     m_mainView->Draw();
 }
 

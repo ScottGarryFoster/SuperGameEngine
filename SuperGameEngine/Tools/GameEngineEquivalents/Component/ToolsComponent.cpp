@@ -75,6 +75,28 @@ void ToolsComponent::Load(const std::shared_ptr<StoredDocumentNode>& node)
 
 std::shared_ptr<ModifiableNode> ToolsComponent::Save() const
 {
-    Log::Exception("Not created save.", "ToolsComponent::Save()", "NotImplementedException");
-    return {};
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("Component");
+
+    // TODO: When we add Guids for Components this is where it would be saved.
+
+    if (!GetType().empty())
+    {
+        auto guid = std::make_shared<ModifiableAttribute>("Type", GetType());
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(guid);
+        node->SetAttributes(attributes);
+    }
+
+    auto children = std::vector<std::shared_ptr<ModifiableNode>>();
+    for (const std::shared_ptr<ToolsSerializableProperty>& property : m_serializableToolsProperties)
+    {
+        if (auto propertyNode = property->Save())
+        {
+            children.emplace_back(propertyNode);
+        }
+    }
+    node->SetAllChildrenNodes(children);
+
+    return node;
 }

@@ -134,7 +134,7 @@ void ModifiableNode::SetAllChildrenNodes(const std::vector<std::shared_ptr<Modif
 
     if (last)
     {
-        m_firstChild = allNodes.front();
+        m_firstChild = allNodes.at(0);
         if (allNodes.size() > 1)
         {
             m_lastChild = allNodes.back();

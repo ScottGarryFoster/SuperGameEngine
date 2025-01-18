@@ -14,6 +14,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
+    class Scene;
     class SceneDocument;
 }
 
@@ -92,6 +93,11 @@ namespace SuperGameTools
         std::shared_ptr<SceneDocument> m_sceneDocument;
 
         /// <summary>
+        /// Holds the scene.
+        /// </summary>
+        std::shared_ptr<Scene> m_scene;
+
+        /// <summary>
         /// Loads a scene from file.
         /// This will not add a scene it simply loads it as the only scene.
         /// </summary>
@@ -105,6 +111,11 @@ namespace SuperGameTools
         /// <param name="treeViewItem">Item to remain selected. </param>
         /// <param name="root">Root to select from. </param>
         void RemoveSelectionFromAllBut(const std::shared_ptr<TreeViewItem>& treeViewItem, const std::shared_ptr<TreeViewItem>& root);
+
+        /// <summary>
+        /// Save all the scenes open.
+        /// </summary>
+        void SaveAllScenes();
 
         bool m_testPopup;
         std::string m_testPopupText;

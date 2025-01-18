@@ -63,6 +63,23 @@ void ToolsGameObject::Load(const std::shared_ptr<StoredDocumentNode>& node)
 
 std::shared_ptr<ModifiableNode> ToolsGameObject::Save() const
 {
-    Log::Exception("Not created save.", "ToolsGameObject::Save()", "NotImplementedException");
-    return {};
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("GameObject");
+    if (m_guid)
+    {
+        auto guid = std::make_shared<ModifiableAttribute>("Guid", m_guid->ToString());
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(guid);
+        node->SetAttributes(attributes);
+    }
+
+    auto children = std::vector<std::shared_ptr<ModifiableNode>>();
+    for (size_t i = 0; i < m_components->size(); ++i)
+    {
+        std::shared_ptr<Component> component = m_components->at(i);
+        children.emplace_back(component->Save());
+    }
+    node->SetAllChildrenNodes(children);
+
+    return node;
 }
