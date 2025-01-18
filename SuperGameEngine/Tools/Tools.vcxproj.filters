@@ -229,6 +229,18 @@
     <Filter Include="Source Files\GameEngineEquivalents\Component">
       <UniqueIdentifier>{63acdbb8-d7ef-4e02-bfd4-2c4e6c5ad5db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameEngineEquivalents\SerializableProperties">
+      <UniqueIdentifier>{3b9f783d-9493-4a80-ba51-e45b9b8d6bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameEngineEquivalents\SerializableProperties">
+      <UniqueIdentifier>{f347fe58-562d-49f0-bd76-c21c1fee3239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameEngineEquivalents\Scene">
+      <UniqueIdentifier>{f452f757-fdd7-4693-96e3-400d6c13892f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameEngineEquivalents\Scene">
+      <UniqueIdentifier>{9dcef323-db7e-4491-8cab-fcb290ab4a3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -474,6 +486,27 @@
     <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h">
       <Filter>Header Files\Windows\SceneHierarchy</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Component\SerializablePropertyLoader.h">
+      <Filter>Header Files\GameEngineEquivalents\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Component\ComponentTreeViewItem.h">
+      <Filter>Header Files\GameEngineEquivalents\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\SerializableProperties\ToolsSerializableProperty.h">
+      <Filter>Header Files\GameEngineEquivalents\SerializableProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\SerializableProperties\TextSerializableProperty.h">
+      <Filter>Header Files\GameEngineEquivalents\SerializableProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventSaveContext.h">
+      <Filter>Header Files\ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Scene\Scene.h">
+      <Filter>Header Files\GameEngineEquivalents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Scene\ToolsScene.h">
+      <Filter>Header Files\GameEngineEquivalents\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -595,6 +628,18 @@
     </ClCompile>
     <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\Component\SerializablePropertyLoader.cpp">
+      <Filter>Source Files\GameEngineEquivalents\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\Component\ComponentTreeViewItem.cpp">
+      <Filter>Source Files\GameEngineEquivalents\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\SerializableProperties\TextSerializableProperty.cpp">
+      <Filter>Source Files\GameEngineEquivalents\SerializableProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\Scene\ToolsScene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

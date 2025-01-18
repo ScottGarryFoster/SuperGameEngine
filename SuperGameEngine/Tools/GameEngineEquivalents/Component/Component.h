@@ -3,15 +3,25 @@
 #include <string>
 
 
+namespace SuperGameEngine
+{
+    class SerializableProperty;
+}
+
 namespace FatedQuestLibraries
 {
+    class StoredDocumentNode;
+    class ModifiableNode;
     class Guid;
 }
 
 using namespace FatedQuestLibraries;
+using namespace SuperGameEngine;
 
 namespace SuperGameTools
 {
+    class ToolsSerializableProperty;
+
     /// <summary>
     /// A component which represents the data of a game component.
     /// </summary>
@@ -31,5 +41,29 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="type">New type. </param>
         virtual void SetType(const std::string& type) = 0;
+
+        /// <summary>
+        /// Properties exposed and serialised in the Tools.
+        /// </summary>
+        /// <returns>Properties exposed and serialised in the Tools. </returns>
+        virtual std::vector<std::shared_ptr<SerializableProperty>> GetProperties() const = 0;
+
+        /// <summary>
+        /// Properties exposed and serialised in the Tools.
+        /// </summary>
+        /// <returns>Properties exposed and serialised in the Tools. </returns>
+        virtual std::vector<std::shared_ptr<ToolsSerializableProperty>> GetToolsProperties() const = 0;
+
+        /// <summary>
+        /// Load the component from stored data.
+        /// </summary>
+        /// <param name="node">Node for this component. </param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
+
+        /// <summary>
+        /// Save this component.
+        /// </summary>
+        /// <returns>A node which contains the data, this is the component node. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save() const = 0;
     };
 }

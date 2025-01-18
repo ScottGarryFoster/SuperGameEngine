@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        The type of data to store.
+    </EnumComment>
+    <EnumName Name="SerializableDataType">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Text>
+            A string of text.
+        </Text>
+    </EnumName>
+</SuperEnum>

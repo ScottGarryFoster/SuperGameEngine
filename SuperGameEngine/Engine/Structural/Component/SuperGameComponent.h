@@ -132,7 +132,21 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>Document node to save to. </returns>
         virtual std::shared_ptr<StoredDocumentNode> Save() override;
+
+        /// <summary>
+        /// Get all properties which can be authored.
+        /// </summary>
+        /// <returns>All author-able properties. </returns>
+        /// <remarks>
+        /// This should be able to be called after construction of the component.
+        /// </remarks>
+        virtual std::vector<std::shared_ptr<SerializableProperty>> Properties() const override;
     protected:
+
+        /// <summary>
+        /// All properties this component can save and load.
+        /// </summary>
+        std::vector<std::shared_ptr<SerializableProperty>> m_serializableProperties;
 
         /// <summary>
         /// Gets the scene load package.

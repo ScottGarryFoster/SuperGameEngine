@@ -12,6 +12,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
+    enum class DocumentEventSaveContext;
     enum class DocumentEventOpenLevel;
     class FileDialog;
     class WindowPackage;
@@ -76,6 +77,14 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="level">How the document suggests being opened. </param>
         void OpenFile(DocumentEventOpenLevel level);
+
+        /// <summary>
+        /// Saves the file or files.
+        /// </summary>
+        /// <param name="saveContext">
+        /// How to create an event such that the document can be saved.
+        /// </param>
+        void SaveFile(DocumentEventSaveContext saveContext);
     };
 }
 

@@ -7,6 +7,7 @@
 #include "../../GameObject/GameObject.h"
 #include "../../Packages/ComponentLoadPackage.h"
 #include "../../Serializable/SerializableParser.h"
+#include "../../Serializable/PropertyByType/TextSerializableProperty.h"
 #include "../SpriteComponent/SpriteComponent.h"
 
 using namespace SuperGameEngine;
@@ -15,6 +16,12 @@ TestComponent::TestComponent()
 {
     m_yPosition = 0;
     m_serial = "default";
+
+    {
+        auto property = std::make_shared<TextSerializableProperty>("default");
+        property->SetName("Serial");
+        m_serializableProperties.emplace_back(property);
+    }
 }
 
 TestComponent::~TestComponent() = default;

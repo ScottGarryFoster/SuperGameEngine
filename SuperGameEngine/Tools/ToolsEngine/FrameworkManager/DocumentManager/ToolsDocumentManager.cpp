@@ -51,6 +51,7 @@ void ToolsDocumentManager::Setup()
         // then I listen to it here.
         std::weak_ptr<FEventObserver> me = shared_from_this();
         windowsPackage->GetTopMenu()->GetMenuItem("FileOpen")->OnSelected()->Subscribe(me);
+        windowsPackage->GetTopMenu()->GetMenuItem("FileSave")->OnSelected()->Subscribe(me);
 
         
         std::string productsDirectory = windowsPackage->GetPackagePaths()->ProductsDirectory();
@@ -78,6 +79,10 @@ void ToolsDocumentManager::Invoke(std::shared_ptr<FEventArguments> arguments)
             if (menuItem->GetKey() == "FileOpen")
             {
                 OpenFile(DocumentEventOpenLevel::Exclusive);
+            }
+            else if (menuItem->GetKey() == "FileSave")
+            {
+                SaveFile(DocumentEventSaveContext::Everything);
             }
         }
     }
@@ -138,5 +143,19 @@ void ToolsDocumentManager::OpenFile(DocumentEventOpenLevel level)
 
     auto args = std::make_shared<DocumentActionEventArguments>(
         document, DocumentEventAction::Open, level);
+    m_onDocumentAction->Invoke(args);
+}
+
+void ToolsDocumentManager::SaveFile(DocumentEventSaveContext saveContext)
+{
+    if (saveContext != DocumentEventSaveContext::Everything)
+    {
+        Log::Error("Only " + EDocumentEventSaveContext::ToString(DocumentEventSaveContext::Everything) + ""
+            " is implemented for saving.", "ToolsDocumentManager::SaveFile(DocumentEventSaveContext)");
+        return;
+    }
+
+    auto args = std::make_shared<DocumentActionEventArguments>(
+        nullptr, DocumentEventAction::Save, saveContext);
     m_onDocumentAction->Invoke(args);
 }

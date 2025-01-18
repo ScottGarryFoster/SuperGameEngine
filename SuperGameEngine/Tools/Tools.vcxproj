@@ -218,9 +218,15 @@
     <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEngineEquivalents\Component\Component.h" />
+    <ClInclude Include="GameEngineEquivalents\Component\ComponentTreeViewItem.h" />
+    <ClInclude Include="GameEngineEquivalents\Component\SerializablePropertyLoader.h" />
     <ClInclude Include="GameEngineEquivalents\Component\ToolsComponent.h" />
     <ClInclude Include="GameEngineEquivalents\GameObject\GameObject.h" />
     <ClInclude Include="GameEngineEquivalents\GameObject\ToolsGameObject.h" />
+    <ClInclude Include="GameEngineEquivalents\Scene\Scene.h" />
+    <ClInclude Include="GameEngineEquivalents\Scene\ToolsScene.h" />
+    <ClInclude Include="GameEngineEquivalents\SerializableProperties\TextSerializableProperty.h" />
+    <ClInclude Include="GameEngineEquivalents\SerializableProperties\ToolsSerializableProperty.h" />
     <ClInclude Include="ImGuiIncludes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SystemActions\FileDialog\FileDialog.h" />
@@ -239,6 +245,7 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentActionEventArguments.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventAction.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventOpenLevel.h" />
+    <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentEvent\DocumentEventSaveContext.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentFactory.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentManager.h" />
     <ClInclude Include="ToolsEngine\FrameworkManager\DocumentManager\DocumentMatcher.h" />
@@ -298,8 +305,12 @@
     <ClCompile Include="Engine\Graphics\ImGuiSuperTexture.cpp" />
     <ClCompile Include="Engine\Graphics\ImGuiSuperTextureWrapper.cpp" />
     <ClCompile Include="Engine\Graphics\ImGuiTexture.cpp" />
+    <ClCompile Include="GameEngineEquivalents\Component\ComponentTreeViewItem.cpp" />
+    <ClCompile Include="GameEngineEquivalents\Component\SerializablePropertyLoader.cpp" />
     <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp" />
     <ClCompile Include="GameEngineEquivalents\GameObject\ToolsGameObject.cpp" />
+    <ClCompile Include="GameEngineEquivalents\Scene\ToolsScene.cpp" />
+    <ClCompile Include="GameEngineEquivalents\SerializableProperties\TextSerializableProperty.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Tools_Debug|x64'">Create</PrecompiledHeader>

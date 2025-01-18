@@ -6,6 +6,8 @@
 
 namespace FatedQuestLibraries
 {
+    class ModifiableNode;
+    class StoredDocumentNode;
     class Guid;
 }
 
@@ -47,5 +49,17 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Components on game object. </returns>
         virtual std::shared_ptr<std::vector<std::shared_ptr<Component>>> GetComponents() const = 0;
+
+        /// <summary>
+        /// Load the game object from stored data.
+        /// </summary>
+        /// <param name="node">Node for this game object. </param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
+
+        /// <summary>
+        /// Save this game object.
+        /// </summary>
+        /// <returns>A node which contains the data, this is the game object node. </returns>
+        virtual std::shared_ptr<ModifiableNode> Save() const = 0;
     };
 }
