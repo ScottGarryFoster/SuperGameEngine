@@ -109,8 +109,8 @@ void TreeView::RenderItem(const std::shared_ptr<TreeViewItem>& current, int dept
         ImGui::EndGroup();
     }
 
-    bool isOpen = 
-        current->GetIsOpen()->GetValue() || 
+    bool isOpen =
+        current->GetIsOpen()->GetValue() ||
         current->GetCollapsibleType()->GetValue() == TreeViewItemCollapsibleBehaviour::AlwaysShown;
     if (isOpen)
     {

@@ -118,6 +118,11 @@ bool ToolsScene::GetDirty() const
     return *m_dirtyFlag;
 }
 
+void ToolsScene::AddGameObject(const std::shared_ptr<GameObject>& gameObject)
+{
+    m_gameObjects.emplace_back(gameObject);
+}
+
 void ToolsScene::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))

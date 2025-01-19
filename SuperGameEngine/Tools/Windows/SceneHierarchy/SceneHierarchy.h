@@ -154,6 +154,16 @@ namespace SuperGameTools
         /// <param name="arguments">Event arguments. </param>
         void OnSelectionChangedEvent(const std::shared_ptr<SelectionChangedEventArguments>& arguments);
 
+        /// <summary>
+        /// Draw the context menu across the entire window.
+        /// </summary>
+        void DrawWindowWideContextClickMenu();
+
+        /// <summary>
+        /// Creates a new game object.
+        /// </summary>
+        void CreateNewGameObject();
+
         bool m_testPopup;
         std::string m_testPopupText;
     };

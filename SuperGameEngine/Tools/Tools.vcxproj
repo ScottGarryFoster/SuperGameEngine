@@ -297,6 +297,7 @@
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
     <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h" />
     <ClInclude Include="Windows\SceneHeirachy\SceneTreeViewItem.h" />
+    <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuNewGameObjectEventArguments.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h" />
     <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h" />
