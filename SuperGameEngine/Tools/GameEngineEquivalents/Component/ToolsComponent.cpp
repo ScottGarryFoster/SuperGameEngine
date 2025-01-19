@@ -4,6 +4,8 @@
 #include "../SerializableProperties/ToolsSerializableProperty.h"
 #include "../../FatedQuestLibraries.h"
 #include "../../../Engine/Structural/Serializable/SerializableProperty.h"
+#include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -11,6 +13,14 @@ using namespace FatedQuestLibraries;
 ToolsComponent::ToolsComponent(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser)
 {
     m_serializableParser = parser;
+    m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_dirty = std::make_shared<bool>();
+    *m_dirty = false;
+}
+
+std::shared_ptr<FEventSubscriptions> ToolsComponent::OnDirtyFlagChanged() const
+{
+    return m_onDirtyFlagChanged;
 }
 
 std::string ToolsComponent::GetType() const
@@ -21,6 +31,13 @@ std::string ToolsComponent::GetType() const
 void ToolsComponent::SetType(const std::string& type)
 {
     m_type = type;
+
+    // Get rid of old information if any
+    // Ensure we unsubscribe from old events.
+    for (const std::shared_ptr<ToolsSerializableProperty>& serializableProperty : m_serializableToolsProperties)
+    {
+        serializableProperty->OnDirtyFlagChanged()->Unsubscribe(shared_from_this());
+    }
 
     auto loader = std::make_shared<SerializablePropertyLoader>(m_serializableParser);
     m_serializableToolsProperties = loader->ToolsFromComponent(type);
@@ -71,6 +88,13 @@ void ToolsComponent::Load(const std::shared_ptr<StoredDocumentNode>& node)
             
         }
     }
+
+    for (const std::shared_ptr<ToolsSerializableProperty>& serializableProperty : m_serializableToolsProperties)
+    {
+        serializableProperty->OnDirtyFlagChanged()->Subscribe(shared_from_this());
+    }
+
+    *m_dirty = false;
 }
 
 std::shared_ptr<ModifiableNode> ToolsComponent::Save() const
@@ -98,5 +122,29 @@ std::shared_ptr<ModifiableNode> ToolsComponent::Save() const
     }
     node->SetAllChildrenNodes(children);
 
+    *m_dirty = false;
     return node;
+}
+
+void ToolsComponent::Invoke(std::shared_ptr<FEventArguments> arguments)
+{
+    if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))
+    {
+        // Only respond if the children now have data to save
+        // as if clean, this does not mean everything is clean,
+        // only that something was saved.
+        if (dirtyArgs->GetDirtyFlagState())
+        {
+            UpdateDirtyFlag(dirtyArgs->GetDirtyFlagState());
+        }
+    }
+}
+
+void ToolsComponent::UpdateDirtyFlag(bool newValue) const
+{
+    if (newValue != *m_dirty)
+    {
+        *m_dirty = newValue;
+        m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
+    }
 }

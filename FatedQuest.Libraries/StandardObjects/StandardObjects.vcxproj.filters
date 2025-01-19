@@ -31,6 +31,9 @@
     <Filter Include="Header Files\Object\GUID">
       <UniqueIdentifier>{6ebd5202-7c63-4cae-a7b8-04999916a727}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structural">
+      <UniqueIdentifier>{3b8874e4-44d9-4d88-987c-73e80150e3c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="Object\GUID\WindowsGUID.h">
       <Filter>Header Files\Object\GUID</Filter>
+    </ClInclude>
+    <ClInclude Include="Structural\DistributeWeakPointers.h">
+      <Filter>Header Files\Structural</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 
 namespace FatedQuestLibraries
 {
+    class FEventSubscriptions;
     class ModifiableNode;
     class StoredDocumentNode;
     class Guid;
@@ -24,6 +25,12 @@ namespace SuperGameTools
     {
     public:
         virtual ~GameObject() = default;
+
+        /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        /// <returns>Event called when this objects dirty flag has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const = 0;
 
         /// <summary>
         /// Guid for the game object.

@@ -241,6 +241,9 @@
     <Filter Include="Source Files\GameEngineEquivalents\Scene">
       <UniqueIdentifier>{9dcef323-db7e-4491-8cab-fcb290ab4a3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ToolsEngine\SharedEventArguments">
+      <UniqueIdentifier>{09e5c6ae-0637-40c3-b53a-e63255fdcb65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -507,6 +510,15 @@
     <ClInclude Include="GameEngineEquivalents\Scene\ToolsScene.h">
       <Filter>Header Files\GameEngineEquivalents\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="ToolsEngine\SharedEventArguments\DirtiedDataEventArguments.h">
+      <Filter>Header Files\ToolsEngine\SharedEventArguments</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHeirachy\SceneTreeViewItem.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineBasicsIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -639,7 +651,10 @@
       <Filter>Source Files\GameEngineEquivalents\SerializableProperties</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineEquivalents\Scene\ToolsScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameEngineEquivalents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHeirachy\SceneTreeViewItem.cpp">
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

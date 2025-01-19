@@ -21,6 +21,9 @@
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItemOnSelectedEventArguments.h"
 #include "../SceneHeirachy/GameObjectTreeViewItem.h"
 #include "../../GameEngineEquivalents/Scene/ToolsScene.h"
+#include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
+#include "../SceneHeirachy/SceneTreeViewItem.h"
+
 
 using namespace SuperGameTools;
 
@@ -57,6 +60,14 @@ void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_windowPackage->GetFrameworkManager()->GetDocumentManager()->OnDocumentAction()->Subscribe(shared_from_this());
 
     // TODO: Automatically load a scene when you open tools from a preferences file #113
+
+    if (!m_windowPackage->GetFrameworkManager()->GetSelectionManager())
+    {
+        Log::Error("No selection manager. Cannot load scenes.", method);
+        return;
+    }
+
+    m_windowPackage->GetFrameworkManager()->GetSelectionManager()->OnSelectionChanged()->Subscribe(shared_from_this());
 }
 
 void SceneHierarchy::Update()
@@ -98,69 +109,21 @@ void SceneHierarchy::Draw()
         ImGui::EndPopup();
     }
 
-    
-    
-
 }
 
 void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (auto treeViewItemArgs = std::dynamic_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
     {
-        // Test Popup
-        //m_testPopup = true;
-        //m_testPopupText = treeViewItemArgs->GetTreeViewItem()->GetLabel()->GetValue();
-
-        if (!treeViewItemArgs->GetTreeViewItem())
-        {
-            return;
-        }
-
-        if (auto gameObjectTreeView = std::dynamic_pointer_cast<GameObjectTreeViewItem>(treeViewItemArgs->GetTreeViewItem()))
-        {
-            if (gameObjectTreeView->GetGameObject())
-            {
-                m_windowPackage->GetFrameworkManager()->GetSelectionManager()->SetSelection(gameObjectTreeView->GetGameObject());
-            }
-        }
-
-        RemoveSelectionFromAllBut(treeViewItemArgs->GetTreeViewItem(), m_treeViewItem);
+        OnTreeViewItemOnSelectedEvent(treeViewItemArgs);
     }
     else if (auto documentAction = std::dynamic_pointer_cast<DocumentActionEventArguments>(arguments))
     {
-        if (documentAction->GetAction() == DocumentEventAction::Open)
-        {
-            if (documentAction->GetDocument())
-            {
-                if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(documentAction->GetDocument()))
-                {
-                    if (LoadScene(sceneDocument))
-                    {
-                        m_testPopup = true;
-                        m_testPopupText = "Loaded";
-                    }
-                }
-                else
-                {
-                    m_testPopup = true;
-                    m_testPopupText = "Not a scene document.";
-                }
-            }
-            else
-            {
-                m_testPopup = true;
-                m_testPopupText = "Empty document.";
-            }
-        }
-        else if (documentAction->GetAction() == DocumentEventAction::Save)
-        {
-            if (documentAction->GetSaveContext() != DocumentEventSaveContext::Everything)
-            {
-                return;
-            }
-
-            SaveAllScenes();
-        }
+        OnDocumentActionEvent(documentAction);
+    }
+    else if (auto selectionArgs = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
+    {
+        OnSelectionChangedEvent(selectionArgs);
     }
 }
 
@@ -173,6 +136,24 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         return false;
     }
 
+    // A scene is already loaded try to re-select the same object in the scene.
+    std::shared_ptr<Guid> reselectGameObject = {};
+    if (m_scene)
+    {
+        std::vector<std::weak_ptr<Selectable>> selectables = m_windowPackage->GetFrameworkManager()->
+            GetSelectionManager()->GetSelection(SelectionGroup::Inspectable);
+        if (selectables.size() == 1)
+        {
+            if (auto selectableShared = selectables.at(0).lock())
+            {
+                if (auto gameObject = std::dynamic_pointer_cast<GameObject>(selectableShared))
+                {
+                    reselectGameObject = selectableShared->GetGuid();
+                }
+            }
+        }
+    }
+
     m_scene = std::make_shared<ToolsScene>(m_windowPackage->GetParser(), document);
     if (!m_scene->Load())
     {
@@ -181,20 +162,29 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         return false;
     }
 
-    m_treeViewItem = std::make_shared<TreeViewItem>(m_windowPackage->GetContentManager());
+    // It is important to store the shared pointer as a TreeViewItem so Shared from works.
+    m_treeViewItem = std::make_shared<SceneTreeViewItem>(m_windowPackage->GetContentManager());
+    m_treeViewItem->UpdateDistributedWeakPointer(m_treeViewItem);
+    m_sceneTreeViewItem = std::static_pointer_cast<SceneTreeViewItem>(m_treeViewItem);
+    m_sceneTreeViewItem->FEventObserver::UpdateDistributedWeakPointer(std::static_pointer_cast<FEventObserver>(m_sceneTreeViewItem));
+
     m_treeViewItem->GetLabel()->SetValue("Scene");
     m_treeViewItem->GetOpenOnLoad()->SetValue(true);
     m_treeViewItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
     m_treeViewItem->GetIsFramed()->SetValue(true);
+
+    m_sceneTreeViewItem->SetScene(m_scene);
 
     // Subscribe to OnSelected.
     std::weak_ptr<FEventObserver> weak = shared_from_this();
     m_treeViewItem->OnSelected()->Subscribe(weak);
 
     auto children = std::vector<std::shared_ptr<TreeViewItem>>();
+    auto childrenAsGameObjectTVI = std::vector<std::shared_ptr<GameObjectTreeViewItem>>();
     for (const std::shared_ptr<GameObject>& gameObject : m_scene->GetGameObjects())
     {
         auto childItem = std::make_shared<GameObjectTreeViewItem>(m_windowPackage->GetContentManager());
+        childItem->UpdateDistributedWeakPointer(childItem);
         childItem->GetLabel()->SetValue("Game Object");
         childItem->GetIsFramed()->SetValue(false);
         childItem->SetGameObject(gameObject);
@@ -205,12 +195,25 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         childItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
         childItem->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::NoIcon);
         children.emplace_back(childItem);
+        childrenAsGameObjectTVI.emplace_back(childItem);
     }
     m_treeViewItem->GetChildren()->SetValue(children);
+    m_sceneTreeViewItem->GetChildrenAsGameObjects()->SetValue(childrenAsGameObjectTVI);
 
     m_tree = std::make_shared<TreeView>(m_windowPackage->GetContentManager(), m_treeViewItem);
     m_tree->ShouldRootBeFrame(true);
     m_tree->SetDepthToStartIndentation(1);
+
+    if (reselectGameObject)
+    {
+        for (const std::shared_ptr<GameObject>& gameObject : m_scene->GetGameObjects())
+        {
+            if (*gameObject->GetGuid() == *reselectGameObject)
+            {
+                m_windowPackage->GetFrameworkManager()->GetSelectionManager()->SetSelection(gameObject);
+            }
+        }
+    }
 
     return true;
 }
@@ -241,5 +244,107 @@ void SceneHierarchy::SaveAllScenes()
 
         m_testPopup = true;
         m_testPopupText = "Saved";
+    }
+}
+
+void SceneHierarchy::OnTreeViewItemOnSelectedEvent(
+    const std::shared_ptr<TreeViewItemOnSelectedEventArguments>& arguments)
+{
+    if (auto treeviewItem = arguments->GetTreeViewItem().lock())
+    {
+        if (auto gameObjectTreeView = std::dynamic_pointer_cast<GameObjectTreeViewItem>(treeviewItem))
+        {
+            if (gameObjectTreeView->GetGameObject())
+            {
+                m_windowPackage->GetFrameworkManager()->GetSelectionManager()->SetSelection(gameObjectTreeView->GetGameObject());
+            }
+        }
+
+        RemoveSelectionFromAllBut(treeviewItem, m_treeViewItem);
+        if (*m_sceneTreeViewItem->GetUniqueID() == *treeviewItem->GetUniqueID())
+        {
+            m_sceneTreeViewItem->GetIsSelected()->SetValue(true);
+        }
+        else
+        {
+            m_sceneTreeViewItem->GetIsSelected()->SetValue(false);
+        }
+    }
+}
+
+void SceneHierarchy::OnDocumentActionEvent(const std::shared_ptr<DocumentActionEventArguments>& arguments)
+{
+    if (arguments->GetAction() == DocumentEventAction::Open)
+    {
+        if (arguments->GetDocument())
+        {
+            if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(arguments->GetDocument()))
+            {
+                if (LoadScene(sceneDocument))
+                {
+                    m_testPopup = true;
+                    m_testPopupText = "Loaded";
+                }
+            }
+            else
+            {
+                m_testPopup = true;
+                m_testPopupText = "Not a scene document.";
+            }
+        }
+        else
+        {
+            m_testPopup = true;
+            m_testPopupText = "Empty document.";
+        }
+    }
+    else if (arguments->GetAction() == DocumentEventAction::Save)
+    {
+        if (arguments->GetSaveContext() != DocumentEventSaveContext::Everything)
+        {
+            return;
+        }
+
+        SaveAllScenes();
+    }
+}
+
+void SceneHierarchy::OnSelectionChangedEvent(const std::shared_ptr<SelectionChangedEventArguments>& arguments)
+{
+    for (size_t i = 0; i < m_sceneTreeViewItem->GetChildrenAsGameObjects()->GetValue().size(); ++i)
+    {
+        std::shared_ptr<GameObjectTreeViewItem> gotvi =
+            m_sceneTreeViewItem->GetChildrenAsGameObjects()->GetValue().at(i);
+        std::shared_ptr<TreeViewItem> treeViewItem =
+            m_treeViewItem->GetChildren()->GetValue().at(i);
+
+        gotvi->GetIsSelected()->SetValue(false);
+        treeViewItem->GetIsSelected()->SetValue(false);
+
+    }
+
+    for (const std::weak_ptr<Selectable>& selectableWeak : m_windowPackage->
+        GetFrameworkManager()->
+        GetSelectionManager()->GetSelection(SelectionGroup::Inspectable))
+    {
+        if (auto selectable = selectableWeak.lock())
+        {
+            if (auto gameObject = std::dynamic_pointer_cast<GameObject>(selectable))
+            {
+                for (size_t i = 0; i < m_sceneTreeViewItem->GetChildrenAsGameObjects()->GetValue().size(); ++i)
+                {
+                    std::shared_ptr<GameObjectTreeViewItem> gotvi =
+                        m_sceneTreeViewItem->GetChildrenAsGameObjects()->GetValue().at(i);
+                    std::shared_ptr<TreeViewItem> treeViewItem =
+                        m_treeViewItem->GetChildren()->GetValue().at(i);
+
+                    if (*gameObject->GetGuid() == *gotvi->GetGameObject()->GetGuid())
+                    {
+                        gotvi->GetIsSelected()->SetValue(true);
+                        treeViewItem->GetIsSelected()->SetValue(true);
+                    }
+                }
+            }
+        }
     }
 }

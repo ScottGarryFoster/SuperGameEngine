@@ -2,6 +2,8 @@
 #include <memory>
 #include <string>
 
+#include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
+
 
 namespace SuperGameEngine
 {
@@ -29,6 +31,12 @@ namespace SuperGameTools
     {
     public:
         virtual ~Component() = default;
+
+        /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        /// <returns>Event called when this objects dirty flag has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const = 0;
 
         /// <summary>
         /// The type of the component.

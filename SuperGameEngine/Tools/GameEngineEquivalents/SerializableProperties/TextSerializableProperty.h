@@ -3,6 +3,11 @@
 
 #include "ToolsSerializableProperty.h"
 
+namespace FatedQuestLibraries
+{
+    class FEvent;
+}
+
 namespace SuperGameEngine
 {
     class TextSerializableProperty;
@@ -24,6 +29,12 @@ namespace SuperGameTools
         TextSerializableProperty(
             const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
             const std::shared_ptr<SuperGameEngine::SerializableProperty>& property);
+
+        /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        /// <returns>Event called when this objects dirty flag has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const override;
 
         /// <summary>
         /// Gets the engine side property.
@@ -56,6 +67,16 @@ namespace SuperGameTools
 
     private:
         /// <summary>
+        /// Event called when this component is dirtied.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onDirtyFlagChanged;
+
+        /// <summary>
+        /// True means are dirty.
+        /// </summary>
+        std::shared_ptr<bool> m_dirty;
+
+        /// <summary>
         /// The engine side property.
         /// </summary>
         std::shared_ptr<SuperGameEngine::SerializableProperty> m_property;
@@ -81,6 +102,12 @@ namespace SuperGameTools
         /// <param name="newValue">New value to set. </param>
         /// <returns>True means could set. </returns>
         bool SetValueFromString(const std::string& newValue);
+
+        /// <summary>
+        /// Call to update the dirty flag.
+        /// </summary>
+        /// <param name="newValue">New value for dirty. </param>
+        void UpdateDirtyFlag(bool newValue) const;
     };
 }
 

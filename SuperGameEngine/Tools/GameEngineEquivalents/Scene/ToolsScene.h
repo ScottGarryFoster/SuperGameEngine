@@ -16,12 +16,18 @@ namespace SuperGameTools
     /// <summary>
     /// Holds game objects.
     /// </summary>
-    class ToolsScene : public Scene
+    class ToolsScene : public Scene, public FEventObserver
     {
     public:
         ToolsScene(
             const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
             const std::shared_ptr<SceneDocument>& document);
+
+        /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        /// <returns>Event called when this objects dirty flag has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const override;
 
         /// <summary>
         /// Saves Scene.
@@ -40,7 +46,26 @@ namespace SuperGameTools
         /// <returns>All game objects in scene. </returns>
         virtual std::vector<std::shared_ptr<GameObject>> GetGameObjects() const override;
 
+        /// <summary>
+        /// True when there is unsaved data.
+        /// </summary>
+        /// <returns>True when there is unsaved data. </returns>
+        virtual bool GetDirty() const override;
+
+        /// <summary>
+        /// Inform the observer an event has taken place.
+        /// Do not store this pointer it is intended as a point for dynamic casting
+        /// and not as long term storage. Directly after invocation it will be deleted.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+
     private:
+        /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onDirtyFlagChanged;
+
         /// <summary>
         /// Helps parse the data in and out of stored documents.
         /// </summary>
@@ -60,5 +85,16 @@ namespace SuperGameTools
         /// All game objects at the top level.
         /// </summary>
         std::vector<std::shared_ptr<GameObject>> m_gameObjects;
+
+        /// <summary>
+        /// True when there is unsaved data.
+        /// </summary>
+        std::shared_ptr<bool> m_dirtyFlag;
+
+        /// <summary>
+        /// Call to update the dirty flag.
+        /// </summary>
+        /// <param name="newValue">New value for dirty. </param>
+        void UpdateDirtyFlag(bool newValue) const;
     };
 }

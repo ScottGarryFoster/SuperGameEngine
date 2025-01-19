@@ -2,7 +2,9 @@
 
 using namespace SuperGameTools;
 
-GameObjectTreeViewItem::GameObjectTreeViewItem(const std::shared_ptr<ContentManager>& contentManager) : TreeViewItem(contentManager)
+GameObjectTreeViewItem::GameObjectTreeViewItem(
+    const std::shared_ptr<ContentManager>& contentManager) :
+        TreeViewItem(contentManager)
 {
 
 }

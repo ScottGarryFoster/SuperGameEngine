@@ -5,6 +5,7 @@
 #include "../../../Engine/Structural/Serializable/PropertyByType/TextSerializableProperty.h"
 
 #include "../../FatedQuestLibraries.h"
+#include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -13,6 +14,10 @@ TextSerializableProperty::TextSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
+    m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_dirty = std::make_shared<bool>();
+    *m_dirty = false;
+
     m_property = property;
     m_value[0] = '\0';
     m_serializableParser = parser;
@@ -41,6 +46,11 @@ TextSerializableProperty::TextSerializableProperty(
     }
 }
 
+std::shared_ptr<FEventSubscriptions> TextSerializableProperty::OnDirtyFlagChanged() const
+{
+    return m_onDirtyFlagChanged;
+}
+
 std::shared_ptr<SuperGameEngine::SerializableProperty> TextSerializableProperty::GetEngineProperty() const
 {
     return m_property;
@@ -55,7 +65,25 @@ void TextSerializableProperty::Draw()
 
     ImGui::Text(m_property->GetName().c_str());
     ImGui::SameLine();
-    ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
+
+    if (*m_dirty)
+    {
+        ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
+        ImGui::SameLine();
+        ImGui::Text("*");
+    }
+    else
+    {
+        std::string before = m_value;
+        ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
+        std::string after = m_value;
+
+        if (before != after)
+        {
+            UpdateDirtyFlag(true);
+        }
+    }
+
 }
 
 void TextSerializableProperty::Load(const std::shared_ptr<StoredDocumentNode>& node)
@@ -66,12 +94,20 @@ void TextSerializableProperty::Load(const std::shared_ptr<StoredDocumentNode>& n
         Log::Error("Could not set data on load.",
             "TextSerializableProperty::Load(std::shared_ptr<StoredDocumentNode>)");
     }
+
+    UpdateDirtyFlag(false);
 }
 
 std::shared_ptr<ModifiableNode> TextSerializableProperty::Save() const
 {
     std::string str(m_value);
+    UpdateDirtyFlag(false);
     return m_textSerializableProperty->Save(m_serializableParser, str);
+}
+
+std::shared_ptr<SuperGameEngine::TextSerializableProperty> TextSerializableProperty::GetTextProperty() const
+{
+    return m_textSerializableProperty;
 }
 
 bool TextSerializableProperty::SetValueFromString(const std::string& newValue)
@@ -93,4 +129,13 @@ bool TextSerializableProperty::SetValueFromString(const std::string& newValue)
     }
 
     return true;
+}
+
+void TextSerializableProperty::UpdateDirtyFlag(bool newValue) const
+{
+    if (newValue != *m_dirty)
+    {
+        *m_dirty = newValue;
+        m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
+    }
 }
