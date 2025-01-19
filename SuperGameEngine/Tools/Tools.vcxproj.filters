@@ -244,6 +244,9 @@
     <Filter Include="Header Files\ToolsEngine\SharedEventArguments">
       <UniqueIdentifier>{09e5c6ae-0637-40c3-b53a-e63255fdcb65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Windows\SceneHierarchy\EventArguments">
+      <UniqueIdentifier>{cdd5af1a-be5c-405f-b9f3-c5eeda523426}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -518,6 +521,9 @@
     </ClInclude>
     <ClInclude Include="EngineBasicsIncludes.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuNewGameObjectEventArguments.h">
+      <Filter>Header Files\Windows\SceneHierarchy\EventArguments</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

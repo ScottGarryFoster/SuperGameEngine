@@ -23,6 +23,7 @@
 #include "../../GameEngineEquivalents/Scene/ToolsScene.h"
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
 #include "../SceneHeirachy/SceneTreeViewItem.h"
+#include "EventArguments/OnMenuNewGameObjectEventArguments.h"
 
 
 using namespace SuperGameTools;
@@ -89,7 +90,7 @@ void SceneHierarchy::Draw()
             m_tree->Draw();
         }
 
-
+        DrawWindowWideContextClickMenu();
     }
     EndWindowRender(windowName);
         
@@ -124,6 +125,10 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto selectionArgs = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
     {
         OnSelectionChangedEvent(selectionArgs);
+    }
+    else if (auto onMenuNewGameObject = std::dynamic_pointer_cast<OnMenuNewGameObjectEventArguments>(arguments))
+    {
+        CreateNewGameObject();
     }
 }
 
@@ -188,12 +193,14 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         childItem->GetLabel()->SetValue("Game Object");
         childItem->GetIsFramed()->SetValue(false);
         childItem->SetGameObject(gameObject);
+        childItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
+        childItem->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::NoIcon);
 
         // Subscribe to OnSelected.
         std::weak_ptr<FEventObserver> weak = shared_from_this();
         childItem->OnSelected()->Subscribe(weak);
-        childItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
-        childItem->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::NoIcon);
+        childItem->OnMenuNewGameObject()->Subscribe(weak);
+
         children.emplace_back(childItem);
         childrenAsGameObjectTVI.emplace_back(childItem);
     }
@@ -347,4 +354,60 @@ void SceneHierarchy::OnSelectionChangedEvent(const std::shared_ptr<SelectionChan
             }
         }
     }
+}
+
+void SceneHierarchy::DrawWindowWideContextClickMenu()
+{
+    ImVec2 availableSize = ImGui::GetContentRegionAvail();
+    if (availableSize.y <= 0)
+    {
+        return;
+    }
+
+    ImGui::InvisibleButton("SceneHierarchy-Context-Region", availableSize);
+    if (ImGui::BeginPopupContextItem("SceneHierarchy-Context", ImGuiPopupFlags_MouseButtonRight))
+    {
+        bool haveScene = false;
+        if (m_scene)
+        {
+            haveScene = true;
+        }
+        if (ImGui::MenuItem("Create new Empty Game Object", nullptr, nullptr, haveScene))
+        {
+            CreateNewGameObject();
+        }
+
+        ImGui::EndPopup();
+    }
+}
+
+void SceneHierarchy::CreateNewGameObject()
+{
+    auto newGameObject = std::make_shared<ToolsGameObject>(m_windowPackage->GetParser());
+    newGameObject->SetGuid(GUIDHelpers::CreateGUID());
+
+    auto newGoTreeViewItem = std::make_shared<GameObjectTreeViewItem>(m_windowPackage->GetContentManager());
+    newGoTreeViewItem->UpdateDistributedWeakPointer(newGoTreeViewItem);
+    newGoTreeViewItem->GetLabel()->SetValue("Game Object");
+    newGoTreeViewItem->GetIsFramed()->SetValue(false);
+    newGoTreeViewItem->SetGameObject(newGameObject);
+    newGoTreeViewItem->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
+    newGoTreeViewItem->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::NoIcon);
+
+    // Subscribe to OnSelected.
+    std::weak_ptr<FEventObserver> weak = shared_from_this();
+    newGoTreeViewItem->OnSelected()->Subscribe(weak);
+
+    // Subscribe to menu items
+    newGoTreeViewItem->OnMenuNewGameObject()->Subscribe(weak);
+
+    std::vector<std::shared_ptr<TreeViewItem>> current = m_treeViewItem->GetChildren()->GetValue();
+    current.emplace_back(newGoTreeViewItem);
+    m_treeViewItem->GetChildren()->SetValue(current);
+
+    std::vector<std::shared_ptr<GameObjectTreeViewItem>> currentGo = m_sceneTreeViewItem->GetChildrenAsGameObjects()->GetValue();
+    currentGo.emplace_back(newGoTreeViewItem);
+    m_sceneTreeViewItem->GetChildrenAsGameObjects()->SetValue(currentGo);
+
+    m_scene->AddGameObject(newGameObject);
 }

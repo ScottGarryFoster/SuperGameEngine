@@ -46,5 +46,11 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>True when there is unsaved data. </returns>
         virtual bool GetDirty() const = 0;
+
+        /// <summary>
+        /// Adds a game object to the scene.
+        /// </summary>
+        /// <param name="gameObject">New game object. </param>
+        virtual void AddGameObject(const std::shared_ptr<GameObject>& gameObject) = 0;
     };
 }

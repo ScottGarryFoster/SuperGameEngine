@@ -105,6 +105,13 @@ namespace SuperGameTools
         /// Draw the tree view item.
         /// </summary>
         virtual void Draw();
+
+    protected:
+        /// <summary>
+        /// Override with a context menu if there is one for this item in the tree view.
+        /// </summary>
+        virtual void DrawContextMenu() {};
+
     private:
 
         /// <summary>

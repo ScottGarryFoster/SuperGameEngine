@@ -211,6 +211,8 @@ void TreeViewItem::RenderSelectableRow(ImVec2 originalPosition)
     GetIsSelected()->SetValue(isSelected);
 
     ImGui::PopStyleColor(3);
+
+    DrawContextMenu();
 }
 
 void TreeViewItem::RenderArrowImage(ImVec2 originalPosition) const
