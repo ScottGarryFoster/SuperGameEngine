@@ -166,6 +166,7 @@ void InspectorWindow::CreateTreeFromObject(const std::shared_ptr<GameObject>& ga
         item->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::AlwaysShown);
         item->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::Arrow);
         item->GetIsFramed()->SetValue(true);
+        item->UpdateDistributedWeakPointer(item);
 
         // Create the renderer of our properties.
         auto componentChild = std::make_shared<ComponentTreeViewItem>(m_windowPackage->GetContentManager());
@@ -173,6 +174,7 @@ void InspectorWindow::CreateTreeFromObject(const std::shared_ptr<GameObject>& ga
         std::vector<std::shared_ptr<TreeViewItem>> children;
         children.emplace_back(componentChild);
         item->GetChildren()->SetValue(children);
+        componentChild->UpdateDistributedWeakPointer(componentChild);
 
         componentsInTreeView.emplace_back(item);
     }

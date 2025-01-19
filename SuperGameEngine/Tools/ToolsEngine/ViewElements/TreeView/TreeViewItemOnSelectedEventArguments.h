@@ -18,7 +18,7 @@ namespace SuperGameTools
     class TreeViewItemOnSelectedEventArguments : public FEventArguments
     {
     public:
-        TreeViewItemOnSelectedEventArguments(const std::shared_ptr<TreeViewItem>& treeViewItem)
+        TreeViewItemOnSelectedEventArguments(const std::weak_ptr<TreeViewItem>& treeViewItem)
         {
             m_treeViewItem = treeViewItem;
         }
@@ -28,7 +28,7 @@ namespace SuperGameTools
         /// The tree view item selected.
         /// </summary>
         /// <returns>The tree view item selected. </returns>
-        std::shared_ptr<TreeViewItem> GetTreeViewItem()
+        std::weak_ptr<TreeViewItem> GetTreeViewItem()
         {
             return m_treeViewItem;
         }
@@ -37,7 +37,7 @@ namespace SuperGameTools
         /// Set the tree view item selected.
         /// </summary>
         /// <param name="treeViewItem">The tree view item selected. </param>
-        void SetTreeViewItem(const std::shared_ptr<TreeViewItem>& treeViewItem)
+        void SetTreeViewItem(const std::weak_ptr<TreeViewItem>& treeViewItem)
         {
             m_treeViewItem = treeViewItem;
         }
@@ -46,6 +46,6 @@ namespace SuperGameTools
         /// <summary>
         /// Item selected.
         /// </summary>
-        std::shared_ptr<TreeViewItem> m_treeViewItem;
+        std::weak_ptr<TreeViewItem> m_treeViewItem;
     };
 }

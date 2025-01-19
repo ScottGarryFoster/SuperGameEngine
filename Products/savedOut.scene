@@ -1,13 +1,13 @@
 <Scene "Guid"="{A75D7CCB-7FBC-4F4A-BF5E-798A7E1BBF7B}">
     <GameObject "Guid"="{418A83D4-19A4-42B8-A8C0-470A2DF829BA}">
         <Component "Type"="TestComponent">
-            <Property "Name"="Serial" "Value"="NotDefault" />
+            <Property "Name"="Serial" "Value"="NotDefaultf4" />
         </Component>
     </GameObject>
     <GameObject "Guid"="{418A83D4-19A4-42B8-A8C0-470A2DF829BB}">
         <Component "Type"="TestComponent" />
         <Component "Type"="TestComponent">
-            <Property "Name"="Serial" "Value"="Number four" />
+            <Property "Name"="Serial" "Value"="Number four2fdfddfd" />
         </Component>
     </GameObject>
 </Scene>

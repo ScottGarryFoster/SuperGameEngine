@@ -3,6 +3,7 @@
 
 namespace FatedQuestLibraries
 {
+    class FEventSubscriptions;
     class ModifiableNode;
     class StoredDocumentNode;
 }
@@ -22,6 +23,12 @@ namespace SuperGameTools
     class ToolsSerializableProperty
     {
     public:
+        /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        /// <returns>Event called when this objects dirty flag has changed. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const = 0;
+
         /// <summary>
         /// Gets the engine side property.
         /// </summary>

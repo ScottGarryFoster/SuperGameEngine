@@ -2,16 +2,18 @@
 #include <memory>
 
 #include "FEventArguments.h"
+#include "../StandardObjects/Structural/DistributeWeakPointers.h"
 
 namespace FatedQuestLibraries
 {
     /// <summary>
     /// Any class which is able to observe events.
     /// </summary>
-    class FEventObserver : public std::enable_shared_from_this<FEventObserver>
+    class FEventObserver : public std::enable_shared_from_this<FEventObserver>, public DistributeWeakPointers<FEventObserver>
     {
     public:
         virtual ~FEventObserver() = default;
+        FEventObserver() = default;
 
         /// <summary>
         /// Inform the observer an event has taken place.

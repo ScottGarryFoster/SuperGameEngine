@@ -210,6 +210,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EngineBasicsIncludes.h" />
     <ClInclude Include="EngineIncludes\EngineInclude.h" />
     <ClInclude Include="Engine\Content\ImGuiTextureManager.h" />
     <ClInclude Include="Engine\Graphics\ImGuiSuperTexture.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="ToolsEngine\Settings\SettingsPaths.h" />
     <ClInclude Include="ToolsEngine\Settings\ToolsLayoutSettings.h" />
     <ClInclude Include="ToolsEngine\Settings\ToolsSettingsPaths.h" />
+    <ClInclude Include="ToolsEngine\SharedEventArguments\DirtiedDataEventArguments.h" />
     <ClInclude Include="ToolsEngine\ToolsEngine.h" />
     <ClInclude Include="ToolsEngine\ToolsEngineEntry.h" />
     <ClInclude Include="ToolsEngine\ViewElements\ColoursAndStyles\ColourIdentity.h" />
@@ -294,6 +296,7 @@
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
     <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h" />
+    <ClInclude Include="Windows\SceneHeirachy\SceneTreeViewItem.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h" />
     <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h" />
@@ -349,6 +352,7 @@
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp" />
     <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp" />
+    <ClCompile Include="Windows\SceneHeirachy\SceneTreeViewItem.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp" />
   </ItemGroup>

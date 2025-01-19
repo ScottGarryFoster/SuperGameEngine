@@ -3,6 +3,7 @@
 #include "../../ToolsEngine/Documents/Scene/SceneDocument.h"
 #include "../GameObject/ToolsGameObject.h"
 #include "../../FatedQuestLibraries.h"
+#include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -13,6 +14,14 @@ ToolsScene::ToolsScene(
 {
     m_parser = parser;
     m_sceneDocument = document;
+    m_dirtyFlag = std::make_shared<bool>();
+    *m_dirtyFlag = false;
+    m_onDirtyFlagChanged = std::make_shared<FEvent>();
+}
+
+std::shared_ptr<FEventSubscriptions> ToolsScene::OnDirtyFlagChanged() const
+{
+    return m_onDirtyFlagChanged;
 }
 
 bool ToolsScene::Save() const
@@ -36,7 +45,9 @@ bool ToolsScene::Save() const
     root->SetAllChildrenNodes(children);
 
     m_sceneDocument->GetDocument()->SetRootElement(root);
-    return m_sceneDocument->Save();
+    bool couldSave = m_sceneDocument->Save();
+    UpdateDirtyFlag(!couldSave);
+    return couldSave;
 }
 
 bool ToolsScene::Load()
@@ -63,6 +74,12 @@ bool ToolsScene::Load()
     }
 
     // Get rid of old information if any
+
+    // Ensure we unsubscribe from old events.
+    for (const std::shared_ptr<GameObject>& gameObject : m_gameObjects)
+    {
+        gameObject->OnDirtyFlagChanged()->Unsubscribe(shared_from_this());
+    }
     m_gameObjects.clear();
     m_guid = {};
 
@@ -80,13 +97,46 @@ bool ToolsScene::Load()
         // Create the game object
         auto gameObject = std::make_shared<ToolsGameObject>(m_parser);
         gameObject->Load(child);
+
+        // Listen to dirtied events.
+        gameObject->OnDirtyFlagChanged()->Subscribe(shared_from_this());
+
         m_gameObjects.emplace_back(gameObject);
     }
 
+    UpdateDirtyFlag(false);
     return true;
 }
 
 std::vector<std::shared_ptr<GameObject>> ToolsScene::GetGameObjects() const
 {
     return m_gameObjects;
+}
+
+bool ToolsScene::GetDirty() const
+{
+    return *m_dirtyFlag;
+}
+
+void ToolsScene::Invoke(std::shared_ptr<FEventArguments> arguments)
+{
+    if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))
+    {
+        // Only respond if the children now have data to save
+        // as if clean, this does not mean everything is clean,
+        // only that something was saved.
+        if (dirtyArgs->GetDirtyFlagState())
+        {
+            UpdateDirtyFlag(dirtyArgs->GetDirtyFlagState());
+        }
+    }
+}
+
+void ToolsScene::UpdateDirtyFlag(bool newValue) const
+{
+    if (newValue != *m_dirtyFlag)
+    {
+        *m_dirtyFlag = newValue;
+        m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
+    }
 }

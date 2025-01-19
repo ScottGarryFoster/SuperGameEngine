@@ -201,8 +201,9 @@ void TreeViewItem::RenderSelectableRow(ImVec2 originalPosition)
             isSelected = !isSelected;
             if (isSelected)
             {
-                std::shared_ptr<TreeViewItem> sharedThis = shared_from_this();
-                auto arguments = std::make_shared<TreeViewItemOnSelectedEventArguments>(sharedThis);
+                auto arguments = std::make_shared
+                    <TreeViewItemOnSelectedEventArguments>(
+                        TreeViewItem::GetWeakDistributed());
                 OnSelected()->Invoke(arguments);
             }
         }

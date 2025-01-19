@@ -22,7 +22,7 @@ namespace SuperGameTools
     /// <summary>
     /// A single item in a tree.
     /// </summary>
-    class TreeViewItem : public std::enable_shared_from_this<TreeViewItem>
+    class TreeViewItem : public DistributeWeakPointers<TreeViewItem>
     {
     public:
         TreeViewItem(const std::shared_ptr<ContentManager>& contentManager);
@@ -105,7 +105,6 @@ namespace SuperGameTools
         /// Draw the tree view item.
         /// </summary>
         virtual void Draw();
-
     private:
 
         /// <summary>

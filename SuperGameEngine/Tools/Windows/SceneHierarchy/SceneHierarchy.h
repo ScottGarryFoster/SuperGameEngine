@@ -7,6 +7,14 @@
 #include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
 #include "../UpdateableObject/UpdateableObject.h"
 
+namespace SuperGameTools
+{
+    class SelectionChangedEventArguments;
+    class DocumentActionEventArguments;
+    class TreeViewItemOnSelectedEventArguments;
+    class GameObjectTreeViewItem;
+}
+
 namespace FatedQuestLibraries
 {
     class Guid;
@@ -14,6 +22,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
+    class SceneTreeViewItem;
     class Scene;
     class SceneDocument;
 }
@@ -85,6 +94,11 @@ namespace SuperGameTools
         std::shared_ptr<TreeViewItem> m_treeViewItem;
 
         /// <summary>
+        /// All items in the tree.
+        /// </summary>
+        std::shared_ptr<SceneTreeViewItem> m_sceneTreeViewItem;
+
+        /// <summary>
         /// The current open document.
         /// </summary>
         /// <remark>
@@ -96,6 +110,11 @@ namespace SuperGameTools
         /// Holds the scene.
         /// </summary>
         std::shared_ptr<Scene> m_scene;
+
+        /// <summary>
+        /// The top level game object tree view items in the current scene.
+        /// </summary>
+        std::vector<std::shared_ptr<GameObjectTreeViewItem>> m_gameObjectTreeViewItems;
 
         /// <summary>
         /// Loads a scene from file.
@@ -116,6 +135,24 @@ namespace SuperGameTools
         /// Save all the scenes open.
         /// </summary>
         void SaveAllScenes();
+
+        /// <summary>
+        /// Occurs when TreeViewItem is selected.
+        /// </summary>
+        /// <param name="arguments">Event arguments. </param>
+        void OnTreeViewItemOnSelectedEvent(const std::shared_ptr<TreeViewItemOnSelectedEventArguments>& arguments);
+
+        /// <summary>
+        /// Occurs when a document action happens which may require a scene load.
+        /// </summary>
+        /// <param name="arguments">Event arguments. </param>
+        void OnDocumentActionEvent(const std::shared_ptr<DocumentActionEventArguments>& arguments);
+
+        /// <summary>
+        /// Occurs when a selection is changed, to ensure outside events can affect us.
+        /// </summary>
+        /// <param name="arguments">Event arguments. </param>
+        void OnSelectionChangedEvent(const std::shared_ptr<SelectionChangedEventArguments>& arguments);
 
         bool m_testPopup;
         std::string m_testPopupText;
