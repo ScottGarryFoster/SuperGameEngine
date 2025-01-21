@@ -51,6 +51,12 @@ namespace SuperGameTools
         /// <param name="depth">The depth at which indentations should occur. </param>
         void SetDepthToStartIndentation(int depth);
 
+        /// <summary>
+        /// Get the root item.
+        /// </summary>
+        /// <returns>Get the root item. </returns>
+        std::shared_ptr<TreeViewItem> GetRootItem() const;
+
     private:
         /// <summary>
         /// The top element of the tree.

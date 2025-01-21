@@ -525,6 +525,12 @@
     <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuNewGameObjectEventArguments.h">
       <Filter>Header Files\Windows\SceneHierarchy\EventArguments</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineEquivalents\Component\ComponentTreeViewHeaderItem.h">
+      <Filter>Header Files\GameEngineEquivalents\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\InspectorWindow\InspectGameObject.h">
+      <Filter>Header Files\Windows\InspectorWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -661,6 +667,12 @@
     </ClCompile>
     <ClCompile Include="Windows\SceneHeirachy\SceneTreeViewItem.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineEquivalents\Component\ComponentTreeViewHeaderItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\InspectorWindow\InspectGameObject.cpp">
+      <Filter>Source Files\Windows\InspectorWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

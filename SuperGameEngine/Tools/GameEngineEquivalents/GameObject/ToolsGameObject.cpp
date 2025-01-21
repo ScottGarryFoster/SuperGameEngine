@@ -108,6 +108,15 @@ std::shared_ptr<ModifiableNode> ToolsGameObject::Save() const
     return node;
 }
 
+std::shared_ptr<Component> ToolsGameObject::AddComponent(const std::string& type) const
+{
+    auto component = std::make_shared<ToolsComponent>(m_serializableParser);
+    component->SetType(type);
+
+    GetComponents()->emplace_back(component);
+    return component;
+}
+
 void ToolsGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))

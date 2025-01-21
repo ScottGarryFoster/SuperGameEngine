@@ -68,5 +68,12 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>A node which contains the data, this is the game object node. </returns>
         virtual std::shared_ptr<ModifiableNode> Save() const = 0;
+
+        /// <summary>
+        /// Add a component to the end of the Game Object.
+        /// </summary>
+        /// <param name="type">Type of the component. </param>
+        /// <returns>The added component. </returns>
+        virtual std::shared_ptr<Component> AddComponent(const std::string& type) const = 0;
     };
 }

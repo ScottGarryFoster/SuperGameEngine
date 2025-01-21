@@ -251,6 +251,7 @@
     <ClInclude Include="Imgui\External\imstb_truetype.h" />
     <ClInclude Include="Imgui\Internal\ImGuiContainer.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Structural\Component\ComponentToolsDetails.h" />
     <ClInclude Include="Structural\Component\GameComponent.h" />
     <ClInclude Include="Structural\Component\SuperGameComponent.h" />
     <ClInclude Include="Structural\GameObject\ComponentFactory.h" />
@@ -316,6 +317,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Structural\Component\ComponentToolsDetails.cpp" />
     <ClCompile Include="Structural\Component\GameComponent.cpp" />
     <ClCompile Include="Structural\Component\SuperGameComponent.cpp" />
     <ClCompile Include="Structural\GameObject\ComponentFactory.cpp" />

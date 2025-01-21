@@ -67,6 +67,13 @@ namespace SuperGameTools
         virtual std::shared_ptr<ModifiableNode> Save() const override;
 
         /// <summary>
+        /// Add a component to the end of the Game Object.
+        /// </summary>
+        /// <param name="type">Type of the component. </param>
+        /// <returns>The added component. </returns>
+        virtual std::shared_ptr<Component> AddComponent(const std::string& type) const override;
+
+        /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
         /// and not as long term storage. Directly after invocation it will be deleted.

@@ -74,6 +74,11 @@ void TreeView::SetDepthToStartIndentation(int depth)
     m_indentationDepth = depth < 0 ? 0 : depth;
 }
 
+std::shared_ptr<TreeViewItem> TreeView::GetRootItem() const
+{
+    return m_treeViewItemRoot;
+}
+
 void TreeView::Setup()
 {
     SetAnyDefaultsAsActuals(m_treeViewItemRoot, 0);

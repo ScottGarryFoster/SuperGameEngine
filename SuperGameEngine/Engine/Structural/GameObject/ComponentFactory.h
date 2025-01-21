@@ -27,6 +27,12 @@ namespace SuperGameEngine
         /// <param name="type">Type name for the component. </param>
         /// <returns>Type of the component. </returns>
         static std::shared_ptr<GameComponent> CreateComponent(const std::string& type);
+
+        /// <summary>
+        /// All component types.
+        /// </summary>
+        /// <returns>All component types. </returns>
+        static std::vector<std::string> GetAllComponentTypes();
     private:
 
         /// <summary>

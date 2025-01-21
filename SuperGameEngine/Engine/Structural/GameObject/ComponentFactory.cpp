@@ -1,5 +1,7 @@
 #include "ComponentFactory.h"
 #include "../Component/GameComponent.h"
+#include <algorithm>
+#include <iterator>
 
 using namespace SuperGameEngine;
 
@@ -19,4 +21,16 @@ std::shared_ptr<GameComponent> ComponentFactory::CreateComponent(const std::stri
     }
 
     return nullptr;
+}
+
+std::vector<std::string> ComponentFactory::GetAllComponentTypes()
+{
+    auto it = GetMap();
+    std::vector<std::string> allTypes;
+    allTypes.reserve(GetMap().size());
+
+    std::ranges::transform(it, std::back_inserter(allTypes),
+                           [](const auto& pair) { return pair.first; });
+
+    return allTypes;
 }

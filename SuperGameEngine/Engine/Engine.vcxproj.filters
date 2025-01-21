@@ -381,6 +381,9 @@
     <ClInclude Include="Structural\Serializable\PropertyByType\TextSerializableProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Component\ComponentToolsDetails.h">
+      <Filter>Header Files\Structural\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -512,8 +515,11 @@
     <ClCompile Include="Structural\Serializable\BasicSerializableProperty.cpp">
       <Filter>Source Files\Structural\Serializable</Filter>
     </ClCompile>
+    <ClCompile Include="Structural\Component\ComponentToolsDetails.cpp">
+      <Filter>Source Files\Structural\Component</Filter>
+    </ClCompile>
     <ClCompile Include="Structural\Serializable\PropertyByType\TextSerializableProperty.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Structural\Serializable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
