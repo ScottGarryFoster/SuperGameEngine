@@ -219,6 +219,7 @@
     <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameEngineEquivalents\Component\Component.h" />
+    <ClInclude Include="GameEngineEquivalents\Component\ComponentTreeViewHeaderItem.h" />
     <ClInclude Include="GameEngineEquivalents\Component\ComponentTreeViewItem.h" />
     <ClInclude Include="GameEngineEquivalents\Component\SerializablePropertyLoader.h" />
     <ClInclude Include="GameEngineEquivalents\Component\ToolsComponent.h" />
@@ -291,6 +292,7 @@
     <ClInclude Include="ToolsEngine\ViewElements\Window\WindowElement.h" />
     <ClInclude Include="Windows\DockableContainer\DockableContainer.h" />
     <ClInclude Include="Windows\GameViewport\GameViewport.h" />
+    <ClInclude Include="Windows\InspectorWindow\InspectGameObject.h" />
     <ClInclude Include="Windows\InspectorWindow\InspectorWindow.h" />
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
@@ -309,6 +311,7 @@
     <ClCompile Include="Engine\Graphics\ImGuiSuperTexture.cpp" />
     <ClCompile Include="Engine\Graphics\ImGuiSuperTextureWrapper.cpp" />
     <ClCompile Include="Engine\Graphics\ImGuiTexture.cpp" />
+    <ClCompile Include="GameEngineEquivalents\Component\ComponentTreeViewHeaderItem.cpp" />
     <ClCompile Include="GameEngineEquivalents\Component\ComponentTreeViewItem.cpp" />
     <ClCompile Include="GameEngineEquivalents\Component\SerializablePropertyLoader.cpp" />
     <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp" />
@@ -348,6 +351,7 @@
     <ClCompile Include="ToolsEngine\ViewElements\Window\WindowElement.cpp" />
     <ClCompile Include="Windows\DockableContainer\DockableContainer.cpp" />
     <ClCompile Include="Windows\GameViewport\GameViewport.cpp" />
+    <ClCompile Include="Windows\InspectorWindow\InspectGameObject.cpp" />
     <ClCompile Include="Windows\InspectorWindow\InspectorWindow.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />

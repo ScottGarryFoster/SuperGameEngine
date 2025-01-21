@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include <string>
 
 #include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
@@ -67,6 +68,11 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="node">Node for this component. </param>
         virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
+
+        /// <summary>
+        /// Load from just the type information.
+        /// </summary>
+        virtual void Load() = 0;
 
         /// <summary>
         /// Save this component.
