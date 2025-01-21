@@ -74,6 +74,6 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="type">Type of the component. </param>
         /// <returns>The added component. </returns>
-        virtual std::shared_ptr<Component> AddComponent(const std::string& type) const = 0;
+        virtual std::shared_ptr<Component> AddComponent(const std::string& type) = 0;
     };
 }

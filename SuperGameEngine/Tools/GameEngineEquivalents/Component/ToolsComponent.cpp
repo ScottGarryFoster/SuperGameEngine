@@ -97,6 +97,16 @@ void ToolsComponent::Load(const std::shared_ptr<StoredDocumentNode>& node)
     *m_dirty = false;
 }
 
+void ToolsComponent::Load()
+{
+    for (const std::shared_ptr<ToolsSerializableProperty>& serializableProperty : m_serializableToolsProperties)
+    {
+        serializableProperty->OnDirtyFlagChanged()->Subscribe(shared_from_this());
+    }
+
+    *m_dirty = false;
+}
+
 std::shared_ptr<ModifiableNode> ToolsComponent::Save() const
 {
     auto node = std::make_shared<ModifiableNode>();

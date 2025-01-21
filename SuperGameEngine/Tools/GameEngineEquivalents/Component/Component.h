@@ -70,6 +70,11 @@ namespace SuperGameTools
         virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
 
         /// <summary>
+        /// Load from just the type information.
+        /// </summary>
+        virtual void Load() = 0;
+
+        /// <summary>
         /// Save this component.
         /// </summary>
         /// <returns>A node which contains the data, this is the component node. </returns>

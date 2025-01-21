@@ -3,6 +3,12 @@
         <Component "Type"="TestComponent">
             <Property "Name"="Serial" "Value"="NotDefaultf4" />
         </Component>
+        <Component "Type"="TestComponent">
+            <Property "Name"="Serial" "Value"="defaultffdsfds" />
+        </Component>
+        <Component "Type"="TestComponent">
+            <Property "Name"="Serial" "Value"="defaultsfg" />
+        </Component>
     </GameObject>
     <GameObject "Guid"="{418A83D4-19A4-42B8-A8C0-470A2DF829BB}">
         <Component "Type"="TestComponent" />
@@ -13,6 +19,12 @@
             <Property "Name"="Serial" "Value"="Can I save this?" />
         </Component>
         <Component "Type"="TestComponent" />
+        <Component "Type"="TestComponent">
+            <Property "Name"="Serial" "Value"="defaultdsdsadsaf" />
+        </Component>
+        <Component "Type"="TestComponent">
+            <Property "Name"="Serial" "Value"="defaultgfgfgtyrttretretre" />
+        </Component>
     </GameObject>
     <GameObject "Guid"="{68C2E8C1-9FE0-4A20-9380-F47B63EEBF5E}">
         <Component "Type"="TestComponent">
