@@ -34,6 +34,12 @@ namespace FatedQuestLibraries
         virtual const std::shared_ptr<PackageFileSystemDirectory> Directory() const override;
 
         /// <summary>
+        /// Forget all files currently on record.
+        /// This is used to refresh the system.
+        /// </summary>
+        virtual void ForgetFiles();
+
+        /// <summary>
         /// Gives the file system some files from the game package.
         /// Only files it is given will be considered within the game package.
         /// </summary>

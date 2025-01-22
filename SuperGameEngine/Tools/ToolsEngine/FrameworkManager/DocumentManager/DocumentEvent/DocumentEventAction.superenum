@@ -22,5 +22,8 @@
         <Reload>
             Document contents has changed and should be reloaded.
         </Reload>
+        <Create>
+            Create new document.
+        </Create>
     </EnumName>
 </SuperEnum>

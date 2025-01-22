@@ -31,47 +31,32 @@ const std::shared_ptr<PackageFileSystemDirectory> CombinedGamePackage::Directory
     return m_fileSystem->Directory();
 }
 
+bool CombinedGamePackage::Reload() const
+{
+    if (!m_packagePaths)
+    {
+        return false;
+    }
+
+    m_fileSystem->ForgetFiles();
+
+    if (!AddAllFiles())
+    {
+        return false;
+    }
+}
+
 bool CombinedGamePackage::Load(const std::shared_ptr<PackagePaths>& paths)
 {
-    std::vector<std::pair<PackageFileOrigin, std::shared_ptr<PackageFile>>> gamePackageFiles;
+    m_packagePaths = paths;
 
-    std::string productsOnFile = Directory::CombinePath(paths->ProductsDirectory(), "Products");
-    if (Directory::Exists(productsOnFile))
-    {
-        std::vector<std::string> files;
-        FillListWithAllProductsFiles(productsOnFile, {}, files);
-
-        for (const std::string& file : files)
-        {
-            auto newFile = std::make_shared<PackageFileUnarchived>(paths, m_binaryZip, file);
-            gamePackageFiles.emplace_back(PackageFileOrigin::Unarchived, newFile);
-        }
-    }
-
-    std::string productArchive = Directory::CombinePath(paths->ProductsDirectory(), "Products.zip");
-    if (File::Exists(productArchive))
-    {
-        std::vector<std::string> errors;
-        std::vector<std::string> files = 
-            m_binaryZip->ListFilesInArchive(
-                productArchive, errors);
-
-        for (const std::string& file : files)
-        {
-            auto newFile = std::make_shared<PackageFileArchived>(paths, m_binaryZip, file);
-            gamePackageFiles.emplace_back(PackageFileOrigin::Archived, newFile);
-        }
-    }
-
-    m_fileSystem->GiveFiles(gamePackageFiles);
-
-    return true;
+    return Reload();
 }
 
 void CombinedGamePackage::FillListWithAllProductsFiles(
     const std::string& productsPath, 
     const std::string& currentPath,
-    std::vector<std::string>& files)
+    std::vector<std::string>& files) const
 {
     std::string fullPath = Directory::CombinePath(productsPath, currentPath);
 
@@ -90,4 +75,46 @@ void CombinedGamePackage::FillListWithAllProductsFiles(
         std::string relativePath = Directory::CombinePath(currentPath, directory);
         FillListWithAllProductsFiles(productsPath, relativePath, files);
     }
+}
+
+bool CombinedGamePackage::AddAllFiles() const
+{
+    if (!m_packagePaths)
+    {
+        return false;
+    }
+
+    std::vector<std::pair<PackageFileOrigin, std::shared_ptr<PackageFile>>> gamePackageFiles;
+
+    std::string productsOnFile = Directory::CombinePath(m_packagePaths->ProductsDirectory(), "Products");
+    if (Directory::Exists(productsOnFile))
+    {
+        std::vector<std::string> files;
+        FillListWithAllProductsFiles(productsOnFile, {}, files);
+
+        for (const std::string& file : files)
+        {
+            auto newFile = std::make_shared<PackageFileUnarchived>(m_packagePaths, m_binaryZip, file);
+            gamePackageFiles.emplace_back(PackageFileOrigin::Unarchived, newFile);
+        }
+    }
+
+    std::string productArchive = Directory::CombinePath(m_packagePaths->ProductsDirectory(), "Products.zip");
+    if (File::Exists(productArchive))
+    {
+        std::vector<std::string> errors;
+        std::vector<std::string> files =
+            m_binaryZip->ListFilesInArchive(
+                productArchive, errors);
+
+        for (const std::string& file : files)
+        {
+            auto newFile = std::make_shared<PackageFileArchived>(m_packagePaths, m_binaryZip, file);
+            gamePackageFiles.emplace_back(PackageFileOrigin::Archived, newFile);
+        }
+    }
+
+    m_fileSystem->GiveFiles(gamePackageFiles);
+
+    return true;
 }

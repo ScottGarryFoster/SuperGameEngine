@@ -314,6 +314,21 @@ void SceneHierarchy::OnDocumentActionEvent(const std::shared_ptr<DocumentActionE
 
         SaveAllScenes();
     }
+    else if (arguments->GetAction() == DocumentEventAction::Create)
+    {
+        std::shared_ptr<Document> document = arguments->GetDocument();
+        if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(document))
+        {
+            for (const std::shared_ptr<GameObject>& go : m_scene->GetGameObjects())
+            {
+                m_windowPackage->GetFrameworkManager()
+                    ->GetSelectionManager()
+                    ->RemoveFromSelection(go);
+            }
+
+            LoadScene(sceneDocument);
+        }
+    }
 }
 
 void SceneHierarchy::OnSelectionChangedEvent(const std::shared_ptr<SelectionChangedEventArguments>& arguments)

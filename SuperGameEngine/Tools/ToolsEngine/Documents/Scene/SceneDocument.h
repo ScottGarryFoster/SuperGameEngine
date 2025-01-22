@@ -16,6 +16,7 @@ namespace SuperGameTools
     class SceneDocument : public ToolsDocument, public DocumentMatcher
     {
     public:
+        SceneDocument();
         virtual ~SceneDocument() override = default;
 
         /// <summary>
@@ -46,6 +47,15 @@ namespace SuperGameTools
         /// <param name="documentContents">Document contents. </param>
         /// <returns>True when the path means this document matches the document. </returns>
         virtual bool IsDocument(const std::string& path, const std::weak_ptr<StoredDocument>& documentContents) const override;
+
+        /// <summary>
+        /// Create a new version of this file.
+        /// Ideally this should be quite empty however
+        /// if anything is required to load the file,
+        /// include it.
+        /// </summary>
+        /// <returns>True means could create. </returns>
+        virtual bool Create() override;
 
         /// <summary>
         /// Get the actual stored document.

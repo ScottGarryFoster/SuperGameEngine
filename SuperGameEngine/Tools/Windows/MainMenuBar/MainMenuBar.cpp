@@ -11,6 +11,7 @@ void MainMenuBar::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_mainView = std::make_shared<MenuView>(windowPackage->GetColourPalette());
 
     m_mainView->AddTopLevelMenuItem("File");
+    m_mainView->AddInnerMenuItem("File", std::make_shared<MenuItemView>("FileNew","New Scene"));
     m_mainView->AddInnerMenuItem("File", std::make_shared<MenuItemView>("FileOpen","Open"));
     m_mainView->AddInnerMenuItem("File", std::make_shared<MenuItemView>("FileSave","Save"));
     m_mainView->AddTopLevelMenuItem("Windows");

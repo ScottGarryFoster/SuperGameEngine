@@ -12,6 +12,10 @@ namespace FatedQuestLibraries
 using namespace FatedQuestLibraries;
 using namespace SuperGameTools;
 
+SceneDocument::SceneDocument()
+{
+}
+
 bool SceneDocument::Load()
 {
     std::string path = File::Sanitize(m_filePath);
@@ -80,6 +84,25 @@ bool SceneDocument::IsDocument(const std::string& path) const
 bool SceneDocument::IsDocument(const std::string& path, const std::weak_ptr<StoredDocument>& documentContents) const
 {
     return File::EndInExtension(path, ".scene");
+}
+
+bool SceneDocument::Create()
+{
+    auto root = std::make_shared<ModifiableNode>();
+    root->SetName("Scene");
+
+    auto attributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+    auto guid = std::make_shared<ModifiableAttribute>();
+    guid->SetName("Guid");
+    guid->SetValue(GUIDHelpers::CreateGUID()->ToString());
+    attributes.emplace_back(guid);
+
+    root->SetAttributes(attributes);
+
+    m_storedDocument = std::make_shared<ModifiableDocument>();
+    m_storedDocument->SetRootElement(root);
+
+    return true;
 }
 
 std::shared_ptr<ModifiableDocument> SceneDocument::GetDocument() const

@@ -85,6 +85,11 @@ namespace SuperGameTools
         /// How to create an event such that the document can be saved.
         /// </param>
         void SaveFile(DocumentEventSaveContext saveContext);
+
+        /// <summary>
+        /// Create new file.
+        /// </summary>
+        void NewFile();
     };
 }
 
