@@ -319,13 +319,7 @@ void SceneHierarchy::OnDocumentActionEvent(const std::shared_ptr<DocumentActionE
         std::shared_ptr<Document> document = arguments->GetDocument();
         if (auto sceneDocument = std::dynamic_pointer_cast<SceneDocument>(document))
         {
-            for (const std::shared_ptr<GameObject>& go : m_scene->GetGameObjects())
-            {
-                m_windowPackage->GetFrameworkManager()
-                    ->GetSelectionManager()
-                    ->RemoveFromSelection(go);
-            }
-
+            UnselectAll();
             LoadScene(sceneDocument);
         }
     }
@@ -425,4 +419,17 @@ void SceneHierarchy::CreateNewGameObject()
     m_sceneTreeViewItem->GetChildrenAsGameObjects()->SetValue(currentGo);
 
     m_scene->AddGameObject(newGameObject);
+}
+
+void SceneHierarchy::UnselectAll()
+{
+    if (m_scene)
+    {
+        for (const std::shared_ptr<GameObject>& go : m_scene->GetGameObjects())
+        {
+            m_windowPackage->GetFrameworkManager()
+                ->GetSelectionManager()
+                ->RemoveFromSelection(go);
+        }
+    }
 }
