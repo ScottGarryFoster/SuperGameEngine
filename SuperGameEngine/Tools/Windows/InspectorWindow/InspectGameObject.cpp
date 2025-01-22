@@ -212,10 +212,11 @@ InspectGameObject::CreateComponentTreeViewItemFromComponent(
 {
     auto item = std::make_shared<TreeViewItem>(m_windowPackage->GetContentManager());
     item->GetLabel()->SetValue(component->GetType());
-    item->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::AlwaysShown);
+    item->GetCollapsibleType()->SetValue(TreeViewItemCollapsibleBehaviour::OpenCloseFromArrowOnly);
     item->GetCollapsibleIcon()->SetValue(TreeViewItemCollapsibleIcon::Arrow);
     item->GetIsFramed()->SetValue(true);
     item->UpdateDistributedWeakPointer(item);
+    item->GetOpenOnLoad()->SetValue(true);
 
     // Create the renderer of our properties.
     auto componentChild = std::make_shared<ComponentTreeViewItem>(m_windowPackage->GetContentManager());
