@@ -34,6 +34,15 @@ namespace FatedQuestLibraries
         virtual const std::shared_ptr<PackageFileSystemDirectory> Directory() const override;
 
         /// <summary>
+        /// Reload the Game package and refresh the files it knows about.
+        /// </summary>
+        /// <returns>
+        /// True means could reload,
+        /// false means could not - note you likely must load this package first.
+        /// </returns>
+        virtual bool Reload() const override;
+
+        /// <summary>
         /// Load the Game Package as is.
         /// </summary>
         /// <param name="paths">Access to where the package is. </param>
@@ -41,6 +50,10 @@ namespace FatedQuestLibraries
         bool Load(const std::shared_ptr<PackagePaths>& paths);
 
     private:
+        /// <summary>
+        /// The last set of the paths loaded.
+        /// </summary>
+        std::shared_ptr<PackagePaths> m_packagePaths;
 
         /// <summary>
         /// Methods to zip and unzip binary files.
@@ -63,7 +76,13 @@ namespace FatedQuestLibraries
         void FillListWithAllProductsFiles(
             const std::string& productsPath, 
             const std::string& currentPath, 
-            std::vector<std::string>& files);
+            std::vector<std::string>& files) const;
+
+        /// <summary>
+        /// Find all files within the packages and add them.
+        /// </summary>
+        /// <returns>True means could add. </returns>
+        bool AddAllFiles() const;
     };
 
 }

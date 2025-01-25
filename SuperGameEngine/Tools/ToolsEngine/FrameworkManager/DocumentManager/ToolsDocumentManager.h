@@ -73,6 +73,12 @@ namespace SuperGameTools
         std::string m_productsPath;
 
         /// <summary>
+        /// The last path saved or opened to.
+        /// Used to re-open dialogs to the same place.
+        /// </summary>
+        std::string m_lastPathOpenedTo;
+
+        /// <summary>
         /// Open a new file.
         /// </summary>
         /// <param name="level">How the document suggests being opened. </param>
@@ -85,6 +91,13 @@ namespace SuperGameTools
         /// How to create an event such that the document can be saved.
         /// </param>
         void SaveFile(DocumentEventSaveContext saveContext);
+
+        /// <summary>
+        /// Create new file.
+        /// </summary>
+        void NewFile();
+
+        std::string GetFilepathToOpenTo();
     };
 }
 

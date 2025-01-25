@@ -38,6 +38,11 @@ namespace SuperGameTools
         /// Document contents has changed and should be reloaded.
         /// </summary>
         Reload,
+
+        /// <summary>
+        /// Create new document.
+        /// </summary>
+        Create,
     };
 
     /// <summary>
@@ -47,7 +52,7 @@ namespace SuperGameTools
     {
     public:
         static DocumentEventAction Min() { return DocumentEventAction::Open; }
-        static DocumentEventAction Max() { return DocumentEventAction::Reload; }
+        static DocumentEventAction Max() { return DocumentEventAction::Create; }
 
         static DocumentEventAction* ToArray()
         {
@@ -57,6 +62,7 @@ namespace SuperGameTools
                 DocumentEventAction::Save,
                 DocumentEventAction::Close,
                 DocumentEventAction::Reload,
+                DocumentEventAction::Create,
             };
             
             return returnArray;
@@ -70,6 +76,7 @@ namespace SuperGameTools
                 DocumentEventAction::Save,
                 DocumentEventAction::Close,
                 DocumentEventAction::Reload,
+                DocumentEventAction::Create,
             };
             
             return returnVector;
@@ -84,6 +91,7 @@ namespace SuperGameTools
                 case DocumentEventAction::Save: return "Save";
                 case DocumentEventAction::Close: return "Close";
                 case DocumentEventAction::Reload: return "Reload";
+                case DocumentEventAction::Create: return "Create";
             }
             
             return "Unknown";
@@ -98,6 +106,7 @@ namespace SuperGameTools
                 if (value == "Save") return DocumentEventAction::Save;
                 if (value == "Close") return DocumentEventAction::Close;
                 if (value == "Reload") return DocumentEventAction::Reload;
+                if (value == "Create") return DocumentEventAction::Create;
             }
             else
             {
@@ -107,6 +116,7 @@ namespace SuperGameTools
                 if (valueLower == "save") return DocumentEventAction::Save;
                 if (valueLower == "close") return DocumentEventAction::Close;
                 if (valueLower == "reload") return DocumentEventAction::Reload;
+                if (valueLower == "create") return DocumentEventAction::Create;
             }
             
             return DocumentEventAction::Unknown;

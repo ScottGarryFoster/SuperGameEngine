@@ -75,6 +75,11 @@ void InspectGameObject::Draw()
         return;
     }
 
+    if (!m_gameObject)
+    {
+        return;
+    }
+
     if (m_components)
     {
         m_components->Draw();
@@ -114,7 +119,7 @@ void InspectGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
         if (inSelection.empty())
         {
             m_components = {};
-            m_currentGameObject = {};
+            m_gameObject = {};
             m_errorMessage = {};
             return;
         }
@@ -122,7 +127,7 @@ void InspectGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
         if (inSelection.size() > 1)
         {
             m_components = {};
-            m_currentGameObject = {};
+            m_gameObject = {};
             m_errorMessage = "There is more than one selection. Select a single item to inspect it.";
             return;
         }
@@ -133,7 +138,7 @@ void InspectGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
             {
                 // There is one selection, it is a game object, hold on to it - it is what you are now inspecting.
                 m_components = {};
-                m_currentGameObject = asGameObject;
+                m_gameObject = asGameObject;
                 CreateTreeFromObject(asGameObject);
                 m_errorMessage = {};
                 return;
@@ -141,7 +146,7 @@ void InspectGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
             else
             {
                 m_components = {};
-                m_currentGameObject = {};
+                m_gameObject = {};
                 m_errorMessage = "Selection type cannot be inspected.";
                 return;
             }
@@ -176,6 +181,11 @@ void InspectGameObject::DrawInspectContextWindow()
 {
     ImVec2 availableSize = ImGui::GetContentRegionAvail();
     if (availableSize.y <= 0)
+    {
+        return;
+    }
+
+    if (!m_gameObject)
     {
         return;
     }

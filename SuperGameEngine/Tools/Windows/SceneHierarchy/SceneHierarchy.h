@@ -164,6 +164,11 @@ namespace SuperGameTools
         /// </summary>
         void CreateNewGameObject();
 
+        /// <summary>
+        /// Unselects anything in current scene.
+        /// </summary>
+        void UnselectAll();
+
         bool m_testPopup;
         std::string m_testPopupText;
     };

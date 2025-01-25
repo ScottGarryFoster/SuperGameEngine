@@ -31,6 +31,12 @@ const std::shared_ptr<PackageFileSystemDirectory> GamePackageFileSystem::Directo
     return m_directorySystem;
 }
 
+void GamePackageFileSystem::ForgetFiles()
+{
+    m_archivedFiles.clear();
+    m_unarchivedFiles.clear();
+}
+
 void GamePackageFileSystem::GiveFiles(
     const std::vector<std::pair<PackageFileOrigin, std::shared_ptr<PackageFile>>>& packageFiles)
 {

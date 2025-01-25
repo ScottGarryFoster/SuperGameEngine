@@ -79,11 +79,6 @@ namespace SuperGameTools
         bool m_isSetup;
 
         /// <summary>
-        /// If we have a game object this is the game object we are displaying.
-        /// </summary>
-        std::shared_ptr<GameObject> m_currentGameObject;
-
-        /// <summary>
         /// If we cannot display something for a good reason, this is displayed instead.
         /// </summary>
         std::string m_errorMessage;

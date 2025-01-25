@@ -145,6 +145,14 @@ void ToolsSelectionManager::RemoveFromSelection(const std::weak_ptr<Selectable>&
                 m_selectables.insert_or_assign(group, std::unordered_map<std::string, std::weak_ptr<Selectable>>());
             }
 
+            // Grab anything removed before so we can fire the event.
+            bool foundOne = m_selectables.at(group).contains(guidKey);
+            std::weak_ptr<Selectable> foundSelectable;
+            if (foundOne)
+            {
+                foundSelectable = m_selectables.at(group).at(guidKey);
+            }
+
             std::unordered_map<std::string, std::weak_ptr<Selectable>>& selectables = m_selectables.at(group);
             erase_if(selectables, [guidKey](const std::pair<std::string, std::weak_ptr<Selectable>>& pair)
                 {
@@ -152,9 +160,9 @@ void ToolsSelectionManager::RemoveFromSelection(const std::weak_ptr<Selectable>&
                 });
 
             // Ensure the event will fire
-            if (m_selectables.at(group).contains(guidKey))
+            if (foundOne)
             {
-                changedSelectables.emplace_back(m_selectables.at(group).at(guidKey));
+                changedSelectables.emplace_back(foundSelectable);
             }
 
         }
@@ -284,6 +292,14 @@ void ToolsSelectionManager::RemoveFromSelection(const std::vector<std::weak_ptr<
                     m_selectables.insert_or_assign(group, std::unordered_map<std::string, std::weak_ptr<Selectable>>());
                 }
 
+                // Grab anything removed before so we can fire the event.
+                bool foundOne = m_selectables.at(group).contains(guidKey);
+                std::weak_ptr<Selectable> foundSelectable;
+                if (foundOne)
+                {
+                    foundSelectable = m_selectables.at(group).at(guidKey);
+                }
+
                 std::unordered_map<std::string, std::weak_ptr<Selectable>>& selectables = m_selectables.at(group);
                 erase_if(selectables, [guidKey](const std::pair<std::string, std::weak_ptr<Selectable>>& pair)
                     {
@@ -291,9 +307,9 @@ void ToolsSelectionManager::RemoveFromSelection(const std::vector<std::weak_ptr<
                     });
 
                 // Ensure the event will fire
-                if (m_selectables.at(group).contains(guidKey))
+                if (foundOne)
                 {
-                    changedSelectables.emplace_back(m_selectables.at(group).at(guidKey));
+                    changedSelectables.emplace_back(foundSelectable);
                 }
 
             }

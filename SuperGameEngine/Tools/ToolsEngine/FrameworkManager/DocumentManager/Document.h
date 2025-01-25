@@ -55,6 +55,15 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>True means saved. </returns>
         virtual bool Save() = 0;
+
+        /// <summary>
+        /// Create a new version of this file.
+        /// Ideally this should be quite empty however
+        /// if anything is required to load the file,
+        /// include it.
+        /// </summary>
+        /// <returns>True means could create. </returns>
+        virtual bool Create() = 0;
     };
 }
 
