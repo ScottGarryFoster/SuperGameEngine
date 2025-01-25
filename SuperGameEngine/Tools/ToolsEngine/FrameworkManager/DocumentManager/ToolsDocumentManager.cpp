@@ -123,6 +123,32 @@ void ToolsDocumentManager::OpenFile(DocumentEventOpenLevel level)
     // Save the last path for convenience
     m_lastPathOpenedTo = path;
 
+    // Ensure the file exists.
+    if (!File::Exists(path))
+    {
+        // TODO: Create an error / general message box for the user. #114
+        Log::Error("Filepath does not exist.",
+            "ToolsDocumentManager::OpenFile(DocumentEventOpenLevel)");
+        return;
+    }
+
+    // It might exist but it might not exist in the GamePackage.
+    // Ensure it does.
+    if (auto windowsPackage = m_windowsPackage.lock())
+    {
+        if (!windowsPackage->GetContentManager()->GamePackage()->File()->Exists(gamePackagePath))
+        {
+            windowsPackage->GetContentManager()->GamePackage()->Reload();
+        }
+    }
+    else
+    {
+        Log::Error("Windows package is no longer alive. Cannot create/open document.",
+            "ToolsDocumentManager::OpenFile(DocumentEventOpenLevel)");
+        return;
+    }
+
+    // See if this is a valid document for us to open.
     auto matcher = DocumentCriteria();
     matcher.FilePath = gamePackagePath;
 
