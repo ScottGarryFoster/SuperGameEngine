@@ -2,7 +2,7 @@
 name: Feature request
 about: Something new which creates a workflow or greatly improves one.
 title: "⛲[FEAT] -Describe-"
-labels: task
+labels: feature
 assignees: ''
 
 ---
@@ -16,7 +16,7 @@ Describe in __**short**__ the feature. This is basically an elevator pitch, one 
 **Describe the critical success factors for your feature**
 What are the key things your feature needs to do to be considered complete?
 
-**Describe in as much detail as needed the request**
+**Describe in as much detail as needed for the request**
 How do you imagine the feature working. Consider user input, data in and out, the UX and UI considerations.
 Provide mock ups and screenshots where applicable.
 
