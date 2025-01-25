@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+
+#include "SelectionChangeType.h"
 #include "SelectionManager.h"
 
 namespace FatedQuestLibraries
@@ -13,8 +15,6 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    enum class SelectionChangeType;
-
     /// <summary>
     /// Manages selection across multiple windows.
     /// </summary>

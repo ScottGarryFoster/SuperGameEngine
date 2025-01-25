@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// The type of colour refered to as a general type.
     /// </summary>
-    enum class ColourIdentity
+    enum class ColourIdentity : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

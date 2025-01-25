@@ -12,7 +12,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// The type and priority the package file needs to take within a game package.
     /// </summary>
-    enum class PackageFileOrigin
+    enum class PackageFileOrigin : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

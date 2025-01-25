@@ -13,7 +13,7 @@ namespace SuperGameEngine
     /// The state the renderer is in.
     /// Used to understand whether to trust the reference.
     /// </summary>
-    enum class SDLRendererState
+    enum class SDLRendererState : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// A list of fonts included in the package.
     /// </summary>
-    enum class EmbeddedFont
+    enum class EmbeddedFont : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

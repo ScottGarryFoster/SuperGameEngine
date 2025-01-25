@@ -2,6 +2,8 @@
 #include "FatedQuestLibraries.h"
 #include <string>
 
+#include "SuperEnumType.h"
+
 using namespace FatedQuestLibraries;
 
 namespace SuperEnumGenerator
@@ -31,20 +33,23 @@ namespace SuperEnumGenerator
         {
         public:
             bool Parsed = false;
-            std::string Value = "";
+            std::string Value = {};
         };
 
         class EnumValueString
         {
         public:
-            std::string Value = "";
-            std::string LowercaseValue = "";
+            std::string Value = {};
+            std::string LowercaseValue = {};
             
             bool ValueIsSet = false;
             int SetValue = 0;
             int ImpliedValue = 0;
 
-            std::string Comment = "";
+            /// <summary>
+            /// The comment for the enum.
+            /// </summary>
+            std::string Comment = {};
 
             /// <summary>
             /// Hides from Array and Vector methods.
@@ -56,7 +61,17 @@ namespace SuperEnumGenerator
             /// when a string cannot be parsed.
             /// </summary>
             bool IsUnknownValue = false;
+
+            /// <summary>
+            /// When making the enum, this updates with the flag value.
+            /// </summary>
+            size_t FlagValue = -1;
         };
+
+        /// <summary>
+        /// How to create the enum from a broad perspective.
+        /// </summary>
+        SuperEnumType m_enumType;
 
         /// <summary>
         /// The namespace to use.
@@ -84,6 +99,8 @@ namespace SuperEnumGenerator
         /// </summary>
         std::vector<std::shared_ptr<EnumValueString>> m_enumValues;
 
+        bool ParseRoot(std::shared_ptr<StoredDocumentNode> rootNode);
+
         bool ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode);
 
         bool ParseNamespace(std::shared_ptr<StoredDocumentNode> namespaceNode);
@@ -109,6 +126,18 @@ namespace SuperEnumGenerator
         std::string GetUnknownValue();
 
         std::string PrintSingleComment(const std::string& rawComment, int indents);
+
+        std::string PrintFlagMethods(int indents);
+        std::string PrintFlagHelperMethods(int indents);
+
+        /// <summary>
+        /// Figure out the best type for the enum.
+        /// </summary>
+        /// <returns>Best type to use. </returns>
+        std::string FigureOutType();
+
+        int GetMinEnumNumberValue();
+        int GetMaxEnumNumberValue();
     };
 }
 

@@ -1,10 +1,10 @@
 #pragma once
 #include <memory>
 #include <string>
+#include "LogLevel.h"
 
 namespace FatedQuestLibraries
 {
-    enum class LogLevel;
     class FEvent;
     class FEventSubscriptions;
 

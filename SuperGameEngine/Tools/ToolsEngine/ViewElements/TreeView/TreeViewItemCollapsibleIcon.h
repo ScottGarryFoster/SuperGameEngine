@@ -13,7 +13,7 @@ namespace SuperGameTools
     /// How the tree view item should display with an icon.
     /// Does not affect if the element can open or close.
     /// </summary>
-    enum class TreeViewItemCollapsibleIcon
+    enum class TreeViewItemCollapsibleIcon : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

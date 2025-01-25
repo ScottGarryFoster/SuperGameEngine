@@ -13,7 +13,7 @@ namespace SuperGameTools
     /// Describes the group for the selectable which helps to decide the
     /// buckets that the selectable will be added to.
     /// </summary>
-    enum class SelectionGroup
+    enum class SelectionGroup : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

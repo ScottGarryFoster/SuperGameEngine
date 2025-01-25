@@ -12,7 +12,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// Describes how to evaluate string input in terms of case.
     /// </summary>
-    enum class CaseSensitivity
+    enum class CaseSensitivity : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

@@ -12,7 +12,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// The level of severity of the log.
     /// </summary>
-    enum class LogLevel
+    enum class LogLevel : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
