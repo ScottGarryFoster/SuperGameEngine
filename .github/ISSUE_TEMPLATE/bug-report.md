@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: A feature is not working as expected.
-title: "[BUG] -Describe here-"
+title: "\U0001F41E[BUG] -Describe here-"
 labels: bug
 assignees: ''
 
