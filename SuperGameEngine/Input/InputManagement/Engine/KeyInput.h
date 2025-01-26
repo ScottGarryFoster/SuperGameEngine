@@ -1,42 +1,38 @@
 #pragma once
-#include "InputManager.h"
+#include <unordered_map>
+
+#include "KeyCode.h"
+#include "KeyState.h"
+#include "../Event/WindowEvent.h"
 
 namespace SuperGameInput
 {
-    class KeyInput;
-
     /// <summary>
-    /// Handles and updates user input.
+    /// Handles input for Keyboard keys.
     /// </summary>
-    class SuperInputManager : public InputManager
+    class KeyInput
     {
     public:
-        SuperInputManager();
-        virtual ~SuperInputManager() override = default;
-
-        /// <summary>
-        /// Called once on setup.
-        /// </summary>
-        /// <param name="gamePackage">Game Package, used to load controller inputs. </param>
-        virtual void Setup(const std::shared_ptr<GamePackage>& gamePackage) override;
+        KeyInput();
+        virtual ~KeyInput();
 
         /// <summary>
         /// Called once after Tools or Game to reset states of keys.
         /// </summary>
-        virtual void Update() override;
+        virtual void Update();
 
         /// <summary>
         /// Called upon every event to handle key and controller changes.
         /// </summary>
         /// <param name="event">Event to inspect. </param>
-        virtual void EventUpdate(WindowEvent event) override;
+        virtual void EventUpdate(WindowEvent event);
 
         /// <summary>
         /// Is the given key down.
         /// </summary>
         /// <param name="keyCode">Keycode to test. </param>
-        /// <returns>True means currently down. Will fire until up. </returns>
-        virtual bool GetKeyDown(const KeyCode& keyCode) const override;
+        /// <returns>True means currently down. Will fire continually. </returns>
+        virtual bool GetKeyDown(const KeyCode& keyCode) const;
 
         /// <summary>
         /// Was the key just pressed.
@@ -44,19 +40,19 @@ namespace SuperGameInput
         /// </summary>
         /// <param name="keyCode">Keycode to test. </param>
         /// <returns>True means was just pressed. </returns>
-        virtual bool GetKeyPressed(const KeyCode& keyCode) const override;
+        virtual bool GetKeyPressed(const KeyCode& keyCode) const;
 
         /// <summary>
         /// Is the given key just been released.
         /// </summary>
         /// <param name="keyCode">Keycode to test. </param>
         /// <returns>True means key was just released. </returns>
-        virtual bool GetKeyUp(const KeyCode& keyCode) const override;
+        virtual bool GetKeyUp(const KeyCode& keyCode) const;
 
     private:
         /// <summary>
-        /// Handles input for Keyboard keys.
+        /// All keys by key state.
         /// </summary>
-        std::shared_ptr<KeyInput> m_keyInput;
+        std::unordered_map<KeyCode, KeyState> m_keys;
     };
 }

@@ -6,11 +6,16 @@
 #include "../Engine/Factory/EngineFactory.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 #include "../.././../FatedQuest.Libraries/Logger/AllReferences.h"
-#include "../../Input/InputManagement/InputManager.h"
-#include "../../Input/InputManagement/SuperInputManager.h"
+#include "../../Input/InputManagement/SuperSDLInputManager.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
+using namespace SuperGameInput;
+
+EngineEntry::EngineEntry()
+{
+    m_inputManager = std::make_shared<SuperSDLInputManager>();
+}
 
 int EngineEntry::RunApplication(const std::string& engineType)
 {
@@ -84,8 +89,6 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         }
     }
 
-    auto input = std::make_shared<SuperGameInput::SuperInputManager>();
-
     m_renderer->SetRenderer(renderer);
     m_engine->GiveRenderer(m_renderer);
     m_engine->WindowStart();
@@ -101,13 +104,7 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
-            input->EventUpdate(e);
-            if (e.type == SDL_KEYUP)
-            {
-                SDL_Keycode key = e.key.keysym.sym;
-                std::string name = SDL_GetKeyName(key);
-                Log::Info("From Debug Engine: Key released: " + name);
-            }
+            m_inputManager->EventUpdate(e);
 
             eventAnswer = m_engine->Event(e);
             if (eventAnswer != ApplicationOperationState::Running)
@@ -131,6 +128,9 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         {
             operationState = updateAnswer;
         }
+
+        // Update the state of inputs. Must be run after anything which uses it.
+        m_inputManager->Update();
 
         // Unlikely to occur but in the situation the event and update loop
         // try to override one another we should log this, in case we get a bug

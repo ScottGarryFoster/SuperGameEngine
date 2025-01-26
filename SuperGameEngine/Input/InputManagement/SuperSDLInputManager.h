@@ -1,18 +1,22 @@
 #pragma once
-#include "InputManager.h"
+#include "SDLInputManager.h"
+#include "Event/KeyboardEvent.h"
+#include "Event/KeyboardKeycode.h"
+#include "Event/KeySymbol.h"
+#include "Event/WindowEvent.h"
 
 namespace SuperGameInput
 {
-    class KeyInput;
+    class InputManager;
 
     /// <summary>
     /// Handles and updates user input.
     /// </summary>
-    class SuperInputManager : public InputManager
+    class SuperSDLInputManager : public SDLInputManager
     {
     public:
-        SuperInputManager();
-        virtual ~SuperInputManager() override = default;
+        virtual ~SuperSDLInputManager() override = default;
+        SuperSDLInputManager();
 
         /// <summary>
         /// Called once on setup.
@@ -29,7 +33,7 @@ namespace SuperGameInput
         /// Called upon every event to handle key and controller changes.
         /// </summary>
         /// <param name="event">Event to inspect. </param>
-        virtual void EventUpdate(WindowEvent event) override;
+        virtual void EventUpdate(SDL_Event event) override;
 
         /// <summary>
         /// Is the given key down.
@@ -55,8 +59,17 @@ namespace SuperGameInput
 
     private:
         /// <summary>
-        /// Handles input for Keyboard keys.
+        /// Handles and updates user input.
         /// </summary>
-        std::shared_ptr<KeyInput> m_keyInput;
+        std::shared_ptr<InputManager> m_inputManager;
+
+        WindowEvent ConvertFromSDL(const SDL_Event& event);
+        WindowEventType ConvertFromType(Uint32 type) const;
+
+        KeyboardEvent ConvertKeyboardEventFromSDL(const SDL_Event& event);
+
+        KeySymbol KeySymbolFromSDLKeySym(SDL_Keysym keysym) const;
+        KeyScancode KeyScancodeFromSDLScanCode(SDL_Scancode scanCode) const;
+        KeyboardKeycode KeyboardKeycodeFromSDLKeyCode(SDL_Keycode keycode) const;
     };
 }

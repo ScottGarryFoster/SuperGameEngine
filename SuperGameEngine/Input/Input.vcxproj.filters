@@ -19,6 +19,12 @@
     <Filter Include="Source Files\InputManagement">
       <UniqueIdentifier>{d13fb78f-aa30-45b2-b56f-d1f05e1ed9a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\InputManagement\Event">
+      <UniqueIdentifier>{93d11699-75cd-46cf-9014-30bf17f41a7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InputManagement\Engine">
+      <UniqueIdentifier>{9926916f-ff34-40fe-9457-6c8d24d85ad3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -27,14 +33,56 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="InputManagement\InputManager.h">
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
     <ClInclude Include="InputManagement\SuperInputManager.h">
       <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SDLInputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SuperSDLInputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\WindowEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\WindowEventType.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyboardEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\GeneralKeyState.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyboardEventType.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeySymbol.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyScancode.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyboardKeycode.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyCode.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyboardKeycodeConversion.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\InputHandler.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyInput.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyState.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="InputManagement\SuperInputManager.cpp">
       <Filter>Source Files\InputManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\SuperSDLInputManager.cpp">
+      <Filter>Source Files\InputManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\Engine\KeyInput.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

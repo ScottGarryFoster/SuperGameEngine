@@ -1,0 +1,148 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameInput" />
+    <EnumComment>
+        Describes a key upon a keyboard.
+    </EnumComment>
+    <EnumName Name="KeyCode">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <None />
+        <Backspace />
+        <Tab />
+        <Clear />
+        <Return />
+        <Pause />
+        <Escape />
+        <Space />
+        <Exclaim />
+        <Quotedbl />
+        <Hash />
+        <Dollar />
+        <Ampersand />
+        <Quote />
+        <LeftParenthesis />
+        <RightParenthesis />
+        <Asterisk />
+        <Plus />
+        <Comma />
+        <Minus />
+        <Period />
+        <Slash />
+        <Zero />
+        <One />
+        <Two />
+        <Three />
+        <Four />
+        <Five />
+        <Six />
+        <Seven />
+        <Eight />
+        <Nine />
+        <Colon />
+        <Semicolon />
+        <Less />
+        <Equals />
+        <Greater />
+        <Question />
+        <At />
+        <LeftBracket />
+        <Backslash />
+        <RightBracket />
+        <Caret />
+        <Underscore />
+        <Backquote />
+        
+        <A />
+        <B />
+        <C />
+        <D />
+        <E />
+        <F />
+        <G />
+        <H />
+        <I />
+        <J />
+        <K />
+        <L />
+        <M />
+        <N />
+        <O />
+        <P />
+        <Q />
+        <R />
+        <S />
+        <T />
+        <U />
+        <V />
+        <W />
+        <X />
+        <Y />
+        <Z />
+        
+        <Delete />
+        <KeyPadZero />
+        <KeyPadOne />
+        <KeyPadTwo />
+        <KeyPadThree />
+        <KeyPadFour />
+        <KeyPadFive />
+        <KeyPadSix />
+        <KeyPadSeven />
+        <KeyPadEight />
+        <KeyPadNine />
+        <KeyPadPeriod />
+        <KeyPadDivide />
+        <KeyPadMultiply />
+        <KeyPadMinus />
+        <KeyPadPlus />
+        <KeyPadEnter />
+        <KeyPadEquals />
+        <Up />
+        <Down />
+        <Right />
+        <Left />
+        <Insert />
+        <Home />
+        <End />
+        <PageUp />
+        <PageDown />
+        
+        <F1 />
+        <F2 />
+        <F3 />
+        <F4 />
+        <F5 />
+        <F6 />
+        <F7 />
+        <F8 />
+        <F9 />
+        <F10 />
+        <F11 />
+        <F12 />
+        <F13 />
+        <F14 />
+        <F15 />
+        
+        <Numlock />
+        <Capslock />
+        <Scrollock />
+        <RightShift />
+        <LeftShift />
+        <RightCtrl />
+        <LeftCtrl />
+        <RightAlt />
+        <LeftAlt />
+        <LeftSuper />
+        <RightSuper />
+        <Mode />
+        <Help />
+        <Print />
+        <Sysreq />
+        <Menu />
+        <Power />
+    </EnumName>
+</SuperEnum>

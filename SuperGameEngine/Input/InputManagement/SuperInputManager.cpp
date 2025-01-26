@@ -1,21 +1,47 @@
 #include "SuperInputManager.h"
 
-#include <iostream>
-
 #include "../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "Engine/KeyInput.h"
 
 using namespace SuperGameInput;
 
-void SuperInputManager::Setup(const std::shared_ptr<GamePackage>& gamePackage)
+SuperInputManager::SuperInputManager()
 {
+    m_keyInput = std::make_shared<KeyInput>();
 }
 
-void SuperInputManager::EventUpdate(SDL_Event e)
+void SuperInputManager::Setup(const std::shared_ptr<GamePackage>& gamePackage)
 {
-    if (e.type == SDL_KEYUP)
+    
+}
+
+void SuperInputManager::Update()
+{
+    m_keyInput->Update();
+}
+
+void SuperInputManager::EventUpdate(WindowEvent event)
+{
+    switch (event.EventType)
     {
-        SDL_Keycode key = e.key.keysym.sym;
-        std::string name = SDL_GetKeyName(key);
-        Log::Info("Key released: " + name);
+        case WindowEventType::SDL_KEYDOWN:
+        case WindowEventType::SDL_KEYUP:
+            m_keyInput->EventUpdate(event);
+            break;
     }
+}
+
+bool SuperInputManager::GetKeyDown(const KeyCode& keyCode) const
+{
+    return m_keyInput->GetKeyDown(keyCode);
+}
+
+bool SuperInputManager::GetKeyPressed(const KeyCode& keyCode) const
+{
+    return m_keyInput->GetKeyPressed(keyCode);
+}
+
+bool SuperInputManager::GetKeyUp(const KeyCode& keyCode) const
+{
+    return m_keyInput->GetKeyUp(keyCode);
 }
