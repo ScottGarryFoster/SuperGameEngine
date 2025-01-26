@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\InputManagement">
+      <UniqueIdentifier>{5a658a6a-fede-4707-ae4f-0b44b7d06dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputManagement">
+      <UniqueIdentifier>{d13fb78f-aa30-45b2-b56f-d1f05e1ed9a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,6 +30,12 @@
     <ClInclude Include="KeyState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InputManagement\InputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SuperInputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -31,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\SuperInputManager.cpp">
+      <Filter>Source Files\InputManagement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

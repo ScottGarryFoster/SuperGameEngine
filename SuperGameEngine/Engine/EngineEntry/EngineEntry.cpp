@@ -6,6 +6,8 @@
 #include "../Engine/Factory/EngineFactory.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 #include "../.././../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "../../Input/InputManagement/InputManager.h"
+#include "../../Input/InputManagement/SuperInputManager.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -82,6 +84,7 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         }
     }
 
+    auto input = std::make_shared<SuperGameInput::SuperInputManager>();
 
     m_renderer->SetRenderer(renderer);
     m_engine->GiveRenderer(m_renderer);
@@ -98,6 +101,14 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
+            input->EventUpdate(e);
+            if (e.type == SDL_KEYUP)
+            {
+                SDL_Keycode key = e.key.keysym.sym;
+                std::string name = SDL_GetKeyName(key);
+                Log::Info("From Debug Engine: Key released: " + name);
+            }
+
             eventAnswer = m_engine->Event(e);
             if (eventAnswer != ApplicationOperationState::Running)
             {
