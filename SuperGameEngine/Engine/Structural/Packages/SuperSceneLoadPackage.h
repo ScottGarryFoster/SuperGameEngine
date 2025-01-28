@@ -38,6 +38,18 @@ namespace SuperGameEngine
         virtual void SetSerializableParser(const std::shared_ptr<SerializableParser>& serializableParser);
 
         /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        /// <returns>Given to Tools and Engine to provide Input. </returns>
+        virtual std::shared_ptr<InputHandler> GetInput() const override;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        /// <param name="inputHandler">Given to Tools and Engine to provide Input. </param>
+        virtual void SetInputHandler(const std::shared_ptr<InputHandler>& inputHandler);
+
+        /// <summary>
         /// Create a scene load package based on the Grand Scene Package.
         /// </summary>
         /// <returns>
@@ -61,6 +73,11 @@ namespace SuperGameEngine
         /// Helps to parse serializable objects.
         /// </summary>
         std::shared_ptr<SerializableParser> m_serializableParser;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        std::shared_ptr<InputHandler> m_inputHandler;
 
         /// <summary>
         /// Attempts to create a scene load package.

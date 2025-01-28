@@ -45,6 +45,12 @@ namespace SuperGameEngine
         virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
 
         /// <summary>
+        /// Gives the input manager.
+        /// </summary>
+        /// <param name="inputHandler">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
@@ -94,6 +100,11 @@ namespace SuperGameEngine
         /// </summary>
         std::shared_ptr<SuperGrandScenePackage> m_grandSceneLoadPackage;
 
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::InputHandler> m_inputHandler;
+
         std::shared_ptr<CombinedGamePackage> m_combinedGamePackage;
 
         std::shared_ptr<DebugLogger> m_logger;
@@ -117,6 +128,16 @@ namespace SuperGameEngine
         /// Holds all scenes.
         /// </summary>
         std::shared_ptr<GrandScene> m_grandScene;
+
+        /// <summary>
+        /// Called once.
+        /// </summary>
+        void Setup();
+
+        /// <summary>
+        /// Creates the Grand Scene Package.
+        /// </summary>
+        void CreateGrandScenePackage();
     };
 
     REGISTER_ENGINE("DebugEngine", DebugEngine);

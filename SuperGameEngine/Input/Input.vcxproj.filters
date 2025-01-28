@@ -30,9 +30,6 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="InputManagement\InputManager.h">
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
@@ -83,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="InputManagement\Engine\KeyState.h">
       <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

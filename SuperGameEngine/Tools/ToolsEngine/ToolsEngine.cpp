@@ -56,6 +56,11 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     }
 }
 
+void ToolsEngine::GiveInput(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler)
+{
+    m_inputHandler = inputHandler;
+}
+
 void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
 {
     m_sdlRenderTexture = sdlRenderTexture;

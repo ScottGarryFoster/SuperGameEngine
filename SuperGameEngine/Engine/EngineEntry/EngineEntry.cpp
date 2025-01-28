@@ -91,6 +91,7 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
 
     m_renderer->SetRenderer(renderer);
     m_engine->GiveRenderer(m_renderer);
+    m_engine->GiveInput(m_inputManager);
     m_engine->WindowStart();
 
     Uint64 startTime = SDL_GetTicks64();

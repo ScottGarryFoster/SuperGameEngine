@@ -47,6 +47,12 @@ namespace SuperGameTools
         virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
 
         /// <summary>
+        /// Gives the input manager.
+        /// </summary>
+        /// <param name="inputHandler">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
@@ -153,6 +159,11 @@ namespace SuperGameTools
         /// Must be called first and you must call End() after all dockable windows.
         /// </summary>
         std::shared_ptr<DockableContainer> m_dockableContainer;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::InputHandler> m_inputHandler;
 
         /// <summary>
         /// Sets up the engine.

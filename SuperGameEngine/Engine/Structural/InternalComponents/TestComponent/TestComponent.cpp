@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "../../../../Input/InputManagement/InputHandler.h"
 #include "../../../Engine/Basic/GameTime.h"
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../GameObject/GameObject.h"
@@ -44,21 +45,27 @@ void TestComponent::Setup(
     //auto sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
     //std::weak_ptr sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
 
+    // Memory Test
+    //for (int i = 0; i < 150; ++i)
+    //{
+    //    auto sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
 
-    for (int i = 0; i < 150; ++i)
+    //    sprite->Move((int)(i * 2), i);
+    //    //std::cout << sprite->GetX();
+    //    //std::cout << sprite->GetY();
+    //    //std::cout << "\n";
+
+    //    m_bunchOfComponents.push_back(sprite);
+    //}
+
+    m_pressed = componentLoadPackage->GetContentManager()->Texture()->GetTexture("Engine\\TestImages\\Input\\Press.png");
+    if (!m_pressed)
     {
-        auto sprite = std::static_pointer_cast<SpriteComponent>(parent->Get()->AddComponent("SpriteComponent"));
-
-        sprite->Move((int)(i * 2), i);
-        //std::cout << sprite->GetX();
-        //std::cout << sprite->GetY();
-        //std::cout << "\n";
-
-        m_bunchOfComponents.push_back(sprite);
+        Log::Error("Could not create texture in test component.");
     }
 
-    m_testTexture = componentLoadPackage->GetContentManager()->Texture()->GetTexture("Engine\\TestImages\\A_pressed.png");
-    if (!m_testTexture)
+    m_pressedAlt = componentLoadPackage->GetContentManager()->Texture()->GetTexture("Engine\\TestImages\\Input\\Press_Green.png");
+    if (!m_pressedAlt)
     {
         Log::Error("Could not create texture in test component.");
     }
@@ -96,7 +103,7 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
 
     m_serial = "FromUpdate";
 
-    if (!m_testTexture)
+    if (!m_pressed)
     {
         return;
     }
@@ -106,6 +113,14 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
     {
         m_yPosition = 0;
     }
+
+    if (!LoadPackage()->GetInput())
+    {
+        Log::Error("No input");
+        return;
+    }
+    m_isPressed = LoadPackage()->GetInput()->GetKeyDown(KeyCode::B);
+
 
     /*if (gameTime->AllTime() > 10000)
     {
@@ -126,10 +141,19 @@ void TestComponent::Draw() const
     SuperGameComponent::Draw();
     if (!IsSetup()) return;
 
-    if (!m_testTexture)
+    if (!m_pressed)
     {
         return;
     }
 
-    m_testTexture->Draw(FPoint(200, m_yPosition));
+    m_pressed->Draw(FPoint(200, m_yPosition));
+
+    if (m_isPressed)
+    {
+        m_pressed->Draw();
+    }
+    else
+    {
+        m_pressedAlt->Draw();
+    }
 }
