@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// What occured to trigger the event.
     /// </summary>
-    enum class DocumentEventAction
+    enum class DocumentEventAction : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperEnumGenerator" />
+    <EnumComment>
+        How to create the enum from a broad perspective.
+    </EnumComment>
+    <EnumName Name="SuperEnumType">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Standard>
+            Values are given as is, in order.
+        </Standard>
+        <BitFlag>
+            Values are a part of bit flags and in order must add numerically.
+        </BitFlag>
+    </EnumName>
+</SuperEnum>

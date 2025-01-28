@@ -12,7 +12,7 @@ namespace SuperGameEngine
     /// <summary>
     /// The type of data to store.
     /// </summary>
-    enum class SerializableDataType
+    enum class SerializableDataType : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

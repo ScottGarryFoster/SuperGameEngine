@@ -12,7 +12,7 @@ namespace SuperGameEngine
     /// <summary>
     /// The state the application is currently in or should change to.
     /// </summary>
-    enum class ApplicationOperationState
+    enum class ApplicationOperationState : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

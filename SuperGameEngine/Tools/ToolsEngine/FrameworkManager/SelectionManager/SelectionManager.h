@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include "SelectionGroup.h"
+
 namespace FatedQuestLibraries
 {
     class FEventSubscriptions;
@@ -12,7 +14,6 @@ using namespace FatedQuestLibraries;
 namespace SuperGameTools
 {
     class Selectable;
-    enum class SelectionGroup;
 
     /// <summary>
     /// Manages selection across multiple windows.

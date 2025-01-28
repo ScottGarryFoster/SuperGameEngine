@@ -34,6 +34,17 @@ void SuperGrandScenePackage::SetSerializableParser(const std::shared_ptr<Seriali
     AttemptToCreateAGameObjectLoadPackage();
 }
 
+std::shared_ptr<InputHandler> SuperGrandScenePackage::GetInput() const
+{
+    return m_inputHandler;
+}
+
+void SuperGrandScenePackage::SetInputHandler(const std::shared_ptr<InputHandler>& inputHandler)
+{
+    m_inputHandler = inputHandler;
+    AttemptToCreateAGameObjectLoadPackage();
+}
+
 std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() const
 {
     return m_sceneLoadPackage;
@@ -41,11 +52,13 @@ std::shared_ptr<SceneLoadPackage> SuperGrandScenePackage::GetSceneLoadPackage() 
 
 void SuperGrandScenePackage::AttemptToCreateAGameObjectLoadPackage()
 {
-    if (m_contentManager || m_serializableParser)
+    if (m_contentManager || m_serializableParser || m_inputHandler)
     {
         auto sceneLoadPackage = std::make_shared<SuperSceneLoadPackage>();
         sceneLoadPackage->SetContentManager(m_contentManager);
         sceneLoadPackage->SetSerializableParser(m_serializableParser);
+        sceneLoadPackage->SetInputHandler(m_inputHandler);
+
         m_sceneLoadPackage = sceneLoadPackage;
     }
 }

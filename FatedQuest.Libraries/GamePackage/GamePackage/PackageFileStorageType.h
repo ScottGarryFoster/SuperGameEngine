@@ -14,7 +14,7 @@ namespace FatedQuestLibraries
     /// of which method to use when gathering the data back out of a package
     /// file.
     /// </summary>
-    enum class PackageFileStorageType
+    enum class PackageFileStorageType : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

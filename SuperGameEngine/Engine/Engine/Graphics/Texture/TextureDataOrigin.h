@@ -14,7 +14,7 @@ namespace FatedQuestLibraries
     /// This is used to understand how to recreate the texture
     /// if the renderer was ever torn down.
     /// </summary>
-    enum class TextureDataOrigin
+    enum class TextureDataOrigin : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

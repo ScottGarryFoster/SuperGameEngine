@@ -26,7 +26,19 @@ namespace SuperGameEngine
         /// Helps to parse serializable objects.
         /// </summary>
         /// <returns>Helps to parse serializable objects. </returns>
-        virtual std::shared_ptr<SerializableParser> GetParser() const;
+        virtual std::shared_ptr<SerializableParser> GetParser() const override;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        /// <returns>Given to Tools and Engine to provide Input. </returns>
+        virtual std::shared_ptr<InputHandler> GetInput() const override;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        /// <param name="inputHandler">Given to Tools and Engine to provide Input. </param>
+        virtual void SetInputHandler(const std::shared_ptr<InputHandler>& inputHandler);
 
         /// <summary>
         /// Set the Serializable Parser for the package.
@@ -43,6 +55,11 @@ namespace SuperGameEngine
         /// Helps to parse serializable objects.
         /// </summary>
         std::shared_ptr<SerializableParser> m_serializableParser;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        std::shared_ptr<InputHandler> m_inputHandler;
     };
 }
 

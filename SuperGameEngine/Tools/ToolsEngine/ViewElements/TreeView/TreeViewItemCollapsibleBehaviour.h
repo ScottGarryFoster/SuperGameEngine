@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// How the tree view item should open or close.
     /// </summary>
-    enum class TreeViewItemCollapsibleBehaviour
+    enum class TreeViewItemCollapsibleBehaviour : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

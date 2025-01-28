@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\InputManagement">
+      <UniqueIdentifier>{5a658a6a-fede-4707-ae4f-0b44b7d06dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputManagement">
+      <UniqueIdentifier>{d13fb78f-aa30-45b2-b56f-d1f05e1ed9a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InputManagement\Event">
+      <UniqueIdentifier>{93d11699-75cd-46cf-9014-30bf17f41a7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InputManagement\Engine">
+      <UniqueIdentifier>{9926916f-ff34-40fe-9457-6c8d24d85ad3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\InputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SuperInputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SDLInputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SuperSDLInputManager.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\WindowEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\WindowEventType.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyboardEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\GeneralKeyState.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyboardEventType.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeySymbol.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyScancode.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\KeyboardKeycode.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyCode.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyboardKeycodeConversion.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\InputHandler.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyInput.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyState.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files\InputManagement</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\SuperInputManager.cpp">
+      <Filter>Source Files\InputManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\SuperSDLInputManager.cpp">
+      <Filter>Source Files\InputManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\Engine\KeyInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

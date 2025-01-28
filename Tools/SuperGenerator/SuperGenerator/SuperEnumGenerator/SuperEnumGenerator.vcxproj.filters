@@ -30,6 +30,9 @@
     <ClInclude Include="FatedQuestLibraries.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SuperEnumType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

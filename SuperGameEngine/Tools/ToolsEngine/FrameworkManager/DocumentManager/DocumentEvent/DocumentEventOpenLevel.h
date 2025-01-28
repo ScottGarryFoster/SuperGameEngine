@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// How the document suggests being opened.
     /// </summary>
-    enum class DocumentEventOpenLevel
+    enum class DocumentEventOpenLevel : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

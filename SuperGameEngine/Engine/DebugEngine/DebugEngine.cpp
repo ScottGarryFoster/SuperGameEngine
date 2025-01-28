@@ -29,43 +29,16 @@ using namespace FatedQuestLibraries;
 void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 {
     m_renderer = renderer;
-    if (!m_textureManager)
+    
+}
+
+void DebugEngine::GiveInput(const std::shared_ptr<InputHandler>& inputHandler)
+{
+    m_inputHandler = inputHandler;
+
+    if (m_grandSceneLoadPackage)
     {
-        m_grandSceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
-
-
-
-        auto m_contentManager = std::make_shared<SuperContentManager>();
-
-        m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
-        std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
-        m_combinedGamePackage->Load(paths);
-        m_contentManager->GiveGamePackage(m_combinedGamePackage);
-
-        m_textureManager = std::make_shared<SuperTextureManager>(renderer, m_combinedGamePackage);
-        m_contentManager->GiveSuperTextureManager(m_textureManager);
-
-        m_grandSceneLoadPackage->SetContentManager(m_contentManager);
-
-        m_grandSceneLoadPackage->SetSerializableParser(
-            std::make_shared<SuperSerializableParser>());
-
-
-        std::shared_ptr<SceneLoadPackage> sceneLoadPackage = m_grandSceneLoadPackage->GetSceneLoadPackage();
-        auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
-        auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
-        sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
-        m_contentManager->GiveSceneCache(sceneLoadCache);
-
-
-        m_gameTime = std::make_shared<SuperGameTime>();
-        curr = m_gameTime->AllTime() + 5000;
-
-        t = 0;
-    }
-    else
-    {
-        // TODO: Create a way to update the Renderer.
+        m_grandSceneLoadPackage->SetInputHandler(m_inputHandler);
     }
 }
 
@@ -78,60 +51,14 @@ ApplicationOperationState DebugEngine::Update(Uint64 ticks)
 {
     if (m_haveLoaded && !m_haveSavedScene)
     {
-        m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut2.txt");
+        //m_grandSceneLoadPackage->GetContentManager()->Scene()->SaveScene(m_scene, "E:\\Development\\SuperGameEngine-Myriad\\Products\\savedOut2.txt");
         m_haveSavedScene = true;
     }
 
     if (!m_haveLoaded)
     {
-        m_haveLoaded = true;
-
+        Setup();
         curr = ticks;
-
-        m_grandScene = std::make_shared<SuperGrandScene>();
-        m_grandScene->Setup(m_grandSceneLoadPackage);
-
-        //m_scene = m_grandScene->CreateAndAddNewScene("TestScene.txt");
-        m_scene = m_grandScene->CreateAndAddNewScene("savedOut.scene");
-
-        // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
-
-        
-
-        //m_scene = m_grandScene->CreateAndAddNewScene();
-        //m_go = m_scene->CreateAndAddNewGameObject();
-        //m_go->AddComponent("TestComponent");
-
-        //std::optional<std::shared_ptr<void>> fromFactory = ClassTypes::GetInstance().Create("SuperGameObject");
-        //if (fromFactory.has_value())
-        //{
-        //    std::shared_ptr<void> sgov = fromFactory.value();
-        //    std::shared_ptr<SuperGameObject> sgo = std::static_pointer_cast<SuperGameObject>(fromFactory.value());
-        //    if (1 == 1)
-        //    {
-        //        
-        //    }
-        //}
-
-        //std::string testPath = R"(Engine\Input\ControllerMappings\NintendoN64Controller.xml)";
-        //if (m_combinedGamePackage->File()->Exists(testPath))
-        //{
-        //    std::string contents = m_combinedGamePackage->File()->ReadFileContents(testPath);
-        //    if (contents[0] == '<')
-        //    {
-        //        auto sprite = std::static_pointer_cast<SpriteComponent>(m_go->AddComponent("SpriteComponent"));
-        //        sprite->Move(400, 400);
-        //    }
-        //}
-
-#ifdef defined(_DEBUG) && !defined(_TOOLS)
-        m_logger = std::make_shared<DebugLogger>();
-        if (auto shared = Log::GetEvent().lock())
-        {
-            shared->Subscribe(m_logger);
-        }
-#endif
-
     }
 
     m_gameTime->SetTicksSinceLastFrame(ticks);
@@ -215,4 +142,84 @@ void DebugEngine::WindowStart()
 
 void DebugEngine::WindowTeardown()
 {
+}
+
+void DebugEngine::Setup()
+{
+    m_haveLoaded = true;
+
+    CreateGrandScenePackage();
+
+    m_grandScene = std::make_shared<SuperGrandScene>();
+    m_grandScene->Setup(m_grandSceneLoadPackage);
+
+    //m_scene = m_grandScene->CreateAndAddNewScene("TestScene.txt");
+    m_scene = m_grandScene->CreateAndAddNewScene("savedOut.scene");
+
+    // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
+
+#ifdef _DEBUG
+#ifndef _TOOLS
+
+    m_logger = std::make_shared<DebugLogger>();
+    if (auto shared = Log::GetEvent().lock())
+    {
+        shared->Subscribe(m_logger);
+    }
+#endif
+#endif
+}
+
+void DebugEngine::CreateGrandScenePackage()
+{
+    if (m_textureManager)
+    {
+        Log::Warning("Setup called twice.");
+        return;
+    }
+
+    if (!m_inputHandler)
+    {
+        Log::Error("No input package. Cannot load scene.", "DebugEngine::CreateGrandScenePackage");
+        return;
+    }
+
+    if (!m_renderer)
+    {
+        Log::Error("No Renderer. Cannot load scene.", "DebugEngine::CreateGrandScenePackage");
+        return;
+    }
+
+    m_grandSceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
+
+    auto m_contentManager = std::make_shared<SuperContentManager>();
+
+    m_combinedGamePackage = std::make_shared<CombinedGamePackage>();
+    std::shared_ptr<PackagePaths> paths = std::make_shared<SGEPackagePaths>();
+    m_combinedGamePackage->Load(paths);
+    m_contentManager->GiveGamePackage(m_combinedGamePackage);
+
+    m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage);
+    m_contentManager->GiveSuperTextureManager(m_textureManager);
+
+    m_grandSceneLoadPackage->SetContentManager(m_contentManager);
+
+    m_grandSceneLoadPackage->SetSerializableParser(
+        std::make_shared<SuperSerializableParser>());
+
+    m_grandSceneLoadPackage->SetInputHandler(m_inputHandler);
+
+
+    std::shared_ptr<SceneLoadPackage> sceneLoadPackage = m_grandSceneLoadPackage->GetSceneLoadPackage();
+    auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
+    auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
+    sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
+    m_contentManager->GiveSceneCache(sceneLoadCache);
+
+
+    m_gameTime = std::make_shared<SuperGameTime>();
+    curr = m_gameTime->AllTime() + 5000;
+
+    t = 0;
+    
 }

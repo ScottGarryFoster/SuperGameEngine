@@ -4,6 +4,11 @@
 #include "ApplicationOperationState.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 
+namespace SuperGameInput
+{
+    class SDLInputManager;
+}
+
 namespace SuperGameEngine
 {
     class EngineFactory;
@@ -15,6 +20,7 @@ namespace SuperGameEngine
     {
     public:
         virtual ~EngineEntry() = default;
+        EngineEntry();
 
         /// <summary>
         /// The entry to the engine.
@@ -54,5 +60,10 @@ namespace SuperGameEngine
         /// If the engine is not destroyed between loops this is the engine.
         /// </summary>
         std::shared_ptr<Engine> m_engine;
+
+        /// <summary>
+        /// Handles and updates user input.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
     };
 }

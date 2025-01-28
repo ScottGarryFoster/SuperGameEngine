@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// The colour palette used.
     /// </summary>
-    enum class ColourPalette
+    enum class ColourPalette : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

@@ -12,7 +12,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// Describes how to open or create a zip.
     /// </summary>
-    enum class ZipCreateOpenOption
+    enum class ZipCreateOpenOption : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
