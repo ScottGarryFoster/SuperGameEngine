@@ -45,9 +45,6 @@
     <ClInclude Include="InputManagement\SDLInputManager.h">
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
-    <ClInclude Include="InputManagement\SuperSDLInputManager.h">
-      <Filter>Header Files\InputManagement</Filter>
-    </ClInclude>
     <ClInclude Include="InputManagement\Event\WindowEvent.h">
       <Filter>Header Files\InputManagement\Event</Filter>
     </ClInclude>
@@ -117,8 +114,14 @@
     <ClInclude Include="InputManagement\Engine\ControllerAxisMappingEvaluation.h">
       <Filter>Header Files\InputManagement\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="InputManagement\SuperSDLInputManager.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\SuperControllerLayoutFromXML.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="InputManagement\Engine\AxisToUniversalAxis.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\InputManagement\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,7 +140,7 @@
     <ClCompile Include="InputManagement\Engine\KeyInput.cpp">
       <Filter>Source Files\InputManagement\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="InputManagement\Engine\ControllerLayoutFromXML.cpp">
+    <ClCompile Include="InputManagement\Engine\SuperControllerLayoutFromXML.cpp">
       <Filter>Source Files\InputManagement\Engine</Filter>
     </ClCompile>
   </ItemGroup>

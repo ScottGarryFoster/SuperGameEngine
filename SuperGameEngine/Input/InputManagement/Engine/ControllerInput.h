@@ -3,7 +3,11 @@
 
 #include "UniversalControllerButton.h"
 
-class ControllerLayout;
+namespace SuperGameInput
+{
+    class ControllerLayoutFromXML;
+    class ControllerLayout;
+}
 
 namespace FatedQuestLibraries
 {
@@ -79,6 +83,11 @@ namespace SuperGameInput
 
     private:
         /// <summary>
+        /// Where to find the controller configuration files.
+        /// </summary>
+        inline static const std::string PathToControllerConfigs = "Engine\\Input\\ControllerMappings";
+
+        /// <summary>
         /// Holds the content for the game.
         /// </summary>
         std::shared_ptr<GamePackage> m_gamePackage;
@@ -86,6 +95,16 @@ namespace SuperGameInput
         /// <summary>
         /// All controller layouts. The layouts are the translation from SDL.
         /// </summary>
-        std::vector<std::shared_ptr<ControllerLayout>> m_controllerLayout;
+        std::vector<std::shared_ptr<ControllerLayout>> m_controllerLayouts;
+
+        /// <summary>
+        /// Creates a Controller Layout from XML Format.
+        /// </summary>
+        std::shared_ptr<ControllerLayoutFromXML> m_controllerLayoutFromXml;
+
+        /// <summary>
+        /// Loads all layouts into memory from file.
+        /// </summary>
+        void ReloadAllLayouts();
     };
 }

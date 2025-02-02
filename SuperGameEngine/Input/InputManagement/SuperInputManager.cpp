@@ -1,6 +1,7 @@
 #include "SuperInputManager.h"
 
 #include "../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "Engine/ControllerInput.h"
 #include "Engine/KeyInput.h"
 
 using namespace SuperGameInput;
@@ -8,11 +9,12 @@ using namespace SuperGameInput;
 SuperInputManager::SuperInputManager()
 {
     m_keyInput = std::make_shared<KeyInput>();
+    m_controllerInput = std::make_shared<ControllerInput>();
 }
 
 void SuperInputManager::Setup(const std::shared_ptr<GamePackage>& gamePackage)
 {
-    
+    m_controllerInput->Setup(gamePackage);
 }
 
 void SuperInputManager::Update()

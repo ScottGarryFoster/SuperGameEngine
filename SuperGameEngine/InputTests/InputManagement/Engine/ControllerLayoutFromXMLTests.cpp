@@ -5,6 +5,7 @@
 #include "../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
 #include "../../../Engine/DebugEngine/DebugLogger.h"
 #include "../../../Input/InputManagement/Engine/ControllerLayout.h"
+#include "../../../Input/InputManagement/Engine/SuperControllerLayoutFromXML.h"
 
 using namespace SuperGameInput;
 using namespace FatedQuestLibraries;
@@ -25,7 +26,7 @@ namespace SuperGameInput_InputManagement_Engine
 
         void SetUp() override
         {
-            m_testClass = std::make_shared<ControllerLayoutFromXML>();
+            m_testClass = std::make_shared<SuperControllerLayoutFromXML>();
 
             m_logger = std::make_shared<SuperGameEngine::DebugLogger>();
             if (auto shared = Log::GetEvent().lock())

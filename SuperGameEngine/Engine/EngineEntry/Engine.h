@@ -6,6 +6,7 @@
 
 namespace SuperGameInput
 {
+    class SDLInputManager;
     class InputHandler;
 }
 
@@ -31,8 +32,8 @@ namespace SuperGameEngine
         /// <summary>
         /// Gives the input manager.
         /// </summary>
-        /// <param name="inputHandler">User input. </param>
-        virtual void GiveInput(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler) = 0;
+        /// <param name="inputManager">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) = 0;
 
         /// <summary>
         /// Handle the current event.

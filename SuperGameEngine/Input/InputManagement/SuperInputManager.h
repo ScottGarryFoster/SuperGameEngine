@@ -3,6 +3,7 @@
 
 namespace SuperGameInput
 {
+    class ControllerInput;
     class KeyInput;
 
     /// <summary>
@@ -58,5 +59,10 @@ namespace SuperGameInput
         /// Handles input for Keyboard keys.
         /// </summary>
         std::shared_ptr<KeyInput> m_keyInput;
+
+        /// <summary>
+        /// Handles controller Input.
+        /// </summary>
+        std::shared_ptr<ControllerInput> m_controllerInput;
     };
 }

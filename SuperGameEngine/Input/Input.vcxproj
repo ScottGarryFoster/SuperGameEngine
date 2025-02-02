@@ -162,6 +162,7 @@
     <ClInclude Include="InputManagement\Engine\KeyCode.h" />
     <ClInclude Include="InputManagement\Engine\KeyInput.h" />
     <ClInclude Include="InputManagement\Engine\KeyState.h" />
+    <ClInclude Include="InputManagement\Engine\SuperControllerLayoutFromXML.h" />
     <ClInclude Include="InputManagement\Engine\UniversalControllerAxis.h" />
     <ClInclude Include="InputManagement\Engine\UniversalControllerButton.h" />
     <ClInclude Include="InputManagement\Event\GeneralKeyState.h" />
@@ -181,8 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManagement\Engine\ControllerInput.cpp" />
-    <ClCompile Include="InputManagement\Engine\ControllerLayoutFromXML.cpp" />
     <ClCompile Include="InputManagement\Engine\KeyInput.cpp" />
+    <ClCompile Include="InputManagement\Engine\SuperControllerLayoutFromXML.cpp" />
     <ClCompile Include="InputManagement\SuperInputManager.cpp" />
     <ClCompile Include="InputManagement\SuperSDLInputManager.cpp" />
     <ClCompile Include="pch.cpp">
@@ -205,11 +206,15 @@
     <ProjectReference Include="..\..\FatedQuest.Libraries\Observer\Observer.vcxproj">
       <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\XmlDocument\XmlDocument.vcxproj">
+      <Project>{04db48a3-bce2-4311-8fc4-ed2b39b5e3b8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets" Condition="Exists('..\packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets')" />
     <Import Project="..\packages\sdl2.2.0.5\build\native\sdl2.targets" Condition="Exists('..\packages\sdl2.2.0.5\build\native\sdl2.targets')" />
+    <Import Project="..\packages\rapidxml.1.13\build\native\rapidxml.targets" Condition="Exists('..\packages\rapidxml.1.13\build\native\rapidxml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -217,5 +222,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2.redist.2.0.5\build\native\sdl2.redist.targets'))" />
     <Error Condition="!Exists('..\packages\sdl2.2.0.5\build\native\sdl2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2.2.0.5\build\native\sdl2.targets'))" />
+    <Error Condition="!Exists('..\packages\rapidxml.1.13\build\native\rapidxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\rapidxml.1.13\build\native\rapidxml.targets'))" />
   </Target>
 </Project>

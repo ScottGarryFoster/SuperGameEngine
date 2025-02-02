@@ -1,4 +1,4 @@
-#include "ControllerLayoutFromXML.h"
+#include "SuperControllerLayoutFromXML.h"
 
 #include "../../../../FatedQuest.Libraries/StoredDocument/StoredDocument.h"
 #include "ControllerLayout.h"
@@ -8,7 +8,7 @@
 
 using namespace SuperGameInput;
 
-ControllerLayoutFromXML::ControllerLayoutFromXML()
+SuperControllerLayoutFromXML::SuperControllerLayoutFromXML()
 {
     m_mainTagName = StringHelpers::ToLower(MainTagName);
     m_metaTagName = StringHelpers::ToLower(MetaTagName);
@@ -21,13 +21,13 @@ ControllerLayoutFromXML::ControllerLayoutFromXML()
     m_sDLToUniversalAxesSingularName = StringHelpers::ToLower(SDLToUniversalAxesSingularName);
 }
 
-ControllerLayoutFromXML::~ControllerLayoutFromXML()
+SuperControllerLayoutFromXML::~SuperControllerLayoutFromXML()
 {
 }
 
-std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
-    const std::shared_ptr<StoredDocument>& document, 
-    std::string& error)
+std::shared_ptr<ControllerLayout> SuperControllerLayoutFromXML::CreateFromDocument(
+    const std::shared_ptr<StoredDocument>& document,
+    std::string& error) const
 {
     if (!document->GetRoot())
     {
@@ -41,7 +41,7 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
         return {};
     }
 
-    std::string methodName = "std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument"
+    std::string methodName = "std::shared_ptr<ControllerLayout> SuperControllerLayoutFromXML::CreateFromDocument"
                              "(const std::shared_ptr<StoredDocument>&,std::string&)";
     bool parsedMetaTag = false;
     auto layout = std::make_shared<ControllerLayout>();
@@ -91,19 +91,20 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
 
     if (!parsedMetaTag)
     {
+        error = "Metadata tag is required and could not be parsed.";
         return {};
     }
 
     return layout;
 }
 
-bool ControllerLayoutFromXML::ParseMetaData(
+bool SuperControllerLayoutFromXML::ParseMetaData(
     const std::shared_ptr<StoredDocumentNode>& node,
     const std::shared_ptr<ControllerLayout>& controllerLayout) const
 {
     bool parsedSuccessfullySoFar = true;
-    if (const std::shared_ptr<StoredDocumentAttribute> attribute = 
-        node->Attribute("Name",CaseSensitivity::IgnoreCase))
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("Name", CaseSensitivity::IgnoreCase))
     {
         if (attribute->Value().empty())
         {
@@ -198,7 +199,7 @@ bool ControllerLayoutFromXML::ParseMetaData(
     return parsedSuccessfullySoFar;
 }
 
-bool ControllerLayoutFromXML::ParseSDLToUniversalButtons(
+bool SuperControllerLayoutFromXML::ParseSDLToUniversalButtons(
     const std::shared_ptr<StoredDocumentNode>& node,
     const std::shared_ptr<ControllerLayout>& controllerLayout) const
 {
@@ -218,7 +219,7 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalButtons(
     return true;
 }
 
-bool ControllerLayoutFromXML::ParseSDLToUniversalButton(const std::shared_ptr<StoredDocumentNode>& node,
+bool SuperControllerLayoutFromXML::ParseSDLToUniversalButton(const std::shared_ptr<StoredDocumentNode>& node,
     std::pair<int, UniversalControllerButton>& singleSDLButtonMapping) const
 {
     bool parsedSuccessfullySoFar = true;
@@ -276,7 +277,7 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalButton(const std::shared_ptr<St
     return parsedSuccessfullySoFar;
 }
 
-bool ControllerLayoutFromXML::ParseAxisToButtons(const std::shared_ptr<StoredDocumentNode>& node,
+bool SuperControllerLayoutFromXML::ParseAxisToButtons(const std::shared_ptr<StoredDocumentNode>& node,
     const std::shared_ptr<ControllerLayout>& controllerLayout) const
 {
     for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
@@ -295,7 +296,7 @@ bool ControllerLayoutFromXML::ParseAxisToButtons(const std::shared_ptr<StoredDoc
     return true;
 }
 
-bool ControllerLayoutFromXML::ParseAxisToButton(
+bool SuperControllerLayoutFromXML::ParseAxisToButton(
     const std::shared_ptr<StoredDocumentNode>& node,
     ControllerAxisMappedToButton& singleAxisToButton) const
 {
@@ -405,7 +406,7 @@ bool ControllerLayoutFromXML::ParseAxisToButton(
     return parsedSuccessfullySoFar;
 }
 
-bool ControllerLayoutFromXML::ParseSDLToUniversalAxes(
+bool SuperControllerLayoutFromXML::ParseSDLToUniversalAxes(
     const std::shared_ptr<StoredDocumentNode>& node,
     const std::shared_ptr<ControllerLayout>& controllerLayout) const
 {
@@ -425,7 +426,7 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalAxes(
     return true;
 }
 
-bool ControllerLayoutFromXML::ParseSDLToUniversalAxis(
+bool SuperControllerLayoutFromXML::ParseSDLToUniversalAxis(
     const std::shared_ptr<StoredDocumentNode>& node,
     AxisToUniversalAxis& singleSDLToUniversalAxis) const
 {
@@ -507,7 +508,7 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalAxis(
     return parsedSuccessfullySoFar;
 }
 
-bool ControllerLayoutFromXML::ParseHatSDLMapping(
+bool SuperControllerLayoutFromXML::ParseHatSDLMapping(
     const std::shared_ptr<StoredDocumentNode>& node,
     const std::shared_ptr<ControllerLayout>& controllerLayout) const
 {

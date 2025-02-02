@@ -24,8 +24,8 @@ namespace SuperGameEngine
         /// <summary>
         /// Gives the input manager.
         /// </summary>
-        /// <param name="inputHandler">User input. </param>
-        virtual void GiveInput(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler) override;
+        /// <param name="inputManager">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
 
         /// <summary>
         /// Handle the current event.
