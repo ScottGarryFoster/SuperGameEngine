@@ -184,5 +184,13 @@ namespace SuperGameInput
         /// <param name="singleSDLToUniversalAxis">Output from parsing. Discarded if returns false. </param>
         /// <returns>True means parsed successfully. </returns>
         bool ParseSDLToUniversalAxis(const std::shared_ptr<StoredDocumentNode>& node, AxisToUniversalAxis& singleSDLToUniversalAxis) const;
+
+        /// <summary>
+        /// Parses the HatSDLMapping node.
+        /// </summary>
+        /// <param name="node">HatSDLMapping node.</param>
+        /// <param name="controllerLayout">Controller layout to add data to. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseHatSDLMapping(const std::shared_ptr<StoredDocumentNode>& node, const std::shared_ptr<ControllerLayout>& controllerLayout) const;
     };
 }

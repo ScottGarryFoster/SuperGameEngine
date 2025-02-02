@@ -1760,4 +1760,73 @@ namespace SuperGameInput_InputManagement_Engine
         ASSERT_EQ(0, sdlAxisToUniversal.size()) << "Found SDLToUniversalAxis in layout";
     }
 #pragma endregion
+
+#pragma region HatSDLMapping
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_HatSDLMappingIsParsed_WhenGiven)
+    {
+        // Arrange
+        int expected = 7;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        // Axis Button to parse
+        auto hatSDLMappingNode = std::make_shared<ModifiableNode>();
+        hatSDLMappingNode->SetName(ControllerLayoutFromXML::HatSDLMappingName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLToButtonValue", std::to_string(expected)));
+        hatSDLMappingNode->SetAttributes(attributes);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(hatSDLMappingNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+        ASSERT_EQ(expected, actual->HatMappedToDpad);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_HatSDLMappingIsNotParsed_WhenInvalid)
+    {
+        // Arrange
+        std::string givenHat = "gfdgfd";
+        int expected = -1;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        // Axis Button to parse
+        auto hatSDLMappingNode = std::make_shared<ModifiableNode>();
+        hatSDLMappingNode->SetName(ControllerLayoutFromXML::HatSDLMappingName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLToButtonValue", givenHat));
+        hatSDLMappingNode->SetAttributes(attributes);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(hatSDLMappingNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+        ASSERT_EQ(expected, actual->HatMappedToDpad);
+    }
+
+#pragma endregion
 }

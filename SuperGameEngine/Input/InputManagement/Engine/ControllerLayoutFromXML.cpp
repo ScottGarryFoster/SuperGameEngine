@@ -79,6 +79,14 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
                     methodName);
             }
         }
+        else if (m_hatSDLMappingName == name)
+        {
+            if (!ParseHatSDLMapping(child, layout))
+            {
+                Log::Warning("Could not parse " + HatSDLMappingName + " in Controller Layout.",
+                    methodName);
+            }
+        }
     }
 
     if (!parsedMetaTag)
@@ -494,6 +502,39 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalAxis(
                 parsedSuccessfullySoFar = false;
             }
         }
+    }
+
+    return parsedSuccessfullySoFar;
+}
+
+bool ControllerLayoutFromXML::ParseHatSDLMapping(
+    const std::shared_ptr<StoredDocumentNode>& node,
+    const std::shared_ptr<ControllerLayout>& controllerLayout) const
+{
+    bool parsedSuccessfullySoFar = true;
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("SDLToButtonValue", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            int output = -1;
+            if (IntHelpers::TryParse(attribute->Value(), output))
+            {
+                controllerLayout->HatMappedToDpad = output;
+            }
+            else
+            {
+                parsedSuccessfullySoFar = false;
+            }
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
     }
 
     return parsedSuccessfullySoFar;
