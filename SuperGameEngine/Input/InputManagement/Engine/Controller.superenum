@@ -1,0 +1,29 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameInput" />
+    <EnumComment>
+        Describes a specific controller.
+    </EnumComment>
+    <EnumName Name="Controller">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Xbox360Controller>
+            This will show up for all off the shelf 360 controllers
+            which match the layout. This also means the vibrations will
+            not work for all controllers.
+        </Xbox360Controller>
+        <XboxSeriesController>
+            Xbox Series X or S controller.
+        </XboxSeriesController>
+        <NintendoSwitchProController>
+            Official Switch Original Pro Controller.
+        </NintendoSwitchProController>
+        <NintendoN64Controller>
+            This is an Official N64 Controller from the 
+            Nintendo Online Switch Subscription.
+        </NintendoN64Controller>
+    </EnumName>
+</SuperEnum>

@@ -150,10 +150,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="InputManagement\Engine\AxisToUniversalAxis.h" />
+    <ClInclude Include="InputManagement\Engine\Controller.h" />
+    <ClInclude Include="InputManagement\Engine\ControllerAxisMappedToButton.h" />
+    <ClInclude Include="InputManagement\Engine\ControllerAxisMappingEvaluation.h" />
+    <ClInclude Include="InputManagement\Engine\ControllerComparisonType.h" />
+    <ClInclude Include="InputManagement\Engine\ControllerInput.h" />
+    <ClInclude Include="InputManagement\Engine\ControllerLayout.h" />
+    <ClInclude Include="InputManagement\Engine\ControllerLayoutFromXML.h" />
     <ClInclude Include="InputManagement\Engine\KeyboardKeycodeConversion.h" />
     <ClInclude Include="InputManagement\Engine\KeyCode.h" />
     <ClInclude Include="InputManagement\Engine\KeyInput.h" />
     <ClInclude Include="InputManagement\Engine\KeyState.h" />
+    <ClInclude Include="InputManagement\Engine\UniversalControllerAxis.h" />
+    <ClInclude Include="InputManagement\Engine\UniversalControllerButton.h" />
     <ClInclude Include="InputManagement\Event\GeneralKeyState.h" />
     <ClInclude Include="InputManagement\Event\KeyboardEvent.h" />
     <ClInclude Include="InputManagement\Event\KeyboardEventType.h" />
@@ -170,7 +180,8 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputManagement\Engine\ControllerInput.cpp" />
+    <ClCompile Include="InputManagement\Engine\ControllerLayoutFromXML.cpp" />
     <ClCompile Include="InputManagement\Engine\KeyInput.cpp" />
     <ClCompile Include="InputManagement\SuperInputManager.cpp" />
     <ClCompile Include="InputManagement\SuperSDLInputManager.cpp" />
