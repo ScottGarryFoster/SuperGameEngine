@@ -11,6 +11,7 @@ namespace SuperGameInput
     /// </summary>
     class ControllerAxisMappedToButton
     {
+    public:
         /// <summary>
         /// SDLAxis number.
         /// </summary>

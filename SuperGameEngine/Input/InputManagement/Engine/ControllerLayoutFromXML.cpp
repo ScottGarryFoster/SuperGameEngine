@@ -59,7 +59,15 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
         {
             if (!ParseSDLToUniversalButtons(child, layout))
             {
-                Log::Warning("Could not parse SDLToUniversalButtons in Controller Layout.",
+                Log::Warning("Could not parse " + ButtonTagName + " in Controller Layout.",
+                    methodName);
+            }
+        }
+        else if (m_axisToButtonTagName == name)
+        {
+            if (!ParseAxisToButtons(child, layout))
+            {
+                Log::Warning("Could not parse " + AxisToButtonTagName + " in Controller Layout.",
                     methodName);
             }
         }
@@ -242,6 +250,135 @@ bool ControllerLayoutFromXML::ParseSDLToUniversalButton(const std::shared_ptr<St
                 singleSDLButtonMapping.second = parsed;
             }
 
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    return parsedSuccessfullySoFar;
+}
+
+bool ControllerLayoutFromXML::ParseAxisToButtons(const std::shared_ptr<StoredDocumentNode>& node,
+    const std::shared_ptr<ControllerLayout>& controllerLayout) const
+{
+    for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string name = StringHelpers::ToLower(child->Name());
+        if (m_axisToButtonTagSingularName == name)
+        {
+            ControllerAxisMappedToButton output;
+            if (ParseAxisToButton(child, output))
+            {
+                controllerLayout->AxisToButton.emplace_back(output);
+            }
+        }
+    }
+
+    return true;
+}
+
+bool ControllerLayoutFromXML::ParseAxisToButton(
+    const std::shared_ptr<StoredDocumentNode>& node,
+    ControllerAxisMappedToButton& singleAxisToButton) const
+{
+    bool parsedSuccessfullySoFar = true;
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("Axis", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            int output = -1;
+            if (IntHelpers::TryParse(attribute->Value(), output))
+            {
+                singleAxisToButton.Axis = output;
+            }
+            else
+            {
+                parsedSuccessfullySoFar = false;
+            }
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("UniversalControllerButton", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            UniversalControllerButton parsed = EUniversalControllerButton::FromString(attribute->Value());
+            if (parsed == UniversalControllerButton::Unknown)
+            {
+                parsedSuccessfullySoFar = false;
+            }
+            else
+            {
+                singleAxisToButton.Button = parsed;
+            }
+
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("EvaluationComparison", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            ControllerComparisonType parsed = EControllerComparisonType::FromString(attribute->Value());
+            if (parsed == ControllerComparisonType::Unknown)
+            {
+                parsedSuccessfullySoFar = false;
+            }
+            else
+            {
+                singleAxisToButton.Evaluation.Comparison = parsed;
+            }
+
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("EvaluationValue", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            int output = -1;
+            if (IntHelpers::TryParse(attribute->Value(), output))
+            {
+                singleAxisToButton.Evaluation.Value = output;
+            }
+            else
+            {
+                parsedSuccessfullySoFar = false;
+            }
         }
     }
     else

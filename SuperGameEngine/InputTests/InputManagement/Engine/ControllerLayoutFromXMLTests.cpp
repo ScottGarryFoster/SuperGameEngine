@@ -792,4 +792,546 @@ namespace SuperGameInput_InputManagement_Engine
     }
 
 #pragma endregion
+
+#pragma region AxisToButtons
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreParsed_WhenGiven)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(1, axisToButtons.size()) << "No SDL Buttons found in layout";
+
+        ASSERT_EQ(expectedValues.Axis, axisToButtons.at(0).Axis);
+        ASSERT_EQ(expectedValues.Button, axisToButtons.at(0).Button);
+        ASSERT_EQ(expectedValues.Evaluation.Value, axisToButtons.at(0).Evaluation.Value);
+        ASSERT_EQ(expectedValues.Evaluation.Comparison, axisToButtons.at(0).Evaluation.Comparison);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AllAxisToButtonsAreParsed_WhenGiven)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        ControllerAxisMappedToButton expectedValues2;
+        expectedValues2.Axis = 1;
+        expectedValues2.Button = UniversalControllerButton::DPadLeft;
+        expectedValues2.Evaluation.Value = 4;
+        expectedValues2.Evaluation.Comparison = ControllerComparisonType::Greater;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+
+        // Axis Button to parse 2
+        auto axisToButtonTagSingularNode2 = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode2->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes2;
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues2.Axis)));
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues2.Button)));
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues2.Evaluation.Comparison)));
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues2.Evaluation.Value)));
+        axisToButtonTagSingularNode2->SetAttributes(attributes2);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode2);
+
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(2, axisToButtons.size()) << "Not enough SDL Buttons found in layout";
+
+        ASSERT_EQ(expectedValues.Axis, axisToButtons.at(0).Axis);
+        ASSERT_EQ(expectedValues.Button, axisToButtons.at(0).Button);
+        ASSERT_EQ(expectedValues.Evaluation.Value, axisToButtons.at(0).Evaluation.Value);
+        ASSERT_EQ(expectedValues.Evaluation.Comparison, axisToButtons.at(0).Evaluation.Comparison);
+
+        ASSERT_EQ(expectedValues2.Axis, axisToButtons.at(1).Axis);
+        ASSERT_EQ(expectedValues2.Button, axisToButtons.at(1).Button);
+        ASSERT_EQ(expectedValues2.Evaluation.Value, axisToButtons.at(1).Evaluation.Value);
+        ASSERT_EQ(expectedValues2.Evaluation.Comparison, axisToButtons.at(1).Evaluation.Comparison);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenAxisIsNotGiven)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        // No Axis
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenButtonIsNotGiven)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        // No UniversalControllerButton
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenEvaluationValueIsNotGiven)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        // No EvaluationValue
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenEvaluationComparisonIsNotGiven)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        // No EvaluationComparison
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenAxisIsNotParseable)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        std::string givenAxis = "T";
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", givenAxis));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenButtonIsNotParseable)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::Unknown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenEvaluationValueIsNotParseable)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Equals;
+        std::string givenValue = "T";
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", givenValue));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AxisToButtonsAreNotFound_WhenEvaluationComparisonIsNotParseable)
+    {
+        // Arrange
+        ControllerAxisMappedToButton expectedValues;
+        expectedValues.Axis = 10;
+        expectedValues.Button = UniversalControllerButton::FaceButtonDown;
+        expectedValues.Evaluation.Value = 12;
+        expectedValues.Evaluation.Comparison = ControllerComparisonType::Unknown;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto axisToButtonTagNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagNode->SetName(ControllerLayoutFromXML::AxisToButtonTagName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto axisToButtonTagSingularNode = std::make_shared<ModifiableNode>();
+        axisToButtonTagSingularNode->SetName(ControllerLayoutFromXML::AxisToButtonTagSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Axis", std::to_string(expectedValues.Axis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerButton", EUniversalControllerButton::ToString(expectedValues.Button)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationComparison", EControllerComparisonType::ToString(expectedValues.Evaluation.Comparison)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("EvaluationValue", std::to_string(expectedValues.Evaluation.Value)));
+
+        axisToButtonTagSingularNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(axisToButtonTagSingularNode);
+        axisToButtonTagNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(axisToButtonTagNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<ControllerAxisMappedToButton> axisToButtons = actual->AxisToButton;
+        ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
+    }
+#pragma endregion
 }

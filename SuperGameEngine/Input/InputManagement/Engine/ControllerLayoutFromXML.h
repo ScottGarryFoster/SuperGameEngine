@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 
+#include "ControllerAxisMappedToButton.h"
 #include "UniversalControllerButton.h"
 
 namespace FatedQuestLibraries
@@ -150,5 +151,21 @@ namespace SuperGameInput
         /// <param name="singleSDLButtonMapping">Output from parsing. Discarded if returns false. </param>
         /// <returns>True means parsed successfully. </returns>
         bool ParseSDLToUniversalButton(const std::shared_ptr<StoredDocumentNode>& node, std::pair<int, UniversalControllerButton>& singleSDLButtonMapping) const;
+
+        /// <summary>
+        /// Parses the AxisToButtons node.
+        /// </summary>
+        /// <param name="node">AxisToButtons node.</param>
+        /// <param name="controllerLayout">Controller layout to add data to. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseAxisToButtons(const std::shared_ptr<StoredDocumentNode>& node, const std::shared_ptr<ControllerLayout>& controllerLayout) const;
+
+        /// <summary>
+        /// Parses the AxisToButton node.
+        /// </summary>
+        /// <param name="node">AxisToButton node.</param>
+        /// <param name="singleAxisToButton">Output from parsing. Discarded if returns false. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseAxisToButton(const std::shared_ptr<StoredDocumentNode>& node, ControllerAxisMappedToButton& singleAxisToButton) const;
     };
 }
