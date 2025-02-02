@@ -202,6 +202,9 @@
     <ProjectReference Include="..\..\FatedQuest.Libraries\Logger\Logger.vcxproj">
       <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\Observer\Observer.vcxproj">
+      <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

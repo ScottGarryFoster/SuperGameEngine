@@ -4,6 +4,7 @@
 #include "ControllerLayout.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/Number/IntHelpers.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/Text/StringHelpers.h"
+#include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
 
 using namespace SuperGameInput;
 
@@ -40,6 +41,8 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
         return {};
     }
 
+    std::string methodName = "std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument"
+                             "(const std::shared_ptr<StoredDocument>&,std::string&)";
     bool parsedMetaTag = false;
     auto layout = std::make_shared<ControllerLayout>();
     for (std::shared_ptr<StoredDocumentNode> child = document->GetRoot()->GetFirstChild(); child; child = child->GetAdjacentNode())
@@ -50,6 +53,14 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
             if (ParseMetaData(child, layout))
             {
                 parsedMetaTag = true;
+            }
+        }
+        else if (m_buttonTagName == name)
+        {
+            if (!ParseSDLToUniversalButtons(child, layout))
+            {
+                Log::Warning("Could not parse SDLToUniversalButtons in Controller Layout.",
+                    methodName);
             }
         }
     }
@@ -153,6 +164,84 @@ bool ControllerLayoutFromXML::ParseMetaData(
             {
                 parsedSuccessfullySoFar = false;
             }
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    return parsedSuccessfullySoFar;
+}
+
+bool ControllerLayoutFromXML::ParseSDLToUniversalButtons(
+    const std::shared_ptr<StoredDocumentNode>& node,
+    const std::shared_ptr<ControllerLayout>& controllerLayout) const
+{
+    for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string name = StringHelpers::ToLower(child->Name());
+        if (m_buttonTagSingularName == name)
+        {
+            std::pair<int, UniversalControllerButton> output;
+            if (ParseSDLToUniversalButton(child, output))
+            {
+                controllerLayout->SDLToUniversalButton.emplace_back(output);
+            }
+        }
+    }
+
+    return true;
+}
+
+bool ControllerLayoutFromXML::ParseSDLToUniversalButton(const std::shared_ptr<StoredDocumentNode>& node,
+    std::pair<int, UniversalControllerButton>& singleSDLButtonMapping) const
+{
+    bool parsedSuccessfullySoFar = true;
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("SDLButton", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            int output = -1;
+            if (IntHelpers::TryParse(attribute->Value(), output))
+            {
+                singleSDLButtonMapping.first = output;
+            }
+            else
+            {
+                parsedSuccessfullySoFar = false;
+            }
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("UniversalControllerButton", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            UniversalControllerButton parsed = EUniversalControllerButton::FromString(attribute->Value());
+            if (parsed == UniversalControllerButton::Unknown)
+            {
+                parsedSuccessfullySoFar = false;
+            }
+            else
+            {
+                singleSDLButtonMapping.second = parsed;
+            }
+
         }
     }
     else

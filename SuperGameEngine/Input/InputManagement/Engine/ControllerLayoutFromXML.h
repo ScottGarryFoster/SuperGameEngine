@@ -2,6 +2,8 @@
 #include <memory>
 #include <string>
 
+#include "UniversalControllerButton.h"
+
 namespace FatedQuestLibraries
 {
     class StoredDocumentNode;
@@ -132,5 +134,21 @@ namespace SuperGameInput
         /// <param name="controllerLayout">Controller layout to add data to</param>
         /// <returns>True means parsed successfully. </returns>
         bool ParseMetaData(const std::shared_ptr<StoredDocumentNode>& node, const std::shared_ptr<ControllerLayout>& controllerLayout) const;
+
+        /// <summary>
+        /// Parses the SDLToUniversalButtons node.
+        /// </summary>
+        /// <param name="node">SDLToUniversalButtons node.</param>
+        /// <param name="controllerLayout">Controller layout to add data to. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseSDLToUniversalButtons(const std::shared_ptr<StoredDocumentNode>& node, const std::shared_ptr<ControllerLayout>& controllerLayout) const;
+
+        /// <summary>
+        /// Parses the SDLToUniversalButton node.
+        /// </summary>
+        /// <param name="node">SDLToUniversalButton node.</param>
+        /// <param name="singleSDLButtonMapping">Output from parsing. Discarded if returns false. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseSDLToUniversalButton(const std::shared_ptr<StoredDocumentNode>& node, std::pair<int, UniversalControllerButton>& singleSDLButtonMapping) const;
     };
 }

@@ -43,12 +43,12 @@ namespace SuperGameInput
         /// Every SDL button and it's universal mapping.
         /// First found will be the resolve.
         /// </summary>
-        std::vector<std::pair<int, UniversalControllerButton>> SDLToUniversalButton;
+        std::vector<std::pair<int, UniversalControllerButton>> SDLToUniversalButton = {};
 
         /// <summary>
         /// Describes how the axis will resolve to buttons.
         /// </summary>
-        std::vector<ControllerAxisMappedToButton> AxisToButton;
+        std::vector<ControllerAxisMappedToButton> AxisToButton = {};
 
         /// <summary>
         /// The hat mapped to DPad.
@@ -59,7 +59,7 @@ namespace SuperGameInput
         /// <summary>
         /// Maps an SDL Axis to a Universal one.
         /// </summary>
-        std::vector<AxisToUniversalAxis> SDLAxisToUniversalAxis;
+        std::vector<AxisToUniversalAxis> SDLAxisToUniversalAxis = {};
     };
 }
 
