@@ -1334,4 +1334,430 @@ namespace SuperGameInput_InputManagement_Engine
         ASSERT_EQ(0, axisToButtons.size()) << "SDL Buttons found in layout";
     }
 #pragma endregion
+
+#pragma region SDLToUniversalAxes
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesIsParsed_WhenGiven)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.SDLAxis = 3;
+        expectedValues.Deadzone = 30;
+        expectedValues.HasDeadzone = true;
+        expectedValues.UniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues.SDLAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues.Deadzone)));
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, sdlAxisToUniversal.size()) << "No SDLToUniversalAxis found in layout";
+
+        ASSERT_EQ(expectedValues.SDLAxis, sdlAxisToUniversal.at(0).SDLAxis);
+        ASSERT_EQ(expectedValues.UniversalAxis, sdlAxisToUniversal.at(0).UniversalAxis);
+        ASSERT_EQ(expectedValues.Deadzone, sdlAxisToUniversal.at(0).Deadzone);
+        ASSERT_EQ(expectedValues.HasDeadzone, sdlAxisToUniversal.at(0).HasDeadzone);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_AllSDLToUniversalAxesAreParsed_WhenGiven)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.SDLAxis = 3;
+        expectedValues.Deadzone = 30;
+        expectedValues.HasDeadzone = true;
+        expectedValues.UniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        AxisToUniversalAxis expectedValues2;
+        expectedValues2.SDLAxis = 5;
+        expectedValues2.Deadzone = 10;
+        expectedValues2.HasDeadzone = true;
+        expectedValues2.UniversalAxis = UniversalControllerAxis::RightStickX;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues.SDLAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues.Deadzone)));
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+
+        // Axis Button to parse 2
+        auto sdlToUniversalAxesSingleNameNode2 = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode2->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes2;
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues2.SDLAxis)));
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues2.UniversalAxis)));
+        attributes2.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues2.Deadzone)));
+        sdlToUniversalAxesSingleNameNode2->SetAttributes(attributes2);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode2);
+        
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(2, sdlAxisToUniversal.size()) << "Incorrect number of SDLToUniversalAxis found in layout";
+
+        ASSERT_EQ(expectedValues.SDLAxis, sdlAxisToUniversal.at(0).SDLAxis);
+        ASSERT_EQ(expectedValues.UniversalAxis, sdlAxisToUniversal.at(0).UniversalAxis);
+        ASSERT_EQ(expectedValues.Deadzone, sdlAxisToUniversal.at(0).Deadzone);
+        ASSERT_EQ(expectedValues.HasDeadzone, sdlAxisToUniversal.at(0).HasDeadzone);
+
+        ASSERT_EQ(expectedValues2.SDLAxis, sdlAxisToUniversal.at(1).SDLAxis);
+        ASSERT_EQ(expectedValues2.UniversalAxis, sdlAxisToUniversal.at(1).UniversalAxis);
+        ASSERT_EQ(expectedValues2.Deadzone, sdlAxisToUniversal.at(1).Deadzone);
+        ASSERT_EQ(expectedValues2.HasDeadzone, sdlAxisToUniversal.at(1).HasDeadzone);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesParsedWithDeadZoneFalse_WhenDeadzoneNotGiven)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.SDLAxis = 3;
+        expectedValues.HasDeadzone = false;
+        expectedValues.UniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues.SDLAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        // No dead zone, this is optional.
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(1, sdlAxisToUniversal.size()) << "No SDLToUniversalAxis found in layout";
+
+        ASSERT_EQ(expectedValues.SDLAxis, sdlAxisToUniversal.at(0).SDLAxis);
+        ASSERT_EQ(expectedValues.UniversalAxis, sdlAxisToUniversal.at(0).UniversalAxis);
+        ASSERT_EQ(expectedValues.HasDeadzone, sdlAxisToUniversal.at(0).HasDeadzone);
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesDoesNotParse_WhenAxisIsNotGiven)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.Deadzone = 30;
+        expectedValues.HasDeadzone = true;
+        expectedValues.UniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        // No SDLAxis
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues.Deadzone)));
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, sdlAxisToUniversal.size()) << "Found SDLToUniversalAxis in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesDoesNotParse_WhenUniversalAxisIsNotGiven)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.SDLAxis = 3;
+        expectedValues.Deadzone = 30;
+        expectedValues.HasDeadzone = true;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues.SDLAxis)));
+        // No UniversalControllerAxis
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues.Deadzone)));
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, sdlAxisToUniversal.size()) << "Found SDLToUniversalAxis in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesDoesNotParse_WhenSDLAxisIsNotValid)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        std::string givenAxis = "Q";
+        expectedValues.Deadzone = 30;
+        expectedValues.HasDeadzone = true;
+        expectedValues.UniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", givenAxis));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues.Deadzone)));
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, sdlAxisToUniversal.size()) << "Found SDLToUniversalAxis in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesDoesNotParse_WhenUniversalAxisIsNotValid)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.SDLAxis = 3;
+        expectedValues.Deadzone = 30;
+        expectedValues.HasDeadzone = true;
+        expectedValues.UniversalAxis = UniversalControllerAxis::Unknown;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues.SDLAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", std::to_string(expectedValues.Deadzone)));
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, sdlAxisToUniversal.size()) << "Found SDLToUniversalAxis in layout";
+    }
+
+    TEST_F(ControllerLayoutFromXMLTests, CreateFromDocument_SDLToUniversalAxesDoesNotParse_WhenDeadzoneIsNotValid)
+    {
+        // Arrange
+        AxisToUniversalAxis expectedValues;
+        expectedValues.SDLAxis = 3;
+        std::string givenDeadZone = "T";
+        expectedValues.UniversalAxis = UniversalControllerAxis::LeftStickX;
+
+        auto given = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        root->SetName(ControllerLayoutFromXML::MainTagName);
+        given->SetRootElement(root);
+
+        auto sdlToUniversalAxesNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesName);
+        std::vector<std::shared_ptr<ModifiableNode>> childrenButtons;
+
+        // Axis Button to parse
+        auto sdlToUniversalAxesSingleNameNode = std::make_shared<ModifiableNode>();
+        sdlToUniversalAxesSingleNameNode->SetName(ControllerLayoutFromXML::SDLToUniversalAxesSingularName);
+        std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("SDLAxis", std::to_string(expectedValues.SDLAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("UniversalControllerAxis", EUniversalControllerAxis::ToString(expectedValues.UniversalAxis)));
+        attributes.emplace_back(std::make_shared<ModifiableAttribute>
+            ("Deadzone", givenDeadZone));
+
+        sdlToUniversalAxesSingleNameNode->SetAttributes(attributes);
+        childrenButtons.emplace_back(sdlToUniversalAxesSingleNameNode);
+        sdlToUniversalAxesNameNode->SetAllChildrenNodes(childrenButtons);
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(GetValidMetaTag());
+        children.emplace_back(sdlToUniversalAxesNameNode);
+        root->SetAllChildrenNodes(children);
+
+        // Act
+        std::string error = {};
+        std::shared_ptr<ControllerLayout> actual = m_testClass->CreateFromDocument(given, error);
+
+        // Assert
+        ASSERT_TRUE(actual) << "Layout not given. ";
+
+        std::vector<AxisToUniversalAxis> sdlAxisToUniversal = actual->SDLAxisToUniversalAxis;
+        ASSERT_EQ(0, sdlAxisToUniversal.size()) << "Found SDLToUniversalAxis in layout";
+    }
+#pragma endregion
 }

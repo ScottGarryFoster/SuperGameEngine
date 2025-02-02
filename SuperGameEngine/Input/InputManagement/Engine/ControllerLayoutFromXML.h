@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 
+#include "AxisToUniversalAxis.h"
 #include "ControllerAxisMappedToButton.h"
 #include "UniversalControllerButton.h"
 
@@ -167,5 +168,21 @@ namespace SuperGameInput
         /// <param name="singleAxisToButton">Output from parsing. Discarded if returns false. </param>
         /// <returns>True means parsed successfully. </returns>
         bool ParseAxisToButton(const std::shared_ptr<StoredDocumentNode>& node, ControllerAxisMappedToButton& singleAxisToButton) const;
+
+        /// <summary>
+        /// Parses the SDLToUniversalAxes node.
+        /// </summary>
+        /// <param name="node">SDLToUniversalAxes node.</param>
+        /// <param name="controllerLayout">Controller layout to add data to. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseSDLToUniversalAxes(const std::shared_ptr<StoredDocumentNode>& node, const std::shared_ptr<ControllerLayout>& controllerLayout) const;
+
+        /// <summary>
+        /// Parses the SDLToUniversalAxis node.
+        /// </summary>
+        /// <param name="node">SDLToUniversalAxis node.</param>
+        /// <param name="singleSDLToUniversalAxis">Output from parsing. Discarded if returns false. </param>
+        /// <returns>True means parsed successfully. </returns>
+        bool ParseSDLToUniversalAxis(const std::shared_ptr<StoredDocumentNode>& node, AxisToUniversalAxis& singleSDLToUniversalAxis) const;
     };
 }

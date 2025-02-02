@@ -71,6 +71,14 @@ std::shared_ptr<ControllerLayout> ControllerLayoutFromXML::CreateFromDocument(
                     methodName);
             }
         }
+        else if (m_sDLToUniversalAxesName == name)
+        {
+            if (!ParseSDLToUniversalAxes(child, layout))
+            {
+                Log::Warning("Could not parse " + SDLToUniversalAxesName + " in Controller Layout.",
+                    methodName);
+            }
+        }
     }
 
     if (!parsedMetaTag)
@@ -384,6 +392,108 @@ bool ControllerLayoutFromXML::ParseAxisToButton(
     else
     {
         parsedSuccessfullySoFar = false;
+    }
+
+    return parsedSuccessfullySoFar;
+}
+
+bool ControllerLayoutFromXML::ParseSDLToUniversalAxes(
+    const std::shared_ptr<StoredDocumentNode>& node,
+    const std::shared_ptr<ControllerLayout>& controllerLayout) const
+{
+    for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string name = StringHelpers::ToLower(child->Name());
+        if (m_sDLToUniversalAxesSingularName == name)
+        {
+            AxisToUniversalAxis output;
+            if (ParseSDLToUniversalAxis(child, output))
+            {
+                controllerLayout->SDLAxisToUniversalAxis.emplace_back(output);
+            }
+        }
+    }
+
+    return true;
+}
+
+bool ControllerLayoutFromXML::ParseSDLToUniversalAxis(
+    const std::shared_ptr<StoredDocumentNode>& node,
+    AxisToUniversalAxis& singleSDLToUniversalAxis) const
+{
+    bool parsedSuccessfullySoFar = true;
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("SDLAxis", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            int output = -1;
+            if (IntHelpers::TryParse(attribute->Value(), output))
+            {
+                singleSDLToUniversalAxis.SDLAxis = output;
+            }
+            else
+            {
+                parsedSuccessfullySoFar = false;
+            }
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("UniversalControllerAxis", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            UniversalControllerAxis parsed = EUniversalControllerAxis::FromString(attribute->Value());
+            if (parsed == UniversalControllerAxis::Unknown)
+            {
+                parsedSuccessfullySoFar = false;
+            }
+            else
+            {
+                singleSDLToUniversalAxis.UniversalAxis = parsed;
+            }
+
+        }
+    }
+    else
+    {
+        parsedSuccessfullySoFar = false;
+    }
+
+    singleSDLToUniversalAxis.HasDeadzone = false;
+    if (const std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("Deadzone", CaseSensitivity::IgnoreCase))
+    {
+        if (attribute->Value().empty())
+        {
+            parsedSuccessfullySoFar = false;
+        }
+        else
+        {
+            int output = -1;
+            if (IntHelpers::TryParse(attribute->Value(), output))
+            {
+                singleSDLToUniversalAxis.Deadzone = output;
+                singleSDLToUniversalAxis.HasDeadzone = true;
+            }
+            else
+            {
+                parsedSuccessfullySoFar = false;
+            }
+        }
     }
 
     return parsedSuccessfullySoFar;
