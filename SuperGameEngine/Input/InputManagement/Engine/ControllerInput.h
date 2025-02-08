@@ -41,6 +41,12 @@ namespace SuperGameInput
         virtual void Update();
 
         /// <summary>
+        /// Called upon every event to handle key and controller changes.
+        /// </summary>
+        /// <param name="event">Event to inspect. </param>
+        virtual void EventUpdate(WindowEvent event);
+
+        /// <summary>
         /// Determines if button is down.
         /// Fires every frame the buttons is pressed.
         /// </summary>

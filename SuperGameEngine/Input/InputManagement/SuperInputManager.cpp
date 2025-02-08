@@ -30,6 +30,10 @@ void SuperInputManager::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_KEYUP:
             m_keyInput->EventUpdate(event);
             break;
+        case WindowEventType::SDL_CONTROLLERDEVICEADDED:
+        case WindowEventType::SDL_CONTROLLERDEVICEREMOVED:
+            m_controllerInput->EventUpdate(event);
+            break;
     }
 }
 

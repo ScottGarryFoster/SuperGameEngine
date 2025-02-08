@@ -1,4 +1,6 @@
 #include "SuperSDLInputManager.h"
+#include <SDL.h>
+#include <SDL_joystick.h>
 
 #include "SuperInputManager.h"
 #include "../../../FatedQuest.Libraries/Logger/AllReferences.h"
@@ -44,7 +46,11 @@ WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
 {
     auto windowEvent = WindowEvent();
     windowEvent.EventType = ConvertFromType(event.type);
-    windowEvent.Keyboard = ConvertKeyboardEventFromSDL(event);
+    ConvertKeyboardEventFromSDL(event, windowEvent);
+    ConvertJoystickDeviceEventFromSDL(event, windowEvent);
+    ConvertControllerDeviceEventFromSDL(event, windowEvent);
+    UpdateOpenControllers(windowEvent.EventType, windowEvent.ControllerDevice);
+
     return windowEvent;
 }
 
@@ -60,6 +66,8 @@ WindowEventType SuperSDLInputManager::ConvertFromType(Uint32 type) const
     case SDL_APP_DIDENTERBACKGROUND: return WindowEventType::SDL_APP_DIDENTERBACKGROUND;
     case SDL_APP_WILLENTERFOREGROUND: return WindowEventType::SDL_APP_WILLENTERFOREGROUND;
     case SDL_APP_DIDENTERFOREGROUND: return WindowEventType::SDL_APP_DIDENTERFOREGROUND;
+    case SDL_LOCALECHANGED: return WindowEventType::SDL_LOCALECHANGED;
+    case SDL_DISPLAYEVENT: return WindowEventType::SDL_DISPLAYEVENT;
     case SDL_WINDOWEVENT: return WindowEventType::SDL_WINDOWEVENT;
     case SDL_SYSWMEVENT: return WindowEventType::SDL_SYSWMEVENT;
     case SDL_KEYDOWN: return WindowEventType::SDL_KEYDOWN;
@@ -67,6 +75,7 @@ WindowEventType SuperSDLInputManager::ConvertFromType(Uint32 type) const
     case SDL_TEXTEDITING: return WindowEventType::SDL_TEXTEDITING;
     case SDL_TEXTINPUT: return WindowEventType::SDL_TEXTINPUT;
     case SDL_KEYMAPCHANGED: return WindowEventType::SDL_KEYMAPCHANGED;
+    case SDL_TEXTEDITING_EXT: return WindowEventType::SDL_TEXTEDITING_EXT;
     case SDL_MOUSEMOTION: return WindowEventType::SDL_MOUSEMOTION;
     case SDL_MOUSEBUTTONDOWN: return WindowEventType::SDL_MOUSEBUTTONDOWN;
     case SDL_MOUSEBUTTONUP: return WindowEventType::SDL_MOUSEBUTTONUP;
@@ -78,12 +87,19 @@ WindowEventType SuperSDLInputManager::ConvertFromType(Uint32 type) const
     case SDL_JOYBUTTONUP: return WindowEventType::SDL_JOYBUTTONUP;
     case SDL_JOYDEVICEADDED: return WindowEventType::SDL_JOYDEVICEADDED;
     case SDL_JOYDEVICEREMOVED: return WindowEventType::SDL_JOYDEVICEREMOVED;
+    case SDL_JOYBATTERYUPDATED: return WindowEventType::SDL_JOYBATTERYUPDATED;
     case SDL_CONTROLLERAXISMOTION: return WindowEventType::SDL_CONTROLLERAXISMOTION;
     case SDL_CONTROLLERBUTTONDOWN: return WindowEventType::SDL_CONTROLLERBUTTONDOWN;
     case SDL_CONTROLLERBUTTONUP: return WindowEventType::SDL_CONTROLLERBUTTONUP;
     case SDL_CONTROLLERDEVICEADDED: return WindowEventType::SDL_CONTROLLERDEVICEADDED;
     case SDL_CONTROLLERDEVICEREMOVED: return WindowEventType::SDL_CONTROLLERDEVICEREMOVED;
     case SDL_CONTROLLERDEVICEREMAPPED: return WindowEventType::SDL_CONTROLLERDEVICEREMAPPED;
+    case SDL_CONTROLLERTOUCHPADDOWN: return WindowEventType::SDL_CONTROLLERTOUCHPADDOWN;
+    case SDL_CONTROLLERTOUCHPADMOTION: return WindowEventType::SDL_CONTROLLERTOUCHPADMOTION;
+    case SDL_CONTROLLERTOUCHPADUP: return WindowEventType::SDL_CONTROLLERTOUCHPADUP;
+    case SDL_CONTROLLERSENSORUPDATE: return WindowEventType::SDL_CONTROLLERSENSORUPDATE;
+    case SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3: return WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3;
+    case SDL_CONTROLLERSTEAMHANDLEUPDATED: return WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED;
     case SDL_FINGERDOWN: return WindowEventType::SDL_FINGERDOWN;
     case SDL_FINGERUP: return WindowEventType::SDL_FINGERUP;
     case SDL_FINGERMOTION: return WindowEventType::SDL_FINGERMOTION;
@@ -97,22 +113,22 @@ WindowEventType SuperSDLInputManager::ConvertFromType(Uint32 type) const
     case SDL_DROPCOMPLETE: return WindowEventType::SDL_DROPCOMPLETE;
     case SDL_AUDIODEVICEADDED: return WindowEventType::SDL_AUDIODEVICEADDED;
     case SDL_AUDIODEVICEREMOVED: return WindowEventType::SDL_AUDIODEVICEREMOVED;
+    case SDL_SENSORUPDATE: return WindowEventType::SDL_SENSORUPDATE;
     case SDL_RENDER_TARGETS_RESET: return WindowEventType::SDL_RENDER_TARGETS_RESET;
     case SDL_RENDER_DEVICE_RESET: return WindowEventType::SDL_RENDER_DEVICE_RESET;
     case SDL_USEREVENT: return WindowEventType::SDL_USEREVENT;
     case SDL_LASTEVENT: return WindowEventType::SDL_LASTEVENT;
     default:
-        Log::Error("SDL Event occured which was not found in WindowEventType. Add it.",
+        Log::Error("SDL Event occured which was not found in WindowEventType. Add it. " + std::to_string(type),
             "SuperSDLInputManager::ConvertFromType(Uint32)");
         return WindowEventType::Unknown;
     }
 }
 
-KeyboardEvent SuperSDLInputManager::ConvertKeyboardEventFromSDL(const SDL_Event& event)
+KeyboardEvent SuperSDLInputManager::ConvertKeyboardEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
 {
-    auto keyboardEvent = KeyboardEvent();
-    keyboardEvent.Key = KeySymbolFromSDLKeySym(event.key.keysym);
-    return keyboardEvent;
+    windowEvent.Keyboard.Key = KeySymbolFromSDLKeySym(event.key.keysym);
+    return windowEvent.Keyboard;
 }
 
 KeySymbol SuperSDLInputManager::KeySymbolFromSDLKeySym(SDL_Keysym keysym) const
@@ -617,4 +633,88 @@ KeyboardKeycode SuperSDLInputManager::KeyboardKeycodeFromSDLKeyCode(SDL_Keycode 
         default:
             return KeyboardKeycode::Unknown;
     }
+}
+
+ControllerDeviceEvent SuperSDLInputManager::ConvertControllerDeviceEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    // Which can be either Index or Controller Instance ID dependent on what happens,
+    // On Add, it is index.
+    // On Remove, it is instance ID.
+    // In the next method "ConvertJoystickDeviceEventFromSDL" we sort this out.
+    windowEvent.ControllerDevice.IndexID = event.cdevice.which;
+    windowEvent.ControllerDevice.ControllerInstanceID = event.cdevice.which;
+    windowEvent.ControllerDevice.Timestamp = event.cdevice.timestamp;
+
+    windowEvent.ControllerDevice.Name = {};
+    windowEvent.ControllerDevice.Axes = 0;
+    windowEvent.ControllerDevice.Buttons = 0;
+
+    return windowEvent.ControllerDevice;
+}
+
+JoystickDeviceEvent SuperSDLInputManager::ConvertJoystickDeviceEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.JoystickDevice.Timestamp = event.jdevice.timestamp;
+    windowEvent.JoystickDevice.JoystickInstanceID = event.jdevice.which;
+
+    return windowEvent.JoystickDevice;
+}
+
+void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)
+{
+    if (type == WindowEventType::SDL_CONTROLLERDEVICEADDED)
+    {
+        size_t numberOfControllers = m_controllers.size();
+        if (SDL_GameController* controller = OpenSDLControllerFromIndex(controllerDevice.IndexID))
+        {
+            SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
+            controllerDevice.ControllerInstanceID = SDL_JoystickGetDeviceInstanceID(controllerDevice.ControllerInstanceID);
+            controllerDevice.Name = SDL_JoystickName(joystick);
+            controllerDevice.Axes = SDL_JoystickNumAxes(joystick);
+            controllerDevice.Buttons = SDL_JoystickNumButtons(joystick);
+
+            m_controllers.try_emplace(controllerDevice.ControllerInstanceID, controller);
+        }
+    }
+    else if (type == WindowEventType::SDL_CONTROLLERDEVICEREMOVED)
+    {
+        SDL_GameController* controller = 
+            m_controllers.contains(controllerDevice.ControllerInstanceID) ?
+                m_controllers[controllerDevice.ControllerInstanceID] : nullptr;
+        if (controller)
+        {
+            SDL_GameControllerClose(controller);
+            m_controllers.erase(controllerDevice.ControllerInstanceID);
+        }
+    }
+}
+
+SDL_GameController* SuperSDLInputManager::OpenSDLControllerFromInstance(int instanceID)
+{
+    for (int i = 0; i < SDL_NumJoysticks(); i++)
+    {
+        if (SDL_IsGameController(i))
+        {
+            SDL_JoystickID joystickID = SDL_JoystickGetDeviceInstanceID(i);
+            if (instanceID == joystickID)
+            {
+                return SDL_GameControllerOpen(i);
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+SDL_GameController* SuperSDLInputManager::OpenSDLControllerFromIndex(int index)
+{
+    if (SDL_NumJoysticks() >= index)
+    {
+        if (SDL_IsGameController(index))
+        {
+            return SDL_GameControllerOpen(index);
+        }
+    }
+
+    return nullptr;
 }

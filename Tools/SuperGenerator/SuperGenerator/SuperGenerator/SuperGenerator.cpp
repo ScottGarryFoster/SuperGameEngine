@@ -26,15 +26,15 @@ int main(int argc, char* args[])
     generator.AllEnums("E:\\Development\\SuperGameEngine-Myriad\\", ".superenum", ".h");
     Log::Info("Generated Enums");
 
-    /*std::string lines;
-    std::vector<SuperGameInput::KeyboardKeycode> codes = SuperGameInput::EKeyboardKeycode::ToVector();
-    for (const SuperGameInput::KeyboardKeycode& code : codes)
+    std::string lines;
+    std::vector<SuperGameInput::WindowEventType> codes = SuperGameInput::EWindowEventType::ToVector();
+    for (const SuperGameInput::WindowEventType& code : codes)
     {
-        std::string enumByName = SuperGameInput::EKeyboardKeycode::ToString(code);
-        lines += "case " + enumByName + ": return KeyboardKeycode::" + enumByName + ";\n";
+        std::string enumByName = SuperGameInput::EWindowEventType::ToString(code);
+        lines += "case " + enumByName + ": return WindowEventType::" + enumByName + ";\n";
     }
 
-    File::WriteLine("D:\\enum.txt", lines);*/
+    File::WriteLine("D:\\enum.txt", lines);
 
     return 0;
 }
