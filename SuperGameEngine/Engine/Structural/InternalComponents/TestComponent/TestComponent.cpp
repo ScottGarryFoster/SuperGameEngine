@@ -119,7 +119,7 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         Log::Error("No input");
         return;
     }
-    m_isPressed = LoadPackage()->GetInput()->GetKeyDown(KeyCode::B);
+    m_isPressed = LoadPackage()->GetInput()->ButtonDown(UniversalControllerButton::FaceButtonDown);
 
 
     /*if (gameTime->AllTime() > 10000)

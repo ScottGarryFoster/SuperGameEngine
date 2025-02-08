@@ -20,6 +20,7 @@ void SuperInputManager::Setup(const std::shared_ptr<GamePackage>& gamePackage)
 void SuperInputManager::Update()
 {
     m_keyInput->Update();
+    m_controllerInput->Update();
 }
 
 void SuperInputManager::EventUpdate(WindowEvent event)
@@ -32,9 +33,13 @@ void SuperInputManager::EventUpdate(WindowEvent event)
             break;
         case WindowEventType::SDL_CONTROLLERDEVICEADDED:
         case WindowEventType::SDL_CONTROLLERDEVICEREMOVED:
+        case WindowEventType::SDL_JOYBUTTONDOWN:
+        case WindowEventType::SDL_JOYBUTTONUP:
             m_controllerInput->EventUpdate(event);
             break;
     }
+
+    Log::Info(EWindowEventType::ToString(event.EventType));
 }
 
 bool SuperInputManager::GetKeyDown(const KeyCode& keyCode) const
@@ -50,4 +55,19 @@ bool SuperInputManager::GetKeyPressed(const KeyCode& keyCode) const
 bool SuperInputManager::GetKeyUp(const KeyCode& keyCode) const
 {
     return m_keyInput->GetKeyUp(keyCode);
+}
+
+bool SuperInputManager::ButtonDown(UniversalControllerButton button) const
+{
+    return m_controllerInput->ButtonDown(button);
+}
+
+bool SuperInputManager::ButtonUp(UniversalControllerButton button) const
+{
+    return m_controllerInput->ButtonUp(button);
+}
+
+bool SuperInputManager::ButtonPressed(UniversalControllerButton button) const
+{
+    return m_controllerInput->ButtonPressed(button);
 }

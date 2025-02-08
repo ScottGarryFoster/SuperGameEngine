@@ -1,5 +1,6 @@
 #pragma once
 #include "ControllerDeviceEvent.h"
+#include "JoyButtonEvent.h"
 #include "JoystickDeviceEvent.h"
 #include "KeyboardEvent.h"
 #include "WindowEventType.h"
@@ -26,6 +27,11 @@ namespace SuperGameInput
         /// Represents a <see cref="SDL_JoyDeviceEvent"/> without the SDL.
         /// </summary>
         JoystickDeviceEvent JoystickDevice;
+
+        /// <summary>
+        /// Represents a <see cref="SDL_JoyButtonEvent"/> without the SDL.
+        /// </summary>
+        JoyButtonEvent JoyButton;
 
         /// <summary>
         /// Represents a <see cref="SDL_ControllerDeviceEvent"/> without the SDL.

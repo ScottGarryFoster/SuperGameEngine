@@ -43,30 +43,75 @@ void ControllerInput::Setup(const std::shared_ptr<GamePackage>& gamePackage)
 
 void ControllerInput::Update()
 {
+    OnJoyStickButtonUpdate();
 }
 
 void ControllerInput::EventUpdate(WindowEvent event)
 {
-    if (event.EventType == WindowEventType::SDL_CONTROLLERDEVICEADDED)
+    switch (event.EventType)
     {
-        if (m_isSetup)
+        case WindowEventType::SDL_CONTROLLERDEVICEADDED: OnControllerAdded(event); break;
+        case WindowEventType::SDL_CONTROLLERDEVICEREMOVED: OnControllerRemoved(event); break;
+        case WindowEventType::SDL_JOYBUTTONDOWN:
+        case WindowEventType::SDL_JOYBUTTONUP:
+            OnJoyStickButtonEvent(event);
+            break;
+    }
+
+}
+
+bool ControllerInput::ButtonDown(UniversalControllerButton button) const
+{
+    for (const auto& instanceIT : m_controllerButtonState)
+    {
+        if (!instanceIT.second.contains(button))
         {
-            if (!AddController(event.ControllerDevice))
-            {
-                Log::Error("Could not add controller: " + event.ControllerDevice.Name +
-                    " instance: " + std::to_string(event.ControllerDevice.ControllerInstanceID),
-                    "ControllerInput::Setup(std::shared_ptr<GamePackage>)");
-            }
+            continue;
         }
-        else
+
+        if (EKeyOrButtonState::HasFlag(instanceIT.second.at(button), KeyOrButtonState::Down))
         {
-            m_pendingDiscovery.emplace_back(event.ControllerDevice);
+            return true;
         }
     }
-    else if (event.EventType == WindowEventType::SDL_CONTROLLERDEVICEREMOVED)
+
+    return false;
+}
+
+bool ControllerInput::ButtonUp(UniversalControllerButton button) const
+{
+    for (const auto& instanceIT : m_controllerButtonState)
     {
-        m_currentControllers.erase(event.ControllerDevice.ControllerInstanceID);
+        if (!instanceIT.second.contains(button))
+        {
+            continue;
+        }
+
+        if (EKeyOrButtonState::HasFlag(instanceIT.second.at(button), KeyOrButtonState::Up))
+        {
+            return true;
+        }
     }
+
+    return false;
+}
+
+bool ControllerInput::ButtonPressed(UniversalControllerButton button) const
+{
+    for (const auto& instanceIT : m_controllerButtonState)
+    {
+        if (!instanceIT.second.contains(button))
+        {
+            continue;
+        }
+
+        if (EKeyOrButtonState::HasFlag(instanceIT.second.at(button), KeyOrButtonState::Pressed))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void ControllerInput::ReloadAllLayouts()
@@ -133,8 +178,131 @@ bool ControllerInput::AddController(const ControllerDeviceEvent& controllerDevic
         }
 
         m_currentControllers.try_emplace(controllerDevice.ControllerInstanceID, layout.first);
+        m_controllerButtonState.try_emplace(controllerDevice.ControllerInstanceID, std::unordered_map<UniversalControllerButton, KeyOrButtonState>());
         return true;
     }
 
     return false;
+}
+
+void ControllerInput::OnControllerAdded(const WindowEvent& event)
+{
+    if (m_isSetup)
+    {
+        if (!AddController(event.ControllerDevice))
+        {
+            Log::Error("Could not add controller: " + event.ControllerDevice.Name +
+                " instance: " + std::to_string(event.ControllerDevice.ControllerInstanceID),
+                "ControllerInput::Setup(std::shared_ptr<GamePackage>)");
+        }
+    }
+    else
+    {
+        m_pendingDiscovery.emplace_back(event.ControllerDevice);
+    }
+}
+
+void ControllerInput::OnControllerRemoved(const WindowEvent& event)
+{
+    m_currentControllers.erase(event.ControllerDevice.ControllerInstanceID);
+    m_controllerButtonState.erase(event.ControllerDevice.ControllerInstanceID);
+}
+
+void ControllerInput::OnJoyStickButtonEvent(const WindowEvent& event)
+{
+    UniversalControllerButton mappedButton = GetButtonFromJoyStick(event.JoyButton);
+    if (mappedButton == UniversalControllerButton::Unknown)
+    {
+        return;
+    }
+
+    KeyOrButtonState buttonState = m_controllerButtonState.at(event.JoyButton.InstanceID).at(mappedButton);
+    if (event.JoyButton.Type == WindowEventType::SDL_JOYBUTTONDOWN)
+    {
+        if (buttonState == KeyOrButtonState::Unpressed)
+        {
+            m_controllerButtonState.at(event.JoyButton.InstanceID).at(mappedButton)
+                = KeyOrButtonState::Down | KeyOrButtonState::Pressed;
+        }
+    }
+    else if (event.EventType == WindowEventType::SDL_JOYBUTTONUP)
+    {
+        if (EKeyOrButtonState::HasFlag(buttonState, KeyOrButtonState::Down))
+        {
+            m_controllerButtonState.at(event.JoyButton.InstanceID).at(mappedButton)
+                = KeyOrButtonState::Up;
+        }
+    }
+
+}
+
+void ControllerInput::OnJoyStickButtonUpdate()
+{
+    for (auto& instanceIT : m_controllerButtonState)
+    {
+        for (auto& buttonIT : instanceIT.second)
+        {
+            if (EKeyOrButtonState::HasFlag(buttonIT.second, KeyOrButtonState::Pressed))
+            {
+                buttonIT.second = KeyOrButtonState::Down;
+            }
+            else if (EKeyOrButtonState::HasFlag(buttonIT.second, KeyOrButtonState::Up))
+            {
+                buttonIT.second = KeyOrButtonState::Unpressed;
+            }
+        }
+    }
+}
+
+UniversalControllerButton ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent& joyButton)
+{
+    if (!m_currentControllers.contains(joyButton.InstanceID))
+    {
+        Log::Error("Button was pressed on an unknown controller. "
+            "InstanceID: " + std::to_string(joyButton.InstanceID),
+            "ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent)");
+        return UniversalControllerButton::Unknown;
+    }
+
+    Controller controllerType = m_currentControllers.at(joyButton.InstanceID);
+    if (!m_controllerLayouts.contains(controllerType))
+    {
+        Log::Error("Button was pressed on a controller without a layout. "
+            "InstanceID: " + std::to_string(joyButton.InstanceID),
+            "ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent)");
+        return UniversalControllerButton::Unknown;
+    }
+
+    // We need to understand what button the player has pressed.
+    std::shared_ptr<ControllerLayout> layout = m_controllerLayouts.at(controllerType);
+    UniversalControllerButton buttonType = UniversalControllerButton::Unknown;
+    for (const std::pair<int, UniversalControllerButton>& buttonMapping : layout->SDLToUniversalButton)
+    {
+        if (buttonMapping.first == joyButton.Button)
+        {
+            buttonType = buttonMapping.second;
+        }
+    }
+
+    if (buttonType == UniversalControllerButton::Unknown)
+    {
+        Log::Error("Unknown button pressed on controller. "
+            "Button: " + std::to_string(joyButton.Button) +
+            " InstanceID: " + std::to_string(joyButton.InstanceID),
+            "ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent)");
+        return UniversalControllerButton::Unknown;
+    }
+
+    // Now we know the button ensure there are entries for it
+    if (!m_controllerButtonState.contains(joyButton.InstanceID))
+    {
+        m_controllerButtonState.try_emplace(joyButton.InstanceID, std::unordered_map<UniversalControllerButton, KeyOrButtonState>());
+    }
+
+    if (!m_controllerButtonState.at(joyButton.InstanceID).contains(buttonType))
+    {
+        m_controllerButtonState.at(joyButton.InstanceID).try_emplace(buttonType, KeyOrButtonState::Unpressed);
+    }
+
+    return buttonType;
 }

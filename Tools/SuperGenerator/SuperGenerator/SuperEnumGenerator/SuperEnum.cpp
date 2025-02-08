@@ -693,7 +693,7 @@ std::string SuperEnum::PrintSingleComment(const std::string& rawComment, int ind
 std::string SuperEnum::PrintFlagMethods(int indents)
 {
     std::string output = {};
-    output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator | (KeyState lhs, KeyState rhs)\n";
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator | (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
         output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value  + ">;\n";

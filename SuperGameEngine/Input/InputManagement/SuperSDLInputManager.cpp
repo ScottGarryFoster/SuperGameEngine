@@ -42,15 +42,32 @@ bool SuperSDLInputManager::GetKeyUp(const KeyCode& keyCode) const
     return m_inputManager->GetKeyUp(keyCode);
 }
 
+bool SuperSDLInputManager::ButtonDown(UniversalControllerButton button) const
+{
+    return m_inputManager->ButtonDown(button);
+}
+
+bool SuperSDLInputManager::ButtonUp(UniversalControllerButton button) const
+{
+    return m_inputManager->ButtonUp(button);
+}
+
+bool SuperSDLInputManager::ButtonPressed(UniversalControllerButton button) const
+{
+    return m_inputManager->ButtonPressed(button);
+}
+
 WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
 {
     auto windowEvent = WindowEvent();
     windowEvent.EventType = ConvertFromType(event.type);
     ConvertKeyboardEventFromSDL(event, windowEvent);
+
     ConvertJoystickDeviceEventFromSDL(event, windowEvent);
     ConvertControllerDeviceEventFromSDL(event, windowEvent);
     UpdateOpenControllers(windowEvent.EventType, windowEvent.ControllerDevice);
-
+    
+    ConvertJoyButtonEventFromSDL(event, windowEvent);
     return windowEvent;
 }
 
@@ -658,6 +675,16 @@ JoystickDeviceEvent SuperSDLInputManager::ConvertJoystickDeviceEventFromSDL(cons
     windowEvent.JoystickDevice.JoystickInstanceID = event.jdevice.which;
 
     return windowEvent.JoystickDevice;
+}
+
+JoyButtonEvent SuperSDLInputManager::ConvertJoyButtonEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.JoyButton.Type = windowEvent.EventType;
+    windowEvent.JoyButton.Timestamp = event.jbutton.timestamp;
+    windowEvent.JoyButton.Button = event.jbutton.button;
+    windowEvent.JoyButton.InstanceID = event.jbutton.which;
+
+    return windowEvent.JoyButton;
 }
 
 void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)

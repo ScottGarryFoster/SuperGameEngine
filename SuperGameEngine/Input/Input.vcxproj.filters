@@ -81,9 +81,6 @@
     <ClInclude Include="InputManagement\Engine\KeyInput.h">
       <Filter>Header Files\InputManagement\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="InputManagement\Engine\KeyState.h">
-      <Filter>Header Files\InputManagement\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
@@ -127,6 +124,12 @@
       <Filter>Header Files\InputManagement\Event</Filter>
     </ClInclude>
     <ClInclude Include="InputManagement\Event\JoystickDeviceEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyOrButtonState.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\JoyButtonEvent.h">
       <Filter>Header Files\InputManagement\Event</Filter>
     </ClInclude>
   </ItemGroup>
