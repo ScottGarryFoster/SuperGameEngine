@@ -15,12 +15,30 @@ using namespace SuperGameInput;
 ControllerInput::ControllerInput()
 {
     m_controllerLayoutFromXml = std::make_shared<SuperControllerLayoutFromXML>();
+    m_isSetup = false;
 }
 
 void ControllerInput::Setup(const std::shared_ptr<GamePackage>& gamePackage)
 {
     m_gamePackage = gamePackage;
     ReloadAllLayouts();
+
+    for (const ControllerDeviceEvent& device : m_pendingDiscovery)
+    {
+        if (AddController(device))
+        {
+            Log::Info("Add controller: " + device.Name);
+        }
+        else
+        {
+            Log::Error("Could not add controller: " + device.Name + 
+                " instance: " +std::to_string(device.ControllerInstanceID),
+                "ControllerInput::Setup(std::shared_ptr<GamePackage>)");
+        }
+    }
+    m_pendingDiscovery.clear();
+
+    m_isSetup = true;
 }
 
 void ControllerInput::Update()
@@ -31,16 +49,23 @@ void ControllerInput::EventUpdate(WindowEvent event)
 {
     if (event.EventType == WindowEventType::SDL_CONTROLLERDEVICEADDED)
     {
-        Log::Info("SDL_CONTROLLERDEVICEADDED");
-        Log::Info("Instance ID: " + std::to_string(event.ControllerDevice.ControllerInstanceID));
-        Log::Info("Name: " + event.ControllerDevice.Name);
-        Log::Info("Axes: " + std::to_string(event.ControllerDevice.Axes));
-        Log::Info("Buttons: " + std::to_string(event.ControllerDevice.Buttons));
+        if (m_isSetup)
+        {
+            if (!AddController(event.ControllerDevice))
+            {
+                Log::Error("Could not add controller: " + event.ControllerDevice.Name +
+                    " instance: " + std::to_string(event.ControllerDevice.ControllerInstanceID),
+                    "ControllerInput::Setup(std::shared_ptr<GamePackage>)");
+            }
+        }
+        else
+        {
+            m_pendingDiscovery.emplace_back(event.ControllerDevice);
+        }
     }
     else if (event.EventType == WindowEventType::SDL_CONTROLLERDEVICEREMOVED)
     {
-        Log::Info("SDL_CONTROLLERDEVICEREMOVED");
-        Log::Info("Instance ID: " + event.ControllerDevice.ControllerInstanceID);
+        m_currentControllers.erase(event.ControllerDevice.ControllerInstanceID);
     }
 }
 
@@ -82,8 +107,34 @@ void ControllerInput::ReloadAllLayouts()
                 continue;
             }
 
-            m_controllerLayouts.emplace_back(newLayout);
+            m_controllerLayouts.try_emplace(newLayout->Controller, newLayout);
             Log::Info("Added layout: " + filepath);
         }
     }
+}
+
+bool ControllerInput::AddController(const ControllerDeviceEvent& controllerDevice)
+{
+    for (std::pair<Controller, std::shared_ptr<ControllerLayout>> layout : m_controllerLayouts)
+    {
+        if (controllerDevice.Name != layout.second->Name)
+        {
+            continue;
+        }
+
+        if (controllerDevice.Axes != layout.second->Axis)
+        {
+            continue;
+        }
+
+        if (controllerDevice.Buttons != layout.second->Buttons)
+        {
+            continue;
+        }
+
+        m_currentControllers.try_emplace(controllerDevice.ControllerInstanceID, layout.first);
+        return true;
+    }
+
+    return false;
 }

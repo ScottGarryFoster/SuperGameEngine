@@ -1,10 +1,13 @@
 #pragma once
 #include <memory>
+#include <unordered_map>
 
+#include "Controller.h"
 #include "UniversalControllerButton.h"
 
 namespace SuperGameInput
 {
+    struct ControllerDeviceEvent;
     class ControllerLayoutFromXML;
     class ControllerLayout;
 }
@@ -94,6 +97,11 @@ namespace SuperGameInput
         inline static const std::string PathToControllerConfigs = "Engine\\Input\\ControllerMappings";
 
         /// <summary>
+        /// True means is setup.
+        /// </summary>
+        bool m_isSetup;
+
+        /// <summary>
         /// Holds the content for the game.
         /// </summary>
         std::shared_ptr<GamePackage> m_gamePackage;
@@ -101,7 +109,7 @@ namespace SuperGameInput
         /// <summary>
         /// All controller layouts. The layouts are the translation from SDL.
         /// </summary>
-        std::vector<std::shared_ptr<ControllerLayout>> m_controllerLayouts;
+        std::unordered_map<Controller, std::shared_ptr<ControllerLayout>> m_controllerLayouts;
 
         /// <summary>
         /// Creates a Controller Layout from XML Format.
@@ -109,8 +117,26 @@ namespace SuperGameInput
         std::shared_ptr<ControllerLayoutFromXML> m_controllerLayoutFromXml;
 
         /// <summary>
+        /// Controllers found at application launch before we were setup.
+        /// Kept in here until we do setup then removed.
+        /// </summary>
+        std::vector<ControllerDeviceEvent> m_pendingDiscovery;
+
+        /// <summary>
+        /// All controllers by instanceID and Controller.
+        /// </summary>
+        std::unordered_map<int32_t, Controller> m_currentControllers;
+
+        /// <summary>
         /// Loads all layouts into memory from file.
         /// </summary>
         void ReloadAllLayouts();
+
+        /// <summary>
+        /// Adds a new controller device.
+        /// </summary>
+        /// <param name="controllerDevice">New controller to add. </param>
+        /// <returns>True means this is a recognised controller. </returns>
+        bool AddController(const ControllerDeviceEvent& controllerDevice);
     };
 }
