@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/KeyCode.h"
+#include "Engine/UniversalControllerAxis.h"
 #include "Engine/UniversalControllerButton.h"
 
 namespace SuperGameInput
@@ -51,12 +52,28 @@ namespace SuperGameInput
         virtual bool ButtonUp(UniversalControllerButton button) const = 0;
 
         /// <summary>
-        /// Determines if button is was just released.
+        /// Determines if button was just released.
         /// Fires the first frame a button was released.
         /// This poll every controller, if any meet the requirements it returns true.
         /// </summary>
         /// <param name="button">button to test. </param>
         /// <returns>True means button was down and now is released. </returns>
         virtual bool ButtonPressed(UniversalControllerButton button) const = 0;
+
+        /// <summary>
+        /// Gets the values on the given Axis.
+        /// This is a value -32767 to 32767 with 0 in the middle.
+        /// </summary>
+        /// <param name="axis">Axis to get the value of. </param>
+        /// <returns>Axis value. </returns>
+        virtual int AxisValue(UniversalControllerAxis axis) const = 0;
+
+        /// <summary>
+        /// Gets the values on the given Axis.
+        /// This is a value -1 to 1 with 0 in the middle.
+        /// </summary>
+        /// <param name="axis">Axis to get the value of. </param>
+        /// <returns>Axis value. </returns>
+        virtual float AxisValueNormalised(UniversalControllerAxis axis) const = 0;
     };
 }

@@ -23,5 +23,14 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <returns>True means are equal. </return>
         static bool AreEqual(double left, double right);
+
+        /// <summary>
+        /// Divide without actually dividing.
+        /// Slightly more efficient than regular division.
+        /// </summary>
+        /// <param name="dividend">Number to divide. </param>
+        /// <param name="divisor">Number to divide by. </param>
+        /// <returns>Result. </returns>
+        static float Divide(float dividend, float divisor);
     };
 }

@@ -126,6 +126,10 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
     {
         Log::Info("ButtonPressed");
     }
+
+
+    //Log::Info(std::to_string(LoadPackage()->GetInput()->AxisValueNormalised(UniversalControllerAxis::LeftTrigger)));
+
     /*if (gameTime->AllTime() > 10000)
     {
         for (size_t i = 0; i < m_bunchOfComponents.size(); ++i)
