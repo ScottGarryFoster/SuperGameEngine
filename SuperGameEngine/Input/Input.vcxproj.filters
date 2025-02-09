@@ -132,6 +132,12 @@
     <ClInclude Include="InputManagement\Event\JoyButtonEvent.h">
       <Filter>Header Files\InputManagement\Event</Filter>
     </ClInclude>
+    <ClInclude Include="InputManagement\Event\JoyHatEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\HatPosition.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

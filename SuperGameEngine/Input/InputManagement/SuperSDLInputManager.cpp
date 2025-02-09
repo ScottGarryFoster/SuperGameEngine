@@ -68,6 +68,7 @@ WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
     UpdateOpenControllers(windowEvent.EventType, windowEvent.ControllerDevice);
     
     ConvertJoyButtonEventFromSDL(event, windowEvent);
+    ConvertJoyHatEventFromSDL(event, windowEvent);
     return windowEvent;
 }
 
@@ -687,6 +688,17 @@ JoyButtonEvent SuperSDLInputManager::ConvertJoyButtonEventFromSDL(const SDL_Even
     return windowEvent.JoyButton;
 }
 
+JoyHatEvent SuperSDLInputManager::ConvertJoyHatEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.JoyHat.Type = windowEvent.EventType;
+    windowEvent.JoyHat.Timestamp = event.jhat.timestamp;
+    windowEvent.JoyHat.ControllerInstanceID = event.jhat.which;
+    windowEvent.JoyHat.HatIndex = event.jhat.hat;
+    windowEvent.JoyHat.Position = HatPositionFromValue(event.jhat.value);
+
+    return windowEvent.JoyHat;
+}
+
 void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)
 {
     if (type == WindowEventType::SDL_CONTROLLERDEVICEADDED)
@@ -744,4 +756,22 @@ SDL_GameController* SuperSDLInputManager::OpenSDLControllerFromIndex(int index)
     }
 
     return nullptr;
+}
+
+HatPosition SuperSDLInputManager::HatPositionFromValue(Uint8 hatValue)
+{
+    switch (hatValue)
+    {
+        case SDL_HAT_CENTERED: return HatPosition::CENTERED;
+        case SDL_HAT_UP: return HatPosition::UP;
+        case SDL_HAT_DOWN: return HatPosition::DOWN;
+        case SDL_HAT_LEFT: return HatPosition::LEFT;
+        case SDL_HAT_RIGHT: return HatPosition::RIGHT;
+        case SDL_HAT_LEFTUP: return HatPosition::LEFTUP;
+        case SDL_HAT_LEFTDOWN: return HatPosition::LEFTDOWN;
+        case SDL_HAT_RIGHTUP: return HatPosition::RIGHTUP;
+        case SDL_HAT_RIGHTDOWN: return HatPosition::RIGHTDOWN;
+    }
+
+    return HatPosition::Unknown;
 }

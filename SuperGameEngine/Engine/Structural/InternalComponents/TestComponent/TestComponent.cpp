@@ -119,9 +119,13 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         Log::Error("No input");
         return;
     }
-    m_isPressed = LoadPackage()->GetInput()->ButtonDown(UniversalControllerButton::FaceButtonDown);
+    m_isPressed = LoadPackage()->GetInput()->ButtonPressed(UniversalControllerButton::DPadDown);
 
-
+    // Pressed is very quick. So much so you'll likely not see it change in the example.
+    if (LoadPackage()->GetInput()->ButtonPressed(UniversalControllerButton::DPadDown))
+    {
+        Log::Info("ButtonPressed");
+    }
     /*if (gameTime->AllTime() > 10000)
     {
         for (size_t i = 0; i < m_bunchOfComponents.size(); ++i)

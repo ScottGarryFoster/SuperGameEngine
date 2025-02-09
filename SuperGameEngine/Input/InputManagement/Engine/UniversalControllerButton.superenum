@@ -14,10 +14,10 @@
         <FaceButtonLeft />
         <FaceButtonRight />
         <FaceButtonUp />
-        <DPadDown />
-        <DPadLeft />
-        <DPadRight />
-        <DPadUp />
+        <DPadDown Groups="DPad" />
+        <DPadLeft Groups="DPad" />
+        <DPadRight Groups="DPad" />
+        <DPadUp Groups="DPad" />
         <LeftShoulder />
         <RightShoulder />
         <LeftTrigger />

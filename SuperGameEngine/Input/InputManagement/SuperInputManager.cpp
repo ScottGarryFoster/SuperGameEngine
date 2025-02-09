@@ -35,11 +35,10 @@ void SuperInputManager::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_CONTROLLERDEVICEREMOVED:
         case WindowEventType::SDL_JOYBUTTONDOWN:
         case WindowEventType::SDL_JOYBUTTONUP:
+        case WindowEventType::SDL_JOYHATMOTION:
             m_controllerInput->EventUpdate(event);
             break;
     }
-
-    Log::Info(EWindowEventType::ToString(event.EventType));
 }
 
 bool SuperInputManager::GetKeyDown(const KeyCode& keyCode) const

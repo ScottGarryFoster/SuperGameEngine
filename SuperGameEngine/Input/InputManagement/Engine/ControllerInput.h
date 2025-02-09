@@ -6,6 +6,7 @@
 #include "Controller.h"
 #include "KeyOrButtonState.h"
 #include "UniversalControllerButton.h"
+#include "../Event/HatPosition.h"
 
 namespace SuperGameInput
 {
@@ -178,8 +179,34 @@ namespace SuperGameInput
         /// Note when referring to 'Mapped' this refers to the mapping to Universal Buttons not
         /// a player re-mapping.
         /// </summary>
-        /// <param name="joystickDeviceEvent">JoyButton event. </param>
+        /// <param name="joyButton">JoyButton event. </param>
         /// <returns>The mapped button or Unknown if there is none. </returns>
-        UniversalControllerButton GetButtonFromJoyStick(const JoyButtonEvent& joystickDeviceEvent);
+        UniversalControllerButton GetButtonFromJoyStick(const JoyButtonEvent& joyButton);
+
+        /// <summary>
+        /// Get Controller layout from InstanceID.
+        /// Use this when you have an event and want to figure out what the mappings are.
+        /// </summary>
+        /// <param name="instanceID">InstanceID found in the event. </param>
+        /// <returns>Controller Layout or empty if there is nothing. </returns>
+        std::shared_ptr<ControllerLayout> GetLayoutFromInstance(int32_t instanceID);
+
+        /// <summary>
+        /// Occurs when a Hat has an event occur upon it.
+        /// A hat is a DPad.
+        /// </summary>
+        /// <param name="event">Event to process. </param>
+        void OnJoyHatEvent(const WindowEvent& event);
+
+        /// <summary>
+        /// Convert a Hat Position to UniversalControllerButtons you can store.
+        /// There are two answers given, this is because 'LeftUp' are valid and would
+        /// return as Left, Up.
+        /// The first slot is always filled in if there is a valid option and
+        /// 'Centered' or no button is UniversalControllerButton::Unknown.
+        /// </summary>
+        /// <param name="position">Hat position. </param>
+        /// <returns>UniversalControllerButtons representing the hat position. </returns>
+        std::pair<UniversalControllerButton, UniversalControllerButton> GetUniversalButtonFromHatPosition(HatPosition position);
     };
 }

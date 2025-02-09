@@ -8,6 +8,8 @@
 #include "Event/WindowEvent.h"
 #include <SDL.h>
 
+#include "Event/JoyHatEvent.h"
+
 namespace SuperGameInput
 {
     class InputManager;
@@ -111,6 +113,8 @@ namespace SuperGameInput
         JoystickDeviceEvent ConvertJoystickDeviceEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
         JoyButtonEvent ConvertJoyButtonEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
+        JoyHatEvent ConvertJoyHatEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
+
         /// <summary>
         /// Updates the instance IDs and open/closed controllers when events occur.
         /// All controllers are opened even those which are never used.
@@ -132,5 +136,12 @@ namespace SuperGameInput
         /// <param name="index">Index of the controller. </param>
         /// <returns>Open controller or nullptr if nothing opened. </returns>
         SDL_GameController* OpenSDLControllerFromIndex(int index);
+
+        /// <summary>
+        /// Returns a Hat Position from SDL version found in Events.
+        /// </summary>
+        /// <param name="hatValue">Value provided by SDL2. </param>
+        /// <returns>The position of the Hat. </returns>
+        HatPosition HatPositionFromValue(Uint8 hatValue);
     };
 }

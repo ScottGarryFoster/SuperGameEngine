@@ -111,6 +111,19 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<UniversalControllerButton> GroupDPad()
+        {
+            static std::vector<UniversalControllerButton> returnVector =
+            {
+                UniversalControllerButton::DPadDown,
+                UniversalControllerButton::DPadLeft,
+                UniversalControllerButton::DPadRight,
+                UniversalControllerButton::DPadUp,
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(UniversalControllerButton value)
         {
             switch (value)

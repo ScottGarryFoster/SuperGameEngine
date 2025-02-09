@@ -1,5 +1,6 @@
 #include "SuperEnum.h"
 #include <memory>
+#include <unordered_map>
 
 using namespace SuperEnumGenerator;
 using namespace FatedQuestLibraries;
@@ -237,6 +238,25 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode)
                     }
                 }
             }
+            else if (name == "groups")
+            {
+                std::string value = StringHelpers::Trim(attribute->Value());
+                if (value != "")
+                {
+                    std::vector<std::string> groups = StringHelpers::Split(value, ",");
+                    for (const std::string& group : groups)
+                    {
+                        std::string groupTrimmed = StringHelpers::ReplaceAll(group, " ", "");
+                        if (!groupTrimmed.empty())
+                        {
+                            if (!enumValue->Groups.contains(groupTrimmed))
+                            {
+                                enumValue->Groups.emplace(groupTrimmed);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         m_enumValues.push_back(enumValue);
@@ -413,6 +433,7 @@ std::string SuperEnum::PrintEnumHelper(int indents)
     output += PrintIndents(indents) + "static " + m_enumName.Value + " Max() { return " + m_enumName.Value + "::" + GetMaxEnumValue() + "; }\n";
     output += PrintToArray(indents);
     output += PrintToVector(indents);
+    output += PrintGroups(indents);
     output += PrintToString(indents);
     output += PrintFromString(indents);
 
@@ -593,6 +614,51 @@ std::string SuperEnum::PrintFromString(int indents)
         output += PrintIndents(indents) + "return output;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
+
+    return output;
+}
+
+std::string SuperEnum::PrintGroups(int indents)
+{
+    std::unordered_map<std::string, std::vector<std::string>> groups;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        for (const std::string& enumGroup : enumValue->Groups)
+        {
+            if (!groups.contains(enumGroup))
+            {
+                groups.emplace(enumGroup, std::vector<std::string>());
+            }
+
+            groups.at(enumGroup).emplace_back(enumValue->Value);
+
+        }
+    }
+
+    std::string output = "";
+    for (const std::pair<std::string, std::vector<std::string>>& group : groups)
+    {
+        std::string groupName = StringHelpers::Capitalize(group.first);
+
+        output += "\n";
+        output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> Group" + groupName + "()\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+        output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> returnVector =\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+        for (const std::string& enumValue : group.second)
+        {
+            output += PrintIndents(indents) + m_enumName.Value + "::" + enumValue + ",\n";
+
+        }
+        --indents;
+        output += PrintIndents(indents) + "};\n";
+        output += PrintIndents(indents) + "\n";
+        output += PrintIndents(indents) + "return returnVector;\n";
+        --indents;
+        output += PrintIndents(indents) + "}\n";
+    }
 
     return output;
 }

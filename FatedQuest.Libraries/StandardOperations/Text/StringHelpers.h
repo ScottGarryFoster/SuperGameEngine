@@ -68,5 +68,12 @@ namespace FatedQuestLibraries
         /// <param name="replace">String to replace</param>
         /// <returns>String with find replaced if found. </returns>
         static std::string ReplaceAll(const std::string& input, const std::string& find, const std::string& replace);
+
+        /// <summary>
+        /// Capitalize letters which might make sense to.
+        /// </summary>
+        /// <param name="input">Input to capitalize. </param>
+        /// <returns>Capitalized string. </returns>
+        static std::string Capitalize(const std::string& input);
     };
 }

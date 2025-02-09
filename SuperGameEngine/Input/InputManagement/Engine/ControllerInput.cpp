@@ -56,6 +56,10 @@ void ControllerInput::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_JOYBUTTONUP:
             OnJoyStickButtonEvent(event);
             break;
+        case WindowEventType::SDL_JOYHATMOTION:
+            OnJoyHatEvent(event);
+            break;
+
     }
 
 }
@@ -256,25 +260,13 @@ void ControllerInput::OnJoyStickButtonUpdate()
 
 UniversalControllerButton ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent& joyButton)
 {
-    if (!m_currentControllers.contains(joyButton.InstanceID))
+    std::shared_ptr<ControllerLayout> layout = GetLayoutFromInstance(joyButton.InstanceID);
+    if (!layout)
     {
-        Log::Error("Button was pressed on an unknown controller. "
-            "InstanceID: " + std::to_string(joyButton.InstanceID),
-            "ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent)");
-        return UniversalControllerButton::Unknown;
-    }
-
-    Controller controllerType = m_currentControllers.at(joyButton.InstanceID);
-    if (!m_controllerLayouts.contains(controllerType))
-    {
-        Log::Error("Button was pressed on a controller without a layout. "
-            "InstanceID: " + std::to_string(joyButton.InstanceID),
-            "ControllerInput::GetButtonFromJoyStick(const JoyButtonEvent)");
         return UniversalControllerButton::Unknown;
     }
 
     // We need to understand what button the player has pressed.
-    std::shared_ptr<ControllerLayout> layout = m_controllerLayouts.at(controllerType);
     UniversalControllerButton buttonType = UniversalControllerButton::Unknown;
     for (const std::pair<int, UniversalControllerButton>& buttonMapping : layout->SDLToUniversalButton)
     {
@@ -305,4 +297,145 @@ UniversalControllerButton ControllerInput::GetButtonFromJoyStick(const JoyButton
     }
 
     return buttonType;
+}
+
+std::shared_ptr<ControllerLayout> ControllerInput::GetLayoutFromInstance(int32_t instanceID)
+{
+    if (!m_currentControllers.contains(instanceID))
+    {
+        Log::Error("Event occured on an unknown controller. "
+            "InstanceID: " + std::to_string(instanceID),
+            "ControllerInput::GetLayoutFromInstance(int32_t)");
+        return {};
+    }
+
+    Controller controllerType = m_currentControllers.at(instanceID);
+    if (!m_controllerLayouts.contains(controllerType))
+    {
+        Log::Error("Event occured on a controller without a layout. "
+            "InstanceID: " + std::to_string(instanceID),
+            "ControllerInput::GetLayoutFromInstance(int32_t)");
+        return {};
+    }
+
+    std::shared_ptr<ControllerLayout> layout = m_controllerLayouts.at(controllerType);
+    return layout;
+}
+
+void ControllerInput::OnJoyHatEvent(const WindowEvent& event)
+{
+    std::shared_ptr<ControllerLayout> layout = GetLayoutFromInstance(event.JoyHat.ControllerInstanceID);
+    if (!layout)
+    {
+        return;
+    }
+
+    // This hat can be ignored.
+    if (event.JoyHat.HatIndex != layout->HatMappedToDpad)
+    {
+        return;
+    }
+
+    if (!m_controllerButtonState.contains(event.JoyHat.ControllerInstanceID))
+    {
+        m_controllerButtonState.try_emplace(event.JoyHat.ControllerInstanceID, std::unordered_map<UniversalControllerButton, KeyOrButtonState>());
+    }
+
+    for (const UniversalControllerButton& button : EUniversalControllerButton::GroupDPad())
+    {
+        if (!m_controllerButtonState.at(event.JoyHat.ControllerInstanceID).contains(button))
+        {
+            m_controllerButtonState.at(event.JoyHat.ControllerInstanceID).try_emplace(button, KeyOrButtonState::Unpressed);
+        }
+    }
+    
+
+    if (event.JoyHat.Position != HatPosition::CENTERED)
+    {
+        std::pair<UniversalControllerButton, UniversalControllerButton> buttons = GetUniversalButtonFromHatPosition(event.JoyHat.Position);
+
+        // The first position is always populated first
+        if (buttons.first == UniversalControllerButton::Unknown)
+        {
+            return;
+        }
+
+        KeyOrButtonState buttonState = m_controllerButtonState.at(event.JoyButton.InstanceID).at(buttons.first);
+        if (buttonState == KeyOrButtonState::Unpressed)
+        {
+            m_controllerButtonState.at(event.JoyButton.InstanceID).at(buttons.first)
+                = KeyOrButtonState::Down | KeyOrButtonState::Pressed;
+        }
+
+        // Hats can have two button presses at once.
+        if (buttons.second == UniversalControllerButton::Unknown)
+        {
+            return;
+        }
+
+        buttonState = m_controllerButtonState.at(event.JoyButton.InstanceID).at(buttons.second);
+        if (buttonState == KeyOrButtonState::Unpressed)
+        {
+            m_controllerButtonState.at(event.JoyButton.InstanceID).at(buttons.second)
+                = KeyOrButtonState::Down | KeyOrButtonState::Pressed;
+        }
+    }
+    else
+    {
+        // We do not know what was released only that now it is released.
+        for (const UniversalControllerButton& button : EUniversalControllerButton::GroupDPad())
+        {
+            KeyOrButtonState buttonState = m_controllerButtonState.at(event.JoyButton.InstanceID).at(button);
+            if (EKeyOrButtonState::HasFlag(buttonState, KeyOrButtonState::Down))
+            {
+                m_controllerButtonState.at(event.JoyButton.InstanceID).at(button)
+                    = KeyOrButtonState::Up;
+            }
+        }
+
+    }
+}
+
+std::pair<UniversalControllerButton, UniversalControllerButton> ControllerInput::GetUniversalButtonFromHatPosition(HatPosition position)
+{
+    auto returnPair = std::pair(UniversalControllerButton::Unknown, UniversalControllerButton::Unknown);
+    switch (position)
+    {
+    case HatPosition::UP:
+        returnPair.first = UniversalControllerButton::DPadUp;
+        break;
+    case HatPosition::DOWN:
+        returnPair.first = UniversalControllerButton::DPadDown;
+        break;
+    case HatPosition::LEFT:
+        returnPair.first = UniversalControllerButton::DPadLeft;
+        break;
+    case HatPosition::RIGHT:
+        returnPair.first = UniversalControllerButton::DPadRight;
+        break;
+    case HatPosition::CENTERED:
+        break;
+    case HatPosition::LEFTUP:
+        returnPair.first = UniversalControllerButton::DPadLeft;
+        returnPair.second = UniversalControllerButton::DPadUp;
+        break;
+    case HatPosition::LEFTDOWN:
+        returnPair.first = UniversalControllerButton::DPadLeft;
+        returnPair.second = UniversalControllerButton::DPadDown;
+        break;
+    case HatPosition::RIGHTUP:
+        returnPair.first = UniversalControllerButton::DPadRight;
+        returnPair.second = UniversalControllerButton::DPadUp;
+        break;
+    case HatPosition::RIGHTDOWN:
+        returnPair.first = UniversalControllerButton::DPadRight;
+        returnPair.second = UniversalControllerButton::DPadDown;
+        break;
+    default:
+        Log::Error("Position not found to have a UniversalControllerButton Equivalent. Position: " + EHatPosition::ToString(position),
+            "ControllerInput::GetUniversalButtonFromHatPosition(HatPosition)");
+        break;
+    }
+
+    return returnPair;
 }
