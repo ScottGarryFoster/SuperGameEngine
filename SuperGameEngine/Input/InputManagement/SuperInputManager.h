@@ -81,6 +81,21 @@ namespace SuperGameInput
         /// <returns>True means button was down and now is released. </returns>
         virtual bool ButtonPressed(UniversalControllerButton button) const override;
 
+        /// <summary>
+        /// Gets the values on the given Axis.
+        /// This is a value -32767 to 32767 with 0 in the middle.
+        /// </summary>
+        /// <param name="axis">Axis to get the value of. </param>
+        /// <returns>Axis value. </returns>
+        virtual int AxisValue(UniversalControllerAxis axis) const override;
+
+        /// <summary>
+        /// Gets the values on the given Axis.
+        /// This is a value -1 to 1 with 0 in the middle.
+        /// </summary>
+        /// <param name="axis">Axis to get the value of. </param>
+        /// <returns>Axis value. </returns>
+        virtual float AxisValueNormalised(UniversalControllerAxis axis) const override;
     private:
         /// <summary>
         /// Handles input for Keyboard keys.

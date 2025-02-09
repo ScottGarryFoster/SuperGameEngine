@@ -29,11 +29,11 @@ namespace SuperGameInput
         /// <summary>
         /// Axis Index.
         /// </summary>
-        uint32_t Axis = -1;
+        uint8_t Axis = -1;
 
         /// <summary>
         /// The value of the axis.
         /// </summary>
-        int32_t Value;
+        int16_t Value;
     };
 }

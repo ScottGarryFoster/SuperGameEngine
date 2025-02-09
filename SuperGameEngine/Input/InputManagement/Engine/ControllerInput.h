@@ -5,6 +5,7 @@
 
 #include "Controller.h"
 #include "KeyOrButtonState.h"
+#include "UniversalControllerAxis.h"
 #include "UniversalControllerButton.h"
 #include "../Event/HatPosition.h"
 #include "../Event/JoyAxisEvent.h"
@@ -83,11 +84,19 @@ namespace SuperGameInput
 
         /// <summary>
         /// Gets the values on the given Axis.
-        /// This is a value -32767 to 32767 with 0 in the middle.
+        /// This is a value -32768 to 32767 with 0 in the middle.
         /// </summary>
         /// <param name="axis">Axis to get the value of. </param>
-        /// <returns>Axix value. </returns>
-        //int AxisValue(UniversalControllerAxis axis) const;
+        /// <returns>Axis value. </returns>
+        int AxisValue(UniversalControllerAxis axis) const;
+
+        /// <summary>
+        /// Gets the values on the given Axis.
+        /// This is a value -1 to 1 with 0 in the middle.
+        /// </summary>
+        /// <param name="axis">Axis to get the value of. </param>
+        /// <returns>Axis value. </returns>
+        float AxisValueNormalised(UniversalControllerAxis axis) const;
 
         /// <summary>
         /// Gets the controller plugged in.
@@ -103,6 +112,20 @@ namespace SuperGameInput
         /// Where to find the controller configuration files.
         /// </summary>
         inline static const std::string PathToControllerConfigs = "Engine\\Input\\ControllerMappings";
+
+        /// <summary>
+        /// Multiplication number which represents a single unit.
+        /// Used for Axis normalisation in the positive.
+        /// This is 1/32767
+        /// </summary>
+        inline static constexpr float PositiveAxisSingleUnit = 0.000030518509475997192297128208258309f;
+
+        /// <summary>
+        /// Multiplication number which represents a single unit.
+        /// Used for Axis normalisation in the positive.
+        /// This is 1/32768
+        /// </summary>
+        inline static constexpr float NegativeAxisSingleUnit = 0.000030517578125f;
 
         /// <summary>
         /// True means is setup.
@@ -139,6 +162,17 @@ namespace SuperGameInput
         /// The state of buttons on all controllers.
         /// </summary>
         std::unordered_map<int32_t, std::unordered_map<UniversalControllerButton, KeyOrButtonState>> m_controllerButtonState;
+
+        /// <summary>
+        /// The current state of Axes on all controllers.
+        /// </summary>
+        std::unordered_map<int32_t, std::unordered_map<UniversalControllerAxis, int>> m_controllerAxisPosition;
+
+        /// <summary>
+        /// The current state of Axes on all controllers.
+        /// -1 to 1 value.
+        /// </summary>
+        std::unordered_map<int32_t, std::unordered_map<UniversalControllerAxis, float>> m_controllerAxisNormalised;
 
         /// <summary>
         /// Loads all layouts into memory from file.
@@ -222,5 +256,12 @@ namespace SuperGameInput
         /// <param name="event">Event to process. </param>
         /// <param name="layout">Layout for the controller. </param>
         void HandleJoyAxisMappedToButtons(const JoyAxisEvent& event, const std::shared_ptr<ControllerLayout>& layout);
+
+        /// <summary>
+        /// Handles Axis value updates.
+        /// </summary>
+        /// <param name="event">Event to process. </param>
+        /// <param name="layout">Layout for the controller. </param>
+        void HandleJoyAxisValues(const JoyAxisEvent& event, const std::shared_ptr<ControllerLayout>& layout);
     };
 }

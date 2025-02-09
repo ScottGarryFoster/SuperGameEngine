@@ -71,3 +71,13 @@ bool SuperInputManager::ButtonPressed(UniversalControllerButton button) const
 {
     return m_controllerInput->ButtonPressed(button);
 }
+
+int SuperInputManager::AxisValue(UniversalControllerAxis axis) const
+{
+    return m_controllerInput->AxisValue(axis);
+}
+
+float SuperInputManager::AxisValueNormalised(UniversalControllerAxis axis) const
+{
+    return m_controllerInput->AxisValueNormalised(axis);
+}

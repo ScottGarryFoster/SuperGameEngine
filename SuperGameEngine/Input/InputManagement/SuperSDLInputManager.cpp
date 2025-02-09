@@ -57,6 +57,16 @@ bool SuperSDLInputManager::ButtonPressed(UniversalControllerButton button) const
     return m_inputManager->ButtonPressed(button);
 }
 
+int SuperSDLInputManager::AxisValue(UniversalControllerAxis axis) const
+{
+    return m_inputManager->AxisValue(axis);
+}
+
+float SuperSDLInputManager::AxisValueNormalised(UniversalControllerAxis axis) const
+{
+    return m_inputManager->AxisValueNormalised(axis);
+}
+
 WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
 {
     auto windowEvent = WindowEvent();

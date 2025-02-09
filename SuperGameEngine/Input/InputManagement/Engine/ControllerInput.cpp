@@ -120,6 +120,36 @@ bool ControllerInput::ButtonPressed(UniversalControllerButton button) const
     return false;
 }
 
+int ControllerInput::AxisValue(UniversalControllerAxis axis) const
+{
+    for (const auto& instanceIT : m_controllerAxisPosition)
+    {
+        if (!instanceIT.second.contains(axis))
+        {
+            continue;
+        }
+
+        return instanceIT.second.at(axis);
+    }
+
+    return 0;
+}
+
+float ControllerInput::AxisValueNormalised(UniversalControllerAxis axis) const
+{
+    for (const auto& instanceIT : m_controllerAxisNormalised)
+    {
+        if (!instanceIT.second.contains(axis))
+        {
+            continue;
+        }
+
+        return instanceIT.second.at(axis);
+    }
+
+    return 0;
+}
+
 void ControllerInput::ReloadAllLayouts()
 {
     if (!m_gamePackage)
@@ -185,6 +215,8 @@ bool ControllerInput::AddController(const ControllerDeviceEvent& controllerDevic
 
         m_currentControllers.try_emplace(controllerDevice.ControllerInstanceID, layout.first);
         m_controllerButtonState.try_emplace(controllerDevice.ControllerInstanceID, std::unordered_map<UniversalControllerButton, KeyOrButtonState>());
+        m_controllerAxisPosition.try_emplace(controllerDevice.ControllerInstanceID, std::unordered_map<UniversalControllerAxis, int>());
+        m_controllerAxisNormalised.try_emplace(controllerDevice.ControllerInstanceID, std::unordered_map<UniversalControllerAxis, float>());
         return true;
     }
 
@@ -212,6 +244,8 @@ void ControllerInput::OnControllerRemoved(const WindowEvent& event)
 {
     m_currentControllers.erase(event.ControllerDevice.ControllerInstanceID);
     m_controllerButtonState.erase(event.ControllerDevice.ControllerInstanceID);
+    m_controllerAxisPosition.erase(event.ControllerDevice.ControllerInstanceID);
+    m_controllerAxisNormalised.erase(event.ControllerDevice.ControllerInstanceID);
 }
 
 void ControllerInput::OnJoyStickButtonEvent(const WindowEvent& event)
@@ -451,6 +485,7 @@ void ControllerInput::OnJoyAxisEvent(const WindowEvent& event)
     }
 
     HandleJoyAxisMappedToButtons(event.JoyAxis, layout);
+    HandleJoyAxisValues(event.JoyAxis, layout);
 }
 
 void ControllerInput::HandleJoyAxisMappedToButtons(
@@ -509,5 +544,64 @@ void ControllerInput::HandleJoyAxisMappedToButtons(
         }
 
         return;
+    }
+}
+
+void ControllerInput::HandleJoyAxisValues(const JoyAxisEvent& event, const std::shared_ptr<ControllerLayout>& layout)
+{
+    for (const AxisToUniversalAxis& axisMapping : layout->SDLAxisToUniversalAxis)
+    {
+        if (axisMapping.SDLAxis != event.Axis)
+        {
+            continue;
+        }
+
+        if (!m_controllerAxisPosition.contains(event.ControllerInstanceID))
+        {
+            m_controllerAxisPosition.try_emplace(event.ControllerInstanceID, std::unordered_map<UniversalControllerAxis, int>());
+            m_controllerAxisNormalised.try_emplace(event.ControllerInstanceID, std::unordered_map<UniversalControllerAxis, float>());
+        }
+
+        if (!m_controllerAxisPosition.at(event.ControllerInstanceID).contains(axisMapping.UniversalAxis))
+        {
+            m_controllerAxisPosition.at(event.ControllerInstanceID).try_emplace(axisMapping.UniversalAxis, 0);
+            m_controllerAxisNormalised.at(event.ControllerInstanceID).try_emplace(axisMapping.UniversalAxis, 0);
+        }
+
+        if (axisMapping.HasDeadzone)
+        {
+            if (event.Value > axisMapping.Deadzone || event.Value < -axisMapping.Deadzone)
+            {
+                m_controllerAxisPosition.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) = event.Value;
+            }
+            else
+            {
+                m_controllerAxisPosition.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) = 0;
+            }
+        }
+        else
+        {
+            m_controllerAxisPosition.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) = event.Value;
+        }
+
+        if (m_controllerAxisPosition.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) == 0)
+        {
+            m_controllerAxisNormalised.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) = 0;
+        }
+        else
+        {
+            int absolute = std::abs(m_controllerAxisPosition.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis));
+            float normalised = 0;
+            if (m_controllerAxisPosition.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) > 0)
+            {
+                normalised = PositiveAxisSingleUnit * static_cast<float>(absolute);
+            }
+            else
+            {
+                normalised = -(NegativeAxisSingleUnit * static_cast<float>(absolute));
+            }
+
+            m_controllerAxisNormalised.at(event.ControllerInstanceID).at(axisMapping.UniversalAxis) = normalised;
+        }
     }
 }
