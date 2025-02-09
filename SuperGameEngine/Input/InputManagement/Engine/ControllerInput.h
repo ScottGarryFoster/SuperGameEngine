@@ -7,6 +7,7 @@
 #include "KeyOrButtonState.h"
 #include "UniversalControllerButton.h"
 #include "../Event/HatPosition.h"
+#include "../Event/JoyAxisEvent.h"
 
 namespace SuperGameInput
 {
@@ -208,5 +209,18 @@ namespace SuperGameInput
         /// <param name="position">Hat position. </param>
         /// <returns>UniversalControllerButtons representing the hat position. </returns>
         std::pair<UniversalControllerButton, UniversalControllerButton> GetUniversalButtonFromHatPosition(HatPosition position);
+
+        /// <summary>
+        /// Occurs when an axis value changes.
+        /// </summary>
+        /// <param name="event">Event to process. </param>
+        void OnJoyAxisEvent(const WindowEvent& event);
+
+        /// <summary>
+        /// Handle joy axis which are mapped to buttons.
+        /// </summary>
+        /// <param name="event">Event to process. </param>
+        /// <param name="layout">Layout for the controller. </param>
+        void HandleJoyAxisMappedToButtons(const JoyAxisEvent& event, const std::shared_ptr<ControllerLayout>& layout);
     };
 }

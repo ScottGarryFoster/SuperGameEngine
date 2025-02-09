@@ -69,6 +69,7 @@ WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
     
     ConvertJoyButtonEventFromSDL(event, windowEvent);
     ConvertJoyHatEventFromSDL(event, windowEvent);
+    ConvertJoyAxisEventFromSDL(event, windowEvent);
     return windowEvent;
 }
 
@@ -697,6 +698,17 @@ JoyHatEvent SuperSDLInputManager::ConvertJoyHatEventFromSDL(const SDL_Event& eve
     windowEvent.JoyHat.Position = HatPositionFromValue(event.jhat.value);
 
     return windowEvent.JoyHat;
+}
+
+JoyAxisEvent SuperSDLInputManager::ConvertJoyAxisEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.JoyAxis.Type = windowEvent.EventType;
+    windowEvent.JoyAxis.Timestamp = event.jaxis.timestamp;
+    windowEvent.JoyAxis.Value = event.jaxis.value;
+    windowEvent.JoyAxis.Axis = event.jaxis.axis;
+    windowEvent.JoyAxis.ControllerInstanceID = event.jaxis.which;
+
+    return windowEvent.JoyAxis;
 }
 
 void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)

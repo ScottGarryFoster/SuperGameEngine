@@ -36,6 +36,7 @@ void SuperInputManager::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_JOYBUTTONDOWN:
         case WindowEventType::SDL_JOYBUTTONUP:
         case WindowEventType::SDL_JOYHATMOTION:
+        case WindowEventType::SDL_JOYAXISMOTION:
             m_controllerInput->EventUpdate(event);
             break;
     }

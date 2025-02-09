@@ -119,10 +119,10 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         Log::Error("No input");
         return;
     }
-    m_isPressed = LoadPackage()->GetInput()->ButtonPressed(UniversalControllerButton::DPadDown);
+    m_isPressed = LoadPackage()->GetInput()->ButtonDown(UniversalControllerButton::LeftTrigger);
 
     // Pressed is very quick. So much so you'll likely not see it change in the example.
-    if (LoadPackage()->GetInput()->ButtonPressed(UniversalControllerButton::DPadDown))
+    if (LoadPackage()->GetInput()->ButtonPressed(UniversalControllerButton::LeftTrigger))
     {
         Log::Info("ButtonPressed");
     }

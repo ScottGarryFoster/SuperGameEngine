@@ -168,6 +168,7 @@
     <ClInclude Include="InputManagement\Event\ControllerDeviceEvent.h" />
     <ClInclude Include="InputManagement\Event\GeneralKeyState.h" />
     <ClInclude Include="InputManagement\Event\HatPosition.h" />
+    <ClInclude Include="InputManagement\Event\JoyAxisEvent.h" />
     <ClInclude Include="InputManagement\Event\JoyButtonEvent.h" />
     <ClInclude Include="InputManagement\Event\JoyHatEvent.h" />
     <ClInclude Include="InputManagement\Event\JoystickDeviceEvent.h" />

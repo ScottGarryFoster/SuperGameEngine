@@ -59,7 +59,9 @@ void ControllerInput::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_JOYHATMOTION:
             OnJoyHatEvent(event);
             break;
-
+        case WindowEventType::SDL_JOYAXISMOTION:
+            OnJoyAxisEvent(event);
+            break;
     }
 
 }
@@ -438,4 +440,74 @@ std::pair<UniversalControllerButton, UniversalControllerButton> ControllerInput:
     }
 
     return returnPair;
+}
+
+void ControllerInput::OnJoyAxisEvent(const WindowEvent& event)
+{
+    std::shared_ptr<ControllerLayout> layout = GetLayoutFromInstance(event.JoyHat.ControllerInstanceID);
+    if (!layout)
+    {
+        return;
+    }
+
+    HandleJoyAxisMappedToButtons(event.JoyAxis, layout);
+}
+
+void ControllerInput::HandleJoyAxisMappedToButtons(
+    const JoyAxisEvent& event,
+    const std::shared_ptr<ControllerLayout>& layout)
+{
+    for (const ControllerAxisMappedToButton& axisToButton : layout->AxisToButton)
+    {
+        if (axisToButton.Axis != static_cast<int>(event.Axis))
+        {
+            continue;
+        }
+
+        if (!m_controllerButtonState.contains(event.ControllerInstanceID))
+        {
+            m_controllerButtonState.try_emplace(event.ControllerInstanceID, std::unordered_map<UniversalControllerButton, KeyOrButtonState>());
+        }
+
+        if (!m_controllerButtonState.at(event.ControllerInstanceID).contains(axisToButton.Button))
+        {
+            m_controllerButtonState.at(event.ControllerInstanceID).try_emplace(axisToButton.Button, KeyOrButtonState::Unpressed);
+        }
+
+        KeyOrButtonState buttonState = m_controllerButtonState.at(event.ControllerInstanceID).at(axisToButton.Button);
+        bool down = false;
+        switch (axisToButton.Evaluation.Comparison)
+        {
+        case ControllerComparisonType::Equals:
+            down = event.Value == axisToButton.Evaluation.Value;
+            break;
+        case ControllerComparisonType::Greater:
+            down = event.Value >= axisToButton.Evaluation.Value;
+            break;
+        case ControllerComparisonType::Less:
+            down = event.Value < axisToButton.Evaluation.Value;
+            break;
+        default:
+            return;
+        }
+
+        if (down)
+        {
+            if (buttonState == KeyOrButtonState::Unpressed)
+            {
+                m_controllerButtonState.at(event.ControllerInstanceID).at(axisToButton.Button)
+                    = KeyOrButtonState::Down | KeyOrButtonState::Pressed;
+            }
+        }
+        else
+        {
+            if (EKeyOrButtonState::HasFlag(buttonState, KeyOrButtonState::Down))
+            {
+                m_controllerButtonState.at(event.ControllerInstanceID).at(axisToButton.Button)
+                    = KeyOrButtonState::Up;
+            }
+        }
+
+        return;
+    }
 }

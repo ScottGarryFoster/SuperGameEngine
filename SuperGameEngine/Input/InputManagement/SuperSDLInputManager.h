@@ -114,6 +114,7 @@ namespace SuperGameInput
         JoyButtonEvent ConvertJoyButtonEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
         JoyHatEvent ConvertJoyHatEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
+        JoyAxisEvent ConvertJoyAxisEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
         /// <summary>
         /// Updates the instance IDs and open/closed controllers when events occur.
