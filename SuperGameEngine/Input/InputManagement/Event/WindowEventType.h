@@ -72,6 +72,16 @@ namespace SuperGameInput
         SDL_APP_DIDENTERFOREGROUND,
 
         /// <summary>
+        /// The user's locale preferences have changed.
+        /// </summary>
+        SDL_LOCALECHANGED,
+
+        /// <summary>
+        /// Display state change
+        /// </summary>
+        SDL_DISPLAYEVENT,
+
+        /// <summary>
         /// Window state change
         /// </summary>
         SDL_WINDOWEVENT,
@@ -106,6 +116,11 @@ namespace SuperGameInput
         /// input language or keyboard layout change.
         /// </summary>
         SDL_KEYMAPCHANGED,
+
+        /// <summary>
+        /// Extended keyboard text editing (composition)
+        /// </summary>
+        SDL_TEXTEDITING_EXT,
 
         /// <summary>
         /// Mouse moved
@@ -163,6 +178,11 @@ namespace SuperGameInput
         SDL_JOYDEVICEREMOVED,
 
         /// <summary>
+        /// Joystick battery level change
+        /// </summary>
+        SDL_JOYBATTERYUPDATED,
+
+        /// <summary>
         /// Game controller axis motion
         /// </summary>
         SDL_CONTROLLERAXISMOTION,
@@ -191,6 +211,33 @@ namespace SuperGameInput
         /// The controller mapping was updated
         /// </summary>
         SDL_CONTROLLERDEVICEREMAPPED,
+
+        /// <summary>
+        /// Game controller touchpad was touched
+        /// </summary>
+        SDL_CONTROLLERTOUCHPADDOWN,
+
+        /// <summary>
+        /// Game controller touchpad finger was moved
+        /// </summary>
+        SDL_CONTROLLERTOUCHPADMOTION,
+
+        /// <summary>
+        /// Game controller touchpad finger was lifted
+        /// </summary>
+        SDL_CONTROLLERTOUCHPADUP,
+
+        /// <summary>
+        /// Game controller sensor was updated
+        /// </summary>
+        SDL_CONTROLLERSENSORUPDATE,
+
+        SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3,
+
+        /// <summary>
+        /// Game controller Steam handle has changed
+        /// </summary>
+        SDL_CONTROLLERSTEAMHANDLEUPDATED,
 
         SDL_FINGERDOWN,
 
@@ -240,6 +287,11 @@ namespace SuperGameInput
         SDL_AUDIODEVICEREMOVED,
 
         /// <summary>
+        /// A sensor was updated
+        /// </summary>
+        SDL_SENSORUPDATE,
+
+        /// <summary>
         /// The render targets have been reset and their contents need to be updated
         /// </summary>
         SDL_RENDER_TARGETS_RESET,
@@ -282,6 +334,8 @@ namespace SuperGameInput
                 WindowEventType::SDL_APP_DIDENTERBACKGROUND,
                 WindowEventType::SDL_APP_WILLENTERFOREGROUND,
                 WindowEventType::SDL_APP_DIDENTERFOREGROUND,
+                WindowEventType::SDL_LOCALECHANGED,
+                WindowEventType::SDL_DISPLAYEVENT,
                 WindowEventType::SDL_WINDOWEVENT,
                 WindowEventType::SDL_SYSWMEVENT,
                 WindowEventType::SDL_KEYDOWN,
@@ -289,6 +343,7 @@ namespace SuperGameInput
                 WindowEventType::SDL_TEXTEDITING,
                 WindowEventType::SDL_TEXTINPUT,
                 WindowEventType::SDL_KEYMAPCHANGED,
+                WindowEventType::SDL_TEXTEDITING_EXT,
                 WindowEventType::SDL_MOUSEMOTION,
                 WindowEventType::SDL_MOUSEBUTTONDOWN,
                 WindowEventType::SDL_MOUSEBUTTONUP,
@@ -300,12 +355,19 @@ namespace SuperGameInput
                 WindowEventType::SDL_JOYBUTTONUP,
                 WindowEventType::SDL_JOYDEVICEADDED,
                 WindowEventType::SDL_JOYDEVICEREMOVED,
+                WindowEventType::SDL_JOYBATTERYUPDATED,
                 WindowEventType::SDL_CONTROLLERAXISMOTION,
                 WindowEventType::SDL_CONTROLLERBUTTONDOWN,
                 WindowEventType::SDL_CONTROLLERBUTTONUP,
                 WindowEventType::SDL_CONTROLLERDEVICEADDED,
                 WindowEventType::SDL_CONTROLLERDEVICEREMOVED,
                 WindowEventType::SDL_CONTROLLERDEVICEREMAPPED,
+                WindowEventType::SDL_CONTROLLERTOUCHPADDOWN,
+                WindowEventType::SDL_CONTROLLERTOUCHPADMOTION,
+                WindowEventType::SDL_CONTROLLERTOUCHPADUP,
+                WindowEventType::SDL_CONTROLLERSENSORUPDATE,
+                WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3,
+                WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED,
                 WindowEventType::SDL_FINGERDOWN,
                 WindowEventType::SDL_FINGERUP,
                 WindowEventType::SDL_FINGERMOTION,
@@ -319,6 +381,7 @@ namespace SuperGameInput
                 WindowEventType::SDL_DROPCOMPLETE,
                 WindowEventType::SDL_AUDIODEVICEADDED,
                 WindowEventType::SDL_AUDIODEVICEREMOVED,
+                WindowEventType::SDL_SENSORUPDATE,
                 WindowEventType::SDL_RENDER_TARGETS_RESET,
                 WindowEventType::SDL_RENDER_DEVICE_RESET,
                 WindowEventType::SDL_USEREVENT,
@@ -340,6 +403,8 @@ namespace SuperGameInput
                 WindowEventType::SDL_APP_DIDENTERBACKGROUND,
                 WindowEventType::SDL_APP_WILLENTERFOREGROUND,
                 WindowEventType::SDL_APP_DIDENTERFOREGROUND,
+                WindowEventType::SDL_LOCALECHANGED,
+                WindowEventType::SDL_DISPLAYEVENT,
                 WindowEventType::SDL_WINDOWEVENT,
                 WindowEventType::SDL_SYSWMEVENT,
                 WindowEventType::SDL_KEYDOWN,
@@ -347,6 +412,7 @@ namespace SuperGameInput
                 WindowEventType::SDL_TEXTEDITING,
                 WindowEventType::SDL_TEXTINPUT,
                 WindowEventType::SDL_KEYMAPCHANGED,
+                WindowEventType::SDL_TEXTEDITING_EXT,
                 WindowEventType::SDL_MOUSEMOTION,
                 WindowEventType::SDL_MOUSEBUTTONDOWN,
                 WindowEventType::SDL_MOUSEBUTTONUP,
@@ -358,12 +424,19 @@ namespace SuperGameInput
                 WindowEventType::SDL_JOYBUTTONUP,
                 WindowEventType::SDL_JOYDEVICEADDED,
                 WindowEventType::SDL_JOYDEVICEREMOVED,
+                WindowEventType::SDL_JOYBATTERYUPDATED,
                 WindowEventType::SDL_CONTROLLERAXISMOTION,
                 WindowEventType::SDL_CONTROLLERBUTTONDOWN,
                 WindowEventType::SDL_CONTROLLERBUTTONUP,
                 WindowEventType::SDL_CONTROLLERDEVICEADDED,
                 WindowEventType::SDL_CONTROLLERDEVICEREMOVED,
                 WindowEventType::SDL_CONTROLLERDEVICEREMAPPED,
+                WindowEventType::SDL_CONTROLLERTOUCHPADDOWN,
+                WindowEventType::SDL_CONTROLLERTOUCHPADMOTION,
+                WindowEventType::SDL_CONTROLLERTOUCHPADUP,
+                WindowEventType::SDL_CONTROLLERSENSORUPDATE,
+                WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3,
+                WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED,
                 WindowEventType::SDL_FINGERDOWN,
                 WindowEventType::SDL_FINGERUP,
                 WindowEventType::SDL_FINGERMOTION,
@@ -377,6 +450,7 @@ namespace SuperGameInput
                 WindowEventType::SDL_DROPCOMPLETE,
                 WindowEventType::SDL_AUDIODEVICEADDED,
                 WindowEventType::SDL_AUDIODEVICEREMOVED,
+                WindowEventType::SDL_SENSORUPDATE,
                 WindowEventType::SDL_RENDER_TARGETS_RESET,
                 WindowEventType::SDL_RENDER_DEVICE_RESET,
                 WindowEventType::SDL_USEREVENT,
@@ -399,6 +473,8 @@ namespace SuperGameInput
                 case WindowEventType::SDL_APP_DIDENTERBACKGROUND: return "SDL_APP_DIDENTERBACKGROUND";
                 case WindowEventType::SDL_APP_WILLENTERFOREGROUND: return "SDL_APP_WILLENTERFOREGROUND";
                 case WindowEventType::SDL_APP_DIDENTERFOREGROUND: return "SDL_APP_DIDENTERFOREGROUND";
+                case WindowEventType::SDL_LOCALECHANGED: return "SDL_LOCALECHANGED";
+                case WindowEventType::SDL_DISPLAYEVENT: return "SDL_DISPLAYEVENT";
                 case WindowEventType::SDL_WINDOWEVENT: return "SDL_WINDOWEVENT";
                 case WindowEventType::SDL_SYSWMEVENT: return "SDL_SYSWMEVENT";
                 case WindowEventType::SDL_KEYDOWN: return "SDL_KEYDOWN";
@@ -406,6 +482,7 @@ namespace SuperGameInput
                 case WindowEventType::SDL_TEXTEDITING: return "SDL_TEXTEDITING";
                 case WindowEventType::SDL_TEXTINPUT: return "SDL_TEXTINPUT";
                 case WindowEventType::SDL_KEYMAPCHANGED: return "SDL_KEYMAPCHANGED";
+                case WindowEventType::SDL_TEXTEDITING_EXT: return "SDL_TEXTEDITING_EXT";
                 case WindowEventType::SDL_MOUSEMOTION: return "SDL_MOUSEMOTION";
                 case WindowEventType::SDL_MOUSEBUTTONDOWN: return "SDL_MOUSEBUTTONDOWN";
                 case WindowEventType::SDL_MOUSEBUTTONUP: return "SDL_MOUSEBUTTONUP";
@@ -417,12 +494,19 @@ namespace SuperGameInput
                 case WindowEventType::SDL_JOYBUTTONUP: return "SDL_JOYBUTTONUP";
                 case WindowEventType::SDL_JOYDEVICEADDED: return "SDL_JOYDEVICEADDED";
                 case WindowEventType::SDL_JOYDEVICEREMOVED: return "SDL_JOYDEVICEREMOVED";
+                case WindowEventType::SDL_JOYBATTERYUPDATED: return "SDL_JOYBATTERYUPDATED";
                 case WindowEventType::SDL_CONTROLLERAXISMOTION: return "SDL_CONTROLLERAXISMOTION";
                 case WindowEventType::SDL_CONTROLLERBUTTONDOWN: return "SDL_CONTROLLERBUTTONDOWN";
                 case WindowEventType::SDL_CONTROLLERBUTTONUP: return "SDL_CONTROLLERBUTTONUP";
                 case WindowEventType::SDL_CONTROLLERDEVICEADDED: return "SDL_CONTROLLERDEVICEADDED";
                 case WindowEventType::SDL_CONTROLLERDEVICEREMOVED: return "SDL_CONTROLLERDEVICEREMOVED";
                 case WindowEventType::SDL_CONTROLLERDEVICEREMAPPED: return "SDL_CONTROLLERDEVICEREMAPPED";
+                case WindowEventType::SDL_CONTROLLERTOUCHPADDOWN: return "SDL_CONTROLLERTOUCHPADDOWN";
+                case WindowEventType::SDL_CONTROLLERTOUCHPADMOTION: return "SDL_CONTROLLERTOUCHPADMOTION";
+                case WindowEventType::SDL_CONTROLLERTOUCHPADUP: return "SDL_CONTROLLERTOUCHPADUP";
+                case WindowEventType::SDL_CONTROLLERSENSORUPDATE: return "SDL_CONTROLLERSENSORUPDATE";
+                case WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3: return "SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3";
+                case WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED: return "SDL_CONTROLLERSTEAMHANDLEUPDATED";
                 case WindowEventType::SDL_FINGERDOWN: return "SDL_FINGERDOWN";
                 case WindowEventType::SDL_FINGERUP: return "SDL_FINGERUP";
                 case WindowEventType::SDL_FINGERMOTION: return "SDL_FINGERMOTION";
@@ -436,6 +520,7 @@ namespace SuperGameInput
                 case WindowEventType::SDL_DROPCOMPLETE: return "SDL_DROPCOMPLETE";
                 case WindowEventType::SDL_AUDIODEVICEADDED: return "SDL_AUDIODEVICEADDED";
                 case WindowEventType::SDL_AUDIODEVICEREMOVED: return "SDL_AUDIODEVICEREMOVED";
+                case WindowEventType::SDL_SENSORUPDATE: return "SDL_SENSORUPDATE";
                 case WindowEventType::SDL_RENDER_TARGETS_RESET: return "SDL_RENDER_TARGETS_RESET";
                 case WindowEventType::SDL_RENDER_DEVICE_RESET: return "SDL_RENDER_DEVICE_RESET";
                 case WindowEventType::SDL_USEREVENT: return "SDL_USEREVENT";
@@ -458,6 +543,8 @@ namespace SuperGameInput
                 if (value == "SDL_APP_DIDENTERBACKGROUND") return WindowEventType::SDL_APP_DIDENTERBACKGROUND;
                 if (value == "SDL_APP_WILLENTERFOREGROUND") return WindowEventType::SDL_APP_WILLENTERFOREGROUND;
                 if (value == "SDL_APP_DIDENTERFOREGROUND") return WindowEventType::SDL_APP_DIDENTERFOREGROUND;
+                if (value == "SDL_LOCALECHANGED") return WindowEventType::SDL_LOCALECHANGED;
+                if (value == "SDL_DISPLAYEVENT") return WindowEventType::SDL_DISPLAYEVENT;
                 if (value == "SDL_WINDOWEVENT") return WindowEventType::SDL_WINDOWEVENT;
                 if (value == "SDL_SYSWMEVENT") return WindowEventType::SDL_SYSWMEVENT;
                 if (value == "SDL_KEYDOWN") return WindowEventType::SDL_KEYDOWN;
@@ -465,6 +552,7 @@ namespace SuperGameInput
                 if (value == "SDL_TEXTEDITING") return WindowEventType::SDL_TEXTEDITING;
                 if (value == "SDL_TEXTINPUT") return WindowEventType::SDL_TEXTINPUT;
                 if (value == "SDL_KEYMAPCHANGED") return WindowEventType::SDL_KEYMAPCHANGED;
+                if (value == "SDL_TEXTEDITING_EXT") return WindowEventType::SDL_TEXTEDITING_EXT;
                 if (value == "SDL_MOUSEMOTION") return WindowEventType::SDL_MOUSEMOTION;
                 if (value == "SDL_MOUSEBUTTONDOWN") return WindowEventType::SDL_MOUSEBUTTONDOWN;
                 if (value == "SDL_MOUSEBUTTONUP") return WindowEventType::SDL_MOUSEBUTTONUP;
@@ -476,12 +564,19 @@ namespace SuperGameInput
                 if (value == "SDL_JOYBUTTONUP") return WindowEventType::SDL_JOYBUTTONUP;
                 if (value == "SDL_JOYDEVICEADDED") return WindowEventType::SDL_JOYDEVICEADDED;
                 if (value == "SDL_JOYDEVICEREMOVED") return WindowEventType::SDL_JOYDEVICEREMOVED;
+                if (value == "SDL_JOYBATTERYUPDATED") return WindowEventType::SDL_JOYBATTERYUPDATED;
                 if (value == "SDL_CONTROLLERAXISMOTION") return WindowEventType::SDL_CONTROLLERAXISMOTION;
                 if (value == "SDL_CONTROLLERBUTTONDOWN") return WindowEventType::SDL_CONTROLLERBUTTONDOWN;
                 if (value == "SDL_CONTROLLERBUTTONUP") return WindowEventType::SDL_CONTROLLERBUTTONUP;
                 if (value == "SDL_CONTROLLERDEVICEADDED") return WindowEventType::SDL_CONTROLLERDEVICEADDED;
                 if (value == "SDL_CONTROLLERDEVICEREMOVED") return WindowEventType::SDL_CONTROLLERDEVICEREMOVED;
                 if (value == "SDL_CONTROLLERDEVICEREMAPPED") return WindowEventType::SDL_CONTROLLERDEVICEREMAPPED;
+                if (value == "SDL_CONTROLLERTOUCHPADDOWN") return WindowEventType::SDL_CONTROLLERTOUCHPADDOWN;
+                if (value == "SDL_CONTROLLERTOUCHPADMOTION") return WindowEventType::SDL_CONTROLLERTOUCHPADMOTION;
+                if (value == "SDL_CONTROLLERTOUCHPADUP") return WindowEventType::SDL_CONTROLLERTOUCHPADUP;
+                if (value == "SDL_CONTROLLERSENSORUPDATE") return WindowEventType::SDL_CONTROLLERSENSORUPDATE;
+                if (value == "SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3") return WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3;
+                if (value == "SDL_CONTROLLERSTEAMHANDLEUPDATED") return WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED;
                 if (value == "SDL_FINGERDOWN") return WindowEventType::SDL_FINGERDOWN;
                 if (value == "SDL_FINGERUP") return WindowEventType::SDL_FINGERUP;
                 if (value == "SDL_FINGERMOTION") return WindowEventType::SDL_FINGERMOTION;
@@ -495,6 +590,7 @@ namespace SuperGameInput
                 if (value == "SDL_DROPCOMPLETE") return WindowEventType::SDL_DROPCOMPLETE;
                 if (value == "SDL_AUDIODEVICEADDED") return WindowEventType::SDL_AUDIODEVICEADDED;
                 if (value == "SDL_AUDIODEVICEREMOVED") return WindowEventType::SDL_AUDIODEVICEREMOVED;
+                if (value == "SDL_SENSORUPDATE") return WindowEventType::SDL_SENSORUPDATE;
                 if (value == "SDL_RENDER_TARGETS_RESET") return WindowEventType::SDL_RENDER_TARGETS_RESET;
                 if (value == "SDL_RENDER_DEVICE_RESET") return WindowEventType::SDL_RENDER_DEVICE_RESET;
                 if (value == "SDL_USEREVENT") return WindowEventType::SDL_USEREVENT;
@@ -512,6 +608,8 @@ namespace SuperGameInput
                 if (valueLower == "sdl_app_didenterbackground") return WindowEventType::SDL_APP_DIDENTERBACKGROUND;
                 if (valueLower == "sdl_app_willenterforeground") return WindowEventType::SDL_APP_WILLENTERFOREGROUND;
                 if (valueLower == "sdl_app_didenterforeground") return WindowEventType::SDL_APP_DIDENTERFOREGROUND;
+                if (valueLower == "sdl_localechanged") return WindowEventType::SDL_LOCALECHANGED;
+                if (valueLower == "sdl_displayevent") return WindowEventType::SDL_DISPLAYEVENT;
                 if (valueLower == "sdl_windowevent") return WindowEventType::SDL_WINDOWEVENT;
                 if (valueLower == "sdl_syswmevent") return WindowEventType::SDL_SYSWMEVENT;
                 if (valueLower == "sdl_keydown") return WindowEventType::SDL_KEYDOWN;
@@ -519,6 +617,7 @@ namespace SuperGameInput
                 if (valueLower == "sdl_textediting") return WindowEventType::SDL_TEXTEDITING;
                 if (valueLower == "sdl_textinput") return WindowEventType::SDL_TEXTINPUT;
                 if (valueLower == "sdl_keymapchanged") return WindowEventType::SDL_KEYMAPCHANGED;
+                if (valueLower == "sdl_textediting_ext") return WindowEventType::SDL_TEXTEDITING_EXT;
                 if (valueLower == "sdl_mousemotion") return WindowEventType::SDL_MOUSEMOTION;
                 if (valueLower == "sdl_mousebuttondown") return WindowEventType::SDL_MOUSEBUTTONDOWN;
                 if (valueLower == "sdl_mousebuttonup") return WindowEventType::SDL_MOUSEBUTTONUP;
@@ -530,12 +629,19 @@ namespace SuperGameInput
                 if (valueLower == "sdl_joybuttonup") return WindowEventType::SDL_JOYBUTTONUP;
                 if (valueLower == "sdl_joydeviceadded") return WindowEventType::SDL_JOYDEVICEADDED;
                 if (valueLower == "sdl_joydeviceremoved") return WindowEventType::SDL_JOYDEVICEREMOVED;
+                if (valueLower == "sdl_joybatteryupdated") return WindowEventType::SDL_JOYBATTERYUPDATED;
                 if (valueLower == "sdl_controlleraxismotion") return WindowEventType::SDL_CONTROLLERAXISMOTION;
                 if (valueLower == "sdl_controllerbuttondown") return WindowEventType::SDL_CONTROLLERBUTTONDOWN;
                 if (valueLower == "sdl_controllerbuttonup") return WindowEventType::SDL_CONTROLLERBUTTONUP;
                 if (valueLower == "sdl_controllerdeviceadded") return WindowEventType::SDL_CONTROLLERDEVICEADDED;
                 if (valueLower == "sdl_controllerdeviceremoved") return WindowEventType::SDL_CONTROLLERDEVICEREMOVED;
                 if (valueLower == "sdl_controllerdeviceremapped") return WindowEventType::SDL_CONTROLLERDEVICEREMAPPED;
+                if (valueLower == "sdl_controllertouchpaddown") return WindowEventType::SDL_CONTROLLERTOUCHPADDOWN;
+                if (valueLower == "sdl_controllertouchpadmotion") return WindowEventType::SDL_CONTROLLERTOUCHPADMOTION;
+                if (valueLower == "sdl_controllertouchpadup") return WindowEventType::SDL_CONTROLLERTOUCHPADUP;
+                if (valueLower == "sdl_controllersensorupdate") return WindowEventType::SDL_CONTROLLERSENSORUPDATE;
+                if (valueLower == "sdl_controllerupdatecomplete_reserved_for_sdl3") return WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3;
+                if (valueLower == "sdl_controllersteamhandleupdated") return WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED;
                 if (valueLower == "sdl_fingerdown") return WindowEventType::SDL_FINGERDOWN;
                 if (valueLower == "sdl_fingerup") return WindowEventType::SDL_FINGERUP;
                 if (valueLower == "sdl_fingermotion") return WindowEventType::SDL_FINGERMOTION;
@@ -549,6 +655,7 @@ namespace SuperGameInput
                 if (valueLower == "sdl_dropcomplete") return WindowEventType::SDL_DROPCOMPLETE;
                 if (valueLower == "sdl_audiodeviceadded") return WindowEventType::SDL_AUDIODEVICEADDED;
                 if (valueLower == "sdl_audiodeviceremoved") return WindowEventType::SDL_AUDIODEVICEREMOVED;
+                if (valueLower == "sdl_sensorupdate") return WindowEventType::SDL_SENSORUPDATE;
                 if (valueLower == "sdl_render_targets_reset") return WindowEventType::SDL_RENDER_TARGETS_RESET;
                 if (valueLower == "sdl_render_device_reset") return WindowEventType::SDL_RENDER_DEVICE_RESET;
                 if (valueLower == "sdl_userevent") return WindowEventType::SDL_USEREVENT;

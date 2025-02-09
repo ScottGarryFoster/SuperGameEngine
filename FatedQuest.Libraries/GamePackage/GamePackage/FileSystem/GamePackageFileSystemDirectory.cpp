@@ -26,6 +26,13 @@ bool GamePackageFileSystemDirectory::Exists(const std::string& path) const
 std::vector<std::string> GamePackageFileSystemDirectory::GetFiles(const std::string& path) const
 {
     std::string cleanPath = File::Sanitize(path);
+
+    // Directories are stored without the final \\ on the end.
+    if (!cleanPath.empty() && cleanPath.size() > 1 && cleanPath.ends_with('\\'))
+    {
+        cleanPath = cleanPath.substr(0, cleanPath.length());
+    }
+
     if (m_filePaths.contains(cleanPath))
     {
         std::vector<std::string>

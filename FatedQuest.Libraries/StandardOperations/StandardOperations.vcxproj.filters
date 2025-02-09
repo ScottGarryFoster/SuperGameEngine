@@ -114,7 +114,4 @@
       <Filter>Source Files\Collection\Vector</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ KeyInput::KeyInput()
     std::vector<KeyCode> keyCodes = EKeyCode::ToVector();
     for (const KeyCode& keyCode : keyCodes)
     {
-        m_keys.insert_or_assign(keyCode, KeyState::Unpressed);
+        m_keys.insert_or_assign(keyCode, KeyOrButtonState::Unpressed);
     }
 }
 
@@ -22,13 +22,13 @@ void KeyInput::Update()
 {
     for (const KeyCode& keyCode : EKeyCode::ToVector())
     {
-        if (EKeyState::HasFlag(m_keys[keyCode], KeyState::Pressed))
+        if (EKeyOrButtonState::HasFlag(m_keys[keyCode], KeyOrButtonState::Pressed))
         {
-            m_keys[keyCode] = KeyState::Down;
+            m_keys[keyCode] = KeyOrButtonState::Down;
         }
-        else if (EKeyState::HasFlag(m_keys[keyCode], KeyState::Up))
+        else if (EKeyOrButtonState::HasFlag(m_keys[keyCode], KeyOrButtonState::Up))
         {
-            m_keys[keyCode] = KeyState::Unpressed;
+            m_keys[keyCode] = KeyOrButtonState::Unpressed;
         }
     }
 }
@@ -36,37 +36,37 @@ void KeyInput::Update()
 void KeyInput::EventUpdate(WindowEvent event)
 {
     KeyCode keyCode = KeyboardKeycodeConversion::FromKeyCode(event.Keyboard.Key.Keycode);
-    KeyState keyState = m_keys[keyCode];
+    KeyOrButtonState keyState = m_keys[keyCode];
     if (event.EventType == WindowEventType::SDL_KEYDOWN)
     {
-        if (keyState == KeyState::Unpressed)
+        if (keyState == KeyOrButtonState::Unpressed)
         {
-            m_keys[keyCode] = KeyState::Down | KeyState::Pressed;
+            m_keys[keyCode] = KeyOrButtonState::Down | KeyOrButtonState::Pressed;
         }
     }
     else if (event.EventType == WindowEventType::SDL_KEYUP)
     {
-        if (EKeyState::HasFlag(keyState, KeyState::Down))
+        if (EKeyOrButtonState::HasFlag(keyState, KeyOrButtonState::Down))
         {
-            m_keys[keyCode] = KeyState::Up;
+            m_keys[keyCode] = KeyOrButtonState::Up;
         }
     }
 }
 
 bool KeyInput::GetKeyDown(const KeyCode& keyCode) const
 {
-    KeyState keystate = m_keys.at(keyCode);
-    return EKeyState::HasFlag(keystate, KeyState::Down);
+    KeyOrButtonState keyState = m_keys.at(keyCode);
+    return EKeyOrButtonState::HasFlag(keyState, KeyOrButtonState::Down);
 }
 
 bool KeyInput::GetKeyPressed(const KeyCode& keyCode) const
 {
-    KeyState keystate = m_keys.at(keyCode);
-    return EKeyState::HasFlag(keystate, KeyState::Pressed);
+    KeyOrButtonState keyState = m_keys.at(keyCode);
+    return EKeyOrButtonState::HasFlag(keyState, KeyOrButtonState::Pressed);
 }
 
 bool KeyInput::GetKeyUp(const KeyCode& keyCode) const
 {
-    KeyState keystate = m_keys.at(keyCode);
-    return EKeyState::HasFlag(keystate, KeyState::Up);
+    KeyOrButtonState keyState = m_keys.at(keyCode);
+    return EKeyOrButtonState::HasFlag(keyState, KeyOrButtonState::Up);
 }

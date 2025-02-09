@@ -2,7 +2,7 @@
 #include <unordered_map>
 
 #include "KeyCode.h"
-#include "KeyState.h"
+#include "KeyOrButtonState.h"
 #include "../Event/WindowEvent.h"
 
 namespace SuperGameInput
@@ -53,6 +53,6 @@ namespace SuperGameInput
         /// <summary>
         /// All keys by key state.
         /// </summary>
-        std::unordered_map<KeyCode, KeyState> m_keys;
+        std::unordered_map<KeyCode, KeyOrButtonState> m_keys;
     };
 }

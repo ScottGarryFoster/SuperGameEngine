@@ -22,9 +22,40 @@
 #include "../Engine/Content/SuperSceneStorageCache.h"
 #include "../Structural/Loaders/SuperSceneLoader.h"
 #include "../Structural/Serializable/SuperSerializableParser.h"
+#include "../../../../../Input/InputManagement/SDLInputManager.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
+
+DebugEngine::DebugEngine()
+{
+#ifdef _DEBUG
+#ifndef _TOOLS
+
+    m_logger = std::make_shared<DebugLogger>();
+    if (auto shared = Log::GetEvent().lock())
+    {
+        shared->Subscribe(m_logger);
+    }
+#endif
+#endif
+}
+
+DebugEngine::~DebugEngine()
+{
+#ifdef _DEBUG
+#ifndef _TOOLS
+
+    if (m_logger)
+    {
+        if (auto shared = Log::GetEvent().lock())
+        {
+            shared->Unsubscribe(m_logger);
+        }
+    }
+#endif
+#endif
+}
 
 void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 {
@@ -32,13 +63,13 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     
 }
 
-void DebugEngine::GiveInput(const std::shared_ptr<InputHandler>& inputHandler)
+void DebugEngine::GiveInput(const std::shared_ptr<SDLInputManager>& inputManager)
 {
-    m_inputHandler = inputHandler;
+    m_inputManager = inputManager;
 
     if (m_grandSceneLoadPackage)
     {
-        m_grandSceneLoadPackage->SetInputHandler(m_inputHandler);
+        m_grandSceneLoadPackage->SetInputHandler(std::static_pointer_cast<InputHandler>(m_inputManager));
     }
 }
 
@@ -158,16 +189,6 @@ void DebugEngine::Setup()
 
     // Keep in mind in the current setup TestComponent spawns Sprite so this is recursive if we send the same object.
 
-#ifdef _DEBUG
-#ifndef _TOOLS
-
-    m_logger = std::make_shared<DebugLogger>();
-    if (auto shared = Log::GetEvent().lock())
-    {
-        shared->Subscribe(m_logger);
-    }
-#endif
-#endif
 }
 
 void DebugEngine::CreateGrandScenePackage()
@@ -178,7 +199,7 @@ void DebugEngine::CreateGrandScenePackage()
         return;
     }
 
-    if (!m_inputHandler)
+    if (!m_inputManager)
     {
         Log::Error("No input package. Cannot load scene.", "DebugEngine::CreateGrandScenePackage");
         return;
@@ -199,6 +220,9 @@ void DebugEngine::CreateGrandScenePackage()
     m_combinedGamePackage->Load(paths);
     m_contentManager->GiveGamePackage(m_combinedGamePackage);
 
+    // Loads configurations.
+    m_inputManager->Setup(m_combinedGamePackage);
+
     m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage);
     m_contentManager->GiveSuperTextureManager(m_textureManager);
 
@@ -207,7 +231,7 @@ void DebugEngine::CreateGrandScenePackage()
     m_grandSceneLoadPackage->SetSerializableParser(
         std::make_shared<SuperSerializableParser>());
 
-    m_grandSceneLoadPackage->SetInputHandler(m_inputHandler);
+    m_grandSceneLoadPackage->SetInputHandler(m_inputManager);
 
 
     std::shared_ptr<SceneLoadPackage> sceneLoadPackage = m_grandSceneLoadPackage->GetSceneLoadPackage();
@@ -215,7 +239,6 @@ void DebugEngine::CreateGrandScenePackage()
     auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
     sceneLoadCache->Setup(sceneLoader, m_combinedGamePackage);
     m_contentManager->GiveSceneCache(sceneLoadCache);
-
 
     m_gameTime = std::make_shared<SuperGameTime>();
     curr = m_gameTime->AllTime() + 5000;

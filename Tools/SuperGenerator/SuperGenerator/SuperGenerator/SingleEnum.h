@@ -10,1711 +10,659 @@
 namespace SuperGameInput
 {
     /// <summary>
-    /// Describes the keycode for a key.
+    /// The types of events that can be delivered.
     /// </summary>
-    enum class KeyboardKeycode : int16_t
+    enum class WindowEventType : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
         /// </summary>
         Unknown = -1,
 
-        SDLK_RETURN,
-
-        SDLK_ESCAPE,
-
-        SDLK_BACKSPACE,
-
-        SDLK_TAB,
-
-        SDLK_SPACE,
-
-        SDLK_EXCLAIM,
-
-        SDLK_QUOTEDBL,
-
-        SDLK_HASH,
-
-        SDLK_PERCENT,
-
-        SDLK_DOLLAR,
-
-        SDLK_AMPERSAND,
-
-        SDLK_QUOTE,
-
-        SDLK_LEFTPAREN,
-
-        SDLK_RIGHTPAREN,
-
-        SDLK_ASTERISK,
-
-        SDLK_PLUS,
-
-        SDLK_COMMA,
-
-        SDLK_MINUS,
-
-        SDLK_PERIOD,
-
-        SDLK_SLASH,
-
-        SDLK_0,
-
-        SDLK_1,
-
-        SDLK_2,
-
-        SDLK_3,
-
-        SDLK_4,
-
-        SDLK_5,
-
-        SDLK_6,
-
-        SDLK_7,
-
-        SDLK_8,
-
-        SDLK_9,
-
-        SDLK_COLON,
-
-        SDLK_SEMICOLON,
-
-        SDLK_LESS,
-
-        SDLK_EQUALS,
-
-        SDLK_GREATER,
-
-        SDLK_QUESTION,
-
-        SDLK_AT,
-
-        SDLK_LEFTBRACKET,
-
-        SDLK_BACKSLASH,
-
-        SDLK_RIGHTBRACKET,
-
-        SDLK_CARET,
-
-        SDLK_UNDERSCORE,
-
-        SDLK_BACKQUOTE,
-
-        SDLK_a,
-
-        SDLK_b,
-
-        SDLK_c,
-
-        SDLK_d,
-
-        SDLK_e,
-
-        SDLK_f,
-
-        SDLK_g,
-
-        SDLK_h,
-
-        SDLK_i,
-
-        SDLK_j,
-
-        SDLK_k,
-
-        SDLK_l,
-
-        SDLK_m,
-
-        SDLK_n,
-
-        SDLK_o,
-
-        SDLK_p,
-
-        SDLK_q,
-
-        SDLK_r,
-
-        SDLK_s,
-
-        SDLK_t,
-
-        SDLK_u,
-
-        SDLK_v,
-
-        SDLK_w,
-
-        SDLK_x,
-
-        SDLK_y,
-
-        SDLK_z,
-
-        SDLK_CAPSLOCK,
-
-        SDLK_F1,
-
-        SDLK_F2,
-
-        SDLK_F3,
-
-        SDLK_F4,
-
-        SDLK_F5,
-
-        SDLK_F6,
-
-        SDLK_F7,
-
-        SDLK_F8,
-
-        SDLK_F9,
-
-        SDLK_F10,
-
-        SDLK_F11,
-
-        SDLK_F12,
-
-        SDLK_PRINTSCREEN,
-
-        SDLK_SCROLLLOCK,
-
-        SDLK_PAUSE,
-
-        SDLK_INSERT,
-
-        SDLK_HOME,
-
-        SDLK_PAGEUP,
-
-        SDLK_DELETE,
-
-        SDLK_END,
-
-        SDLK_PAGEDOWN,
-
-        SDLK_RIGHT,
-
-        SDLK_LEFT,
-
-        SDLK_DOWN,
-
-        SDLK_UP,
-
-        SDLK_NUMLOCKCLEAR,
-
-        SDLK_KP_DIVIDE,
-
-        SDLK_KP_MULTIPLY,
-
-        SDLK_KP_MINUS,
-
-        SDLK_KP_PLUS,
-
-        SDLK_KP_ENTER,
-
-        SDLK_KP_1,
-
-        SDLK_KP_2,
-
-        SDLK_KP_3,
-
-        SDLK_KP_4,
-
-        SDLK_KP_5,
-
-        SDLK_KP_6,
-
-        SDLK_KP_7,
-
-        SDLK_KP_8,
-
-        SDLK_KP_9,
-
-        SDLK_KP_0,
-
-        SDLK_KP_PERIOD,
-
-        SDLK_APPLICATION,
-
-        SDLK_POWER,
-
-        SDLK_KP_EQUALS,
-
-        SDLK_F13,
-
-        SDLK_F14,
-
-        SDLK_F15,
-
-        SDLK_F16,
-
-        SDLK_F17,
-
-        SDLK_F18,
-
-        SDLK_F19,
-
-        SDLK_F20,
-
-        SDLK_F21,
-
-        SDLK_F22,
-
-        SDLK_F23,
-
-        SDLK_F24,
-
-        SDLK_EXECUTE,
-
-        SDLK_HELP,
-
-        SDLK_MENU,
-
-        SDLK_SELECT,
-
-        SDLK_STOP,
-
-        SDLK_AGAIN,
-
-        SDLK_UNDO,
-
-        SDLK_CUT,
-
-        SDLK_COPY,
-
-        SDLK_PASTE,
-
-        SDLK_FIND,
-
-        SDLK_MUTE,
-
-        SDLK_VOLUMEUP,
-
-        SDLK_VOLUMEDOWN,
-
-        SDLK_KP_COMMA,
-
-        SDLK_KP_EQUALSAS400,
-
-        SDLK_ALTERASE,
-
-        SDLK_SYSREQ,
-
-        SDLK_CANCEL,
-
-        SDLK_CLEAR,
-
-        SDLK_PRIOR,
-
-        SDLK_RETURN2,
-
-        SDLK_SEPARATOR,
-
-        SDLK_OUT,
-
-        SDLK_OPER,
-
-        SDLK_CLEARAGAIN,
-
-        SDLK_CRSEL,
-
-        SDLK_EXSEL,
-
-        SDLK_KP_00,
-
-        SDLK_KP_000,
-
-        SDLK_THOUSANDSSEPARATOR,
-
-        SDLK_DECIMALSEPARATOR,
-
-        SDLK_CURRENCYUNIT,
-
-        SDLK_CURRENCYSUBUNIT,
-
-        SDLK_KP_LEFTPAREN,
-
-        SDLK_KP_RIGHTPAREN,
-
-        SDLK_KP_LEFTBRACE,
-
-        SDLK_KP_RIGHTBRACE,
-
-        SDLK_KP_TAB,
-
-        SDLK_KP_BACKSPACE,
-
-        SDLK_KP_A,
-
-        SDLK_KP_B,
-
-        SDLK_KP_C,
-
-        SDLK_KP_D,
-
-        SDLK_KP_E,
-
-        SDLK_KP_F,
-
-        SDLK_KP_XOR,
-
-        SDLK_KP_POWER,
-
-        SDLK_KP_PERCENT,
-
-        SDLK_KP_LESS,
-
-        SDLK_KP_GREATER,
-
-        SDLK_KP_AMPERSAND,
-
-        SDLK_KP_DBLAMPERSAND,
-
-        SDLK_KP_VERTICALBAR,
-
-        SDLK_KP_DBLVERTICALBAR,
-
-        SDLK_KP_COLON,
-
-        SDLK_KP_HASH,
-
-        SDLK_KP_SPACE,
-
-        SDLK_KP_AT,
-
-        SDLK_KP_EXCLAM,
-
-        SDLK_KP_MEMSTORE,
-
-        SDLK_KP_MEMRECALL,
-
-        SDLK_KP_MEMCLEAR,
-
-        SDLK_KP_MEMADD,
-
-        SDLK_KP_MEMSUBTRACT,
-
-        SDLK_KP_MEMMULTIPLY,
-
-        SDLK_KP_MEMDIVIDE,
-
-        SDLK_KP_PLUSMINUS,
-
-        SDLK_KP_CLEAR,
-
-        SDLK_KP_CLEARENTRY,
-
-        SDLK_KP_BINARY,
-
-        SDLK_KP_OCTAL,
-
-        SDLK_KP_DECIMAL,
-
-        SDLK_KP_HEXADECIMAL,
-
-        SDLK_LCTRL,
-
-        SDLK_LSHIFT,
-
-        SDLK_LALT,
-
-        SDLK_LGUI,
-
-        SDLK_RCTRL,
-
-        SDLK_RSHIFT,
-
-        SDLK_RALT,
-
-        SDLK_RGUI,
-
-        SDLK_MODE,
-
-        SDLK_AUDIONEXT,
-
-        SDLK_AUDIOPREV,
-
-        SDLK_AUDIOSTOP,
-
-        SDLK_AUDIOPLAY,
-
-        SDLK_AUDIOMUTE,
-
-        SDLK_MEDIASELECT,
-
-        SDLK_WWW,
-
-        SDLK_MAIL,
-
-        SDLK_CALCULATOR,
-
-        SDLK_COMPUTER,
-
-        SDLK_AC_SEARCH,
-
-        SDLK_AC_HOME,
-
-        SDLK_AC_BACK,
-
-        SDLK_AC_FORWARD,
-
-        SDLK_AC_STOP,
-
-        SDLK_AC_REFRESH,
-
-        SDLK_AC_BOOKMARKS,
-
-        SDLK_BRIGHTNESSDOWN,
-
-        SDLK_BRIGHTNESSUP,
-
-        SDLK_DISPLAYSWITCH,
-
-        SDLK_KBDILLUMTOGGLE,
-
-        SDLK_KBDILLUMDOWN,
-
-        SDLK_KBDILLUMUP,
-
-        SDLK_EJECT,
-
-        SDLK_SLEEP,
+        /// <summary>
+        /// Unused (do not remove)
+        /// </summary>
+        SDL_FIRSTEVENT = 0,
+
+        /// <summary>
+        /// User-requested quit
+        /// </summary>
+        SDL_QUIT,
+
+        /// <summary>
+        /// The application is being terminated by the OS
+        /// Called on iOS in applicationWillTerminate()
+        /// Called on Android in onDestroy()
+        /// </summary>
+        SDL_APP_TERMINATING,
+
+        /// <summary>
+        /// The application is low on memory, free memory if possible.
+        /// Called on iOS in applicationDidReceiveMemoryWarning()
+        /// Called on Android in onLowMemory()
+        /// </summary>
+        SDL_APP_LOWMEMORY,
+
+        /// <summary>
+        /// The application is about to enter the background
+        /// Called on iOS in applicationWillResignActive()
+        /// Called on Android in onPause()
+        /// </summary>
+        SDL_APP_WILLENTERBACKGROUND,
+
+        /// <summary>
+        /// The application did enter the background and may not get CPU for some time
+        /// Called on iOS in applicationDidEnterBackground()
+        /// Called on Android in onPause()
+        /// </summary>
+        SDL_APP_DIDENTERBACKGROUND,
+
+        /// <summary>
+        /// The application is about to enter the foreground
+        /// Called on iOS in applicationWillEnterForeground()
+        /// Called on Android in onResume()
+        /// </summary>
+        SDL_APP_WILLENTERFOREGROUND,
+
+        /// <summary>
+        /// The application is now interactive
+        /// Called on iOS in applicationDidBecomeActive()
+        /// Called on Android in onResume()
+        /// </summary>
+        SDL_APP_DIDENTERFOREGROUND,
+
+        /// <summary>
+        /// The user's locale preferences have changed.
+        /// </summary>
+        SDL_LOCALECHANGED,
+
+        /// <summary>
+        /// Display state change
+        /// </summary>
+        SDL_DISPLAYEVENT,
+
+        /// <summary>
+        /// Window state change
+        /// </summary>
+        SDL_WINDOWEVENT,
+
+        /// <summary>
+        /// System specific event
+        /// </summary>
+        SDL_SYSWMEVENT,
+
+        /// <summary>
+        /// Key pressed
+        /// </summary>
+        SDL_KEYDOWN,
+
+        /// <summary>
+        /// Key released
+        /// </summary>
+        SDL_KEYUP,
+
+        /// <summary>
+        /// Keyboard text editing (composition)
+        /// </summary>
+        SDL_TEXTEDITING,
+
+        /// <summary>
+        /// Keyboard text input
+        /// </summary>
+        SDL_TEXTINPUT,
+
+        /// <summary>
+        /// Keymap changed due to a system event such as an
+        /// input language or keyboard layout change.
+        /// </summary>
+        SDL_KEYMAPCHANGED,
+
+        /// <summary>
+        /// Extended keyboard text editing (composition)
+        /// </summary>
+        SDL_TEXTEDITING_EXT,
+
+        /// <summary>
+        /// Mouse moved
+        /// </summary>
+        SDL_MOUSEMOTION,
+
+        /// <summary>
+        /// Mouse button pressed
+        /// </summary>
+        SDL_MOUSEBUTTONDOWN,
+
+        /// <summary>
+        /// Mouse button released
+        /// </summary>
+        SDL_MOUSEBUTTONUP,
+
+        /// <summary>
+        /// Mouse wheel motion
+        /// </summary>
+        SDL_MOUSEWHEEL,
+
+        /// <summary>
+        /// Joystick axis motion
+        /// </summary>
+        SDL_JOYAXISMOTION,
+
+        /// <summary>
+        /// Joystick trackball motion
+        /// </summary>
+        SDL_JOYBALLMOTION,
+
+        /// <summary>
+        /// Joystick hat position change
+        /// </summary>
+        SDL_JOYHATMOTION,
+
+        /// <summary>
+        /// Joystick button pressed
+        /// </summary>
+        SDL_JOYBUTTONDOWN,
+
+        /// <summary>
+        /// Joystick button released
+        /// </summary>
+        SDL_JOYBUTTONUP,
+
+        /// <summary>
+        /// A new joystick has been inserted into the system
+        /// </summary>
+        SDL_JOYDEVICEADDED,
+
+        /// <summary>
+        /// An opened joystick has been removed
+        /// </summary>
+        SDL_JOYDEVICEREMOVED,
+
+        /// <summary>
+        /// Joystick battery level change
+        /// </summary>
+        SDL_JOYBATTERYUPDATED,
+
+        /// <summary>
+        /// Game controller axis motion
+        /// </summary>
+        SDL_CONTROLLERAXISMOTION,
+
+        /// <summary>
+        /// Game controller button pressed
+        /// </summary>
+        SDL_CONTROLLERBUTTONDOWN,
+
+        /// <summary>
+        /// Game controller button released
+        /// </summary>
+        SDL_CONTROLLERBUTTONUP,
+
+        /// <summary>
+        /// A new Game controller has been inserted into the system
+        /// </summary>
+        SDL_CONTROLLERDEVICEADDED,
+
+        /// <summary>
+        /// An opened Game controller has been removed
+        /// </summary>
+        SDL_CONTROLLERDEVICEREMOVED,
+
+        /// <summary>
+        /// The controller mapping was updated
+        /// </summary>
+        SDL_CONTROLLERDEVICEREMAPPED,
+
+        /// <summary>
+        /// Game controller touchpad was touched
+        /// </summary>
+        SDL_CONTROLLERTOUCHPADDOWN,
+
+        /// <summary>
+        /// Game controller touchpad finger was moved
+        /// </summary>
+        SDL_CONTROLLERTOUCHPADMOTION,
+
+        /// <summary>
+        /// Game controller touchpad finger was lifted
+        /// </summary>
+        SDL_CONTROLLERTOUCHPADUP,
+
+        /// <summary>
+        /// Game controller sensor was updated
+        /// </summary>
+        SDL_CONTROLLERSENSORUPDATE,
+
+        SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3,
+
+        /// <summary>
+        /// Game controller Steam handle has changed
+        /// </summary>
+        SDL_CONTROLLERSTEAMHANDLEUPDATED,
+
+        SDL_FINGERDOWN,
+
+        SDL_FINGERUP,
+
+        SDL_FINGERMOTION,
+
+        SDL_DOLLARGESTURE,
+
+        SDL_DOLLARRECORD,
+
+        SDL_MULTIGESTURE,
+
+        /// <summary>
+        /// The clipboard changed
+        /// </summary>
+        SDL_CLIPBOARDUPDATE,
+
+        /// <summary>
+        /// The system requests a file open
+        /// </summary>
+        SDL_DROPFILE,
+
+        /// <summary>
+        /// text/plain drag-and-drop event
+        /// </summary>
+        SDL_DROPTEXT,
+
+        /// <summary>
+        /// A new set of drops is beginning (NULL filename)
+        /// </summary>
+        SDL_DROPBEGIN,
+
+        /// <summary>
+        /// Current set of drops is now complete (NULL filename)
+        /// </summary>
+        SDL_DROPCOMPLETE,
+
+        /// <summary>
+        /// A new audio device is available
+        /// </summary>
+        SDL_AUDIODEVICEADDED,
+
+        /// <summary>
+        /// An audio device has been removed.
+        /// </summary>
+        SDL_AUDIODEVICEREMOVED,
+
+        /// <summary>
+        /// A sensor was updated
+        /// </summary>
+        SDL_SENSORUPDATE,
+
+        /// <summary>
+        /// The render targets have been reset and their contents need to be updated
+        /// </summary>
+        SDL_RENDER_TARGETS_RESET,
+
+        /// <summary>
+        /// The device has been reset and all textures need to be recreated
+        /// </summary>
+        SDL_RENDER_DEVICE_RESET,
+
+        /// <summary>
+        /// Events ::SDL_USEREVENT through ::SDL_LASTEVENT are for your use,
+        /// and should be allocated with SDL_RegisterEvents()
+        /// </summary>
+        SDL_USEREVENT,
+
+        /// <summary>
+        /// This last event is only for bounding internal arrays
+        /// </summary>
+        SDL_LASTEVENT,
     };
 
     /// <summary>
     /// Accompanies enums to provide extra functionality.
     /// </summary>
-    class EKeyboardKeycode
+    class EWindowEventType
     {
     public:
-        static KeyboardKeycode Min() { return KeyboardKeycode::SDLK_RETURN; }
-        static KeyboardKeycode Max() { return KeyboardKeycode::SDLK_SLEEP; }
+        static WindowEventType Min() { return WindowEventType::SDL_FIRSTEVENT; }
+        static WindowEventType Max() { return WindowEventType::SDL_LASTEVENT; }
 
-        static KeyboardKeycode* ToArray()
+        static WindowEventType* ToArray()
         {
-            static KeyboardKeycode returnArray[] =
+            static WindowEventType returnArray[] =
             {
-                KeyboardKeycode::SDLK_RETURN,
-                KeyboardKeycode::SDLK_ESCAPE,
-                KeyboardKeycode::SDLK_BACKSPACE,
-                KeyboardKeycode::SDLK_TAB,
-                KeyboardKeycode::SDLK_SPACE,
-                KeyboardKeycode::SDLK_EXCLAIM,
-                KeyboardKeycode::SDLK_QUOTEDBL,
-                KeyboardKeycode::SDLK_HASH,
-                KeyboardKeycode::SDLK_PERCENT,
-                KeyboardKeycode::SDLK_DOLLAR,
-                KeyboardKeycode::SDLK_AMPERSAND,
-                KeyboardKeycode::SDLK_QUOTE,
-                KeyboardKeycode::SDLK_LEFTPAREN,
-                KeyboardKeycode::SDLK_RIGHTPAREN,
-                KeyboardKeycode::SDLK_ASTERISK,
-                KeyboardKeycode::SDLK_PLUS,
-                KeyboardKeycode::SDLK_COMMA,
-                KeyboardKeycode::SDLK_MINUS,
-                KeyboardKeycode::SDLK_PERIOD,
-                KeyboardKeycode::SDLK_SLASH,
-                KeyboardKeycode::SDLK_0,
-                KeyboardKeycode::SDLK_1,
-                KeyboardKeycode::SDLK_2,
-                KeyboardKeycode::SDLK_3,
-                KeyboardKeycode::SDLK_4,
-                KeyboardKeycode::SDLK_5,
-                KeyboardKeycode::SDLK_6,
-                KeyboardKeycode::SDLK_7,
-                KeyboardKeycode::SDLK_8,
-                KeyboardKeycode::SDLK_9,
-                KeyboardKeycode::SDLK_COLON,
-                KeyboardKeycode::SDLK_SEMICOLON,
-                KeyboardKeycode::SDLK_LESS,
-                KeyboardKeycode::SDLK_EQUALS,
-                KeyboardKeycode::SDLK_GREATER,
-                KeyboardKeycode::SDLK_QUESTION,
-                KeyboardKeycode::SDLK_AT,
-                KeyboardKeycode::SDLK_LEFTBRACKET,
-                KeyboardKeycode::SDLK_BACKSLASH,
-                KeyboardKeycode::SDLK_RIGHTBRACKET,
-                KeyboardKeycode::SDLK_CARET,
-                KeyboardKeycode::SDLK_UNDERSCORE,
-                KeyboardKeycode::SDLK_BACKQUOTE,
-                KeyboardKeycode::SDLK_a,
-                KeyboardKeycode::SDLK_b,
-                KeyboardKeycode::SDLK_c,
-                KeyboardKeycode::SDLK_d,
-                KeyboardKeycode::SDLK_e,
-                KeyboardKeycode::SDLK_f,
-                KeyboardKeycode::SDLK_g,
-                KeyboardKeycode::SDLK_h,
-                KeyboardKeycode::SDLK_i,
-                KeyboardKeycode::SDLK_j,
-                KeyboardKeycode::SDLK_k,
-                KeyboardKeycode::SDLK_l,
-                KeyboardKeycode::SDLK_m,
-                KeyboardKeycode::SDLK_n,
-                KeyboardKeycode::SDLK_o,
-                KeyboardKeycode::SDLK_p,
-                KeyboardKeycode::SDLK_q,
-                KeyboardKeycode::SDLK_r,
-                KeyboardKeycode::SDLK_s,
-                KeyboardKeycode::SDLK_t,
-                KeyboardKeycode::SDLK_u,
-                KeyboardKeycode::SDLK_v,
-                KeyboardKeycode::SDLK_w,
-                KeyboardKeycode::SDLK_x,
-                KeyboardKeycode::SDLK_y,
-                KeyboardKeycode::SDLK_z,
-                KeyboardKeycode::SDLK_CAPSLOCK,
-                KeyboardKeycode::SDLK_F1,
-                KeyboardKeycode::SDLK_F2,
-                KeyboardKeycode::SDLK_F3,
-                KeyboardKeycode::SDLK_F4,
-                KeyboardKeycode::SDLK_F5,
-                KeyboardKeycode::SDLK_F6,
-                KeyboardKeycode::SDLK_F7,
-                KeyboardKeycode::SDLK_F8,
-                KeyboardKeycode::SDLK_F9,
-                KeyboardKeycode::SDLK_F10,
-                KeyboardKeycode::SDLK_F11,
-                KeyboardKeycode::SDLK_F12,
-                KeyboardKeycode::SDLK_PRINTSCREEN,
-                KeyboardKeycode::SDLK_SCROLLLOCK,
-                KeyboardKeycode::SDLK_PAUSE,
-                KeyboardKeycode::SDLK_INSERT,
-                KeyboardKeycode::SDLK_HOME,
-                KeyboardKeycode::SDLK_PAGEUP,
-                KeyboardKeycode::SDLK_DELETE,
-                KeyboardKeycode::SDLK_END,
-                KeyboardKeycode::SDLK_PAGEDOWN,
-                KeyboardKeycode::SDLK_RIGHT,
-                KeyboardKeycode::SDLK_LEFT,
-                KeyboardKeycode::SDLK_DOWN,
-                KeyboardKeycode::SDLK_UP,
-                KeyboardKeycode::SDLK_NUMLOCKCLEAR,
-                KeyboardKeycode::SDLK_KP_DIVIDE,
-                KeyboardKeycode::SDLK_KP_MULTIPLY,
-                KeyboardKeycode::SDLK_KP_MINUS,
-                KeyboardKeycode::SDLK_KP_PLUS,
-                KeyboardKeycode::SDLK_KP_ENTER,
-                KeyboardKeycode::SDLK_KP_1,
-                KeyboardKeycode::SDLK_KP_2,
-                KeyboardKeycode::SDLK_KP_3,
-                KeyboardKeycode::SDLK_KP_4,
-                KeyboardKeycode::SDLK_KP_5,
-                KeyboardKeycode::SDLK_KP_6,
-                KeyboardKeycode::SDLK_KP_7,
-                KeyboardKeycode::SDLK_KP_8,
-                KeyboardKeycode::SDLK_KP_9,
-                KeyboardKeycode::SDLK_KP_0,
-                KeyboardKeycode::SDLK_KP_PERIOD,
-                KeyboardKeycode::SDLK_APPLICATION,
-                KeyboardKeycode::SDLK_POWER,
-                KeyboardKeycode::SDLK_KP_EQUALS,
-                KeyboardKeycode::SDLK_F13,
-                KeyboardKeycode::SDLK_F14,
-                KeyboardKeycode::SDLK_F15,
-                KeyboardKeycode::SDLK_F16,
-                KeyboardKeycode::SDLK_F17,
-                KeyboardKeycode::SDLK_F18,
-                KeyboardKeycode::SDLK_F19,
-                KeyboardKeycode::SDLK_F20,
-                KeyboardKeycode::SDLK_F21,
-                KeyboardKeycode::SDLK_F22,
-                KeyboardKeycode::SDLK_F23,
-                KeyboardKeycode::SDLK_F24,
-                KeyboardKeycode::SDLK_EXECUTE,
-                KeyboardKeycode::SDLK_HELP,
-                KeyboardKeycode::SDLK_MENU,
-                KeyboardKeycode::SDLK_SELECT,
-                KeyboardKeycode::SDLK_STOP,
-                KeyboardKeycode::SDLK_AGAIN,
-                KeyboardKeycode::SDLK_UNDO,
-                KeyboardKeycode::SDLK_CUT,
-                KeyboardKeycode::SDLK_COPY,
-                KeyboardKeycode::SDLK_PASTE,
-                KeyboardKeycode::SDLK_FIND,
-                KeyboardKeycode::SDLK_MUTE,
-                KeyboardKeycode::SDLK_VOLUMEUP,
-                KeyboardKeycode::SDLK_VOLUMEDOWN,
-                KeyboardKeycode::SDLK_KP_COMMA,
-                KeyboardKeycode::SDLK_KP_EQUALSAS400,
-                KeyboardKeycode::SDLK_ALTERASE,
-                KeyboardKeycode::SDLK_SYSREQ,
-                KeyboardKeycode::SDLK_CANCEL,
-                KeyboardKeycode::SDLK_CLEAR,
-                KeyboardKeycode::SDLK_PRIOR,
-                KeyboardKeycode::SDLK_RETURN2,
-                KeyboardKeycode::SDLK_SEPARATOR,
-                KeyboardKeycode::SDLK_OUT,
-                KeyboardKeycode::SDLK_OPER,
-                KeyboardKeycode::SDLK_CLEARAGAIN,
-                KeyboardKeycode::SDLK_CRSEL,
-                KeyboardKeycode::SDLK_EXSEL,
-                KeyboardKeycode::SDLK_KP_00,
-                KeyboardKeycode::SDLK_KP_000,
-                KeyboardKeycode::SDLK_THOUSANDSSEPARATOR,
-                KeyboardKeycode::SDLK_DECIMALSEPARATOR,
-                KeyboardKeycode::SDLK_CURRENCYUNIT,
-                KeyboardKeycode::SDLK_CURRENCYSUBUNIT,
-                KeyboardKeycode::SDLK_KP_LEFTPAREN,
-                KeyboardKeycode::SDLK_KP_RIGHTPAREN,
-                KeyboardKeycode::SDLK_KP_LEFTBRACE,
-                KeyboardKeycode::SDLK_KP_RIGHTBRACE,
-                KeyboardKeycode::SDLK_KP_TAB,
-                KeyboardKeycode::SDLK_KP_BACKSPACE,
-                KeyboardKeycode::SDLK_KP_A,
-                KeyboardKeycode::SDLK_KP_B,
-                KeyboardKeycode::SDLK_KP_C,
-                KeyboardKeycode::SDLK_KP_D,
-                KeyboardKeycode::SDLK_KP_E,
-                KeyboardKeycode::SDLK_KP_F,
-                KeyboardKeycode::SDLK_KP_XOR,
-                KeyboardKeycode::SDLK_KP_POWER,
-                KeyboardKeycode::SDLK_KP_PERCENT,
-                KeyboardKeycode::SDLK_KP_LESS,
-                KeyboardKeycode::SDLK_KP_GREATER,
-                KeyboardKeycode::SDLK_KP_AMPERSAND,
-                KeyboardKeycode::SDLK_KP_DBLAMPERSAND,
-                KeyboardKeycode::SDLK_KP_VERTICALBAR,
-                KeyboardKeycode::SDLK_KP_DBLVERTICALBAR,
-                KeyboardKeycode::SDLK_KP_COLON,
-                KeyboardKeycode::SDLK_KP_HASH,
-                KeyboardKeycode::SDLK_KP_SPACE,
-                KeyboardKeycode::SDLK_KP_AT,
-                KeyboardKeycode::SDLK_KP_EXCLAM,
-                KeyboardKeycode::SDLK_KP_MEMSTORE,
-                KeyboardKeycode::SDLK_KP_MEMRECALL,
-                KeyboardKeycode::SDLK_KP_MEMCLEAR,
-                KeyboardKeycode::SDLK_KP_MEMADD,
-                KeyboardKeycode::SDLK_KP_MEMSUBTRACT,
-                KeyboardKeycode::SDLK_KP_MEMMULTIPLY,
-                KeyboardKeycode::SDLK_KP_MEMDIVIDE,
-                KeyboardKeycode::SDLK_KP_PLUSMINUS,
-                KeyboardKeycode::SDLK_KP_CLEAR,
-                KeyboardKeycode::SDLK_KP_CLEARENTRY,
-                KeyboardKeycode::SDLK_KP_BINARY,
-                KeyboardKeycode::SDLK_KP_OCTAL,
-                KeyboardKeycode::SDLK_KP_DECIMAL,
-                KeyboardKeycode::SDLK_KP_HEXADECIMAL,
-                KeyboardKeycode::SDLK_LCTRL,
-                KeyboardKeycode::SDLK_LSHIFT,
-                KeyboardKeycode::SDLK_LALT,
-                KeyboardKeycode::SDLK_LGUI,
-                KeyboardKeycode::SDLK_RCTRL,
-                KeyboardKeycode::SDLK_RSHIFT,
-                KeyboardKeycode::SDLK_RALT,
-                KeyboardKeycode::SDLK_RGUI,
-                KeyboardKeycode::SDLK_MODE,
-                KeyboardKeycode::SDLK_AUDIONEXT,
-                KeyboardKeycode::SDLK_AUDIOPREV,
-                KeyboardKeycode::SDLK_AUDIOSTOP,
-                KeyboardKeycode::SDLK_AUDIOPLAY,
-                KeyboardKeycode::SDLK_AUDIOMUTE,
-                KeyboardKeycode::SDLK_MEDIASELECT,
-                KeyboardKeycode::SDLK_WWW,
-                KeyboardKeycode::SDLK_MAIL,
-                KeyboardKeycode::SDLK_CALCULATOR,
-                KeyboardKeycode::SDLK_COMPUTER,
-                KeyboardKeycode::SDLK_AC_SEARCH,
-                KeyboardKeycode::SDLK_AC_HOME,
-                KeyboardKeycode::SDLK_AC_BACK,
-                KeyboardKeycode::SDLK_AC_FORWARD,
-                KeyboardKeycode::SDLK_AC_STOP,
-                KeyboardKeycode::SDLK_AC_REFRESH,
-                KeyboardKeycode::SDLK_AC_BOOKMARKS,
-                KeyboardKeycode::SDLK_BRIGHTNESSDOWN,
-                KeyboardKeycode::SDLK_BRIGHTNESSUP,
-                KeyboardKeycode::SDLK_DISPLAYSWITCH,
-                KeyboardKeycode::SDLK_KBDILLUMTOGGLE,
-                KeyboardKeycode::SDLK_KBDILLUMDOWN,
-                KeyboardKeycode::SDLK_KBDILLUMUP,
-                KeyboardKeycode::SDLK_EJECT,
-                KeyboardKeycode::SDLK_SLEEP,
+                WindowEventType::SDL_FIRSTEVENT,
+                WindowEventType::SDL_QUIT,
+                WindowEventType::SDL_APP_TERMINATING,
+                WindowEventType::SDL_APP_LOWMEMORY,
+                WindowEventType::SDL_APP_WILLENTERBACKGROUND,
+                WindowEventType::SDL_APP_DIDENTERBACKGROUND,
+                WindowEventType::SDL_APP_WILLENTERFOREGROUND,
+                WindowEventType::SDL_APP_DIDENTERFOREGROUND,
+                WindowEventType::SDL_LOCALECHANGED,
+                WindowEventType::SDL_DISPLAYEVENT,
+                WindowEventType::SDL_WINDOWEVENT,
+                WindowEventType::SDL_SYSWMEVENT,
+                WindowEventType::SDL_KEYDOWN,
+                WindowEventType::SDL_KEYUP,
+                WindowEventType::SDL_TEXTEDITING,
+                WindowEventType::SDL_TEXTINPUT,
+                WindowEventType::SDL_KEYMAPCHANGED,
+                WindowEventType::SDL_TEXTEDITING_EXT,
+                WindowEventType::SDL_MOUSEMOTION,
+                WindowEventType::SDL_MOUSEBUTTONDOWN,
+                WindowEventType::SDL_MOUSEBUTTONUP,
+                WindowEventType::SDL_MOUSEWHEEL,
+                WindowEventType::SDL_JOYAXISMOTION,
+                WindowEventType::SDL_JOYBALLMOTION,
+                WindowEventType::SDL_JOYHATMOTION,
+                WindowEventType::SDL_JOYBUTTONDOWN,
+                WindowEventType::SDL_JOYBUTTONUP,
+                WindowEventType::SDL_JOYDEVICEADDED,
+                WindowEventType::SDL_JOYDEVICEREMOVED,
+                WindowEventType::SDL_JOYBATTERYUPDATED,
+                WindowEventType::SDL_CONTROLLERAXISMOTION,
+                WindowEventType::SDL_CONTROLLERBUTTONDOWN,
+                WindowEventType::SDL_CONTROLLERBUTTONUP,
+                WindowEventType::SDL_CONTROLLERDEVICEADDED,
+                WindowEventType::SDL_CONTROLLERDEVICEREMOVED,
+                WindowEventType::SDL_CONTROLLERDEVICEREMAPPED,
+                WindowEventType::SDL_CONTROLLERTOUCHPADDOWN,
+                WindowEventType::SDL_CONTROLLERTOUCHPADMOTION,
+                WindowEventType::SDL_CONTROLLERTOUCHPADUP,
+                WindowEventType::SDL_CONTROLLERSENSORUPDATE,
+                WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3,
+                WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED,
+                WindowEventType::SDL_FINGERDOWN,
+                WindowEventType::SDL_FINGERUP,
+                WindowEventType::SDL_FINGERMOTION,
+                WindowEventType::SDL_DOLLARGESTURE,
+                WindowEventType::SDL_DOLLARRECORD,
+                WindowEventType::SDL_MULTIGESTURE,
+                WindowEventType::SDL_CLIPBOARDUPDATE,
+                WindowEventType::SDL_DROPFILE,
+                WindowEventType::SDL_DROPTEXT,
+                WindowEventType::SDL_DROPBEGIN,
+                WindowEventType::SDL_DROPCOMPLETE,
+                WindowEventType::SDL_AUDIODEVICEADDED,
+                WindowEventType::SDL_AUDIODEVICEREMOVED,
+                WindowEventType::SDL_SENSORUPDATE,
+                WindowEventType::SDL_RENDER_TARGETS_RESET,
+                WindowEventType::SDL_RENDER_DEVICE_RESET,
+                WindowEventType::SDL_USEREVENT,
+                WindowEventType::SDL_LASTEVENT,
             };
 
             return returnArray;
         }
 
-        static std::vector<KeyboardKeycode> ToVector()
+        static std::vector<WindowEventType> ToVector()
         {
-            static std::vector<KeyboardKeycode> returnVector =
+            static std::vector<WindowEventType> returnVector =
             {
-                KeyboardKeycode::SDLK_RETURN,
-                KeyboardKeycode::SDLK_ESCAPE,
-                KeyboardKeycode::SDLK_BACKSPACE,
-                KeyboardKeycode::SDLK_TAB,
-                KeyboardKeycode::SDLK_SPACE,
-                KeyboardKeycode::SDLK_EXCLAIM,
-                KeyboardKeycode::SDLK_QUOTEDBL,
-                KeyboardKeycode::SDLK_HASH,
-                KeyboardKeycode::SDLK_PERCENT,
-                KeyboardKeycode::SDLK_DOLLAR,
-                KeyboardKeycode::SDLK_AMPERSAND,
-                KeyboardKeycode::SDLK_QUOTE,
-                KeyboardKeycode::SDLK_LEFTPAREN,
-                KeyboardKeycode::SDLK_RIGHTPAREN,
-                KeyboardKeycode::SDLK_ASTERISK,
-                KeyboardKeycode::SDLK_PLUS,
-                KeyboardKeycode::SDLK_COMMA,
-                KeyboardKeycode::SDLK_MINUS,
-                KeyboardKeycode::SDLK_PERIOD,
-                KeyboardKeycode::SDLK_SLASH,
-                KeyboardKeycode::SDLK_0,
-                KeyboardKeycode::SDLK_1,
-                KeyboardKeycode::SDLK_2,
-                KeyboardKeycode::SDLK_3,
-                KeyboardKeycode::SDLK_4,
-                KeyboardKeycode::SDLK_5,
-                KeyboardKeycode::SDLK_6,
-                KeyboardKeycode::SDLK_7,
-                KeyboardKeycode::SDLK_8,
-                KeyboardKeycode::SDLK_9,
-                KeyboardKeycode::SDLK_COLON,
-                KeyboardKeycode::SDLK_SEMICOLON,
-                KeyboardKeycode::SDLK_LESS,
-                KeyboardKeycode::SDLK_EQUALS,
-                KeyboardKeycode::SDLK_GREATER,
-                KeyboardKeycode::SDLK_QUESTION,
-                KeyboardKeycode::SDLK_AT,
-                KeyboardKeycode::SDLK_LEFTBRACKET,
-                KeyboardKeycode::SDLK_BACKSLASH,
-                KeyboardKeycode::SDLK_RIGHTBRACKET,
-                KeyboardKeycode::SDLK_CARET,
-                KeyboardKeycode::SDLK_UNDERSCORE,
-                KeyboardKeycode::SDLK_BACKQUOTE,
-                KeyboardKeycode::SDLK_a,
-                KeyboardKeycode::SDLK_b,
-                KeyboardKeycode::SDLK_c,
-                KeyboardKeycode::SDLK_d,
-                KeyboardKeycode::SDLK_e,
-                KeyboardKeycode::SDLK_f,
-                KeyboardKeycode::SDLK_g,
-                KeyboardKeycode::SDLK_h,
-                KeyboardKeycode::SDLK_i,
-                KeyboardKeycode::SDLK_j,
-                KeyboardKeycode::SDLK_k,
-                KeyboardKeycode::SDLK_l,
-                KeyboardKeycode::SDLK_m,
-                KeyboardKeycode::SDLK_n,
-                KeyboardKeycode::SDLK_o,
-                KeyboardKeycode::SDLK_p,
-                KeyboardKeycode::SDLK_q,
-                KeyboardKeycode::SDLK_r,
-                KeyboardKeycode::SDLK_s,
-                KeyboardKeycode::SDLK_t,
-                KeyboardKeycode::SDLK_u,
-                KeyboardKeycode::SDLK_v,
-                KeyboardKeycode::SDLK_w,
-                KeyboardKeycode::SDLK_x,
-                KeyboardKeycode::SDLK_y,
-                KeyboardKeycode::SDLK_z,
-                KeyboardKeycode::SDLK_CAPSLOCK,
-                KeyboardKeycode::SDLK_F1,
-                KeyboardKeycode::SDLK_F2,
-                KeyboardKeycode::SDLK_F3,
-                KeyboardKeycode::SDLK_F4,
-                KeyboardKeycode::SDLK_F5,
-                KeyboardKeycode::SDLK_F6,
-                KeyboardKeycode::SDLK_F7,
-                KeyboardKeycode::SDLK_F8,
-                KeyboardKeycode::SDLK_F9,
-                KeyboardKeycode::SDLK_F10,
-                KeyboardKeycode::SDLK_F11,
-                KeyboardKeycode::SDLK_F12,
-                KeyboardKeycode::SDLK_PRINTSCREEN,
-                KeyboardKeycode::SDLK_SCROLLLOCK,
-                KeyboardKeycode::SDLK_PAUSE,
-                KeyboardKeycode::SDLK_INSERT,
-                KeyboardKeycode::SDLK_HOME,
-                KeyboardKeycode::SDLK_PAGEUP,
-                KeyboardKeycode::SDLK_DELETE,
-                KeyboardKeycode::SDLK_END,
-                KeyboardKeycode::SDLK_PAGEDOWN,
-                KeyboardKeycode::SDLK_RIGHT,
-                KeyboardKeycode::SDLK_LEFT,
-                KeyboardKeycode::SDLK_DOWN,
-                KeyboardKeycode::SDLK_UP,
-                KeyboardKeycode::SDLK_NUMLOCKCLEAR,
-                KeyboardKeycode::SDLK_KP_DIVIDE,
-                KeyboardKeycode::SDLK_KP_MULTIPLY,
-                KeyboardKeycode::SDLK_KP_MINUS,
-                KeyboardKeycode::SDLK_KP_PLUS,
-                KeyboardKeycode::SDLK_KP_ENTER,
-                KeyboardKeycode::SDLK_KP_1,
-                KeyboardKeycode::SDLK_KP_2,
-                KeyboardKeycode::SDLK_KP_3,
-                KeyboardKeycode::SDLK_KP_4,
-                KeyboardKeycode::SDLK_KP_5,
-                KeyboardKeycode::SDLK_KP_6,
-                KeyboardKeycode::SDLK_KP_7,
-                KeyboardKeycode::SDLK_KP_8,
-                KeyboardKeycode::SDLK_KP_9,
-                KeyboardKeycode::SDLK_KP_0,
-                KeyboardKeycode::SDLK_KP_PERIOD,
-                KeyboardKeycode::SDLK_APPLICATION,
-                KeyboardKeycode::SDLK_POWER,
-                KeyboardKeycode::SDLK_KP_EQUALS,
-                KeyboardKeycode::SDLK_F13,
-                KeyboardKeycode::SDLK_F14,
-                KeyboardKeycode::SDLK_F15,
-                KeyboardKeycode::SDLK_F16,
-                KeyboardKeycode::SDLK_F17,
-                KeyboardKeycode::SDLK_F18,
-                KeyboardKeycode::SDLK_F19,
-                KeyboardKeycode::SDLK_F20,
-                KeyboardKeycode::SDLK_F21,
-                KeyboardKeycode::SDLK_F22,
-                KeyboardKeycode::SDLK_F23,
-                KeyboardKeycode::SDLK_F24,
-                KeyboardKeycode::SDLK_EXECUTE,
-                KeyboardKeycode::SDLK_HELP,
-                KeyboardKeycode::SDLK_MENU,
-                KeyboardKeycode::SDLK_SELECT,
-                KeyboardKeycode::SDLK_STOP,
-                KeyboardKeycode::SDLK_AGAIN,
-                KeyboardKeycode::SDLK_UNDO,
-                KeyboardKeycode::SDLK_CUT,
-                KeyboardKeycode::SDLK_COPY,
-                KeyboardKeycode::SDLK_PASTE,
-                KeyboardKeycode::SDLK_FIND,
-                KeyboardKeycode::SDLK_MUTE,
-                KeyboardKeycode::SDLK_VOLUMEUP,
-                KeyboardKeycode::SDLK_VOLUMEDOWN,
-                KeyboardKeycode::SDLK_KP_COMMA,
-                KeyboardKeycode::SDLK_KP_EQUALSAS400,
-                KeyboardKeycode::SDLK_ALTERASE,
-                KeyboardKeycode::SDLK_SYSREQ,
-                KeyboardKeycode::SDLK_CANCEL,
-                KeyboardKeycode::SDLK_CLEAR,
-                KeyboardKeycode::SDLK_PRIOR,
-                KeyboardKeycode::SDLK_RETURN2,
-                KeyboardKeycode::SDLK_SEPARATOR,
-                KeyboardKeycode::SDLK_OUT,
-                KeyboardKeycode::SDLK_OPER,
-                KeyboardKeycode::SDLK_CLEARAGAIN,
-                KeyboardKeycode::SDLK_CRSEL,
-                KeyboardKeycode::SDLK_EXSEL,
-                KeyboardKeycode::SDLK_KP_00,
-                KeyboardKeycode::SDLK_KP_000,
-                KeyboardKeycode::SDLK_THOUSANDSSEPARATOR,
-                KeyboardKeycode::SDLK_DECIMALSEPARATOR,
-                KeyboardKeycode::SDLK_CURRENCYUNIT,
-                KeyboardKeycode::SDLK_CURRENCYSUBUNIT,
-                KeyboardKeycode::SDLK_KP_LEFTPAREN,
-                KeyboardKeycode::SDLK_KP_RIGHTPAREN,
-                KeyboardKeycode::SDLK_KP_LEFTBRACE,
-                KeyboardKeycode::SDLK_KP_RIGHTBRACE,
-                KeyboardKeycode::SDLK_KP_TAB,
-                KeyboardKeycode::SDLK_KP_BACKSPACE,
-                KeyboardKeycode::SDLK_KP_A,
-                KeyboardKeycode::SDLK_KP_B,
-                KeyboardKeycode::SDLK_KP_C,
-                KeyboardKeycode::SDLK_KP_D,
-                KeyboardKeycode::SDLK_KP_E,
-                KeyboardKeycode::SDLK_KP_F,
-                KeyboardKeycode::SDLK_KP_XOR,
-                KeyboardKeycode::SDLK_KP_POWER,
-                KeyboardKeycode::SDLK_KP_PERCENT,
-                KeyboardKeycode::SDLK_KP_LESS,
-                KeyboardKeycode::SDLK_KP_GREATER,
-                KeyboardKeycode::SDLK_KP_AMPERSAND,
-                KeyboardKeycode::SDLK_KP_DBLAMPERSAND,
-                KeyboardKeycode::SDLK_KP_VERTICALBAR,
-                KeyboardKeycode::SDLK_KP_DBLVERTICALBAR,
-                KeyboardKeycode::SDLK_KP_COLON,
-                KeyboardKeycode::SDLK_KP_HASH,
-                KeyboardKeycode::SDLK_KP_SPACE,
-                KeyboardKeycode::SDLK_KP_AT,
-                KeyboardKeycode::SDLK_KP_EXCLAM,
-                KeyboardKeycode::SDLK_KP_MEMSTORE,
-                KeyboardKeycode::SDLK_KP_MEMRECALL,
-                KeyboardKeycode::SDLK_KP_MEMCLEAR,
-                KeyboardKeycode::SDLK_KP_MEMADD,
-                KeyboardKeycode::SDLK_KP_MEMSUBTRACT,
-                KeyboardKeycode::SDLK_KP_MEMMULTIPLY,
-                KeyboardKeycode::SDLK_KP_MEMDIVIDE,
-                KeyboardKeycode::SDLK_KP_PLUSMINUS,
-                KeyboardKeycode::SDLK_KP_CLEAR,
-                KeyboardKeycode::SDLK_KP_CLEARENTRY,
-                KeyboardKeycode::SDLK_KP_BINARY,
-                KeyboardKeycode::SDLK_KP_OCTAL,
-                KeyboardKeycode::SDLK_KP_DECIMAL,
-                KeyboardKeycode::SDLK_KP_HEXADECIMAL,
-                KeyboardKeycode::SDLK_LCTRL,
-                KeyboardKeycode::SDLK_LSHIFT,
-                KeyboardKeycode::SDLK_LALT,
-                KeyboardKeycode::SDLK_LGUI,
-                KeyboardKeycode::SDLK_RCTRL,
-                KeyboardKeycode::SDLK_RSHIFT,
-                KeyboardKeycode::SDLK_RALT,
-                KeyboardKeycode::SDLK_RGUI,
-                KeyboardKeycode::SDLK_MODE,
-                KeyboardKeycode::SDLK_AUDIONEXT,
-                KeyboardKeycode::SDLK_AUDIOPREV,
-                KeyboardKeycode::SDLK_AUDIOSTOP,
-                KeyboardKeycode::SDLK_AUDIOPLAY,
-                KeyboardKeycode::SDLK_AUDIOMUTE,
-                KeyboardKeycode::SDLK_MEDIASELECT,
-                KeyboardKeycode::SDLK_WWW,
-                KeyboardKeycode::SDLK_MAIL,
-                KeyboardKeycode::SDLK_CALCULATOR,
-                KeyboardKeycode::SDLK_COMPUTER,
-                KeyboardKeycode::SDLK_AC_SEARCH,
-                KeyboardKeycode::SDLK_AC_HOME,
-                KeyboardKeycode::SDLK_AC_BACK,
-                KeyboardKeycode::SDLK_AC_FORWARD,
-                KeyboardKeycode::SDLK_AC_STOP,
-                KeyboardKeycode::SDLK_AC_REFRESH,
-                KeyboardKeycode::SDLK_AC_BOOKMARKS,
-                KeyboardKeycode::SDLK_BRIGHTNESSDOWN,
-                KeyboardKeycode::SDLK_BRIGHTNESSUP,
-                KeyboardKeycode::SDLK_DISPLAYSWITCH,
-                KeyboardKeycode::SDLK_KBDILLUMTOGGLE,
-                KeyboardKeycode::SDLK_KBDILLUMDOWN,
-                KeyboardKeycode::SDLK_KBDILLUMUP,
-                KeyboardKeycode::SDLK_EJECT,
-                KeyboardKeycode::SDLK_SLEEP,
+                WindowEventType::SDL_FIRSTEVENT,
+                WindowEventType::SDL_QUIT,
+                WindowEventType::SDL_APP_TERMINATING,
+                WindowEventType::SDL_APP_LOWMEMORY,
+                WindowEventType::SDL_APP_WILLENTERBACKGROUND,
+                WindowEventType::SDL_APP_DIDENTERBACKGROUND,
+                WindowEventType::SDL_APP_WILLENTERFOREGROUND,
+                WindowEventType::SDL_APP_DIDENTERFOREGROUND,
+                WindowEventType::SDL_LOCALECHANGED,
+                WindowEventType::SDL_DISPLAYEVENT,
+                WindowEventType::SDL_WINDOWEVENT,
+                WindowEventType::SDL_SYSWMEVENT,
+                WindowEventType::SDL_KEYDOWN,
+                WindowEventType::SDL_KEYUP,
+                WindowEventType::SDL_TEXTEDITING,
+                WindowEventType::SDL_TEXTINPUT,
+                WindowEventType::SDL_KEYMAPCHANGED,
+                WindowEventType::SDL_TEXTEDITING_EXT,
+                WindowEventType::SDL_MOUSEMOTION,
+                WindowEventType::SDL_MOUSEBUTTONDOWN,
+                WindowEventType::SDL_MOUSEBUTTONUP,
+                WindowEventType::SDL_MOUSEWHEEL,
+                WindowEventType::SDL_JOYAXISMOTION,
+                WindowEventType::SDL_JOYBALLMOTION,
+                WindowEventType::SDL_JOYHATMOTION,
+                WindowEventType::SDL_JOYBUTTONDOWN,
+                WindowEventType::SDL_JOYBUTTONUP,
+                WindowEventType::SDL_JOYDEVICEADDED,
+                WindowEventType::SDL_JOYDEVICEREMOVED,
+                WindowEventType::SDL_JOYBATTERYUPDATED,
+                WindowEventType::SDL_CONTROLLERAXISMOTION,
+                WindowEventType::SDL_CONTROLLERBUTTONDOWN,
+                WindowEventType::SDL_CONTROLLERBUTTONUP,
+                WindowEventType::SDL_CONTROLLERDEVICEADDED,
+                WindowEventType::SDL_CONTROLLERDEVICEREMOVED,
+                WindowEventType::SDL_CONTROLLERDEVICEREMAPPED,
+                WindowEventType::SDL_CONTROLLERTOUCHPADDOWN,
+                WindowEventType::SDL_CONTROLLERTOUCHPADMOTION,
+                WindowEventType::SDL_CONTROLLERTOUCHPADUP,
+                WindowEventType::SDL_CONTROLLERSENSORUPDATE,
+                WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3,
+                WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED,
+                WindowEventType::SDL_FINGERDOWN,
+                WindowEventType::SDL_FINGERUP,
+                WindowEventType::SDL_FINGERMOTION,
+                WindowEventType::SDL_DOLLARGESTURE,
+                WindowEventType::SDL_DOLLARRECORD,
+                WindowEventType::SDL_MULTIGESTURE,
+                WindowEventType::SDL_CLIPBOARDUPDATE,
+                WindowEventType::SDL_DROPFILE,
+                WindowEventType::SDL_DROPTEXT,
+                WindowEventType::SDL_DROPBEGIN,
+                WindowEventType::SDL_DROPCOMPLETE,
+                WindowEventType::SDL_AUDIODEVICEADDED,
+                WindowEventType::SDL_AUDIODEVICEREMOVED,
+                WindowEventType::SDL_SENSORUPDATE,
+                WindowEventType::SDL_RENDER_TARGETS_RESET,
+                WindowEventType::SDL_RENDER_DEVICE_RESET,
+                WindowEventType::SDL_USEREVENT,
+                WindowEventType::SDL_LASTEVENT,
             };
 
             return returnVector;
         }
 
-        static std::string ToString(KeyboardKeycode value)
+        static std::string ToString(WindowEventType value)
         {
             switch (value)
             {
-            case KeyboardKeycode::Unknown: return "Unknown";
-            case KeyboardKeycode::SDLK_RETURN: return "SDLK_RETURN";
-            case KeyboardKeycode::SDLK_ESCAPE: return "SDLK_ESCAPE";
-            case KeyboardKeycode::SDLK_BACKSPACE: return "SDLK_BACKSPACE";
-            case KeyboardKeycode::SDLK_TAB: return "SDLK_TAB";
-            case KeyboardKeycode::SDLK_SPACE: return "SDLK_SPACE";
-            case KeyboardKeycode::SDLK_EXCLAIM: return "SDLK_EXCLAIM";
-            case KeyboardKeycode::SDLK_QUOTEDBL: return "SDLK_QUOTEDBL";
-            case KeyboardKeycode::SDLK_HASH: return "SDLK_HASH";
-            case KeyboardKeycode::SDLK_PERCENT: return "SDLK_PERCENT";
-            case KeyboardKeycode::SDLK_DOLLAR: return "SDLK_DOLLAR";
-            case KeyboardKeycode::SDLK_AMPERSAND: return "SDLK_AMPERSAND";
-            case KeyboardKeycode::SDLK_QUOTE: return "SDLK_QUOTE";
-            case KeyboardKeycode::SDLK_LEFTPAREN: return "SDLK_LEFTPAREN";
-            case KeyboardKeycode::SDLK_RIGHTPAREN: return "SDLK_RIGHTPAREN";
-            case KeyboardKeycode::SDLK_ASTERISK: return "SDLK_ASTERISK";
-            case KeyboardKeycode::SDLK_PLUS: return "SDLK_PLUS";
-            case KeyboardKeycode::SDLK_COMMA: return "SDLK_COMMA";
-            case KeyboardKeycode::SDLK_MINUS: return "SDLK_MINUS";
-            case KeyboardKeycode::SDLK_PERIOD: return "SDLK_PERIOD";
-            case KeyboardKeycode::SDLK_SLASH: return "SDLK_SLASH";
-            case KeyboardKeycode::SDLK_0: return "SDLK_0";
-            case KeyboardKeycode::SDLK_1: return "SDLK_1";
-            case KeyboardKeycode::SDLK_2: return "SDLK_2";
-            case KeyboardKeycode::SDLK_3: return "SDLK_3";
-            case KeyboardKeycode::SDLK_4: return "SDLK_4";
-            case KeyboardKeycode::SDLK_5: return "SDLK_5";
-            case KeyboardKeycode::SDLK_6: return "SDLK_6";
-            case KeyboardKeycode::SDLK_7: return "SDLK_7";
-            case KeyboardKeycode::SDLK_8: return "SDLK_8";
-            case KeyboardKeycode::SDLK_9: return "SDLK_9";
-            case KeyboardKeycode::SDLK_COLON: return "SDLK_COLON";
-            case KeyboardKeycode::SDLK_SEMICOLON: return "SDLK_SEMICOLON";
-            case KeyboardKeycode::SDLK_LESS: return "SDLK_LESS";
-            case KeyboardKeycode::SDLK_EQUALS: return "SDLK_EQUALS";
-            case KeyboardKeycode::SDLK_GREATER: return "SDLK_GREATER";
-            case KeyboardKeycode::SDLK_QUESTION: return "SDLK_QUESTION";
-            case KeyboardKeycode::SDLK_AT: return "SDLK_AT";
-            case KeyboardKeycode::SDLK_LEFTBRACKET: return "SDLK_LEFTBRACKET";
-            case KeyboardKeycode::SDLK_BACKSLASH: return "SDLK_BACKSLASH";
-            case KeyboardKeycode::SDLK_RIGHTBRACKET: return "SDLK_RIGHTBRACKET";
-            case KeyboardKeycode::SDLK_CARET: return "SDLK_CARET";
-            case KeyboardKeycode::SDLK_UNDERSCORE: return "SDLK_UNDERSCORE";
-            case KeyboardKeycode::SDLK_BACKQUOTE: return "SDLK_BACKQUOTE";
-            case KeyboardKeycode::SDLK_a: return "SDLK_a";
-            case KeyboardKeycode::SDLK_b: return "SDLK_b";
-            case KeyboardKeycode::SDLK_c: return "SDLK_c";
-            case KeyboardKeycode::SDLK_d: return "SDLK_d";
-            case KeyboardKeycode::SDLK_e: return "SDLK_e";
-            case KeyboardKeycode::SDLK_f: return "SDLK_f";
-            case KeyboardKeycode::SDLK_g: return "SDLK_g";
-            case KeyboardKeycode::SDLK_h: return "SDLK_h";
-            case KeyboardKeycode::SDLK_i: return "SDLK_i";
-            case KeyboardKeycode::SDLK_j: return "SDLK_j";
-            case KeyboardKeycode::SDLK_k: return "SDLK_k";
-            case KeyboardKeycode::SDLK_l: return "SDLK_l";
-            case KeyboardKeycode::SDLK_m: return "SDLK_m";
-            case KeyboardKeycode::SDLK_n: return "SDLK_n";
-            case KeyboardKeycode::SDLK_o: return "SDLK_o";
-            case KeyboardKeycode::SDLK_p: return "SDLK_p";
-            case KeyboardKeycode::SDLK_q: return "SDLK_q";
-            case KeyboardKeycode::SDLK_r: return "SDLK_r";
-            case KeyboardKeycode::SDLK_s: return "SDLK_s";
-            case KeyboardKeycode::SDLK_t: return "SDLK_t";
-            case KeyboardKeycode::SDLK_u: return "SDLK_u";
-            case KeyboardKeycode::SDLK_v: return "SDLK_v";
-            case KeyboardKeycode::SDLK_w: return "SDLK_w";
-            case KeyboardKeycode::SDLK_x: return "SDLK_x";
-            case KeyboardKeycode::SDLK_y: return "SDLK_y";
-            case KeyboardKeycode::SDLK_z: return "SDLK_z";
-            case KeyboardKeycode::SDLK_CAPSLOCK: return "SDLK_CAPSLOCK";
-            case KeyboardKeycode::SDLK_F1: return "SDLK_F1";
-            case KeyboardKeycode::SDLK_F2: return "SDLK_F2";
-            case KeyboardKeycode::SDLK_F3: return "SDLK_F3";
-            case KeyboardKeycode::SDLK_F4: return "SDLK_F4";
-            case KeyboardKeycode::SDLK_F5: return "SDLK_F5";
-            case KeyboardKeycode::SDLK_F6: return "SDLK_F6";
-            case KeyboardKeycode::SDLK_F7: return "SDLK_F7";
-            case KeyboardKeycode::SDLK_F8: return "SDLK_F8";
-            case KeyboardKeycode::SDLK_F9: return "SDLK_F9";
-            case KeyboardKeycode::SDLK_F10: return "SDLK_F10";
-            case KeyboardKeycode::SDLK_F11: return "SDLK_F11";
-            case KeyboardKeycode::SDLK_F12: return "SDLK_F12";
-            case KeyboardKeycode::SDLK_PRINTSCREEN: return "SDLK_PRINTSCREEN";
-            case KeyboardKeycode::SDLK_SCROLLLOCK: return "SDLK_SCROLLLOCK";
-            case KeyboardKeycode::SDLK_PAUSE: return "SDLK_PAUSE";
-            case KeyboardKeycode::SDLK_INSERT: return "SDLK_INSERT";
-            case KeyboardKeycode::SDLK_HOME: return "SDLK_HOME";
-            case KeyboardKeycode::SDLK_PAGEUP: return "SDLK_PAGEUP";
-            case KeyboardKeycode::SDLK_DELETE: return "SDLK_DELETE";
-            case KeyboardKeycode::SDLK_END: return "SDLK_END";
-            case KeyboardKeycode::SDLK_PAGEDOWN: return "SDLK_PAGEDOWN";
-            case KeyboardKeycode::SDLK_RIGHT: return "SDLK_RIGHT";
-            case KeyboardKeycode::SDLK_LEFT: return "SDLK_LEFT";
-            case KeyboardKeycode::SDLK_DOWN: return "SDLK_DOWN";
-            case KeyboardKeycode::SDLK_UP: return "SDLK_UP";
-            case KeyboardKeycode::SDLK_NUMLOCKCLEAR: return "SDLK_NUMLOCKCLEAR";
-            case KeyboardKeycode::SDLK_KP_DIVIDE: return "SDLK_KP_DIVIDE";
-            case KeyboardKeycode::SDLK_KP_MULTIPLY: return "SDLK_KP_MULTIPLY";
-            case KeyboardKeycode::SDLK_KP_MINUS: return "SDLK_KP_MINUS";
-            case KeyboardKeycode::SDLK_KP_PLUS: return "SDLK_KP_PLUS";
-            case KeyboardKeycode::SDLK_KP_ENTER: return "SDLK_KP_ENTER";
-            case KeyboardKeycode::SDLK_KP_1: return "SDLK_KP_1";
-            case KeyboardKeycode::SDLK_KP_2: return "SDLK_KP_2";
-            case KeyboardKeycode::SDLK_KP_3: return "SDLK_KP_3";
-            case KeyboardKeycode::SDLK_KP_4: return "SDLK_KP_4";
-            case KeyboardKeycode::SDLK_KP_5: return "SDLK_KP_5";
-            case KeyboardKeycode::SDLK_KP_6: return "SDLK_KP_6";
-            case KeyboardKeycode::SDLK_KP_7: return "SDLK_KP_7";
-            case KeyboardKeycode::SDLK_KP_8: return "SDLK_KP_8";
-            case KeyboardKeycode::SDLK_KP_9: return "SDLK_KP_9";
-            case KeyboardKeycode::SDLK_KP_0: return "SDLK_KP_0";
-            case KeyboardKeycode::SDLK_KP_PERIOD: return "SDLK_KP_PERIOD";
-            case KeyboardKeycode::SDLK_APPLICATION: return "SDLK_APPLICATION";
-            case KeyboardKeycode::SDLK_POWER: return "SDLK_POWER";
-            case KeyboardKeycode::SDLK_KP_EQUALS: return "SDLK_KP_EQUALS";
-            case KeyboardKeycode::SDLK_F13: return "SDLK_F13";
-            case KeyboardKeycode::SDLK_F14: return "SDLK_F14";
-            case KeyboardKeycode::SDLK_F15: return "SDLK_F15";
-            case KeyboardKeycode::SDLK_F16: return "SDLK_F16";
-            case KeyboardKeycode::SDLK_F17: return "SDLK_F17";
-            case KeyboardKeycode::SDLK_F18: return "SDLK_F18";
-            case KeyboardKeycode::SDLK_F19: return "SDLK_F19";
-            case KeyboardKeycode::SDLK_F20: return "SDLK_F20";
-            case KeyboardKeycode::SDLK_F21: return "SDLK_F21";
-            case KeyboardKeycode::SDLK_F22: return "SDLK_F22";
-            case KeyboardKeycode::SDLK_F23: return "SDLK_F23";
-            case KeyboardKeycode::SDLK_F24: return "SDLK_F24";
-            case KeyboardKeycode::SDLK_EXECUTE: return "SDLK_EXECUTE";
-            case KeyboardKeycode::SDLK_HELP: return "SDLK_HELP";
-            case KeyboardKeycode::SDLK_MENU: return "SDLK_MENU";
-            case KeyboardKeycode::SDLK_SELECT: return "SDLK_SELECT";
-            case KeyboardKeycode::SDLK_STOP: return "SDLK_STOP";
-            case KeyboardKeycode::SDLK_AGAIN: return "SDLK_AGAIN";
-            case KeyboardKeycode::SDLK_UNDO: return "SDLK_UNDO";
-            case KeyboardKeycode::SDLK_CUT: return "SDLK_CUT";
-            case KeyboardKeycode::SDLK_COPY: return "SDLK_COPY";
-            case KeyboardKeycode::SDLK_PASTE: return "SDLK_PASTE";
-            case KeyboardKeycode::SDLK_FIND: return "SDLK_FIND";
-            case KeyboardKeycode::SDLK_MUTE: return "SDLK_MUTE";
-            case KeyboardKeycode::SDLK_VOLUMEUP: return "SDLK_VOLUMEUP";
-            case KeyboardKeycode::SDLK_VOLUMEDOWN: return "SDLK_VOLUMEDOWN";
-            case KeyboardKeycode::SDLK_KP_COMMA: return "SDLK_KP_COMMA";
-            case KeyboardKeycode::SDLK_KP_EQUALSAS400: return "SDLK_KP_EQUALSAS400";
-            case KeyboardKeycode::SDLK_ALTERASE: return "SDLK_ALTERASE";
-            case KeyboardKeycode::SDLK_SYSREQ: return "SDLK_SYSREQ";
-            case KeyboardKeycode::SDLK_CANCEL: return "SDLK_CANCEL";
-            case KeyboardKeycode::SDLK_CLEAR: return "SDLK_CLEAR";
-            case KeyboardKeycode::SDLK_PRIOR: return "SDLK_PRIOR";
-            case KeyboardKeycode::SDLK_RETURN2: return "SDLK_RETURN2";
-            case KeyboardKeycode::SDLK_SEPARATOR: return "SDLK_SEPARATOR";
-            case KeyboardKeycode::SDLK_OUT: return "SDLK_OUT";
-            case KeyboardKeycode::SDLK_OPER: return "SDLK_OPER";
-            case KeyboardKeycode::SDLK_CLEARAGAIN: return "SDLK_CLEARAGAIN";
-            case KeyboardKeycode::SDLK_CRSEL: return "SDLK_CRSEL";
-            case KeyboardKeycode::SDLK_EXSEL: return "SDLK_EXSEL";
-            case KeyboardKeycode::SDLK_KP_00: return "SDLK_KP_00";
-            case KeyboardKeycode::SDLK_KP_000: return "SDLK_KP_000";
-            case KeyboardKeycode::SDLK_THOUSANDSSEPARATOR: return "SDLK_THOUSANDSSEPARATOR";
-            case KeyboardKeycode::SDLK_DECIMALSEPARATOR: return "SDLK_DECIMALSEPARATOR";
-            case KeyboardKeycode::SDLK_CURRENCYUNIT: return "SDLK_CURRENCYUNIT";
-            case KeyboardKeycode::SDLK_CURRENCYSUBUNIT: return "SDLK_CURRENCYSUBUNIT";
-            case KeyboardKeycode::SDLK_KP_LEFTPAREN: return "SDLK_KP_LEFTPAREN";
-            case KeyboardKeycode::SDLK_KP_RIGHTPAREN: return "SDLK_KP_RIGHTPAREN";
-            case KeyboardKeycode::SDLK_KP_LEFTBRACE: return "SDLK_KP_LEFTBRACE";
-            case KeyboardKeycode::SDLK_KP_RIGHTBRACE: return "SDLK_KP_RIGHTBRACE";
-            case KeyboardKeycode::SDLK_KP_TAB: return "SDLK_KP_TAB";
-            case KeyboardKeycode::SDLK_KP_BACKSPACE: return "SDLK_KP_BACKSPACE";
-            case KeyboardKeycode::SDLK_KP_A: return "SDLK_KP_A";
-            case KeyboardKeycode::SDLK_KP_B: return "SDLK_KP_B";
-            case KeyboardKeycode::SDLK_KP_C: return "SDLK_KP_C";
-            case KeyboardKeycode::SDLK_KP_D: return "SDLK_KP_D";
-            case KeyboardKeycode::SDLK_KP_E: return "SDLK_KP_E";
-            case KeyboardKeycode::SDLK_KP_F: return "SDLK_KP_F";
-            case KeyboardKeycode::SDLK_KP_XOR: return "SDLK_KP_XOR";
-            case KeyboardKeycode::SDLK_KP_POWER: return "SDLK_KP_POWER";
-            case KeyboardKeycode::SDLK_KP_PERCENT: return "SDLK_KP_PERCENT";
-            case KeyboardKeycode::SDLK_KP_LESS: return "SDLK_KP_LESS";
-            case KeyboardKeycode::SDLK_KP_GREATER: return "SDLK_KP_GREATER";
-            case KeyboardKeycode::SDLK_KP_AMPERSAND: return "SDLK_KP_AMPERSAND";
-            case KeyboardKeycode::SDLK_KP_DBLAMPERSAND: return "SDLK_KP_DBLAMPERSAND";
-            case KeyboardKeycode::SDLK_KP_VERTICALBAR: return "SDLK_KP_VERTICALBAR";
-            case KeyboardKeycode::SDLK_KP_DBLVERTICALBAR: return "SDLK_KP_DBLVERTICALBAR";
-            case KeyboardKeycode::SDLK_KP_COLON: return "SDLK_KP_COLON";
-            case KeyboardKeycode::SDLK_KP_HASH: return "SDLK_KP_HASH";
-            case KeyboardKeycode::SDLK_KP_SPACE: return "SDLK_KP_SPACE";
-            case KeyboardKeycode::SDLK_KP_AT: return "SDLK_KP_AT";
-            case KeyboardKeycode::SDLK_KP_EXCLAM: return "SDLK_KP_EXCLAM";
-            case KeyboardKeycode::SDLK_KP_MEMSTORE: return "SDLK_KP_MEMSTORE";
-            case KeyboardKeycode::SDLK_KP_MEMRECALL: return "SDLK_KP_MEMRECALL";
-            case KeyboardKeycode::SDLK_KP_MEMCLEAR: return "SDLK_KP_MEMCLEAR";
-            case KeyboardKeycode::SDLK_KP_MEMADD: return "SDLK_KP_MEMADD";
-            case KeyboardKeycode::SDLK_KP_MEMSUBTRACT: return "SDLK_KP_MEMSUBTRACT";
-            case KeyboardKeycode::SDLK_KP_MEMMULTIPLY: return "SDLK_KP_MEMMULTIPLY";
-            case KeyboardKeycode::SDLK_KP_MEMDIVIDE: return "SDLK_KP_MEMDIVIDE";
-            case KeyboardKeycode::SDLK_KP_PLUSMINUS: return "SDLK_KP_PLUSMINUS";
-            case KeyboardKeycode::SDLK_KP_CLEAR: return "SDLK_KP_CLEAR";
-            case KeyboardKeycode::SDLK_KP_CLEARENTRY: return "SDLK_KP_CLEARENTRY";
-            case KeyboardKeycode::SDLK_KP_BINARY: return "SDLK_KP_BINARY";
-            case KeyboardKeycode::SDLK_KP_OCTAL: return "SDLK_KP_OCTAL";
-            case KeyboardKeycode::SDLK_KP_DECIMAL: return "SDLK_KP_DECIMAL";
-            case KeyboardKeycode::SDLK_KP_HEXADECIMAL: return "SDLK_KP_HEXADECIMAL";
-            case KeyboardKeycode::SDLK_LCTRL: return "SDLK_LCTRL";
-            case KeyboardKeycode::SDLK_LSHIFT: return "SDLK_LSHIFT";
-            case KeyboardKeycode::SDLK_LALT: return "SDLK_LALT";
-            case KeyboardKeycode::SDLK_LGUI: return "SDLK_LGUI";
-            case KeyboardKeycode::SDLK_RCTRL: return "SDLK_RCTRL";
-            case KeyboardKeycode::SDLK_RSHIFT: return "SDLK_RSHIFT";
-            case KeyboardKeycode::SDLK_RALT: return "SDLK_RALT";
-            case KeyboardKeycode::SDLK_RGUI: return "SDLK_RGUI";
-            case KeyboardKeycode::SDLK_MODE: return "SDLK_MODE";
-            case KeyboardKeycode::SDLK_AUDIONEXT: return "SDLK_AUDIONEXT";
-            case KeyboardKeycode::SDLK_AUDIOPREV: return "SDLK_AUDIOPREV";
-            case KeyboardKeycode::SDLK_AUDIOSTOP: return "SDLK_AUDIOSTOP";
-            case KeyboardKeycode::SDLK_AUDIOPLAY: return "SDLK_AUDIOPLAY";
-            case KeyboardKeycode::SDLK_AUDIOMUTE: return "SDLK_AUDIOMUTE";
-            case KeyboardKeycode::SDLK_MEDIASELECT: return "SDLK_MEDIASELECT";
-            case KeyboardKeycode::SDLK_WWW: return "SDLK_WWW";
-            case KeyboardKeycode::SDLK_MAIL: return "SDLK_MAIL";
-            case KeyboardKeycode::SDLK_CALCULATOR: return "SDLK_CALCULATOR";
-            case KeyboardKeycode::SDLK_COMPUTER: return "SDLK_COMPUTER";
-            case KeyboardKeycode::SDLK_AC_SEARCH: return "SDLK_AC_SEARCH";
-            case KeyboardKeycode::SDLK_AC_HOME: return "SDLK_AC_HOME";
-            case KeyboardKeycode::SDLK_AC_BACK: return "SDLK_AC_BACK";
-            case KeyboardKeycode::SDLK_AC_FORWARD: return "SDLK_AC_FORWARD";
-            case KeyboardKeycode::SDLK_AC_STOP: return "SDLK_AC_STOP";
-            case KeyboardKeycode::SDLK_AC_REFRESH: return "SDLK_AC_REFRESH";
-            case KeyboardKeycode::SDLK_AC_BOOKMARKS: return "SDLK_AC_BOOKMARKS";
-            case KeyboardKeycode::SDLK_BRIGHTNESSDOWN: return "SDLK_BRIGHTNESSDOWN";
-            case KeyboardKeycode::SDLK_BRIGHTNESSUP: return "SDLK_BRIGHTNESSUP";
-            case KeyboardKeycode::SDLK_DISPLAYSWITCH: return "SDLK_DISPLAYSWITCH";
-            case KeyboardKeycode::SDLK_KBDILLUMTOGGLE: return "SDLK_KBDILLUMTOGGLE";
-            case KeyboardKeycode::SDLK_KBDILLUMDOWN: return "SDLK_KBDILLUMDOWN";
-            case KeyboardKeycode::SDLK_KBDILLUMUP: return "SDLK_KBDILLUMUP";
-            case KeyboardKeycode::SDLK_EJECT: return "SDLK_EJECT";
-            case KeyboardKeycode::SDLK_SLEEP: return "SDLK_SLEEP";
+            case WindowEventType::Unknown: return "Unknown";
+            case WindowEventType::SDL_FIRSTEVENT: return "SDL_FIRSTEVENT";
+            case WindowEventType::SDL_QUIT: return "SDL_QUIT";
+            case WindowEventType::SDL_APP_TERMINATING: return "SDL_APP_TERMINATING";
+            case WindowEventType::SDL_APP_LOWMEMORY: return "SDL_APP_LOWMEMORY";
+            case WindowEventType::SDL_APP_WILLENTERBACKGROUND: return "SDL_APP_WILLENTERBACKGROUND";
+            case WindowEventType::SDL_APP_DIDENTERBACKGROUND: return "SDL_APP_DIDENTERBACKGROUND";
+            case WindowEventType::SDL_APP_WILLENTERFOREGROUND: return "SDL_APP_WILLENTERFOREGROUND";
+            case WindowEventType::SDL_APP_DIDENTERFOREGROUND: return "SDL_APP_DIDENTERFOREGROUND";
+            case WindowEventType::SDL_LOCALECHANGED: return "SDL_LOCALECHANGED";
+            case WindowEventType::SDL_DISPLAYEVENT: return "SDL_DISPLAYEVENT";
+            case WindowEventType::SDL_WINDOWEVENT: return "SDL_WINDOWEVENT";
+            case WindowEventType::SDL_SYSWMEVENT: return "SDL_SYSWMEVENT";
+            case WindowEventType::SDL_KEYDOWN: return "SDL_KEYDOWN";
+            case WindowEventType::SDL_KEYUP: return "SDL_KEYUP";
+            case WindowEventType::SDL_TEXTEDITING: return "SDL_TEXTEDITING";
+            case WindowEventType::SDL_TEXTINPUT: return "SDL_TEXTINPUT";
+            case WindowEventType::SDL_KEYMAPCHANGED: return "SDL_KEYMAPCHANGED";
+            case WindowEventType::SDL_TEXTEDITING_EXT: return "SDL_TEXTEDITING_EXT";
+            case WindowEventType::SDL_MOUSEMOTION: return "SDL_MOUSEMOTION";
+            case WindowEventType::SDL_MOUSEBUTTONDOWN: return "SDL_MOUSEBUTTONDOWN";
+            case WindowEventType::SDL_MOUSEBUTTONUP: return "SDL_MOUSEBUTTONUP";
+            case WindowEventType::SDL_MOUSEWHEEL: return "SDL_MOUSEWHEEL";
+            case WindowEventType::SDL_JOYAXISMOTION: return "SDL_JOYAXISMOTION";
+            case WindowEventType::SDL_JOYBALLMOTION: return "SDL_JOYBALLMOTION";
+            case WindowEventType::SDL_JOYHATMOTION: return "SDL_JOYHATMOTION";
+            case WindowEventType::SDL_JOYBUTTONDOWN: return "SDL_JOYBUTTONDOWN";
+            case WindowEventType::SDL_JOYBUTTONUP: return "SDL_JOYBUTTONUP";
+            case WindowEventType::SDL_JOYDEVICEADDED: return "SDL_JOYDEVICEADDED";
+            case WindowEventType::SDL_JOYDEVICEREMOVED: return "SDL_JOYDEVICEREMOVED";
+            case WindowEventType::SDL_JOYBATTERYUPDATED: return "SDL_JOYBATTERYUPDATED";
+            case WindowEventType::SDL_CONTROLLERAXISMOTION: return "SDL_CONTROLLERAXISMOTION";
+            case WindowEventType::SDL_CONTROLLERBUTTONDOWN: return "SDL_CONTROLLERBUTTONDOWN";
+            case WindowEventType::SDL_CONTROLLERBUTTONUP: return "SDL_CONTROLLERBUTTONUP";
+            case WindowEventType::SDL_CONTROLLERDEVICEADDED: return "SDL_CONTROLLERDEVICEADDED";
+            case WindowEventType::SDL_CONTROLLERDEVICEREMOVED: return "SDL_CONTROLLERDEVICEREMOVED";
+            case WindowEventType::SDL_CONTROLLERDEVICEREMAPPED: return "SDL_CONTROLLERDEVICEREMAPPED";
+            case WindowEventType::SDL_CONTROLLERTOUCHPADDOWN: return "SDL_CONTROLLERTOUCHPADDOWN";
+            case WindowEventType::SDL_CONTROLLERTOUCHPADMOTION: return "SDL_CONTROLLERTOUCHPADMOTION";
+            case WindowEventType::SDL_CONTROLLERTOUCHPADUP: return "SDL_CONTROLLERTOUCHPADUP";
+            case WindowEventType::SDL_CONTROLLERSENSORUPDATE: return "SDL_CONTROLLERSENSORUPDATE";
+            case WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3: return "SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3";
+            case WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED: return "SDL_CONTROLLERSTEAMHANDLEUPDATED";
+            case WindowEventType::SDL_FINGERDOWN: return "SDL_FINGERDOWN";
+            case WindowEventType::SDL_FINGERUP: return "SDL_FINGERUP";
+            case WindowEventType::SDL_FINGERMOTION: return "SDL_FINGERMOTION";
+            case WindowEventType::SDL_DOLLARGESTURE: return "SDL_DOLLARGESTURE";
+            case WindowEventType::SDL_DOLLARRECORD: return "SDL_DOLLARRECORD";
+            case WindowEventType::SDL_MULTIGESTURE: return "SDL_MULTIGESTURE";
+            case WindowEventType::SDL_CLIPBOARDUPDATE: return "SDL_CLIPBOARDUPDATE";
+            case WindowEventType::SDL_DROPFILE: return "SDL_DROPFILE";
+            case WindowEventType::SDL_DROPTEXT: return "SDL_DROPTEXT";
+            case WindowEventType::SDL_DROPBEGIN: return "SDL_DROPBEGIN";
+            case WindowEventType::SDL_DROPCOMPLETE: return "SDL_DROPCOMPLETE";
+            case WindowEventType::SDL_AUDIODEVICEADDED: return "SDL_AUDIODEVICEADDED";
+            case WindowEventType::SDL_AUDIODEVICEREMOVED: return "SDL_AUDIODEVICEREMOVED";
+            case WindowEventType::SDL_SENSORUPDATE: return "SDL_SENSORUPDATE";
+            case WindowEventType::SDL_RENDER_TARGETS_RESET: return "SDL_RENDER_TARGETS_RESET";
+            case WindowEventType::SDL_RENDER_DEVICE_RESET: return "SDL_RENDER_DEVICE_RESET";
+            case WindowEventType::SDL_USEREVENT: return "SDL_USEREVENT";
+            case WindowEventType::SDL_LASTEVENT: return "SDL_LASTEVENT";
             }
 
             return "Unknown";
         }
 
-        static KeyboardKeycode FromString(std::string value, bool checkCase = true)
+        static WindowEventType FromString(std::string value, bool checkCase = true)
         {
             if (checkCase)
             {
-                if (value == "Unknown") return KeyboardKeycode::Unknown;
-                if (value == "SDLK_RETURN") return KeyboardKeycode::SDLK_RETURN;
-                if (value == "SDLK_ESCAPE") return KeyboardKeycode::SDLK_ESCAPE;
-                if (value == "SDLK_BACKSPACE") return KeyboardKeycode::SDLK_BACKSPACE;
-                if (value == "SDLK_TAB") return KeyboardKeycode::SDLK_TAB;
-                if (value == "SDLK_SPACE") return KeyboardKeycode::SDLK_SPACE;
-                if (value == "SDLK_EXCLAIM") return KeyboardKeycode::SDLK_EXCLAIM;
-                if (value == "SDLK_QUOTEDBL") return KeyboardKeycode::SDLK_QUOTEDBL;
-                if (value == "SDLK_HASH") return KeyboardKeycode::SDLK_HASH;
-                if (value == "SDLK_PERCENT") return KeyboardKeycode::SDLK_PERCENT;
-                if (value == "SDLK_DOLLAR") return KeyboardKeycode::SDLK_DOLLAR;
-                if (value == "SDLK_AMPERSAND") return KeyboardKeycode::SDLK_AMPERSAND;
-                if (value == "SDLK_QUOTE") return KeyboardKeycode::SDLK_QUOTE;
-                if (value == "SDLK_LEFTPAREN") return KeyboardKeycode::SDLK_LEFTPAREN;
-                if (value == "SDLK_RIGHTPAREN") return KeyboardKeycode::SDLK_RIGHTPAREN;
-                if (value == "SDLK_ASTERISK") return KeyboardKeycode::SDLK_ASTERISK;
-                if (value == "SDLK_PLUS") return KeyboardKeycode::SDLK_PLUS;
-                if (value == "SDLK_COMMA") return KeyboardKeycode::SDLK_COMMA;
-                if (value == "SDLK_MINUS") return KeyboardKeycode::SDLK_MINUS;
-                if (value == "SDLK_PERIOD") return KeyboardKeycode::SDLK_PERIOD;
-                if (value == "SDLK_SLASH") return KeyboardKeycode::SDLK_SLASH;
-                if (value == "SDLK_0") return KeyboardKeycode::SDLK_0;
-                if (value == "SDLK_1") return KeyboardKeycode::SDLK_1;
-                if (value == "SDLK_2") return KeyboardKeycode::SDLK_2;
-                if (value == "SDLK_3") return KeyboardKeycode::SDLK_3;
-                if (value == "SDLK_4") return KeyboardKeycode::SDLK_4;
-                if (value == "SDLK_5") return KeyboardKeycode::SDLK_5;
-                if (value == "SDLK_6") return KeyboardKeycode::SDLK_6;
-                if (value == "SDLK_7") return KeyboardKeycode::SDLK_7;
-                if (value == "SDLK_8") return KeyboardKeycode::SDLK_8;
-                if (value == "SDLK_9") return KeyboardKeycode::SDLK_9;
-                if (value == "SDLK_COLON") return KeyboardKeycode::SDLK_COLON;
-                if (value == "SDLK_SEMICOLON") return KeyboardKeycode::SDLK_SEMICOLON;
-                if (value == "SDLK_LESS") return KeyboardKeycode::SDLK_LESS;
-                if (value == "SDLK_EQUALS") return KeyboardKeycode::SDLK_EQUALS;
-                if (value == "SDLK_GREATER") return KeyboardKeycode::SDLK_GREATER;
-                if (value == "SDLK_QUESTION") return KeyboardKeycode::SDLK_QUESTION;
-                if (value == "SDLK_AT") return KeyboardKeycode::SDLK_AT;
-                if (value == "SDLK_LEFTBRACKET") return KeyboardKeycode::SDLK_LEFTBRACKET;
-                if (value == "SDLK_BACKSLASH") return KeyboardKeycode::SDLK_BACKSLASH;
-                if (value == "SDLK_RIGHTBRACKET") return KeyboardKeycode::SDLK_RIGHTBRACKET;
-                if (value == "SDLK_CARET") return KeyboardKeycode::SDLK_CARET;
-                if (value == "SDLK_UNDERSCORE") return KeyboardKeycode::SDLK_UNDERSCORE;
-                if (value == "SDLK_BACKQUOTE") return KeyboardKeycode::SDLK_BACKQUOTE;
-                if (value == "SDLK_a") return KeyboardKeycode::SDLK_a;
-                if (value == "SDLK_b") return KeyboardKeycode::SDLK_b;
-                if (value == "SDLK_c") return KeyboardKeycode::SDLK_c;
-                if (value == "SDLK_d") return KeyboardKeycode::SDLK_d;
-                if (value == "SDLK_e") return KeyboardKeycode::SDLK_e;
-                if (value == "SDLK_f") return KeyboardKeycode::SDLK_f;
-                if (value == "SDLK_g") return KeyboardKeycode::SDLK_g;
-                if (value == "SDLK_h") return KeyboardKeycode::SDLK_h;
-                if (value == "SDLK_i") return KeyboardKeycode::SDLK_i;
-                if (value == "SDLK_j") return KeyboardKeycode::SDLK_j;
-                if (value == "SDLK_k") return KeyboardKeycode::SDLK_k;
-                if (value == "SDLK_l") return KeyboardKeycode::SDLK_l;
-                if (value == "SDLK_m") return KeyboardKeycode::SDLK_m;
-                if (value == "SDLK_n") return KeyboardKeycode::SDLK_n;
-                if (value == "SDLK_o") return KeyboardKeycode::SDLK_o;
-                if (value == "SDLK_p") return KeyboardKeycode::SDLK_p;
-                if (value == "SDLK_q") return KeyboardKeycode::SDLK_q;
-                if (value == "SDLK_r") return KeyboardKeycode::SDLK_r;
-                if (value == "SDLK_s") return KeyboardKeycode::SDLK_s;
-                if (value == "SDLK_t") return KeyboardKeycode::SDLK_t;
-                if (value == "SDLK_u") return KeyboardKeycode::SDLK_u;
-                if (value == "SDLK_v") return KeyboardKeycode::SDLK_v;
-                if (value == "SDLK_w") return KeyboardKeycode::SDLK_w;
-                if (value == "SDLK_x") return KeyboardKeycode::SDLK_x;
-                if (value == "SDLK_y") return KeyboardKeycode::SDLK_y;
-                if (value == "SDLK_z") return KeyboardKeycode::SDLK_z;
-                if (value == "SDLK_CAPSLOCK") return KeyboardKeycode::SDLK_CAPSLOCK;
-                if (value == "SDLK_F1") return KeyboardKeycode::SDLK_F1;
-                if (value == "SDLK_F2") return KeyboardKeycode::SDLK_F2;
-                if (value == "SDLK_F3") return KeyboardKeycode::SDLK_F3;
-                if (value == "SDLK_F4") return KeyboardKeycode::SDLK_F4;
-                if (value == "SDLK_F5") return KeyboardKeycode::SDLK_F5;
-                if (value == "SDLK_F6") return KeyboardKeycode::SDLK_F6;
-                if (value == "SDLK_F7") return KeyboardKeycode::SDLK_F7;
-                if (value == "SDLK_F8") return KeyboardKeycode::SDLK_F8;
-                if (value == "SDLK_F9") return KeyboardKeycode::SDLK_F9;
-                if (value == "SDLK_F10") return KeyboardKeycode::SDLK_F10;
-                if (value == "SDLK_F11") return KeyboardKeycode::SDLK_F11;
-                if (value == "SDLK_F12") return KeyboardKeycode::SDLK_F12;
-                if (value == "SDLK_PRINTSCREEN") return KeyboardKeycode::SDLK_PRINTSCREEN;
-                if (value == "SDLK_SCROLLLOCK") return KeyboardKeycode::SDLK_SCROLLLOCK;
-                if (value == "SDLK_PAUSE") return KeyboardKeycode::SDLK_PAUSE;
-                if (value == "SDLK_INSERT") return KeyboardKeycode::SDLK_INSERT;
-                if (value == "SDLK_HOME") return KeyboardKeycode::SDLK_HOME;
-                if (value == "SDLK_PAGEUP") return KeyboardKeycode::SDLK_PAGEUP;
-                if (value == "SDLK_DELETE") return KeyboardKeycode::SDLK_DELETE;
-                if (value == "SDLK_END") return KeyboardKeycode::SDLK_END;
-                if (value == "SDLK_PAGEDOWN") return KeyboardKeycode::SDLK_PAGEDOWN;
-                if (value == "SDLK_RIGHT") return KeyboardKeycode::SDLK_RIGHT;
-                if (value == "SDLK_LEFT") return KeyboardKeycode::SDLK_LEFT;
-                if (value == "SDLK_DOWN") return KeyboardKeycode::SDLK_DOWN;
-                if (value == "SDLK_UP") return KeyboardKeycode::SDLK_UP;
-                if (value == "SDLK_NUMLOCKCLEAR") return KeyboardKeycode::SDLK_NUMLOCKCLEAR;
-                if (value == "SDLK_KP_DIVIDE") return KeyboardKeycode::SDLK_KP_DIVIDE;
-                if (value == "SDLK_KP_MULTIPLY") return KeyboardKeycode::SDLK_KP_MULTIPLY;
-                if (value == "SDLK_KP_MINUS") return KeyboardKeycode::SDLK_KP_MINUS;
-                if (value == "SDLK_KP_PLUS") return KeyboardKeycode::SDLK_KP_PLUS;
-                if (value == "SDLK_KP_ENTER") return KeyboardKeycode::SDLK_KP_ENTER;
-                if (value == "SDLK_KP_1") return KeyboardKeycode::SDLK_KP_1;
-                if (value == "SDLK_KP_2") return KeyboardKeycode::SDLK_KP_2;
-                if (value == "SDLK_KP_3") return KeyboardKeycode::SDLK_KP_3;
-                if (value == "SDLK_KP_4") return KeyboardKeycode::SDLK_KP_4;
-                if (value == "SDLK_KP_5") return KeyboardKeycode::SDLK_KP_5;
-                if (value == "SDLK_KP_6") return KeyboardKeycode::SDLK_KP_6;
-                if (value == "SDLK_KP_7") return KeyboardKeycode::SDLK_KP_7;
-                if (value == "SDLK_KP_8") return KeyboardKeycode::SDLK_KP_8;
-                if (value == "SDLK_KP_9") return KeyboardKeycode::SDLK_KP_9;
-                if (value == "SDLK_KP_0") return KeyboardKeycode::SDLK_KP_0;
-                if (value == "SDLK_KP_PERIOD") return KeyboardKeycode::SDLK_KP_PERIOD;
-                if (value == "SDLK_APPLICATION") return KeyboardKeycode::SDLK_APPLICATION;
-                if (value == "SDLK_POWER") return KeyboardKeycode::SDLK_POWER;
-                if (value == "SDLK_KP_EQUALS") return KeyboardKeycode::SDLK_KP_EQUALS;
-                if (value == "SDLK_F13") return KeyboardKeycode::SDLK_F13;
-                if (value == "SDLK_F14") return KeyboardKeycode::SDLK_F14;
-                if (value == "SDLK_F15") return KeyboardKeycode::SDLK_F15;
-                if (value == "SDLK_F16") return KeyboardKeycode::SDLK_F16;
-                if (value == "SDLK_F17") return KeyboardKeycode::SDLK_F17;
-                if (value == "SDLK_F18") return KeyboardKeycode::SDLK_F18;
-                if (value == "SDLK_F19") return KeyboardKeycode::SDLK_F19;
-                if (value == "SDLK_F20") return KeyboardKeycode::SDLK_F20;
-                if (value == "SDLK_F21") return KeyboardKeycode::SDLK_F21;
-                if (value == "SDLK_F22") return KeyboardKeycode::SDLK_F22;
-                if (value == "SDLK_F23") return KeyboardKeycode::SDLK_F23;
-                if (value == "SDLK_F24") return KeyboardKeycode::SDLK_F24;
-                if (value == "SDLK_EXECUTE") return KeyboardKeycode::SDLK_EXECUTE;
-                if (value == "SDLK_HELP") return KeyboardKeycode::SDLK_HELP;
-                if (value == "SDLK_MENU") return KeyboardKeycode::SDLK_MENU;
-                if (value == "SDLK_SELECT") return KeyboardKeycode::SDLK_SELECT;
-                if (value == "SDLK_STOP") return KeyboardKeycode::SDLK_STOP;
-                if (value == "SDLK_AGAIN") return KeyboardKeycode::SDLK_AGAIN;
-                if (value == "SDLK_UNDO") return KeyboardKeycode::SDLK_UNDO;
-                if (value == "SDLK_CUT") return KeyboardKeycode::SDLK_CUT;
-                if (value == "SDLK_COPY") return KeyboardKeycode::SDLK_COPY;
-                if (value == "SDLK_PASTE") return KeyboardKeycode::SDLK_PASTE;
-                if (value == "SDLK_FIND") return KeyboardKeycode::SDLK_FIND;
-                if (value == "SDLK_MUTE") return KeyboardKeycode::SDLK_MUTE;
-                if (value == "SDLK_VOLUMEUP") return KeyboardKeycode::SDLK_VOLUMEUP;
-                if (value == "SDLK_VOLUMEDOWN") return KeyboardKeycode::SDLK_VOLUMEDOWN;
-                if (value == "SDLK_KP_COMMA") return KeyboardKeycode::SDLK_KP_COMMA;
-                if (value == "SDLK_KP_EQUALSAS400") return KeyboardKeycode::SDLK_KP_EQUALSAS400;
-                if (value == "SDLK_ALTERASE") return KeyboardKeycode::SDLK_ALTERASE;
-                if (value == "SDLK_SYSREQ") return KeyboardKeycode::SDLK_SYSREQ;
-                if (value == "SDLK_CANCEL") return KeyboardKeycode::SDLK_CANCEL;
-                if (value == "SDLK_CLEAR") return KeyboardKeycode::SDLK_CLEAR;
-                if (value == "SDLK_PRIOR") return KeyboardKeycode::SDLK_PRIOR;
-                if (value == "SDLK_RETURN2") return KeyboardKeycode::SDLK_RETURN2;
-                if (value == "SDLK_SEPARATOR") return KeyboardKeycode::SDLK_SEPARATOR;
-                if (value == "SDLK_OUT") return KeyboardKeycode::SDLK_OUT;
-                if (value == "SDLK_OPER") return KeyboardKeycode::SDLK_OPER;
-                if (value == "SDLK_CLEARAGAIN") return KeyboardKeycode::SDLK_CLEARAGAIN;
-                if (value == "SDLK_CRSEL") return KeyboardKeycode::SDLK_CRSEL;
-                if (value == "SDLK_EXSEL") return KeyboardKeycode::SDLK_EXSEL;
-                if (value == "SDLK_KP_00") return KeyboardKeycode::SDLK_KP_00;
-                if (value == "SDLK_KP_000") return KeyboardKeycode::SDLK_KP_000;
-                if (value == "SDLK_THOUSANDSSEPARATOR") return KeyboardKeycode::SDLK_THOUSANDSSEPARATOR;
-                if (value == "SDLK_DECIMALSEPARATOR") return KeyboardKeycode::SDLK_DECIMALSEPARATOR;
-                if (value == "SDLK_CURRENCYUNIT") return KeyboardKeycode::SDLK_CURRENCYUNIT;
-                if (value == "SDLK_CURRENCYSUBUNIT") return KeyboardKeycode::SDLK_CURRENCYSUBUNIT;
-                if (value == "SDLK_KP_LEFTPAREN") return KeyboardKeycode::SDLK_KP_LEFTPAREN;
-                if (value == "SDLK_KP_RIGHTPAREN") return KeyboardKeycode::SDLK_KP_RIGHTPAREN;
-                if (value == "SDLK_KP_LEFTBRACE") return KeyboardKeycode::SDLK_KP_LEFTBRACE;
-                if (value == "SDLK_KP_RIGHTBRACE") return KeyboardKeycode::SDLK_KP_RIGHTBRACE;
-                if (value == "SDLK_KP_TAB") return KeyboardKeycode::SDLK_KP_TAB;
-                if (value == "SDLK_KP_BACKSPACE") return KeyboardKeycode::SDLK_KP_BACKSPACE;
-                if (value == "SDLK_KP_A") return KeyboardKeycode::SDLK_KP_A;
-                if (value == "SDLK_KP_B") return KeyboardKeycode::SDLK_KP_B;
-                if (value == "SDLK_KP_C") return KeyboardKeycode::SDLK_KP_C;
-                if (value == "SDLK_KP_D") return KeyboardKeycode::SDLK_KP_D;
-                if (value == "SDLK_KP_E") return KeyboardKeycode::SDLK_KP_E;
-                if (value == "SDLK_KP_F") return KeyboardKeycode::SDLK_KP_F;
-                if (value == "SDLK_KP_XOR") return KeyboardKeycode::SDLK_KP_XOR;
-                if (value == "SDLK_KP_POWER") return KeyboardKeycode::SDLK_KP_POWER;
-                if (value == "SDLK_KP_PERCENT") return KeyboardKeycode::SDLK_KP_PERCENT;
-                if (value == "SDLK_KP_LESS") return KeyboardKeycode::SDLK_KP_LESS;
-                if (value == "SDLK_KP_GREATER") return KeyboardKeycode::SDLK_KP_GREATER;
-                if (value == "SDLK_KP_AMPERSAND") return KeyboardKeycode::SDLK_KP_AMPERSAND;
-                if (value == "SDLK_KP_DBLAMPERSAND") return KeyboardKeycode::SDLK_KP_DBLAMPERSAND;
-                if (value == "SDLK_KP_VERTICALBAR") return KeyboardKeycode::SDLK_KP_VERTICALBAR;
-                if (value == "SDLK_KP_DBLVERTICALBAR") return KeyboardKeycode::SDLK_KP_DBLVERTICALBAR;
-                if (value == "SDLK_KP_COLON") return KeyboardKeycode::SDLK_KP_COLON;
-                if (value == "SDLK_KP_HASH") return KeyboardKeycode::SDLK_KP_HASH;
-                if (value == "SDLK_KP_SPACE") return KeyboardKeycode::SDLK_KP_SPACE;
-                if (value == "SDLK_KP_AT") return KeyboardKeycode::SDLK_KP_AT;
-                if (value == "SDLK_KP_EXCLAM") return KeyboardKeycode::SDLK_KP_EXCLAM;
-                if (value == "SDLK_KP_MEMSTORE") return KeyboardKeycode::SDLK_KP_MEMSTORE;
-                if (value == "SDLK_KP_MEMRECALL") return KeyboardKeycode::SDLK_KP_MEMRECALL;
-                if (value == "SDLK_KP_MEMCLEAR") return KeyboardKeycode::SDLK_KP_MEMCLEAR;
-                if (value == "SDLK_KP_MEMADD") return KeyboardKeycode::SDLK_KP_MEMADD;
-                if (value == "SDLK_KP_MEMSUBTRACT") return KeyboardKeycode::SDLK_KP_MEMSUBTRACT;
-                if (value == "SDLK_KP_MEMMULTIPLY") return KeyboardKeycode::SDLK_KP_MEMMULTIPLY;
-                if (value == "SDLK_KP_MEMDIVIDE") return KeyboardKeycode::SDLK_KP_MEMDIVIDE;
-                if (value == "SDLK_KP_PLUSMINUS") return KeyboardKeycode::SDLK_KP_PLUSMINUS;
-                if (value == "SDLK_KP_CLEAR") return KeyboardKeycode::SDLK_KP_CLEAR;
-                if (value == "SDLK_KP_CLEARENTRY") return KeyboardKeycode::SDLK_KP_CLEARENTRY;
-                if (value == "SDLK_KP_BINARY") return KeyboardKeycode::SDLK_KP_BINARY;
-                if (value == "SDLK_KP_OCTAL") return KeyboardKeycode::SDLK_KP_OCTAL;
-                if (value == "SDLK_KP_DECIMAL") return KeyboardKeycode::SDLK_KP_DECIMAL;
-                if (value == "SDLK_KP_HEXADECIMAL") return KeyboardKeycode::SDLK_KP_HEXADECIMAL;
-                if (value == "SDLK_LCTRL") return KeyboardKeycode::SDLK_LCTRL;
-                if (value == "SDLK_LSHIFT") return KeyboardKeycode::SDLK_LSHIFT;
-                if (value == "SDLK_LALT") return KeyboardKeycode::SDLK_LALT;
-                if (value == "SDLK_LGUI") return KeyboardKeycode::SDLK_LGUI;
-                if (value == "SDLK_RCTRL") return KeyboardKeycode::SDLK_RCTRL;
-                if (value == "SDLK_RSHIFT") return KeyboardKeycode::SDLK_RSHIFT;
-                if (value == "SDLK_RALT") return KeyboardKeycode::SDLK_RALT;
-                if (value == "SDLK_RGUI") return KeyboardKeycode::SDLK_RGUI;
-                if (value == "SDLK_MODE") return KeyboardKeycode::SDLK_MODE;
-                if (value == "SDLK_AUDIONEXT") return KeyboardKeycode::SDLK_AUDIONEXT;
-                if (value == "SDLK_AUDIOPREV") return KeyboardKeycode::SDLK_AUDIOPREV;
-                if (value == "SDLK_AUDIOSTOP") return KeyboardKeycode::SDLK_AUDIOSTOP;
-                if (value == "SDLK_AUDIOPLAY") return KeyboardKeycode::SDLK_AUDIOPLAY;
-                if (value == "SDLK_AUDIOMUTE") return KeyboardKeycode::SDLK_AUDIOMUTE;
-                if (value == "SDLK_MEDIASELECT") return KeyboardKeycode::SDLK_MEDIASELECT;
-                if (value == "SDLK_WWW") return KeyboardKeycode::SDLK_WWW;
-                if (value == "SDLK_MAIL") return KeyboardKeycode::SDLK_MAIL;
-                if (value == "SDLK_CALCULATOR") return KeyboardKeycode::SDLK_CALCULATOR;
-                if (value == "SDLK_COMPUTER") return KeyboardKeycode::SDLK_COMPUTER;
-                if (value == "SDLK_AC_SEARCH") return KeyboardKeycode::SDLK_AC_SEARCH;
-                if (value == "SDLK_AC_HOME") return KeyboardKeycode::SDLK_AC_HOME;
-                if (value == "SDLK_AC_BACK") return KeyboardKeycode::SDLK_AC_BACK;
-                if (value == "SDLK_AC_FORWARD") return KeyboardKeycode::SDLK_AC_FORWARD;
-                if (value == "SDLK_AC_STOP") return KeyboardKeycode::SDLK_AC_STOP;
-                if (value == "SDLK_AC_REFRESH") return KeyboardKeycode::SDLK_AC_REFRESH;
-                if (value == "SDLK_AC_BOOKMARKS") return KeyboardKeycode::SDLK_AC_BOOKMARKS;
-                if (value == "SDLK_BRIGHTNESSDOWN") return KeyboardKeycode::SDLK_BRIGHTNESSDOWN;
-                if (value == "SDLK_BRIGHTNESSUP") return KeyboardKeycode::SDLK_BRIGHTNESSUP;
-                if (value == "SDLK_DISPLAYSWITCH") return KeyboardKeycode::SDLK_DISPLAYSWITCH;
-                if (value == "SDLK_KBDILLUMTOGGLE") return KeyboardKeycode::SDLK_KBDILLUMTOGGLE;
-                if (value == "SDLK_KBDILLUMDOWN") return KeyboardKeycode::SDLK_KBDILLUMDOWN;
-                if (value == "SDLK_KBDILLUMUP") return KeyboardKeycode::SDLK_KBDILLUMUP;
-                if (value == "SDLK_EJECT") return KeyboardKeycode::SDLK_EJECT;
-                if (value == "SDLK_SLEEP") return KeyboardKeycode::SDLK_SLEEP;
+                if (value == "Unknown") return WindowEventType::Unknown;
+                if (value == "SDL_FIRSTEVENT") return WindowEventType::SDL_FIRSTEVENT;
+                if (value == "SDL_QUIT") return WindowEventType::SDL_QUIT;
+                if (value == "SDL_APP_TERMINATING") return WindowEventType::SDL_APP_TERMINATING;
+                if (value == "SDL_APP_LOWMEMORY") return WindowEventType::SDL_APP_LOWMEMORY;
+                if (value == "SDL_APP_WILLENTERBACKGROUND") return WindowEventType::SDL_APP_WILLENTERBACKGROUND;
+                if (value == "SDL_APP_DIDENTERBACKGROUND") return WindowEventType::SDL_APP_DIDENTERBACKGROUND;
+                if (value == "SDL_APP_WILLENTERFOREGROUND") return WindowEventType::SDL_APP_WILLENTERFOREGROUND;
+                if (value == "SDL_APP_DIDENTERFOREGROUND") return WindowEventType::SDL_APP_DIDENTERFOREGROUND;
+                if (value == "SDL_LOCALECHANGED") return WindowEventType::SDL_LOCALECHANGED;
+                if (value == "SDL_DISPLAYEVENT") return WindowEventType::SDL_DISPLAYEVENT;
+                if (value == "SDL_WINDOWEVENT") return WindowEventType::SDL_WINDOWEVENT;
+                if (value == "SDL_SYSWMEVENT") return WindowEventType::SDL_SYSWMEVENT;
+                if (value == "SDL_KEYDOWN") return WindowEventType::SDL_KEYDOWN;
+                if (value == "SDL_KEYUP") return WindowEventType::SDL_KEYUP;
+                if (value == "SDL_TEXTEDITING") return WindowEventType::SDL_TEXTEDITING;
+                if (value == "SDL_TEXTINPUT") return WindowEventType::SDL_TEXTINPUT;
+                if (value == "SDL_KEYMAPCHANGED") return WindowEventType::SDL_KEYMAPCHANGED;
+                if (value == "SDL_TEXTEDITING_EXT") return WindowEventType::SDL_TEXTEDITING_EXT;
+                if (value == "SDL_MOUSEMOTION") return WindowEventType::SDL_MOUSEMOTION;
+                if (value == "SDL_MOUSEBUTTONDOWN") return WindowEventType::SDL_MOUSEBUTTONDOWN;
+                if (value == "SDL_MOUSEBUTTONUP") return WindowEventType::SDL_MOUSEBUTTONUP;
+                if (value == "SDL_MOUSEWHEEL") return WindowEventType::SDL_MOUSEWHEEL;
+                if (value == "SDL_JOYAXISMOTION") return WindowEventType::SDL_JOYAXISMOTION;
+                if (value == "SDL_JOYBALLMOTION") return WindowEventType::SDL_JOYBALLMOTION;
+                if (value == "SDL_JOYHATMOTION") return WindowEventType::SDL_JOYHATMOTION;
+                if (value == "SDL_JOYBUTTONDOWN") return WindowEventType::SDL_JOYBUTTONDOWN;
+                if (value == "SDL_JOYBUTTONUP") return WindowEventType::SDL_JOYBUTTONUP;
+                if (value == "SDL_JOYDEVICEADDED") return WindowEventType::SDL_JOYDEVICEADDED;
+                if (value == "SDL_JOYDEVICEREMOVED") return WindowEventType::SDL_JOYDEVICEREMOVED;
+                if (value == "SDL_JOYBATTERYUPDATED") return WindowEventType::SDL_JOYBATTERYUPDATED;
+                if (value == "SDL_CONTROLLERAXISMOTION") return WindowEventType::SDL_CONTROLLERAXISMOTION;
+                if (value == "SDL_CONTROLLERBUTTONDOWN") return WindowEventType::SDL_CONTROLLERBUTTONDOWN;
+                if (value == "SDL_CONTROLLERBUTTONUP") return WindowEventType::SDL_CONTROLLERBUTTONUP;
+                if (value == "SDL_CONTROLLERDEVICEADDED") return WindowEventType::SDL_CONTROLLERDEVICEADDED;
+                if (value == "SDL_CONTROLLERDEVICEREMOVED") return WindowEventType::SDL_CONTROLLERDEVICEREMOVED;
+                if (value == "SDL_CONTROLLERDEVICEREMAPPED") return WindowEventType::SDL_CONTROLLERDEVICEREMAPPED;
+                if (value == "SDL_CONTROLLERTOUCHPADDOWN") return WindowEventType::SDL_CONTROLLERTOUCHPADDOWN;
+                if (value == "SDL_CONTROLLERTOUCHPADMOTION") return WindowEventType::SDL_CONTROLLERTOUCHPADMOTION;
+                if (value == "SDL_CONTROLLERTOUCHPADUP") return WindowEventType::SDL_CONTROLLERTOUCHPADUP;
+                if (value == "SDL_CONTROLLERSENSORUPDATE") return WindowEventType::SDL_CONTROLLERSENSORUPDATE;
+                if (value == "SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3") return WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3;
+                if (value == "SDL_CONTROLLERSTEAMHANDLEUPDATED") return WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED;
+                if (value == "SDL_FINGERDOWN") return WindowEventType::SDL_FINGERDOWN;
+                if (value == "SDL_FINGERUP") return WindowEventType::SDL_FINGERUP;
+                if (value == "SDL_FINGERMOTION") return WindowEventType::SDL_FINGERMOTION;
+                if (value == "SDL_DOLLARGESTURE") return WindowEventType::SDL_DOLLARGESTURE;
+                if (value == "SDL_DOLLARRECORD") return WindowEventType::SDL_DOLLARRECORD;
+                if (value == "SDL_MULTIGESTURE") return WindowEventType::SDL_MULTIGESTURE;
+                if (value == "SDL_CLIPBOARDUPDATE") return WindowEventType::SDL_CLIPBOARDUPDATE;
+                if (value == "SDL_DROPFILE") return WindowEventType::SDL_DROPFILE;
+                if (value == "SDL_DROPTEXT") return WindowEventType::SDL_DROPTEXT;
+                if (value == "SDL_DROPBEGIN") return WindowEventType::SDL_DROPBEGIN;
+                if (value == "SDL_DROPCOMPLETE") return WindowEventType::SDL_DROPCOMPLETE;
+                if (value == "SDL_AUDIODEVICEADDED") return WindowEventType::SDL_AUDIODEVICEADDED;
+                if (value == "SDL_AUDIODEVICEREMOVED") return WindowEventType::SDL_AUDIODEVICEREMOVED;
+                if (value == "SDL_SENSORUPDATE") return WindowEventType::SDL_SENSORUPDATE;
+                if (value == "SDL_RENDER_TARGETS_RESET") return WindowEventType::SDL_RENDER_TARGETS_RESET;
+                if (value == "SDL_RENDER_DEVICE_RESET") return WindowEventType::SDL_RENDER_DEVICE_RESET;
+                if (value == "SDL_USEREVENT") return WindowEventType::SDL_USEREVENT;
+                if (value == "SDL_LASTEVENT") return WindowEventType::SDL_LASTEVENT;
             }
             else
             {
                 std::string valueLower = ToLower(value);
-                if (valueLower == "unknown") return KeyboardKeycode::Unknown;
-                if (valueLower == "sdlk_return") return KeyboardKeycode::SDLK_RETURN;
-                if (valueLower == "sdlk_escape") return KeyboardKeycode::SDLK_ESCAPE;
-                if (valueLower == "sdlk_backspace") return KeyboardKeycode::SDLK_BACKSPACE;
-                if (valueLower == "sdlk_tab") return KeyboardKeycode::SDLK_TAB;
-                if (valueLower == "sdlk_space") return KeyboardKeycode::SDLK_SPACE;
-                if (valueLower == "sdlk_exclaim") return KeyboardKeycode::SDLK_EXCLAIM;
-                if (valueLower == "sdlk_quotedbl") return KeyboardKeycode::SDLK_QUOTEDBL;
-                if (valueLower == "sdlk_hash") return KeyboardKeycode::SDLK_HASH;
-                if (valueLower == "sdlk_percent") return KeyboardKeycode::SDLK_PERCENT;
-                if (valueLower == "sdlk_dollar") return KeyboardKeycode::SDLK_DOLLAR;
-                if (valueLower == "sdlk_ampersand") return KeyboardKeycode::SDLK_AMPERSAND;
-                if (valueLower == "sdlk_quote") return KeyboardKeycode::SDLK_QUOTE;
-                if (valueLower == "sdlk_leftparen") return KeyboardKeycode::SDLK_LEFTPAREN;
-                if (valueLower == "sdlk_rightparen") return KeyboardKeycode::SDLK_RIGHTPAREN;
-                if (valueLower == "sdlk_asterisk") return KeyboardKeycode::SDLK_ASTERISK;
-                if (valueLower == "sdlk_plus") return KeyboardKeycode::SDLK_PLUS;
-                if (valueLower == "sdlk_comma") return KeyboardKeycode::SDLK_COMMA;
-                if (valueLower == "sdlk_minus") return KeyboardKeycode::SDLK_MINUS;
-                if (valueLower == "sdlk_period") return KeyboardKeycode::SDLK_PERIOD;
-                if (valueLower == "sdlk_slash") return KeyboardKeycode::SDLK_SLASH;
-                if (valueLower == "sdlk_0") return KeyboardKeycode::SDLK_0;
-                if (valueLower == "sdlk_1") return KeyboardKeycode::SDLK_1;
-                if (valueLower == "sdlk_2") return KeyboardKeycode::SDLK_2;
-                if (valueLower == "sdlk_3") return KeyboardKeycode::SDLK_3;
-                if (valueLower == "sdlk_4") return KeyboardKeycode::SDLK_4;
-                if (valueLower == "sdlk_5") return KeyboardKeycode::SDLK_5;
-                if (valueLower == "sdlk_6") return KeyboardKeycode::SDLK_6;
-                if (valueLower == "sdlk_7") return KeyboardKeycode::SDLK_7;
-                if (valueLower == "sdlk_8") return KeyboardKeycode::SDLK_8;
-                if (valueLower == "sdlk_9") return KeyboardKeycode::SDLK_9;
-                if (valueLower == "sdlk_colon") return KeyboardKeycode::SDLK_COLON;
-                if (valueLower == "sdlk_semicolon") return KeyboardKeycode::SDLK_SEMICOLON;
-                if (valueLower == "sdlk_less") return KeyboardKeycode::SDLK_LESS;
-                if (valueLower == "sdlk_equals") return KeyboardKeycode::SDLK_EQUALS;
-                if (valueLower == "sdlk_greater") return KeyboardKeycode::SDLK_GREATER;
-                if (valueLower == "sdlk_question") return KeyboardKeycode::SDLK_QUESTION;
-                if (valueLower == "sdlk_at") return KeyboardKeycode::SDLK_AT;
-                if (valueLower == "sdlk_leftbracket") return KeyboardKeycode::SDLK_LEFTBRACKET;
-                if (valueLower == "sdlk_backslash") return KeyboardKeycode::SDLK_BACKSLASH;
-                if (valueLower == "sdlk_rightbracket") return KeyboardKeycode::SDLK_RIGHTBRACKET;
-                if (valueLower == "sdlk_caret") return KeyboardKeycode::SDLK_CARET;
-                if (valueLower == "sdlk_underscore") return KeyboardKeycode::SDLK_UNDERSCORE;
-                if (valueLower == "sdlk_backquote") return KeyboardKeycode::SDLK_BACKQUOTE;
-                if (valueLower == "sdlk_a") return KeyboardKeycode::SDLK_a;
-                if (valueLower == "sdlk_b") return KeyboardKeycode::SDLK_b;
-                if (valueLower == "sdlk_c") return KeyboardKeycode::SDLK_c;
-                if (valueLower == "sdlk_d") return KeyboardKeycode::SDLK_d;
-                if (valueLower == "sdlk_e") return KeyboardKeycode::SDLK_e;
-                if (valueLower == "sdlk_f") return KeyboardKeycode::SDLK_f;
-                if (valueLower == "sdlk_g") return KeyboardKeycode::SDLK_g;
-                if (valueLower == "sdlk_h") return KeyboardKeycode::SDLK_h;
-                if (valueLower == "sdlk_i") return KeyboardKeycode::SDLK_i;
-                if (valueLower == "sdlk_j") return KeyboardKeycode::SDLK_j;
-                if (valueLower == "sdlk_k") return KeyboardKeycode::SDLK_k;
-                if (valueLower == "sdlk_l") return KeyboardKeycode::SDLK_l;
-                if (valueLower == "sdlk_m") return KeyboardKeycode::SDLK_m;
-                if (valueLower == "sdlk_n") return KeyboardKeycode::SDLK_n;
-                if (valueLower == "sdlk_o") return KeyboardKeycode::SDLK_o;
-                if (valueLower == "sdlk_p") return KeyboardKeycode::SDLK_p;
-                if (valueLower == "sdlk_q") return KeyboardKeycode::SDLK_q;
-                if (valueLower == "sdlk_r") return KeyboardKeycode::SDLK_r;
-                if (valueLower == "sdlk_s") return KeyboardKeycode::SDLK_s;
-                if (valueLower == "sdlk_t") return KeyboardKeycode::SDLK_t;
-                if (valueLower == "sdlk_u") return KeyboardKeycode::SDLK_u;
-                if (valueLower == "sdlk_v") return KeyboardKeycode::SDLK_v;
-                if (valueLower == "sdlk_w") return KeyboardKeycode::SDLK_w;
-                if (valueLower == "sdlk_x") return KeyboardKeycode::SDLK_x;
-                if (valueLower == "sdlk_y") return KeyboardKeycode::SDLK_y;
-                if (valueLower == "sdlk_z") return KeyboardKeycode::SDLK_z;
-                if (valueLower == "sdlk_capslock") return KeyboardKeycode::SDLK_CAPSLOCK;
-                if (valueLower == "sdlk_f1") return KeyboardKeycode::SDLK_F1;
-                if (valueLower == "sdlk_f2") return KeyboardKeycode::SDLK_F2;
-                if (valueLower == "sdlk_f3") return KeyboardKeycode::SDLK_F3;
-                if (valueLower == "sdlk_f4") return KeyboardKeycode::SDLK_F4;
-                if (valueLower == "sdlk_f5") return KeyboardKeycode::SDLK_F5;
-                if (valueLower == "sdlk_f6") return KeyboardKeycode::SDLK_F6;
-                if (valueLower == "sdlk_f7") return KeyboardKeycode::SDLK_F7;
-                if (valueLower == "sdlk_f8") return KeyboardKeycode::SDLK_F8;
-                if (valueLower == "sdlk_f9") return KeyboardKeycode::SDLK_F9;
-                if (valueLower == "sdlk_f10") return KeyboardKeycode::SDLK_F10;
-                if (valueLower == "sdlk_f11") return KeyboardKeycode::SDLK_F11;
-                if (valueLower == "sdlk_f12") return KeyboardKeycode::SDLK_F12;
-                if (valueLower == "sdlk_printscreen") return KeyboardKeycode::SDLK_PRINTSCREEN;
-                if (valueLower == "sdlk_scrolllock") return KeyboardKeycode::SDLK_SCROLLLOCK;
-                if (valueLower == "sdlk_pause") return KeyboardKeycode::SDLK_PAUSE;
-                if (valueLower == "sdlk_insert") return KeyboardKeycode::SDLK_INSERT;
-                if (valueLower == "sdlk_home") return KeyboardKeycode::SDLK_HOME;
-                if (valueLower == "sdlk_pageup") return KeyboardKeycode::SDLK_PAGEUP;
-                if (valueLower == "sdlk_delete") return KeyboardKeycode::SDLK_DELETE;
-                if (valueLower == "sdlk_end") return KeyboardKeycode::SDLK_END;
-                if (valueLower == "sdlk_pagedown") return KeyboardKeycode::SDLK_PAGEDOWN;
-                if (valueLower == "sdlk_right") return KeyboardKeycode::SDLK_RIGHT;
-                if (valueLower == "sdlk_left") return KeyboardKeycode::SDLK_LEFT;
-                if (valueLower == "sdlk_down") return KeyboardKeycode::SDLK_DOWN;
-                if (valueLower == "sdlk_up") return KeyboardKeycode::SDLK_UP;
-                if (valueLower == "sdlk_numlockclear") return KeyboardKeycode::SDLK_NUMLOCKCLEAR;
-                if (valueLower == "sdlk_kp_divide") return KeyboardKeycode::SDLK_KP_DIVIDE;
-                if (valueLower == "sdlk_kp_multiply") return KeyboardKeycode::SDLK_KP_MULTIPLY;
-                if (valueLower == "sdlk_kp_minus") return KeyboardKeycode::SDLK_KP_MINUS;
-                if (valueLower == "sdlk_kp_plus") return KeyboardKeycode::SDLK_KP_PLUS;
-                if (valueLower == "sdlk_kp_enter") return KeyboardKeycode::SDLK_KP_ENTER;
-                if (valueLower == "sdlk_kp_1") return KeyboardKeycode::SDLK_KP_1;
-                if (valueLower == "sdlk_kp_2") return KeyboardKeycode::SDLK_KP_2;
-                if (valueLower == "sdlk_kp_3") return KeyboardKeycode::SDLK_KP_3;
-                if (valueLower == "sdlk_kp_4") return KeyboardKeycode::SDLK_KP_4;
-                if (valueLower == "sdlk_kp_5") return KeyboardKeycode::SDLK_KP_5;
-                if (valueLower == "sdlk_kp_6") return KeyboardKeycode::SDLK_KP_6;
-                if (valueLower == "sdlk_kp_7") return KeyboardKeycode::SDLK_KP_7;
-                if (valueLower == "sdlk_kp_8") return KeyboardKeycode::SDLK_KP_8;
-                if (valueLower == "sdlk_kp_9") return KeyboardKeycode::SDLK_KP_9;
-                if (valueLower == "sdlk_kp_0") return KeyboardKeycode::SDLK_KP_0;
-                if (valueLower == "sdlk_kp_period") return KeyboardKeycode::SDLK_KP_PERIOD;
-                if (valueLower == "sdlk_application") return KeyboardKeycode::SDLK_APPLICATION;
-                if (valueLower == "sdlk_power") return KeyboardKeycode::SDLK_POWER;
-                if (valueLower == "sdlk_kp_equals") return KeyboardKeycode::SDLK_KP_EQUALS;
-                if (valueLower == "sdlk_f13") return KeyboardKeycode::SDLK_F13;
-                if (valueLower == "sdlk_f14") return KeyboardKeycode::SDLK_F14;
-                if (valueLower == "sdlk_f15") return KeyboardKeycode::SDLK_F15;
-                if (valueLower == "sdlk_f16") return KeyboardKeycode::SDLK_F16;
-                if (valueLower == "sdlk_f17") return KeyboardKeycode::SDLK_F17;
-                if (valueLower == "sdlk_f18") return KeyboardKeycode::SDLK_F18;
-                if (valueLower == "sdlk_f19") return KeyboardKeycode::SDLK_F19;
-                if (valueLower == "sdlk_f20") return KeyboardKeycode::SDLK_F20;
-                if (valueLower == "sdlk_f21") return KeyboardKeycode::SDLK_F21;
-                if (valueLower == "sdlk_f22") return KeyboardKeycode::SDLK_F22;
-                if (valueLower == "sdlk_f23") return KeyboardKeycode::SDLK_F23;
-                if (valueLower == "sdlk_f24") return KeyboardKeycode::SDLK_F24;
-                if (valueLower == "sdlk_execute") return KeyboardKeycode::SDLK_EXECUTE;
-                if (valueLower == "sdlk_help") return KeyboardKeycode::SDLK_HELP;
-                if (valueLower == "sdlk_menu") return KeyboardKeycode::SDLK_MENU;
-                if (valueLower == "sdlk_select") return KeyboardKeycode::SDLK_SELECT;
-                if (valueLower == "sdlk_stop") return KeyboardKeycode::SDLK_STOP;
-                if (valueLower == "sdlk_again") return KeyboardKeycode::SDLK_AGAIN;
-                if (valueLower == "sdlk_undo") return KeyboardKeycode::SDLK_UNDO;
-                if (valueLower == "sdlk_cut") return KeyboardKeycode::SDLK_CUT;
-                if (valueLower == "sdlk_copy") return KeyboardKeycode::SDLK_COPY;
-                if (valueLower == "sdlk_paste") return KeyboardKeycode::SDLK_PASTE;
-                if (valueLower == "sdlk_find") return KeyboardKeycode::SDLK_FIND;
-                if (valueLower == "sdlk_mute") return KeyboardKeycode::SDLK_MUTE;
-                if (valueLower == "sdlk_volumeup") return KeyboardKeycode::SDLK_VOLUMEUP;
-                if (valueLower == "sdlk_volumedown") return KeyboardKeycode::SDLK_VOLUMEDOWN;
-                if (valueLower == "sdlk_kp_comma") return KeyboardKeycode::SDLK_KP_COMMA;
-                if (valueLower == "sdlk_kp_equalsas400") return KeyboardKeycode::SDLK_KP_EQUALSAS400;
-                if (valueLower == "sdlk_alterase") return KeyboardKeycode::SDLK_ALTERASE;
-                if (valueLower == "sdlk_sysreq") return KeyboardKeycode::SDLK_SYSREQ;
-                if (valueLower == "sdlk_cancel") return KeyboardKeycode::SDLK_CANCEL;
-                if (valueLower == "sdlk_clear") return KeyboardKeycode::SDLK_CLEAR;
-                if (valueLower == "sdlk_prior") return KeyboardKeycode::SDLK_PRIOR;
-                if (valueLower == "sdlk_return2") return KeyboardKeycode::SDLK_RETURN2;
-                if (valueLower == "sdlk_separator") return KeyboardKeycode::SDLK_SEPARATOR;
-                if (valueLower == "sdlk_out") return KeyboardKeycode::SDLK_OUT;
-                if (valueLower == "sdlk_oper") return KeyboardKeycode::SDLK_OPER;
-                if (valueLower == "sdlk_clearagain") return KeyboardKeycode::SDLK_CLEARAGAIN;
-                if (valueLower == "sdlk_crsel") return KeyboardKeycode::SDLK_CRSEL;
-                if (valueLower == "sdlk_exsel") return KeyboardKeycode::SDLK_EXSEL;
-                if (valueLower == "sdlk_kp_00") return KeyboardKeycode::SDLK_KP_00;
-                if (valueLower == "sdlk_kp_000") return KeyboardKeycode::SDLK_KP_000;
-                if (valueLower == "sdlk_thousandsseparator") return KeyboardKeycode::SDLK_THOUSANDSSEPARATOR;
-                if (valueLower == "sdlk_decimalseparator") return KeyboardKeycode::SDLK_DECIMALSEPARATOR;
-                if (valueLower == "sdlk_currencyunit") return KeyboardKeycode::SDLK_CURRENCYUNIT;
-                if (valueLower == "sdlk_currencysubunit") return KeyboardKeycode::SDLK_CURRENCYSUBUNIT;
-                if (valueLower == "sdlk_kp_leftparen") return KeyboardKeycode::SDLK_KP_LEFTPAREN;
-                if (valueLower == "sdlk_kp_rightparen") return KeyboardKeycode::SDLK_KP_RIGHTPAREN;
-                if (valueLower == "sdlk_kp_leftbrace") return KeyboardKeycode::SDLK_KP_LEFTBRACE;
-                if (valueLower == "sdlk_kp_rightbrace") return KeyboardKeycode::SDLK_KP_RIGHTBRACE;
-                if (valueLower == "sdlk_kp_tab") return KeyboardKeycode::SDLK_KP_TAB;
-                if (valueLower == "sdlk_kp_backspace") return KeyboardKeycode::SDLK_KP_BACKSPACE;
-                if (valueLower == "sdlk_kp_a") return KeyboardKeycode::SDLK_KP_A;
-                if (valueLower == "sdlk_kp_b") return KeyboardKeycode::SDLK_KP_B;
-                if (valueLower == "sdlk_kp_c") return KeyboardKeycode::SDLK_KP_C;
-                if (valueLower == "sdlk_kp_d") return KeyboardKeycode::SDLK_KP_D;
-                if (valueLower == "sdlk_kp_e") return KeyboardKeycode::SDLK_KP_E;
-                if (valueLower == "sdlk_kp_f") return KeyboardKeycode::SDLK_KP_F;
-                if (valueLower == "sdlk_kp_xor") return KeyboardKeycode::SDLK_KP_XOR;
-                if (valueLower == "sdlk_kp_power") return KeyboardKeycode::SDLK_KP_POWER;
-                if (valueLower == "sdlk_kp_percent") return KeyboardKeycode::SDLK_KP_PERCENT;
-                if (valueLower == "sdlk_kp_less") return KeyboardKeycode::SDLK_KP_LESS;
-                if (valueLower == "sdlk_kp_greater") return KeyboardKeycode::SDLK_KP_GREATER;
-                if (valueLower == "sdlk_kp_ampersand") return KeyboardKeycode::SDLK_KP_AMPERSAND;
-                if (valueLower == "sdlk_kp_dblampersand") return KeyboardKeycode::SDLK_KP_DBLAMPERSAND;
-                if (valueLower == "sdlk_kp_verticalbar") return KeyboardKeycode::SDLK_KP_VERTICALBAR;
-                if (valueLower == "sdlk_kp_dblverticalbar") return KeyboardKeycode::SDLK_KP_DBLVERTICALBAR;
-                if (valueLower == "sdlk_kp_colon") return KeyboardKeycode::SDLK_KP_COLON;
-                if (valueLower == "sdlk_kp_hash") return KeyboardKeycode::SDLK_KP_HASH;
-                if (valueLower == "sdlk_kp_space") return KeyboardKeycode::SDLK_KP_SPACE;
-                if (valueLower == "sdlk_kp_at") return KeyboardKeycode::SDLK_KP_AT;
-                if (valueLower == "sdlk_kp_exclam") return KeyboardKeycode::SDLK_KP_EXCLAM;
-                if (valueLower == "sdlk_kp_memstore") return KeyboardKeycode::SDLK_KP_MEMSTORE;
-                if (valueLower == "sdlk_kp_memrecall") return KeyboardKeycode::SDLK_KP_MEMRECALL;
-                if (valueLower == "sdlk_kp_memclear") return KeyboardKeycode::SDLK_KP_MEMCLEAR;
-                if (valueLower == "sdlk_kp_memadd") return KeyboardKeycode::SDLK_KP_MEMADD;
-                if (valueLower == "sdlk_kp_memsubtract") return KeyboardKeycode::SDLK_KP_MEMSUBTRACT;
-                if (valueLower == "sdlk_kp_memmultiply") return KeyboardKeycode::SDLK_KP_MEMMULTIPLY;
-                if (valueLower == "sdlk_kp_memdivide") return KeyboardKeycode::SDLK_KP_MEMDIVIDE;
-                if (valueLower == "sdlk_kp_plusminus") return KeyboardKeycode::SDLK_KP_PLUSMINUS;
-                if (valueLower == "sdlk_kp_clear") return KeyboardKeycode::SDLK_KP_CLEAR;
-                if (valueLower == "sdlk_kp_clearentry") return KeyboardKeycode::SDLK_KP_CLEARENTRY;
-                if (valueLower == "sdlk_kp_binary") return KeyboardKeycode::SDLK_KP_BINARY;
-                if (valueLower == "sdlk_kp_octal") return KeyboardKeycode::SDLK_KP_OCTAL;
-                if (valueLower == "sdlk_kp_decimal") return KeyboardKeycode::SDLK_KP_DECIMAL;
-                if (valueLower == "sdlk_kp_hexadecimal") return KeyboardKeycode::SDLK_KP_HEXADECIMAL;
-                if (valueLower == "sdlk_lctrl") return KeyboardKeycode::SDLK_LCTRL;
-                if (valueLower == "sdlk_lshift") return KeyboardKeycode::SDLK_LSHIFT;
-                if (valueLower == "sdlk_lalt") return KeyboardKeycode::SDLK_LALT;
-                if (valueLower == "sdlk_lgui") return KeyboardKeycode::SDLK_LGUI;
-                if (valueLower == "sdlk_rctrl") return KeyboardKeycode::SDLK_RCTRL;
-                if (valueLower == "sdlk_rshift") return KeyboardKeycode::SDLK_RSHIFT;
-                if (valueLower == "sdlk_ralt") return KeyboardKeycode::SDLK_RALT;
-                if (valueLower == "sdlk_rgui") return KeyboardKeycode::SDLK_RGUI;
-                if (valueLower == "sdlk_mode") return KeyboardKeycode::SDLK_MODE;
-                if (valueLower == "sdlk_audionext") return KeyboardKeycode::SDLK_AUDIONEXT;
-                if (valueLower == "sdlk_audioprev") return KeyboardKeycode::SDLK_AUDIOPREV;
-                if (valueLower == "sdlk_audiostop") return KeyboardKeycode::SDLK_AUDIOSTOP;
-                if (valueLower == "sdlk_audioplay") return KeyboardKeycode::SDLK_AUDIOPLAY;
-                if (valueLower == "sdlk_audiomute") return KeyboardKeycode::SDLK_AUDIOMUTE;
-                if (valueLower == "sdlk_mediaselect") return KeyboardKeycode::SDLK_MEDIASELECT;
-                if (valueLower == "sdlk_www") return KeyboardKeycode::SDLK_WWW;
-                if (valueLower == "sdlk_mail") return KeyboardKeycode::SDLK_MAIL;
-                if (valueLower == "sdlk_calculator") return KeyboardKeycode::SDLK_CALCULATOR;
-                if (valueLower == "sdlk_computer") return KeyboardKeycode::SDLK_COMPUTER;
-                if (valueLower == "sdlk_ac_search") return KeyboardKeycode::SDLK_AC_SEARCH;
-                if (valueLower == "sdlk_ac_home") return KeyboardKeycode::SDLK_AC_HOME;
-                if (valueLower == "sdlk_ac_back") return KeyboardKeycode::SDLK_AC_BACK;
-                if (valueLower == "sdlk_ac_forward") return KeyboardKeycode::SDLK_AC_FORWARD;
-                if (valueLower == "sdlk_ac_stop") return KeyboardKeycode::SDLK_AC_STOP;
-                if (valueLower == "sdlk_ac_refresh") return KeyboardKeycode::SDLK_AC_REFRESH;
-                if (valueLower == "sdlk_ac_bookmarks") return KeyboardKeycode::SDLK_AC_BOOKMARKS;
-                if (valueLower == "sdlk_brightnessdown") return KeyboardKeycode::SDLK_BRIGHTNESSDOWN;
-                if (valueLower == "sdlk_brightnessup") return KeyboardKeycode::SDLK_BRIGHTNESSUP;
-                if (valueLower == "sdlk_displayswitch") return KeyboardKeycode::SDLK_DISPLAYSWITCH;
-                if (valueLower == "sdlk_kbdillumtoggle") return KeyboardKeycode::SDLK_KBDILLUMTOGGLE;
-                if (valueLower == "sdlk_kbdillumdown") return KeyboardKeycode::SDLK_KBDILLUMDOWN;
-                if (valueLower == "sdlk_kbdillumup") return KeyboardKeycode::SDLK_KBDILLUMUP;
-                if (valueLower == "sdlk_eject") return KeyboardKeycode::SDLK_EJECT;
-                if (valueLower == "sdlk_sleep") return KeyboardKeycode::SDLK_SLEEP;
+                if (valueLower == "unknown") return WindowEventType::Unknown;
+                if (valueLower == "sdl_firstevent") return WindowEventType::SDL_FIRSTEVENT;
+                if (valueLower == "sdl_quit") return WindowEventType::SDL_QUIT;
+                if (valueLower == "sdl_app_terminating") return WindowEventType::SDL_APP_TERMINATING;
+                if (valueLower == "sdl_app_lowmemory") return WindowEventType::SDL_APP_LOWMEMORY;
+                if (valueLower == "sdl_app_willenterbackground") return WindowEventType::SDL_APP_WILLENTERBACKGROUND;
+                if (valueLower == "sdl_app_didenterbackground") return WindowEventType::SDL_APP_DIDENTERBACKGROUND;
+                if (valueLower == "sdl_app_willenterforeground") return WindowEventType::SDL_APP_WILLENTERFOREGROUND;
+                if (valueLower == "sdl_app_didenterforeground") return WindowEventType::SDL_APP_DIDENTERFOREGROUND;
+                if (valueLower == "sdl_localechanged") return WindowEventType::SDL_LOCALECHANGED;
+                if (valueLower == "sdl_displayevent") return WindowEventType::SDL_DISPLAYEVENT;
+                if (valueLower == "sdl_windowevent") return WindowEventType::SDL_WINDOWEVENT;
+                if (valueLower == "sdl_syswmevent") return WindowEventType::SDL_SYSWMEVENT;
+                if (valueLower == "sdl_keydown") return WindowEventType::SDL_KEYDOWN;
+                if (valueLower == "sdl_keyup") return WindowEventType::SDL_KEYUP;
+                if (valueLower == "sdl_textediting") return WindowEventType::SDL_TEXTEDITING;
+                if (valueLower == "sdl_textinput") return WindowEventType::SDL_TEXTINPUT;
+                if (valueLower == "sdl_keymapchanged") return WindowEventType::SDL_KEYMAPCHANGED;
+                if (valueLower == "sdl_textediting_ext") return WindowEventType::SDL_TEXTEDITING_EXT;
+                if (valueLower == "sdl_mousemotion") return WindowEventType::SDL_MOUSEMOTION;
+                if (valueLower == "sdl_mousebuttondown") return WindowEventType::SDL_MOUSEBUTTONDOWN;
+                if (valueLower == "sdl_mousebuttonup") return WindowEventType::SDL_MOUSEBUTTONUP;
+                if (valueLower == "sdl_mousewheel") return WindowEventType::SDL_MOUSEWHEEL;
+                if (valueLower == "sdl_joyaxismotion") return WindowEventType::SDL_JOYAXISMOTION;
+                if (valueLower == "sdl_joyballmotion") return WindowEventType::SDL_JOYBALLMOTION;
+                if (valueLower == "sdl_joyhatmotion") return WindowEventType::SDL_JOYHATMOTION;
+                if (valueLower == "sdl_joybuttondown") return WindowEventType::SDL_JOYBUTTONDOWN;
+                if (valueLower == "sdl_joybuttonup") return WindowEventType::SDL_JOYBUTTONUP;
+                if (valueLower == "sdl_joydeviceadded") return WindowEventType::SDL_JOYDEVICEADDED;
+                if (valueLower == "sdl_joydeviceremoved") return WindowEventType::SDL_JOYDEVICEREMOVED;
+                if (valueLower == "sdl_joybatteryupdated") return WindowEventType::SDL_JOYBATTERYUPDATED;
+                if (valueLower == "sdl_controlleraxismotion") return WindowEventType::SDL_CONTROLLERAXISMOTION;
+                if (valueLower == "sdl_controllerbuttondown") return WindowEventType::SDL_CONTROLLERBUTTONDOWN;
+                if (valueLower == "sdl_controllerbuttonup") return WindowEventType::SDL_CONTROLLERBUTTONUP;
+                if (valueLower == "sdl_controllerdeviceadded") return WindowEventType::SDL_CONTROLLERDEVICEADDED;
+                if (valueLower == "sdl_controllerdeviceremoved") return WindowEventType::SDL_CONTROLLERDEVICEREMOVED;
+                if (valueLower == "sdl_controllerdeviceremapped") return WindowEventType::SDL_CONTROLLERDEVICEREMAPPED;
+                if (valueLower == "sdl_controllertouchpaddown") return WindowEventType::SDL_CONTROLLERTOUCHPADDOWN;
+                if (valueLower == "sdl_controllertouchpadmotion") return WindowEventType::SDL_CONTROLLERTOUCHPADMOTION;
+                if (valueLower == "sdl_controllertouchpadup") return WindowEventType::SDL_CONTROLLERTOUCHPADUP;
+                if (valueLower == "sdl_controllersensorupdate") return WindowEventType::SDL_CONTROLLERSENSORUPDATE;
+                if (valueLower == "sdl_controllerupdatecomplete_reserved_for_sdl3") return WindowEventType::SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3;
+                if (valueLower == "sdl_controllersteamhandleupdated") return WindowEventType::SDL_CONTROLLERSTEAMHANDLEUPDATED;
+                if (valueLower == "sdl_fingerdown") return WindowEventType::SDL_FINGERDOWN;
+                if (valueLower == "sdl_fingerup") return WindowEventType::SDL_FINGERUP;
+                if (valueLower == "sdl_fingermotion") return WindowEventType::SDL_FINGERMOTION;
+                if (valueLower == "sdl_dollargesture") return WindowEventType::SDL_DOLLARGESTURE;
+                if (valueLower == "sdl_dollarrecord") return WindowEventType::SDL_DOLLARRECORD;
+                if (valueLower == "sdl_multigesture") return WindowEventType::SDL_MULTIGESTURE;
+                if (valueLower == "sdl_clipboardupdate") return WindowEventType::SDL_CLIPBOARDUPDATE;
+                if (valueLower == "sdl_dropfile") return WindowEventType::SDL_DROPFILE;
+                if (valueLower == "sdl_droptext") return WindowEventType::SDL_DROPTEXT;
+                if (valueLower == "sdl_dropbegin") return WindowEventType::SDL_DROPBEGIN;
+                if (valueLower == "sdl_dropcomplete") return WindowEventType::SDL_DROPCOMPLETE;
+                if (valueLower == "sdl_audiodeviceadded") return WindowEventType::SDL_AUDIODEVICEADDED;
+                if (valueLower == "sdl_audiodeviceremoved") return WindowEventType::SDL_AUDIODEVICEREMOVED;
+                if (valueLower == "sdl_sensorupdate") return WindowEventType::SDL_SENSORUPDATE;
+                if (valueLower == "sdl_render_targets_reset") return WindowEventType::SDL_RENDER_TARGETS_RESET;
+                if (valueLower == "sdl_render_device_reset") return WindowEventType::SDL_RENDER_DEVICE_RESET;
+                if (valueLower == "sdl_userevent") return WindowEventType::SDL_USEREVENT;
+                if (valueLower == "sdl_lastevent") return WindowEventType::SDL_LASTEVENT;
             }
 
-            return KeyboardKeycode::Unknown;
+            return WindowEventType::Unknown;
         }
 
         /// <summary>

@@ -243,9 +243,6 @@
     <ClCompile Include="Text\StringHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.vcxproj">
       <Project>{40283b7b-524e-4753-9617-ff1da95cd9d0}</Project>
     </ProjectReference>
@@ -254,10 +251,4 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\Tools\SuperGenerator\SuperGenerator\packages\rapidxml.1.13\build\native\rapidxml.targets" Condition="Exists('..\..\Tools\SuperGenerator\SuperGenerator\packages\rapidxml.1.13\build\native\rapidxml.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\Tools\SuperGenerator\SuperGenerator\packages\rapidxml.1.13\build\native\rapidxml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Tools\SuperGenerator\SuperGenerator\packages\rapidxml.1.13\build\native\rapidxml.targets'))" />
-  </Target>
 </Project>

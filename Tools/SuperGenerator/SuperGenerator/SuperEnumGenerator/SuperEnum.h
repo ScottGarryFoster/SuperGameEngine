@@ -1,6 +1,7 @@
 #pragma once
 #include "FatedQuestLibraries.h"
 #include <string>
+#include <unordered_set>
 
 #include "SuperEnumType.h"
 
@@ -66,6 +67,11 @@ namespace SuperEnumGenerator
             /// When making the enum, this updates with the flag value.
             /// </summary>
             size_t FlagValue = -1;
+
+            /// <summary>
+            /// The predefined group this enum is in.
+            /// </summary>
+            std::unordered_set<std::string> Groups;
         };
 
         /// <summary>
@@ -121,6 +127,7 @@ namespace SuperEnumGenerator
         std::string PrintToVector(int indents);
         std::string PrintToString(int indents);
         std::string PrintFromString(int indents);
+        std::string PrintGroups(int indents);
         std::string GetMinEnumValue();
         std::string GetMaxEnumValue();
         std::string GetUnknownValue();

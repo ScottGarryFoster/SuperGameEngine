@@ -33,6 +33,9 @@ namespace SuperGameEngine
     class DebugEngine : public Engine
     {
     public:
+        DebugEngine();
+        virtual ~DebugEngine();
+
         /// <summary>
         /// Gives the engine a renderer.
         /// This can be called multiple times whilst the application is open
@@ -47,8 +50,8 @@ namespace SuperGameEngine
         /// <summary>
         /// Gives the input manager.
         /// </summary>
-        /// <param name="inputHandler">User input. </param>
-        virtual void GiveInput(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler) override;
+        /// <param name="inputManager">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
 
         /// <summary>
         /// Handle the current event.
@@ -103,7 +106,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Given to Tools and Engine to provide Input.
         /// </summary>
-        std::shared_ptr<SuperGameInput::InputHandler> m_inputHandler;
+        std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
 
         std::shared_ptr<CombinedGamePackage> m_combinedGamePackage;
 

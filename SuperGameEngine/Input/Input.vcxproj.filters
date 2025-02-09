@@ -25,6 +25,12 @@
     <Filter Include="Header Files\InputManagement\Engine">
       <UniqueIdentifier>{9926916f-ff34-40fe-9457-6c8d24d85ad3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\InputManagement\Engine">
+      <UniqueIdentifier>{424cf919-bbc4-4c69-9c68-5e84ec3ea052}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputManagement\Event">
+      <UniqueIdentifier>{3fb6e88d-ec37-4e99-976a-f4c552704d4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -37,9 +43,6 @@
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
     <ClInclude Include="InputManagement\SDLInputManager.h">
-      <Filter>Header Files\InputManagement</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManagement\SuperSDLInputManager.h">
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
     <ClInclude Include="InputManagement\Event\WindowEvent.h">
@@ -78,28 +81,85 @@
     <ClInclude Include="InputManagement\Engine\KeyInput.h">
       <Filter>Header Files\InputManagement\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="InputManagement\Engine\KeyState.h">
-      <Filter>Header Files\InputManagement\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files\InputManagement</Filter>
     </ClInclude>
+    <ClInclude Include="InputManagement\Engine\ControllerInput.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\ControllerComparisonType.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\UniversalControllerAxis.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\UniversalControllerButton.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\ControllerLayout.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\Controller.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\ControllerLayoutFromXML.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\ControllerAxisMappedToButton.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\ControllerAxisMappingEvaluation.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\SuperSDLInputManager.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\SuperControllerLayoutFromXML.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\AxisToUniversalAxis.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\ControllerDeviceEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\JoystickDeviceEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\KeyOrButtonState.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\JoyButtonEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\JoyHatEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\HatPosition.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\JoyAxisEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InputManagement\SuperInputManager.cpp">
-      <Filter>Source Files\InputManagement</Filter>
+      <Filter>Source Files\InputManagement\Event</Filter>
     </ClCompile>
     <ClCompile Include="InputManagement\SuperSDLInputManager.cpp">
-      <Filter>Source Files\InputManagement</Filter>
+      <Filter>Source Files\InputManagement\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\Engine\ControllerInput.cpp">
+      <Filter>Source Files\InputManagement\Engine</Filter>
     </ClCompile>
     <ClCompile Include="InputManagement\Engine\KeyInput.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\InputManagement\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\Engine\SuperControllerLayoutFromXML.cpp">
+      <Filter>Source Files\InputManagement\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

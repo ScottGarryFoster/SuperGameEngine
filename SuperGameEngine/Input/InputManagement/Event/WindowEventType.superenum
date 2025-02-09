@@ -51,6 +51,15 @@
             Called on Android in onResume()
         </SDL_APP_DIDENTERFOREGROUND>
         
+        <SDL_LOCALECHANGED>
+            The user's locale preferences have changed.
+        </SDL_LOCALECHANGED>
+        
+        <!-- Display events -->
+        <SDL_DISPLAYEVENT>
+            Display state change
+        </SDL_DISPLAYEVENT>
+        
         <!-- Window events -->
         <SDL_WINDOWEVENT>
             Window state change
@@ -76,6 +85,9 @@
             Keymap changed due to a system event such as an
             input language or keyboard layout change.
         </SDL_KEYMAPCHANGED>
+        <SDL_TEXTEDITING_EXT>
+            Extended keyboard text editing (composition)
+        </SDL_TEXTEDITING_EXT>
         
         <!-- Mouse events -->
         <SDL_MOUSEMOTION>
@@ -113,6 +125,9 @@
         <SDL_JOYDEVICEREMOVED>
             An opened joystick has been removed
         </SDL_JOYDEVICEREMOVED>
+        <SDL_JOYBATTERYUPDATED>
+            Joystick battery level change
+        </SDL_JOYBATTERYUPDATED>
         
         <!-- Game controller events -->
         <SDL_CONTROLLERAXISMOTION>
@@ -133,6 +148,22 @@
         <SDL_CONTROLLERDEVICEREMAPPED>
             The controller mapping was updated
         </SDL_CONTROLLERDEVICEREMAPPED>
+        <SDL_CONTROLLERTOUCHPADDOWN>
+            Game controller touchpad was touched
+        </SDL_CONTROLLERDEVICEREMAPPED>
+        <SDL_CONTROLLERTOUCHPADMOTION>
+            Game controller touchpad finger was moved
+        </SDL_CONTROLLERDEVICEREMAPPED>
+        <SDL_CONTROLLERTOUCHPADUP>
+            Game controller touchpad finger was lifted
+        </SDL_CONTROLLERTOUCHPADUP>
+        <SDL_CONTROLLERSENSORUPDATE>
+            Game controller sensor was updated
+        </SDL_CONTROLLERSENSORUPDATE>
+        <SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3 />
+        <SDL_CONTROLLERSTEAMHANDLEUPDATED>
+            Game controller Steam handle has changed
+        </SDL_CONTROLLERSTEAMHANDLEUPDATED>
         
         <!-- Touch events -->
         <SDL_FINGERDOWN />
@@ -170,6 +201,11 @@
         <SDL_AUDIODEVICEREMOVED>
             An audio device has been removed.
         </SDL_AUDIODEVICEREMOVED>
+        
+        <!-- Sensor events -->
+        <SDL_SENSORUPDATE>
+            A sensor was updated
+        </SDL_SENSORUPDATE>
         
         <!-- Render events -->
         <SDL_RENDER_TARGETS_RESET>
