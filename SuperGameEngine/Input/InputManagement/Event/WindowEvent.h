@@ -5,6 +5,7 @@
 #include "JoyHatEvent.h"
 #include "JoystickDeviceEvent.h"
 #include "KeyboardEvent.h"
+#include "MouseButtonEvent.h"
 #include "WindowEventType.h"
 
 namespace SuperGameInput
@@ -49,6 +50,11 @@ namespace SuperGameInput
         /// Represents a <see cref="SDL_ControllerDeviceEvent"/> without the SDL.
         /// </summary>
         ControllerDeviceEvent ControllerDevice;
+
+        /// <summary>
+        /// Represents a <see cref="SDL_MouseButtonEvent"/> without the SDL.
+        /// </summary>
+        MouseButtonEvent MouseButton;
     };
 }
 

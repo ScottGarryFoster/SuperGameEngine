@@ -67,6 +67,11 @@ float SuperSDLInputManager::AxisValueNormalised(UniversalControllerAxis axis) co
     return m_inputManager->AxisValueNormalised(axis);
 }
 
+MouseState SuperSDLInputManager::GetMouseState() const
+{
+    return m_inputManager->GetMouseState();
+}
+
 WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
 {
     auto windowEvent = WindowEvent();
@@ -80,6 +85,8 @@ WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
     ConvertJoyButtonEventFromSDL(event, windowEvent);
     ConvertJoyHatEventFromSDL(event, windowEvent);
     ConvertJoyAxisEventFromSDL(event, windowEvent);
+
+    ConvertMouseButtonEventFromSDL(event, windowEvent);
     return windowEvent;
 }
 
@@ -721,6 +728,21 @@ JoyAxisEvent SuperSDLInputManager::ConvertJoyAxisEventFromSDL(const SDL_Event& e
     return windowEvent.JoyAxis;
 }
 
+MouseButtonEvent SuperSDLInputManager::ConvertMouseButtonEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.MouseButton.Type = windowEvent.EventType;
+    windowEvent.MouseButton.InstanceID = event.button.which;
+    windowEvent.MouseButton.Clicks = event.button.clicks;
+    windowEvent.MouseButton.Window = event.button.windowID;
+    windowEvent.MouseButton.X = event.button.x;
+    windowEvent.MouseButton.Y = event.button.y;
+    windowEvent.MouseButton.Timestamp = event.button.timestamp;
+    windowEvent.MouseButton.IsTouch = event.button.which == SDL_TOUCH_MOUSEID;
+    windowEvent.MouseButton.Button = MouseButtonFromValue(event.button.button);
+
+    return windowEvent.MouseButton;
+}
+
 void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)
 {
     if (type == WindowEventType::SDL_CONTROLLERDEVICEADDED)
@@ -796,4 +818,18 @@ HatPosition SuperSDLInputManager::HatPositionFromValue(Uint8 hatValue)
     }
 
     return HatPosition::Unknown;
+}
+
+MouseButton SuperSDLInputManager::MouseButtonFromValue(uint8_t mouseButtonValue)
+{
+    switch (mouseButtonValue)
+    {
+        case SDL_BUTTON_LEFT: return MouseButton::Left;
+        case SDL_BUTTON_RIGHT: return MouseButton::Right;
+        case SDL_BUTTON_MIDDLE: return MouseButton::Middle;
+        case SDL_BUTTON_X1: return MouseButton::Back;
+        case SDL_BUTTON_X2: return MouseButton::Forward;
+        default:
+            return MouseButton::Unknown;
+    }
 }

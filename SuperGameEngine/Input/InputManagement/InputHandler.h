@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/KeyCode.h"
+#include "Engine/MouseState.h"
 #include "Engine/UniversalControllerAxis.h"
 #include "Engine/UniversalControllerButton.h"
 
@@ -75,5 +76,12 @@ namespace SuperGameInput
         /// <param name="axis">Axis to get the value of. </param>
         /// <returns>Axis value. </returns>
         virtual float AxisValueNormalised(UniversalControllerAxis axis) const = 0;
+
+        /// <summary>
+        /// Describes the state of a mouse, where it is, what button is pressed.
+        /// Technically you can have more than one mouse, this will be the last mouse that had an event.
+        /// </summary>
+        /// <returns>The state of a mouse. </returns>
+        virtual MouseState GetMouseState() const = 0;
     };
 }

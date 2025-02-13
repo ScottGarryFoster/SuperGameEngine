@@ -13,33 +13,33 @@ namespace SuperGameInput
     /// Describes the state of keys pressed on a keyboard,
     /// mouse buttons or controller buttons.
     /// </summary>
-    enum class KeyOrButtonState : int8_t
+    enum class KeyOrButtonState : uint8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
         /// </summary>
-        Unknown = -1,
+        Unknown = 0,
 
         /// <summary>
         /// Key is not pressed at all.
         /// Default state.
         /// </summary>
-        Unpressed = 0,
+        Unpressed = 1 << 0,
 
         /// <summary>
         /// Has just been pressed. Always also means down. Fires first frame.
         /// </summary>
-        Pressed = 1 << 0,
+        Pressed = 1 << 1,
 
         /// <summary>
         /// Key is down. Fires every frame.
         /// </summary>
-        Down = 1 << 1,
+        Down = 1 << 2,
 
         /// <summary>
         /// Key was just release. Fires first frame.
         /// </summary>
-        Up = 1 << 2,
+        Up = 1 << 3,
     };
 
     inline KeyOrButtonState operator | (KeyOrButtonState lhs, KeyOrButtonState rhs)
@@ -164,7 +164,7 @@ namespace SuperGameInput
         /// <returns>True means has flag. </returns>
         static bool HasFlag(KeyOrButtonState origin, KeyOrButtonState lookFor)
         {
-            return (origin & lookFor) != KeyOrButtonState::Unpressed;
+            return (origin & lookFor) != KeyOrButtonState::Unknown;
         }
     };
 }

@@ -5,6 +5,7 @@ namespace SuperGameInput
 {
     class ControllerInput;
     class KeyInput;
+    class MouseInput;
 
     /// <summary>
     /// Handles and updates user input.
@@ -96,6 +97,13 @@ namespace SuperGameInput
         /// <param name="axis">Axis to get the value of. </param>
         /// <returns>Axis value. </returns>
         virtual float AxisValueNormalised(UniversalControllerAxis axis) const override;
+
+        /// <summary>
+        /// Describes the state of a mouse, where it is, what button is pressed.
+        /// Technically you can have more than one mouse, this will be the last mouse that had an event.
+        /// </summary>
+        /// <returns>The state of a mouse. </returns>
+        virtual MouseState GetMouseState() const override;
     private:
         /// <summary>
         /// Handles input for Keyboard keys.
@@ -106,5 +114,10 @@ namespace SuperGameInput
         /// Handles controller Input.
         /// </summary>
         std::shared_ptr<ControllerInput> m_controllerInput;
+
+        /// <summary>
+        /// Handles input for Mouse buttons and location.
+        /// </summary>
+        std::shared_ptr<MouseInput> m_mouseInput;
     };
 }
