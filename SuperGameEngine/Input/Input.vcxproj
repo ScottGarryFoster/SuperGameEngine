@@ -162,6 +162,8 @@
     <ClInclude Include="InputManagement\Engine\KeyCode.h" />
     <ClInclude Include="InputManagement\Engine\KeyInput.h" />
     <ClInclude Include="InputManagement\Engine\KeyOrButtonState.h" />
+    <ClInclude Include="InputManagement\Engine\MouseState.h" />
+    <ClInclude Include="InputManagement\Engine\MouseInput.h" />
     <ClInclude Include="InputManagement\Engine\SuperControllerLayoutFromXML.h" />
     <ClInclude Include="InputManagement\Engine\UniversalControllerAxis.h" />
     <ClInclude Include="InputManagement\Engine\UniversalControllerButton.h" />
@@ -177,6 +179,8 @@
     <ClInclude Include="InputManagement\Event\KeyboardKeycode.h" />
     <ClInclude Include="InputManagement\Event\KeyScancode.h" />
     <ClInclude Include="InputManagement\Event\KeySymbol.h" />
+    <ClInclude Include="InputManagement\Event\MouseButton.h" />
+    <ClInclude Include="InputManagement\Event\MouseButtonEvent.h" />
     <ClInclude Include="InputManagement\Event\WindowEvent.h" />
     <ClInclude Include="InputManagement\Event\WindowEventType.h" />
     <ClInclude Include="InputManagement\InputHandler.h" />
@@ -189,6 +193,7 @@
   <ItemGroup>
     <ClCompile Include="InputManagement\Engine\ControllerInput.cpp" />
     <ClCompile Include="InputManagement\Engine\KeyInput.cpp" />
+    <ClCompile Include="InputManagement\Engine\MouseInput.cpp" />
     <ClCompile Include="InputManagement\Engine\SuperControllerLayoutFromXML.cpp" />
     <ClCompile Include="InputManagement\SuperInputManager.cpp" />
     <ClCompile Include="InputManagement\SuperSDLInputManager.cpp" />

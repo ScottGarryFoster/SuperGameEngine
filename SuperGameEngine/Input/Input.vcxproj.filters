@@ -141,6 +141,18 @@
     <ClInclude Include="InputManagement\Event\JoyAxisEvent.h">
       <Filter>Header Files\InputManagement\Event</Filter>
     </ClInclude>
+    <ClInclude Include="InputManagement\Event\MouseButtonEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\MouseButton.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\MouseInput.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Engine\MouseState.h">
+      <Filter>Header Files\InputManagement\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -159,6 +171,9 @@
       <Filter>Source Files\InputManagement\Engine</Filter>
     </ClCompile>
     <ClCompile Include="InputManagement\Engine\SuperControllerLayoutFromXML.cpp">
+      <Filter>Source Files\InputManagement\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManagement\Engine\MouseInput.cpp">
       <Filter>Source Files\InputManagement\Engine</Filter>
     </ClCompile>
   </ItemGroup>

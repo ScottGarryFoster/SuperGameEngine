@@ -119,12 +119,12 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         Log::Error("No input");
         return;
     }
-    m_isPressed = LoadPackage()->GetInput()->ButtonDown(UniversalControllerButton::LeftTrigger);
+    m_isPressed = EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Down);
 
     // Pressed is very quick. So much so you'll likely not see it change in the example.
-    if (LoadPackage()->GetInput()->ButtonPressed(UniversalControllerButton::LeftTrigger))
+    if (EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Up))
     {
-        Log::Info("ButtonPressed");
+        Log::Info("Left Up");
     }
 
 

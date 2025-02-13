@@ -3,6 +3,7 @@
 #include "../../../FatedQuest.Libraries/Logger/AllReferences.h"
 #include "Engine/ControllerInput.h"
 #include "Engine/KeyInput.h"
+#include "Engine/MouseInput.h"
 
 using namespace SuperGameInput;
 
@@ -10,6 +11,7 @@ SuperInputManager::SuperInputManager()
 {
     m_keyInput = std::make_shared<KeyInput>();
     m_controllerInput = std::make_shared<ControllerInput>();
+    m_mouseInput = std::make_shared<MouseInput>();
 }
 
 void SuperInputManager::Setup(const std::shared_ptr<GamePackage>& gamePackage)
@@ -21,6 +23,7 @@ void SuperInputManager::Update()
 {
     m_keyInput->Update();
     m_controllerInput->Update();
+    m_mouseInput->Update();
 }
 
 void SuperInputManager::EventUpdate(WindowEvent event)
@@ -38,6 +41,12 @@ void SuperInputManager::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_JOYHATMOTION:
         case WindowEventType::SDL_JOYAXISMOTION:
             m_controllerInput->EventUpdate(event);
+            break;
+        case WindowEventType::SDL_MOUSEBUTTONDOWN:
+        case WindowEventType::SDL_MOUSEBUTTONUP:
+        case WindowEventType::SDL_MOUSEMOTION:
+        case WindowEventType::SDL_MOUSEWHEEL:
+            m_mouseInput->EventUpdate(event);
             break;
     }
 }
@@ -80,4 +89,9 @@ int SuperInputManager::AxisValue(UniversalControllerAxis axis) const
 float SuperInputManager::AxisValueNormalised(UniversalControllerAxis axis) const
 {
     return m_controllerInput->AxisValueNormalised(axis);
+}
+
+MouseState SuperInputManager::GetMouseState() const
+{
+    return m_mouseInput->GetMouseState();
 }

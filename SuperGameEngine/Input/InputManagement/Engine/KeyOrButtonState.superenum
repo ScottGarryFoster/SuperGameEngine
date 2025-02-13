@@ -8,7 +8,7 @@
         mouse buttons or controller buttons.
     </EnumComment>
     <EnumName Name="KeyOrButtonState">
-        <Unknown Value="-1" HideFromLists="true">
+        <Unknown HideFromLists="true">
             Only used for unsuccessful parsing.
         </Unknown>
         <Unpressed>
