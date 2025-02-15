@@ -3,6 +3,9 @@
 #include "Engine/MouseState.h"
 #include "Engine/UniversalControllerAxis.h"
 #include "Engine/UniversalControllerButton.h"
+#include "../FatedQuestLibraries.h"
+
+using namespace FatedQuestLibraries;
 
 namespace SuperGameInput
 {
@@ -83,5 +86,12 @@ namespace SuperGameInput
         /// </summary>
         /// <returns>The state of a mouse. </returns>
         virtual MouseState GetMouseState() const = 0;
+
+        /// <summary>
+        /// Gets the current mouse position.
+        /// This will be the last mouse to click position.
+        /// </summary>
+        /// <returns>The position of the current mouse. </returns>
+        virtual FPoint GetMousePosition() const = 0;
     };
 }

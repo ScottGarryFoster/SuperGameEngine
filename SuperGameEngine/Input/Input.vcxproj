@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FatedQuestLibraries.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="InputManagement\Engine\AxisToUniversalAxis.h" />
     <ClInclude Include="InputManagement\Engine\Controller.h" />
@@ -181,8 +182,11 @@
     <ClInclude Include="InputManagement\Event\KeySymbol.h" />
     <ClInclude Include="InputManagement\Event\MouseButton.h" />
     <ClInclude Include="InputManagement\Event\MouseButtonEvent.h" />
+    <ClInclude Include="InputManagement\Event\MouseMotionEvent.h" />
     <ClInclude Include="InputManagement\Event\WindowEvent.h" />
     <ClInclude Include="InputManagement\Event\WindowEventType.h" />
+    <ClInclude Include="InputManagement\Event\WindowUpdateEvent.h" />
+    <ClInclude Include="InputManagement\Event\WindowUpdateEventID.h" />
     <ClInclude Include="InputManagement\InputHandler.h" />
     <ClInclude Include="InputManagement\InputManager.h" />
     <ClInclude Include="InputManagement\SDLInputManager.h" />
@@ -216,6 +220,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\Observer\Observer.vcxproj">
       <Project>{82e4f919-75b9-4614-b7b9-bac8ecb40834}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FatedQuest.Libraries\StandardObjects\StandardObjects.vcxproj">
+      <Project>{3f3ccd80-0310-46b9-a963-285eac938cd6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\FatedQuest.Libraries\XmlDocument\XmlDocument.vcxproj">
       <Project>{04db48a3-bce2-4311-8fc4-ed2b39b5e3b8}</Project>

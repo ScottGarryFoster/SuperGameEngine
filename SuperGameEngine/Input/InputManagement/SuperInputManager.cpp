@@ -46,6 +46,7 @@ void SuperInputManager::EventUpdate(WindowEvent event)
         case WindowEventType::SDL_MOUSEBUTTONUP:
         case WindowEventType::SDL_MOUSEMOTION:
         case WindowEventType::SDL_MOUSEWHEEL:
+        case WindowEventType::SDL_WINDOWEVENT:
             m_mouseInput->EventUpdate(event);
             break;
     }
@@ -94,4 +95,9 @@ float SuperInputManager::AxisValueNormalised(UniversalControllerAxis axis) const
 MouseState SuperInputManager::GetMouseState() const
 {
     return m_mouseInput->GetMouseState();
+}
+
+FPoint SuperInputManager::GetMousePosition() const
+{
+    return m_mouseInput->GetMousePosition();
 }

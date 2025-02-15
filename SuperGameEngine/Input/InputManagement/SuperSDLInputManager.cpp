@@ -72,10 +72,17 @@ MouseState SuperSDLInputManager::GetMouseState() const
     return m_inputManager->GetMouseState();
 }
 
+FPoint SuperSDLInputManager::GetMousePosition() const
+{
+    return m_inputManager->GetMousePosition();
+}
+
 WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
 {
     auto windowEvent = WindowEvent();
     windowEvent.EventType = ConvertFromType(event.type);
+    ConvertWindowUpdateEventFromSDL(event, windowEvent);
+
     ConvertKeyboardEventFromSDL(event, windowEvent);
 
     ConvertJoystickDeviceEventFromSDL(event, windowEvent);
@@ -87,6 +94,7 @@ WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
     ConvertJoyAxisEventFromSDL(event, windowEvent);
 
     ConvertMouseButtonEventFromSDL(event, windowEvent);
+    ConvertMouseMotionEventFromSDL(event, windowEvent);
     return windowEvent;
 }
 
@@ -159,6 +167,18 @@ WindowEventType SuperSDLInputManager::ConvertFromType(Uint32 type) const
             "SuperSDLInputManager::ConvertFromType(Uint32)");
         return WindowEventType::Unknown;
     }
+}
+
+WindowUpdateEvent SuperSDLInputManager::ConvertWindowUpdateEventFromSDL(
+    const SDL_Event& event,
+    WindowEvent& windowEvent)
+{
+    windowEvent.WindowUpdate.EventType = windowEvent.EventType;
+    windowEvent.WindowUpdate.EventID = WindowUpdateEventIDFromValue(event.window.event);
+    windowEvent.WindowUpdate.Timestamp = event.window.timestamp;
+    windowEvent.WindowUpdate.Window = event.window.windowID;
+
+    return windowEvent.WindowUpdate;
 }
 
 KeyboardEvent SuperSDLInputManager::ConvertKeyboardEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
@@ -743,6 +763,20 @@ MouseButtonEvent SuperSDLInputManager::ConvertMouseButtonEventFromSDL(const SDL_
     return windowEvent.MouseButton;
 }
 
+MouseMotionEvent SuperSDLInputManager::ConvertMouseMotionEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.MouseMotion.Type = windowEvent.EventType;
+    windowEvent.MouseMotion.InstanceID = event.motion.which;
+    windowEvent.MouseMotion.Window = event.motion.windowID;
+    windowEvent.MouseMotion.X = event.motion.x;
+    windowEvent.MouseMotion.Y = event.motion.y;
+    windowEvent.MouseMotion.RelativeX = event.motion.xrel;
+    windowEvent.MouseMotion.RelativeY = event.motion.yrel;
+    windowEvent.MouseMotion.Timestamp = event.motion.timestamp;
+
+    return windowEvent.MouseMotion;
+}
+
 void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)
 {
     if (type == WindowEventType::SDL_CONTROLLERDEVICEADDED)
@@ -831,5 +865,33 @@ MouseButton SuperSDLInputManager::MouseButtonFromValue(uint8_t mouseButtonValue)
         case SDL_BUTTON_X2: return MouseButton::Forward;
         default:
             return MouseButton::Unknown;
+    }
+}
+
+WindowUpdateEventID SuperSDLInputManager::WindowUpdateEventIDFromValue(uint8_t windowEventID)
+{
+    switch (windowEventID)
+    {
+        case SDL_WINDOWEVENT_NONE: return WindowUpdateEventID::SDL_WINDOWEVENT_NONE;
+        case SDL_WINDOWEVENT_SHOWN: return WindowUpdateEventID::SDL_WINDOWEVENT_SHOWN;
+        case SDL_WINDOWEVENT_HIDDEN: return WindowUpdateEventID::SDL_WINDOWEVENT_HIDDEN;
+        case SDL_WINDOWEVENT_EXPOSED: return WindowUpdateEventID::SDL_WINDOWEVENT_EXPOSED;
+        case SDL_WINDOWEVENT_MOVED: return WindowUpdateEventID::SDL_WINDOWEVENT_MOVED;
+        case SDL_WINDOWEVENT_RESIZED: return WindowUpdateEventID::SDL_WINDOWEVENT_RESIZED;
+        case SDL_WINDOWEVENT_SIZE_CHANGED: return WindowUpdateEventID::SDL_WINDOWEVENT_SIZE_CHANGED;
+        case SDL_WINDOWEVENT_MINIMIZED: return WindowUpdateEventID::SDL_WINDOWEVENT_MINIMIZED;
+        case SDL_WINDOWEVENT_MAXIMIZED: return WindowUpdateEventID::SDL_WINDOWEVENT_MAXIMIZED;
+        case SDL_WINDOWEVENT_RESTORED: return WindowUpdateEventID::SDL_WINDOWEVENT_RESTORED;
+        case SDL_WINDOWEVENT_ENTER: return WindowUpdateEventID::SDL_WINDOWEVENT_ENTER;
+        case SDL_WINDOWEVENT_LEAVE: return WindowUpdateEventID::SDL_WINDOWEVENT_LEAVE;
+        case SDL_WINDOWEVENT_FOCUS_GAINED: return WindowUpdateEventID::SDL_WINDOWEVENT_FOCUS_GAINED;
+        case SDL_WINDOWEVENT_FOCUS_LOST: return WindowUpdateEventID::SDL_WINDOWEVENT_FOCUS_LOST;
+        case SDL_WINDOWEVENT_CLOSE: return WindowUpdateEventID::SDL_WINDOWEVENT_CLOSE;
+        case SDL_WINDOWEVENT_TAKE_FOCUS: return WindowUpdateEventID::SDL_WINDOWEVENT_TAKE_FOCUS;
+        case SDL_WINDOWEVENT_HIT_TEST: return WindowUpdateEventID::SDL_WINDOWEVENT_HIT_TEST;
+        case SDL_WINDOWEVENT_ICCPROF_CHANGED: return WindowUpdateEventID::SDL_WINDOWEVENT_ICCPROF_CHANGED;
+        case SDL_WINDOWEVENT_DISPLAY_CHANGED: return WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED;
+    default:
+        return WindowUpdateEventID::Unknown;
     }
 }

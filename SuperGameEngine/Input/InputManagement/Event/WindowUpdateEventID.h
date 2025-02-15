@@ -149,7 +149,7 @@ namespace SuperGameInput
                 WindowUpdateEventID::SDL_WINDOWEVENT_ICCPROF_CHANGED,
                 WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED,
             };
-
+            
             return returnArray;
         }
 
@@ -177,7 +177,7 @@ namespace SuperGameInput
                 WindowUpdateEventID::SDL_WINDOWEVENT_ICCPROF_CHANGED,
                 WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED,
             };
-
+            
             return returnVector;
         }
 
@@ -185,28 +185,28 @@ namespace SuperGameInput
         {
             switch (value)
             {
-            case WindowUpdateEventID::Unknown: return "Unknown";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_NONE: return "SDL_WINDOWEVENT_NONE";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_SHOWN: return "SDL_WINDOWEVENT_SHOWN";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_HIDDEN: return "SDL_WINDOWEVENT_HIDDEN";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_EXPOSED: return "SDL_WINDOWEVENT_EXPOSED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_MOVED: return "SDL_WINDOWEVENT_MOVED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_RESIZED: return "SDL_WINDOWEVENT_RESIZED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_SIZE_CHANGED: return "SDL_WINDOWEVENT_SIZE_CHANGED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_MINIMIZED: return "SDL_WINDOWEVENT_MINIMIZED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_MAXIMIZED: return "SDL_WINDOWEVENT_MAXIMIZED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_RESTORED: return "SDL_WINDOWEVENT_RESTORED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_ENTER: return "SDL_WINDOWEVENT_ENTER";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_LEAVE: return "SDL_WINDOWEVENT_LEAVE";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_FOCUS_GAINED: return "SDL_WINDOWEVENT_FOCUS_GAINED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_FOCUS_LOST: return "SDL_WINDOWEVENT_FOCUS_LOST";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_CLOSE: return "SDL_WINDOWEVENT_CLOSE";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_TAKE_FOCUS: return "SDL_WINDOWEVENT_TAKE_FOCUS";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_HIT_TEST: return "SDL_WINDOWEVENT_HIT_TEST";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_ICCPROF_CHANGED: return "SDL_WINDOWEVENT_ICCPROF_CHANGED";
-            case WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED: return "SDL_WINDOWEVENT_DISPLAY_CHANGED";
+                case WindowUpdateEventID::Unknown: return "Unknown";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_NONE: return "SDL_WINDOWEVENT_NONE";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_SHOWN: return "SDL_WINDOWEVENT_SHOWN";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_HIDDEN: return "SDL_WINDOWEVENT_HIDDEN";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_EXPOSED: return "SDL_WINDOWEVENT_EXPOSED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_MOVED: return "SDL_WINDOWEVENT_MOVED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_RESIZED: return "SDL_WINDOWEVENT_RESIZED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_SIZE_CHANGED: return "SDL_WINDOWEVENT_SIZE_CHANGED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_MINIMIZED: return "SDL_WINDOWEVENT_MINIMIZED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_MAXIMIZED: return "SDL_WINDOWEVENT_MAXIMIZED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_RESTORED: return "SDL_WINDOWEVENT_RESTORED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_ENTER: return "SDL_WINDOWEVENT_ENTER";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_LEAVE: return "SDL_WINDOWEVENT_LEAVE";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_FOCUS_GAINED: return "SDL_WINDOWEVENT_FOCUS_GAINED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_FOCUS_LOST: return "SDL_WINDOWEVENT_FOCUS_LOST";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_CLOSE: return "SDL_WINDOWEVENT_CLOSE";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_TAKE_FOCUS: return "SDL_WINDOWEVENT_TAKE_FOCUS";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_HIT_TEST: return "SDL_WINDOWEVENT_HIT_TEST";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_ICCPROF_CHANGED: return "SDL_WINDOWEVENT_ICCPROF_CHANGED";
+                case WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED: return "SDL_WINDOWEVENT_DISPLAY_CHANGED";
             }
-
+            
             return "Unknown";
         }
 
@@ -237,7 +237,7 @@ namespace SuperGameInput
             }
             else
             {
-                std::string valueLower = ToLower(value);
+                std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return WindowUpdateEventID::Unknown;
                 if (valueLower == "sdl_windowevent_none") return WindowUpdateEventID::SDL_WINDOWEVENT_NONE;
                 if (valueLower == "sdl_windowevent_shown") return WindowUpdateEventID::SDL_WINDOWEVENT_SHOWN;
@@ -259,7 +259,7 @@ namespace SuperGameInput
                 if (valueLower == "sdl_windowevent_iccprof_changed") return WindowUpdateEventID::SDL_WINDOWEVENT_ICCPROF_CHANGED;
                 if (valueLower == "sdl_windowevent_display_changed") return WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED;
             }
-
+            
             return WindowUpdateEventID::Unknown;
         }
 
@@ -268,7 +268,7 @@ namespace SuperGameInput
         /// any outside dependency. Although we could include a header, doing so restricts
         /// the project which holds StringHelpers.
         /// </summary>
-        static std::string ToLower(const std::string& input)
+        static std::string ToLower(const std::string & input)
         {
             std::string output = input;
             for (char& c : output)

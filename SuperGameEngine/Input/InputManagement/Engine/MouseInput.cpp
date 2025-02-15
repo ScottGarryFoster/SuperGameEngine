@@ -39,9 +39,14 @@ void MouseInput::EventUpdate(WindowEvent event)
     {
     case WindowEventType::SDL_MOUSEBUTTONDOWN:
     case WindowEventType::SDL_MOUSEBUTTONUP:
-    //case WindowEventType::SDL_MOUSEMOTION:
     //case WindowEventType::SDL_MOUSEWHEEL:
         UpdateMiceFromMouseButtonEvent(event.MouseButton);
+        break;
+    case WindowEventType::SDL_MOUSEMOTION:
+        UpdateMiceFromMouseMotionEvent(event.MouseMotion);
+        break;
+    case WindowEventType::SDL_WINDOWEVENT:
+        UpdateMiceWhenMouseHasLeftOrReturned(event.WindowUpdate);
         break;
     }
 }
@@ -67,6 +72,30 @@ MouseState MouseInput::GetMouseState() const
     }
 
     return m_defaultState;
+}
+
+FPoint MouseInput::GetMousePosition() const
+{
+    auto defaultPoint = FPoint(-1, -1);
+    if (m_mice.empty())
+    {
+        return defaultPoint;
+    }
+
+    if (m_instanceToUse != 4294967295)
+    {
+        if (m_mice.contains(m_instanceToUse))
+        {
+            return {m_mice.at(m_instanceToUse).X, m_mice.at(m_instanceToUse).Y};
+        }
+    }
+
+    for (const auto& val : m_mice | std::views::values)
+    {
+        return {val.X, val.Y};
+    }
+
+    return defaultPoint;
 }
 
 void MouseInput::UpdateMiceFromMouseButtonEvent(const MouseButtonEvent& event)
@@ -96,6 +125,26 @@ void MouseInput::UpdateMiceFromMouseButtonEvent(const MouseButtonEvent& event)
     }
 
     m_instanceToUse = event.InstanceID;
+}
+
+void MouseInput::UpdateMiceFromMouseMotionEvent(const MouseMotionEvent& event)
+{
+    EnsureInstanceIsCreated(event.InstanceID);
+
+    m_mice.at(event.InstanceID).X = event.X;
+    m_mice.at(event.InstanceID).Y = event.Y;
+}
+
+void MouseInput::UpdateMiceWhenMouseHasLeftOrReturned(const WindowUpdateEvent& event)
+{
+    if (event.EventID == WindowUpdateEventID::SDL_WINDOWEVENT_LEAVE)
+    {
+        for (const auto& val : m_mice | std::views::keys)
+        {
+            m_mice.at(val).X = -1;
+            m_mice.at(val).Y = -1;
+        }
+    }
 }
 
 void MouseInput::EnsureInstanceIsCreated(uint32_t instanceID)

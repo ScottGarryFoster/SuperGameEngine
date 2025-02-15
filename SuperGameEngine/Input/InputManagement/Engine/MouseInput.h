@@ -3,6 +3,9 @@
 
 #include "MouseState.h"
 #include "../Event/WindowEvent.h"
+#include "../../FatedQuestLibraries.h"
+
+using namespace FatedQuestLibraries;
 
 namespace SuperGameInput
 {
@@ -33,6 +36,13 @@ namespace SuperGameInput
         /// <returns>The state of a mouse. </returns>
         virtual MouseState GetMouseState() const;
 
+        /// <summary>
+        /// Gets the current mouse position.
+        /// This will be the last mouse to click position.
+        /// </summary>
+        /// <returns>The position of the current mouse. </returns>
+        virtual FPoint GetMousePosition() const;
+
     private:
         /// <summary>
         /// Instance ID which is set when invalid.
@@ -61,6 +71,18 @@ namespace SuperGameInput
         /// </summary>
         /// <param name="event">Mouse button event. </param>
         void UpdateMiceFromMouseButtonEvent(const MouseButtonEvent& event);
+
+        /// <summary>
+        /// Update mouse position from motion event.
+        /// </summary>
+        /// <param name="event">Mouse motion event. </param>
+        void UpdateMiceFromMouseMotionEvent(const MouseMotionEvent& event);
+
+        /// <summary>
+        /// Update the X and Y positions when the mouse leaves the window.
+        /// </summary>
+        /// <param name="event">Window Update event. </param>
+        void UpdateMiceWhenMouseHasLeftOrReturned(const WindowUpdateEvent& event);
 
         /// <summary>
         /// Ensures mouse is found in <see cref="m_mice"/>.

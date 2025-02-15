@@ -104,6 +104,13 @@ namespace SuperGameInput
         /// </summary>
         /// <returns>The state of a mouse. </returns>
         virtual MouseState GetMouseState() const override;
+
+        /// <summary>
+        /// Gets the current mouse position.
+        /// This will be the last mouse to click position.
+        /// </summary>
+        /// <returns>The position of the current mouse. </returns>
+        virtual FPoint GetMousePosition() const override;
     private:
         /// <summary>
         /// Handles input for Keyboard keys.

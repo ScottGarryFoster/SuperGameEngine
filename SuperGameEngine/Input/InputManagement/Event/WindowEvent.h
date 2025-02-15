@@ -6,7 +6,9 @@
 #include "JoystickDeviceEvent.h"
 #include "KeyboardEvent.h"
 #include "MouseButtonEvent.h"
+#include "MouseMotionEvent.h"
 #include "WindowEventType.h"
+#include "WindowUpdateEvent.h"
 
 namespace SuperGameInput
 {
@@ -20,6 +22,11 @@ namespace SuperGameInput
         /// The types of events that can be delivered.
         /// </summary>
         WindowEventType EventType;
+
+        /// <summary>
+        /// Represents a <see cref="SDL_WindowEvent"/> without the SDL.
+        /// </summary>
+        WindowUpdateEvent WindowUpdate;
 
         /// <summary>
         /// Represents a <see cref="SDL_KeyboardEvent"/> without the SDL.
@@ -55,6 +62,11 @@ namespace SuperGameInput
         /// Represents a <see cref="SDL_MouseButtonEvent"/> without the SDL.
         /// </summary>
         MouseButtonEvent MouseButton;
+
+        /// <summary>
+        /// Represents a <see cref="SDL_MouseMotionEvent"/> without the SDL.
+        /// </summary>
+        MouseMotionEvent MouseMotion;
     };
 }
 
