@@ -119,7 +119,10 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
         Log::Error("No input");
         return;
     }
-    m_isPressed = EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Down);
+    //m_isPressed = EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Down);
+
+    FPoint point = LoadPackage()->GetInput()->GetMousePosition();
+    m_isPressed = point.GetX() >= 0 && point.GetX() <= 100 && point.GetY() >= 0 && point.GetY() <= 100;
 
     // Pressed is very quick. So much so you'll likely not see it change in the example.
     if (EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Up))

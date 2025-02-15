@@ -111,6 +111,13 @@ namespace SuperGameInput
         /// </summary>
         /// <returns>The state of a mouse. </returns>
         virtual MouseState GetMouseState() const override;
+
+        /// <summary>
+        /// Gets the current mouse position.
+        /// This will be the last mouse to click position.
+        /// </summary>
+        /// <returns>The position of the current mouse. </returns>
+        virtual FPoint GetMousePosition() const override;
     private:
         /// <summary>
         /// Handles and updates user input.
@@ -124,6 +131,8 @@ namespace SuperGameInput
 
         WindowEvent ConvertFromSDL(const SDL_Event& event);
         WindowEventType ConvertFromType(Uint32 type) const;
+
+        WindowUpdateEvent ConvertWindowUpdateEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
         KeyboardEvent ConvertKeyboardEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
@@ -139,6 +148,7 @@ namespace SuperGameInput
         JoyAxisEvent ConvertJoyAxisEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
         MouseButtonEvent ConvertMouseButtonEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
+        MouseMotionEvent ConvertMouseMotionEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
         /// <summary>
         /// Updates the instance IDs and open/closed controllers when events occur.
@@ -175,5 +185,12 @@ namespace SuperGameInput
         /// <param name="mouseButtonValue">Value provided from SDL2. </param>
         /// <returns>Button upon a mouse. </returns>
         MouseButton MouseButtonFromValue(uint8_t mouseButtonValue);
+
+        /// <summary>
+        /// Converts from an event window ID in Window Event to <see cref="WindowUpdateEventID"/>
+        /// </summary>
+        /// <param name="windowEventID">Value from the SDL event. </param>
+        /// <returns>Converted value. </returns>
+        WindowUpdateEventID WindowUpdateEventIDFromValue(uint8_t windowEventID);
     };
 }
