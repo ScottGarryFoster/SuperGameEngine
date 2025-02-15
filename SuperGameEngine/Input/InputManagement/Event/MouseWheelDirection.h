@@ -46,7 +46,7 @@ namespace SuperGameInput
                 MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL,
                 MouseWheelDirection::SDL_MOUSEWHEEL_FLIPPED,
             };
-
+            
             return returnArray;
         }
 
@@ -57,7 +57,7 @@ namespace SuperGameInput
                 MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL,
                 MouseWheelDirection::SDL_MOUSEWHEEL_FLIPPED,
             };
-
+            
             return returnVector;
         }
 
@@ -65,11 +65,11 @@ namespace SuperGameInput
         {
             switch (value)
             {
-            case MouseWheelDirection::Unknown: return "Unknown";
-            case MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL: return "SDL_MOUSEWHEEL_NORMAL";
-            case MouseWheelDirection::SDL_MOUSEWHEEL_FLIPPED: return "SDL_MOUSEWHEEL_FLIPPED";
+                case MouseWheelDirection::Unknown: return "Unknown";
+                case MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL: return "SDL_MOUSEWHEEL_NORMAL";
+                case MouseWheelDirection::SDL_MOUSEWHEEL_FLIPPED: return "SDL_MOUSEWHEEL_FLIPPED";
             }
-
+            
             return "Unknown";
         }
 
@@ -83,12 +83,12 @@ namespace SuperGameInput
             }
             else
             {
-                std::string valueLower = ToLower(value);
+                std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return MouseWheelDirection::Unknown;
                 if (valueLower == "sdl_mousewheel_normal") return MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL;
                 if (valueLower == "sdl_mousewheel_flipped") return MouseWheelDirection::SDL_MOUSEWHEEL_FLIPPED;
             }
-
+            
             return MouseWheelDirection::Unknown;
         }
 
@@ -97,7 +97,7 @@ namespace SuperGameInput
         /// any outside dependency. Although we could include a header, doing so restricts
         /// the project which holds StringHelpers.
         /// </summary>
-        static std::string ToLower(const std::string& input)
+        static std::string ToLower(const std::string & input)
         {
             std::string output = input;
             for (char& c : output)

@@ -7,6 +7,7 @@
 #include "KeyboardEvent.h"
 #include "MouseButtonEvent.h"
 #include "MouseMotionEvent.h"
+#include "MouseWheelEvent.h"
 #include "WindowEventType.h"
 #include "WindowUpdateEvent.h"
 
@@ -67,6 +68,11 @@ namespace SuperGameInput
         /// Represents a <see cref="SDL_MouseMotionEvent"/> without the SDL.
         /// </summary>
         MouseMotionEvent MouseMotion;
+
+        /// <summary>
+        /// Represents a <see cref="SDL_MouseWheelEvent"/> without the SDL.
+        /// </summary>
+        MouseWheelEvent MouseWheel;
     };
 }
 

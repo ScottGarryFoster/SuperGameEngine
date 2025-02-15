@@ -28,5 +28,29 @@ namespace SuperGameInput
         /// Position Y relative to the window.
         /// </summary>
         int32_t Y;
+
+        /// <summary>
+        /// Mouse Wheel scroll Left and Right.
+        /// </summary>
+        int32_t WheelX;
+
+        /// <summary>
+        /// Mouse Wheel scroll Up and Down.
+        /// </summary>
+        int32_t WheelY;
+
+        /// <summary>
+        /// Mouse Wheel scroll Left and Right.
+        /// This is a consistent value scrolled, therefore it will increase
+        /// continually in one direction and decrease in the other.
+        /// </summary>
+        int32_t ConsistentWheelX;
+
+        /// <summary>
+        /// Mouse Wheel scroll Up and Down.
+        /// This is a consistent value scrolled, therefore it will increase
+        /// continually in one direction and decrease in the other.
+        /// </summary>
+        int32_t ConsistentWheelY;
     };
 }

@@ -165,6 +165,12 @@
     <ClInclude Include="InputManagement\Event\WindowUpdateEventID.h">
       <Filter>Header Files\InputManagement\Event</Filter>
     </ClInclude>
+    <ClInclude Include="InputManagement\Event\MouseWheelEvent.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManagement\Event\MouseWheelDirection.h">
+      <Filter>Header Files\InputManagement\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

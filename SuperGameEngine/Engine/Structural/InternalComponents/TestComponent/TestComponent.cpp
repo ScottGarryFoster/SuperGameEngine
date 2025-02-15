@@ -121,13 +121,16 @@ void TestComponent::Update(const std::shared_ptr<GameTime> gameTime)
     }
     //m_isPressed = EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Down);
 
-    FPoint point = LoadPackage()->GetInput()->GetMousePosition();
-    m_isPressed = point.GetX() >= 0 && point.GetX() <= 100 && point.GetY() >= 0 && point.GetY() <= 100;
+    //FPoint point = LoadPackage()->GetInput()->GetMousePosition();
+    //m_isPressed = point.GetX() >= 0 && point.GetX() <= 100 && point.GetY() >= 0 && point.GetY() <= 100;
+
+    m_isPressed = LoadPackage()->GetInput()->GetMouseState().ConsistentWheelY > 0;
+    //Log::Info(std::to_string(LoadPackage()->GetInput()->GetMouseState().WheelY));
 
     // Pressed is very quick. So much so you'll likely not see it change in the example.
     if (EKeyOrButtonState::HasFlag(LoadPackage()->GetInput()->GetMouseState().ButtonState.at(MouseButton::Forward), KeyOrButtonState::Up))
     {
-        Log::Info("Left Up");
+        Log::Info(std::to_string(LoadPackage()->GetInput()->GetMouseState().WheelY));
     }
 
 

@@ -1,6 +1,8 @@
 #include "MouseInput.h"
 
+#include "../../FatedQuestLibraries.h"
 #include <ranges>
+#include <stdexcept>
 
 using namespace SuperGameInput;
 
@@ -39,7 +41,6 @@ void MouseInput::EventUpdate(WindowEvent event)
     {
     case WindowEventType::SDL_MOUSEBUTTONDOWN:
     case WindowEventType::SDL_MOUSEBUTTONUP:
-    //case WindowEventType::SDL_MOUSEWHEEL:
         UpdateMiceFromMouseButtonEvent(event.MouseButton);
         break;
     case WindowEventType::SDL_MOUSEMOTION:
@@ -47,6 +48,9 @@ void MouseInput::EventUpdate(WindowEvent event)
         break;
     case WindowEventType::SDL_WINDOWEVENT:
         UpdateMiceWhenMouseHasLeftOrReturned(event.WindowUpdate);
+        break;
+    case WindowEventType::SDL_MOUSEWHEEL:
+        UpdateMiceForWheelPosition(event.MouseWheel);
         break;
     }
 }
@@ -147,6 +151,45 @@ void MouseInput::UpdateMiceWhenMouseHasLeftOrReturned(const WindowUpdateEvent& e
     }
 }
 
+void MouseInput::UpdateMiceForWheelPosition(const MouseWheelEvent& event)
+{
+    EnsureInstanceIsCreated(event.InstanceID);
+
+    m_mice.at(event.InstanceID).X = event.MouseX;
+    m_mice.at(event.InstanceID).Y = event.MouseY;
+
+    if (event.Direction == MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL)
+    {
+        m_mice.at(event.InstanceID).WheelX = event.X;
+        m_mice.at(event.InstanceID).WheelY = event.Y;
+    }
+    else
+    {
+        m_mice.at(event.InstanceID).WheelX = -event.X;
+        m_mice.at(event.InstanceID).WheelY = -event.Y;
+    }
+
+    try
+    {
+        m_mice.at(event.InstanceID).ConsistentWheelX = 
+            IntHelpers::SafeAddition(m_mice.at(event.InstanceID).ConsistentWheelX, event.X);
+        m_mice.at(event.InstanceID).ConsistentWheelY = 
+            IntHelpers::SafeAddition(m_mice.at(event.InstanceID).ConsistentWheelY, event.Y);
+    }
+    catch (const std::overflow_error& e)
+    {
+        std::string what = e.what();
+        Log::Error("ConsistentWheelX or ConsistentWheelY overflowed. " + what,
+            "MouseInput::UpdateMiceForWheelPosition(const MouseWheelEvent)");
+    }
+    catch (const std::exception& e)
+    {
+        std::string what = e.what();
+        Log::Error("Caught an unknown exception! " + what,
+            "MouseInput::UpdateMiceForWheelPosition(const MouseWheelEvent)");
+    }
+}
+
 void MouseInput::EnsureInstanceIsCreated(uint32_t instanceID)
 {
     if (!m_mice.contains(instanceID))
@@ -165,6 +208,10 @@ MouseState MouseInput::CreateBaseState()
     mouseState.ButtonState.try_emplace(MouseButton::Forward, KeyOrButtonState::Unpressed);
     mouseState.X = -1;
     mouseState.Y = -1;
+    mouseState.WheelY = 0;
+    mouseState.WheelX = 0;
+    mouseState.ConsistentWheelX = 0;
+    mouseState.ConsistentWheelY = 0;
 
     return mouseState;
 }
