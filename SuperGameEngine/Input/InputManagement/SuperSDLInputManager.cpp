@@ -95,6 +95,7 @@ WindowEvent SuperSDLInputManager::ConvertFromSDL(const SDL_Event& event)
 
     ConvertMouseButtonEventFromSDL(event, windowEvent);
     ConvertMouseMotionEventFromSDL(event, windowEvent);
+    ConvertMouseWheelEventFromSDL(event, windowEvent);
     return windowEvent;
 }
 
@@ -777,6 +778,24 @@ MouseMotionEvent SuperSDLInputManager::ConvertMouseMotionEventFromSDL(const SDL_
     return windowEvent.MouseMotion;
 }
 
+MouseWheelEvent SuperSDLInputManager::ConvertMouseWheelEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent)
+{
+    windowEvent.MouseWheel.Type = windowEvent.EventType;
+    windowEvent.MouseWheel.Timestamp = event.wheel.timestamp;
+    windowEvent.MouseWheel.InstanceID = event.wheel.which;
+    windowEvent.MouseWheel.MouseX = event.wheel.mouseX;
+    windowEvent.MouseWheel.MouseY = event.wheel.mouseY;
+    windowEvent.MouseWheel.X = event.wheel.x;
+    windowEvent.MouseWheel.Y = event.wheel.y;
+    windowEvent.MouseWheel.PreciseX = event.wheel.preciseX;
+    windowEvent.MouseWheel.PreciseY = event.wheel.preciseY;
+    windowEvent.MouseWheel.Window = event.wheel.windowID;
+    windowEvent.MouseWheel.IsTouch = event.wheel.which == SDL_TOUCH_MOUSEID;
+    windowEvent.MouseWheel.Direction = MouseWheelDirectionFromValue(event.wheel.direction);
+
+    return windowEvent.MouseWheel;
+}
+
 void SuperSDLInputManager::UpdateOpenControllers(WindowEventType type, ControllerDeviceEvent& controllerDevice)
 {
     if (type == WindowEventType::SDL_CONTROLLERDEVICEADDED)
@@ -893,5 +912,15 @@ WindowUpdateEventID SuperSDLInputManager::WindowUpdateEventIDFromValue(uint8_t w
         case SDL_WINDOWEVENT_DISPLAY_CHANGED: return WindowUpdateEventID::SDL_WINDOWEVENT_DISPLAY_CHANGED;
     default:
         return WindowUpdateEventID::Unknown;
+    }
+}
+
+MouseWheelDirection SuperSDLInputManager::MouseWheelDirectionFromValue(uint32_t direction)
+{
+    switch (direction)
+    {
+        case SDL_MOUSEWHEEL_NORMAL: return MouseWheelDirection::SDL_MOUSEWHEEL_NORMAL;
+        case SDL_MOUSEWHEEL_FLIPPED: return MouseWheelDirection::SDL_MOUSEWHEEL_FLIPPED;
+        default: return MouseWheelDirection::Unknown;
     }
 }

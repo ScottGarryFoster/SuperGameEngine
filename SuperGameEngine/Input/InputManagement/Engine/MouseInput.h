@@ -85,6 +85,12 @@ namespace SuperGameInput
         void UpdateMiceWhenMouseHasLeftOrReturned(const WindowUpdateEvent& event);
 
         /// <summary>
+        /// Update the mouse wheel position.
+        /// </summary>
+        /// <param name="event">Mouse wheel event. </param>
+        void UpdateMiceForWheelPosition(const MouseWheelEvent& event);
+
+        /// <summary>
         /// Ensures mouse is found in <see cref="m_mice"/>.
         /// </summary>
         /// <param name="instanceID">Instance to add. </param>

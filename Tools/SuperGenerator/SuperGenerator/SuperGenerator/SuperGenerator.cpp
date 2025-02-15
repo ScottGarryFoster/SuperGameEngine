@@ -26,15 +26,17 @@ int main(int argc, char* args[])
     generator.AllEnums("E:\\Development\\SuperGameEngine-Myriad\\", ".superenum", ".h");
     Log::Info("Generated Enums");
 
-    std::string lines;
-    std::vector<SuperGameInput::WindowUpdateEventID> codes = SuperGameInput::EWindowUpdateEventID::ToVector();
-    for (const SuperGameInput::WindowUpdateEventID& code : codes)
-    {
-        std::string enumByName = SuperGameInput::EWindowUpdateEventID::ToString(code);
-        lines += "case " + enumByName + ": return WindowUpdateEventID::" + enumByName + ";\n";
-    }
 
-    File::WriteLine("D:\\enum.txt", lines);
+
+    //std::string lines;
+    //std::vector<SuperGameInput::MouseWheelDirection> codes = SuperGameInput::EMouseWheelDirection::ToVector();
+    //for (const SuperGameInput::MouseWheelDirection& code : codes)
+    //{
+    //    std::string enumByName = SuperGameInput::EMouseWheelDirection::ToString(code);
+    //    lines += "case " + enumByName + ": return WindowUpdateEventID::" + enumByName + ";\n";
+    //}
+
+    //File::WriteLine("D:\\enum.txt", lines);
 
     return 0;
 }

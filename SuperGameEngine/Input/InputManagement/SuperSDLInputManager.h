@@ -149,6 +149,7 @@ namespace SuperGameInput
 
         MouseButtonEvent ConvertMouseButtonEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
         MouseMotionEvent ConvertMouseMotionEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
+        MouseWheelEvent ConvertMouseWheelEventFromSDL(const SDL_Event& event, WindowEvent& windowEvent);
 
         /// <summary>
         /// Updates the instance IDs and open/closed controllers when events occur.
@@ -192,5 +193,12 @@ namespace SuperGameInput
         /// <param name="windowEventID">Value from the SDL event. </param>
         /// <returns>Converted value. </returns>
         WindowUpdateEventID WindowUpdateEventIDFromValue(uint8_t windowEventID);
+
+        /// <summary>
+        /// Converts from a direction in the event to <see cref="MouseWheelDirection"/>
+        /// </summary>
+        /// <param name="direction">Value from the SDL event. </param>
+        /// <returns>Converted value. </returns>
+        MouseWheelDirection MouseWheelDirectionFromValue(uint32_t direction);
     };
 }
