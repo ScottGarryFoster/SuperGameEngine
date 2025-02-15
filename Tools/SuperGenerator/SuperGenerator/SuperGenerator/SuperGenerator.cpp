@@ -4,8 +4,10 @@
 #include <iostream>
 
 #include "DebugLogger.h"
+#include "SingleEnum.h"
 #include "../../../../FatedQuest.Libraries/Logger/Logger/Log.h"
 #include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
+#include "../../../../FatedQuest.Libraries/StandardOperations/FileHandling/File.h"
 #include "../SuperEnumGenerator/GenerateEnum.h"
 
 using namespace SuperEnumGenerator;
@@ -23,6 +25,18 @@ int main(int argc, char* args[])
     GenerateEnum generator;
     generator.AllEnums("E:\\Development\\SuperGameEngine-Myriad\\", ".superenum", ".h");
     Log::Info("Generated Enums");
+
+
+
+    //std::string lines;
+    //std::vector<SuperGameInput::MouseWheelDirection> codes = SuperGameInput::EMouseWheelDirection::ToVector();
+    //for (const SuperGameInput::MouseWheelDirection& code : codes)
+    //{
+    //    std::string enumByName = SuperGameInput::EMouseWheelDirection::ToString(code);
+    //    lines += "case " + enumByName + ": return WindowUpdateEventID::" + enumByName + ";\n";
+    //}
+
+    //File::WriteLine("D:\\enum.txt", lines);
 
     return 0;
 }

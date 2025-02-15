@@ -25,5 +25,16 @@ namespace FatedQuestLibraries
         /// <param name="outValue">The output of the parsing. Is 0 by default. </param>
         /// <returns>True means is parsed. </returns>
         static bool TryParse(const std::string& parsing, unsigned int& outValue);
+
+        /// <summary>
+        /// Add two ints together in a safe manner.
+        /// </summary>
+        /// <param name="left">First number to add. </param>
+        /// <param name="right">Number to add to. </param>
+        /// <returns>Result. </returns>
+        /// <exception cref="std::overflow_error">
+        /// If adding the two numbers together would cause an overflow or underflow.
+        /// </exception>
+        static int32_t SafeAddition(int32_t left, int32_t right);
     };
 }

@@ -13,7 +13,7 @@ namespace SuperGameEngine
     /// The state the pointer is in.
     /// Used to determine if the pointer is safe to use or should be discarded.
     /// </summary>
-    enum class PointerState
+    enum class PointerState : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

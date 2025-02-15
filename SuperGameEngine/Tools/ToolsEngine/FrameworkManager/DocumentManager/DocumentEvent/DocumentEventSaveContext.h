@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// How to save documents.
     /// </summary>
-    enum class DocumentEventSaveContext
+    enum class DocumentEventSaveContext : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

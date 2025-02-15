@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="DebugLogger.h" />
     <ClInclude Include="FatedQuestLibraries.h" />
+    <ClInclude Include="SingleEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

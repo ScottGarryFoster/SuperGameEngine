@@ -146,6 +146,7 @@
     <ClInclude Include="GenerateEnum.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SuperEnum.h" />
+    <ClInclude Include="SuperEnumType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GenerateEnum.cpp" />

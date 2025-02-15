@@ -28,6 +28,17 @@ void SuperGameObjectLoadPackage::SetSerializableParser(const std::shared_ptr<Ser
     AttemptToCreateAComponentLoadPackage();
 }
 
+std::shared_ptr<InputHandler> SuperGameObjectLoadPackage::GetInput() const
+{
+    return m_inputHandler;
+}
+
+void SuperGameObjectLoadPackage::SetInputHandler(const std::shared_ptr<InputHandler>& inputHandler)
+{
+    m_inputHandler = inputHandler;
+    AttemptToCreateAComponentLoadPackage();
+}
+
 std::shared_ptr<ComponentLoadPackage> SuperGameObjectLoadPackage::GetComponentLoadPackage() const
 {
     return m_componentLoadPackage;
@@ -35,11 +46,12 @@ std::shared_ptr<ComponentLoadPackage> SuperGameObjectLoadPackage::GetComponentLo
 
 void SuperGameObjectLoadPackage::AttemptToCreateAComponentLoadPackage()
 {
-    if (m_contentManager || m_serializableParser)
+    if (m_contentManager || m_serializableParser || m_inputHandler)
     {
         auto sceneLoadPackage = std::make_shared<SuperComponentLoadPackage>();
         sceneLoadPackage->SetContentManager(m_contentManager);
         sceneLoadPackage->SetSerializableParser(m_serializableParser);
+        sceneLoadPackage->SetInputHandler(m_inputHandler);
 
         m_componentLoadPackage = sceneLoadPackage;
     }

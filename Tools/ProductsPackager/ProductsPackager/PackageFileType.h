@@ -12,7 +12,7 @@ namespace ProductsPackager
     /// <summary>
     /// The form the file should take once packaged.
     /// </summary>
-    enum class PackageFileType
+    enum class PackageFileType : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

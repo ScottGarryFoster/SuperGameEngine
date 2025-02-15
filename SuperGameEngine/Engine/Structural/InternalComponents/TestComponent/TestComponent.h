@@ -65,7 +65,12 @@ namespace SuperGameEngine
         /// <summary>
         /// A Texture which will move.
         /// </summary>
-        std::shared_ptr<SuperTexture> m_testTexture;
+        std::shared_ptr<SuperTexture> m_pressed;
+
+        /// <summary>
+        /// A Texture which will move.
+        /// </summary>
+        std::shared_ptr<SuperTexture> m_pressedAlt;
 
         /// <summary>
         /// Testing Y position to give a little movement to the
@@ -74,6 +79,8 @@ namespace SuperGameEngine
         int m_yPosition;
 
         std::string m_serial;
+
+        bool m_isPressed;
     };
 
     REGISTER_COMPONENT("TestComponent", TestComponent);

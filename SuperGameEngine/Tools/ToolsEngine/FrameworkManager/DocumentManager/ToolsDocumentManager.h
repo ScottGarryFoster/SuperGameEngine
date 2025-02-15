@@ -4,6 +4,8 @@
 
 #include "DocumentManager.h"
 #include "../../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
+#include "DocumentEvent/DocumentEventOpenLevel.h"
+#include "DocumentEvent/DocumentEventSaveContext.h"
 
 namespace FatedQuestLibraries
 {
@@ -12,8 +14,6 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    enum class DocumentEventSaveContext;
-    enum class DocumentEventOpenLevel;
     class FileDialog;
     class WindowPackage;
 }

@@ -19,7 +19,13 @@ namespace SuperGameEngine
         /// is recreated on this new renderer.
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
-        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer);
+        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
+
+        /// <summary>
+        /// Gives the input manager.
+        /// </summary>
+        /// <param name="inputManager">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
 
         /// <summary>
         /// Handle the current event.
@@ -29,7 +35,7 @@ namespace SuperGameEngine
         /// True means keep running the application.
         /// False will quit the application.
         /// </returns>
-        virtual ApplicationOperationState Event(SDL_Event event);
+        virtual ApplicationOperationState Event(SDL_Event event) override;
 
         /// <summary>
         /// Update the application each frame.
@@ -40,21 +46,21 @@ namespace SuperGameEngine
         /// True means keep running the application.
         /// False will quit the application.
         /// </returns>
-        virtual ApplicationOperationState Update(Uint64 ticks);
+        virtual ApplicationOperationState Update(Uint64 ticks) override;
 
         /// <summary>
         /// Draw to the screen.
         /// </summary>
-        virtual void Draw();
+        virtual void Draw() override;
 
         /// <summary>
         /// Called as the window starts.
         /// </summary>
-        virtual void WindowStart();
+        virtual void WindowStart() override;
 
         /// <summary>
         /// Called when the window is torndown.
         /// </summary>
-        virtual void WindowTeardown();
+        virtual void WindowTeardown() override;
 };
 }

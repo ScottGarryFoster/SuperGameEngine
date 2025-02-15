@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// How the selection changed.
     /// </summary>
-    enum class SelectionChangeType
+    enum class SelectionChangeType : int8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.

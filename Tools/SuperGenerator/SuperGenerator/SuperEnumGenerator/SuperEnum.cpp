@@ -1,5 +1,6 @@
 #include "SuperEnum.h"
 #include <memory>
+#include <unordered_map>
 
 using namespace SuperEnumGenerator;
 using namespace FatedQuestLibraries;
@@ -18,6 +19,10 @@ bool SuperEnum::FromString(const std::string& superEnumFile)
     }
 
     std::shared_ptr<StoredDocumentNode> root = xml->GetRoot();
+    if (!ParseRoot(root))
+    {
+        return false;
+    }
     for (std::shared_ptr<StoredDocumentNode> child = root->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         std::string name = StringHelpers::Trim(StringHelpers::ToLower(child->Name()));
@@ -75,6 +80,13 @@ std::string SuperEnum::ToString()
 
     output += PrintEnum(indents);
 
+    if (m_enumType == SuperEnumType::BitFlag)
+    {
+        output += "\n";
+        output += PrintFlagMethods(indents);
+    }
+
+    output += "\n";
     output += PrintEnumHelper(indents);
 
 
@@ -84,6 +96,21 @@ std::string SuperEnum::ToString()
         output += "}\n";
     }
     return output;
+}
+
+bool SuperEnum::ParseRoot(std::shared_ptr<StoredDocumentNode> rootNode)
+{
+    m_enumType = SuperEnumType::Standard;
+    if (auto typeAttribute = rootNode->Attribute("Type", CaseSensitivity::IgnoreCase))
+    {
+        SuperEnumType parsed = ESuperEnumType::FromString(typeAttribute->Value());
+        if (parsed != SuperEnumType::Unknown)
+        {
+            m_enumType = parsed;
+        }
+    }
+
+    return true;
 }
 
 bool SuperEnum::ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode)
@@ -211,6 +238,25 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode)
                     }
                 }
             }
+            else if (name == "groups")
+            {
+                std::string value = StringHelpers::Trim(attribute->Value());
+                if (value != "")
+                {
+                    std::vector<std::string> groups = StringHelpers::Split(value, ",");
+                    for (const std::string& group : groups)
+                    {
+                        std::string groupTrimmed = StringHelpers::ReplaceAll(group, " ", "");
+                        if (!groupTrimmed.empty())
+                        {
+                            if (!enumValue->Groups.contains(groupTrimmed))
+                            {
+                                enumValue->Groups.emplace(groupTrimmed);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         m_enumValues.push_back(enumValue);
@@ -310,11 +356,15 @@ std::string SuperEnum::PrintEnum(int indents)
 
     if (m_enumName.Parsed)
     {
-        output += PrintIndents(indents) + "enum class " + m_enumName.Value + "\n";
+        output += PrintIndents(indents) + "enum class " + m_enumName.Value;
+        output += " : " + FigureOutType();
+        output += "\n";
+
         output += PrintIndents(indents) + "{\n";
         ++indents;
     }
 
+    int currentBitFlag = -1;
     for (int i = 0; i < m_enumValues.size(); ++i)
     {
         const std::shared_ptr<EnumValueString>& enumValue = m_enumValues[i];
@@ -329,7 +379,24 @@ std::string SuperEnum::PrintEnum(int indents)
         if (enumValue->ValueIsSet)
         {
             output += " = " + std::to_string(enumValue->SetValue);
+            enumValue->FlagValue = enumValue->SetValue;
         }
+        else if (m_enumType == SuperEnumType::BitFlag)
+        {
+            if (currentBitFlag == -1)
+            {
+                output += " = 0";
+                enumValue->FlagValue = 0;
+            }
+            else
+            {
+                output += " = 1 << " + std::to_string(currentBitFlag);
+                enumValue->FlagValue = 1 + currentBitFlag;
+            }
+
+            ++currentBitFlag;
+        }
+
         output += ",\n";
 
         // Ensure there is a line space between each other than the very last.
@@ -356,7 +423,6 @@ std::string SuperEnum::PrintEnumHelper(int indents)
         return std::string();
     }
 
-    output += "\n";
     output += PrintSingleComment("Accompanies enums to provide extra functionality.", indents);
     output += PrintIndents(indents) + "class E" + m_enumName.Value + "\n";
     output += PrintIndents(indents) + "{\n";
@@ -367,8 +433,15 @@ std::string SuperEnum::PrintEnumHelper(int indents)
     output += PrintIndents(indents) + "static " + m_enumName.Value + " Max() { return " + m_enumName.Value + "::" + GetMaxEnumValue() + "; }\n";
     output += PrintToArray(indents);
     output += PrintToVector(indents);
+    output += PrintGroups(indents);
     output += PrintToString(indents);
     output += PrintFromString(indents);
+
+    if (m_enumType == SuperEnumType::BitFlag)
+    {
+        output += PrintFlagHelperMethods(indents);
+    }
+
     --indents;
 
     output += PrintIndents(indents) + "};\n";
@@ -545,6 +618,51 @@ std::string SuperEnum::PrintFromString(int indents)
     return output;
 }
 
+std::string SuperEnum::PrintGroups(int indents)
+{
+    std::unordered_map<std::string, std::vector<std::string>> groups;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        for (const std::string& enumGroup : enumValue->Groups)
+        {
+            if (!groups.contains(enumGroup))
+            {
+                groups.emplace(enumGroup, std::vector<std::string>());
+            }
+
+            groups.at(enumGroup).emplace_back(enumValue->Value);
+
+        }
+    }
+
+    std::string output = "";
+    for (const std::pair<std::string, std::vector<std::string>>& group : groups)
+    {
+        std::string groupName = StringHelpers::Capitalize(group.first);
+
+        output += "\n";
+        output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> Group" + groupName + "()\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+        output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> returnVector =\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+        for (const std::string& enumValue : group.second)
+        {
+            output += PrintIndents(indents) + m_enumName.Value + "::" + enumValue + ",\n";
+
+        }
+        --indents;
+        output += PrintIndents(indents) + "};\n";
+        output += PrintIndents(indents) + "\n";
+        output += PrintIndents(indents) + "return returnVector;\n";
+        --indents;
+        output += PrintIndents(indents) + "}\n";
+    }
+
+    return output;
+}
+
 std::string SuperEnum::GetMinEnumValue()
 {
     bool foundMin = false;
@@ -617,7 +735,7 @@ std::string SuperEnum::GetUnknownValue()
 
 std::string SuperEnum::PrintSingleComment(const std::string& rawComment, int indents)
 {
-    std::string output = "";
+    std::string output = {};
     if (rawComment.empty())
     {
         return output;
@@ -636,4 +754,165 @@ std::string SuperEnum::PrintSingleComment(const std::string& rawComment, int ind
     output += PrintIndents(indents) + "/// </summary>\n";
 
     return output;
+}
+
+std::string SuperEnum::PrintFlagMethods(int indents)
+{
+    std::string output = {};
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator | (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+        output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value  + ">;\n";
+        output += PrintIndents(indents) + "return static_cast<" + m_enumName.Value  + ">(static_cast<T>(lhs) | static_cast<T>(rhs));\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += "\n";
+
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator |= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+        output += PrintIndents(indents) + "lhs = lhs | rhs;\n";
+        output += PrintIndents(indents) + "return lhs;\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += "\n";
+
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator & (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value + ">;\n";
+    output += PrintIndents(indents) + "return static_cast<" + m_enumName.Value + ">(static_cast<T>(lhs) & static_cast<T>(rhs));\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += "\n";
+
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator &= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "lhs = lhs | rhs;\n";
+    output += PrintIndents(indents) + "return lhs;\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+
+    return output;
+}
+
+std::string SuperEnum::PrintFlagHelperMethods(int indents)
+{
+    std::string output = {};
+
+    // To compare the value we need the 0 value.
+    // If we cannot find it, we will get the lowest.
+    // This could be hidden.
+    std::shared_ptr<EnumValueString> closestToZero;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (!closestToZero)
+        {
+            closestToZero = enumValue;
+        }
+
+        if (enumValue->FlagValue == 0)
+        {
+            closestToZero = enumValue;
+            break;
+        }
+
+        if (enumValue->FlagValue < closestToZero->FlagValue && enumValue->FlagValue > 0)
+        {
+            closestToZero = enumValue;
+        }
+    }
+
+    output += "\n";
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Test to see whether value has the given flag.\n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+    output += PrintIndents(indents) + "/// <param name=\"origin\">Origin to look for flag in. </param>\n";
+    output += PrintIndents(indents) + "/// <param name=\"lookFor\">Value to look for. </param>\n";
+    output += PrintIndents(indents) + "/// <returns>True means has flag. </returns>\n";
+    output += PrintIndents(indents) + "static bool HasFlag(" + m_enumName.Value + " origin, " + m_enumName.Value + " lookFor)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+        output += PrintIndents(indents) + "return (origin & lookFor) != " + m_enumName.Value + "::" + closestToZero->Value + ";\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+
+    return output;
+}
+
+std::string SuperEnum::FigureOutType()
+{
+    int min = GetMinEnumNumberValue();
+    int max = GetMaxEnumNumberValue();
+
+    std::string type = {};
+    if (min >= 0)
+    {
+        if (max <= 255)
+        {
+            type = "uint8_t";
+        }
+        else if(max <= 65535)
+        {
+            type = "uint16_t";
+        }
+        else if (max <= 65535)
+        {
+            type = "uint16_t";
+        }
+        else
+        {
+            type = "uint32_t";
+        }
+    }
+    else
+    {
+        if (min >= -128 && max <= 127)
+        {
+            type = "int8_t";
+        }
+        else if (min >= -32768 && max <= 32767)
+        {
+            type = "int16_t";
+        }
+        else
+        {
+            type = "int32_t";
+        }
+    }
+
+    return type;
+}
+
+int SuperEnum::GetMinEnumNumberValue()
+{
+    bool foundMin = false;
+    int currentIndex = 0;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (!foundMin || enumValue->ImpliedValue < currentIndex)
+        {
+            currentIndex = enumValue->ImpliedValue;
+            foundMin = true;
+        }
+    }
+
+    return currentIndex;
+}
+
+int SuperEnum::GetMaxEnumNumberValue()
+{
+    bool foundMin = false;
+    int currentIndex = 0;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (!foundMin || enumValue->ImpliedValue > currentIndex)
+        {
+            currentIndex = enumValue->ImpliedValue;
+            foundMin = true;
+        }
+    }
+
+    return currentIndex;
 }

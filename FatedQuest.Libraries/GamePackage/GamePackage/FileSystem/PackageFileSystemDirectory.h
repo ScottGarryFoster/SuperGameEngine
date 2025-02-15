@@ -22,9 +22,14 @@ namespace FatedQuestLibraries
         /// <summary>
         /// Lists all files in the directory.
         /// </summary>
-        /// <param name="path">Path to directory. </param>
+        /// <param name="path">
+        /// Path to directory.
+        /// This is given as Folder\\Folder2\\Folder3
+        /// You do not need a \\ on the end.
+        /// </param>
         /// <returns>
         /// A list of files or empty if either no files or directory does not exist.
+        /// Returned as filenames not full paths, you need to append the directory to these!
         /// </returns>
         virtual std::vector<std::string> GetFiles(const std::string& path) const = 0;
 

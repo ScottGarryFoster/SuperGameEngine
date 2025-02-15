@@ -1,0 +1,16 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameInput" />
+    <EnumComment>
+        A more general key state used across various input types.
+    </EnumComment>
+    <EnumName Name="GeneralKeyState">
+        <Unknown Value="-1" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <SDL__RELEASED />
+        <SDL__PRESSED />
+    </EnumName>
+</SuperEnum>

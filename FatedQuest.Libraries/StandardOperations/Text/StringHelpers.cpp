@@ -156,3 +156,30 @@ std::string StringHelpers::ReplaceAll(const std::string& input, const std::strin
 
     return returnString;
 }
+
+std::string StringHelpers::Capitalize(const std::string& input)
+{
+    if (input.empty())
+    {
+        return input;
+    }
+
+    std::string answer = "";
+    std::vector<std::string> sentences = StringHelpers::Split(input, ".");
+    for (std::string& sentence : sentences)
+    {
+        if (sentence.empty())
+        {
+            continue;
+        }
+
+        if (sentence[0] >= 'a' && sentence[0] <= 'z')
+        {
+            sentence[0] = sentence[0] - 'a' + 'A';
+        }
+
+        answer += sentence;
+    }
+
+    return answer;
+}

@@ -7,6 +7,13 @@ namespace SuperGameEngine
     class SceneLoadPackage;
 }
 
+namespace SuperGameInput
+{
+    class InputHandler;
+}
+
+using namespace SuperGameInput;
+
 namespace SuperGameEngine
 {
     class ContentManager;
@@ -38,6 +45,12 @@ namespace SuperGameEngine
         /// Returns empty if cannot create.
         /// </returns>
         virtual std::shared_ptr<SceneLoadPackage> GetSceneLoadPackage() const = 0;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        /// <returns>Given to Tools and Engine to provide Input. </returns>
+        virtual std::shared_ptr<InputHandler> GetInput() const = 0;
     };
 }
 

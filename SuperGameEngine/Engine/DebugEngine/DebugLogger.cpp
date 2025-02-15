@@ -5,7 +5,8 @@ using namespace SuperGameEngine;
 
 void DebugLogger::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
-#if defined _DEBUG || defined _TESTS
+#ifdef _DEBUG
+#ifndef _TOOLS
     if (auto logArguments = std::static_pointer_cast<LogEventArguments>(arguments))
     {
         std::string from = logArguments->GetFrom();
@@ -16,6 +17,7 @@ void DebugLogger::Invoke(std::shared_ptr<FEventArguments> arguments)
 
         std::cout << logArguments->GetLogMessage() << "\n";
     }
+#endif
 #endif
 
 }

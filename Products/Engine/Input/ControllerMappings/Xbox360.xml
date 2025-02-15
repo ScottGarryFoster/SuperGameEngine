@@ -21,8 +21,8 @@
     <SDLToUniversalAxis SDLAxis="0" UniversalControllerAxis="LeftStickX" Deadzone="2000" />
     <SDLToUniversalAxis SDLAxis="1" UniversalControllerAxis="LeftStickY" Deadzone="2000" />
     <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickX" Deadzone="2000" />
-    <SDLToUniversalAxis SDLAxis="2" UniversalControllerAxis="RightStickY" Deadzone="2000" />
-    <SDLToUniversalAxis SDLAxis="3" UniversalControllerAxis="LeftTrigger" />
-    <SDLToUniversalAxis SDLAxis="4" UniversalControllerAxis="RightTrigger" />
+    <SDLToUniversalAxis SDLAxis="3" UniversalControllerAxis="RightStickY" Deadzone="2000" />
+    <SDLToUniversalAxis SDLAxis="4" UniversalControllerAxis="LeftTrigger" />
+    <SDLToUniversalAxis SDLAxis="5" UniversalControllerAxis="RightTrigger" />
   </SDLToUniversalAxes>
 </ControllerLayout>

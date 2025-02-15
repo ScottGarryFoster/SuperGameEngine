@@ -7,6 +7,13 @@ namespace SuperGameEngine
     class GameObjectLoadPackage;
 }
 
+namespace SuperGameInput
+{
+    class InputHandler;
+}
+
+using namespace SuperGameInput;
+
 namespace SuperGameEngine
 {
     class ContentManager;
@@ -28,6 +35,12 @@ namespace SuperGameEngine
         /// </summary>
         /// <returns>Helps to parse serializable objects. </returns>
         virtual std::shared_ptr<SerializableParser> GetParser() const = 0;
+
+        /// <summary>
+        /// Given to Tools and Engine to provide Input.
+        /// </summary>
+        /// <returns>Given to Tools and Engine to provide Input. </returns>
+        virtual std::shared_ptr<InputHandler> GetInput() const = 0;
 
         /// <summary>
         /// Create a scene load package based on the Grand Scene Package.

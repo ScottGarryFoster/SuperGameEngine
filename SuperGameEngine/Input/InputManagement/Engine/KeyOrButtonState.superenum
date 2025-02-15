@@ -1,0 +1,28 @@
+<SuperEnum Type="BitFlag">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameInput" />
+    <EnumComment>
+        Describes the state of keys pressed on a keyboard,
+        mouse buttons or controller buttons.
+    </EnumComment>
+    <EnumName Name="KeyOrButtonState">
+        <Unknown HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Unpressed>
+            Key is not pressed at all.
+            Default state.
+        </Unpressed>
+        <Pressed>
+            Has just been pressed. Always also means down. Fires first frame.
+        </Pressed>
+        <Down>
+            Key is down. Fires every frame.
+        </Down>
+        <Up>
+            Key was just release. Fires first frame.
+        </Up>
+    </EnumName>
+</SuperEnum>

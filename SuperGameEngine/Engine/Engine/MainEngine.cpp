@@ -7,6 +7,10 @@ void MainEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 
 }
 
+void MainEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager)
+{
+}
+
 ApplicationOperationState MainEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;

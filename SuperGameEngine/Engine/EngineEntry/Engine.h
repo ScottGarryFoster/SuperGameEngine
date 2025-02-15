@@ -4,6 +4,12 @@
 #include "../Engine/Graphics/Texture/SDLRendererReader.h"
 #include "ApplicationOperationState.h"
 
+namespace SuperGameInput
+{
+    class SDLInputManager;
+    class InputHandler;
+}
+
 namespace SuperGameEngine
 {
     /// <summary>
@@ -22,6 +28,12 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
         virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) = 0;
+
+        /// <summary>
+        /// Gives the input manager.
+        /// </summary>
+        /// <param name="inputManager">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) = 0;
 
         /// <summary>
         /// Handle the current event.
