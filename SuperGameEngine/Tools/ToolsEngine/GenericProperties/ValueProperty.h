@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../../../FatedQuestLibraries.h"
+
 
 namespace SuperGameTools
 {
@@ -52,6 +52,12 @@ namespace SuperGameTools
             return m_name;
         }
 
+        /// <summary>
+        /// Removes element from a type for which that makes sense.
+        /// </summary>
+        /// <typeparam name="Predicate">Predicate as to which to erase. </typeparam>
+        /// <param name="predicate">Predicate as to which to erase.  </param>
+        /// <remarks>Only use for types which use erase_if </remarks>
         template <typename Predicate>
         requires FatedQuestLibraries::Erasable<ValueType>
         void Remove(const Predicate& predicate)

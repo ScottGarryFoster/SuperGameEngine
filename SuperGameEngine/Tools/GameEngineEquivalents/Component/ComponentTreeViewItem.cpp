@@ -31,3 +31,8 @@ void ComponentTreeViewItem::SetComponent(const std::shared_ptr<Component>& compo
 {
     m_component = component;
 }
+
+std::shared_ptr<Component> ComponentTreeViewItem::GetComponent() const
+{
+    return m_component;
+}

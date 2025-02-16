@@ -9,6 +9,7 @@
 
 namespace SuperGameTools
 {
+    class Component;
     class GameObject;
 }
 
@@ -175,6 +176,19 @@ namespace SuperGameTools
         /// <param name="treeViewItem">Guid of the tree view item. </param>
         /// <param name="gameObject">GameObject to remove. </param>
         void DeleteGameObject(const std::shared_ptr<Guid>& treeViewItem, const std::shared_ptr<GameObject>& gameObject);
+
+        /// <summary>
+        /// Deletes a component.
+        /// </summary>
+        /// <param name="gameObject">Game Object to delete on. </param>
+        /// <param name="component">Component to delete. </param>
+        void DeleteComponent(const std::shared_ptr<GameObject>& gameObject, const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// Deletes a component.
+        /// </summary>
+        /// <param name="component">Component to delete. </param>
+        void DeleteComponent(const std::shared_ptr<Component>& component);
 
         /// <summary>
         /// Unselects anything in current scene.

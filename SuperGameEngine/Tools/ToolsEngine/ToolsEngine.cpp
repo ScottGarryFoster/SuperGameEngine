@@ -122,9 +122,15 @@ void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
     std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
-    std::shared_ptr<UpdateableObject> sceneHierarchy = std::make_shared<SceneHierarchy>();
-    std::shared_ptr<UpdateableObject> inspectorWindow = std::make_shared<InspectorWindow>();
+
+    std::shared_ptr<SceneHierarchy> sceneHierarchy = std::make_shared<SceneHierarchy>();
+    sceneHierarchy->UpdateDistributedWeakPointer(sceneHierarchy);
+
+    std::shared_ptr<InspectorWindow> inspectorWindow = std::make_shared<InspectorWindow>();
+    inspectorWindow->UpdateDistributedWeakPointer(inspectorWindow);
+
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
+    loggerWindow->UpdateDistributedWeakPointer(loggerWindow);
 
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
@@ -155,5 +161,6 @@ void ToolsEngine::Setup()
     m_updatables.push_back(inspectorWindow);
 
     sceneHierarchy->Setup(m_windowPackage);
+    inspectorWindow->OnMenuDelete()->Subscribe(sceneHierarchy);
     m_updatables.push_back(sceneHierarchy);
 }

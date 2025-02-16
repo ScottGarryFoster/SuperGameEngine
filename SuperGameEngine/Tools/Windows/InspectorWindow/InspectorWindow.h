@@ -48,6 +48,12 @@ namespace SuperGameTools
         virtual void TearDown() override;
 
         /// <summary>
+        /// Called when the user has requested to delete a component.
+        /// </summary>
+        /// <returns>Called when the user has requested to delete a component. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnMenuDelete() const;
+
+        /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
         /// and not as long term storage. Directly after invocation it will be deleted.
@@ -76,6 +82,11 @@ namespace SuperGameTools
         /// Inspect window functionality when inspecting a GameObject
         /// </summary>
         std::shared_ptr<InspectGameObject> m_inspectGameObject;
+
+        /// <summary>
+        /// Called when the user has requested to delete a component.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onMenuDeleteComponent;
     };
 }
 

@@ -534,6 +534,9 @@
     <ClInclude Include="Windows\SceneHierarchy\SceneTreeViewItem.h">
       <Filter>Header Files\Windows\SceneHierarchy</Filter>
     </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuDeleteComponentEventArguments.h">
+      <Filter>Header Files\Windows\SceneHierarchy\EventArguments</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
