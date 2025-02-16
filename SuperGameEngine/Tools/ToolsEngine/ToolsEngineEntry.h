@@ -97,6 +97,11 @@ namespace SuperGameTools
         /// Helps to keep settings for the main window.
         /// </summary>
         std::shared_ptr<ToolsLayoutSettings> m_layoutSettings;
+
+        /// <summary>
+        /// Handles and updates user input.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);

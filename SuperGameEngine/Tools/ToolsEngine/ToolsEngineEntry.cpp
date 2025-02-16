@@ -7,6 +7,7 @@
 
 #include "../ImGuiIncludes.h"
 #include "../../../FatedQuest.Libraries/StoredDocument/Converters/SimpleDocumentToXml.h"
+#include "../../Input/InputManagement/SuperSDLInputManager.h"
 #include "Communication/ToolsEngineEntryCommunication.h"
 #include "Communication/EngineFlowPlayControl.h"
 #include "Communication/ToolsEngineControl.h"
@@ -27,6 +28,8 @@ ToolsEngineEntry::ToolsEngineEntry()
         std::make_shared<ToolsSettingsPaths>(), 
         "layoutSettings.xml", 
         std::make_shared<SimpleDocumentToXml>());
+
+    m_inputManager = std::make_shared<SuperGameInput::SuperSDLInputManager>();
 }
 
 int ToolsEngineEntry::RunApplication(const std::string& engineType)
@@ -108,6 +111,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     {
         m_Toolsrenderer->SetRenderer(renderer);
         m_toolsEngine->GiveRenderer(m_Toolsrenderer);
+        m_toolsEngine->GiveInput(m_inputManager);
         m_toolsEngine->WindowStart();
     }
 
@@ -134,6 +138,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             {
                 m_gameRenderer->SetRenderer(renderer);
                 engine->GiveRenderer(m_gameRenderer);
+                engine->GiveInput(m_inputManager);
                 engine->WindowStart();
             }
 
@@ -142,6 +147,8 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         // Handle events on the queue
         while (SDL_PollEvent(&e) != 0)
         {
+            m_inputManager->EventUpdate(e);
+
             if (engine && m_engineFlow->DoRunEvents())
             {
                 eventAnswer = engine->Event(e);
@@ -210,6 +217,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
                 operationState = updateAnswer;
             }
         }
+
+        // Update the state of inputs. Must be run after anything which uses it.
+        m_inputManager->Update();
 
         // Unlikely to occur but in the situation the event and update loop
         // try to override one another we should log this, incase we get a bug
