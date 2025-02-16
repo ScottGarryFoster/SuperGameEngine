@@ -31,6 +31,13 @@ namespace SuperGameTools
         ToolsComponent(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser);
 
         /// <summary>
+        /// The unique ID for this component.
+        /// </summary>
+        /// <returns>A unique ID for this component. </returns>
+        /// <remarks>This is currently not stored on file and is used for adding and deleting. </remarks>
+        virtual std::shared_ptr<Guid> GetUniqueID() const;
+
+        /// <summary>
         /// Event called when this objects dirty flag has changed.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
@@ -86,6 +93,12 @@ namespace SuperGameTools
         virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
 
     private:
+        /// <summary>
+        /// The unique ID for this component.
+        /// </summary>
+        /// <remarks>This is currently not stored on file and is used for adding and deleting. </remarks>
+        std::shared_ptr<Guid> m_guid;
+
         /// <summary>
         /// Event called when this component is dirtied.
         /// </summary>

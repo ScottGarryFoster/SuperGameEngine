@@ -24,6 +24,7 @@
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
 #include "SceneTreeViewItem.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
 
@@ -135,6 +136,10 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto onMenuDeleteGameObject = std::dynamic_pointer_cast<OnMenuDeleteGameObjectEventArguments>(arguments))
     {
         DeleteGameObject(onMenuDeleteGameObject->GetUniqueId(), onMenuDeleteGameObject->GetGameObject());
+    }
+    else if (auto onMenuDeleteComponent = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
+    {
+        DeleteComponent(onMenuDeleteComponent->GetComponent());
     }
 }
 
@@ -459,6 +464,41 @@ void SceneHierarchy::DeleteGameObject(
     m_windowPackage->GetFrameworkManager()->GetSelectionManager()->RemoveFromSelection(gameObject);
     m_scene->MarkDirty();
     m_sceneTreeViewItem->Invoke(std::make_shared<DirtiedDataEventArguments>(true));
+}
+
+void SceneHierarchy::DeleteComponent(
+    const std::shared_ptr<GameObject>& gameObject,
+    const std::shared_ptr<Component>& component)
+{
+    gameObject->RemoveComponent(component);
+    m_scene->MarkDirty();
+    m_sceneTreeViewItem->Invoke(std::make_shared<DirtiedDataEventArguments>(true));
+}
+
+void SceneHierarchy::DeleteComponent(const std::shared_ptr<Component>& component)
+{
+    std::shared_ptr<GameObject> foundGameObject = {};
+    for (const std::shared_ptr<GameObject>& gameObject : m_scene->GetGameObjects())
+    {
+        for (const std::shared_ptr<Component>& currentComponent : *gameObject->GetComponents())
+        {
+            if (currentComponent->GetUniqueID() == component->GetUniqueID())
+            {
+                foundGameObject = gameObject;
+                break;
+            }
+        }
+    }
+
+    if (foundGameObject)
+    {
+        DeleteComponent(foundGameObject, component);
+    }
+    else
+    {
+        Log::Error("Delete component called but could not find game object.",
+            "SceneHierarchy::DeleteComponent(const std::shared_ptr<Component>)");
+    }
 }
 
 void SceneHierarchy::UnselectAll()

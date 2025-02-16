@@ -4,6 +4,7 @@
 #include "../GameObject/ToolsGameObject.h"
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "../Component/Component.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -134,6 +135,26 @@ void ToolsScene::RemoveGameObject(const std::shared_ptr<GameObject>& gameObject)
         {
             return gameObject->GetGuid()->ToString() == current->GetGuid()->ToString();
         });
+}
+
+void ToolsScene::RemoveComponentFromGameObject(
+    const std::shared_ptr<GameObject>& gameObject,
+    const std::shared_ptr<Component>& component)
+{
+    bool didRemove = false;
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (gameObject->GetGuid()->ToString() == go->GetGuid()->ToString())
+        {
+            gameObject->RemoveComponent(component);
+            didRemove = true;
+        }
+    }
+
+    if (didRemove)
+    {
+        UpdateDirtyFlag(true);
+    }
 }
 
 void ToolsScene::Invoke(std::shared_ptr<FEventArguments> arguments)

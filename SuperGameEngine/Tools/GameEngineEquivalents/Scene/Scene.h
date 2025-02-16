@@ -10,6 +10,7 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
 {
+    class Component;
     class GameObject;
 
     /// <summary>
@@ -46,6 +47,15 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="gameObject">Game Object to erase. </param>
         virtual void RemoveGameObject(const std::shared_ptr<GameObject>& gameObject) = 0;
+
+        /// <summary>
+        /// Deletes Component.
+        /// </summary>
+        /// <param name="gameObject">Game Object component is on. </param>
+        /// <param name="component">Component to erase. </param>
+        virtual void RemoveComponentFromGameObject(
+            const std::shared_ptr<GameObject>& gameObject, 
+            const std::shared_ptr<Component>& component) = 0;
 
         /// <summary>
         /// True when there is unsaved data.

@@ -16,6 +16,12 @@ ToolsComponent::ToolsComponent(const std::shared_ptr<SuperGameEngine::Serializab
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
+    m_guid = GUIDHelpers::CreateGUID();
+}
+
+std::shared_ptr<Guid> ToolsComponent::GetUniqueID() const
+{
+    return m_guid;
 }
 
 std::shared_ptr<FEventSubscriptions> ToolsComponent::OnDirtyFlagChanged() const

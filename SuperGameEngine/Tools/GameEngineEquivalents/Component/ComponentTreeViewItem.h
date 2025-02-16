@@ -24,6 +24,12 @@ namespace SuperGameTools
         /// <param name="component">The component this item manages. </param>
         virtual void SetComponent(const std::shared_ptr<Component>& component);
 
+        /// <summary>
+        /// Gets the component.
+        /// </summary>
+        /// <returns>The component this is displaying. </returns>
+        virtual std::shared_ptr<Component> GetComponent() const;
+
     private:
         /// <summary>
         /// The component this item manages.

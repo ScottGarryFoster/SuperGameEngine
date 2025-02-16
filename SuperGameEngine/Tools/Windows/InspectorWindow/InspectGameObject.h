@@ -6,6 +6,9 @@
 
 namespace FatedQuestLibraries
 {
+    class FEvent;
+    class FEventSubscriptions;
+    class Guid;
     class FEventArguments;
 }
 
@@ -49,6 +52,12 @@ namespace SuperGameTools
         void TearDown();
 
         /// <summary>
+        /// Called when the user has requested to delete a component.
+        /// </summary>
+        /// <returns>Called when the user has requested to delete a component. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnMenuDelete() const;
+
+        /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
         /// and not as long term storage. Directly after invocation it will be deleted.
@@ -84,6 +93,11 @@ namespace SuperGameTools
         std::string m_errorMessage;
 
         /// <summary>
+        /// Called when the user has requested to delete a component.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onMenuDeleteComponent;
+
+        /// <summary>
         /// Create a tree view from a game object.
         /// </summary>
         /// <param name="gameObject">Game object to use as a source. </param>
@@ -100,6 +114,18 @@ namespace SuperGameTools
         /// <param name="component">Component. </param>
         /// <returns>Tree view item from the component. </returns>
         std::shared_ptr<TreeViewItem> CreateComponentTreeViewItemFromComponent(const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// Occurs when Selection Changed
+        /// </summary>
+        void OnSelectionChanged();
+
+        /// <summary>
+        /// Deletes component.
+        /// </summary>
+        /// <param name="treeViewItemGuid">Guid of the Tree View Item. </param>
+        /// <param name="component">Component to delete. </param>
+        void OnDeleteComponent(const std::shared_ptr<Guid>& treeViewItemGuid, const std::shared_ptr<Component>& component);
     };
 }
 

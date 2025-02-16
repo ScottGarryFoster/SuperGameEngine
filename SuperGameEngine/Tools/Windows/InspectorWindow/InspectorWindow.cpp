@@ -15,6 +15,7 @@
 #include "../../GameEngineEquivalents/GameObject/ToolsGameObject.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../../Engine/Structural/GameObject/ComponentFactory.h"
+#include "../SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
 
 using namespace SuperGameTools;
 
@@ -22,12 +23,15 @@ InspectorWindow::InspectorWindow()
 {
     m_isSetup = false;
     m_inspectGameObject = std::make_shared<InspectGameObject>();
+
+    m_onMenuDeleteComponent = std::make_shared<FEvent>();
 }
 
 void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     WindowElement::Setup(windowPackage->GetColourPalette());
     m_windowPackage = windowPackage;
+    m_inspectGameObject->OnMenuDelete()->Subscribe(GetWeakDistributed());
     m_inspectGameObject->Setup(m_windowPackage);
 
     if (!m_windowPackage->GetFrameworkManager())
@@ -96,6 +100,11 @@ void InspectorWindow::TearDown()
     m_inspectGameObject->TearDown();
 }
 
+std::shared_ptr<FEventSubscriptions> InspectorWindow::OnMenuDelete() const
+{
+    return m_onMenuDeleteComponent;
+}
+
 void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (!m_isSetup)
@@ -103,4 +112,8 @@ void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
         return;
     }
 
+    if (auto onMenuDeleteComponent = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
+    {
+        m_onMenuDeleteComponent->Invoke(arguments);
+    }
 }

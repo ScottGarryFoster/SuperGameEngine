@@ -45,6 +45,14 @@ std::shared_ptr<std::vector<std::shared_ptr<Component>>> ToolsGameObject::GetCom
     return m_components;
 }
 
+void ToolsGameObject::RemoveComponent(const std::shared_ptr<Component>& component)
+{
+    std::erase_if(*m_components, [component](const std::shared_ptr<Component>& current)
+    {
+        return current->GetUniqueID()->ToString() == component->GetUniqueID()->ToString();
+    });
+}
+
 void ToolsGameObject::Load(const std::shared_ptr<StoredDocumentNode>& node)
 {
     bool createdGuid = false;

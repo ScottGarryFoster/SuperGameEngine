@@ -70,6 +70,15 @@ namespace SuperGameTools
         virtual void RemoveGameObject(const std::shared_ptr<GameObject>& gameObject) override;
 
         /// <summary>
+        /// Deletes Component.
+        /// </summary>
+        /// <param name="gameObject">Game Object component is on. </param>
+        /// <param name="component">Component to erase. </param>
+        virtual void RemoveComponentFromGameObject(
+            const std::shared_ptr<GameObject>& gameObject,
+            const std::shared_ptr<Component>& component) override;
+
+        /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
         /// and not as long term storage. Directly after invocation it will be deleted.

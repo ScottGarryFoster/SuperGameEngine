@@ -297,6 +297,7 @@
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
+    <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuDeleteComponentEventArguments.h" />
     <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuDeleteGameObjectEventArguments.h" />
     <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuNewGameObjectEventArguments.h" />
     <ClInclude Include="Windows\SceneHierarchy\GameObjectTreeViewItem.h" />

@@ -34,6 +34,13 @@ namespace SuperGameTools
         virtual ~Component() = default;
 
         /// <summary>
+        /// The unique ID for this component.
+        /// </summary>
+        /// <returns>A unique ID for this component. </returns>
+        /// <remarks>This is currently not stored on file and is used for adding and deleting. </remarks>
+        virtual std::shared_ptr<Guid> GetUniqueID() const = 0;
+
+        /// <summary>
         /// Event called when this objects dirty flag has changed.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>

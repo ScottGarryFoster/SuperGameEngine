@@ -55,6 +55,12 @@ namespace SuperGameTools
         virtual std::shared_ptr<std::vector<std::shared_ptr<Component>>> GetComponents() const override;
 
         /// <summary>
+        /// Removes component.
+        /// </summary>
+        /// <param name="component">Component to remove. </param>
+        virtual void RemoveComponent(const std::shared_ptr<Component>& component) override;
+
+        /// <summary>
         /// Load the game object from stored data.
         /// </summary>
         /// <param name="node">Node for this game object. </param>
