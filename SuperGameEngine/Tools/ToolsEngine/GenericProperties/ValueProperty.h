@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "../../../FatedQuestLibraries.h"
 
 namespace SuperGameTools
 {
@@ -49,6 +50,13 @@ namespace SuperGameTools
         std::string GetName() const
         {
             return m_name;
+        }
+
+        template <typename Predicate>
+        requires FatedQuestLibraries::Erasable<ValueType>
+        void Remove(const Predicate& predicate)
+        {
+            std::erase_if(m_value, predicate);
         }
 
     private:

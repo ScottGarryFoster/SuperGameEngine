@@ -63,6 +63,9 @@
     <ClInclude Include="Structural\DistributeWeakPointers.h">
       <Filter>Header Files\Structural</Filter>
     </ClInclude>
+    <ClInclude Include="Structural\Concepts.h">
+      <Filter>Header Files\Structural</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

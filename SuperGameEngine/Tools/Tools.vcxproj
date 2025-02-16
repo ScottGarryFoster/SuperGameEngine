@@ -297,11 +297,12 @@
     <ClInclude Include="Windows\LoggerOutput\LogEntry.h" />
     <ClInclude Include="Windows\LoggerOutput\LoggerOutput.h" />
     <ClInclude Include="Windows\MainMenuBar\MainMenuBar.h" />
-    <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h" />
-    <ClInclude Include="Windows\SceneHeirachy\SceneTreeViewItem.h" />
+    <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuDeleteGameObjectEventArguments.h" />
     <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuNewGameObjectEventArguments.h" />
+    <ClInclude Include="Windows\SceneHierarchy\GameObjectTreeViewItem.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneHierarchy.h" />
     <ClInclude Include="Windows\SceneHierarchy\SceneLoader.h" />
+    <ClInclude Include="Windows\SceneHierarchy\SceneTreeViewItem.h" />
     <ClInclude Include="Windows\SceneHierarchy\ToolsSceneLoader.h" />
     <ClInclude Include="Windows\UpdateableObject\UpdateableObject.h" />
   </ItemGroup>
@@ -356,9 +357,9 @@
     <ClCompile Include="Windows\LoggerOutput\LogEntry.cpp" />
     <ClCompile Include="Windows\LoggerOutput\LoggerOutput.cpp" />
     <ClCompile Include="Windows\MainMenuBar\MainMenuBar.cpp" />
-    <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp" />
-    <ClCompile Include="Windows\SceneHeirachy\SceneTreeViewItem.cpp" />
+    <ClCompile Include="Windows\SceneHierarchy\GameObjectTreeViewItem.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\SceneHierarchy.cpp" />
+    <ClCompile Include="Windows\SceneHierarchy\SceneTreeViewItem.cpp" />
     <ClCompile Include="Windows\SceneHierarchy\ToolsSceneLoader.cpp" />
   </ItemGroup>
   <ItemGroup>

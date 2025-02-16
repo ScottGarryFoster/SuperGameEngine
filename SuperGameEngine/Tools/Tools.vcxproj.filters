@@ -489,9 +489,6 @@
     <ClInclude Include="ToolsEngine\FrameworkManager\SelectionManager\SelectionChangeType.h">
       <Filter>Header Files\ToolsEngine\FrameworkManager\SelectionManager</Filter>
     </ClInclude>
-    <ClInclude Include="Windows\SceneHeirachy\GameObjectTreeViewItem.h">
-      <Filter>Header Files\Windows\SceneHierarchy</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineEquivalents\Component\SerializablePropertyLoader.h">
       <Filter>Header Files\GameEngineEquivalents\Component</Filter>
     </ClInclude>
@@ -516,9 +513,6 @@
     <ClInclude Include="ToolsEngine\SharedEventArguments\DirtiedDataEventArguments.h">
       <Filter>Header Files\ToolsEngine\SharedEventArguments</Filter>
     </ClInclude>
-    <ClInclude Include="Windows\SceneHeirachy\SceneTreeViewItem.h">
-      <Filter>Header Files\Windows\SceneHierarchy</Filter>
-    </ClInclude>
     <ClInclude Include="EngineBasicsIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -530,6 +524,15 @@
     </ClInclude>
     <ClInclude Include="Windows\InspectorWindow\InspectGameObject.h">
       <Filter>Header Files\Windows\InspectorWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\EventArguments\OnMenuDeleteGameObjectEventArguments.h">
+      <Filter>Header Files\Windows\SceneHierarchy\EventArguments</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\GameObjectTreeViewItem.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\SceneHierarchy\SceneTreeViewItem.h">
+      <Filter>Header Files\Windows\SceneHierarchy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -650,9 +653,6 @@
     <ClCompile Include="GameEngineEquivalents\Component\ToolsComponent.cpp">
       <Filter>Source Files\GameEngineEquivalents\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Windows\SceneHeirachy\GameObjectTreeViewItem.cpp">
-      <Filter>Source Files\Windows\SceneHeirachy</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineEquivalents\Component\SerializablePropertyLoader.cpp">
       <Filter>Source Files\GameEngineEquivalents\Component</Filter>
     </ClCompile>
@@ -665,14 +665,17 @@
     <ClCompile Include="GameEngineEquivalents\Scene\ToolsScene.cpp">
       <Filter>Source Files\GameEngineEquivalents\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Windows\SceneHeirachy\SceneTreeViewItem.cpp">
+    <ClCompile Include="Windows\InspectorWindow\InspectGameObject.cpp">
+      <Filter>Source Files\Windows\InspectorWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHierarchy\SceneTreeViewItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\SceneHierarchy\GameObjectTreeViewItem.cpp">
       <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineEquivalents\Component\ComponentTreeViewHeaderItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Windows\InspectorWindow\InspectGameObject.cpp">
-      <Filter>Source Files\Windows\InspectorWindow</Filter>
+      <Filter>Source Files\Windows\SceneHeirachy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

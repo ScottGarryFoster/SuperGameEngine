@@ -118,9 +118,22 @@ bool ToolsScene::GetDirty() const
     return *m_dirtyFlag;
 }
 
+void ToolsScene::MarkDirty()
+{
+    UpdateDirtyFlag(true);
+}
+
 void ToolsScene::AddGameObject(const std::shared_ptr<GameObject>& gameObject)
 {
     m_gameObjects.emplace_back(gameObject);
+}
+
+void ToolsScene::RemoveGameObject(const std::shared_ptr<GameObject>& gameObject)
+{
+    std::erase_if(m_gameObjects, [gameObject](const std::shared_ptr<GameObject>& current)
+        {
+            return gameObject->GetGuid()->ToString() == current->GetGuid()->ToString();
+        });
 }
 
 void ToolsScene::Invoke(std::shared_ptr<FEventArguments> arguments)
