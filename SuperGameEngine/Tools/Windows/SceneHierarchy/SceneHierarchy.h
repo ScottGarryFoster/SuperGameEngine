@@ -9,6 +9,11 @@
 
 namespace SuperGameTools
 {
+    class GameObject;
+}
+
+namespace SuperGameTools
+{
     class SelectionChangedEventArguments;
     class DocumentActionEventArguments;
     class TreeViewItemOnSelectedEventArguments;
@@ -163,6 +168,13 @@ namespace SuperGameTools
         /// Creates a new game object.
         /// </summary>
         void CreateNewGameObject();
+
+        /// <summary>
+        /// Deletes a game object from the hierarchy.
+        /// </summary>
+        /// <param name="treeViewItem">Guid of the tree view item. </param>
+        /// <param name="gameObject">GameObject to remove. </param>
+        void DeleteGameObject(const std::shared_ptr<Guid>& treeViewItem, const std::shared_ptr<GameObject>& gameObject);
 
         /// <summary>
         /// Unselects anything in current scene.

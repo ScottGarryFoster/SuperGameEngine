@@ -8,3 +8,4 @@
 #include "Object/GUID/WindowsGUID.h"
 
 #include "Structural/DistributeWeakPointers.h"
+#include "Structural/Concepts.h"

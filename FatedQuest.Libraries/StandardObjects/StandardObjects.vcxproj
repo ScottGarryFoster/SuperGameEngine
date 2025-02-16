@@ -218,6 +218,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Position\FPoint.h" />
     <ClInclude Include="Position\FVector2D.h" />
+    <ClInclude Include="Structural\Concepts.h" />
     <ClInclude Include="Structural\DistributeWeakPointers.h" />
   </ItemGroup>
   <ItemGroup>

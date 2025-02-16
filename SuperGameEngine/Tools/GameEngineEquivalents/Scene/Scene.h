@@ -42,10 +42,21 @@ namespace SuperGameTools
         virtual std::vector<std::shared_ptr<GameObject>> GetGameObjects() const = 0;
 
         /// <summary>
+        /// Deletes GameObject.
+        /// </summary>
+        /// <param name="gameObject">Game Object to erase. </param>
+        virtual void RemoveGameObject(const std::shared_ptr<GameObject>& gameObject) = 0;
+
+        /// <summary>
         /// True when there is unsaved data.
         /// </summary>
         /// <returns>True when there is unsaved data. </returns>
         virtual bool GetDirty() const = 0;
+
+        /// <summary>
+        /// Mark Scene Dirty.
+        /// </summary>
+        virtual void MarkDirty() = 0;
 
         /// <summary>
         /// Adds a game object to the scene.

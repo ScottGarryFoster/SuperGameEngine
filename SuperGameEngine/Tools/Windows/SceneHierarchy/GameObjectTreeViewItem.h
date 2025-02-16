@@ -20,6 +20,12 @@ namespace SuperGameTools
         virtual std::shared_ptr<FEventSubscriptions> OnMenuNewGameObject() const;
 
         /// <summary>
+        /// Called when the user has requested to delete the Game Object.
+        /// </summary>
+        /// <returns>Called when the user has requested to delete game object. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnMenuDeleteGameObject() const;
+
+        /// <summary>
         /// The game object attached to the Tree view item.
         /// </summary>
         /// <returns>The game object attached to the Tree view item. </returns>
@@ -47,5 +53,10 @@ namespace SuperGameTools
         /// Called when the user has requested a new game object.
         /// </summary>
         std::shared_ptr<FEvent> m_onMenuNewGameObject;
+
+        /// <summary>
+        /// Called when the user has requested to delete the Game Object.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onMenuDeleteGameObject;
     };
 }

@@ -19,10 +19,12 @@
 #include "../../ToolsEngine/ViewElements/TreeView/TreeView.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItemOnSelectedEventArguments.h"
-#include "../SceneHeirachy/GameObjectTreeViewItem.h"
+#include "GameObjectTreeViewItem.h"
 #include "../../GameEngineEquivalents/Scene/ToolsScene.h"
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
-#include "../SceneHeirachy/SceneTreeViewItem.h"
+#include "SceneTreeViewItem.h"
+#include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
 
 
@@ -130,6 +132,10 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         CreateNewGameObject();
     }
+    else if (auto onMenuDeleteGameObject = std::dynamic_pointer_cast<OnMenuDeleteGameObjectEventArguments>(arguments))
+    {
+        DeleteGameObject(onMenuDeleteGameObject->GetUniqueId(), onMenuDeleteGameObject->GetGameObject());
+    }
 }
 
 bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
@@ -200,6 +206,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         std::weak_ptr<FEventObserver> weak = shared_from_this();
         childItem->OnSelected()->Subscribe(weak);
         childItem->OnMenuNewGameObject()->Subscribe(weak);
+        childItem->OnMenuDeleteGameObject()->Subscribe(weak);
 
         children.emplace_back(childItem);
         childrenAsGameObjectTVI.emplace_back(childItem);
@@ -409,6 +416,7 @@ void SceneHierarchy::CreateNewGameObject()
 
     // Subscribe to menu items
     newGoTreeViewItem->OnMenuNewGameObject()->Subscribe(weak);
+    newGoTreeViewItem->OnMenuDeleteGameObject()->Subscribe(weak);
 
     std::vector<std::shared_ptr<TreeViewItem>> current = m_treeViewItem->GetChildren()->GetValue();
     current.emplace_back(newGoTreeViewItem);
@@ -419,6 +427,38 @@ void SceneHierarchy::CreateNewGameObject()
     m_sceneTreeViewItem->GetChildrenAsGameObjects()->SetValue(currentGo);
 
     m_scene->AddGameObject(newGameObject);
+}
+
+void SceneHierarchy::DeleteGameObject(
+    const std::shared_ptr<Guid>& treeViewItem,
+    const std::shared_ptr<GameObject>& gameObject)
+{
+    m_treeViewItem->GetChildren()->Remove(
+        [treeViewItem](const std::shared_ptr<TreeViewItem>& pair)
+        {
+            return pair->GetUniqueID() == treeViewItem;
+        });
+
+    std::weak_ptr<FEventObserver> weak = shared_from_this();
+    m_sceneTreeViewItem->GetChildrenAsGameObjects()->Remove(
+        [treeViewItem, weak](const std::shared_ptr<GameObjectTreeViewItem>& gotvi)
+        {
+            bool toBeDeleted = gotvi->GetUniqueID() == treeViewItem;
+            if (toBeDeleted)
+            {
+                // Unsubscribe from events
+                gotvi->OnSelected()->Unsubscribe(weak);
+                gotvi->OnMenuNewGameObject()->Unsubscribe(weak);
+                gotvi->OnMenuDeleteGameObject()->Unsubscribe(weak);
+            }
+
+            return toBeDeleted;
+        });
+
+    m_scene->RemoveGameObject(gameObject);
+    m_windowPackage->GetFrameworkManager()->GetSelectionManager()->RemoveFromSelection(gameObject);
+    m_scene->MarkDirty();
+    m_sceneTreeViewItem->Invoke(std::make_shared<DirtiedDataEventArguments>(true));
 }
 
 void SceneHierarchy::UnselectAll()

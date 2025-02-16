@@ -53,10 +53,21 @@ namespace SuperGameTools
         virtual bool GetDirty() const override;
 
         /// <summary>
+        /// Mark Scene Dirty.
+        /// </summary>
+        virtual void MarkDirty() override;
+
+        /// <summary>
         /// Adds a game object to the scene.
         /// </summary>
         /// <param name="gameObject">New game object. </param>
         virtual void AddGameObject(const std::shared_ptr<GameObject>& gameObject) override;
+
+        /// <summary>
+        /// Deletes GameObject.
+        /// </summary>
+        /// <param name="gameObject">Game Object to erase. </param>
+        virtual void RemoveGameObject(const std::shared_ptr<GameObject>& gameObject) override;
 
         /// <summary>
         /// Inform the observer an event has taken place.
