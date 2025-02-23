@@ -8,6 +8,9 @@ function(NugetInclude LIBRARY TARGET)
     if(${LIBRARY} STREQUAL "rapidxml")
         NugetIncludeRapid(${TARGET})
     endif()
+    if(${LIBRARY} STREQUAL "gtest")
+        NugetIncludeGTest(${TARGET})
+    endif()
 
 endfunction()
 
@@ -35,11 +38,11 @@ function(NugetIncludeZlib TARGET)
     set(ZLIB_INCLUDE_DIR "${NUGET_ZLIB_DIR}/include")
 
     # Include and link dependencies
+    message(STATUS "Linking ${TARGET} to ${ZLIB_INCLUDE_DIR}")
     target_include_directories(${TARGET} PRIVATE ${ZLIB_INCLUDE_DIR})
     target_link_libraries(${TARGET} Zlib)
 
 endfunction()
-
 
 function(NugetIncludeRapid TARGET)
 
@@ -63,5 +66,29 @@ function(NugetIncludeRapid TARGET)
     # Include and link dependencies
     message(STATUS "Linking ${TARGET} to ${RAPIDXML_INCLUDE_DIR}")
     target_include_directories(${TARGET} PRIVATE ${RAPIDXML_INCLUDE_DIR})
+
+endfunction()
+
+function(NugetIncludeGTest TARGET)
+
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    )
+    FetchContent_MakeAvailable(googletest)
+
+    # Check the actual path where the headers are installed
+    set(SOURCE_INCLUDE_DIR "${CMAKE_BINARY_DIR}/_deps/googletest-src")
+
+    # Make sure the path is valid
+    if (EXISTS "${SOURCE_INCLUDE_DIR}")
+        message(STATUS "GTest found at ${SOURCE_INCLUDE_DIR}")
+    else()
+        message(FATAL_ERROR "GTest not found! Expected at: ${SOURCE_INCLUDE_DIR}")
+    endif()
+
+    # For some reason this does not appear to work for GTest
+    # You need to actually add these yourself (PRIVATE appears to make no difference)
+    target_link_libraries(${TARGET} PRIVATE GTest::gtest GTest::gtest_main)
 
 endfunction()
