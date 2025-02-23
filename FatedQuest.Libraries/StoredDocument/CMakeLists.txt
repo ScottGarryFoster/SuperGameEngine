@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(BinaryOperations)
+project(StoredDocument)
 include(../CMake/Main.cmake)
 
 # Set C++ standard
@@ -10,13 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
 
 # Collect source files
-file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "BinaryZip/*.cpp")
-file(GLOB_RECURSE UNFILTERED_HEADER_FILES "BinaryZip/*.h")
+file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
+file(GLOB_RECURSE UNFILTERED_HEADER_FILES "*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
-
-# If generated files (from FetchContent) are causing issues, exclude them
-set_source_files_properties(${SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY OFF)
-set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY OFF)
 
 # Filter out build directory
 FilterDirectoryFromGiven(UNFILTERED_SOURCE_FILES "build" SOURCE_FILES)
@@ -38,43 +34,44 @@ foreach(FILE ${HEADER_FILES})
 endforeach()
 
 # Create the library
-if(NOT TARGET BinaryOperations)
-    add_library(BinaryOperations STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
+if(NOT TARGET StoredDocument)
+    add_library(StoredDocument STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
 endif()
 
 # Include directories
-target_include_directories(BinaryOperations PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(StoredDocument PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
 
 if(MSVC)
-    target_precompile_headers(BinaryOperations PRIVATE ${PCH_HEADER})
+    target_precompile_headers(StoredDocument PRIVATE ${PCH_HEADER})
 endif()
 
 # Platform-specific settings
 if(WIN32)
-    target_compile_definitions(BinaryOperations PRIVATE _WINDOWS)
-    target_compile_options(BinaryOperations PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+    target_compile_definitions(StoredDocument PRIVATE _WINDOWS)
+    target_compile_options(StoredDocument PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
 endif()
 
 # Set configurations
 foreach(OUTPUTCONFIG Debug Release Tools_Debug)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(BinaryOperations PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "BinaryOperations_${OUTPUTCONFIG}"
+    set_target_properties(StoredDocument PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "StoredDocument_${OUTPUTCONFIG}"
     )
 endforeach()
 
 # Link libraries
-add_subdirectory(../Logger Logger)
 add_subdirectory(../StandardOperations StandardOperations)
+add_subdirectory(../Logger Logger)
+add_subdirectory(../SharedEnums SharedEnums)
+add_subdirectory(../Observer Observer)
 
 # Link dependencies
-target_link_libraries(BinaryOperations
+target_link_libraries(StoredDocument
+    Observer
     Logger
+    SharedEnums
     StandardOperations
 )
-
-# Get Packages
-NugetInclude("zlib" BinaryOperations)

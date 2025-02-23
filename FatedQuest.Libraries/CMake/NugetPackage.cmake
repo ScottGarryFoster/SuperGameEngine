@@ -2,11 +2,11 @@ include(FetchContent)
 
 # Function to filter out files in the directory
 function(NugetInclude LIBRARY TARGET)
-    if(EXCLUDE EQUAL "zlib")
-        NugetIncludeZlib(TARGET)
+    if(${LIBRARY} STREQUAL "zlib")
+        NugetIncludeZlib(${TARGET})
     endif()
-    if(EXCLUDE EQUAL "rapidxml")
-        NugetIncludeRapid(TARGET)
+    if(${LIBRARY} STREQUAL "rapidxml")
+        NugetIncludeRapid(${TARGET})
     endif()
 
 endfunction()
@@ -31,13 +31,12 @@ function(NugetIncludeZlib TARGET)
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         )
     endif()
+
     set(ZLIB_INCLUDE_DIR "${NUGET_ZLIB_DIR}/include")
-    set(ZLIB_LIBRARY "${NUGET_ZLIB_DIR}/lib/zlibstatic.lib")
 
     # Include and link dependencies
-    target_include_directories(TARGET PRIVATE ${ZLIB_INCLUDE_DIR})
-    #target_link_libraries(TARGET ${ZLIB_LIBRARY})
-    target_link_libraries(TARGET Zlib)
+    target_include_directories(${TARGET} PRIVATE ${ZLIB_INCLUDE_DIR})
+    target_link_libraries(${TARGET} Zlib)
 
 endfunction()
 
@@ -62,9 +61,18 @@ function(NugetIncludeRapid TARGET)
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         )
     endif()
+
+    # Check the actual path where the headers are installed
     set(RAPIDXML_INCLUDE_DIR "${NUGET_RAPIDXML_DIR}/include")
 
+    # Make sure the path is valid
+    if (EXISTS "${RAPIDXML_INCLUDE_DIR}/rapidxml.hpp")
+        message(STATUS "RapidXML found at ${RAPIDXML_INCLUDE_DIR}")
+    else()
+        message(FATAL_ERROR "RapidXML headers not found! Expected at: ${RAPIDXML_INCLUDE_DIR} | ${NUGET_PACKAGES_DIR}")
+    endif()
+
     # Include and link dependencies
-    target_include_directories(GamePackage PRIVATE ${RAPIDXML_INCLUDE_DIR})
+    target_include_directories(${TARGET} PRIVATE ${RAPIDXML_INCLUDE_DIR})
 
 endfunction()
