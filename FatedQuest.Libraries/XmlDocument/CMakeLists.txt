@@ -75,3 +75,6 @@ target_link_libraries(XmlDocument
     SharedEnums
     StoredDocument
 )
+
+# Get packages
+NugetInclude("rapidxml" XmlDocument)

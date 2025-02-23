@@ -45,34 +45,23 @@ function(NugetIncludeRapid TARGET)
 
     FetchContent_Declare(
         RapidXML
-        URL "https://www.nuget.org/api/v2/package/rapidxml/1.13"
-        DOWNLOAD_NO_EXTRACT TRUE
+        GIT_REPOSITORY "https://github.com/0x08088405/rapidxml.git"
+        GIT_TAG "master"
     )
     FetchContent_MakeAvailable(RapidXML)
 
-    # Manually set RapidXML paths from NuGet
-    set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
-
-    # Rapid
-    set(NUGET_RAPIDXML_DIR "${NUGET_PACKAGES_DIR}/rapidxml.1.13/build/native")
-    if (NOT EXISTS "${NUGET_RAPIDXML_DIR}")
-        execute_process(
-            COMMAND nuget install rapidxml -Version 1.13 -OutputDirectory ${NUGET_PACKAGES_DIR}
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        )
-    endif()
-
     # Check the actual path where the headers are installed
-    set(RAPIDXML_INCLUDE_DIR "${NUGET_RAPIDXML_DIR}/include")
+    set(RAPIDXML_INCLUDE_DIR "${CMAKE_BINARY_DIR}/_deps/rapidxml-src")
 
     # Make sure the path is valid
     if (EXISTS "${RAPIDXML_INCLUDE_DIR}/rapidxml.hpp")
         message(STATUS "RapidXML found at ${RAPIDXML_INCLUDE_DIR}")
     else()
-        message(FATAL_ERROR "RapidXML headers not found! Expected at: ${RAPIDXML_INCLUDE_DIR} | ${NUGET_PACKAGES_DIR}")
+        message(FATAL_ERROR "RapidXML headers not found! Expected at: ${RAPIDXML_INCLUDE_DIR}")
     endif()
 
     # Include and link dependencies
+    message(STATUS "Linking ${TARGET} to ${RAPIDXML_INCLUDE_DIR}")
     target_include_directories(${TARGET} PRIVATE ${RAPIDXML_INCLUDE_DIR})
 
 endfunction()

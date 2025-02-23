@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define build configurations
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
 
 # Collect source files
 file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
@@ -33,10 +34,8 @@ foreach(FILE ${HEADER_FILES})
     source_group("Header Files\\${GROUP_NAME}" FILES "${FILE}")
 endforeach()
 
-# Create the library
-if(NOT TARGET SuperGenerator)
-    add_library(SuperGenerator STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
-endif()
+# Create executable
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 
 # Include directories
 target_include_directories(SuperGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
