@@ -1,3 +1,5 @@
+option(ENABLE_TESTS "Enable test projects in the solution" OFF)
+
 cmake_minimum_required(VERSION 3.20)
 project(SuperGenerator)
 
@@ -31,3 +33,13 @@ set_target_properties(StoredDocument PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(Observer PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(Logger PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
+
+if(ENABLE_TESTS)
+    add_subdirectory(../../../FatedQuest.Libraries/XmlDocumentTests XmlDocumentTests)
+
+    set_target_properties(XmlDocumentTests PROPERTIES FOLDER "FatedQuest.Libraries")
+    set_target_properties(gmock PROPERTIES FOLDER "External")
+    set_target_properties(gmock_main PROPERTIES FOLDER "External")
+    set_target_properties(gtest PROPERTIES FOLDER "External")
+    set_target_properties(gtest_main PROPERTIES FOLDER "External")
+endif()

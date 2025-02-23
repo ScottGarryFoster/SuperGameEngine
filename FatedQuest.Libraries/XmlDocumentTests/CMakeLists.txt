@@ -36,6 +36,7 @@ endforeach()
 
 # Create executable
 add_executable(XmlDocumentTests  ${SOURCE_FILES} ${HEADER_FILES})
+set_target_properties(XmlDocumentTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 
 # Set compiler options
 if(MSVC)
@@ -87,4 +88,3 @@ target_link_libraries(XmlDocumentTests
     GTest::gtest
     GTest::gtest_main
 )
-
