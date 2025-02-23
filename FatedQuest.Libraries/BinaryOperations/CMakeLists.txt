@@ -76,31 +76,5 @@ target_link_libraries(BinaryOperations
     StandardOperations
 )
 
-# Use NuGet to fetch SDL2 and RapidXML
-include(FetchContent)
-
-FetchContent_Declare(
-    Zlib
-    URL "https://www.nuget.org/api/v2/package/zlib_static/1.2.11.12"
-    DOWNLOAD_NO_EXTRACT TRUE
-)
-FetchContent_MakeAvailable(Zlib)
-
-# Manually set paths from NuGet
-set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
-
-# Zlib
-set(NUGET_ZLIB_DIR "${NUGET_PACKAGES_DIR}/zlib_static.1.2.11.12/build/native")
-if (NOT EXISTS "${NUGET_ZLIB_DIR}")
-    execute_process(
-        COMMAND nuget install zlib_static -Version 1.2.11.12 -OutputDirectory ${NUGET_PACKAGES_DIR}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    )
-endif()
-set(ZLIB_INCLUDE_DIR "${NUGET_ZLIB_DIR}/include")
-set(ZLIB_LIBRARY "${NUGET_ZLIB_DIR}/lib/zlibstatic.lib")
-
-# Include and link dependencies
-target_include_directories(BinaryOperations PRIVATE ${ZLIB_INCLUDE_DIR})
-# target_link_libraries(BinaryOperations ${ZLIB_LIBRARY})
-target_link_libraries(BinaryOperations Zlib)
+# Get Packages
+NugetInclude("zlib" GamePackage)
