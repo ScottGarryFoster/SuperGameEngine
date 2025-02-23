@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(BinaryOperations)
+include(../CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -9,13 +10,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
 
 # Collect source files
-file(GLOB_RECURSE SOURCE_FILES "*.cpp" "*.h")
-file(GLOB_RECURSE HEADER_FILES "*.h")
+file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "BinaryZip/*.cpp")
+file(GLOB_RECURSE UNFILTERED_HEADER_FILES "BinaryZip/*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
 
-# Remove files from the "build" directory
-list(FILTER SOURCE_FILES EXCLUDE REGEX "^build/")
-list(FILTER HEADER_FILES EXCLUDE REGEX "^build/")
+# If generated files (from FetchContent) are causing issues, exclude them
+set_source_files_properties(${SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY OFF)
+set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY OFF)
+
+# Filter out build directory
+FilterDirectoryFromGiven(UNFILTERED_SOURCE_FILES "build" SOURCE_FILES)
+FilterDirectoryFromGiven(UNFILTERED_HEADER_FILES "build" HEADER_FILES)
 
 # Organizing filters based on actual structure with top-level grouping
 foreach(FILE ${SOURCE_FILES})
@@ -42,7 +47,6 @@ target_include_directories(BinaryOperations PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
-set(PCH_SOURCE "src/pch.cpp")
 
 if(MSVC)
     target_precompile_headers(BinaryOperations PRIVATE ${PCH_HEADER})
@@ -63,8 +67,8 @@ foreach(OUTPUTCONFIG Debug Release Tools_Debug)
 endforeach()
 
 # Link libraries
-add_subdirectory(../../FatedQuest.Libraries/Logger Logger)
-add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
+add_subdirectory(../Logger Logger)
+add_subdirectory(../StandardOperations StandardOperations)
 
 # Link dependencies
 target_link_libraries(BinaryOperations

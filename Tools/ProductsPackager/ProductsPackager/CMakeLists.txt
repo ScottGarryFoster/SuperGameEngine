@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(ProductsPackager)
+include(../../../FatedQuest.Libraries/CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -14,20 +15,9 @@ file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp" "*.h")
 file(GLOB_RECURSE UNFILTERED_HEADER_FILES "*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
 
-# Filter out files in the "build" directory
-foreach(FILE ${UNFILTERED_SOURCE_FILES})
-    string(FIND ${FILE} "/build/" EXCLUDE)
-    if(EXCLUDE EQUAL -1)
-        list(APPEND SOURCE_FILES ${FILE})
-    endif()
-endforeach()
-
-foreach(FILE ${UNFILTERED_HEADER_FILES})
-    string(FIND ${FILE} "/build/" EXCLUDE)
-    if(EXCLUDE EQUAL -1)
-        list(APPEND HEADER_FILES ${FILE})
-    endif()
-endforeach()
+# Filter out build directory
+FilterDirectoryFromGiven(UNFILTERED_SOURCE_FILES "build" SOURCE_FILES)
+FilterDirectoryFromGiven(UNFILTERED_HEADER_FILES "build" HEADER_FILES)
 
 # Organizing filters based on actual structure with top-level grouping
 foreach(FILE ${SOURCE_FILES})

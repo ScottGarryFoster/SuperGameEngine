@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(Logger)
+include(../CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -9,13 +10,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
 
 # Collect source files
-file(GLOB_RECURSE SOURCE_FILES "*.cpp" "*.h")
-file(GLOB_RECURSE HEADER_FILES "*.h")
+file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
+file(GLOB_RECURSE UNFILTERED_HEADER_FILES "*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
 
-# Remove files from the "build" directory
-list(FILTER SOURCE_FILES EXCLUDE REGEX "^build/")
-list(FILTER HEADER_FILES EXCLUDE REGEX "^build/")
+# Filter out build directory
+FilterDirectoryFromGiven(UNFILTERED_SOURCE_FILES "build" SOURCE_FILES)
+FilterDirectoryFromGiven(UNFILTERED_HEADER_FILES "build" HEADER_FILES)
 
 # Organizing filters based on actual structure with top-level grouping
 foreach(FILE ${SOURCE_FILES})
@@ -42,7 +43,6 @@ target_include_directories(Logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
-set(PCH_SOURCE "src/pch.cpp")
 
 if(MSVC)
     target_precompile_headers(Logger PRIVATE ${PCH_HEADER})
@@ -63,7 +63,7 @@ foreach(OUTPUTCONFIG Debug Release Tools_Debug)
 endforeach()
 
 # Link libraries
-add_subdirectory(../../FatedQuest.Libraries/Observer Observer)
+add_subdirectory(../Observer Observer)
 
 # Link dependencies
 target_link_libraries(Logger
