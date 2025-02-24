@@ -72,6 +72,6 @@ NugetInclude("sdl2Image" Tools)
 add_subdirectory(../Engine Engine)
 
 # Link dependencies
-target_link_libraries(Tools
+target_link_libraries(Tools PUBLIC
     Engine
 )

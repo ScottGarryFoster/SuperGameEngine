@@ -71,7 +71,7 @@ add_subdirectory(../Logger Logger)
 add_subdirectory(../StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(BinaryOperations
+target_link_libraries(BinaryOperations PUBLIC
     Logger
     StandardOperations
 )

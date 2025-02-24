@@ -49,7 +49,7 @@ function(NugetIncludeZlib TARGET)
     # Include and link dependencies
     message(STATUS "Linking ${TARGET} to ${ZLIB_INCLUDE_DIR}")
     target_include_directories(${TARGET} PRIVATE ${ZLIB_INCLUDE_DIR})
-    target_link_libraries(${TARGET} Zlib)
+    target_link_libraries(${TARGET} PRIVATE Zlib)
 
 endfunction()
 
@@ -105,155 +105,83 @@ endfunction()
 function(NugetIncludeSdl2 TARGET)
 
     FetchContent_Declare(
-        SDL2
-        URL "https://www.nuget.org/api/v2/package/sdl2.nuget/2.30.9"
+    SDL2NuGet
+        URL https://www.nuget.org/api/v2/package/sdl2.nuget/2.30.9
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
-    FetchContent_MakeAvailable(SDL2)
+    FetchContent_MakeAvailable(SDL2NuGet)
 
-    # Manually set RapidXML paths from NuGet
-    set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
+    set(SDL2NuGet_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2nuget-src")
+    message("SDL ${SDL2NuGet_SOURCE_DIR}")
 
-    # SDL2
-    set(NUGET_SDL2_DIR "${NUGET_PACKAGES_DIR}/sdl2.nuget.2.30.9/build/native")
-    if (NOT EXISTS "${NUGET_SDL2_DIR}")
-        execute_process(
-            COMMAND nuget install sdl2 -Version 2.30.9 -OutputDirectory ${NUGET_PACKAGES_DIR}
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    # Find the extracted SDL2 files
+    set(SDL2_BASE_DIR "${SDL2NuGet_SOURCE_DIR}")
+    set(SDL2_INCLUDE_DIR "${SDL2_BASE_DIR}/build/native/include")
+    set(SDL2_LIB_DIR "${SDL2_BASE_DIR}/build/native/lib/x64")
+
+    if(NOT TARGET SDL2)
+        add_library(SDL2 STATIC IMPORTED)
+        set_target_properties(SDL2 PROPERTIES
+            IMPORTED_LOCATION "${SDL2_LIB_DIR}/SDL2.lib"
+            INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}"
         )
     endif()
 
-    # Grab the Library paths
-    set(SDL2_NATIVE "${CMAKE_BINARY_DIR}/_deps/sdl2-src/build/native")
-    set(SDL2_INCLUDE_DIR "${SDL2_NATIVE}/include")
-
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(ARCH_DIR "x64")
-    else()
-        set(ARCH_DIR "Win32")
-    endif()
-
-    set(SDL2_LIB_DIR "${SDL2_NATIVE}/lib/${ARCH_DIR}")
-
-    # Nothing checks to see if these are empty or non-existant we need to check
-    if (NOT EXISTS "${SDL2_NATIVE}")
-        message(FATAL_ERROR "SDL2 (Main) Source Files not found: ${SDL2_NATIVE}")
-    endif()
-
-    if (NOT EXISTS "${SDL2_INCLUDE_DIR}")
-        message(FATAL_ERROR "SDL2 (Main) Source Files not found: ${SDL2_INCLUDE_DIR}")
-    endif()
-
-    if (NOT EXISTS "${SDL2_LIB_DIR}")
-        message(FATAL_ERROR "SDL2 (Main) Source Files not found: ${SDL2_LIB_DIR}")
-    endif()
-
-    # Include and link dependencies
-    message(STATUS "Linking ${TARGET} to ${SDL2_INCLUDE_DIR}")
-    target_include_directories(${TARGET} PRIVATE ${SDL2_INCLUDE_DIR})
-    target_link_libraries(${TARGET} ${SDL2_LIB_DIR})
+    target_link_libraries(${TARGET} PRIVATE SDL2)
 
 endfunction()
 
 function(NugetIncludeSdl2Image TARGET)
 
     FetchContent_Declare(
-        SDL2_image
-        URL "https://www.nuget.org/api/v2/package/sdl2_image.nuget/2.8.2"
+        SDL2ImageNuGet
+        URL https://www.nuget.org/api/v2/package/sdl2_image.nuget/2.8.2
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
-    FetchContent_MakeAvailable(SDL2_image)
+    FetchContent_MakeAvailable(SDL2ImageNuGet)
 
-    # Manually set RapidXML paths from NuGet
-    set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
+    set(SDL2ImageNuGet_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2imagenuget-src")
 
-    # SDL2
-    set(NUGET_SDL2_DIR "${NUGET_PACKAGES_DIR}/sdl2_image.nuget.2.8.2/build/native")
-    if (NOT EXISTS "${NUGET_SDL2_DIR}")
-        execute_process(
-            COMMAND nuget install sdl2_image -Version 2.8.2 -OutputDirectory ${NUGET_PACKAGES_DIR}
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    set(SDL2_IMAGE_BASE_DIR "${SDL2ImageNuGet_SOURCE_DIR}/build/native")
+    set(SDL2_IMAGE_INCLUDE_DIR "${SDL2_IMAGE_BASE_DIR}/include")
+    set(SDL2_IMAGE_LIB_DIR "${SDL2_IMAGE_BASE_DIR}/lib/x64")
+
+    # Create SDL2_image target
+    if(NOT TARGET SDL2_image)
+        add_library(SDL2_image STATIC IMPORTED)
+        set_target_properties(SDL2_image PROPERTIES
+            IMPORTED_LOCATION "${SDL2_IMAGE_LIB_DIR}/SDL2_image.lib"
+            INTERFACE_INCLUDE_DIRECTORIES "${SDL2_IMAGE_INCLUDE_DIR}"
         )
     endif()
 
-    # Grab the Library paths
-    set(SDL2_NATIVE "${CMAKE_BINARY_DIR}/_deps/sdl2_image-src/build/native")
-    set(SDL2_INCLUDE_DIR "${SDL2_NATIVE}/include")
-
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(ARCH_DIR "x64")
-    else()
-        set(ARCH_DIR "Win32")
-    endif()
-
-    set(SDL2_LIB_DIR "${SDL2_NATIVE}/lib/${ARCH_DIR}")
-
-    # Nothing checks to see if these are empty or non-existant we need to check
-    if (NOT EXISTS "${SDL2_NATIVE}")
-        message(FATAL_ERROR "SDL2 Image Source Files not found: ${SDL2_NATIVE}")
-    endif()
-
-    if (NOT EXISTS "${SDL2_INCLUDE_DIR}")
-        message(FATAL_ERROR "SDL2 Image Source Files not found: ${SDL2_INCLUDE_DIR}")
-    endif()
-
-    if (NOT EXISTS "${SDL2_LIB_DIR}")
-        message(FATAL_ERROR "SDL2 Image Source Files not found: ${SDL2_LIB_DIR}")
-    endif()
-
-    # Include and link dependencies
-    message(STATUS "Linking ${TARGET} to ${SDL2_INCLUDE_DIR}")
-    target_include_directories(${TARGET} PRIVATE ${SDL2_INCLUDE_DIR})
-    target_link_libraries(${TARGET} ${SDL2_LIB_DIR})
+    target_link_libraries(${TARGET} PRIVATE SDL2_image)
 
 endfunction()
 
 function(NugetIncludeSdl2Mixer TARGET)
 
+    # SDL2_mixer
     FetchContent_Declare(
-        SDL2_mixer
-        URL "https://www.nuget.org/api/v2/package/sdl2_mixer.nuget/2.8.0"
+        SDL2MixerNuGet
+        URL https://www.nuget.org/api/v2/package/sdl2_mixer.nuget/2.8.0
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
-    FetchContent_MakeAvailable(SDL2_mixer)
+    FetchContent_MakeAvailable(SDL2MixerNuGet)
 
-    # Manually set RapidXML paths from NuGet
-    set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
+    set(SDL2MixerNuGet_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2mixernuget-src")
+    set(SDL2_MIXER_BASE_DIR "${SDL2MixerNuGet_SOURCE_DIR}/build/native")
+    set(SDL2_MIXER_INCLUDE_DIR "${SDL2_MIXER_BASE_DIR}/include")
+    set(SDL2_MIXER_LIB_DIR "${SDL2_MIXER_BASE_DIR}/lib/x64")
 
-    # SDL2
-    set(NUGET_SDL2_DIR "${NUGET_PACKAGES_DIR}/sdl2_mixer.nuget.2.8.0/build/native")
-    if (NOT EXISTS "${NUGET_SDL2_DIR}")
-        execute_process(
-            COMMAND nuget install sdl2_mixer -Version 2.8.0 -OutputDirectory ${NUGET_PACKAGES_DIR}
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    # Create SDL2_mixer target
+    if(NOT TARGET SDL2_mixer)
+        add_library(SDL2_mixer STATIC IMPORTED)
+        set_target_properties(SDL2_mixer PROPERTIES
+            IMPORTED_LOCATION "${SDL2_MIXER_LIB_DIR}/SDL2_mixer.lib"
+            INTERFACE_INCLUDE_DIRECTORIES "${SDL2_MIXER_INCLUDE_DIR}"
         )
     endif()
 
-    # Grab the Library paths
-    set(SDL2_NATIVE "${CMAKE_BINARY_DIR}/_deps/sdl2_mixer-src/build/native")
-    set(SDL2_INCLUDE_DIR "${SDL2_NATIVE}/include")
-    
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(ARCH_DIR "x64")
-    else()
-        set(ARCH_DIR "Win32")
-    endif()
-
-    set(SDL2_LIB_DIR "${SDL2_NATIVE}/lib/${ARCH_DIR}")
-
-    # Nothing checks to see if these are empty or non-existant we need to check
-    if (NOT EXISTS "${SDL2_NATIVE}")
-        message(FATAL_ERROR "SDL2 Mixer Source Files not found: ${SDL2_NATIVE}")
-    endif()
-
-    if (NOT EXISTS "${SDL2_INCLUDE_DIR}")
-        message(FATAL_ERROR "SDL2 Mixer Source Files not found: ${SDL2_INCLUDE_DIR}")
-    endif()
-
-    if (NOT EXISTS "${SDL2_LIB_DIR}")
-        message(FATAL_ERROR "SDL2 Mixer Source Files not found: ${SDL2_LIB_DIR}")
-    endif()
-
-    # Include and link dependencies
-    message(STATUS "Linking ${TARGET} to ${SDL2_INCLUDE_DIR}")
-    target_include_directories(${TARGET} PRIVATE ${SDL2_INCLUDE_DIR})
-    target_link_libraries(${TARGET} ${SDL2_LIB_DIR})
-
+    target_link_libraries(${TARGET} PRIVATE SDL2_mixer)
 endfunction()

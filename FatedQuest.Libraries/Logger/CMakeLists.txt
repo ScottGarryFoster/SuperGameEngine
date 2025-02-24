@@ -66,6 +66,6 @@ endforeach()
 add_subdirectory(../Observer Observer)
 
 # Link dependencies
-target_link_libraries(Logger
+target_link_libraries(Logger PUBLIC
     Observer
 )

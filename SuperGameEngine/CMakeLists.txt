@@ -10,6 +10,7 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug")
 
 # Add subdirectories
 add_subdirectory(SuperGameEngine)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SuperGameEngine)
 add_subdirectory(Engine)
 add_subdirectory(Tools)
 add_subdirectory(Input)

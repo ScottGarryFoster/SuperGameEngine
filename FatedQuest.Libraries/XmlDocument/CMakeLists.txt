@@ -62,6 +62,9 @@ foreach(OUTPUTCONFIG Debug Release Tools_Debug)
     )
 endforeach()
 
+# Get packages
+NugetInclude("rapidxml" XmlDocument)
+
 # Link libraries
 add_subdirectory(../StandardOperations StandardOperations)
 add_subdirectory(../Logger Logger)
@@ -69,12 +72,9 @@ add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../StoredDocument StoredDocument)
 
 # Link dependencies
-target_link_libraries(XmlDocument
+target_link_libraries(XmlDocument PUBLIC
     StandardOperations
     Logger
     SharedEnums
     StoredDocument
 )
-
-# Get packages
-NugetInclude("rapidxml" XmlDocument)

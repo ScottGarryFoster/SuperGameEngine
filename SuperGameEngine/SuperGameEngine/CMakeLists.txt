@@ -83,7 +83,7 @@ add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
 add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(SuperGameEngine
+target_link_libraries(SuperGameEngine PUBLIC
     Engine
     Input
     Tools

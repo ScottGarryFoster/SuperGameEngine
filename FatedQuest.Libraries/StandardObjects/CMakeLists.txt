@@ -66,6 +66,6 @@ endforeach()
 add_subdirectory(../StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(StandardObjects
+target_link_libraries(StandardObjects PUBLIC
     StandardOperations
 )
