@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
-project(Engine LANGUAGES CXX)
+project(Engine)
+include(../../FatedQuest.Libraries/CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -9,9 +10,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
 
 # Collect source files
-file(GLOB_RECURSE SOURCE_FILES "*.cpp" "*.h")
-file(GLOB_RECURSE HEADER_FILES "*.h")
+file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
+file(GLOB_RECURSE UNFILTERED_HEADER_FILES "*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
+
+# Filter out build directory
+FilterDirectoryFromGiven(UNFILTERED_SOURCE_FILES "build" SOURCE_FILES)
+FilterDirectoryFromGiven(UNFILTERED_HEADER_FILES "build" HEADER_FILES)
 
 # Organizing filters based on actual structure with top-level grouping
 foreach(FILE ${SOURCE_FILES})
@@ -34,11 +39,10 @@ if(NOT TARGET Engine)
 endif()
 
 # Include directories
-target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
-set(PCH_SOURCE "src/pch.cpp")
 
 if(MSVC)
     target_precompile_headers(Engine PRIVATE ${PCH_HEADER})
@@ -58,29 +62,8 @@ foreach(OUTPUTCONFIG Debug Release Tools_Debug)
     )
 endforeach()
 
-# Use NuGet to fetch SDL2 and RapidXML
-include(FetchContent)
-
-FetchContent_Declare(
-    SDL2
-    URL "https://www.nuget.org/api/v2/package/sdl2.nuget/2.30.9"
-    DOWNLOAD_NO_EXTRACT TRUE
-)
-FetchContent_Declare(
-    RapidXML
-    URL "https://www.nuget.org/api/v2/package/rapidxml/1.13"
-    DOWNLOAD_NO_EXTRACT TRUE
-)
-
-FetchContent_MakeAvailable(SDL2 RapidXML)
-
-# Manually set SDL2 paths from NuGet
-set(SDL2_INCLUDE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2-src/include")
-set(SDL2_LIBRARY "${CMAKE_BINARY_DIR}/_deps/sdl2-src/lib/x64/SDL2.lib")
-
-# Manually set RapidXML paths from NuGet
-set(RapidXML_INCLUDE_DIR "${CMAKE_BINARY_DIR}/_deps/rapidxml-src/include")
-
-# Include and link dependencies
-target_include_directories(Engine PRIVATE ${SDL2_INCLUDE_DIR} ${RapidXML_INCLUDE_DIR})
-target_link_libraries(Engine ${SDL2_LIBRARY})
+# Get packages
+NugetInclude("rapidxml" Engine)
+NugetInclude("sdl2" Engine)
+NugetInclude("sdl2Image" Engine)
+NugetInclude("sdl2Mixer" Engine)

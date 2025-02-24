@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
-project(SuperEnumGenerator)
-include(../../../../FatedQuest.Libraries/CMake/Main.cmake)
+project(Input)
+include(../../FatedQuest.Libraries/CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -34,51 +34,52 @@ foreach(FILE ${HEADER_FILES})
 endforeach()
 
 # Create the library
-if(NOT TARGET SuperEnumGenerator)
-    add_library(SuperEnumGenerator STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
+if(NOT TARGET Input)
+    add_library(Input STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
 endif()
 
 # Include directories
-target_include_directories(SuperEnumGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Input PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
 
 if(MSVC)
-    target_precompile_headers(SuperEnumGenerator PRIVATE ${PCH_HEADER})
+    target_precompile_headers(Input PRIVATE ${PCH_HEADER})
 endif()
 
 # Platform-specific settings
 if(WIN32)
-    target_compile_definitions(SuperEnumGenerator PRIVATE _WINDOWS)
-    target_compile_options(SuperEnumGenerator PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+    target_compile_definitions(Input PRIVATE _WINDOWS)
+    target_compile_options(Input PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
 endif()
 
 # Set configurations
 foreach(OUTPUTCONFIG Debug Release Tools_Debug)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(SuperEnumGenerator PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "SuperEnumGenerator${OUTPUTCONFIG}"
+    set_target_properties(Input PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "Input_${OUTPUTCONFIG}"
     )
 endforeach()
 
-# Get Packages
-NugetInclude("rapidxml" SuperEnumGenerator)
+# Get packages
+NugetInclude("rapidxml" Input)
+NugetInclude("sdl2" Input)
 
 # Link libraries
-add_subdirectory(../../../../FatedQuest.Libraries/Logger Logger)
-add_subdirectory(../../../../FatedQuest.Libraries/Observer Observer)
-add_subdirectory(../../../../FatedQuest.Libraries/StandardObjects StandardObjects)
-add_subdirectory(../../../../FatedQuest.Libraries/StandardOperations StandardOperations)
-add_subdirectory(../../../../FatedQuest.Libraries/StoredDocument StoredDocument)
-add_subdirectory(../../../../FatedQuest.Libraries/XmlDocument XmlDocument)
+add_subdirectory(../../FatedQuest.Libraries/GamePackage GamePackage)
+add_subdirectory(../../FatedQuest.Libraries/Logger Logger)
+add_subdirectory(../../FatedQuest.Libraries/Observer Observer)
+add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
+add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
+add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(SuperEnumGenerator
+target_link_libraries(Input
+    GamePackage
     Logger
     Observer
     StandardObjects
     StandardOperations
-    StoredDocument
     XmlDocument
 )

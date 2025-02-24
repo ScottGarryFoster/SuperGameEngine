@@ -22,7 +22,7 @@
 #include "../Engine/Content/SuperSceneStorageCache.h"
 #include "../Structural/Loaders/SuperSceneLoader.h"
 #include "../Structural/Serializable/SuperSerializableParser.h"
-#include "../../../../../Input/InputManagement/SDLInputManager.h"
+#include "../Input/InputManagement/SDLInputManager.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
