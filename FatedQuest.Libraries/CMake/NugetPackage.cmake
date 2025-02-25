@@ -51,6 +51,33 @@ function(NugetIncludeZlib TARGET)
     target_include_directories(${TARGET} PRIVATE ${ZLIB_INCLUDE_DIR})
     target_link_libraries(${TARGET} PRIVATE Zlib)
 
+    NugetIncludeZlibRuntime()
+
+endfunction()
+
+function(NugetIncludeZlibRuntime)
+
+    FetchContent_Declare(
+        ZlibRedistNuGet
+        URL "https://www.nuget.org/api/v2/package/zlib_native.redist/1.2.11"
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_MakeAvailable(ZlibRedistNuGet)
+
+    set(ZLibRedist_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/zlibredistnuget-src")
+    message("Zlib Runtime ${ZLibRedist_SOURCE_DIR}")
+
+    # Find the extracted SDL2 files
+    set(ZLIB_BASE_DIR "${ZLibRedist_SOURCE_DIR}")
+    set(ZLIB_DLL_DIR "${ZLIB_BASE_DIR}/build/native/bin/x64")
+
+    # Make sure the path is valid
+    if (EXISTS "${ZLIB_DLL_DIR}")
+        message(STATUS "Zlib Redistributes found at ${ZLIB_DLL_DIR}")
+    else()
+        message(FATAL_ERROR "Zlib Redistributes not found! Expected at: ${ZLIB_DLL_DIR}")
+    endif()
+
 endfunction()
 
 function(NugetIncludeRapid TARGET)
@@ -112,7 +139,13 @@ function(NugetIncludeSdl2 TARGET)
     FetchContent_MakeAvailable(SDL2NuGet)
 
     set(SDL2NuGet_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2nuget-src")
-    message("SDL ${SDL2NuGet_SOURCE_DIR}")
+
+    # Make sure the path is valid
+    if (EXISTS "${SDL2NuGet_SOURCE_DIR}")
+        message(STATUS "SDL2 found at ${SDL2NuGet_SOURCE_DIR}")
+    else()
+        message(FATAL_ERROR "SDL2 not found! Expected at: ${SDL2NuGet_SOURCE_DIR}")
+    endif()
 
     # Find the extracted SDL2 files
     set(SDL2_BASE_DIR "${SDL2NuGet_SOURCE_DIR}")
@@ -127,7 +160,35 @@ function(NugetIncludeSdl2 TARGET)
         )
     endif()
 
+    message(STATUS "Linking ${TARGET} to ${SDL2NuGet_SOURCE_DIR}")
     target_link_libraries(${TARGET} PRIVATE SDL2)
+
+    NugetIncludeSdl2Runtime()
+
+endfunction()
+
+function(NugetIncludeSdl2Runtime)
+
+    FetchContent_Declare(
+        SDL2RedistNuGet
+        URL https://www.nuget.org/api/v2/package/sdl2.nuget.redist/2.30.9
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_MakeAvailable(SDL2RedistNuGet)
+
+    set(SDL2Redist_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2redistnuget-src")
+    message("SDL Runtime ${SDL2Redist_SOURCE_DIR}")
+
+    # Find the extracted SDL2 files
+    set(SDL2_BASE_DIR "${SDL2Redist_SOURCE_DIR}")
+    set(SDL2_DLL_DIR "${SDL2_BASE_DIR}/build/native/bin/x64")
+
+    # Make sure the path is valid
+    if (EXISTS "${SDL2_DLL_DIR}")
+        message(STATUS "SDL2 Redistributes found at ${SDL2_DLL_DIR}")
+    else()
+        message(FATAL_ERROR "SDL2 Redistributes not found! Expected at: ${SDL2_DLL_DIR}")
+    endif()
 
 endfunction()
 
@@ -157,6 +218,33 @@ function(NugetIncludeSdl2Image TARGET)
 
     target_link_libraries(${TARGET} PRIVATE SDL2_image)
 
+    NugetIncludeSdl2ImageRuntime()
+
+endfunction()
+
+function(NugetIncludeSdl2ImageRuntime)
+
+    FetchContent_Declare(
+        SDL2ImageRedistNuGet
+        URL "https://www.nuget.org/api/v2/package/sdl2_image.nuget.redist/2.8.2"
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_MakeAvailable(SDL2ImageRedistNuGet)
+
+    set(SDL2Redist_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2imageredistnuget-src")
+    message("SDL Image Runtime ${SDL2Redist_SOURCE_DIR}")
+
+    # Find the extracted SDL2 files
+    set(SDL2_BASE_DIR "${SDL2Redist_SOURCE_DIR}")
+    set(SDL2_DLL_DIR "${SDL2_BASE_DIR}/build/native/bin/x64")
+
+    # Make sure the path is valid
+    if (EXISTS "${SDL2_DLL_DIR}")
+        message(STATUS "SDL2 Image Runtime found at ${SDL2_DLL_DIR}")
+    else()
+        message(FATAL_ERROR "SDL2 Image Runtime not found! Expected at: ${SDL2_DLL_DIR}")
+    endif()
+
 endfunction()
 
 function(NugetIncludeSdl2Mixer TARGET)
@@ -184,4 +272,32 @@ function(NugetIncludeSdl2Mixer TARGET)
     endif()
 
     target_link_libraries(${TARGET} PRIVATE SDL2_mixer)
+
+    NugetIncludeSdl2MixerRuntime()
+
+endfunction()
+
+function(NugetIncludeSdl2MixerRuntime)
+
+    FetchContent_Declare(
+        SDL2MixerRedistNuGet
+        URL https://www.nuget.org/api/v2/package/sdl2_mixer.nuget.redist/2.8.0
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_MakeAvailable(SDL2MixerRedistNuGet)
+
+    set(SDL2Redist_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/sdl2mixerredistnuget-src")
+    message("SDL Mixer Runtime ${SDL2Redist_SOURCE_DIR}")
+
+    # Find the extracted SDL2 files
+    set(SDL2_BASE_DIR "${SDL2Redist_SOURCE_DIR}")
+    set(SDL2_DLL_DIR "${SDL2_BASE_DIR}/build/native/bin/x64")
+
+    # Make sure the path is valid
+    if (EXISTS "${SDL2_DLL_DIR}")
+        message(STATUS "SDL2 Mixer Runtime found at ${SDL2_DLL_DIR}")
+    else()
+        message(FATAL_ERROR "SDL2 Mixer Runtime not found! Expected at: ${SDL2_DLL_DIR}")
+    endif()
+
 endfunction()
