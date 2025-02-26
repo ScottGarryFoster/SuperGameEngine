@@ -102,11 +102,10 @@ target_link_libraries(SuperGameEngine PUBLIC
 # Set preprocessor definitions per configuration
 target_compile_definitions(SuperGameEngine PRIVATE
     $<$<CONFIG:Debug>:DEBUG _DEBUG _CONSOLE>
-    $<$<CONFIG:Release>:NDEBUG _CONSOLE>
+    $<$<CONFIG:Release>:NDEBUG>
     $<$<CONFIG:Tools_Debug>:_TOOLS _DEBUG _CONSOLE>
 )
 
 # Set the executable's subsystem
 set_target_properties(SuperGameEngine PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
-set_target_properties(SuperGameEngine PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:CONSOLE")
 set_target_properties(SuperGameEngine PROPERTIES LINK_FLAGS_TOOLS_DEBUG "/SUBSYSTEM:CONSOLE")
