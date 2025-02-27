@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Define build configurations
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
 set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
 
 # Detect platform
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
