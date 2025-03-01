@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(EngineTests)
+project(ToolsTests)
 include(../../FatedQuest.Libraries/CMake/Main.cmake)
 
 # Set C++ standard
@@ -36,23 +36,23 @@ foreach(FILE ${HEADER_FILES})
 endforeach()
 
 # Create executable
-add_executable(EngineTests  ${SOURCE_FILES} ${HEADER_FILES})
-set_target_properties(EngineTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+add_executable(ToolsTests  ${SOURCE_FILES} ${HEADER_FILES})
+set_target_properties(ToolsTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 
 # Set compiler options
 if(MSVC)
-    target_compile_definitions(EngineTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(EngineTests PRIVATE /W3)
+    target_compile_definitions(ToolsTests PRIVATE _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(ToolsTests PRIVATE /W3)
 endif()
 
 # Include directories
-target_include_directories(EngineTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(ToolsTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
 
 if(MSVC)
-    target_precompile_headers(EngineTests PRIVATE ${PCH_HEADER})
+    target_precompile_headers(ToolsTests PRIVATE ${PCH_HEADER})
 endif()
 
 # Platform-specific settings
@@ -63,36 +63,38 @@ endif()
 # Set configurations
 foreach(OUTPUTCONFIG Debug Release)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(EngineTests PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "EngineTests_${OUTPUTCONFIG}"
+    set_target_properties(ToolsTests PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "ToolsTests_${OUTPUTCONFIG}"
     )
 endforeach()
 
 # Get packages (must occur before projects below)
-NugetInclude("rapidxml" EngineTests)
-NugetInclude("gtest" EngineTests)
-set_target_properties(EngineTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
+NugetInclude("rapidxml" ToolsTests)
+NugetInclude("gtest" ToolsTests)
+set_target_properties(ToolsTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
 
 # Link libraries
+add_subdirectory(../../FatedQuest.Libraries/GamePackage GamePackage)
 add_subdirectory(../../FatedQuest.Libraries/Logger Logger)
 add_subdirectory(../../FatedQuest.Libraries/Observer Observer)
 add_subdirectory(../../FatedQuest.Libraries/SharedEnums SharedEnums)
 add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
 add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
 add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
-add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 add_subdirectory(../Engine Engine)
+add_subdirectory(../Tools Tools)
 
 # Link dependencies
-target_link_libraries(EngineTests PUBLIC
+target_link_libraries(ToolsTests PUBLIC
+    GamePackage
     Logger
     Observer
     SharedEnums
     StandardObjects
     StandardOperations
     StoredDocument
-    XmlDocument
     Engine
+    Tools
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )

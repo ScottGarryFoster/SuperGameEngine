@@ -86,6 +86,7 @@ function(NugetIncludeRapid TARGET)
         RapidXML
         GIT_REPOSITORY "https://github.com/0x08088405/rapidxml.git"
         GIT_TAG "master"
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
     FetchContent_MakeAvailable(RapidXML)
 
@@ -110,6 +111,7 @@ function(NugetIncludeGTest TARGET)
     FetchContent_Declare(
         googletest
         URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
     FetchContent_MakeAvailable(googletest)
 
@@ -125,7 +127,7 @@ function(NugetIncludeGTest TARGET)
 
     # For some reason this does not appear to work for GTest
     # You need to actually add these yourself (PRIVATE appears to make no difference)
-    target_link_libraries(${TARGET} PRIVATE GTest::gtest GTest::gtest_main)
+    target_link_libraries(${TARGET} PRIVATE $<$<NOT:$<CONFIG:Release>>:GTest::gtest> $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>)
 
 endfunction()
 

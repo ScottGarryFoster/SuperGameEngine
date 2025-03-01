@@ -8,10 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define build configurations
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
 set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
 
 # Collect source files
-file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp" "*.h")
+file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
 file(GLOB_RECURSE UNFILTERED_HEADER_FILES "*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
 
@@ -69,7 +70,8 @@ endforeach()
 
 # Get packages (must occur before projects below)
 NugetInclude("rapidxml" XmlDocumentTests)
-NugetIncludeGTest("gtest" XmlDocumentTests)
+NugetInclude("gtest" XmlDocumentTests)
+set_target_properties(XmlDocumentTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
 
 # Link libraries
 add_subdirectory(../Logger Logger)
@@ -79,12 +81,12 @@ add_subdirectory(../StoredDocument StoredDocument)
 add_subdirectory(../XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(XmlDocumentTests
+target_link_libraries(XmlDocumentTests PUBLIC
     Logger
     SharedEnums
     StandardOperations
     StoredDocument
     XmlDocument
-    GTest::gtest
-    GTest::gtest_main
+    $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
+    $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )

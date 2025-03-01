@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
-project(EngineTests)
-include(../../FatedQuest.Libraries/CMake/Main.cmake)
+project(StandardOperationsTests)
+include(../CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -36,23 +36,23 @@ foreach(FILE ${HEADER_FILES})
 endforeach()
 
 # Create executable
-add_executable(EngineTests  ${SOURCE_FILES} ${HEADER_FILES})
-set_target_properties(EngineTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+add_executable(StandardOperationsTests  ${SOURCE_FILES} ${HEADER_FILES})
+set_target_properties(StandardOperationsTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 
 # Set compiler options
 if(MSVC)
-    target_compile_definitions(EngineTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(EngineTests PRIVATE /W3)
+    target_compile_definitions(StandardOperationsTests PRIVATE _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(StandardOperationsTests PRIVATE /W3)
 endif()
 
 # Include directories
-target_include_directories(EngineTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(StandardOperationsTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
 
 if(MSVC)
-    target_precompile_headers(EngineTests PRIVATE ${PCH_HEADER})
+    target_precompile_headers(StandardOperationsTests PRIVATE ${PCH_HEADER})
 endif()
 
 # Platform-specific settings
@@ -63,36 +63,25 @@ endif()
 # Set configurations
 foreach(OUTPUTCONFIG Debug Release)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(EngineTests PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "EngineTests_${OUTPUTCONFIG}"
+    set_target_properties(StandardOperationsTests PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "StandardOperationsTests_${OUTPUTCONFIG}"
     )
 endforeach()
 
 # Get packages (must occur before projects below)
-NugetInclude("rapidxml" EngineTests)
-NugetInclude("gtest" EngineTests)
-set_target_properties(EngineTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
+NugetInclude("gtest" StandardOperationsTests)
+set_target_properties(StandardOperationsTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
 
 # Link libraries
-add_subdirectory(../../FatedQuest.Libraries/Logger Logger)
-add_subdirectory(../../FatedQuest.Libraries/Observer Observer)
-add_subdirectory(../../FatedQuest.Libraries/SharedEnums SharedEnums)
-add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
-add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
-add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
-add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
-add_subdirectory(../Engine Engine)
+add_subdirectory(../Logger Logger)
+add_subdirectory(../SharedEnums SharedEnums)
+add_subdirectory(../StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(EngineTests PUBLIC
+target_link_libraries(StandardOperationsTests PUBLIC
     Logger
-    Observer
     SharedEnums
-    StandardObjects
     StandardOperations
-    StoredDocument
-    XmlDocument
-    Engine
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )
