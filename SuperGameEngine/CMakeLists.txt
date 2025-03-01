@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
-project(SuperGameEngine)
+option(ENABLE_TESTS "Enable tests" OFF)
+
+if(ENABLE_TESTS)
+    project(SuperGameEngine-WithTests)
+else()
+    project(SuperGameEngine)
+endif()
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -40,8 +46,6 @@ set_target_properties(Observer PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(ClassTypes PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(StoredDocument PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
-
-option(ENABLE_TESTS "Enable tests" OFF)
 
 message(STATUS "ENABLE_TESTS: ${ENABLE_TESTS}")
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
