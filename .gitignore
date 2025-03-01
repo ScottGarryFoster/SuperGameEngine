@@ -424,3 +424,8 @@ FodyWeavers.xsd
 **/*.opensdf
 **/*.sdf
 **/*.ncb
+
+# Allow this version.
+!**SuperGameEngine/Engine/Structural/[Pp]ackages/*
+!**SuperGameEngine/Tools/ToolsEngine/[Pp]ackages/*
+!FatedQuestLibraries/[Bb]uild/*

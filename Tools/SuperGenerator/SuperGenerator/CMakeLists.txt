@@ -1,7 +1,11 @@
+cmake_minimum_required(VERSION 3.20)
 option(ENABLE_TESTS "Enable test projects in the solution" OFF)
 
-cmake_minimum_required(VERSION 3.20)
-project(SuperGenerator)
+if(ENABLE_TESTS)
+    project(SuperGenerator-WithTests)
+else()
+    project(SuperGenerator)
+endif()
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -36,6 +40,12 @@ set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
 
 if(ENABLE_TESTS)
     add_subdirectory(../../../FatedQuest.Libraries/XmlDocumentTests XmlDocumentTests)
+    add_subdirectory(../../../FatedQuest.Libraries/StandardOperationsTests StandardOperationsTests)
+    add_subdirectory(../../../FatedQuest.Libraries/StandardObjectsTests StandardObjectsTests)
+
+    set_target_properties(XmlDocumentTests PROPERTIES FOLDER "FatedQuest.Libraries")
+    set_target_properties(StandardOperationsTests PROPERTIES FOLDER "FatedQuest.Libraries")
+    set_target_properties(StandardObjectsTests PROPERTIES FOLDER "FatedQuest.Libraries")
 
     set_target_properties(XmlDocumentTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(gmock PROPERTIES FOLDER "External")
