@@ -397,7 +397,30 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-build/
-debug/
-release/
-tools_debug/
+# Cmake and custom config
+[Bb]uild/
+[Tt]ools_[Dd]ebug/
+
+# Ignore Visual Studio project and solution files
+*.sln
+*.sln*
+*.vcxproj
+*.vcxproj*
+*.vcxproj.filters
+*.vcxproj.user
+*.csproj
+*.csproj.user
+*.csproj.filters
+*.vbproj
+*.vbproj.user
+*.vbproj.filters
+*.fsproj
+*.fsproj.user
+*.fsproj.filters
+
+# Ignore IntelliSense and browsing database files
+*.VC.db
+*.VC.opendb
+*.opensdf
+*.sdf
+*.ncb
