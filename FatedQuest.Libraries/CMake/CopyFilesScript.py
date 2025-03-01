@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 
-def CopyDirectory(source: str, destination: str, forceOverride: bool):
+def CopyDirectory(source: str, destination: str, forceOverride: bool, addToDirectory: bool):
     """
     Copies one directory to another.
 
@@ -12,6 +12,7 @@ def CopyDirectory(source: str, destination: str, forceOverride: bool):
         source (string): Source of files, directory.
         destination (string): Place to copy to, directory.
         forceOverride (bool): If True, always overwrite destination, false only when newer.
+        addToDirectory (bool): If True, files will be added to destination, false directory is deleted first.
     """
     sourcePath = Path(source).resolve()
     destinationPath = Path(destination).resolve()
@@ -19,6 +20,10 @@ def CopyDirectory(source: str, destination: str, forceOverride: bool):
     if not sourcePath.exists() or not sourcePath.is_dir():
         print(f"Error: Source directory '{source}' does not exist or is not a directory.")
         return
+
+    # If there is a directory and we are not adding files then delete the files
+    if destinationPath.exists() and not addToDirectory:
+        shutil.rmtree(destination)
 
     # When can ensure destination exists.
     if not destinationPath.exists() or not destinationPath.is_dir():
@@ -47,12 +52,17 @@ def CopyDirectory(source: str, destination: str, forceOverride: bool):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: python CopyDirectory <sourceDirectory:string> <destination:string> <forceOverride:[true|false]>")
+    if len(sys.argv) < 4:
+        print("Usage: python CopyDirectory "
+              "<sourceDirectory:string> "
+              "<destination:string> "
+              "<forceOverride:[true|false]> "
+              "<addToDirectory:[true|false]>")
         sys.exit(1)
 
     sourceDirectory = sys.argv[1]
     destinationDirectory = sys.argv[2]
-    forceOverride = sys.argv[3].lower() in ('true', '1', 'yes')
+    forceOverride = sys.argv[3].lower() in ('true', '1', 'yes') if len(sys.argv) == 5 else False
+    addToDirectory = sys.argv[4].lower() in ('true', '1', 'yes') if len(sys.argv) == 5 else True
 
-    CopyDirectory(sourceDirectory, destinationDirectory, forceOverride)
+    CopyDirectory(sourceDirectory, destinationDirectory, forceOverride, addToDirectory)

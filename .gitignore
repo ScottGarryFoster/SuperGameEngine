@@ -398,3 +398,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 build/
+debug/
+release/
+tools_debug/
