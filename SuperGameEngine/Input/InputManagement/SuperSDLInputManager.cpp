@@ -1,6 +1,7 @@
 #include "SuperSDLInputManager.h"
 #include <SDL.h>
 #include <SDL_joystick.h>
+#include <SDL_gamecontroller.h>
 
 #include "SuperInputManager.h"
 #include "../../../FatedQuest.Libraries/Logger/AllReferences.h"
