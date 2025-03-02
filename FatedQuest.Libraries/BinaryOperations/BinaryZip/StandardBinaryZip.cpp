@@ -4,10 +4,19 @@
 #include <filesystem>
 #include <vector>
 #include <string>
-#include "minizip/zip.h"
-#include "minizip/mztools.h"
-#include "minizip/unzip.h"
-#include <minizip/ioapi.h>
+//#include "../../External/Minizip/1.3.1/contrib/minizip/zip.h"
+//#include "../../External/Minizip/1.3.1/contrib/minizip/unzip.h"
+//#include "../../External/Minizip/1.3.1/contrib/minizip/mztools.h"
+//#include "../../External/Minizip/1.3.1/contrib/minizip/ioapi.h"
+//#include "minizip/zip.h"
+//#include "minizip/mztools.h"
+//#include "minizip/unzip.h"
+//#include <minizip/ioapi.h>
+#include "contrib/minizip/zip.h"
+#include "contrib/minizip/unzip.h"
+#include "contrib/minizip/ioapi.h"
+#include "contrib/minizip/mztools.h"
+
 
 #include "../../StandardOperations/AllReferences.h"
 
@@ -38,7 +47,7 @@ bool StandardBinaryZip::FileToBinary(
 
     std::vector<unsigned char> compressedData(destinationLength);
 
-    int result = compress(compressedData.data(), &destinationLength, reinterpret_cast<unsigned char*>(buffer.data()), sourceLength);
+    size_t result = compress(compressedData.data(), &destinationLength, reinterpret_cast<unsigned char*>(buffer.data()), sourceLength);
     if (result != Z_OK)
     {
         errors.push_back("Compression failed!");

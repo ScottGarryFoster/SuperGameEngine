@@ -3,7 +3,8 @@ include(FetchContent)
 # Function to filter out files in the directory
 function(NugetInclude LIBRARY TARGET)
     if(${LIBRARY} STREQUAL "zlib")
-        NugetIncludeZlib(${TARGET})
+        NugetIncludeMinizip(${TARGET})
+        #NugetIncludeZlib(${TARGET})
     endif()
     if(${LIBRARY} STREQUAL "rapidxml")
         NugetIncludeRapid(${TARGET})
@@ -24,6 +25,8 @@ function(NugetInclude LIBRARY TARGET)
 endfunction()
 
 function(NugetIncludeZlib TARGET)
+
+    NugetIncludeMinizip(${TARGET})
 
     FetchContent_Declare(
         Zlib
@@ -53,6 +56,7 @@ function(NugetIncludeZlib TARGET)
 
     NugetIncludeZlibRuntime()
 
+
 endfunction()
 
 function(NugetIncludeZlibRuntime)
@@ -77,6 +81,65 @@ function(NugetIncludeZlibRuntime)
     else()
         message(FATAL_ERROR "Zlib Redistributes not found! Expected at: ${ZLIB_DLL_DIR}")
     endif()
+
+endfunction()
+
+function(NugetIncludeMinizip TARGET)
+
+    set(MZ_BUILD_SHARED OFF CACHE BOOL "Build shared Minizip library")
+    set(MZ_BUILD_STATIC ON CACHE BOOL "Build static Minizip library")
+    set(MZ_ZLIB ON CACHE BOOL "Enable Zlib in Minizip")
+    set(MZ_COMPAT ON CACHE BOOL "Enable compatibility mode")
+    set(MZ_TOOLS ON CACHE BOOL "Enable mz_tools support") # <-- Enable mz_tools
+
+    FetchContent_Declare(
+        MiniZip
+        GIT_REPOSITORY "https://github.com/zlib-ng/minizip-ng.git"
+        GIT_TAG "master"
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    ) 
+
+    # Manually set RapidXML paths from NuGet
+    set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/_deps")
+
+    set(NUGET_MINIZIP_DIR "${NUGET_PACKAGES_DIR}/minizip-src")
+    #if (NOT EXISTS "${NUGET_MINIZIP_DIR}")
+    #    FetchContent_Populate(MiniZip)
+    #endif()
+
+    message("Fetch https://github.com/zlib-ng/minizip-ng.git")
+    FetchContent_MakeAvailable(MiniZip)
+
+    #FetchContent_Declare(
+    #    zlib
+    #    GIT_REPOSITORY "https://github.com/madler/zlib.git"
+    #    GIT_TAG "develop"
+    #    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    #)
+    #message("Fetch https://github.com/madler/zlib.git")
+
+    #if (NOT EXISTS "${zlib_SOURCE_DIR}")
+    #    FetchContent_Populate(zlib)
+    #endif()
+
+    #target_include_directories(${TARGET} PRIVATE
+    #    ${NUGET_MINIZIP_DIR}  # Base dir
+    #)
+
+    #target_link_libraries(${TARGET} PRIVATE minizip zlib)
+
+    
+    #set(NUGET_ZLIB_DIR "${NUGET_PACKAGES_DIR}/zlib-src")
+
+    #target_include_directories(${TARGET} PRIVATE
+    #    ${NUGET_ZLIB_DIR}  # Base dir
+    #)
+
+    #target_link_libraries(${TARGET} PRIVATE zlib)
+
+    #add_subdirectory(E:/Development/SuperGameEngine-CmakeTest1/External/Zlib/1.3.1.1 zlib)
+    target_include_directories(${TARGET} PRIVATE E:/Development/SuperGameEngine-CmakeTest1/External/Zlib/1.3.1.1)
+    target_link_libraries(${TARGET} PRIVATE zlib)
 
 endfunction()
 

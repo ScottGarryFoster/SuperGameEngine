@@ -1,8 +1,12 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "minizip/zip.h"
-#include <minizip/unzip.h>
+//#include "minizip/zip.h"
+//#include <minizip/unzip.h>
+#include "contrib/minizip/zip.h"
+#include "contrib/minizip/unzip.h"
+//#include "../../External/Minizip/1.3.1/contrib/minizip/zip.h"
+//#include "../../External/Minizip/1.3.1/contrib/minizip/unzip.h"
 
 #include "BinaryZip.h"
 
