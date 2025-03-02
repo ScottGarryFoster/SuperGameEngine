@@ -3,7 +3,7 @@ include(FetchContent)
 # Function to filter out files in the directory
 function(NugetInclude LIBRARY TARGET)
     if(${LIBRARY} STREQUAL "zlib")
-        NugetIncludeZlib(${TARGET})
+        VCPKGIncludeZLib(${TARGET})      
     endif()
     if(${LIBRARY} STREQUAL "rapidxml")
         NugetIncludeRapid(${TARGET})
@@ -21,6 +21,23 @@ function(NugetInclude LIBRARY TARGET)
         NugetIncludeSdl2Mixer(${TARGET})
     endif()
 
+endfunction()
+
+function(VCPKGIncludeZLib TARGET)
+    message("VCPKGIncludeZLib: CMAKE_TOOLCHAIN_FILE set to ${CMAKE_TOOLCHAIN_FILE}")
+    message("VCPKGIncludeZLib: CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
+    find_package(ZLIB REQUIRED)
+
+    set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/Build/vcpkg/installed/x64-windows/share/unofficial-minizip)
+    message("VCPKGIncludeZLib: Set for MiniZip to CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
+    
+    find_package(ZLIB REQUIRED)
+    find_package(unofficial-minizip REQUIRED)
+
+    target_link_libraries(${TARGET} PRIVATE unofficial::minizip::minizip ZLIB::ZLIB)
+
+    set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/Build/vcpkg/installed/x64-windows/)
+    message("VCPKGIncludeZLib: Reset back to CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
 endfunction()
 
 function(NugetIncludeZlib TARGET)
