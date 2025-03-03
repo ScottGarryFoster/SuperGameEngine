@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
+option(ENABLE_TOOLS "Enable tools" OFF)
 project(Observer)
 include(../CMake/Main.cmake)
 
@@ -7,8 +8,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define build configurations
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
+if(ENABLE_TOOLS)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
+else()
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
+endif()
 
 # Collect source files
 file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")

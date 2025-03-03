@@ -1,11 +1,27 @@
 cmake_minimum_required(VERSION 3.20)
 option(ENABLE_TESTS "Enable tests" OFF)
+option(ENABLE_TOOLS "Enable tools" OFF)
 
-if(ENABLE_TESTS)
-    project(SuperGameEngine-WithTests)
+message(STATUS "ENABLE_TESTS: ${ENABLE_TESTS}")
+message(STATUS "ENABLE_TOOLS: ${ENABLE_TOOLS}")
+message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+
+# Name the project such that each solution could have its own name
+if(ENABLE_TOOLS)
+    if(ENABLE_TESTS)
+        project(SuperGameEngine-Tools-WithTests)
+    else()
+        project(SuperGameEngine-Tools)
+    endif()
 else()
-    project(SuperGameEngine)
+    if(ENABLE_TESTS)
+        project(SuperGameEngine-WithTests)
+    else()
+        project(SuperGameEngine)
+    endif()
 endif()
+
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -25,8 +41,11 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Configur
 add_subdirectory(SuperGameEngine)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SuperGameEngine)
 add_subdirectory(Engine)
-add_subdirectory(Tools)
 add_subdirectory(Input)
+if(ENABLE_TOOLS)
+    add_subdirectory(Tools)
+endif()
+
 
 # Libraries under FatedQuest.Libraries
 set(FATEDQUEST_LIBRARIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../FatedQuest.Libraries)
@@ -54,14 +73,12 @@ set_target_properties(ClassTypes PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(StoredDocument PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
 
-message(STATUS "ENABLE_TESTS: ${ENABLE_TESTS}")
-message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
-
 if(ENABLE_TESTS)
     add_subdirectory(EngineTests)
-    add_subdirectory(ToolsTests)
     add_subdirectory(InputTests)
+    if(ENABLE_TOOLS)
+        add_subdirectory(ToolsTests)
+    endif()
 
     add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/StandardOperationsTests StandardOperationsTests)
     add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/XmlDocumentTests XmlDocumentTests)

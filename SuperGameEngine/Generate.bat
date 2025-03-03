@@ -8,7 +8,7 @@ call build\vcpkg\vcpkg install zlib
 echo Current directory: %CD%
 
 rem Call CMake including the Tools Chain.
-cmake -B build -DCMAKE_TOOLCHAIN_FILE="%TOOLCHAIN_FILE%" -DCMAKE_PREFIX_PATH="%CD%\Build\vcpkg\installed\x64-windows"
+cmake -B build -DCMAKE_TOOLCHAIN_FILE="%TOOLCHAIN_FILE%" -DCMAKE_PREFIX_PATH="%CD%\Build\vcpkg\installed\x64-windows" -DENABLE_TOOLS=OFF -DENABLE_TESTS=OFF
 
 rem Clean filters or other post build steps
 python ../FatedQuest.Libraries/CMake/PostBuildScripts.py build/

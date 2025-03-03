@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
+option(ENABLE_TOOLS "Enable tools" OFF)
+message(STATUS "Project(SuperGameEngine): ENABLE_TOOLS: ${ENABLE_TOOLS}")
+
 project(SuperGameEngine)
 include(../../FatedQuest.Libraries/CMake/Main.cmake)
 
@@ -7,9 +10,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define build configurations
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
-set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
+if(ENABLE_TOOLS)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
+    set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
+else()
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
+endif()
+
 
 # Detect platform
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -71,7 +79,6 @@ NugetInclude("sdl2Mixer" SuperGameEngine)
 # Link libraries
 add_subdirectory(../Engine Engine)
 add_subdirectory(../Input Input)
-add_subdirectory(../Tools Tools)
 add_subdirectory(../../FatedQuest.Libraries/BinaryOperations BinaryOperations)
 add_subdirectory(../../FatedQuest.Libraries/ClassTypes ClassTypes)
 add_subdirectory(../../FatedQuest.Libraries/GamePackage GamePackage)
@@ -87,7 +94,6 @@ add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 target_link_libraries(SuperGameEngine PUBLIC
     Engine
     Input
-    Tools
     BinaryOperations
     ClassTypes
     GamePackage
@@ -100,12 +106,26 @@ target_link_libraries(SuperGameEngine PUBLIC
     XmlDocument
 )
 
+# Tools only dependencies
+if(ENABLE_TOOLS)
+    message(STATUS "SuperGameEngine: Linking Tools Dependancies")
+    add_subdirectory(../Tools Tools)
+    target_link_libraries(SuperGameEngine PUBLIC Tools)
+endif()
+
 # Set preprocessor definitions per configuration
-target_compile_definitions(SuperGameEngine PRIVATE
-    $<$<CONFIG:Debug>:DEBUG _DEBUG _CONSOLE>
-    $<$<CONFIG:Release>:NDEBUG>
-    $<$<CONFIG:Tools_Debug>:_TOOLS _DEBUG _CONSOLE>
-)
+if(ENABLE_TOOLS)
+    target_compile_definitions(SuperGameEngine PRIVATE
+        $<$<CONFIG:Debug>:DEBUG _DEBUG _CONSOLE>
+        $<$<CONFIG:Release>:NDEBUG>
+        $<$<CONFIG:Tools_Debug>:_TOOLS _DEBUG _CONSOLE>
+    )
+else()
+    target_compile_definitions(SuperGameEngine PRIVATE
+        $<$<CONFIG:Debug>:DEBUG _DEBUG _CONSOLE>
+        $<$<CONFIG:Release>:NDEBUG>
+    )
+endif()
 
 # Set the executable's subsystem
 set_target_properties(SuperGameEngine PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
