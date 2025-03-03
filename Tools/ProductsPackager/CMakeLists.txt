@@ -5,6 +5,13 @@ project(ProductsPackager)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Find and use vcpkg
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/Build/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
+message("CMAKE_TOOLCHAIN_FILE set to ${CMAKE_TOOLCHAIN_FILE}")
+message("CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
+
 # Define solution-wide configurations
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 

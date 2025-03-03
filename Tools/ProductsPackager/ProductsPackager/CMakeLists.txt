@@ -67,6 +67,9 @@ foreach(OUTPUTCONFIG Debug Release)
     )
 endforeach()
 
+# Get Packages
+NugetInclude("zlib" ProductsPackager)
+
 # Link libraries
 add_subdirectory(../../../FatedQuest.Libraries/BinaryOperations BinaryOperations)
 add_subdirectory(../../../FatedQuest.Libraries/GamePackage GamePackage)
@@ -76,7 +79,7 @@ add_subdirectory(../../../FatedQuest.Libraries/SharedEnums SharedEnums)
 add_subdirectory(../../../FatedQuest.Libraries/StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(ProductsPackager
+target_link_libraries(ProductsPackager PUBLIC
     BinaryOperations
     GamePackage
     Logger
