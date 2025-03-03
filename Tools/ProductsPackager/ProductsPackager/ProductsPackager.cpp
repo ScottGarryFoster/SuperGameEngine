@@ -4,15 +4,18 @@
 #include <iostream>
 
 #include "Packager.h"
+#include "../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
+#include "../../FatedQuest.Libraries/GamePackage/AllReferences.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
 
+    auto paths = SGEPackagePaths();
+    std::string fullProductsDirectory = Directory::CombinePath(paths.ProductsDirectory(), paths.ProductsDirectoryName());
+
     ProductsPackager::Packager packager;
-    packager.PackageProductFolder(
-        "E:\\Development\\SuperGameEngine-Myriad\\Products", 
-        "E:\\Development\\SuperGameEngine-Myriad\\Products", 
+    packager.PackageProductFolder(fullProductsDirectory, fullProductsDirectory,
         ProductsPackager::PackageFileType::Binary);
 }
 

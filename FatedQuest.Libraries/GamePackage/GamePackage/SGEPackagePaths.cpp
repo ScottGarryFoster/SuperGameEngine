@@ -3,15 +3,20 @@
 
 using namespace FatedQuestLibraries;
 
+SGEPackagePaths::SGEPackagePaths()
+{
+    m_lastDiscoveredProductsDirectory = {};
+    m_lastDiscoveredProductsDirectory = FindProductsDirectory();
+}
+
 std::string SGEPackagePaths::ProductsDirectory() const
 {
-    std::string exePath = FilePaths::ApplicationDirectory();
-    std::filesystem::path exeFilepath(exePath);
 #ifdef _DEBUG
-    std::filesystem::path threeAbove = exeFilepath.parent_path().parent_path().parent_path().parent_path();
-    return threeAbove.string();
+    return FindProductsDirectory();
 #endif
 
+    std::string exePath = FilePaths::ApplicationDirectory();
+    std::filesystem::path exeFilepath(exePath);
     return exeFilepath.string();
 }
 
@@ -23,4 +28,29 @@ std::string SGEPackagePaths::ProductsDirectoryName() const
 std::string SGEPackagePaths::ProductsArchiveName() const
 {
     return "Products.zip";
+}
+
+std::string SGEPackagePaths::FindProductsDirectory() const
+{
+    if (!m_lastDiscoveredProductsDirectory.empty())
+    {
+        return m_lastDiscoveredProductsDirectory;
+    }
+
+    std::filesystem::path currentPath(FilePaths::ApplicationDirectory());
+    std::string productsDirectory = Directory::CombinePath(currentPath, ProductsDirectoryName());
+    std::string productsArchive = Directory::CombinePath(currentPath, ProductsDirectoryName());
+    for (size_t i = 0; i < 10; ++i)
+    {
+        if (Directory::Exists(productsDirectory) || File::Exists(productsArchive))
+        {
+            break;
+        }
+
+        currentPath = currentPath.parent_path();
+        productsDirectory = Directory::CombinePath(currentPath, ProductsDirectoryName());
+        productsArchive = Directory::CombinePath(currentPath, ProductsDirectoryName());
+    }
+
+    return currentPath.string();
 }

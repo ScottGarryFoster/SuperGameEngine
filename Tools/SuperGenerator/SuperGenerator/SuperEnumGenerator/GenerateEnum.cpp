@@ -68,7 +68,11 @@ void GenerateEnum::AllEnums(
         std::string fullFilePath = Directory::CombinePath(topLevel, file);
         std::string headerFilepath =
             File::ChangeExtension(fullFilePath, superEnumExtension, destinationExtension);
-        if (!SingleFile(fullFilePath, headerFilepath))
+        if (SingleFile(fullFilePath, headerFilepath))
+        {
+            Log::Info("Generated: " + fullFilePath);
+        }
+        else
         {
             Log::Error("Enum not generated. From: " + fullFilePath + " to " + headerFilepath,
                 "GenerateEnum::GenerateEnums(std::string, std::string, std::string)");

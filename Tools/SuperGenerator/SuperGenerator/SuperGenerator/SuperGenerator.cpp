@@ -9,6 +9,7 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/FileHandling/File.h"
 #include "../SuperEnumGenerator/GenerateEnum.h"
+#include "FileHandling/FilePaths.h"
 
 using namespace SuperEnumGenerator;
 
@@ -22,11 +23,13 @@ int main(int argc, char* args[])
         event->Subscribe(debugLogger);
     }
 
+    auto paths = FilePaths();
+    std::string repoDirectory = paths.RepositoryDirectory();
+    Log::Info("Generating with: " + repoDirectory);
+
     GenerateEnum generator;
-    generator.AllEnums("E:\\Development\\SuperGameEngine-Myriad\\", ".superenum", ".h");
+    generator.AllEnums(repoDirectory, ".superenum", ".h");
     Log::Info("Generated Enums");
-
-
 
     //std::string lines;
     //std::vector<SuperGameInput::MouseWheelDirection> codes = SuperGameInput::EMouseWheelDirection::ToVector();

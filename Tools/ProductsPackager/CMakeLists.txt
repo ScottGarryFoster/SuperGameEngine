@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
-project(ProductsPackager)
+option(ENABLE_TESTS "Enable test projects in the solution" OFF)
+
+if(ENABLE_TESTS)
+    project(ProductsPackager-WithTests)
+else()
+    project(ProductsPackager)
+endif()
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -35,3 +41,16 @@ set_target_properties(BinaryOperations PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(Logger PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(Observer PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
+
+if(ENABLE_TESTS)
+    add_subdirectory(../../FatedQuest.Libraries/GamePackageTests GamePackageTests)
+    add_subdirectory(../../FatedQuest.Libraries/StandardOperationsTests StandardOperationsTests)
+
+    set_target_properties(GamePackageTests PROPERTIES FOLDER "FatedQuest.Libraries")
+    set_target_properties(StandardOperationsTests PROPERTIES FOLDER "FatedQuest.Libraries")
+
+    set_target_properties(gmock PROPERTIES FOLDER "External")
+    set_target_properties(gmock_main PROPERTIES FOLDER "External")
+    set_target_properties(gtest PROPERTIES FOLDER "External")
+    set_target_properties(gtest_main PROPERTIES FOLDER "External")
+endif()

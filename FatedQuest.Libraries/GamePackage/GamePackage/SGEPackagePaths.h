@@ -10,6 +10,8 @@ namespace FatedQuestLibraries
     class SGEPackagePaths : public PackagePaths
     {
     public:
+        SGEPackagePaths();
+
         /// <summary>
         /// Gets the directory the Products folder should be in.
         /// This is not the products folder itself, it is the folder it is place in,
@@ -31,6 +33,20 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <returns>The actual name of the Products Archive stored in the products directory.</returns>
         virtual std::string ProductsArchiveName() const override;
+
+    private:
+
+        /// <summary>
+        /// When looking for a products directory this is the cached last found location.
+        /// </summary>
+        std::string m_lastDiscoveredProductsDirectory;
+
+        /// <summary>
+        /// Finds the products directory by looking for a products folder or archive.
+        /// </summary>
+        /// <returns>A products directory path.</returns>
+        /// <remarks>This is cached and so should be safe to call multiple times. </remarks>
+        std::string FindProductsDirectory() const;
     };
 }
 

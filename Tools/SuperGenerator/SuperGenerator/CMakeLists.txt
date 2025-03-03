@@ -47,7 +47,6 @@ if(ENABLE_TESTS)
     set_target_properties(StandardOperationsTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(StandardObjectsTests PROPERTIES FOLDER "FatedQuest.Libraries")
 
-    set_target_properties(XmlDocumentTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(gmock PROPERTIES FOLDER "External")
     set_target_properties(gmock_main PROPERTIES FOLDER "External")
     set_target_properties(gtest PROPERTIES FOLDER "External")
