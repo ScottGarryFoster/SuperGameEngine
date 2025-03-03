@@ -23,8 +23,7 @@ int main(int argc, char* args[])
         event->Subscribe(debugLogger);
     }
 
-    auto paths = FilePaths();
-    std::string repoDirectory = paths.RepositoryDirectory();
+    std::string repoDirectory = FilePaths::RepositoryDirectory();
     Log::Info("Generating with: " + repoDirectory);
 
     GenerateEnum generator;
