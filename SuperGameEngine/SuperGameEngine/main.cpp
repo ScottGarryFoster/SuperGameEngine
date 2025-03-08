@@ -1,4 +1,7 @@
-#include <Windows.h>
+#ifdef _WINDOWS
+#include <windows.h>
+#endif
+
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #undef main 
@@ -31,14 +34,25 @@ int main(int argc, char* args[])
     Log::Initialise();
 
 #ifdef _DEBUG
-    AllocConsole();
-    FILE* pCout;
-    FILE* pCerr;
-    freopen_s(&pCout, "CONOUT$", "w", stdout);
-    freopen_s(&pCerr, "CONOUT$", "w", stderr);
-    std::cout << "Super Game Engine Version 0.0.6 Dev" << std::endl;
+
+    #ifdef _WINDOWS
+        AllocConsole();
+        FILE* pCout;
+        FILE* pCerr;
+        freopen_s(&pCout, "CONOUT$", "w", stdout);
+        freopen_s(&pCerr, "CONOUT$", "w", stderr);
+    #endif
+
+    std::cout << "Super Game Engine Version 0.0.6 Dev\n";
 #else
-    FreeConsole();
+
+    #ifdef _WINDOWS
+        FreeConsole();
+    #else
+        freopen("/dev/null", "w", stdout);
+        freopen("/dev/null", "w", stderr);
+    #endif
+
 #endif
 
 #ifdef _TOOLS
