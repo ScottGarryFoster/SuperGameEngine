@@ -60,9 +60,9 @@ endif()
 
 # Include these by default in all CPP files.
 if (MSVC)
-    target_compile_options(Engine PRIVATE "/FIcmake_pch.hxx" "/FIpch.h")
+    target_compile_options(BinaryOperations PRIVATE "/FIcmake_pch.hxx" "/FIpch.h")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    target_compile_options(Engine PRIVATE "-include cmake_pch.hxx;pch.h")
+    target_compile_options(BinaryOperations PRIVATE "-include cmake_pch.hxx;pch.h")
 endif()
 
 # Platform-specific settings
