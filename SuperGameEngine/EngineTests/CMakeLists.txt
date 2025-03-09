@@ -62,9 +62,9 @@ endif()
 
 # Include these by default in all CPP files.
 if (MSVC)
-    target_compile_options(EngineTests PRIVATE "/FIcmake_pch.hxx" "/FIpch.h")
+    target_compile_options(EngineTests PRIVATE "/FI${PCH_HEADER}")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    target_compile_options(EngineTests PRIVATE "-include cmake_pch.hxx;pch.h")
+    target_compile_options(EngineTests PRIVATE "-include ${PCH_HEADER}")
 endif()
 
 # Platform-specific settings
