@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        The top level type of a given asset.
+    </EnumComment>
+    <EnumName Name="GameAssetType">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Texture>
+            Asset represents an image.
+        </Texture>
+    </EnumName>
+</SuperEnum>
