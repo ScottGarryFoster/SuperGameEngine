@@ -1,27 +1,23 @@
 #pragma once
-#include <string>
+#include "SuperGameAsset.h"
 
 namespace SuperGameEngine
 {
     /// <summary>
-    /// Base class for all Assets and provides the base data for assets.
-    /// Assets in this context are data provided for the game and the data
-    /// is contextual setup such as how to split a texture or how to use a
-    /// piece of music.
+    /// A test game asset which explicitly exposes the file contents.
+    /// This is used for debugging as it is not particularly useful outside of reading a
+    /// game asset file.
     /// </summary>
-    class GameAsset
+    class ExplicitTextGameAsset : public SuperGameAsset
     {
     public:
         /// <summary>
-        /// The name of the asset.
+        /// Constructor.
         /// </summary>
-        /// <returns>The name to display for tooling. </returns>
-        /// <remarks>This can be used in games but should be avoided. </remarks>
-        virtual std::string GetName() const = 0;
-
-    protected:
-        // This should contain the raw data loaded from file to give to
-        // the derivative types.
+        /// <param name="metaDataDocument">
+        /// Meta data document to load.
+        /// </param>
+        ExplicitTextGameAsset(const std::shared_ptr<FatedQuestLibraries::StoredDocument>& metaDataDocument);
 
         /// <summary>
         /// Get a loaded string value.
@@ -29,27 +25,28 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>The value found or empty if nothing. </returns>
-        virtual std::string GetString(const std::string& key) = 0;
+        std::string GetString(const std::string& key) override;
 
         /// <summary>
         /// True when a key is loaded.
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
-        virtual bool IsStringLoaded(const std::string& key) = 0;
+        bool IsStringLoaded(const std::string& key) override;
 
         /// <summary>
         /// Get a loaded int value.
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>The value found or -1 if nothing. </returns>
-        virtual int GetInt(const std::string& key) = 0;
+        int GetInt(const std::string& key) override;
 
         /// <summary>
         /// True when a key is loaded. 
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
-        virtual bool IsIntLoaded(const std::string& key) = 0;
+        bool IsIntLoaded(const std::string& key) override;
     };
 }
+
