@@ -82,7 +82,7 @@ add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../Observer Observer)
 
 # Link dependencies
-target_link_libraries(StoredDocument PUBLIC
+target_link_libraries(StoredDocument PRIVATE
     Observer
     Logger
     SharedEnums

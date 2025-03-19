@@ -86,7 +86,7 @@ add_subdirectory(../../../FatedQuest.Libraries/SharedEnums SharedEnums)
 add_subdirectory(../../../FatedQuest.Libraries/StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(ProductsPackager PUBLIC
+target_link_libraries(ProductsPackager PRIVATE
     BinaryOperations
     GamePackage
     Logger

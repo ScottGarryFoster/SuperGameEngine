@@ -93,7 +93,7 @@ add_subdirectory(../StoredDocument StoredDocument)
 add_subdirectory(../XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(XmlDocumentTests PUBLIC
+target_link_libraries(XmlDocumentTests PRIVATE
     Logger
     SharedEnums
     StandardOperations

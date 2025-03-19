@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/DocumentUniversalObjectData.h"
 
 namespace SuperGameEngine
 {
@@ -9,47 +10,17 @@ namespace SuperGameEngine
     /// is contextual setup such as how to split a texture or how to use a
     /// piece of music.
     /// </summary>
-    class GameAsset
+    class GameAsset : public FatedQuestLibraries::DocumentUniversalObjectData
     {
     public:
+        // To inherit constructor.
+        using FatedQuestLibraries::DocumentUniversalObjectData::DocumentUniversalObjectData;
+
         /// <summary>
         /// The name of the asset.
         /// </summary>
         /// <returns>The name to display for tooling. </returns>
         /// <remarks>This can be used in games but should be avoided. </remarks>
         virtual std::string GetName() const = 0;
-
-    protected:
-        // This should contain the raw data loaded from file to give to
-        // the derivative types.
-
-        /// <summary>
-        /// Get a loaded string value.
-        /// Will return empty if nothing found.
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>The value found or empty if nothing. </returns>
-        virtual std::string GetString(const std::string& key) = 0;
-
-        /// <summary>
-        /// True when a key is loaded.
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>True when a key is loaded. </returns>
-        virtual bool IsStringLoaded(const std::string& key) = 0;
-
-        /// <summary>
-        /// Get a loaded int value.
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>The value found or -1 if nothing. </returns>
-        virtual int GetInt(const std::string& key) = 0;
-
-        /// <summary>
-        /// True when a key is loaded. 
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>True when a key is loaded. </returns>
-        virtual bool IsIntLoaded(const std::string& key) = 0;
     };
 }

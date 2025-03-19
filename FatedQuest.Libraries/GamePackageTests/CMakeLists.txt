@@ -93,7 +93,7 @@ add_subdirectory(../StandardOperations StandardOperations)
 add_subdirectory(../StandardObjects StandardObjects)
 
 # Link dependencies
-target_link_libraries(GamePackageTests PUBLIC
+target_link_libraries(GamePackageTests PRIVATE
     Logger
     GamePackage
     StandardOperations

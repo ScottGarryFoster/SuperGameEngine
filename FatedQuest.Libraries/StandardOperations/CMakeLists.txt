@@ -79,6 +79,6 @@ endforeach()
 add_subdirectory(../Logger Logger)
 
 # Link dependencies
-target_link_libraries(StandardOperations PUBLIC
+target_link_libraries(StandardOperations PRIVATE
     Logger
 )

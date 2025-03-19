@@ -90,7 +90,7 @@ add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(StandardOperationsTests PUBLIC
+target_link_libraries(StandardOperationsTests PRIVATE
     Logger
     SharedEnums
     StandardOperations

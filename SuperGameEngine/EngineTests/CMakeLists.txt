@@ -96,7 +96,7 @@ add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 add_subdirectory(../Engine Engine)
 
 # Link dependencies
-target_link_libraries(EngineTests PUBLIC
+target_link_libraries(EngineTests PRIVATE
     Logger
     Observer
     SharedEnums

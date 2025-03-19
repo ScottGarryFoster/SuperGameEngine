@@ -88,7 +88,7 @@ add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperation
 add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(Input PUBLIC
+target_link_libraries(Input PRIVATE
     GamePackage
     Logger
     Observer

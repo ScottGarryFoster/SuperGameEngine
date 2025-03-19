@@ -81,7 +81,7 @@ add_subdirectory(../../../../FatedQuest.Libraries/StoredDocument StoredDocument)
 add_subdirectory(../../../../FatedQuest.Libraries/XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(SuperEnumGenerator
+target_link_libraries(SuperEnumGenerator PRIVATE
     Logger
     Observer
     StandardObjects

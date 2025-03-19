@@ -85,7 +85,7 @@ add_subdirectory(../StandardOperations StandardOperations)
 add_subdirectory(../BinaryOperations BinaryOperations)
 
 # Link dependencies
-target_link_libraries(GamePackage PUBLIC
+target_link_libraries(GamePackage PRIVATE
     Logger
     StandardOperations
     BinaryOperations

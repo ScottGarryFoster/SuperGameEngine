@@ -89,13 +89,15 @@ add_subdirectory(../Logger Logger)
 add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../StandardOperations StandardOperations)
 add_subdirectory(../StandardObjects StandardObjects)
+add_subdirectory(../StoredDocument StoredDocument)
 
 # Link dependencies
-target_link_libraries(StandardObjectsTests PUBLIC
+target_link_libraries(StandardObjectsTests PRIVATE
     Logger
     SharedEnums
     StandardOperations
     StandardObjects
+    StoredDocument
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )

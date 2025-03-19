@@ -97,7 +97,7 @@ add_subdirectory(../Engine Engine)
 add_subdirectory(../Tools Tools)
 
 # Link dependencies
-target_link_libraries(ToolsTests PUBLIC
+target_link_libraries(ToolsTests PRIVATE
     GamePackage
     Logger
     Observer

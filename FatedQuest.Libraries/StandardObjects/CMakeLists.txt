@@ -77,8 +77,10 @@ endforeach()
 
 # Link libraries
 add_subdirectory(../StandardOperations StandardOperations)
+add_subdirectory(../StoredDocument StoredDocument)
 
 # Link dependencies
-target_link_libraries(StandardObjects PUBLIC
+target_link_libraries(StandardObjects PRIVATE
     StandardOperations
+    StoredDocument
 )

@@ -85,7 +85,7 @@ add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../StoredDocument StoredDocument)
 
 # Link dependencies
-target_link_libraries(XmlDocument PUBLIC
+target_link_libraries(XmlDocument PRIVATE
     StandardOperations
     Logger
     SharedEnums

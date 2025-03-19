@@ -73,7 +73,7 @@ add_subdirectory(../SuperEnumGenerator SuperEnumGenerator)
 add_subdirectory(../../../../FatedQuest.Libraries/SharedEnums SharedEnums)
 
 # Link dependencies
-target_link_libraries(SuperGenerator
+target_link_libraries(SuperGenerator PRIVATE
     SuperEnumGenerator
     SharedEnums
 )

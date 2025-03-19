@@ -94,7 +94,7 @@ add_subdirectory(../Engine Engine)
 add_subdirectory(../Input Input)
 
 # Link dependencies
-target_link_libraries(InputTests PUBLIC
+target_link_libraries(InputTests PRIVATE
     Logger
     Observer
     StoredDocument
