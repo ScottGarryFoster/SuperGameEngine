@@ -3,6 +3,7 @@
 
 #include "GameAsset.h"
 #include "../../FatedQuestReferences.h"
+#include "../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/DocumentUniversalObjectData.h"
 
 namespace FatedQuestLibraries
 {
@@ -17,7 +18,7 @@ namespace SuperGameEngine
     /// is contextual setup such as how to split a texture or how to use a
     /// piece of music.
     /// </summary>
-    class SuperGameAsset : public GameAsset
+    class SuperGameAsset : public GameAsset, public FatedQuestLibraries::DocumentUniversalObjectData
     {
     public:
         /// <summary>

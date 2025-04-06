@@ -3,7 +3,7 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
-SuperGameAsset::SuperGameAsset(const std::shared_ptr<StoredDocument>& universalObject) : GameAsset(universalObject)
+SuperGameAsset::SuperGameAsset(const std::shared_ptr<StoredDocument>& universalObject) : DocumentUniversalObjectData(universalObject)
 {
     m_name = DocumentUniversalObjectData::GetString("GameAssetName");
 }

@@ -3,8 +3,6 @@
 #include <memory>
 #include <gtest/gtest.h>
 
-#include "Structural/Assets/ExplicitTextGameAsset.h"
-
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 namespace SuperGameEngineTests_Structural_Assets
