@@ -25,9 +25,13 @@ namespace FatedLauncher
         private NotifyIcon trayIcon;
         private Timer menuCloseTimer;
 
+        private MenuManager menuManager;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.menuManager = new MenuManager();
 
             // Set up tray icon
             trayIcon = new NotifyIcon
@@ -41,15 +45,15 @@ namespace FatedLauncher
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    ShowLeftClickMenuAtCursor();
+                    this.menuManager.ShowMainMenu();
                 }
             };
 
             // Set up tray menu
-            this.menu = new ContextMenuStrip();
-            this.menu.Items.Add("Open Window", null, (s, e) => ShowWindow());
-            this.menu.Items.Add("Option A", null, (s, e) => ShowMessage("Option A"));
-            this.menu.Items.Add("Exit", null, (s, e) => ExitApp());
+            //this.menu = new ContextMenuStrip();
+            //this.menu.Items.Add("Open Window", null, (s, e) => ShowWindow());
+            //this.menu.Items.Add("Option A", null, (s, e) => ShowMessage("Option A"));
+            //this.menu.Items.Add("Exit", null, (s, e) => ExitApp());
 
             this.StateChanged += (s, e) =>
             {
@@ -83,42 +87,6 @@ namespace FatedLauncher
             trayIcon.Visible = false;
             trayIcon.Dispose();
             System.Windows.Application.Current.Shutdown();
-        }
-
-        private void ShowLeftClickMenuAtCursor()
-        {
-            var pos = System.Windows.Forms.Control.MousePosition;
-            this.menu.Show(pos);
-            StartMenuCloseWatcher();
-        }
-
-        private void StartMenuCloseWatcher()
-        {
-            if (menuCloseTimer == null)
-            {
-                menuCloseTimer = new Timer();
-                menuCloseTimer.Interval = 100;
-                menuCloseTimer.Tick += (s, e) =>
-                {
-                    if (!this.menu.Visible)
-                    {
-                        menuCloseTimer.Stop();
-                        return;
-                    }
-
-                    // If left mouse is clicked outside the menu
-                    if (System.Windows.Forms.Control.MouseButtons != MouseButtons.None)
-                    {
-                        var mousePos = System.Windows.Forms.Control.MousePosition;
-                        if (!this.menu.Bounds.Contains(mousePos))
-                        {
-                            this.menu.Close();
-                        }
-                    }
-                };
-            }
-
-            menuCloseTimer?.Start();
         }
     }
 }

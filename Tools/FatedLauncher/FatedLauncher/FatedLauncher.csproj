@@ -58,6 +58,13 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Launcher.cs" />
+    <Compile Include="MenuCreation\API\ISingleMenu.cs" />
+    <Compile Include="MenuCreation\MenuManager.cs" />
+    <Compile Include="MenuCreation\SingleMenu.cs" />
+    <Compile Include="MenuOption\API\MouseButtonType.cs" />
+    <Compile Include="MenuOption\API\MenuEventArguments.cs" />
+    <Compile Include="MenuOption\API\IMenuOption.cs" />
+    <Compile Include="MenuOption\TestMenuOption.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -88,6 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FatedQuest.Libraries\CSharpLibraries\FileHandling\FileHandling.csproj">
+      <Project>{1a500616-d300-4dbf-93fc-9e7f4fad5f27}</Project>
+      <Name>FileHandling</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
