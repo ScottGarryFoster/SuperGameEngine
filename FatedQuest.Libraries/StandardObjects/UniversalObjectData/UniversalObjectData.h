@@ -3,8 +3,6 @@
 
 namespace FatedQuestLibraries
 {
-    class StoredDocument;
-
     /// <summary>
     /// Stores basic data loaded from file.
     /// </summary>

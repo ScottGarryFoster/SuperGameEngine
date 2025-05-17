@@ -11,11 +11,7 @@ namespace SuperGameEngine
     class TextureAsset : public GameAsset
     {
     public:
-        /// <summary>
-        /// The name of the asset.
-        /// </summary>
-        /// <returns>The name to display for tooling. </returns>
-        /// <remarks>This can be used in games but should be avoided. </remarks>
+
     };
 }
 

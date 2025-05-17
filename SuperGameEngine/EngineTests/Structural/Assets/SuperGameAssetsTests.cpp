@@ -72,12 +72,31 @@ namespace SuperGameEngineTests_Structural_Assets
         stringElement->SetAttributes(attributes);
 
         // Give document to Asset. Using ExplicitTextGameAsset as this exposes the data.
-        std::shared_ptr<SuperGameAsset> testClass = std::make_shared<SuperGameAsset>(givenDocument);
+        std::shared_ptr<SuperGameAsset> testClass = std::make_shared<SuperGameAsset>(givenDocument, std::string());
 
         // Act
         std::string actual = testClass->GetName();
 
         // Assert
         ASSERT_EQ(givenValue, actual) << givenValue << " != " << actual;
+    }
+
+    TEST_F(SuperGameAssetsTests, GetPath_ReturnsGivenPath_WhenProvidedOnConstruction)
+    {
+        // Arrange
+        std::string givenPath = "Example\\Path\\texture.png";
+
+        // Document is not required.
+        // This may change and there amy be an exception in the future here.
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+
+        // Give document to Asset. Using ExplicitTextGameAsset as this exposes the data.
+        std::shared_ptr<SuperGameAsset> testClass = std::make_shared<SuperGameAsset>(givenDocument, givenPath);
+
+        // Act
+        std::string actual = testClass->GetPath();
+
+        // Assert
+        ASSERT_EQ(givenPath, actual) << givenPath << " != " << actual;
     }
 }
