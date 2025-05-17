@@ -47,24 +47,9 @@ namespace FatedLauncher
             this.menuStrip.MouseClick += OnMouseDown;
         }
 
-        private MouseButtonType Convert(MouseButtons mouseButtons)
-        {
-            MouseButtonType button = MouseButtonType.Left;
-            switch (mouseButtons)
-            {
-                case MouseButtons.Left: button = MouseButtonType.Left; break;
-                case MouseButtons.Right: button = MouseButtonType.Right; break;
-                case MouseButtons.Middle: button = MouseButtonType.Middle; break;
-                case MouseButtons.XButton1: button = MouseButtonType.Forward; break;
-                case MouseButtons.XButton2: button = MouseButtonType.Back; break;
-            }
-
-            return button;
-        }
-
         private void OnMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            this.listMouseButton = Convert(e.Button);
+            this.listMouseButton = e.Button.ToMouseButtonType();
         }
 
         /// <summary>
@@ -114,7 +99,7 @@ namespace FatedLauncher
                             Tuple<ToolStripItem, IMenuOption> selected = this.items.FirstOrDefault(x => x.Item1.Selected);
                             if(selected != null)
                             {
-                                selected.Item2.OnClick(new MenuEventArguments() { Button = Convert(System.Windows.Forms.Control.MouseButtons) });
+                                selected.Item2.OnClick(new MenuEventArguments() { Button = System.Windows.Forms.Control.MouseButtons.ToMouseButtonType() });
                                 this.menuStrip.Close();
                             }
                         }

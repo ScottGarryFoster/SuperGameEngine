@@ -58,12 +58,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Launcher.cs" />
+    <Compile Include="MenuCreation\API\IMenuPaths.cs" />
     <Compile Include="MenuCreation\API\ISingleMenu.cs" />
     <Compile Include="MenuCreation\MenuManager.cs" />
+    <Compile Include="MenuCreation\MenuPaths.cs" />
     <Compile Include="MenuCreation\SingleMenu.cs" />
     <Compile Include="MenuOption\API\MouseButtonType.cs" />
     <Compile Include="MenuOption\API\MenuEventArguments.cs" />
     <Compile Include="MenuOption\API\IMenuOption.cs" />
+    <Compile Include="MenuOption\API\MouseButtonTypeExtentions.cs" />
     <Compile Include="MenuOption\TestMenuOption.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
