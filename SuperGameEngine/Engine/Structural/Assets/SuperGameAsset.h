@@ -46,7 +46,7 @@ namespace SuperGameEngine
         /// <returns>The path to the loaded file. </returns>
         virtual std::string GetPath() const override;
 
-    protected:
+    /*protected:
         /// <summary>
         /// Get a loaded string value.
         /// Will return empty if nothing found.
@@ -86,7 +86,7 @@ namespace SuperGameEngine
         virtual bool IsIntLoaded(const std::string& key) override
         {
             return FatedQuestLibraries::DocumentUniversalObjectData::IsIntLoaded(key);
-        }
+        }*/
 
     private:
         /// <summary>

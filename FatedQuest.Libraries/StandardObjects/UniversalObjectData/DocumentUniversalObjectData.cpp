@@ -32,32 +32,32 @@ DocumentUniversalObjectData::DocumentUniversalObjectData(const std::shared_ptr<S
     }
 }
 
-std::string DocumentUniversalObjectData::GetString(const std::string& key)
+std::string DocumentUniversalObjectData::GetString(const std::string& key) const
 {
     if (IsStringLoaded(key))
     {
-        return m_stringValues[key];
+        return m_stringValues.at(key);
     }
 
     return {};
 }
 
-bool DocumentUniversalObjectData::IsStringLoaded(const std::string& key)
+bool DocumentUniversalObjectData::IsStringLoaded(const std::string& key) const
 {
     return m_stringValues.contains(key);
 }
 
-int DocumentUniversalObjectData::GetInt(const std::string& key)
+int DocumentUniversalObjectData::GetInt(const std::string& key) const
 {
     if (IsIntLoaded(key))
     {
-        return m_intValues[key];
+        return m_intValues.at(key);
     }
 
     return {};
 }
 
-bool DocumentUniversalObjectData::IsIntLoaded(const std::string& key)
+bool DocumentUniversalObjectData::IsIntLoaded(const std::string& key) const
 {
     return m_intValues.contains(key);
 }

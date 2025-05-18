@@ -9,7 +9,7 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/FileHandling/File.h"
 #include "../SuperEnumGenerator/GenerateEnum.h"
-#include "FileHandling/FilePaths.h"
+#include "../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
 
 using namespace SuperEnumGenerator;
 

@@ -28,28 +28,28 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>The value found or empty if nothing. </returns>
-        virtual std::string GetString(const std::string& key) override;
+        virtual std::string GetString(const std::string& key) const override;
 
         /// <summary>
         /// True when a key is loaded.
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
-        virtual bool IsStringLoaded(const std::string& key) override;
+        virtual bool IsStringLoaded(const std::string& key) const override;
 
         /// <summary>
         /// Get a loaded int value.
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>The value found or -1 if nothing. </returns>
-        virtual int GetInt(const std::string& key) override;
+        virtual int GetInt(const std::string& key) const override;
 
         /// <summary>
         /// True when a key is loaded. 
         /// </summary>
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
-        virtual bool IsIntLoaded(const std::string& key) override;
+        virtual bool IsIntLoaded(const std::string& key) const override;
 
     private:
         /// <summary>

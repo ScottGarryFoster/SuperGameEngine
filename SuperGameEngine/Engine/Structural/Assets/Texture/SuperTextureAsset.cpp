@@ -51,5 +51,11 @@ void SuperTextureAsset::Draw() const
 
 void SuperTextureAsset::Draw(int tile) const
 {
-
+    if (m_superTexture)
+    {
+        if (IsStringLoaded("TextureUVMethod"))
+        {
+            m_superTexture->Draw();
+        }
+    }
 }

@@ -1,0 +1,24 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        The method to split the UVs upon the texture.
+        This ensures we can define several methods which can be later be read in,
+        without defaulting to always using the in tool define method which would be
+        slower when loading say a large uniform tileset.
+    </EnumComment>
+    <EnumName Name="SplitUVMethod">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Predefined>
+            All tiles are predefined in the asset file.
+        </Predefined>
+        <UniformByPixel>
+            A width and height is defined across the entire image.
+            These are all the tiles.
+        </UniformByPixel>
+    </EnumName>
+</SuperEnum>
