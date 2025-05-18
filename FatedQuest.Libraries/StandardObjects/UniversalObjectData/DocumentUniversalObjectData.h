@@ -10,7 +10,7 @@ namespace FatedQuestLibraries
     /// <summary>
     /// A universal object which comes from a document.
     /// </summary>
-    class DocumentUniversalObjectData : public UniversalObjectData
+    class DocumentUniversalObjectData : public virtual UniversalObjectData
     {
     public:
         /// <summary>

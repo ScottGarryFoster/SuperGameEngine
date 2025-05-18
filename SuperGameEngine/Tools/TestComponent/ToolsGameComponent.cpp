@@ -1,6 +1,7 @@
 #include "ToolsGameComponent.h"
 
 #include "../../Engine/Engine/Content/ContentManager.h"
+#include "../../Engine/Engine/Graphics/Texture/SuperTexture.h"
 #include "../../Engine/Structural/Packages/ComponentLoadPackage.h"
 
 using namespace SuperGameEngine;

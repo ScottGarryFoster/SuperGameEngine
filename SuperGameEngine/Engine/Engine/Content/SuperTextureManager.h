@@ -2,6 +2,7 @@
 #include <unordered_map>
 
 #include "TextureManager.h"
+#include "../Graphics/Texture/SuperTexture.h"
 #include "../Graphics/Texture/SDLRendererReader.h"
 #include "../Graphics/Texture/SuperTextureWrapper.h"
 

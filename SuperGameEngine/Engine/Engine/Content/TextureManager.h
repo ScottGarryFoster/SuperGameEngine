@@ -1,8 +1,11 @@
 #pragma once
-#include "../Graphics/Texture/SuperTexture.h"
+#include <string>
+#include <memory>
 
 namespace SuperGameEngine
 {
+    class SuperTexture;
+
     /// <summary>
     /// Creates, stores and manages all textures in the engine.
     /// </summary>

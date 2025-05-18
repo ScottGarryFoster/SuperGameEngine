@@ -18,7 +18,7 @@ namespace SuperGameEngine
     /// is contextual setup such as how to split a texture or how to use a
     /// piece of music.
     /// </summary>
-    class SuperGameAsset : public GameAsset, public FatedQuestLibraries::DocumentUniversalObjectData
+    class SuperGameAsset : public virtual GameAsset, public FatedQuestLibraries::DocumentUniversalObjectData
     {
     public:
         /// <summary>

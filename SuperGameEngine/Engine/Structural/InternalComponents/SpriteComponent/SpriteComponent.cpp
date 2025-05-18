@@ -2,6 +2,7 @@
 
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../Packages/ComponentLoadPackage.h"
+#include "../../../Engine/Engine/Graphics/Texture/SuperTexture.h"
 
 using namespace SuperGameEngine;
 
