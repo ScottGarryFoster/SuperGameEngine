@@ -5,6 +5,7 @@
 
 namespace SuperGameEngine
 {
+    enum class SplitUVMethod : uint8_t;
     class TextureManager;
     class SuperTexture;
 
@@ -59,6 +60,11 @@ namespace SuperGameEngine
         /// The path for the asset we represent.
         /// </summary>
         std::string m_path;
+
+        /// <summary>
+        /// The method the UVs are split by and defined in the file.
+        /// </summary>
+        SplitUVMethod m_splitMethod;
     };
 }
 

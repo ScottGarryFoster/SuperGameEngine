@@ -193,6 +193,9 @@ namespace SuperGameEngineTests_Structural_Assets
 
         // Assert
         ASSERT_EQ(1, givenTexture->GetTheNumberOfTimesDrawn());
+        ASSERT_TRUE(false) << "ADD CONDITION BELOW";
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+
     }
 
 #pragma endregion

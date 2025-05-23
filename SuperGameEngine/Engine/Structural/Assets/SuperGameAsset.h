@@ -46,48 +46,6 @@ namespace SuperGameEngine
         /// <returns>The path to the loaded file. </returns>
         virtual std::string GetPath() const override;
 
-    /*protected:
-        /// <summary>
-        /// Get a loaded string value.
-        /// Will return empty if nothing found.
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>The value found or empty if nothing. </returns>
-        virtual std::string GetString(const std::string& key) override
-        {
-            return FatedQuestLibraries::DocumentUniversalObjectData::GetString(key);
-        }
-
-        /// <summary>
-        /// True when a key is loaded.
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>True when a key is loaded. </returns>
-        virtual bool IsStringLoaded(const std::string& key) override
-        {
-            return FatedQuestLibraries::DocumentUniversalObjectData::IsStringLoaded(key);
-        }
-
-        /// <summary>
-        /// Get a loaded int value.
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>The value found or -1 if nothing. </returns>
-        virtual int GetInt(const std::string& key) override
-        {
-            return FatedQuestLibraries::DocumentUniversalObjectData::GetInt(key);
-        }
-
-        /// <summary>
-        /// True when a key is loaded. 
-        /// </summary>
-        /// <param name="key">Key to search for. </param>
-        /// <returns>True when a key is loaded. </returns>
-        virtual bool IsIntLoaded(const std::string& key) override
-        {
-            return FatedQuestLibraries::DocumentUniversalObjectData::IsIntLoaded(key);
-        }*/
-
     private:
         /// <summary>
         /// The name of the asset.

@@ -121,6 +121,24 @@ namespace SuperGameEngineTests_Stubs
             return *m_timesDrawn;
         }
 
+        /// <summary>
+        /// If a draw call has occured, this is the rectangle upon the texture attempted.
+        /// </summary>
+        /// <returns>If a draw call has occured, this is the rectangle upon the texture attempted. </returns>
+        std::shared_ptr<SuperGameEngine::RectangleInt> LastDrawnTextureLocation()
+        {
+            return m_lastDrawnTexture;
+        }
+
+        /// <summary>
+        /// If a draw call has occured, this is the location and size which was used.
+        /// </summary>
+        /// <returns>If a draw call has occured, this is the location and size which was used.</returns>
+        std::shared_ptr<SuperGameEngine::RectangleInt> LastDrawnScrrenLocation()
+        {
+            return m_lastDrawnScreen;
+        }
+
     private:
         /// <summary>
         /// The last position on the texture drawn.

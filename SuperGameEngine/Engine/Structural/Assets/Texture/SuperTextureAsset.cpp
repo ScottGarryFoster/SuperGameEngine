@@ -2,6 +2,8 @@
 #include <Engine/Content/TextureManager.h>
 #include <Engine/Graphics/Texture/SuperTexture.h>
 
+#include "SplitUVMethod.h"
+
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
@@ -11,6 +13,8 @@ SuperTextureAsset::SuperTextureAsset(
     const std::weak_ptr<TextureManager>& textureManager)
     : SuperGameAsset(universalObject, path)
 {
+
+    m_splitMethod = SplitUVMethod::Unknown;
 
     m_path = File::Sanitize(path);
     if (m_path.empty())
@@ -39,6 +43,8 @@ SuperTextureAsset::SuperTextureAsset(
             "InvalidArgumentException");
         return;
     }
+
+
 }
 
 void SuperTextureAsset::Draw() const
