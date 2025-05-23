@@ -4,89 +4,103 @@
 namespace FatedQuestLibraries
 {
     class FPoint;
-    class FVector2F;
-    class FVector2I;
+    class FVector3D;
+    class FVector3I;
 
     /// <summary>
     /// A point or direction in space.
     /// </summary>
-    class FVector2D
+    class FVector3F
     {
     public:
         /// <summary>
         /// Default constructor.
         /// </summary>
-        FVector2D();
+        FVector3F();
 
         /// <summary>
         /// Create an FVector and give it some values.
         /// </summary>
         /// <param name="x">X location. </param>
         /// <param name="y">Y location. </param>
-        FVector2D(double x, double y);
+        /// <param name="z">Z location. </param>
+        FVector3F(float x, float y, float z);
 
         /// <summary>
         /// Use the public data of an FVector to create another one.
         /// </summary>
         /// <param name="other">Other FVector to use.</param>
-        FVector2D(const FVector2D& other);
+        FVector3F(const FVector3F& other);
 
         /// <summary>
         /// Use the public data of an FPoint to create another one.
         /// </summary>
         /// <param name="other">Other FPoint to use.</param>
-        FVector2D(const FPoint& other);
+        FVector3F(const FPoint& other);
 
         /// <summary>
-        /// Creates from a FVector2F.
+        /// Creates from a FVector3F.
         /// </summary>
-        /// <param name="other">FVector2F to create from. </param>
-        FVector2D(const FVector2F& other);
+        /// <param name="other">FVector3I to create from. </param>
+        FVector3F(const FVector3I& other);
 
         /// <summary>
-        /// Creates from a FVector2I.
+        /// Creates from a FVector3D.
         /// </summary>
-        /// <param name="other">FVector2I to create from. </param>
-        FVector2D(const FVector2I& other);
+        /// <param name="other">FVector3D to create from. </param>
+        FVector3F(const FVector3D& other);
 
-        virtual ~FVector2D();
+        virtual ~FVector3F();
 
         /// <summary>
         /// X coordinate.
         /// </summary>
         /// <returns>X coordinate. </returns>
-        [[nodiscard]] double GetX() const;
+        [[nodiscard]] float GetX() const;
 
         /// <summary>
         /// Y coordinate.
         /// </summary>
         /// <returns>Y coordinate. </returns>
-        [[nodiscard]] double GetY() const;
+        [[nodiscard]] float GetY() const;
+
+        /// <summary>
+        /// Z coordinate.
+        /// </summary>
+        /// <returns>Y coordinate. </returns>
+        [[nodiscard]] float GetZ() const;
 
         /// <summary>
         /// Sets the X Value.
         /// </summary>
         /// <param name="newValue">The new X value. </param>
-        virtual void SetX(double newValue);
+        virtual void SetX(float newValue);
 
         /// <summary>
         /// Sets the Y Value.
         /// </summary>
         /// <param name="newValue">The new Y value. </param>
-        virtual void SetY(double newValue);
+        virtual void SetY(float newValue);
+
+        /// <summary>
+        /// Sets the Z Value.
+        /// </summary>
+        /// <param name="newValue">The new Z value. </param>
+        virtual void SetZ(float newValue);
 
         /// <summary>
         /// Sets both the x and y values.
+        /// Z is untouched.
         /// </summary>
         /// <param name="x">New X value. </param>
         /// <param name="y">New Y value. </param>
-        virtual void SetXYValue(double x, double y);
+        virtual void SetXYValue(float x, float y);
 
         /// <summary>
         /// Sets the X and Y based upon the value of another Vector.
         /// </summary>
         /// <param name="other">Other vector to obtain the value from. </param>
-        virtual void SetXYValue(const FVector2D& other);
+        virtual void SetXYValue(const FVector3F& other);
 
         /// <summary>
         /// Sets the X and Y values based on the value in an FPoint.
@@ -95,60 +109,68 @@ namespace FatedQuestLibraries
         virtual void SetXYValue(const FPoint& other);
 
         /// <summary>
-        /// Adds two vectors together.
+        /// Sets both the x and y values.
         /// </summary>
-        /// <param name="other">Other vector to add. </param>
-        /// <returns>Result of addition. </returns>
-        FVector2D operator+(const FVector2D& other) const;
+        /// <param name="x">New X value. </param>
+        /// <param name="y">New Y value. </param>
+        /// <param name="z">New Z value. </param>
+        virtual void SetXYValue(float x, float y, float z);
 
         /// <summary>
         /// Adds two vectors together.
         /// </summary>
         /// <param name="other">Other vector to add. </param>
         /// <returns>Result of addition. </returns>
-        FVector2D& operator+=(const FVector2D& other);
+        FVector3F operator+(const FVector3F& other) const;
+
+        /// <summary>
+        /// Adds two vectors together.
+        /// </summary>
+        /// <param name="other">Other vector to add. </param>
+        /// <returns>Result of addition. </returns>
+        FVector3F& operator+=(const FVector3F& other);
 
         /// <summary>
         /// Subtracts two vectors from one another.
         /// </summary>
         /// <param name="other">Other vector to subtract. </param>
         /// <returns>Result of subtraction. </returns>
-        FVector2D operator-(const FVector2D& other) const;
+        FVector3F operator-(const FVector3F& other) const;
 
         /// <summary>
         /// Subtracts two vectors from one another.
         /// </summary>
         /// <param name="other">Other vector to subtract. </param>
         /// <returns>Result of subtraction. </returns>
-        FVector2D& operator-=(const FVector2D& other);
+        FVector3F& operator-=(const FVector3F& other);
 
         /// <summary>
         /// Multiplies the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to multiply by. </param>
         /// <returns>Vector multiplied. </returns>
-        FVector2D operator*(double scalar) const;
+        FVector3F operator*(float scalar) const;
 
         /// <summary>
         /// Multiplies the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to multiply by. </param>
         /// <returns>Vector multiplied. </returns>
-        FVector2D& operator*=(double scalar);
+        FVector3F& operator*=(float scalar);
 
         /// <summary>
         /// Divides the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to divide by. </param>
         /// <returns>Vector divided. </returns>
-        FVector2D operator/(double scalar) const;
+        FVector3F operator/(float scalar) const;
 
         /// <summary>
         /// Divides the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to divide by. </param>
         /// <returns>Vector divided. </returns>
-        FVector2D& operator/=(double scalar);
+        FVector3F& operator/=(float scalar);
 
         /// <summary>
         /// Returns true if two vectors are approximately equal.
@@ -158,51 +180,56 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="other">Other vector to test against. </param>
         /// <returns>True means equal. </returns>
-        bool operator==(const FVector2D& other) const;
+        bool operator==(const FVector3F& other) const;
 
         /// <summary>
         /// A unit vector version of the current vector.
         /// A unit vector retains the direction of the original.
         /// </summary>
         /// <returns>The normalized vector (unit vector). </returns>
-        [[nodiscard]] FVector2D Normalize() const;
+        [[nodiscard]] FVector3F Normalize() const;
 
         /// <summary>
         /// The length of this vector.
         /// </summary>
         /// <returns>The magnitude of the vector. </returns>
-        [[nodiscard]] double Magnitude() const;
+        [[nodiscard]] float Magnitude() const;
 
         /// <summary>
         /// The dot product between two vectors.
         /// </summary>
         /// <param name="other">Other vector to find the dot product. </param>
         /// <returns>The dot product. </returns>
-        [[nodiscard]] double DotProduct(const FVector2D& other) const;
+        [[nodiscard]] float DotProduct(const FVector3F& other) const;
 
         /// <summary>
         /// Calculates the distance between two points.
         /// </summary>
         /// <param name="other">Other point to calculate between. </param>
         /// <returns>The distance between the two points. </returns>
-        [[nodiscard]] double DistanceBetween(const FVector2D& other) const;
+        [[nodiscard]] float DistanceBetween(const FVector3F& other) const;
 
         /// <summary>
         /// Prints the Point value.
         /// </summary>
         /// <returns>A string version of the point. </returns>
-        [[nodiscard]] const std::string Print() const;
+        [[nodiscard]] std::string Print() const;
 
     private:
 
         /// <summary>
         /// X coordinate.
         /// </summary>
-        double m_x;
+        float m_x;
 
         /// <summary>
         /// Y coordinate.
         /// </summary>
-        double m_y;
+        float m_y;
+
+        /// <summary>
+        /// Z coordinate.
+        /// </summary>
+        float m_z;
     };
 }

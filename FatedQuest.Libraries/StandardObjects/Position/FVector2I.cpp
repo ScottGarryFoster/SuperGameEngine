@@ -1,57 +1,71 @@
-#include "FVector2Int.h"
+#include "FVector2I.h"
 
 #include "FVector2D.h"
+#include "FVector2I.h"
+#include "FVector2F.h"
 #include "FPoint.h"
 #include "../../StandardOperations/AllReferences.h"
 #include <cmath>
 
 using namespace FatedQuestLibraries;
 
-FVector2Int::FVector2Int()
+FVector2I::FVector2I()
 {
     m_x = 0;
     m_y = 0;
 }
 
-FVector2Int::FVector2Int(int x, int y)
+FVector2I::FVector2I(int x, int y)
 {
     m_x = x;
     m_y = y;
 }
 
-FVector2Int::FVector2Int(const FVector2Int& other)
-    : FVector2Int(other.GetX(), other.GetY())
+FVector2I::FVector2I(const FVector2I& other)
+    : FVector2I(other.GetX(), other.GetY())
 {
 }
 
-FVector2Int::FVector2Int(const FPoint& other)
-    : FVector2Int(other.GetX(), other.GetY())
+FVector2I::FVector2I(const FPoint& other)
+    : FVector2I(other.GetX(), other.GetY())
 {
 }
 
-FVector2Int::~FVector2Int() = default;
+FVector2I::FVector2I(const FVector2F& other)
+{
+    m_x = static_cast<int>(other.GetX());
+    m_y = static_cast<int>(other.GetY());
+}
 
-int FVector2Int::GetX() const
+FVector2I::FVector2I(const FVector2D& other)
+{
+    m_x = static_cast<int>(other.GetX());
+    m_y = static_cast<int>(other.GetY());
+}
+
+FVector2I::~FVector2I() = default;
+
+int FVector2I::GetX() const
 {
     return m_x;
 }
 
-int FVector2Int::GetY() const
+int FVector2I::GetY() const
 {
     return m_y;
 }
 
-void FVector2Int::SetX(int newValue)
+void FVector2I::SetX(int newValue)
 {
     m_x = newValue;
 }
 
-void FVector2Int::SetY(int newValue)
+void FVector2I::SetY(int newValue)
 {
     m_y = newValue;
 }
 
-void FVector2Int::SetXYValue(int x, int y)
+void FVector2I::SetXYValue(int x, int y)
 {
     if (x != m_x || y != m_y)
     {
@@ -60,72 +74,72 @@ void FVector2Int::SetXYValue(int x, int y)
     }
 }
 
-void FVector2Int::SetXYValue(const FVector2Int& other)
+void FVector2I::SetXYValue(const FVector2I& other)
 {
     SetXYValue(other.GetX(), other.GetY());
 }
 
-void FVector2Int::SetXYValue(const FPoint& other)
+void FVector2I::SetXYValue(const FPoint& other)
 {
     SetXYValue(other.GetX(), other.GetY());
 }
 
-FVector2Int FVector2Int::operator+(const FVector2Int& other) const
+FVector2I FVector2I::operator+(const FVector2I& other) const
 {
     return { m_x + other.GetX(), m_y + other.GetY() };
 }
 
-FVector2Int& FVector2Int::operator+=(const FVector2Int& other)
+FVector2I& FVector2I::operator+=(const FVector2I& other)
 {
     m_x += other.m_x;
     m_y += other.m_y;
     return *this;
 }
 
-FVector2Int FVector2Int::operator-(const FVector2Int& other) const
+FVector2I FVector2I::operator-(const FVector2I& other) const
 {
     return { m_x - other.m_x, m_y - other.m_y };
 }
 
-FVector2Int& FVector2Int::operator-=(const FVector2Int& other)
+FVector2I& FVector2I::operator-=(const FVector2I& other)
 {
     m_x -= other.m_x;
     m_y -= other.m_y;
     return *this;
 }
 
-FVector2Int FVector2Int::operator*(int scalar) const
+FVector2I FVector2I::operator*(int scalar) const
 {
     return { m_x * scalar, m_y * scalar };
 }
 
-FVector2Int& FVector2Int::operator*=(int scalar)
+FVector2I& FVector2I::operator*=(int scalar)
 {
     m_x *= scalar;
     m_y *= scalar;
     return *this;
 }
 
-FVector2Int FVector2Int::operator/(int scalar) const
+FVector2I FVector2I::operator/(int scalar) const
 {
     return { m_x / scalar, m_y / scalar };
 }
 
-FVector2Int& FVector2Int::operator/=(int scalar)
+FVector2I& FVector2I::operator/=(int scalar)
 {
     m_x /= scalar;
     m_y /= scalar;
     return *this;
 }
 
-bool FVector2Int::operator==(const FVector2Int& other) const
+bool FVector2I::operator==(const FVector2I& other) const
 {
     return
         GetX() == other.GetX() &&
         GetY() == other.GetY();
 }
 
-FVector2Int FVector2Int::Normalize() const
+FVector2I FVector2I::Normalize() const
 {
     int magnitude = static_cast<int>(Magnitude());
     if (magnitude != 0)
@@ -138,7 +152,7 @@ FVector2Int FVector2Int::Normalize() const
     }
 }
 
-float FVector2Int::Magnitude() const
+float FVector2I::Magnitude() const
 {
     // We should add Inverse Square Root version
     // Using Newton's approximation method here
@@ -148,18 +162,18 @@ float FVector2Int::Magnitude() const
     return static_cast<float>(std::sqrt(m_x * m_x + m_y * m_y));
 }
 
-int FVector2Int::DotProduct(const FVector2Int& other) const
+int FVector2I::DotProduct(const FVector2I& other) const
 {
     return m_x * other.m_x + m_y * other.m_y;
 }
 
-float FVector2Int::DistanceBetween(const FVector2Int& other) const
+float FVector2I::DistanceBetween(const FVector2I& other) const
 {
     return (float)std::sqrt(static_cast<float>(std::pow(other.m_x - m_x, 2))
         + static_cast<float>(std::pow(other.m_y - m_y, 2)));
 }
 
-std::string FVector2Int::Print() const
+std::string FVector2I::Print() const
 {
     std::stringstream ss;
     ss << "X: " << std::to_string(m_x) << " Y: " << std::to_string(m_y);
