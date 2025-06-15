@@ -185,7 +185,7 @@ float FVector3I::Magnitude() const
     // Square Root is not exactly performant and we
     // likely do not need an exact value.
     // TODO: [#32] Change Magnitude which does not use Square Root
-    return std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+    return static_cast<float>(std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z));
 }
 
 int FVector3I::DotProduct(const FVector3I& other) const

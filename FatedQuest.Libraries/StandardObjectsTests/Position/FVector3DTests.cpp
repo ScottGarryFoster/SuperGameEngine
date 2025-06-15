@@ -705,7 +705,8 @@ namespace StandardObjectsTests
 
         // This should be fine to compare.
         // If flaky use the double helper compare.
-        ASSERT_EQ(expected, actual);
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expected, actual))
+            << "expected: " << expected << " actual: " << actual;
     }
 
 #pragma endregion
