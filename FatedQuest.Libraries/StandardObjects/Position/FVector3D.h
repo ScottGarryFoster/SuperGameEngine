@@ -67,7 +67,7 @@ namespace FatedQuestLibraries
         /// <summary>
         /// Z coordinate.
         /// </summary>
-        /// <returns>Y coordinate. </returns>
+        /// <returns>Z coordinate. </returns>
         [[nodiscard]] double GetZ() const;
 
         /// <summary>
@@ -109,12 +109,12 @@ namespace FatedQuestLibraries
         virtual void SetXYValue(const FPoint& other);
 
         /// <summary>
-        /// Sets both the x and y values.
+        /// Sets the x y z values.
         /// </summary>
         /// <param name="x">New X value. </param>
         /// <param name="y">New Y value. </param>
         /// <param name="z">New Z value. </param>
-        virtual void SetXYValue(double x, double y, double z);
+        virtual void SetXYZValue(double x, double y, double z);
 
         /// <summary>
         /// Adds two vectors together.

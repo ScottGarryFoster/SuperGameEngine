@@ -86,7 +86,7 @@ void FVector3D::SetXYValue(double x, double y)
     }
 }
 
-void FVector3D::SetXYValue(double x, double y, double z)
+void FVector3D::SetXYZValue(double x, double y, double z)
 {
     if (x != m_x || y != m_y || z != m_z)
     {

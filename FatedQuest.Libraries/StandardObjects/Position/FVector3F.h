@@ -109,12 +109,12 @@ namespace FatedQuestLibraries
         virtual void SetXYValue(const FPoint& other);
 
         /// <summary>
-        /// Sets both the x and y values.
+        /// Sets the x y z values.
         /// </summary>
         /// <param name="x">New X value. </param>
         /// <param name="y">New Y value. </param>
         /// <param name="z">New Z value. </param>
-        virtual void SetXYValue(float x, float y, float z);
+        virtual void SetXYZValue(float x, float y, float z);
 
         /// <summary>
         /// Adds two vectors together.
