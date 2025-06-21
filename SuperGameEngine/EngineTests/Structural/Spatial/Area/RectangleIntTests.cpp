@@ -106,6 +106,30 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         ASSERT_EQ(givenWidthHeight, m_testRectangle->GetHeight());
     }
 
+    TEST_F(RectangleIntTests, OnContruction_ReturnsLocationAndSize_WhenGivenVector4I)
+    {
+        FVector4I given = FVector4I(1, 2, 3, 4);
+
+        m_testRectangle = std::make_shared<RectangleInt>(given);
+
+        ASSERT_EQ(given.GetX(), m_testRectangle->GetLeft());
+        ASSERT_EQ(given.GetY(), m_testRectangle->GetTop());
+        ASSERT_EQ(given.GetZ(), m_testRectangle->GetWidth());
+        ASSERT_EQ(given.GetW(), m_testRectangle->GetHeight());
+    }
+
+    TEST_F(RectangleIntTests, OnContruction_ReturnsLocationAndSize_WhenGivenVector4IPointer)
+    {
+        auto given = std::make_shared<FVector4I>(1, 2, 3, 4);
+
+        m_testRectangle = std::make_shared<RectangleInt>(given);
+
+        ASSERT_EQ(given->GetX(), m_testRectangle->GetLeft());
+        ASSERT_EQ(given->GetY(), m_testRectangle->GetTop());
+        ASSERT_EQ(given->GetZ(), m_testRectangle->GetWidth());
+        ASSERT_EQ(given->GetW(), m_testRectangle->GetHeight());
+    }
+
 #pragma endregion
 
 #pragma region SetAndGet

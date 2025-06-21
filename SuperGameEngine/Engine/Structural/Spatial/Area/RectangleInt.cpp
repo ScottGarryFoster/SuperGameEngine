@@ -9,14 +9,28 @@ RectangleInt::RectangleInt(int x, int y, int width, int height)
 {
     m_location = FPoint(x, y);
     m_size = FPoint(width, height);
-    m_center = FVector2D(x + width / 2.0f, y + height / 2.0f);
+    m_center = FVector2D(x + (width / 2.0f), y + (height / 2.0f));
 }
 
 RectangleInt::RectangleInt(int xy, int widthHeight)
 {
     m_location = FPoint(xy, xy);
     m_size = FPoint(widthHeight, widthHeight);
-    m_center = FVector2D(xy + widthHeight / 2.0f, xy + widthHeight / 2.0f);
+    m_center = FVector2D(xy + (widthHeight / 2.0f), xy + (widthHeight / 2.0f));
+}
+
+RectangleInt::RectangleInt(const FVector4I& other)
+{
+    m_location = FPoint(other.GetX(), other.GetY());
+    m_size = FPoint(other.GetZ(), other.GetW());
+    m_center = FVector2D(other.GetX() + (other.GetZ() / 2.0f), other.GetY() + (other.GetW() / 2.0f));
+}
+
+RectangleInt::RectangleInt(const std::shared_ptr<FVector4I>& other)
+{
+    m_location = FPoint(other->GetX(), other->GetY());
+    m_size = FPoint(other->GetZ(), other->GetW());
+    m_center = FVector2D(other->GetX() + (other->GetZ() / 2.0f), other->GetY() + (other->GetW() / 2.0f));
 }
 
 bool RectangleInt::operator==(const RectangleInt& other) const

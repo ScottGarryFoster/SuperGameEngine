@@ -28,6 +28,18 @@ namespace SuperGameEngine
         RectangleInt(int xy, int widthHeight);
 
         /// <summary>
+        /// Create from a Vector.
+        /// </summary>
+        /// <param name="other">Other vector to create from.</param>
+        RectangleInt(const FVector4I& other);
+
+        /// <summary>
+        /// Create from a Vector.
+        /// </summary>
+        /// <param name="other">Other vector to create from.</param>
+        RectangleInt(const std::shared_ptr<FVector4I>& other);
+
+        /// <summary>
         /// Does this shape equal the other functionally.
         /// </summary>
         /// <param name="other">Other shape to compare to. </param>
