@@ -7,6 +7,9 @@
 #include "Position/FVector3F.h"
 #include "Position/FVector3D.h"
 #include "Position/FVector3I.h"
+#include "Position/FVector4F.h"
+#include "Position/FVector4D.h"
+#include "Position/FVector4I.h"
 
 #include "Object/GUID/GUID.h"
 #include "Object/GUID/GUIDHelpers.h"
