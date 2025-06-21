@@ -51,6 +51,21 @@ namespace FatedQuestLibraries
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsIntLoaded(const std::string& key) const override;
 
+
+        /// <summary>
+        /// Get a loaded Vector4I value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>The value found or empty if not found. </returns>
+        virtual std::shared_ptr<FVector4I> GetVector4I(const std::string& key) const override;
+
+        /// <summary>
+        /// True when a key is loaded. 
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True when a key is loaded. </returns>
+        virtual bool IsVector4ILoaded(const std::string& key) const override;
+
     private:
         /// <summary>
         /// Loaded string values from file.
@@ -62,10 +77,18 @@ namespace FatedQuestLibraries
         /// </summary>
         std::unordered_map<std::string, int> m_intValues;
 
+        /// <summary>
+        /// Loaded FVector4I values from file.
+        /// </summary>
+        std::unordered_map<std::string, std::shared_ptr<FVector4I>> m_vector4IValues;
+
         void ParseStoredDocumentStrings(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringsNode);
         void ParseStoredDocumentSingleString(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringNode);
         void ParseStoredDocumentInts(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intsNode);
         void ParseStoredDocumentSingleInt(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intNode);
+
+        void ParseStoredDocumentVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node);
+        void ParseStoredDocumentSingleVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node);
     };
 
 }

@@ -1,8 +1,11 @@
 #pragma once
+#include <memory>
 #include <string>
 
 namespace FatedQuestLibraries
 {
+    class FVector4I;
+
     /// <summary>
     /// Stores basic data loaded from file.
     /// </summary>
@@ -37,5 +40,19 @@ namespace FatedQuestLibraries
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsIntLoaded(const std::string& key) const = 0;
+
+        /// <summary>
+        /// Get a loaded Vector4I value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>The value found or empty if not found. </returns>
+        virtual std::shared_ptr<FVector4I> GetVector4I(const std::string& key) const = 0;
+
+        /// <summary>
+        /// True when a key is loaded. 
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True when a key is loaded. </returns>
+        virtual bool IsVector4ILoaded(const std::string& key) const = 0;
     };
 }

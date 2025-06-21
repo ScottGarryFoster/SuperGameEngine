@@ -3,6 +3,7 @@
 #include "../Logger/Logger/Log.h"
 #include "../StandardOperations/Number/IntHelpers.h"
 #include "../StandardOperations/Text/StringHelpers.h"
+#include "../Position/FVector4I.h"
 
 using namespace FatedQuestLibraries;
 
@@ -10,6 +11,7 @@ DocumentUniversalObjectData::DocumentUniversalObjectData(const std::shared_ptr<S
 {
     m_stringValues = {};
     m_intValues = {};
+    m_vector4IValues = {};
 
     std::shared_ptr<StoredDocumentNode> root = metaDataDocument->GetRoot();
     if (!root)
@@ -28,6 +30,10 @@ DocumentUniversalObjectData::DocumentUniversalObjectData(const std::shared_ptr<S
         else if (nodeName == "ints")
         {
             ParseStoredDocumentInts(child);
+        }
+        else if (nodeName == "vector4is")
+        {
+            ParseStoredDocumentVector4I(child);
         }
     }
 }
@@ -60,6 +66,21 @@ int DocumentUniversalObjectData::GetInt(const std::string& key) const
 bool DocumentUniversalObjectData::IsIntLoaded(const std::string& key) const
 {
     return m_intValues.contains(key);
+}
+
+std::shared_ptr<FVector4I> DocumentUniversalObjectData::GetVector4I(const std::string& key) const
+{
+    if (IsVector4ILoaded(key))
+    {
+        return m_vector4IValues.at(key);
+    }
+
+    return {};
+}
+
+bool DocumentUniversalObjectData::IsVector4ILoaded(const std::string& key) const
+{
+    return m_vector4IValues.contains(key);
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentStrings(
@@ -163,5 +184,112 @@ void DocumentUniversalObjectData::ParseStoredDocumentSingleInt(
     if (!newKey.empty() && foundValue)
     {
         m_intValues.insert_or_assign(newKey, newValue);
+    }
+}
+
+void DocumentUniversalObjectData::ParseStoredDocumentVector4I(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node)
+{
+    for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string nodeName = StringHelpers::ToLower(child->Name());
+        if (nodeName == "vector4i")
+        {
+            ParseStoredDocumentSingleVector4I(child);
+        }
+        else
+        {
+            Log::Error("When parsing a game asset file, found a string not called \"Vector4i\", potential file corruption.",
+                "SuperGameAsset::ParseStoredDocumentVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>)");
+        }
+    }
+}
+
+void DocumentUniversalObjectData::ParseStoredDocumentSingleVector4I(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node)
+{
+    std::string newKey = {};
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("key", CaseSensitivity::IgnoreCase))
+    {
+        std::string key = StringHelpers::Trim(attribute->Value());
+        if (!key.empty())
+        {
+            newKey = key;
+        }
+    }
+
+    int xValue = -1;
+    bool foundValueX = false;
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("x", CaseSensitivity::IgnoreCase))
+    {
+        std::string value = StringHelpers::Trim(attribute->Value());
+        if (!value.empty())
+        {
+            int outValue = -1;
+            if (IntHelpers::TryParse(value, outValue))
+            {
+                xValue = outValue;
+                foundValueX = true;
+            }
+        }
+    }
+
+    int yValue = -1;
+    bool foundValueY = false;
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("y", CaseSensitivity::IgnoreCase))
+    {
+        std::string value = StringHelpers::Trim(attribute->Value());
+        if (!value.empty())
+        {
+            int outValue = -1;
+            if (IntHelpers::TryParse(value, outValue))
+            {
+                yValue = outValue;
+                foundValueY = true;
+            }
+        }
+    }
+
+    int zValue = -1;
+    bool foundValueZ = false;
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("z", CaseSensitivity::IgnoreCase))
+    {
+        std::string value = StringHelpers::Trim(attribute->Value());
+        if (!value.empty())
+        {
+            int outValue = -1;
+            if (IntHelpers::TryParse(value, outValue))
+            {
+                zValue = outValue;
+                foundValueZ = true;
+            }
+        }
+    }
+
+    int wValue = -1;
+    bool foundValueW = false;
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("w", CaseSensitivity::IgnoreCase))
+    {
+        std::string value = StringHelpers::Trim(attribute->Value());
+        if (!value.empty())
+        {
+            int outValue = -1;
+            if (IntHelpers::TryParse(value, outValue))
+            {
+                wValue = outValue;
+                foundValueW = true;
+            }
+        }
+    }
+
+    if (!newKey.empty() && foundValueX && foundValueY && foundValueZ && foundValueW)
+    {
+        auto newVector = std::make_shared<FVector4I>(xValue, yValue, zValue, wValue);
+        m_vector4IValues.insert_or_assign(newKey, newVector);
     }
 }

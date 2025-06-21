@@ -26,3 +26,13 @@ bool ExplicitUniversalObjectData::IsIntLoaded(const std::string& key) const
 {
     return DocumentUniversalObjectData::IsIntLoaded(key);
 }
+
+std::shared_ptr<FVector4I> ExplicitUniversalObjectData::GetVector4I(const std::string& key) const
+{
+    return DocumentUniversalObjectData::GetVector4I(key);
+}
+
+bool ExplicitUniversalObjectData::IsVector4ILoaded(const std::string& key) const
+{
+    return DocumentUniversalObjectData::IsVector4ILoaded(key);
+}

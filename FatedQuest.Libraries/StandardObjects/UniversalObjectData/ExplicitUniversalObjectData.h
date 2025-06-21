@@ -39,6 +39,20 @@ namespace FatedQuestLibraries
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsIntLoaded(const std::string& key) const override;
+
+        /// <summary>
+        /// Get a loaded Vector4I value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>The value found or empty if not found. </returns>
+        virtual std::shared_ptr<FVector4I> GetVector4I(const std::string& key) const override;
+
+        /// <summary>
+        /// True when a key is loaded. 
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True when a key is loaded. </returns>
+        virtual bool IsVector4ILoaded(const std::string& key) const override;
     };
 }
 

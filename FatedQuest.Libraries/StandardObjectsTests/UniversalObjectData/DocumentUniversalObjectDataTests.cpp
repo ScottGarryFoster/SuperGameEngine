@@ -4,6 +4,8 @@
 #include <memory>
 #include <gtest/gtest.h>
 
+#include "Position/FVector4I.h"
+
 using namespace FatedQuestLibraries;
 namespace StandardObjectsTests
 {
@@ -171,7 +173,8 @@ namespace StandardObjectsTests
         ASSERT_EQ(givenValue2, actual2) << givenValue2 << " != " << actual2;
     }
 
-    TEST_F(DocumentUniversalObjectDataTests, GetInt_ReturnsStringValue_WhenProvidedInIntList)
+#pragma region Int
+    TEST_F(DocumentUniversalObjectDataTests, GetInt_ReturnsIntValue_WhenProvidedInIntList)
     {
         // Arrange
         std::string givenKey = "myKey";
@@ -249,7 +252,7 @@ namespace StandardObjectsTests
         ASSERT_TRUE(actual);
     }
 
-    TEST_F(DocumentUniversalObjectDataTests, GetInt_ReturnsAllStrings_WhenProvidedMultipleInIntList)
+    TEST_F(DocumentUniversalObjectDataTests, GetInt_ReturnsAllInts_WhenProvidedMultipleInIntList)
     {
         // Arrange
         std::string givenKey = "myKey";
@@ -299,4 +302,160 @@ namespace StandardObjectsTests
         ASSERT_EQ(givenValue, actual) << givenValue << " != " << actual;
         ASSERT_EQ(givenValue2, actual2) << givenValue2 << " != " << actual2;
     }
+
+#pragma endregion
+
+#pragma region Vector4I
+    TEST_F(DocumentUniversalObjectDataTests, GetVector4I_ReturnsVector4IValue_WhenProvidedInVector4IList)
+    {
+        // Arrange
+        std::string givenKey = "myKey";
+        auto givenValue = std::make_shared<FVector4I>(1, 2, 3, 4);
+
+        // Make a document with a single element, name.
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        givenDocument->SetRootElement(root);
+        auto firstElement = std::make_shared<ModifiableNode>();
+        auto children = std::vector<std::shared_ptr<ModifiableNode>>();
+        children.emplace_back(firstElement);
+        root->SetAllChildrenNodes(children);
+
+        // Give the top level metadata
+        firstElement->SetName("Vector4Is");
+        auto stringElement = std::make_shared<ModifiableNode>();
+        auto firstElementChildren = std::vector<std::shared_ptr<ModifiableNode>>();
+        firstElementChildren.emplace_back(stringElement);
+        firstElement->SetAllChildrenNodes(firstElementChildren);
+
+        stringElement->SetName("Vector4I");
+        auto attributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+
+        AddAttribute(attributes, "Key", givenKey);
+        AddAttribute(attributes, "X", std::to_string(givenValue->GetX()));
+        AddAttribute(attributes, "Y", std::to_string(givenValue->GetY()));
+        AddAttribute(attributes, "Z", std::to_string(givenValue->GetZ()));
+        AddAttribute(attributes, "W", std::to_string(givenValue->GetW()));
+        stringElement->SetAttributes(attributes);
+
+        // Give document to Asset. Using ExplicitTextGameAsset as this exposes the data.
+        std::shared_ptr<ExplicitUniversalObjectData> testClass = std::make_shared<ExplicitUniversalObjectData>(givenDocument);
+
+        // Act
+        std::shared_ptr<FVector4I> actual = testClass->GetVector4I(givenKey);
+
+        // Assert
+        ASSERT_EQ(givenValue->GetX(), actual->GetX()) << "X: " << givenValue->GetX() << " != " << actual->GetX();
+        ASSERT_EQ(givenValue->GetY(), actual->GetY()) << "Y: " << givenValue->GetY() << " != " << actual->GetY();
+        ASSERT_EQ(givenValue->GetZ(), actual->GetZ()) << "Z: " << givenValue->GetZ() << " != " << actual->GetZ();
+        ASSERT_EQ(givenValue->GetW(), actual->GetW()) << "W: " << givenValue->GetW() << " != " << actual->GetW();
+    }
+
+    TEST_F(DocumentUniversalObjectDataTests, IsVector4ILoaded_ReturnsTrue_WhenProvidedInVector4IList)
+    {
+        // Arrange
+        std::string givenKey = "myKey";
+        auto givenValue = std::make_shared<FVector4I>(1, 2, 3, 4);
+
+        // Make a document with a single element, name.
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        givenDocument->SetRootElement(root);
+        auto firstElement = std::make_shared<ModifiableNode>();
+        auto children = std::vector<std::shared_ptr<ModifiableNode>>();
+        children.emplace_back(firstElement);
+        root->SetAllChildrenNodes(children);
+
+        // Give the top level metadata
+        firstElement->SetName("Vector4Is");
+        auto stringElement = std::make_shared<ModifiableNode>();
+        auto firstElementChildren = std::vector<std::shared_ptr<ModifiableNode>>();
+        firstElementChildren.emplace_back(stringElement);
+        firstElement->SetAllChildrenNodes(firstElementChildren);
+
+        stringElement->SetName("Vector4I");
+        auto attributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+
+        AddAttribute(attributes, "Key", givenKey);
+        AddAttribute(attributes, "X", std::to_string(givenValue->GetX()));
+        AddAttribute(attributes, "Y", std::to_string(givenValue->GetY()));
+        AddAttribute(attributes, "Z", std::to_string(givenValue->GetZ()));
+        AddAttribute(attributes, "W", std::to_string(givenValue->GetW()));
+        stringElement->SetAttributes(attributes);
+
+        // Give document to Asset. Using ExplicitTextGameAsset as this exposes the data.
+        std::shared_ptr<ExplicitUniversalObjectData> testClass = std::make_shared<ExplicitUniversalObjectData>(givenDocument);
+
+        // Act
+        bool actual = testClass->IsVector4ILoaded(givenKey);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(DocumentUniversalObjectDataTests, GetVector4I_ReturnsAllVector4Is_WhenProvidedMultipleInVector4IList)
+    {
+        // Arrange
+        std::string givenKey = "myKey";
+        auto givenValue = std::make_shared<FVector4I>(1, 2, 3, 4);
+        std::string givenKey2 = "mySecondKey";
+        auto givenValue2 = std::make_shared<FVector4I>(5, 6, 7, 8);
+
+        // Make a document with a single element, name.
+        auto givenDocument = std::make_shared<ModifiableDocument>();
+        auto root = std::make_shared<ModifiableNode>();
+        givenDocument->SetRootElement(root);
+        auto firstElement = std::make_shared<ModifiableNode>();
+        auto children = std::vector<std::shared_ptr<ModifiableNode>>();
+        children.emplace_back(firstElement);
+        root->SetAllChildrenNodes(children);
+
+        // Give the top level metadata
+        firstElement->SetName("Vector4Is");
+        auto firstElementChildren = std::vector<std::shared_ptr<ModifiableNode>>();
+
+        auto stringElement = std::make_shared<ModifiableNode>();
+        firstElementChildren.emplace_back(stringElement);
+        stringElement->SetName("Vector4I");
+        auto attributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+        AddAttribute(attributes, "Key", givenKey);
+        AddAttribute(attributes, "X", std::to_string(givenValue->GetX()));
+        AddAttribute(attributes, "Y", std::to_string(givenValue->GetY()));
+        AddAttribute(attributes, "Z", std::to_string(givenValue->GetZ()));
+        AddAttribute(attributes, "W", std::to_string(givenValue->GetW()));
+        stringElement->SetAttributes(attributes);
+
+        auto string2Element = std::make_shared<ModifiableNode>();
+        firstElementChildren.emplace_back(string2Element);
+        string2Element->SetName("Vector4I");
+        auto attributes2 = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+        AddAttribute(attributes2, "Key", givenKey2);
+        AddAttribute(attributes2, "X", std::to_string(givenValue2->GetX()));
+        AddAttribute(attributes2, "Y", std::to_string(givenValue2->GetY()));
+        AddAttribute(attributes2, "Z", std::to_string(givenValue2->GetZ()));
+        AddAttribute(attributes2, "W", std::to_string(givenValue2->GetW()));
+        string2Element->SetAttributes(attributes2);
+
+        firstElement->SetAllChildrenNodes(firstElementChildren);
+
+        // Give document to Asset. Using ExplicitTextGameAsset as this exposes the data.
+        std::shared_ptr<ExplicitUniversalObjectData> testClass = std::make_shared<ExplicitUniversalObjectData>(givenDocument);
+
+        // Act
+        std::shared_ptr<FVector4I> actual = testClass->GetVector4I(givenKey);
+        std::shared_ptr<FVector4I> actual2 = testClass->GetVector4I(givenKey2);
+
+        // Assert
+        ASSERT_EQ(givenValue->GetX(), actual->GetX()) << "X: " << givenValue->GetX() << " != " << actual->GetX();
+        ASSERT_EQ(givenValue->GetY(), actual->GetY()) << "Y: " << givenValue->GetY() << " != " << actual->GetY();
+        ASSERT_EQ(givenValue->GetZ(), actual->GetZ()) << "Z: " << givenValue->GetZ() << " != " << actual->GetZ();
+        ASSERT_EQ(givenValue->GetW(), actual->GetW()) << "W: " << givenValue->GetW() << " != " << actual->GetW();
+
+        ASSERT_EQ(givenValue2->GetX(), actual2->GetX()) << "X: " << givenValue2->GetX() << " != " << actual2->GetX();
+        ASSERT_EQ(givenValue2->GetY(), actual2->GetY()) << "Y: " << givenValue2->GetY() << " != " << actual2->GetY();
+        ASSERT_EQ(givenValue2->GetZ(), actual2->GetZ()) << "Z: " << givenValue2->GetZ() << " != " << actual2->GetZ();
+        ASSERT_EQ(givenValue2->GetW(), actual2->GetW()) << "W: " << givenValue2->GetW() << " != " << actual2->GetW();
+    }
+
+#pragma endregion
 }
