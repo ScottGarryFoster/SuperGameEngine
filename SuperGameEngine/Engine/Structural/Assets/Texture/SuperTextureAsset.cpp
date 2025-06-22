@@ -44,7 +44,15 @@ SuperTextureAsset::SuperTextureAsset(
         return;
     }
 
+    if (IsStringLoaded("TextureUVMethod"))
+    {
+        m_splitMethod = ESplitUVMethod::FromString(GetString("TextureUVMethod"));
+    }
 
+    switch (m_splitMethod)
+    {
+        case SplitUVMethod::Predefined: SetupPredefinedUVs(); break;
+    }
 }
 
 void SuperTextureAsset::Draw() const
@@ -59,9 +67,56 @@ void SuperTextureAsset::Draw(int tile) const
 {
     if (m_superTexture)
     {
-        if (IsStringLoaded("TextureUVMethod"))
+        switch (m_splitMethod)
         {
+        case SplitUVMethod::Predefined:
+            DrawPredefined(tile);
+            break;
+        default:
             m_superTexture->Draw();
         }
     }
+}
+
+void SuperTextureAsset::SetupPredefinedUVs()
+{
+    int vectors = 0;
+    while (true)
+    {
+        std::string uvKey = "TextureUV" + std::to_string(vectors);
+        if (IsVector4ILoaded(uvKey))
+        {
+            ++vectors;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    m_predefinedUVs.clear();
+    m_predefinedUVs.resize(vectors);
+    for (int i = 0 ; i < vectors; ++i)
+    {
+        std::string uvKey = "TextureUV" + std::to_string(i);
+        std::shared_ptr<FVector4I> vectorUV = GetVector4I(uvKey);
+        m_predefinedUVs[i] = (vectorUV);
+    }
+}
+
+void SuperTextureAsset::DrawPredefined(int tile) const
+{
+    if (tile < 0)
+    {
+        return;
+    }
+
+    // Cast to Size_T to remove warning here.
+    // We are never going to use so many segments as to reach the int limit.
+    if (static_cast<size_t>(tile) >= m_predefinedUVs.size())
+    {
+        return;
+    }
+
+    m_superTexture->Draw(m_predefinedUVs[tile], m_predefinedUVs[tile]);
 }

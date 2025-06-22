@@ -3,6 +3,8 @@
 #include "TextureAsset.h"
 #include <memory>
 
+#include "Structural/Spatial/Area/RectangleInt.h"
+
 namespace SuperGameEngine
 {
     enum class SplitUVMethod : uint8_t;
@@ -17,7 +19,6 @@ namespace SuperGameEngine
     class SuperTextureAsset : public virtual TextureAsset, public SuperGameAsset
     {
     public:
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -65,6 +66,20 @@ namespace SuperGameEngine
         /// The method the UVs are split by and defined in the file.
         /// </summary>
         SplitUVMethod m_splitMethod;
+
+        /// <summary>
+        /// When using predefined UVs these are all the UVs which can be used
+        /// upon a texture.
+        /// </summary>
+        std::vector<RectangleInt> m_predefinedUVs;
+
+        /// <summary>
+        /// Sets up the Predefined UVs upon a texture.
+        /// These are all the locations upon a texture you may render.
+        /// </summary>
+        void SetupPredefinedUVs();
+
+        void DrawPredefined(int tile) const;
     };
 }
 

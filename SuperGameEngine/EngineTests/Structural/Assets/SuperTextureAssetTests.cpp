@@ -86,6 +86,41 @@ namespace SuperGameEngineTests_Structural_Assets
             }
 
         }
+
+        void AddVector4I(std::shared_ptr<ModifiableNode>& vector4is, const std::string& key, int x, int y, int z, int w)
+        {
+            auto newString = std::make_shared<ModifiableNode>();
+            newString->SetName("Vector4I");
+            std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+            AddAttribute(attributes, "Key", key);
+            AddAttribute(attributes, "X", std::to_string(x));
+            AddAttribute(attributes, "Y", std::to_string(y));
+            AddAttribute(attributes, "Z", std::to_string(z));
+            AddAttribute(attributes, "W", std::to_string(w));
+            newString->SetAttributes(attributes);
+
+
+            std::shared_ptr<StoredDocumentNode> lastChild = vector4is->GetLastChild();
+            if (!lastChild)
+            {
+                lastChild = vector4is->GetFirstChild();
+            }
+
+            if (lastChild)
+            {
+                if (std::shared_ptr<ModifiableNode> modifiableChild = std::dynamic_pointer_cast<ModifiableNode>(lastChild))
+                {
+                    modifiableChild->SetAdjacentNode(newString);
+                    vector4is->SetLastChild(newString);
+                }
+            }
+            else
+            {
+                std::vector<std::shared_ptr<ModifiableNode>> children;
+                children.emplace_back(newString);
+                vector4is->SetAllChildrenNodes(children);
+            }
+        }
     };
 
 
@@ -160,7 +195,7 @@ namespace SuperGameEngineTests_Structural_Assets
 
 #pragma endregion
 
-#pragma region Segement Draw
+#pragma region Segement Draw Predefined
 
     TEST_F(SuperTextureAssetTests, Draw_ReturnsFirstSegement_WhenGivenDocumentDefiningASegementInPositionZero)
     {
@@ -179,12 +214,17 @@ namespace SuperGameEngineTests_Structural_Assets
         auto strings = std::make_shared<ModifiableNode>();
         strings->SetName("Strings");
 
+        auto vector4is = std::make_shared<ModifiableNode>();
+        vector4is->SetName("Vector4Is");
+
         std::vector<std::shared_ptr<ModifiableNode>> children;
         children.emplace_back(strings);
+        children.emplace_back(vector4is);
         root->SetAllChildrenNodes(children);
         givenDocument->SetRootElement(root);
 
         AddString(strings, "TextureUVMethod", "Predefined");
+        AddVector4I(vector4is, "TextureUV0", 1, 2, 3, 4);
 
         auto testClass = std::make_shared<SuperTextureAsset>(givenDocument, givenPath, givenTextureManager);
 
@@ -193,9 +233,145 @@ namespace SuperGameEngineTests_Structural_Assets
 
         // Assert
         ASSERT_EQ(1, givenTexture->GetTheNumberOfTimesDrawn());
-        ASSERT_TRUE(false) << "ADD CONDITION BELOW";
-        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
 
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+        ASSERT_EQ(1, lastTextureLocation->GetLeft()) << "Left location was incorrect";
+        ASSERT_EQ(2, lastTextureLocation->GetTop()) << "Top location was incorrect";
+        ASSERT_EQ(3, lastTextureLocation->GetWidth()) << "Width was incorrect";
+        ASSERT_EQ(4, lastTextureLocation->GetHeight()) << "Height was incorrect";
+    }
+
+    TEST_F(SuperTextureAssetTests, Draw_ReturnsSecondSegement_WhenGivenDocumentDefiningASegementInPositionZero)
+    {
+        // Arrange
+        std::string givenPath = "myPath.png";
+        FatedQuestLibraries::FPoint givenSize = FPoint(10, 20);
+        auto givenTexture = std::make_shared<SuperTextureStub>(givenPath, givenSize);
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn()) << "Times drawn must begin at zero to mean something to the test.";
+
+        // Ensure the texture is acquirable.
+        auto givenTextureManager = std::make_shared<TextureManagerStub>();
+        givenTextureManager->GiveTexture(givenTexture, givenPath);
+
+        std::shared_ptr<ModifiableDocument> givenDocument = GetValidDocument();
+        auto root = std::make_shared<ModifiableNode>();
+        auto strings = std::make_shared<ModifiableNode>();
+        strings->SetName("Strings");
+
+        auto vector4is = std::make_shared<ModifiableNode>();
+        vector4is->SetName("Vector4Is");
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(strings);
+        children.emplace_back(vector4is);
+        root->SetAllChildrenNodes(children);
+        givenDocument->SetRootElement(root);
+
+        AddString(strings, "TextureUVMethod", "Predefined");
+        AddVector4I(vector4is, "TextureUV0", 1, 2, 3, 4);
+        AddVector4I(vector4is, "TextureUV1", 5, 6, 7, 8);
+
+        auto testClass = std::make_shared<SuperTextureAsset>(givenDocument, givenPath, givenTextureManager);
+
+        // Act
+        testClass->Draw(1);
+
+        // Assert
+        ASSERT_EQ(1, givenTexture->GetTheNumberOfTimesDrawn());
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+        ASSERT_EQ(5, lastTextureLocation->GetLeft()) << "Left location was incorrect";
+        ASSERT_EQ(6, lastTextureLocation->GetTop()) << "Top location was incorrect";
+        ASSERT_EQ(7, lastTextureLocation->GetWidth()) << "Width was incorrect";
+        ASSERT_EQ(8, lastTextureLocation->GetHeight()) << "Height was incorrect";
+    }
+
+    TEST_F(SuperTextureAssetTests, Draw_DrawsNothing_WhenGivenMinusOne)
+    {
+        // Arrange
+        std::string givenPath = "myPath.png";
+        FatedQuestLibraries::FPoint givenSize = FPoint(10, 20);
+        auto givenTexture = std::make_shared<SuperTextureStub>(givenPath, givenSize);
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn()) << "Times drawn must begin at zero to mean something to the test.";
+
+        // Ensure the texture is acquirable.
+        auto givenTextureManager = std::make_shared<TextureManagerStub>();
+        givenTextureManager->GiveTexture(givenTexture, givenPath);
+
+        std::shared_ptr<ModifiableDocument> givenDocument = GetValidDocument();
+        auto root = std::make_shared<ModifiableNode>();
+        auto strings = std::make_shared<ModifiableNode>();
+        strings->SetName("Strings");
+
+        auto vector4is = std::make_shared<ModifiableNode>();
+        vector4is->SetName("Vector4Is");
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(strings);
+        children.emplace_back(vector4is);
+        root->SetAllChildrenNodes(children);
+        givenDocument->SetRootElement(root);
+
+        AddString(strings, "TextureUVMethod", "Predefined");
+        AddVector4I(vector4is, "TextureUV0", 1, 2, 3, 4);
+
+        auto testClass = std::make_shared<SuperTextureAsset>(givenDocument, givenPath, givenTextureManager);
+
+        // Act
+        testClass->Draw(-1);
+
+        // Assert
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn());
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+        ASSERT_EQ(0, lastTextureLocation->GetLeft()) << "Left location was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetTop()) << "Top location was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetWidth()) << "Width was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetHeight()) << "Height was incorrect";
+    }
+
+    TEST_F(SuperTextureAssetTests, Draw_DrawsNothing_WhenGivenASegementAboveTheNumberOfSegments)
+    {
+        // Arrange
+        std::string givenPath = "myPath.png";
+        FatedQuestLibraries::FPoint givenSize = FPoint(10, 20);
+        auto givenTexture = std::make_shared<SuperTextureStub>(givenPath, givenSize);
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn()) << "Times drawn must begin at zero to mean something to the test.";
+
+        // Ensure the texture is acquirable.
+        auto givenTextureManager = std::make_shared<TextureManagerStub>();
+        givenTextureManager->GiveTexture(givenTexture, givenPath);
+
+        std::shared_ptr<ModifiableDocument> givenDocument = GetValidDocument();
+        auto root = std::make_shared<ModifiableNode>();
+        auto strings = std::make_shared<ModifiableNode>();
+        strings->SetName("Strings");
+
+        auto vector4is = std::make_shared<ModifiableNode>();
+        vector4is->SetName("Vector4Is");
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(strings);
+        children.emplace_back(vector4is);
+        root->SetAllChildrenNodes(children);
+        givenDocument->SetRootElement(root);
+
+        AddString(strings, "TextureUVMethod", "Predefined");
+        AddVector4I(vector4is, "TextureUV0", 1, 2, 3, 4);
+
+        auto testClass = std::make_shared<SuperTextureAsset>(givenDocument, givenPath, givenTextureManager);
+
+        // Act
+        testClass->Draw(1);
+
+        // Assert
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn());
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+        ASSERT_EQ(0, lastTextureLocation->GetLeft()) << "Left location was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetTop()) << "Top location was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetWidth()) << "Width was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetHeight()) << "Height was incorrect";
     }
 
 #pragma endregion

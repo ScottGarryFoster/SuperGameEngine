@@ -11,6 +11,14 @@ namespace SuperGameEngine
     class RectangleInt
     {
     public:
+
+        /// <summary>
+        /// Default constructor.
+        /// Only to be used in the case of initialising empty versions
+        /// in arrays.
+        /// </summary>
+        RectangleInt();
+
         /// <summary>
         /// Constructs a rectangle.
         /// </summary>

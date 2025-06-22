@@ -5,6 +5,14 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
+RectangleInt::RectangleInt()
+{
+    // Explicitly calling these.
+    m_location = FPoint();
+    m_size = FPoint();
+    m_center = FVector2D();
+}
+
 RectangleInt::RectangleInt(int x, int y, int width, int height)
 {
     m_location = FPoint(x, y);
