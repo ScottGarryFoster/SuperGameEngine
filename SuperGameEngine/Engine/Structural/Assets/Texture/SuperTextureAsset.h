@@ -58,6 +58,11 @@ namespace SuperGameEngine
         std::shared_ptr<SuperGameEngine::SuperTexture> m_superTexture;
 
         /// <summary>
+        /// The texture uv bounds (the size of the texture as an area to compare to).
+        /// </summary>
+        RectangleInt m_uvBounds;
+
+        /// <summary>
         /// The path for the asset we represent.
         /// </summary>
         std::string m_path;
@@ -71,7 +76,7 @@ namespace SuperGameEngine
         /// When using predefined UVs these are all the UVs which can be used
         /// upon a texture.
         /// </summary>
-        std::vector<RectangleInt> m_predefinedUVs;
+        std::vector<std::pair<bool, RectangleInt>> m_predefinedUVs;
 
         /// <summary>
         /// Sets up the Predefined UVs upon a texture.

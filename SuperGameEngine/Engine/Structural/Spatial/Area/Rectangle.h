@@ -230,6 +230,16 @@ namespace SuperGameEngine
         /// <param name="other">Point to test. </param>
         /// <returns>Closest point on shape to point.</returns>
         [[nodiscard]] FVector2D ClosestPointTo(const FVector2D& other) const;
+
+        /// <summary>
+        /// Returns this object as a debug string.
+        /// </summary>
+        std::string Print() const;
+
+        /// <summary>
+        /// Returns this object as a debug string.
+        /// </summary>
+        std::string ToString() const;
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.

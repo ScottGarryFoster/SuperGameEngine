@@ -574,17 +574,14 @@ namespace ToolsTests_ToolsEngine_FrameworkManager
         std::vector<std::weak_ptr<Selectable>> actual = m_selectionManager->GetSelection(givenGroup);
         ASSERT_EQ(3, actual.size()) << "The correct number of selectables was not found.";
 
-        auto shared = actual.at(0).lock();
-        ASSERT_TRUE(shared) << "Pointer to selection did not exist.";
-        ASSERT_EQ(inSelection->m_guid, shared->GetGuid()) << "Guids did not match. ";
+        bool containsSelection1 = SelectionContains(actual, inSelection);
+        ASSERT_TRUE(containsSelection1) << "Could not find first in Selection";
 
-        auto shared2 = actual.at(1).lock();
-        ASSERT_TRUE(shared2) << "Pointer to selection did not exist.";
-        ASSERT_EQ(inSelection2->m_guid, shared2->GetGuid()) << "Guids did not match. ";
+        bool containsSelection2 = SelectionContains(actual, inSelection2);
+        ASSERT_TRUE(containsSelection2) << "Could not find second in Selection";
 
-        auto shared3 = actual.at(2).lock();
-        ASSERT_TRUE(shared3) << "Pointer to selection did not exist.";
-        ASSERT_EQ(toBeRemoved->m_guid, shared3->GetGuid()) << "Guids did not match. ";
+        bool containsSelection3 = SelectionContains(actual, toBeRemoved);
+        ASSERT_TRUE(containsSelection3) << "Could not find third in Selection";
     }
 
 #pragma endregion

@@ -194,3 +194,16 @@ FVector2D Circle::GetNewLocationToNotOverlap(const Rectangle& other) const
 
     return newLocation;
 }
+
+std::string Circle::Print() const
+{
+    return ToString();
+}
+
+std::string Circle::ToString() const
+{
+    std::string x = std::to_string(GetLocation().GetX());
+    std::string y = std::to_string(GetLocation().GetY());
+    std::string radius = std::to_string(m_radius);
+    return "(" + x + ", " + y + ") Radius: " + radius;
+}

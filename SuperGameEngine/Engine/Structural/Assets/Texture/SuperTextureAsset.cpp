@@ -44,6 +44,8 @@ SuperTextureAsset::SuperTextureAsset(
         return;
     }
 
+    m_uvBounds = RectangleInt(0, 0, m_superTexture->Size().GetX(), m_superTexture->Size().GetY());
+
     if (IsStringLoaded("TextureUVMethod"))
     {
         m_splitMethod = ESplitUVMethod::FromString(GetString("TextureUVMethod"));
@@ -100,7 +102,17 @@ void SuperTextureAsset::SetupPredefinedUVs()
     {
         std::string uvKey = "TextureUV" + std::to_string(i);
         std::shared_ptr<FVector4I> vectorUV = GetVector4I(uvKey);
-        m_predefinedUVs[i] = (vectorUV);
+
+        auto textureUV = RectangleInt(vectorUV);
+        bool newUVIsValid = m_uvBounds.Contains(textureUV);
+        if (!newUVIsValid)
+        {
+            Log::Error("Loaded a texture UV outside the bounds of a texture. "
+                       "Texture: " + m_uvBounds.ToString() + "UV: " + textureUV.ToString(),
+                "SuperTextureAsset::SetupPredefinedUVs");
+        }
+
+        m_predefinedUVs[i] = { newUVIsValid, vectorUV };
     }
 }
 
@@ -118,5 +130,11 @@ void SuperTextureAsset::DrawPredefined(int tile) const
         return;
     }
 
-    m_superTexture->Draw(m_predefinedUVs[tile], m_predefinedUVs[tile]);
+    // If the bool is false, the rectangle is invalid
+    if (!m_predefinedUVs[tile].first)
+    {
+        return;
+    }
+
+    m_superTexture->Draw(m_predefinedUVs[tile].second, m_predefinedUVs[tile].second);
 }

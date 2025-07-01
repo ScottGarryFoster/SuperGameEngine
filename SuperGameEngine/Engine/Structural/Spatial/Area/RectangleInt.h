@@ -171,6 +171,30 @@ namespace SuperGameEngine
         [[nodiscard]] bool Overlaps(const Circle& other) const;
 
         /// <summary>
+        /// True when the left (this) contains the given (other) completely.
+        /// The bounds of other could be exactly the same as left/this.
+        /// </summary>
+        /// <param name="other">Compare. </param>
+        /// <returns>True means other is completely within this. </returns>
+        [[nodiscard]] bool Contains(const Rectangle& other) const;
+
+        /// <summary>
+        /// True when the left (this) contains the given (other) completely.
+        /// The bounds of other could be exactly the same as left/this.
+        /// </summary>
+        /// <param name="other">Compare. </param>
+        /// <returns>True means other is completely within this. </returns>
+        [[nodiscard]] bool Contains(const RectangleInt& other) const;
+
+        /// <summary>
+        /// True when the left (this) contains the given (other) completely.
+        /// The bounds of other could be exactly the same as left/this.
+        /// </summary>
+        /// <param name="other">Compare. </param>
+        /// <returns>True means other is completely within this. </returns>
+        [[nodiscard]] bool Contains(const Circle& other) const;
+
+        /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.
         /// </summary>
         /// <param name="other">Other to check against. </param>
@@ -320,6 +344,17 @@ namespace SuperGameEngine
         /// <param name="other">Point to test. </param>
         /// <returns>Closest point on shape to point.</returns>
         [[nodiscard]] FPoint ClosestPointTo(const FPoint& other) const;
+
+        /// <summary>
+        /// Returns this object as a debug string.
+        /// </summary>
+        std::string Print() const;
+
+        /// <summary>
+        /// Returns this object as a debug string.
+        /// </summary>
+        std::string ToString() const;
+
     private:
         /// <summary>
         /// Stores the location, top left of the rectangle.
