@@ -3,8 +3,8 @@
 #include "../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
 #include <memory>
 #include <gtest/gtest.h>
-#include "Stubs/Engine/Content/TextureManagerStub.h"
-#include "Stubs/Engine/Graphics/SuperTextureStub.h"
+#include "../../Stubs/Engine/Content/TextureManagerStub.h"
+#include "../../Stubs/Engine/Graphics/SuperTextureStub.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;

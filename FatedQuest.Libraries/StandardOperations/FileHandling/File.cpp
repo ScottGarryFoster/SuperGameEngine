@@ -8,6 +8,7 @@
 namespace FileSystem = std::filesystem;
 
 using namespace FatedQuestLibraries;
+#undef CopyFile
 
 bool File::Exists(const std::string& filepath)
 {
@@ -113,7 +114,49 @@ std::string File::ChangeExtension(
     return newFilepath;
 }
 
-#undef CopyFile
+std::string File::RemoveAllExtensions(const std::string& filepath)
+{
+    if (filepath.empty())
+    {
+        return {};
+    }
+
+    FileSystem::path input(filepath);
+    while (!input.extension().empty())
+    {
+        input.replace_extension();
+    }
+
+    return input.string();
+}
+
+std::string File::RemoveLastExtension(const std::string& filepath)
+{
+    if (filepath.empty())
+    {
+        return {};
+    }
+
+    FileSystem::path input(filepath);
+    if (!input.extension().empty())
+    {
+        input.replace_extension();
+    }
+
+    return input.string();
+}
+
+std::string File::GetExtension(const std::string& filepath)
+{
+    if (filepath.empty())
+    {
+        return {};
+    }
+
+    FileSystem::path input(filepath);
+    return input.extension().string();
+}
+
 bool File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
 {
     try
@@ -205,3 +248,4 @@ std::string File::MakeRelative(const std::string& base, const std::string& targe
 
     return {};
 }
+#define CopyFile

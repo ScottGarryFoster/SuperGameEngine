@@ -7,8 +7,8 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-    class SuperTexture;
 
+    class TextureAsset;
     /// <summary>
     /// A component to test basic functionality.
     /// </summary>
@@ -53,7 +53,7 @@ namespace SuperGameEngine
 
     private:
 
-        std::shared_ptr<SuperTexture> m_superTexture;
+        std::shared_ptr<TextureAsset> m_textureAsset;
 
         FPoint m_location;
 

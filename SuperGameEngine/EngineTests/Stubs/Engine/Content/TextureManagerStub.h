@@ -29,6 +29,17 @@ namespace SuperGameEngineTests_Stubs
             return std::shared_ptr<SuperGameEngine::SuperTexture>();
         }
 
+        /// <summary>
+        /// Creates or gets the texture asset for the given path.
+        /// A texture asset has the ability to predefine more information about the texture.
+        /// </summary>
+        /// <param name="filepath">Filepath to the texture asset without any extension, relative to the products folder. </param>
+        /// <returns>The texture asset or empty if not found. </returns>
+        virtual std::shared_ptr<SuperGameEngine::TextureAsset> GetTextureAsset(const std::string& filepath) override
+        {
+            return {};
+        }
+
         void GiveTexture(
             const std::shared_ptr<SuperGameEngine::SuperTexture>& 
             texture, const std::string& filePath)

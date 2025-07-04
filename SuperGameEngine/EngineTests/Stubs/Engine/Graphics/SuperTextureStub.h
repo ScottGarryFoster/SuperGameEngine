@@ -7,7 +7,6 @@ namespace SuperGameEngineTests_Stubs
     class SuperTextureStub : public SuperGameEngine::SuperTexture
     {
     public:
-        ~SuperTextureStub() override = default;
         SuperTextureStub(const std::string& path, const FatedQuestLibraries::FPoint& size)
         {
             // Default XY 0, Width Height 0. Needs to be pointers as const is used.

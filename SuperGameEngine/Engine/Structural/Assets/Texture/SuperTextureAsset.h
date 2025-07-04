@@ -1,9 +1,8 @@
 #pragma once
 #include "../SuperGameAsset.h"
 #include "TextureAsset.h"
-#include <memory>
-
 #include "Structural/Spatial/Area/RectangleInt.h"
+#include <memory>
 
 namespace SuperGameEngine
 {
