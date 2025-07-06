@@ -73,6 +73,25 @@ void ImGuiSuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) 
 
 void ImGuiSuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
 {
+    ImVec2 position = ImGui::GetCursorPos();
+    ImGui::SetCursorPos(ImVec2(
+        static_cast<int>(static_cast<int>(position.x) + screenRectangle.GetLeft()),
+        static_cast<int>(static_cast<int>(position.y) + screenRectangle.GetTop())));
+
+    ImTextureID textureID = 0;
+    if (!m_texture->GetTextureID(textureID))
+    {
+        return;
+    }
+
+    FPoint size = m_texture->Size();
+    auto imageSize = ImVec2(
+        static_cast<float>(screenRectangle.GetRight()),
+        static_cast<float>(screenRectangle.GetBottom()));
+
+    ImGui::Image(textureID, imageSize);
+
+    ImGui::SetCursorPos(ImVec2(position.x, position.y));
 }
 
 bool ImGuiSuperTextureWrapper::RepresentSameImage(std::shared_ptr<SuperTexture> texture) const

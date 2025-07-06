@@ -47,7 +47,13 @@ set_target_properties(XmlDocumentTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE
 # Set compiler options
 if(MSVC)
     target_compile_definitions(XmlDocumentTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(XmlDocumentTests PRIVATE /W3)
+    target_compile_options(XmlDocumentTests PRIVATE
+      /W3
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Include directories

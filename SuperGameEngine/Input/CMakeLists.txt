@@ -64,7 +64,16 @@ endif()
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(Input PRIVATE _WINDOWS)
-    target_compile_options(Input PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+    target_compile_options(Input PRIVATE
+      /W3
+      /permissive-
+      /Zc:preprocessor
+      /MP
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Set configurations

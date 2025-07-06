@@ -12,6 +12,7 @@
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
 #include "../Windows/MainMenuBar/MainMenuBar.h"
+#include "../Windows/AssetBrowser/AssetBrowser.h"
 
 #include "../Engine/Content/ImGuiTextureManager.h"
 #include "../Windows/DockableContainer/DockableContainer.h"
@@ -132,6 +133,9 @@ void ToolsEngine::Setup()
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
     loggerWindow->UpdateDistributedWeakPointer(loggerWindow);
 
+    std::shared_ptr<AssetBrowser> assetBrowserWindow = std::make_shared<AssetBrowser>();
+    assetBrowserWindow->UpdateDistributedWeakPointer(assetBrowserWindow);
+
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
     // Ensure we listen to logs early.
@@ -163,4 +167,7 @@ void ToolsEngine::Setup()
     sceneHierarchy->Setup(m_windowPackage);
     inspectorWindow->OnMenuDelete()->Subscribe(sceneHierarchy);
     m_updatables.push_back(sceneHierarchy);
+
+    assetBrowserWindow->Setup(m_windowPackage);
+    m_updatables.push_back(assetBrowserWindow);
 }

@@ -47,7 +47,13 @@ set_target_properties(StandardOperationsTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:
 # Set compiler options
 if(MSVC)
     target_compile_definitions(StandardOperationsTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(StandardOperationsTests PRIVATE /W3)
+    target_compile_options(StandardOperationsTests PRIVATE
+      /W3
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Include directories

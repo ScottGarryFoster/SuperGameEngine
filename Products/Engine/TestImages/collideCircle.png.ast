@@ -1,6 +1,5 @@
 <Asset>
     <Strings>
-        <String Key="GameAssetName" Value="Small 8 Direction Characters by Axul Art" />
         <String Key="TextureUVMethod" Value="Predefined" />
     </Strings>
     <Vector4Is>
