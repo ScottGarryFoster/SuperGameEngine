@@ -6,6 +6,7 @@ message(STATUS "ENABLE_TESTS: ${ENABLE_TESTS}")
 message(STATUS "ENABLE_TOOLS: ${ENABLE_TOOLS}")
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+set(CMAKE_BUILD_TYPE Debug)
 
 # Name the project such that each solution could have its own name
 if(ENABLE_TOOLS)

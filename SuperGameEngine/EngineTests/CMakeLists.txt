@@ -47,7 +47,13 @@ set_target_properties(EngineTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 # Set compiler options
 if(MSVC)
     target_compile_definitions(EngineTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(EngineTests PRIVATE /W3)
+    target_compile_options(EngineTests PRIVATE
+      /W3
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Include directories

@@ -17,3 +17,7 @@
 
 #include "Structural/DistributeWeakPointers.h"
 #include "Structural/Concepts.h"
+
+#include "UniversalObjectData/UniversalObjectData.h"
+#include "UniversalObjectData/DocumentUniversalObjectData.h"
+#include "UniversalObjectData/ExplicitUniversalObjectData.h"
