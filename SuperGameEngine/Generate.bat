@@ -39,4 +39,5 @@ python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x6
 python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Release false
 
 python ../FatedQuest.Libraries/CMake/CreateShortcut.py build\SuperGameEngine.sln SuperGameEngine.sln
+python ../FatedQuest.Libraries/CMake/CreateShortcut.py Generate.bat Regenerate
 pause
