@@ -25,7 +25,7 @@ namespace SuperGameTools
         ToolsAssetFile(
             const std::weak_ptr<FatedQuestLibraries::GamePackage>& package,
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
-            const std::string& packagePath, 
+            const std::string& packagePath,
             const std::weak_ptr<AssetFolder>& parent);
 
         /// <summary>

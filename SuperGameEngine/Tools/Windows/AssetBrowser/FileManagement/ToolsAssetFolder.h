@@ -17,7 +17,7 @@ namespace SuperGameTools
     /// <summary>
     /// Implementation of <see cref="AssetFolder"/>
     /// </summary>
-    class ToolsAssetFolder : public AssetFolder, public FatedQuestLibraries::DistributeWeakPointers<ToolsAssetFolder>
+    class ToolsAssetFolder : public AssetFolder, public std::enable_shared_from_this<ToolsAssetFolder>
     {
     public:
 
@@ -50,6 +50,14 @@ namespace SuperGameTools
         /// <returns>Get the path to this directory relative to the package. </returns>
         virtual std::string GetPackagePath() const override;
 
+        /// <summary>
+        /// Gets the parent folder.
+        /// </summary>
+        /// <returns>The parent of the given folder. </returns>
+        virtual std::weak_ptr<AssetFolder> GetParent() const override;
+
+        void PopulateChildren(const std::weak_ptr<AssetFolder>& parent);
+
     private:
         /// <summary>
         /// Given game package.
@@ -80,5 +88,10 @@ namespace SuperGameTools
         /// Folders directly in this folder.
         /// </summary>
         std::vector<std::shared_ptr<AssetFolder>> m_folders;
+
+        /// <summary>
+        /// The folder above this one (the parent).
+        /// </summary>
+        std::weak_ptr<AssetFolder> m_parent;
     };
 }

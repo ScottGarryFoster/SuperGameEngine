@@ -16,6 +16,7 @@ namespace SuperGameEngine
 namespace SuperGameTools
 {
     class AssetFolder;
+    class AssetFile;
 }
 
 namespace SuperGameTools
@@ -56,5 +57,46 @@ namespace SuperGameTools
         /// Texture to use for folders.
         /// </summary>
         std::shared_ptr<SuperGameEngine::SuperTexture> m_folderTexture;
+
+        /// <summary>
+        /// Texture to move back up folders.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SuperTexture> m_upFolderTexture;
+
+        /// <summary>
+        /// Draws a folder tile.
+        /// </summary>
+        /// <param name="folder">Folder to draw. </param>
+        /// <param name="size">Size of the tile. </param>
+        /// <param name="padding">Padding between tiles. </param>
+        /// <returns>Folder to move to if an action is taken. </returns>
+        std::shared_ptr<AssetFolder> DrawFolder(
+            const std::shared_ptr<AssetFolder>& folder, 
+            int size, 
+            int padding) const;
+
+        /// <summary>
+        /// Draws a return folder tile.
+        /// </summary>
+        /// <param name="previousFolder">Folder above this. </param>
+        /// <param name="size">Size of the tile. </param>
+        /// <param name="padding">Padding between tiles. </param>
+        /// <returns>True means do return. </returns>
+        bool DrawReturnFolder(
+            const std::shared_ptr<AssetFolder>& previousFolder,
+            int size,
+            int padding) const;
+
+        /// <summary>
+        /// Draws a file tile.
+        /// </summary>
+        /// <param name="file">File to draw. </param>
+        /// <param name="size">Size of the tile. </param>
+        /// <param name="padding">Padding between tiles. </param>
+        /// <returns>The file clicked if any. </returns>
+        std::shared_ptr<AssetFile> DrawFile(
+            const std::shared_ptr<AssetFile>& file,
+            int size,
+            int padding) const;
     };
 }

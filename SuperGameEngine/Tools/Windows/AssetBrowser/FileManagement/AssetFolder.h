@@ -37,5 +37,11 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Get the path to this directory relative to the package. </returns>
         virtual std::string GetPackagePath() const = 0;
+
+        /// <summary>
+        /// Gets the parent folder.
+        /// </summary>
+        /// <returns>The parent of the given folder. </returns>
+        virtual std::weak_ptr<AssetFolder> GetParent() const = 0;
     };
 }
