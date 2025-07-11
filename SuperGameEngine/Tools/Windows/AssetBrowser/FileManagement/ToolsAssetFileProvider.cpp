@@ -16,7 +16,9 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
     m_gamePackage = package;
     m_textureManager = texture;
 
-    m_rootFolder = std::make_shared<ToolsAssetFolder>(package, texture, "");
+    auto folder = std::make_shared<ToolsAssetFolder>(package, texture, "");
+    m_rootFolder = folder;
+    folder->PopulateChildren(m_rootFolder);
 }
 
 std::vector<std::shared_ptr<AssetFolder>> ToolsAssetFileProvider::GetFoldersInRootDirectory() const
