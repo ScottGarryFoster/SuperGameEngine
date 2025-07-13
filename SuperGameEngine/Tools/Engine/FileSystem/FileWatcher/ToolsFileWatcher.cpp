@@ -4,7 +4,6 @@
 
 #include <chrono>
 #include <mutex>
-#include <SDL_thread.h>
 #include <thread>
 #include <string>
 
@@ -21,6 +20,11 @@ ToolsFileWatcher::ToolsFileWatcher(const std::shared_ptr<FatedQuestLibraries::Pa
 ToolsFileWatcher::~ToolsFileWatcher()
 {
     Stop();
+
+    for (const auto& [key, value] : m_completeFolderWatchers)
+    {
+        value->Empty();
+    }
 }
 
 void ToolsFileWatcher::Start()
@@ -83,8 +87,8 @@ std::weak_ptr<FEventSubscriptions> ToolsFileWatcher::WatchFolder(const std::stri
         else
         {
             auto newEvent = std::make_shared<FEvent>();
-            returnSubscription = newEvent;
             m_completeFolderWatchers.insert_or_assign(cleanedPath, newEvent);
+            return newEvent;
         }
     }
 

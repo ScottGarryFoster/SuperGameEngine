@@ -34,7 +34,7 @@ void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
         m_windowPackage->GetPackagePaths());
     m_assetFileProvider = assetFileProvider;
 
-    auto tileFolderRenderer = std::make_shared<AssetTileRender>(
+   auto tileFolderRenderer = std::make_shared<AssetTileRender>(
         m_assetFileProvider->GetRootFolder(), 
         m_windowPackage->GetContentManager()->Texture());
     m_tileFolderRenderer = tileFolderRenderer;

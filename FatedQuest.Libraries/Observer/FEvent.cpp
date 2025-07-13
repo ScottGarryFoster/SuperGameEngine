@@ -58,3 +58,8 @@ void FEvent::Invoke(std::shared_ptr<FEventArguments> arguments)
             return observer.expired();
         });
 }
+
+void FEvent::Empty()
+{
+    m_observers.clear();
+}

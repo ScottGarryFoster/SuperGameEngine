@@ -35,10 +35,7 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
 
 ToolsAssetFileProvider::~ToolsAssetFileProvider()
 {
-    if (std::shared_ptr<FEventSubscriptions> subscription = m_watcherSubscription.lock())
-    {
-        subscription->Unsubscribe(shared_from_this());
-    }
+    // Do not need to unsub to watcher. This will resolve itself at the event level.
 }
 
 void ToolsAssetFileProvider::Update()
