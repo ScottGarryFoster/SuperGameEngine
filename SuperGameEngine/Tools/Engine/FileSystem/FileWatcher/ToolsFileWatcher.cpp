@@ -20,11 +20,6 @@ ToolsFileWatcher::ToolsFileWatcher(const std::shared_ptr<FatedQuestLibraries::Pa
 ToolsFileWatcher::~ToolsFileWatcher()
 {
     Stop();
-
-    for (const auto& [key, value] : m_completeFolderWatchers)
-    {
-        value->Empty();
-    }
 }
 
 void ToolsFileWatcher::Start()

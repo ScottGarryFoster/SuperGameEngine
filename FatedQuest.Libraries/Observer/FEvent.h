@@ -36,12 +36,6 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="arguments">Arguments to send to all observers. </param>
         virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
-
-        /// <summary>
-        /// Empties the event of all observers.
-        /// </summary>
-        virtual void Empty() override;
-
     private:
 
         /// <summary>
