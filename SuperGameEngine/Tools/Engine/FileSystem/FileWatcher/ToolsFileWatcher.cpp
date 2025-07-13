@@ -262,7 +262,6 @@ void ToolsFileWatcher::FindAndAddDeletes(
     for (const std::string& missingFile : missingFiles)
     {
         allCurrentFiles.erase(missingFile);
-        //auto deleteStatus = FileStatus(missingFile, missingFile, 0);
         auto deleteEntry = std::pair(FileUpdateAction::Removed, FileStatus(missingFile, missingFile, 0));
         fileUpdates.UpdatesDiscovered.insert_or_assign(missingFile, deleteEntry);
     }
