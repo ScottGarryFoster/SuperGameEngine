@@ -148,5 +148,13 @@ namespace FatedQuestLibraries
         /// <param name="target">Target to make relative. </param>
         /// <returns>Target path relative to base or empty if target is not in base. </returns>
         static std::string MakeRelative(const std::string& base, const std::string& target);
+
+        /// <summary>
+        /// Returns the last modified time of the given file.
+        /// Will return Unix Epoch if an error occured.
+        /// </summary>
+        /// <param name="fullFilepath">Full path to the file. </param>
+        /// <returns>Last modified time of the file. </returns>
+        static std::time_t GetLastModifiedTime(const std::string& fullFilepath);
     };
 }

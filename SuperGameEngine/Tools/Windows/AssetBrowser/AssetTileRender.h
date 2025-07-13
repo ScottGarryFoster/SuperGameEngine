@@ -2,6 +2,12 @@
 #include <memory>
 
 #include "AssetFolderRender.h"
+#include "../../FatedQuestLibraries.h"
+
+namespace FatedQuestLibraries
+{
+    class FEventArguments;
+}
 
 namespace SuperGameEngine
 {
@@ -24,7 +30,7 @@ namespace SuperGameTools
     /// <summary>
     /// Renders the folder as tiles.
     /// </summary>
-    class AssetTileRender : public AssetFolderRender
+    class AssetTileRender : public AssetFolderRender, public FatedQuestLibraries::FEventObserver
     {
     public:
 
@@ -41,6 +47,12 @@ namespace SuperGameTools
         /// Render the asset tiles.
         /// </summary>
         virtual void Draw() override;
+
+        /// <summary>
+        /// Called when we need to update.
+        /// Expect: PackageFilesHaveUpdatedEventArguments for new asset folder.
+        /// </summary>
+        virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
     private:
         /// <summary>

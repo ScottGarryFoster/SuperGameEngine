@@ -5,3 +5,4 @@
 #include "../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
 #include "../../FatedQuest.Libraries/Logger/AllReferences.h"
 #include "../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
+#include "../../FatedQuest.Libraries/Observer/AllReferences.h"

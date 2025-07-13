@@ -49,6 +49,10 @@ void ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>& parent
     // Keep in mind, at the root this will be an empty pointer to nothing.
     m_parent = parent;
 
+    // Populate might occur after files and folders have loaded.
+    m_files.clear();
+    m_folders.clear();
+
     if (std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock())
     {
         std::vector<std::string> fileList = gamePackage->Directory()->GetFiles(m_packagePath);
@@ -62,7 +66,18 @@ void ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>& parent
 
             std::string assetFilePackagePath = Directory::CombinePath(m_packagePath, fileName);
 
-            m_files.emplace_back(std::make_shared<ToolsAssetFile>(m_gamePackage, m_textureManager, assetFilePackagePath, shared_from_this()));
+            std::shared_ptr<ToolsAssetFile> file = {};
+            try
+            {
+                file = std::make_shared<ToolsAssetFile>(m_gamePackage, m_textureManager, assetFilePackagePath, shared_from_this());
+                m_files.emplace_back(file);
+            }
+            catch (const std::exception& e)
+            {
+                Log::Error("Asset File could not be created: " + assetFilePackagePath + ". " +
+                    e.what()
+                    ,"ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>&)");
+            }
         }
 
         std::vector<std::string> directoryList = gamePackage->Directory()->ListDirectories(m_packagePath);
