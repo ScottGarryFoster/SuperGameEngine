@@ -7,6 +7,7 @@
 #include "Engine/Content/ContentManager.h"
 #include "FileManagement/AssetFile.h"
 #include "FileManagement/AssetFolder.h"
+#include "FileManagement/PackageFilesHaveUpdatedEventArguments.h"
 
 using namespace SuperGameTools;
 using namespace SuperGameEngine;
@@ -92,6 +93,49 @@ void AssetTileRender::Draw()
     {
         m_currentFolder = newCurrentFolder;
 
+    }
+}
+
+void AssetTileRender::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+{
+    if (auto packageFileUpdate = std::dynamic_pointer_cast<PackageFilesHaveUpdatedEventArguments>(arguments))
+    {
+        std::string cachedCurrentPath = m_currentFolder->GetPackagePath();
+
+        m_rootFolder = packageFileUpdate->GetNewRoot();
+        if (cachedCurrentPath.empty())
+        {
+            m_currentFolder = m_rootFolder;
+            return;
+        }
+
+        // If the current folder is not root attempt to remain where we were.
+        std::vector<std::string> directories = StringHelpers::Split(cachedCurrentPath, "\\");
+        std::string currentPath = {};
+        std::shared_ptr<AssetFolder> currentFolder = m_rootFolder;
+        for (const std::string& currentDirectoryName : directories)
+        {
+            bool foundFolder = false;
+            std::string testPath = Directory::CombinePath(currentPath, currentDirectoryName);
+            for (const std::shared_ptr<AssetFolder>& folder : currentFolder->GetContainingFolders())
+            {
+                if (folder->GetPackagePath() == testPath)
+                {
+                    foundFolder = true;
+                    currentFolder = folder;
+                }
+            }
+
+            // Folder must no longer exist. End here
+            if (!foundFolder)
+            {
+                break;
+            }
+
+            currentPath = testPath;
+        }
+
+        m_currentFolder = currentFolder;
     }
 }
 

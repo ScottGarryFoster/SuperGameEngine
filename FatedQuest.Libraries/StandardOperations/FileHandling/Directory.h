@@ -34,6 +34,7 @@ namespace FatedQuestLibraries
         /// <param name="path">Path to directory. </param>
         /// <returns>
         /// A list of files or empty if either no files or directory does not exist.
+        /// This returns just the filename! Not the full path.
         /// </returns>
         static std::vector<std::string> GetFiles(const std::string& path);
 
@@ -102,6 +103,20 @@ namespace FatedQuestLibraries
         /// <param name="path">Directory to list. </param>
         /// <returns>All directories in directory as names. </returns>
         static std::vector<std::string> ListDirectoryNames(const std::string& path);
+
+        /// <summary>
+        /// Lists files in the given directory.
+        /// </summary>
+        /// <param name="path">Directory to look within. </param>
+        /// <returns>All files in directory as full paths. </returns>
+        static std::vector<std::string> ListFiles(const std::string& path);
+
+        /// <summary>
+        /// Lists files in the given directory and returns just the filenames.
+        /// </summary>
+        /// <param name="path">Directory to look within. </param>
+        /// <returns>All files in directory as filenames. </returns>
+        static std::vector<std::string> ListFileNames(const std::string& path);
 
         /// <summary>
         /// Gets the parent directory of the given path.

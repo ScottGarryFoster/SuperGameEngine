@@ -4,6 +4,11 @@
 
 namespace FatedQuestLibraries
 {
+    /// <summary>
+    /// Allows an object to subscribe to an event.
+    /// This should be all that is required to give out to create an event instead of a delegate
+    /// the object could invoke.
+    /// </summary>
     class FEventSubscriptions
     {
     public:

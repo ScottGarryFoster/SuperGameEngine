@@ -2,6 +2,11 @@
 #include <memory>
 #include <vector>
 
+namespace FatedQuestLibraries
+{
+    class FEventSubscriptions;
+}
+
 namespace SuperGameTools
 {
     class AssetFile;
@@ -13,6 +18,10 @@ namespace SuperGameTools
     class AssetFileProvider
     {
     public:
+        /// <summary>
+        /// Run on the main loop. Responds to updates.
+        /// </summary>
+        virtual void Update() = 0;
 
         /// <summary>
         /// Get all folders in root directory of the products folder.
@@ -31,5 +40,11 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>The top level folder. </returns>
         virtual std::shared_ptr<AssetFolder> GetRootFolder() const = 0;
+
+        /// <summary>
+        /// Gets the event listener called when the file system detects changes.
+        /// </summary>
+        /// <returns>Event listener called when the file system detects changes.</returns>
+        virtual std::weak_ptr<FatedQuestLibraries::FEventSubscriptions> OnFileSystemUpdated() const = 0;
     };
 }

@@ -5,6 +5,7 @@
 #include "Engine/Content/ContentManager.h"
 #include "FileManagement/ToolsAssetFileProvider.h"
 #include <algorithm>
+#include "../../FatedQuestLibraries.h"
 
 #include "AssetTileRender.h"
 #include "FileManagement/AssetFile.h"
@@ -27,17 +28,26 @@ void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
     // Setup Selection Manager or Document Manager if you're going to in the future.
 
-    m_assetFileProvider = std::make_shared<ToolsAssetFileProvider>(
+    auto assetFileProvider = std::make_shared<ToolsAssetFileProvider>(
         m_windowPackage->GetContentManager()->GamePackage(), 
-        m_windowPackage->GetContentManager()->Texture());
+        m_windowPackage->GetContentManager()->Texture(),
+        m_windowPackage->GetPackagePaths());
+    m_assetFileProvider = assetFileProvider;
 
-    m_tileFolderRenderer = std::make_shared<AssetTileRender>(
+    auto tileFolderRenderer = std::make_shared<AssetTileRender>(
         m_assetFileProvider->GetRootFolder(), 
         m_windowPackage->GetContentManager()->Texture());
+    m_tileFolderRenderer = tileFolderRenderer;
+
+    if (auto subscription = assetFileProvider->OnFileSystemUpdated().lock())
+    {
+        subscription->Subscribe(tileFolderRenderer);
+    }
 }
 
 void AssetBrowser::Update()
 {
+    m_assetFileProvider->Update();
     m_tileFolderRenderer->Update();
 }
 

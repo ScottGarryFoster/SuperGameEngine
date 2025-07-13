@@ -20,6 +20,12 @@ ToolsAssetFile::ToolsAssetFile(
 
     if (std::shared_ptr<GamePackage> gamePackage = package.lock())
     {
+        std::string originalFilePath = File::RemoveLastExtension(packagePath);
+        if (!gamePackage->File()->Exists(originalFilePath))
+        {
+            throw std::exception("ToolsAssetFile::ToolsAssetFile: Original file asset refers to not found.");
+        }
+
         if (gamePackage->File()->Exists(packagePath))
         {
             std::string contents = gamePackage->File()->ReadFileContents(packagePath);
@@ -41,7 +47,6 @@ ToolsAssetFile::ToolsAssetFile(
         // Setup the image.
         if (std::shared_ptr<TextureManager> textureManager = texture.lock())
         {
-            std::string originalFilePath = File::RemoveLastExtension(packagePath);
             std::string fileType = File::GetExtension(originalFilePath);
             if (StringHelpers::ToLower(fileType) == ".png")
             {
