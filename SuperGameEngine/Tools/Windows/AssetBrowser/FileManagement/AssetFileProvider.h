@@ -18,6 +18,8 @@ namespace SuperGameTools
     class AssetFileProvider
     {
     public:
+        virtual ~AssetFileProvider() = default;
+
         /// <summary>
         /// Run on the main loop. Responds to updates.
         /// </summary>
