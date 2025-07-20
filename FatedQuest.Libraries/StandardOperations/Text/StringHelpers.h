@@ -75,5 +75,14 @@ namespace FatedQuestLibraries
         /// <param name="input">Input to capitalize. </param>
         /// <returns>Capitalized string. </returns>
         static std::string Capitalize(const std::string& input);
+
+        /// <summary>
+        /// Checks to see if one value is within another.
+        /// This will return true even if both are empty.
+        /// </summary>
+        /// <param name="toFind">Value to find. </param>
+        /// <param name="inText">Text to look within. </param>
+        /// <returns>True means toFind is within inText. </returns>
+        static bool Contains(const std::string& toFind, const std::string& inText);
     };
 }

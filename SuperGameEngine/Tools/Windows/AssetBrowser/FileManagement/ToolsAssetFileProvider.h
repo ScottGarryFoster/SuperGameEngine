@@ -109,5 +109,7 @@ namespace SuperGameTools
         /// Event trigger when the file system updates.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onFileSystemUpdated;
+
+        void CreateAssetFilesForValidAssets();
     };
 }

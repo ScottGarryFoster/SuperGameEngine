@@ -106,6 +106,7 @@ add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
 add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
 add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
 add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
+add_subdirectory(../../FatedQuest.Libraries/Exceptions Exceptions)
 
 # Link dependencies
 target_link_libraries(SuperGameEngine PUBLIC
@@ -121,6 +122,7 @@ target_link_libraries(SuperGameEngine PUBLIC
     StandardOperations
     StoredDocument
     XmlDocument
+    Exceptions
 )
 
 # Tools only dependencies

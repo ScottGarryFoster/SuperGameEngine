@@ -108,3 +108,8 @@ void ToolsAssetFileProvider::Invoke(std::shared_ptr<FEventArguments> arguments)
         m_reloadPackage.store(true, std::memory_order_relaxed);
     }
 }
+
+void ToolsAssetFileProvider::CreateAssetFilesForValidAssets()
+{
+
+}

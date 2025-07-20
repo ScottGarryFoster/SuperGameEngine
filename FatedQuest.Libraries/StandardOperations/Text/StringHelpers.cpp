@@ -183,3 +183,18 @@ std::string StringHelpers::Capitalize(const std::string& input)
 
     return answer;
 }
+
+bool StringHelpers::Contains(const std::string& toFind, const std::string& inText)
+{
+    if (toFind.empty() && inText.empty())
+    {
+        return true;
+    }
+
+    if (toFind.empty() || inText.empty())
+    {
+        return false;
+    }
+
+    return inText.find(toFind) != std::string::npos;
+}
