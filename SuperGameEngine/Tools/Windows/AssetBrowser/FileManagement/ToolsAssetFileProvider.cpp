@@ -30,6 +30,10 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
 
     LoadAssetMetaDataFiles();
     SearchAllFilesForPotentialMissingAssetFiles();
+    if (std::shared_ptr<GamePackage> gamePackage = package.lock())
+    {
+        gamePackage->Reload();
+    }
 
     auto folder = std::make_shared<ToolsAssetFolder>(package, texture, "");
     m_rootFolder = folder;
@@ -191,8 +195,11 @@ void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles(const s
                 std::string newFileContents = {};
                 if (TryFindAssetFileTemplate(gamepackagePath, newFileContents))
                 {
+                    std::string fullpath = Directory::CombinePath(m_packagePaths->ProductsDirectory(), m_packagePaths->ProductsDirectoryName(), assetFilepath);
+                    File::WriteLine(fullpath, newFileContents);
+
                     // In next commit create these files.
-                    Log::Info("New asset file found." + assetFilepath);
+                    Log::Info("Written asset: " + assetFilepath);
                 }
             }
         }

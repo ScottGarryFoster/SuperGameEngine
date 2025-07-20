@@ -6,6 +6,16 @@
 
 namespace FatedQuestLibraries
 {
+    class StoredDocument;
+}
+
+namespace SuperGameTools
+{
+    enum class AssetTemplateCreationMethod : uint8_t;
+}
+
+namespace FatedQuestLibraries
+{
     class StoredDocumentNode;
 }
 
@@ -49,7 +59,17 @@ namespace SuperGameTools
         /// </summary>
         std::unordered_set<std::string> m_matchingExtensions;
 
-        // Matching Criteria Creation
+        /// <summary>
+        /// The method used to create a brand-new asset file.
+        /// </summary>
+        AssetTemplateCreationMethod m_creationMethod;
+
+        /// <summary>
+        /// The empty document to use when recreating the asset file.
+        /// </summary>
+        std::string m_creationDocumentCopy;
+
+#pragma region Matching Criteria Creation
 
         /// <summary>
         /// Creates the data for MatchingCriteria.
@@ -64,8 +84,43 @@ namespace SuperGameTools
         /// <param name="matchingNodeRoot">The MatchingCriteria node. </param>
         void CreateDataForMatchingCriteriaExtension(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot);
 
-        // Should Use Template
+#pragma endregion
+#pragma region Should Use Template
 
+        /// <summary>
+        /// Should use template logic when extension is selected.
+        /// </summary>
+        /// <param name="filepath">Filepath of the original file. </param>
+        /// <returns>True means should use template. </returns>
         bool ShouldUseTemplateExtension(const std::string& filepath) const;
+
+#pragma endregion
+
+#pragma region CreateAssetFile Creation
+
+        /// <summary>
+        /// Creates the data for the Template node which allows us to create asset files.
+        /// </summary>
+        /// <param name="templateNode">The Template node. </param>
+        void CreateDataForCreateAssetFile(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
+
+        /// <summary>
+        /// Creates the data for the Template node which allows us to create asset files.
+        /// This is the logic for simple creation.
+        /// </summary>
+        /// <param name="templateNode">The Template node. </param>
+        void CreateDataForCreateAssetFileSimple(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
+
+#pragma endregion
+
+#pragma region CreateAssetFile
+        /// <summary>
+        /// Create an asset file based on the file path using the simple logic.
+        /// </summary>
+        /// <param name="filepath">Filepath to use as a base. </param>
+        /// <returns>An asset file </returns>
+        virtual std::string CreateAssetFileSimple(const std::string& filepath) const;
+
+#pragma endregion
     };
 }

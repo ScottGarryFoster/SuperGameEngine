@@ -84,5 +84,13 @@ namespace FatedQuestLibraries
         /// <param name="inText">Text to look within. </param>
         /// <returns>True means toFind is within inText. </returns>
         static bool Contains(const std::string& toFind, const std::string& inText);
+
+        /// <summary>
+        /// Takes a string and creates another which represents it in a more
+        /// appealing way to display to the user.
+        /// </summary>
+        /// <param name="input">Input to  make pretty. </param>
+        /// <returns>Display name. </returns>
+        static std::string DisplayName(const std::string& input);
     };
 }
