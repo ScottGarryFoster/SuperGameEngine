@@ -123,6 +123,16 @@ namespace SuperGameTools
         std::vector<std::shared_ptr<AssetMetaData>> m_assetMetaData;
 
         void LoadAssetMetaDataFiles();
+        void SearchAllFilesForPotentialMissingAssetFiles();
+        void SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<FatedQuestLibraries::GamePackage> gamePackage, const std::string& currentDirectory);
         void CreateAssetFilesForValidAssets();
+
+        /// <summary>
+        /// Tries to find the asset template file.
+        /// </summary>
+        /// <param name="packagePath">Path to the game package file. </param>
+        /// <param name="assetFileContents">If found, the contents are created and returned. </param>
+        /// <returns>True means a match was found, false means this type is not an asset. </returns>
+        bool TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents);
     };
 }

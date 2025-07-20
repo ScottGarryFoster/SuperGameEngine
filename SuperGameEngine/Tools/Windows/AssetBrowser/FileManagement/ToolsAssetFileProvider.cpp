@@ -11,6 +11,7 @@
 #include "../../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
 #include "Engine/FileSystem/FileWatcher/FileUpdateEventArguments.h"
 #include "Engine/FileSystem/FileWatcher/ToolsFileWatcher.h"
+#include "Engine/Structural/Asset/Template/AssetTemplate.h"
 #include "Engine/Structural/Asset/Template/ToolsAssetMetaData.h"
 
 using namespace SuperGameEngine;
@@ -28,6 +29,7 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
     m_reloadPackage.store(false, std::memory_order_relaxed);
 
     LoadAssetMetaDataFiles();
+    SearchAllFilesForPotentialMissingAssetFiles();
 
     auto folder = std::make_shared<ToolsAssetFolder>(package, texture, "");
     m_rootFolder = folder;
@@ -159,7 +161,68 @@ void ToolsAssetFileProvider::LoadAssetMetaDataFiles()
     }
 }
 
+void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles()
+{
+    std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock();
+    if (!gamePackage)
+    {
+        Log::Error("No game package given. Cannot create asset files.",
+            "ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles");
+        return;
+    }
+
+    SearchAllFilesForPotentialMissingAssetFiles(gamePackage, {});
+}
+
+void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<GamePackage> gamePackage, const std::string& currentDirectory)
+{
+
+    std::vector<std::string> filenames = gamePackage->Directory()->GetFiles(currentDirectory);
+    for (const std::string& filename : filenames)
+    {
+        std::string gamepackagePath = Directory::CombinePath(currentDirectory, filename);
+        std::string extension = StringHelpers::ToLower(File::GetExtension(filename));
+        if (extension != ".ast")
+        {
+            std::string assetFilepath = gamepackagePath + ".ast";
+            if (!gamePackage->File()->Exists(assetFilepath))
+            {
+                // There is a file without an asset file and we are not an asset file.
+                std::string newFileContents = {};
+                if (TryFindAssetFileTemplate(gamepackagePath, newFileContents))
+                {
+                    // In next commit create these files.
+                    Log::Info("New asset file found." + assetFilepath);
+                }
+            }
+        }
+    }
+
+    std::vector<std::string> directories = gamePackage->Directory()->ListDirectories(currentDirectory);
+    for (const std::string& directory : directories)
+    {
+        SearchAllFilesForPotentialMissingAssetFiles(gamePackage, directory);
+    }
+}
+
 void ToolsAssetFileProvider::CreateAssetFilesForValidAssets()
 {
 
+}
+
+bool ToolsAssetFileProvider::TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents)
+{
+    for (const std::shared_ptr<AssetMetaData>& metaData : m_assetMetaData)
+    {
+        if (metaData->GetTemplate())
+        {
+            if (metaData->GetTemplate()->ShouldUseTemplate(packagePath))
+            {
+                assetFileContents = metaData->GetTemplate()->CreateAssetFile(packagePath);
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
