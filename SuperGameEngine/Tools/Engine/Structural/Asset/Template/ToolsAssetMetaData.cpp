@@ -22,16 +22,16 @@ ToolsAssetMetaData::ToolsAssetMetaData(
 
     std::shared_ptr<StoredDocumentNode> root = document->GetRoot();
     for (std::shared_ptr<StoredDocumentNode> current = root->GetFirstChild(); 
-        current != root->GetLastChild(); 
+        current; 
         current = current->GetAdjacentNode())
     {
         std::string nodeName = StringHelpers::ToLower(current->Name());
-        if (!m_template && nodeName == "AssetTemplate")
+        if (!m_template && nodeName == "assettemplate")
         {
             m_template = std::make_shared<ToolsAssetTemplate>(current);
         }
 
-        if (!m_layout && nodeName == "AssetLayout")
+        if (!m_layout && nodeName == "assetlayout")
         {
             m_layout = std::make_shared<ToolsAssetLayout>(current);
         }

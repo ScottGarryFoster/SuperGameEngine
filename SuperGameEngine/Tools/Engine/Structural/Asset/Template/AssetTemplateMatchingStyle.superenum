@@ -1,0 +1,18 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes how a template might figure out if a given file is in fact the template
+        for which it is defined. For instance does the file path make a match.
+    </EnumComment>
+    <EnumName Name="AssetTemplateMatchingStyle">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Extension>
+            The extension matches the given template.
+        </Extension>
+    </EnumName>
+</SuperEnum>

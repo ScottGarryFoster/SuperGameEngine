@@ -16,6 +16,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class AssetMetaData;
     class FileWatcher;
     class ToolsAssetFolder;
 
@@ -70,6 +71,12 @@ namespace SuperGameTools
         virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
     private:
+
+        /// <summary>
+        /// Where to store the asset templates within the game package.
+        /// </summary>
+        const std::string m_assetTemplateFolder = "Tools\\AssetTemplates";
+
         /// <summary>
         /// All the folders at the root level.
         /// </summary>
@@ -110,6 +117,12 @@ namespace SuperGameTools
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onFileSystemUpdated;
 
+        /// <summary>
+        /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
+        /// </summary>
+        std::vector<std::shared_ptr<AssetMetaData>> m_assetMetaData;
+
+        void LoadAssetMetaDataFiles();
         void CreateAssetFilesForValidAssets();
     };
 }

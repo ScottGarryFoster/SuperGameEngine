@@ -87,9 +87,9 @@ namespace FatedQuestLibraries
         /// <summary>
         /// Returns the last extension<br/>
         /// Given: folder\\filepath.png.gz ->
-        /// Returns: folder\\filepath.png<br/>
+        /// Returns: .gz<br/>
         /// Given: folder\\filepath.png ->
-        /// Returns: folder\\filepath<br />
+        /// Returns: .png<br />
         /// If there is no extension returns empty string.
         /// </summary>
         /// <param name="filepath">Filepath to inspect. </param>

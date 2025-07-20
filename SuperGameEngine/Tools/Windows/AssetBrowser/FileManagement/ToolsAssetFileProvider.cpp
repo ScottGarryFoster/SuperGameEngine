@@ -8,8 +8,10 @@
 
 #include "PackageFilesHaveUpdatedEventArguments.h"
 #include "ToolsAssetFolder.h"
+#include "../../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
 #include "Engine/FileSystem/FileWatcher/FileUpdateEventArguments.h"
 #include "Engine/FileSystem/FileWatcher/ToolsFileWatcher.h"
+#include "Engine/Structural/Asset/Template/ToolsAssetMetaData.h"
 
 using namespace SuperGameEngine;
 using namespace SuperGameTools;
@@ -24,6 +26,8 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
     m_textureManager = texture;
     m_packagePaths = packagePaths;
     m_reloadPackage.store(false, std::memory_order_relaxed);
+
+    LoadAssetMetaDataFiles();
 
     auto folder = std::make_shared<ToolsAssetFolder>(package, texture, "");
     m_rootFolder = folder;
@@ -106,6 +110,52 @@ void ToolsAssetFileProvider::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         // We should run this on the main thread to avoid threading conflicts.
         m_reloadPackage.store(true, std::memory_order_relaxed);
+    }
+}
+
+
+void ToolsAssetFileProvider::LoadAssetMetaDataFiles()
+{
+    std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock();
+    if (!gamePackage)
+    {
+        Log::Error("No game package given. Cannot load asset meta files.",
+            "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
+        return;
+    }
+
+    if (!gamePackage->Directory()->Exists(m_assetTemplateFolder))
+    {
+        Log::Error("No Asset Template folder. Cannot create asset templates automatically.",
+            "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
+        return;
+    }
+
+    std::vector<std::string> templateFilenames = gamePackage->Directory()->GetFiles(m_assetTemplateFolder);
+    for (const std::string& templateFilename : templateFilenames)
+    {
+        std::string fullGamepackagePath = Directory::CombinePath(m_assetTemplateFolder, templateFilename);
+        std::string fileContents = gamePackage->File()->ReadFileContents(fullGamepackagePath);
+
+        auto document = std::make_shared<RapidXMLDocument>();
+        if (!document->Load(fileContents))
+        {
+            Log::Error("Could not load asset template file: " + fullGamepackagePath,
+                "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
+            continue;
+        }
+
+        try
+        {
+            m_assetMetaData.emplace_back(std::make_shared<ToolsAssetMetaData>(document));
+        }
+        catch (Exception& e)
+        {
+            Log::Exception("Could not load template file due to an exception." +
+                           e.Message() + " Filepath: " + fullGamepackagePath, 
+                "ToolsAssetFileProvider::LoadAssetMetaDataFiles", 
+                e.Type());
+        }
     }
 }
 
