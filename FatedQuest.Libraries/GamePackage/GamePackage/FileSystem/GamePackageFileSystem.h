@@ -58,7 +58,13 @@ namespace FatedQuestLibraries
         /// </remarks>
         virtual void GiveFiles(const std::vector<std::pair<PackageFileOrigin, std::shared_ptr<PackageFile>>>& packageFiles);
 
-    private:
+    protected:
+        /// <summary>
+        /// All files the file and directory systems know about.
+        /// Note these are files not directories.
+        /// </summary>
+        std::shared_ptr<PackageFiles> m_packageFiles;
+
         /// <summary>
         /// Handles file methods;
         /// </summary>
@@ -69,6 +75,8 @@ namespace FatedQuestLibraries
         /// </summary>
         std::shared_ptr<GamePackageFileSystemDirectory> m_directorySystem;
 
+    private:
+
         /// <summary>
         /// All archived files we know about.
         /// </summary>
@@ -78,12 +86,6 @@ namespace FatedQuestLibraries
         /// All unarchived files we know about.
         /// </summary>
         std::unordered_map<std::string, std::shared_ptr<PackageFile>> m_unarchivedFiles;
-
-        /// <summary>
-        /// All files the file and directory systems know about.
-        /// Note these are files not directories.
-        /// </summary>
-        std::shared_ptr<PackageFiles> m_packageFiles;
 
         /// <summary>
         /// Called everytime a significant change occurs to files

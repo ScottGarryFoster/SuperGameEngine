@@ -93,6 +93,7 @@ NugetInclude("rapidxml" Tools)
 NugetInclude("sdl2" Tools)
 NugetInclude("sdl2Mixer" Tools)
 NugetInclude("sdl2Image" Tools)
+NugetInclude("zlib" Tools)
 
 # Link libraries
 add_subdirectory(../Engine Engine)

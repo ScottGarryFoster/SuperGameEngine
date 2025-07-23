@@ -18,6 +18,7 @@
 #include "../Windows/DockableContainer/DockableContainer.h"
 #include "../Windows/SceneHierarchy/SceneHierarchy.h"
 #include "../Windows/InspectorWindow/InspectorWindow.h"
+#include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
 #include "FrameworkManager/ToolsFrameworkManager.h"
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
@@ -44,7 +45,7 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     {
         auto paths = std::make_shared<SGEPackagePaths>();
         m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
-        auto gamePackage = std::make_shared<CombinedGamePackage>();
+        auto gamePackage = std::make_shared<ToolsGamePackage>();
         gamePackage->Load(paths);
         m_superContentManager->GiveGamePackage(gamePackage);
 

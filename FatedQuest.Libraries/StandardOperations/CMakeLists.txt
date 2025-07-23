@@ -86,8 +86,10 @@ endforeach()
 
 # Link libraries
 add_subdirectory(../Logger Logger)
+add_subdirectory(../SharedEnums SharedEnums)
 
 # Link dependencies
 target_link_libraries(StandardOperations PRIVATE
     Logger
+    SharedEnums
 )
