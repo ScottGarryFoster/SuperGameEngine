@@ -1,5 +1,6 @@
 #pragma once
 #include <mutex>
+#include <queue>
 
 #include "AssetFileProvider.h"
 #include "../../../FatedQuestLibraries.h"
@@ -16,6 +17,8 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class FileUpdateEventArguments;
+    class AssetMetaData;
     class FileWatcher;
     class ToolsAssetFolder;
 
@@ -70,6 +73,12 @@ namespace SuperGameTools
         virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
     private:
+
+        /// <summary>
+        /// Where to store the asset templates within the game package.
+        /// </summary>
+        const std::string m_assetTemplateFolder = "Tools\\AssetTemplates";
+
         /// <summary>
         /// All the folders at the root level.
         /// </summary>
@@ -86,9 +95,14 @@ namespace SuperGameTools
         std::weak_ptr<SuperGameEngine::TextureManager> m_textureManager;
 
         /// <summary>
-        /// True when we should we reload all the files we care about.
+        /// Updates about the files in the game package.
         /// </summary>
-        std::atomic<bool> m_reloadPackage;
+        std::queue<std::shared_ptr<FileUpdateEventArguments>> m_reloadPackageQueue;
+
+        /// <summary>
+        /// True when we are adding to or using the queue.
+        /// </summary>
+        std::mutex m_reloadPackageQueueLock;
 
         /// <summary>
         /// Allows us to update the asset browser on file updates.
@@ -109,5 +123,41 @@ namespace SuperGameTools
         /// Event trigger when the file system updates.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onFileSystemUpdated;
+
+        /// <summary>
+        /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
+        /// </summary>
+        std::vector<std::shared_ptr<AssetMetaData>> m_assetMetaData;
+
+        void LoadAssetMetaDataFiles();
+        void SearchAllFilesForPotentialMissingAssetFiles();
+        void SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage, const std::string& currentDirectory);
+        void CreateAssetFilesForValidAssets();
+
+        /// <summary>
+        /// Tries to find the asset template file.
+        /// </summary>
+        /// <param name="packagePath">Path to the game package file. </param>
+        /// <param name="assetFileContents">If found, the contents are created and returned. </param>
+        /// <returns>True means a match was found, false means this type is not an asset. </returns>
+        bool TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents);
+
+        /// <summary>
+        /// Looks at the given package path and if applicable will create an asset file.
+        /// </summary>
+        /// <param name="gamePackage">Game package containing all the files which we know about. </param>
+        /// <param name="packagePath">Path to attempt to observe. </param>
+        void TryAddAssetFile(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage, const std::string& packagePath);
+
+        /// <summary>
+        /// Setup the listener to file changes.
+        /// </summary>
+        void ListenToFilePackageChanges();
+
+        /// <summary>
+        /// Process or attempt to process if there is something any changes to the file system.
+        /// Will create asset files and reload the game package.
+        /// </summary>
+        void ProcessFilePackageChanges();
     };
 }

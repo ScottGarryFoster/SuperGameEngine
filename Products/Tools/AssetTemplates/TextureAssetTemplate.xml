@@ -1,0 +1,14 @@
+<AssetMetaData>
+    <AssetTemplate>
+        <MatchingCriteria AssetTemplateMatchingStyle="Extension">
+            <Extension value=".png" />
+        </MatchingCriteria>
+        <Template AssetTemplateCreationMethod="Simple">
+            <Asset>
+                <Strings>
+                    <String Key="GameAssetName" Value="{FilepathDisplayName}" />
+                </Strings>
+            </Asset>
+        </Template>
+    </AssetTemplate>
+</AssetMetaData>

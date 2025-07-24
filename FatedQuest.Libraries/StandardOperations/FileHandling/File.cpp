@@ -212,12 +212,16 @@ std::string File::Separator()
     return "\\";
 }
 
-std::string File::Sanitize(const std::string& path)
+std::string File::Sanitize(const std::string& path, CaseRespective caseRespective)
 {
-    std::string returnPath = StringHelpers::ToLower(path);
-    returnPath = StringHelpers::Trim(returnPath);
+    std::string returnPath = StringHelpers::Trim(path);
     returnPath = StringHelpers::ReplaceAll(returnPath,"/","\\");
     returnPath = StringHelpers::ReplaceAll(returnPath,"\\\\","\\");
+
+    if (caseRespective == CaseRespective::AlterCaseAsNeeded)
+    {
+        returnPath = StringHelpers::ToLower(returnPath);
+    }
 
     return returnPath;
 }

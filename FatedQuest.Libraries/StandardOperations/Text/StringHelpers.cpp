@@ -183,3 +183,63 @@ std::string StringHelpers::Capitalize(const std::string& input)
 
     return answer;
 }
+
+bool StringHelpers::Contains(const std::string& toFind, const std::string& inText)
+{
+    if (toFind.empty() && inText.empty())
+    {
+        return true;
+    }
+
+    if (toFind.empty() || inText.empty())
+    {
+        return false;
+    }
+
+    return inText.find(toFind) != std::string::npos;
+}
+
+std::string StringHelpers::DisplayName(const std::string& input)
+{
+    auto addFillerCharacter = [](std::string& displayName, const char& character)
+    {
+        if (!displayName.empty() && displayName.back() != character)
+        {
+            displayName.push_back(character);
+        }
+    };
+
+    std::string displayName;
+    bool doCapital = false;
+    for (char character : input)
+    {
+        if (character == '.')
+        {
+            doCapital = true;
+            addFillerCharacter(displayName, '.');
+
+        }
+        else if (character == '_' || character == '-')
+        {
+            addFillerCharacter(displayName, ' ');
+        }
+        else
+        {
+            if (doCapital &&
+                std::isalpha(static_cast<unsigned char>(character)))
+            {
+                character = std::toupper(static_cast<unsigned char>(character));
+                doCapital = false;
+            }
+
+            if (std::isupper(static_cast<unsigned char>(character)))
+            {
+                addFillerCharacter(displayName, ' ');
+            }
+
+            displayName.push_back(character);
+        }
+    }
+
+    return displayName;
+}

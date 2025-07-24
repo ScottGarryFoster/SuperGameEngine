@@ -22,12 +22,12 @@ std::string FilePaths::ApplicationDirectory()
 
 #if defined(_WINDOWS)
     GetModuleFileNameA(NULL, buffer, MAX_PATH);
-#elif defined(__APPLE__)
+#elif defined(_APPLE)
     uint32_t size = sizeof(buffer);
     if (_NSGetExecutablePath(buffer, &size) != 0) {
         throw std::runtime_error("Buffer too small for executable path");
     }
-#elif defined(__linux__)
+#elif defined(_LINUX)
     ssize_t length = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
     if (length == -1) {
         throw std::runtime_error("Failed to read /proc/self/exe");

@@ -7,3 +7,4 @@
 #include "ModifiableNode.h"
 #include "ModifiableAttribute.h"
 #include "Converters/DocumentToXml.h"
+#include "Converters/SimpleDocumentToXml.h"

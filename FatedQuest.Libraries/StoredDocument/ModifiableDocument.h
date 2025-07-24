@@ -34,6 +34,14 @@ namespace FatedQuestLibraries
         bool Load(const std::shared_ptr<StoredDocument>& storedDocument);
 
         /// <summary>
+        /// Loads the information from the stored document node in this one such
+        /// that you can now modify it.
+        /// </summary>
+        /// <param name="storedDocument">Stored document node (this will become the root). </param>
+        /// <returns>True means parsed. </returns>
+        bool Load(const std::shared_ptr<StoredDocumentNode>& storedDocumentNode);
+
+        /// <summary>
         /// Gets the root StoredDocumentNode for the document.
         /// </summary>
         /// <returns>

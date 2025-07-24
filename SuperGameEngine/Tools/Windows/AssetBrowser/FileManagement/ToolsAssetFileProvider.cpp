@@ -8,8 +8,11 @@
 
 #include "PackageFilesHaveUpdatedEventArguments.h"
 #include "ToolsAssetFolder.h"
+#include "../../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
 #include "Engine/FileSystem/FileWatcher/FileUpdateEventArguments.h"
 #include "Engine/FileSystem/FileWatcher/ToolsFileWatcher.h"
+#include "Engine/Structural/Asset/Template/AssetTemplate.h"
+#include "Engine/Structural/Asset/Template/ToolsAssetMetaData.h"
 
 using namespace SuperGameEngine;
 using namespace SuperGameTools;
@@ -23,7 +26,13 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
     m_gamePackage = package;
     m_textureManager = texture;
     m_packagePaths = packagePaths;
-    m_reloadPackage.store(false, std::memory_order_relaxed);
+
+    LoadAssetMetaDataFiles();
+    SearchAllFilesForPotentialMissingAssetFiles();
+    if (std::shared_ptr<GamePackage> gamePackage = package.lock())
+    {
+        gamePackage->Reload();
+    }
 
     auto folder = std::make_shared<ToolsAssetFolder>(package, texture, "");
     m_rootFolder = folder;
@@ -40,43 +49,8 @@ ToolsAssetFileProvider::~ToolsAssetFileProvider()
 
 void ToolsAssetFileProvider::Update()
 {
-    if (!m_watcherSubscription.lock())
-    {
-        m_fileWatcher = std::make_shared<ToolsFileWatcher>(m_packagePaths);
-        m_watcherSubscription = m_fileWatcher->WatchFolder("");
-        if (std::shared_ptr<FEventSubscriptions> subscription = m_watcherSubscription.lock())
-        {
-            subscription->Subscribe(shared_from_this());
-            Log::Info("Subscribed to FileWatcher.", "ToolsAssetFileProvider::Update");
-            m_fileWatcher->Start();
-        }
-    }
-
-    if (!m_reloadPackage.load(std::memory_order_relaxed))
-    {
-        return;
-    }
-
-    if (std::shared_ptr<FatedQuestLibraries::GamePackage> gamePackage = m_gamePackage.lock())
-    {
-        //std::unique_lock lock(gamePackage);
-        if (!gamePackage->Reload())
-        {
-            Log::Error("Could not reload GamePackage.", "ToolsAssetFileProvider::Update");
-            return;
-        }
-
-        m_rootFolder->PopulateChildren({});
-
-        auto packageUpdate = std::make_shared<PackageFilesHaveUpdatedEventArguments>(m_rootFolder);
-        m_onFileSystemUpdated->Invoke(packageUpdate);
-    }
-    else
-    {
-        Log::Error("Lost a pointer to GamePackage.", "ToolsAssetFileProvider::Update");
-    }
-
-    m_reloadPackage.store(false, std::memory_order_relaxed);
+    ListenToFilePackageChanges();
+    ProcessFilePackageChanges();
 }
 
 std::vector<std::shared_ptr<AssetFolder>> ToolsAssetFileProvider::GetFoldersInRootDirectory() const
@@ -105,6 +79,191 @@ void ToolsAssetFileProvider::Invoke(std::shared_ptr<FEventArguments> arguments)
         std::dynamic_pointer_cast<FileUpdateEventArguments>(arguments))
     {
         // We should run this on the main thread to avoid threading conflicts.
-        m_reloadPackage.store(true, std::memory_order_relaxed);
+        m_reloadPackageQueueLock.lock();
+        m_reloadPackageQueue.push(fileUpdateEventArguments);
+        m_reloadPackageQueueLock.unlock();
+    }
+}
+
+
+void ToolsAssetFileProvider::LoadAssetMetaDataFiles()
+{
+    std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock();
+    if (!gamePackage)
+    {
+        Log::Error("No game package given. Cannot load asset meta files.",
+            "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
+        return;
+    }
+
+    if (!gamePackage->Directory()->Exists(m_assetTemplateFolder))
+    {
+        Log::Error("No Asset Template folder. Cannot create asset templates automatically.",
+            "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
+        return;
+    }
+
+    std::vector<std::string> templateFilenames = gamePackage->Directory()->GetFiles(m_assetTemplateFolder);
+    for (const std::string& templateFilename : templateFilenames)
+    {
+        std::string fullGamepackagePath = Directory::CombinePath(m_assetTemplateFolder, templateFilename);
+        std::string fileContents = gamePackage->File()->ReadFileContents(fullGamepackagePath);
+
+        auto document = std::make_shared<RapidXMLDocument>();
+        if (!document->Load(fileContents))
+        {
+            Log::Error("Could not load asset template file: " + fullGamepackagePath,
+                "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
+            continue;
+        }
+
+        try
+        {
+            m_assetMetaData.emplace_back(std::make_shared<ToolsAssetMetaData>(document));
+        }
+        catch (Exception& e)
+        {
+            Log::Exception("Could not load template file due to an exception." +
+                           e.Message() + " Filepath: " + fullGamepackagePath, 
+                "ToolsAssetFileProvider::LoadAssetMetaDataFiles", 
+                e.Type());
+        }
+    }
+}
+
+void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles()
+{
+    std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock();
+    if (!gamePackage)
+    {
+        Log::Error("No game package given. Cannot create asset files.",
+            "ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles");
+        return;
+    }
+
+    SearchAllFilesForPotentialMissingAssetFiles(gamePackage, {});
+}
+
+void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<GamePackage>& gamePackage, const std::string& currentDirectory)
+{
+
+    std::vector<std::string> filenames = gamePackage->Directory()->GetFiles(currentDirectory);
+    for (const std::string& filename : filenames)
+    {
+        std::string gamePackagePath = Directory::CombinePath(currentDirectory, filename);
+        TryAddAssetFile(gamePackage, gamePackagePath);
+    }
+
+    std::vector<std::string> directories = gamePackage->Directory()->ListDirectories(currentDirectory);
+    for (const std::string& directory : directories)
+    {
+        SearchAllFilesForPotentialMissingAssetFiles(gamePackage, directory);
+    }
+}
+
+void ToolsAssetFileProvider::CreateAssetFilesForValidAssets()
+{
+
+}
+
+bool ToolsAssetFileProvider::TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents)
+{
+    for (const std::shared_ptr<AssetMetaData>& metaData : m_assetMetaData)
+    {
+        if (metaData->GetTemplate())
+        {
+            if (metaData->GetTemplate()->ShouldUseTemplate(packagePath))
+            {
+                assetFileContents = metaData->GetTemplate()->CreateAssetFile(packagePath);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void ToolsAssetFileProvider::TryAddAssetFile(
+    const std::shared_ptr<GamePackage>& gamePackage,
+    const std::string& packagePath)
+{
+    std::string extension = StringHelpers::ToLower(File::GetExtension(packagePath));
+    if (extension != ".ast")
+    {
+        std::string assetFilepath = packagePath + ".ast";
+        if (!gamePackage->File()->Exists(assetFilepath))
+        {
+            // There is a file without an asset file and we are not an asset file.
+            std::string newFileContents = {};
+            if (TryFindAssetFileTemplate(packagePath, newFileContents))
+            {
+                std::string fullpath = Directory::CombinePath(m_packagePaths->ProductsDirectory(), m_packagePaths->ProductsDirectoryName(), assetFilepath);
+                File::WriteLine(fullpath, newFileContents);
+
+                // In next commit create these files.
+                Log::Info("Written asset: " + assetFilepath);
+            }
+        }
+    }
+}
+
+void ToolsAssetFileProvider::ListenToFilePackageChanges()
+{
+    if (!m_watcherSubscription.lock())
+    {
+        m_fileWatcher = std::make_shared<ToolsFileWatcher>(m_packagePaths);
+        m_watcherSubscription = m_fileWatcher->WatchFolder("");
+        if (std::shared_ptr<FEventSubscriptions> subscription = m_watcherSubscription.lock())
+        {
+            subscription->Subscribe(shared_from_this());
+            Log::Info("Subscribed to FileWatcher.", "ToolsAssetFileProvider::ListenToFilePackageChanges");
+            m_fileWatcher->Start();
+        }
+    }
+}
+
+void ToolsAssetFileProvider::ProcessFilePackageChanges()
+{
+    m_reloadPackageQueueLock.lock();
+    if (m_reloadPackageQueue.empty())
+    {
+        m_reloadPackageQueueLock.unlock();
+        return;
+    }
+    m_reloadPackageQueueLock.unlock();
+
+    if (std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock())
+    {
+        //std::unique_lock lock(gamePackage);
+        if (!gamePackage->Reload())
+        {
+            Log::Error("Could not reload GamePackage.", "ToolsAssetFileProvider::ProcessFilePackageChanges");
+            return;
+        }
+
+        m_reloadPackageQueueLock.lock();
+        std::shared_ptr<FileUpdateEventArguments> arguments = m_reloadPackageQueue.front();
+        m_reloadPackageQueue.pop();
+        m_reloadPackageQueueLock.unlock();
+
+        for (const std::string& path : arguments->GetFilesAdded())
+        {
+            TryAddAssetFile(gamePackage, path);
+        }
+
+        if (!arguments->GetFilesAdded().empty() && !gamePackage->Reload())
+        {
+            Log::Error("Could not reload GamePackage.", "ToolsAssetFileProvider::ProcessFilePackageChanges");
+            return;
+        }
+
+        m_rootFolder->PopulateChildren({});
+
+        auto packageUpdate = std::make_shared<PackageFilesHaveUpdatedEventArguments>(m_rootFolder);
+        m_onFileSystemUpdated->Invoke(packageUpdate);
+    }
+    else
+    {
+        Log::Error("Lost a pointer to GamePackage.", "ToolsAssetFileProvider::ProcessFilePackageChanges");
     }
 }

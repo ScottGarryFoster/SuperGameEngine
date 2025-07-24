@@ -7,3 +7,4 @@
 #include "../../FatedQuest.Libraries/Observer/AllReferences.h"
 #include "../../FatedQuest.Libraries/Logger/Logger/Log.h"
 #include "../../FatedQuest.Libraries/ClassTypes/ClassTypes.h"
+#include "../../FatedQuest.Libraries/Exceptions/AllReferences.h"

@@ -48,6 +48,30 @@ bool ModifiableDocument::Load(const std::shared_ptr<StoredDocument>& storedDocum
     return true;
 }
 
+bool ModifiableDocument::Load(const std::shared_ptr<StoredDocumentNode>& storedDocumentNode)
+{
+    if (!storedDocumentNode)
+    {
+        Log::Error("Node does not exist.",
+            "ModifiableDocument::Load(std::shared_ptr<StoredDocumentNode>)");
+        return false;
+    }
+
+    auto modNode = std::make_shared<ModifiableNode>();
+    if (modNode->Load(storedDocumentNode))
+    {
+        m_root = modNode;
+    }
+    else
+    {
+        Log::Error("Could not parse stored node into a modifiable node.",
+            "ModifiableDocument::Load(std::shared_ptr<StoredDocumentNode>)");
+        return false;
+    }
+
+    return true;
+}
+
 std::shared_ptr<StoredDocumentNode> ModifiableDocument::GetRoot()
 {
     return m_root;

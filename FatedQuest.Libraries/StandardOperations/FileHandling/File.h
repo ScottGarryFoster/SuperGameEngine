@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+
+#include "../../SharedEnums/CaseRespective.h"
 #include "CopyFileOptions.h"
 
 namespace FatedQuestLibraries
@@ -87,9 +89,9 @@ namespace FatedQuestLibraries
         /// <summary>
         /// Returns the last extension<br/>
         /// Given: folder\\filepath.png.gz ->
-        /// Returns: folder\\filepath.png<br/>
+        /// Returns: .gz<br/>
         /// Given: folder\\filepath.png ->
-        /// Returns: folder\\filepath<br />
+        /// Returns: .png<br />
         /// If there is no extension returns empty string.
         /// </summary>
         /// <param name="filepath">Filepath to inspect. </param>
@@ -126,8 +128,12 @@ namespace FatedQuestLibraries
         /// Sanitize the path such that it should be comparable to another.
         /// </summary>
         /// <param name="path">Path to sanitize. </param>
+        /// <param name="caseRespective">
+        /// When AlterCaseAsNeeded it will always change the case to a uniform case,
+        /// otherwise it will leave it unchanged.
+        /// </param>
         /// <returns>New path. </returns>
-        static std::string Sanitize(const std::string& path);
+        static std::string Sanitize(const std::string& path, CaseRespective caseRespective = CaseRespective::AlterCaseAsNeeded);
 
         /// <summary>
         /// Get the filename from a given path.
