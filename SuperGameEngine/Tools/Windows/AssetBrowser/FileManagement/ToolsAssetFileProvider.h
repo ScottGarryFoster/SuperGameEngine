@@ -1,5 +1,6 @@
 #pragma once
 #include <mutex>
+#include <queue>
 
 #include "AssetFileProvider.h"
 #include "../../../FatedQuestLibraries.h"
@@ -16,6 +17,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class FileUpdateEventArguments;
     class AssetMetaData;
     class FileWatcher;
     class ToolsAssetFolder;
@@ -93,9 +95,14 @@ namespace SuperGameTools
         std::weak_ptr<SuperGameEngine::TextureManager> m_textureManager;
 
         /// <summary>
-        /// True when we should we reload all the files we care about.
+        /// Updates about the files in the game package.
         /// </summary>
-        std::atomic<bool> m_reloadPackage;
+        std::queue<std::shared_ptr<FileUpdateEventArguments>> m_reloadPackageQueue;
+
+        /// <summary>
+        /// True when we are adding to or using the queue.
+        /// </summary>
+        std::mutex m_reloadPackageQueueLock;
 
         /// <summary>
         /// Allows us to update the asset browser on file updates.
@@ -124,7 +131,7 @@ namespace SuperGameTools
 
         void LoadAssetMetaDataFiles();
         void SearchAllFilesForPotentialMissingAssetFiles();
-        void SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<FatedQuestLibraries::GamePackage> gamePackage, const std::string& currentDirectory);
+        void SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage, const std::string& currentDirectory);
         void CreateAssetFilesForValidAssets();
 
         /// <summary>
@@ -134,5 +141,23 @@ namespace SuperGameTools
         /// <param name="assetFileContents">If found, the contents are created and returned. </param>
         /// <returns>True means a match was found, false means this type is not an asset. </returns>
         bool TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents);
+
+        /// <summary>
+        /// Looks at the given package path and if applicable will create an asset file.
+        /// </summary>
+        /// <param name="gamePackage">Game package containing all the files which we know about. </param>
+        /// <param name="packagePath">Path to attempt to observe. </param>
+        void TryAddAssetFile(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage, const std::string& packagePath);
+
+        /// <summary>
+        /// Setup the listener to file changes.
+        /// </summary>
+        void ListenToFilePackageChanges();
+
+        /// <summary>
+        /// Process or attempt to process if there is something any changes to the file system.
+        /// Will create asset files and reload the game package.
+        /// </summary>
+        void ProcessFilePackageChanges();
     };
 }

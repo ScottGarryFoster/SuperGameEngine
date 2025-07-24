@@ -26,7 +26,6 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
     m_gamePackage = package;
     m_textureManager = texture;
     m_packagePaths = packagePaths;
-    m_reloadPackage.store(false, std::memory_order_relaxed);
 
     LoadAssetMetaDataFiles();
     SearchAllFilesForPotentialMissingAssetFiles();
@@ -50,43 +49,8 @@ ToolsAssetFileProvider::~ToolsAssetFileProvider()
 
 void ToolsAssetFileProvider::Update()
 {
-    if (!m_watcherSubscription.lock())
-    {
-        m_fileWatcher = std::make_shared<ToolsFileWatcher>(m_packagePaths);
-        m_watcherSubscription = m_fileWatcher->WatchFolder("");
-        if (std::shared_ptr<FEventSubscriptions> subscription = m_watcherSubscription.lock())
-        {
-            subscription->Subscribe(shared_from_this());
-            Log::Info("Subscribed to FileWatcher.", "ToolsAssetFileProvider::Update");
-            m_fileWatcher->Start();
-        }
-    }
-
-    if (!m_reloadPackage.load(std::memory_order_relaxed))
-    {
-        return;
-    }
-
-    if (std::shared_ptr<FatedQuestLibraries::GamePackage> gamePackage = m_gamePackage.lock())
-    {
-        //std::unique_lock lock(gamePackage);
-        if (!gamePackage->Reload())
-        {
-            Log::Error("Could not reload GamePackage.", "ToolsAssetFileProvider::Update");
-            return;
-        }
-
-        m_rootFolder->PopulateChildren({});
-
-        auto packageUpdate = std::make_shared<PackageFilesHaveUpdatedEventArguments>(m_rootFolder);
-        m_onFileSystemUpdated->Invoke(packageUpdate);
-    }
-    else
-    {
-        Log::Error("Lost a pointer to GamePackage.", "ToolsAssetFileProvider::Update");
-    }
-
-    m_reloadPackage.store(false, std::memory_order_relaxed);
+    ListenToFilePackageChanges();
+    ProcessFilePackageChanges();
 }
 
 std::vector<std::shared_ptr<AssetFolder>> ToolsAssetFileProvider::GetFoldersInRootDirectory() const
@@ -115,7 +79,9 @@ void ToolsAssetFileProvider::Invoke(std::shared_ptr<FEventArguments> arguments)
         std::dynamic_pointer_cast<FileUpdateEventArguments>(arguments))
     {
         // We should run this on the main thread to avoid threading conflicts.
-        m_reloadPackage.store(true, std::memory_order_relaxed);
+        m_reloadPackageQueueLock.lock();
+        m_reloadPackageQueue.push(fileUpdateEventArguments);
+        m_reloadPackageQueueLock.unlock();
     }
 }
 
@@ -178,31 +144,14 @@ void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles()
     SearchAllFilesForPotentialMissingAssetFiles(gamePackage, {});
 }
 
-void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<GamePackage> gamePackage, const std::string& currentDirectory)
+void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<GamePackage>& gamePackage, const std::string& currentDirectory)
 {
 
     std::vector<std::string> filenames = gamePackage->Directory()->GetFiles(currentDirectory);
     for (const std::string& filename : filenames)
     {
-        std::string gamepackagePath = Directory::CombinePath(currentDirectory, filename);
-        std::string extension = StringHelpers::ToLower(File::GetExtension(filename));
-        if (extension != ".ast")
-        {
-            std::string assetFilepath = gamepackagePath + ".ast";
-            if (!gamePackage->File()->Exists(assetFilepath))
-            {
-                // There is a file without an asset file and we are not an asset file.
-                std::string newFileContents = {};
-                if (TryFindAssetFileTemplate(gamepackagePath, newFileContents))
-                {
-                    std::string fullpath = Directory::CombinePath(m_packagePaths->ProductsDirectory(), m_packagePaths->ProductsDirectoryName(), assetFilepath);
-                    File::WriteLine(fullpath, newFileContents);
-
-                    // In next commit create these files.
-                    Log::Info("Written asset: " + assetFilepath);
-                }
-            }
-        }
+        std::string gamePackagePath = Directory::CombinePath(currentDirectory, filename);
+        TryAddAssetFile(gamePackage, gamePackagePath);
     }
 
     std::vector<std::string> directories = gamePackage->Directory()->ListDirectories(currentDirectory);
@@ -232,4 +181,89 @@ bool ToolsAssetFileProvider::TryFindAssetFileTemplate(const std::string& package
     }
 
     return false;
+}
+
+void ToolsAssetFileProvider::TryAddAssetFile(
+    const std::shared_ptr<GamePackage>& gamePackage,
+    const std::string& packagePath)
+{
+    std::string extension = StringHelpers::ToLower(File::GetExtension(packagePath));
+    if (extension != ".ast")
+    {
+        std::string assetFilepath = packagePath + ".ast";
+        if (!gamePackage->File()->Exists(assetFilepath))
+        {
+            // There is a file without an asset file and we are not an asset file.
+            std::string newFileContents = {};
+            if (TryFindAssetFileTemplate(packagePath, newFileContents))
+            {
+                std::string fullpath = Directory::CombinePath(m_packagePaths->ProductsDirectory(), m_packagePaths->ProductsDirectoryName(), assetFilepath);
+                File::WriteLine(fullpath, newFileContents);
+
+                // In next commit create these files.
+                Log::Info("Written asset: " + assetFilepath);
+            }
+        }
+    }
+}
+
+void ToolsAssetFileProvider::ListenToFilePackageChanges()
+{
+    if (!m_watcherSubscription.lock())
+    {
+        m_fileWatcher = std::make_shared<ToolsFileWatcher>(m_packagePaths);
+        m_watcherSubscription = m_fileWatcher->WatchFolder("");
+        if (std::shared_ptr<FEventSubscriptions> subscription = m_watcherSubscription.lock())
+        {
+            subscription->Subscribe(shared_from_this());
+            Log::Info("Subscribed to FileWatcher.", "ToolsAssetFileProvider::ListenToFilePackageChanges");
+            m_fileWatcher->Start();
+        }
+    }
+}
+
+void ToolsAssetFileProvider::ProcessFilePackageChanges()
+{
+    m_reloadPackageQueueLock.lock();
+    if (m_reloadPackageQueue.empty())
+    {
+        m_reloadPackageQueueLock.unlock();
+        return;
+    }
+    m_reloadPackageQueueLock.unlock();
+
+    if (std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock())
+    {
+        //std::unique_lock lock(gamePackage);
+        if (!gamePackage->Reload())
+        {
+            Log::Error("Could not reload GamePackage.", "ToolsAssetFileProvider::ProcessFilePackageChanges");
+            return;
+        }
+
+        m_reloadPackageQueueLock.lock();
+        std::shared_ptr<FileUpdateEventArguments> arguments = m_reloadPackageQueue.front();
+        m_reloadPackageQueue.pop();
+        m_reloadPackageQueueLock.unlock();
+
+        for (const std::string& path : arguments->GetFilesAdded())
+        {
+            TryAddAssetFile(gamePackage, path);
+        }
+
+        if (!arguments->GetFilesAdded().empty() && !gamePackage->Reload())
+        {
+            Log::Error("Could not reload GamePackage.", "ToolsAssetFileProvider::ProcessFilePackageChanges");
+            return;
+        }
+
+        m_rootFolder->PopulateChildren({});
+
+        auto packageUpdate = std::make_shared<PackageFilesHaveUpdatedEventArguments>(m_rootFolder);
+        m_onFileSystemUpdated->Invoke(packageUpdate);
+    }
+    else
+    {
+        Log::Error("Lost a pointer to GamePackage.", "ToolsAssetFileProvider::ProcessFilePackageChanges");
+    }
 }
