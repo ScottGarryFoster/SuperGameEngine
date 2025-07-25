@@ -1,21 +1,30 @@
 #pragma once
-#include "DocumentUniversalObjectData.h"
+#include "DocumentModifiableUniversalObjectData.h"
 
 namespace FatedQuestLibraries
 {
+    class StoredDocument;
+
     /// <summary>
-    /// Explicitly exposes object data for testing.
+    /// A modifiable version of a universal object that can exported to a document.
     /// </summary>
-    class ExplicitUniversalObjectData : public DocumentUniversalObjectData
+    class ExplictDocumentModifiableUniversalObjectData : public virtual DocumentModifiableUniversalObjectData
     {
     public:
-        ExplicitUniversalObjectData(const std::shared_ptr<StoredDocument>& document);
+        ExplictDocumentModifiableUniversalObjectData();
 
         /// <summary>
-        /// Lists all the strings in the object.
+        /// Exports the data stored to a document format.
         /// </summary>
-        /// <returns>All the String keys. </returns>
-        virtual std::vector<std::string> ListStrings() const override;
+        /// <returns>The data within the object as a document. </returns>
+        virtual std::shared_ptr<StoredDocument> ExportToDocument() const override;
+
+        /// <summary>
+        /// Sets the string to the given value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <param name="value">Value to set. </param>
+        virtual void SetString(const std::string& key, const std::string& value) const override;
 
         /// <summary>
         /// Get a loaded string value.
@@ -33,10 +42,11 @@ namespace FatedQuestLibraries
         virtual bool IsStringLoaded(const std::string& key) const override;
 
         /// <summary>
-        /// Lists all the Ints in the object.
+        /// Sets the int to the given value.
         /// </summary>
-        /// <returns>All the Int keys. </returns>
-        virtual std::vector<std::string> ListInts() const override;
+        /// <param name="key">Key to search for. </param>
+        /// <param name="value">Value to set. </param>
+        virtual void SetInt(const std::string& key, int value) const override;
 
         /// <summary>
         /// Get a loaded int value.
@@ -53,10 +63,21 @@ namespace FatedQuestLibraries
         virtual bool IsIntLoaded(const std::string& key) const override;
 
         /// <summary>
-        /// List vector4is in the object.
+        /// Sets the vector4I to the given value.
         /// </summary>
-        /// <returns>All the keys for any Vector4Is. </returns>
-        virtual std::vector<std::string> ListVector4Is() const override;
+        /// <param name="key">Key to search for. </param>
+        /// <param name="value">Value to set. </param>
+        virtual void SetVector4I(const std::string& key, const FVector4I& value) const override;
+
+        /// <summary>
+        /// Sets the vector4I to the given value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <param name="x">X value to set. </param>
+        /// <param name="y">Y value to set. </param>
+        /// <param name="z">Z value to set. </param>
+        /// <param name="w">W value to set. </param>
+        virtual void SetVector4I(const std::string& key, int x, int y, int z, int w) const override;
 
         /// <summary>
         /// Get a loaded Vector4I value.
@@ -73,4 +94,3 @@ namespace FatedQuestLibraries
         virtual bool IsVector4ILoaded(const std::string& key) const override;
     };
 }
-

@@ -1,5 +1,8 @@
 #include "DocumentUniversalObjectData.h"
 
+#include <algorithm>
+#include <iterator>
+
 #include "../Logger/Logger/Log.h"
 #include "../StandardOperations/Number/IntHelpers.h"
 #include "../StandardOperations/Text/StringHelpers.h"
@@ -38,6 +41,16 @@ DocumentUniversalObjectData::DocumentUniversalObjectData(const std::shared_ptr<S
     }
 }
 
+std::vector<std::string> DocumentUniversalObjectData::ListStrings() const
+{
+    std::vector<std::string> keys;
+    keys.reserve(m_stringValues.size());
+    std::ranges::transform(m_stringValues, 
+                           std::back_inserter(keys),
+                           [](const auto& pair) { return pair.first; });
+    return keys;
+}
+
 std::string DocumentUniversalObjectData::GetString(const std::string& key) const
 {
     if (IsStringLoaded(key))
@@ -53,6 +66,16 @@ bool DocumentUniversalObjectData::IsStringLoaded(const std::string& key) const
     return m_stringValues.contains(key);
 }
 
+std::vector<std::string> DocumentUniversalObjectData::ListInts() const
+{
+    std::vector<std::string> keys;
+    keys.reserve(m_intValues.size());
+    std::ranges::transform(m_intValues,
+        std::back_inserter(keys),
+        [](const auto& pair) { return pair.first; });
+    return keys;
+}
+
 int DocumentUniversalObjectData::GetInt(const std::string& key) const
 {
     if (IsIntLoaded(key))
@@ -60,12 +83,22 @@ int DocumentUniversalObjectData::GetInt(const std::string& key) const
         return m_intValues.at(key);
     }
 
-    return {};
+    return -1;
 }
 
 bool DocumentUniversalObjectData::IsIntLoaded(const std::string& key) const
 {
     return m_intValues.contains(key);
+}
+
+std::vector<std::string> DocumentUniversalObjectData::ListVector4Is() const
+{
+    std::vector<std::string> keys;
+    keys.reserve(m_vector4IValues.size());
+    std::ranges::transform(m_vector4IValues,
+        std::back_inserter(keys),
+        [](const auto& pair) { return pair.first; });
+    return keys;
 }
 
 std::shared_ptr<FVector4I> DocumentUniversalObjectData::GetVector4I(const std::string& key) const
@@ -84,7 +117,7 @@ bool DocumentUniversalObjectData::IsVector4ILoaded(const std::string& key) const
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentStrings(
-    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringsNode)
+    const std::shared_ptr<StoredDocumentNode>& stringsNode)
 {
     for (std::shared_ptr<StoredDocumentNode> child = stringsNode->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
@@ -102,7 +135,7 @@ void DocumentUniversalObjectData::ParseStoredDocumentStrings(
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentSingleString(
-    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringNode)
+    const std::shared_ptr<StoredDocumentNode>& stringNode)
 {
     std::string newKey = {};
     if (std::shared_ptr<StoredDocumentAttribute> attribute =
@@ -133,7 +166,7 @@ void DocumentUniversalObjectData::ParseStoredDocumentSingleString(
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentInts(
-    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intsNode)
+    const std::shared_ptr<StoredDocumentNode>& intsNode)
 {
     for (std::shared_ptr<StoredDocumentNode> child = intsNode->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
@@ -151,7 +184,7 @@ void DocumentUniversalObjectData::ParseStoredDocumentInts(
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentSingleInt(
-    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intNode)
+    const std::shared_ptr<StoredDocumentNode>& intNode)
 {
     std::string newKey = {};
     if (std::shared_ptr<StoredDocumentAttribute> attribute =
@@ -188,7 +221,7 @@ void DocumentUniversalObjectData::ParseStoredDocumentSingleInt(
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentVector4I(
-    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node)
+    const std::shared_ptr<StoredDocumentNode>& node)
 {
     for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
@@ -206,7 +239,7 @@ void DocumentUniversalObjectData::ParseStoredDocumentVector4I(
 }
 
 void DocumentUniversalObjectData::ParseStoredDocumentSingleVector4I(
-    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node)
+    const std::shared_ptr<StoredDocumentNode>& node)
 {
     std::string newKey = {};
     if (std::shared_ptr<StoredDocumentAttribute> attribute =
