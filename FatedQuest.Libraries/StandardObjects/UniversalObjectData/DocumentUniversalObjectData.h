@@ -7,6 +7,8 @@
 
 namespace FatedQuestLibraries
 {
+    class UniversalObjectParser;
+
     /// <summary>
     /// A universal object which comes from a document.
     /// </summary>
@@ -84,6 +86,12 @@ namespace FatedQuestLibraries
         virtual bool IsVector4ILoaded(const std::string& key) const override;
 
     private:
+
+        /// <summary>
+        /// Provides methods to parse in and out of Universal Object Data.
+        /// </summary>
+        std::shared_ptr<UniversalObjectParser> m_parser;
+
         /// <summary>
         /// Loaded string values from file.
         /// </summary>
@@ -98,14 +106,6 @@ namespace FatedQuestLibraries
         /// Loaded FVector4I values from file.
         /// </summary>
         std::unordered_map<std::string, std::shared_ptr<FVector4I>> m_vector4IValues;
-
-        void ParseStoredDocumentStrings(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringsNode);
-        void ParseStoredDocumentSingleString(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringNode);
-        void ParseStoredDocumentInts(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intsNode);
-        void ParseStoredDocumentSingleInt(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intNode);
-
-        void ParseStoredDocumentVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node);
-        void ParseStoredDocumentSingleVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node);
     };
 
 }
