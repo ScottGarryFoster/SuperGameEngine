@@ -3,7 +3,7 @@
 
 namespace FatedQuestLibraries
 {
-    class StoredDocument;
+    class ModifiableDocument;
 
     /// <summary>
     /// A Modifiable Object which can be exported to a document.
@@ -16,6 +16,6 @@ namespace FatedQuestLibraries
         /// Exports the data stored to a document format.
         /// </summary>
         /// <returns>The data within the object as a document. </returns>
-        virtual std::shared_ptr<StoredDocument> ExportToDocument() const = 0;
+        virtual std::shared_ptr<ModifiableDocument> ExportToDocument() = 0;
     };
 }

@@ -5,26 +5,25 @@
 
 namespace FatedQuestLibraries
 {
-    class ModifiableDocument;
+    class UniversalObjectParser;
 }
 
 namespace FatedQuestLibraries
 {
-    class StoredDocument;
 
     /// <summary>
     /// A modifiable version of a universal object that can exported to a document.
     /// </summary>
-    class ExplictDocumentModifiableUniversalObjectData : public virtual DocumentModifiableUniversalObjectData
+    class ExplicitDocumentModifiableUniversalObjectData : public virtual DocumentModifiableUniversalObjectData
     {
     public:
-        ExplictDocumentModifiableUniversalObjectData();
+        ExplicitDocumentModifiableUniversalObjectData();
 
         /// <summary>
         /// Exports the data stored to a document format.
         /// </summary>
         /// <returns>The data within the object as a document. </returns>
-        virtual std::shared_ptr<StoredDocument> ExportToDocument() const override;
+        virtual std::shared_ptr<ModifiableDocument> ExportToDocument() override;
 
         /// <summary>
         /// Lists all the strings in the object.
@@ -38,6 +37,13 @@ namespace FatedQuestLibraries
         /// <param name="key">Key to search for. </param>
         /// <param name="value">Value to set. </param>
         virtual void SetString(const std::string& key, const std::string& value) override;
+
+        /// <summary>
+        /// Removes key from the object.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True means Key was unset, false means key never existed. </returns>
+        virtual bool UnsetString(const std::string& key) override;
 
         /// <summary>
         /// Get a loaded string value.
@@ -68,6 +74,13 @@ namespace FatedQuestLibraries
         virtual void SetInt(const std::string& key, int value) override;
 
         /// <summary>
+        /// Removes key from the object.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True means Key was unset, false means key never existed. </returns>
+        virtual bool UnsetInt(const std::string& key) override;
+
+        /// <summary>
         /// Get a loaded int value.
         /// </summary>
         /// <param name="key">Key to search for. </param>
@@ -86,6 +99,13 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <returns>All the keys for any Vector4Is. </returns>
         virtual std::vector<std::string> ListVector4Is() const override;
+
+        /// <summary>
+        /// Removes key from the object.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True means Key was unset, false means key never existed. </returns>
+        virtual bool UnsetVector4I(const std::string& key) override;
 
         /// <summary>
         /// Sets the vector4I to the given value.
@@ -143,5 +163,10 @@ namespace FatedQuestLibraries
         /// Loaded FVector4I values from file.
         /// </summary>
         std::unordered_map<std::string, std::shared_ptr<FVector4I>> m_vector4IValues;
+
+        /// <summary>
+        /// Provides methods to parse in and out of Universal Object Data.
+        /// </summary>
+        std::shared_ptr<UniversalObjectParser> m_parser;
     };
 }

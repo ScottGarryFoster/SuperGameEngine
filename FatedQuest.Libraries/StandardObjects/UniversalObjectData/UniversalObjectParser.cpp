@@ -1,5 +1,7 @@
 #include "UniversalObjectParser.h"
 
+#include "ModifiableAttribute.h"
+#include "ModifiableNode.h"
 #include "StoredDocumentNode.h"
 #include "../../Logger/Logger/Log.h"
 #include "Number/IntHelpers.h"
@@ -7,6 +9,57 @@
 #include "Text/StringHelpers.h"
 
 using namespace FatedQuestLibraries;
+
+std::shared_ptr<ModifiableNode> UniversalObjectParser::CreateStringsNode(
+    const std::unordered_map<std::string, std::string>& strings) const
+{
+    std::vector<std::shared_ptr<ModifiableNode>> stringNodes;
+    for (const auto& string : strings)
+    {
+        auto stringNode = CreateStringNode(string.first, string.second);
+        if (stringNode)
+        {
+            stringNodes.emplace_back(stringNode);
+        }
+    }
+
+    if (!stringNodes.empty())
+    {
+        auto node = std::make_shared<ModifiableNode>();
+        node->SetName("Strings");
+        node->SetAllChildrenNodes(stringNodes);
+        return node;
+    }
+
+    return {};
+}
+
+std::shared_ptr<ModifiableNode> UniversalObjectParser::CreateStringNode(
+    const std::string& key,
+    const std::string& value) const
+{
+    if (key.empty() || value.empty())
+    {
+        return {};
+    }
+
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("String");
+
+    std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+    auto keyAttribute = std::make_shared<ModifiableAttribute>();
+    keyAttribute->SetName("Key");
+    keyAttribute->SetValue(key);
+    attributes.emplace_back(keyAttribute);
+
+    auto valueAttribute = std::make_shared<ModifiableAttribute>();
+    valueAttribute->SetName("Value");
+    valueAttribute->SetValue(value);
+    attributes.emplace_back(valueAttribute);
+
+    node->SetAttributes(attributes);
+    return node;
+}
 
 std::unordered_map<std::string, std::string>
     UniversalObjectParser::ParseStoredDocumentStrings(
@@ -73,6 +126,57 @@ std::pair<std::string, std::string>
     }
 
     return { newKey, newValue };
+}
+
+std::shared_ptr<ModifiableNode> UniversalObjectParser::CreateIntsNode(
+    const std::unordered_map<std::string, int>& ints) const
+{
+    std::vector<std::shared_ptr<ModifiableNode>> currentNodes;
+    for (const auto& current : ints)
+    {
+        auto currentNode = CreateIntNode(current.first, current.second);
+        if (currentNode)
+        {
+            currentNodes.emplace_back(currentNode);
+        }
+    }
+
+    if (!currentNodes.empty())
+    {
+        auto node = std::make_shared<ModifiableNode>();
+        node->SetName("Ints");
+        node->SetAllChildrenNodes(currentNodes);
+        return node;
+    }
+
+    return {};
+}
+
+std::shared_ptr<ModifiableNode> UniversalObjectParser::CreateIntNode(
+    const std::string& key,
+    const int& value) const
+{
+    if (key.empty())
+    {
+        return {};
+    }
+
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("Int");
+
+    std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+    auto keyAttribute = std::make_shared<ModifiableAttribute>();
+    keyAttribute->SetName("Key");
+    keyAttribute->SetValue(key);
+    attributes.emplace_back(keyAttribute);
+
+    auto valueAttribute = std::make_shared<ModifiableAttribute>();
+    valueAttribute->SetName("Value");
+    valueAttribute->SetValue(std::to_string(value));
+    attributes.emplace_back(valueAttribute);
+
+    node->SetAttributes(attributes);
+    return node;
 }
 
 std::unordered_map<std::string, int>
@@ -144,6 +248,71 @@ std::pair<std::string, int>
     }
 
     return { newKey, newValue };
+}
+
+std::shared_ptr<FatedQuestLibraries::ModifiableNode> UniversalObjectParser::CreateVector4IsNode(
+    const std::unordered_map<std::string, std::shared_ptr<FVector4I>>& vector4Is) const
+{
+    std::vector<std::shared_ptr<ModifiableNode>> currentNodes;
+    for (const auto& current : vector4Is)
+    {
+        auto currentNode = CreateVector4INode(current.first, current.second);
+        if (currentNode)
+        {
+            currentNodes.emplace_back(currentNode);
+        }
+    }
+
+    if (!currentNodes.empty())
+    {
+        auto node = std::make_shared<ModifiableNode>();
+        node->SetName("Vector4Is");
+        node->SetAllChildrenNodes(currentNodes);
+        return node;
+    }
+
+    return {};
+}
+
+std::shared_ptr<FatedQuestLibraries::ModifiableNode> UniversalObjectParser::CreateVector4INode(const std::string& key,
+    const std::shared_ptr<FVector4I>& value) const
+{
+    if (key.empty() || !value)
+    {
+        return {};
+    }
+
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("Vector4I");
+
+    std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+    auto keyAttribute = std::make_shared<ModifiableAttribute>();
+    keyAttribute->SetName("Key");
+    keyAttribute->SetValue(key);
+    attributes.emplace_back(keyAttribute);
+
+    auto xAttribute = std::make_shared<ModifiableAttribute>();
+    xAttribute->SetName("X");
+    xAttribute->SetValue(std::to_string(value->GetX()));
+    attributes.emplace_back(xAttribute);
+
+    auto yAttribute = std::make_shared<ModifiableAttribute>();
+    yAttribute->SetName("Y");
+    yAttribute->SetValue(std::to_string(value->GetY()));
+    attributes.emplace_back(yAttribute);
+
+    auto zAttribute = std::make_shared<ModifiableAttribute>();
+    zAttribute->SetName("Z");
+    zAttribute->SetValue(std::to_string(value->GetZ()));
+    attributes.emplace_back(zAttribute);
+
+    auto wAttribute = std::make_shared<ModifiableAttribute>();
+    wAttribute->SetName("W");
+    wAttribute->SetValue(std::to_string(value->GetW()));
+    attributes.emplace_back(wAttribute);
+
+    node->SetAttributes(attributes);
+    return node;
 }
 
 std::unordered_map<std::string, std::shared_ptr<FVector4I>>
