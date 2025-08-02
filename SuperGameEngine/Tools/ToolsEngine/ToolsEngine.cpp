@@ -19,6 +19,8 @@
 #include "../Windows/SceneHierarchy/SceneHierarchy.h"
 #include "../Windows/InspectorWindow/InspectorWindow.h"
 #include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
+#include "Engine/Structural/Asset/AssetTemplateProvider.h"
+#include "Engine/Structural/Asset/ToolsAssetTemplateProvider.h"
 #include "FrameworkManager/ToolsFrameworkManager.h"
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
@@ -157,6 +159,12 @@ void ToolsEngine::Setup()
     auto framework = std::make_shared<ToolsFrameworkManager>(m_windowPackage);
     framework->Setup();
     m_windowPackage->SetFrameworkManager(framework);
+
+    // Then assets. Must come before Inspector window and Asset Browser Setup.
+    auto assetTemplateProvider = std::make_shared<ToolsAssetTemplateProvider>
+        (m_windowPackage->GetContentManager()->GamePackage());
+    assetTemplateProvider->LoadAllAssetMeta();
+    m_windowPackage->SetAssetTemplateProvider(assetTemplateProvider);
 
     // Everything else should be able to be in any order
     gameViewport->Setup(m_windowPackage);

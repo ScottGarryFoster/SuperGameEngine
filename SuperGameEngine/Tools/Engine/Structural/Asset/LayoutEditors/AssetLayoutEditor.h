@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include <memory>
 
 namespace FatedQuestLibraries
 {
@@ -8,15 +8,13 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditor;
-
     /// <summary>
-    /// Describes how to edit the given asset and how the data is laid out.
+    /// Encapsulates a single control within an Asset, described with an asset layout and file.
     /// </summary>
-    class AssetLayout
+    class AssetLayoutEditor
     {
     public:
-        virtual ~AssetLayout() = default;
+        virtual ~AssetLayoutEditor() = default;
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.

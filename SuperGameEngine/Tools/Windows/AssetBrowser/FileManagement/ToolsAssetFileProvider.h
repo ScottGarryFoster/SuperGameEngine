@@ -17,6 +17,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class AssetTemplateProvider;
     class FileUpdateEventArguments;
     class AssetMetaData;
     class FileWatcher;
@@ -32,7 +33,8 @@ namespace SuperGameTools
         ToolsAssetFileProvider(
             const std::weak_ptr<FatedQuestLibraries::GamePackage>& package,
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
-            const std::shared_ptr<FatedQuestLibraries::PackagePaths>& packagePaths);
+            const std::shared_ptr<FatedQuestLibraries::PackagePaths>& packagePaths,
+            const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider);
         virtual ~ToolsAssetFileProvider() override;
 
         /// <summary>
@@ -125,11 +127,11 @@ namespace SuperGameTools
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onFileSystemUpdated;
 
         /// <summary>
+        /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
         /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
         /// </summary>
-        std::vector<std::shared_ptr<AssetMetaData>> m_assetMetaData;
+        std::shared_ptr<AssetTemplateProvider> m_assetTemplateProvider;
 
-        void LoadAssetMetaDataFiles();
         void SearchAllFilesForPotentialMissingAssetFiles();
         void SearchAllFilesForPotentialMissingAssetFiles(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage, const std::string& currentDirectory);
         void CreateAssetFilesForValidAssets();

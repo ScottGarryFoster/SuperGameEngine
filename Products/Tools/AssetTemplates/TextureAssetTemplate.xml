@@ -11,4 +11,9 @@
             </Asset>
         </Template>
     </AssetTemplate>
+    <AssetLayout>
+        <Data Type="String" Map="TestTextInput" />
+        <Data Type="String" Filter="SplitUVMethod" Map="TextureUVMethod" MapType="Single" />
+        <Data Type="Vector4I" Map="TextureUV" MapType="Array" />
+    </AssetLayout>
 </AssetMetaData>

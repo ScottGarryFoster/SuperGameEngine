@@ -1,28 +1,21 @@
 #pragma once
+#include "AssetLayoutEditor.h"
 #include <memory>
-#include <vector>
-
-#include "AssetLayout.h"
-
-namespace FatedQuestLibraries
-{
-    class StoredDocumentNode;
-}
+#include <string>
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditorFactory;
-
     /// <summary>
-    /// Describes how to edit the given asset and how the data is laid out.
+    /// Encapsulates a single control within an Asset, described with an asset layout and file.
     /// </summary>
-    class ToolsAssetLayout : public AssetLayout
+    class AssetLayoutEditorTextInput : public virtual AssetLayoutEditor
     {
     public:
-
-        ToolsAssetLayout(
-            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode,
-            const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory);
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">Parameter to modify within the asset. </param>
+        AssetLayoutEditorTextInput(const std::string& map);
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -39,8 +32,8 @@ namespace SuperGameTools
     private:
 
         /// <summary>
-        /// The editor providing the structure to edit the data.
+        /// The parameter within the Asset to modify.
         /// </summary>
-        std::vector<std::shared_ptr<const AssetLayoutEditor>> m_assetLayoutEditor;
+        std::string m_map;
     };
 }

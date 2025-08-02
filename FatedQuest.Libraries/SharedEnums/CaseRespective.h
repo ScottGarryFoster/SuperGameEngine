@@ -12,12 +12,12 @@ namespace FatedQuestLibraries
     /// <summary>
     /// When altering a value, describes if the new value respects the input case or not.
     /// </summary>
-    enum class CaseRespective : int8_t
+    enum class CaseRespective : uint8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
         /// </summary>
-        Unknown = -1,
+        Unknown,
 
         /// <summary>
         /// When modifying do not adjust or alter the case of alphabetical characters.

@@ -91,3 +91,13 @@ void WindowPackage::SetColourPalette(const std::shared_ptr<ColoursAndStyles>& co
 {
     m_colorPalette = colourPalette;
 }
+
+std::shared_ptr<AssetTemplateProvider> WindowPackage::GetAssetTemplateProvider() const
+{
+    return m_assetTemplateProvider;
+}
+
+void WindowPackage::SetAssetTemplateProvider(const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider)
+{
+    m_assetTemplateProvider = assetTemplateProvider;
+}

@@ -8,7 +8,8 @@ using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
 ToolsAssetMetaData::ToolsAssetMetaData(
-    const std::shared_ptr<StoredDocument>& document)
+    const std::shared_ptr<StoredDocument>& document,
+    const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory)
 {
     if (!document)
     {
@@ -33,7 +34,7 @@ ToolsAssetMetaData::ToolsAssetMetaData(
 
         if (!m_layout && nodeName == "assetlayout")
         {
-            m_layout = std::make_shared<ToolsAssetLayout>(current);
+            m_layout = std::make_shared<ToolsAssetLayout>(current, layoutFactory);
         }
     }
 }

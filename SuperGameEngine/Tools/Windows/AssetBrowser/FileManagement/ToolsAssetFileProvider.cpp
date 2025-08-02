@@ -11,6 +11,7 @@
 #include "../../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
 #include "Engine/FileSystem/FileWatcher/FileUpdateEventArguments.h"
 #include "Engine/FileSystem/FileWatcher/ToolsFileWatcher.h"
+#include "Engine/Structural/Asset/AssetTemplateProvider.h"
 #include "Engine/Structural/Asset/Template/AssetTemplate.h"
 #include "Engine/Structural/Asset/Template/ToolsAssetMetaData.h"
 
@@ -21,13 +22,14 @@ using namespace FatedQuestLibraries;
 ToolsAssetFileProvider::ToolsAssetFileProvider(
     const std::weak_ptr<GamePackage>& package,
     const std::weak_ptr<TextureManager>& texture,
-    const std::shared_ptr<PackagePaths>& packagePaths)
+    const std::shared_ptr<PackagePaths>& packagePaths,
+    const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider)
 {
     m_gamePackage = package;
     m_textureManager = texture;
     m_packagePaths = packagePaths;
+    m_assetTemplateProvider = assetTemplateProvider;
 
-    LoadAssetMetaDataFiles();
     SearchAllFilesForPotentialMissingAssetFiles();
     if (std::shared_ptr<GamePackage> gamePackage = package.lock())
     {
@@ -85,52 +87,6 @@ void ToolsAssetFileProvider::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
 }
 
-
-void ToolsAssetFileProvider::LoadAssetMetaDataFiles()
-{
-    std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock();
-    if (!gamePackage)
-    {
-        Log::Error("No game package given. Cannot load asset meta files.",
-            "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
-        return;
-    }
-
-    if (!gamePackage->Directory()->Exists(m_assetTemplateFolder))
-    {
-        Log::Error("No Asset Template folder. Cannot create asset templates automatically.",
-            "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
-        return;
-    }
-
-    std::vector<std::string> templateFilenames = gamePackage->Directory()->GetFiles(m_assetTemplateFolder);
-    for (const std::string& templateFilename : templateFilenames)
-    {
-        std::string fullGamepackagePath = Directory::CombinePath(m_assetTemplateFolder, templateFilename);
-        std::string fileContents = gamePackage->File()->ReadFileContents(fullGamepackagePath);
-
-        auto document = std::make_shared<RapidXMLDocument>();
-        if (!document->Load(fileContents))
-        {
-            Log::Error("Could not load asset template file: " + fullGamepackagePath,
-                "ToolsAssetFileProvider::LoadAssetMetaDataFiles");
-            continue;
-        }
-
-        try
-        {
-            m_assetMetaData.emplace_back(std::make_shared<ToolsAssetMetaData>(document));
-        }
-        catch (Exception& e)
-        {
-            Log::Exception("Could not load template file due to an exception." +
-                           e.Message() + " Filepath: " + fullGamepackagePath, 
-                "ToolsAssetFileProvider::LoadAssetMetaDataFiles", 
-                e.Type());
-        }
-    }
-}
-
 void ToolsAssetFileProvider::SearchAllFilesForPotentialMissingAssetFiles()
 {
     std::shared_ptr<GamePackage> gamePackage = m_gamePackage.lock();
@@ -168,7 +124,7 @@ void ToolsAssetFileProvider::CreateAssetFilesForValidAssets()
 
 bool ToolsAssetFileProvider::TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents)
 {
-    for (const std::shared_ptr<AssetMetaData>& metaData : m_assetMetaData)
+    for (const std::shared_ptr<const AssetMetaData>& metaData : m_assetTemplateProvider->GetAssetTemplates())
     {
         if (metaData->GetTemplate())
         {
