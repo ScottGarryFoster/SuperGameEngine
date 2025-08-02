@@ -52,6 +52,37 @@ namespace SuperGameTools
         /// <param name="screenRectangle">Location and size on the screen to draw. </param>
         virtual void DrawLargeTile(const SuperGameEngine::RectangleInt& screenRectangle) const override;
 
+        /// <summary>
+        /// Selects this file or tile.
+        /// </summary>
+        virtual void SelectFile() override;
+
+        /// <summary>
+        /// Unselects this file or tile.
+        /// </summary>
+        virtual void UnselectFile() override;
+
+        /// <summary>
+        /// True means the file is selected in the browser.
+        /// </summary>
+        /// <returns>True means the file is selected in the browser. </returns>
+        virtual bool IsSelected() const override;
+
+        /// <summary>
+        /// Describes the group for the selectable which helps to decide the
+        /// buckets that the selectable will be added to.
+        /// </summary>
+        /// <returns>The group or groups for this selectable. </returns>
+        virtual std::unordered_set<SelectionGroup> GetSelectionGroup() const override;
+
+        /// <summary>
+        /// The Guid for this Selectable.
+        /// It should be unique among selectables.
+        /// </summary>
+        /// <returns>A unique Guid. </returns>
+        virtual std::shared_ptr<Guid> GetGuid() const override;
+
+
     private:
 
         /// <summary>
@@ -68,5 +99,21 @@ namespace SuperGameTools
         /// Out parent folder.
         /// </summary>
         std::weak_ptr<AssetFolder> m_parent;
+
+        /// <summary>
+        /// A unique identifier.
+        /// A GUID should be unique.
+        /// </summary>
+        std::shared_ptr<Guid> m_guid;
+
+        /// <summary>
+        /// The groups for this selectable.
+        /// </summary>
+        std::unordered_set<SelectionGroup> m_selectionGroups;
+
+        /// <summary>
+        /// The file is selected currently and is in the inspector.
+        /// </summary>
+        bool m_selected;
     };
 }

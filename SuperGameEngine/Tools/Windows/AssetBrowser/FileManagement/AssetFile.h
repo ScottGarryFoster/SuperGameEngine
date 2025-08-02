@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "ToolsEngine/FrameworkManager/SelectionManager/Selectable.h"
+
 namespace SuperGameEngine
 {
     class RectangleInt;
@@ -15,7 +17,7 @@ namespace SuperGameTools
     /// <summary>
     /// Represents a single Asset File.
     /// </summary>
-    class AssetFile
+    class AssetFile : public Selectable
     {
     public:
 
@@ -42,5 +44,21 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="screenRectangle">Location and size on the screen to draw. </param>
         virtual void DrawLargeTile(const SuperGameEngine::RectangleInt& screenRectangle) const = 0;
+
+        /// <summary>
+        /// Selects this file or tile.
+        /// </summary>
+        virtual void SelectFile() = 0;
+
+        /// <summary>
+        /// Unselects this file or tile.
+        /// </summary>
+        virtual void UnselectFile() = 0;
+
+        /// <summary>
+        /// True means the file is selected in the browser.
+        /// </summary>
+        /// <returns>True means the file is selected in the browser. </returns>
+        virtual bool IsSelected() const = 0;
     };
 }

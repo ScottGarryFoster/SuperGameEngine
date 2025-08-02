@@ -8,19 +8,23 @@
 #include "FileManagement/AssetFile.h"
 #include "FileManagement/AssetFolder.h"
 #include "FileManagement/PackageFilesHaveUpdatedEventArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
 
 using namespace SuperGameTools;
 using namespace SuperGameEngine;
 
 AssetTileRender::AssetTileRender(
     const std::shared_ptr<AssetFolder>& rootFolder,
-    const std::shared_ptr<SuperGameEngine::TextureManager>& texture)
+    const std::shared_ptr<SuperGameEngine::TextureManager>& texture,
+    const std::shared_ptr<SelectionManager>& selectionManager)
 {
 
     m_folderTexture = texture->GetTexture(R"(Tools\Icons\Folder\Folder-256.png)");
     m_upFolderTexture = texture->GetTexture(R"(Tools\Icons\FolderUp\FolderUp-256.png)");
     m_currentFolder = rootFolder;
     m_rootFolder = rootFolder;
+    m_selectionManager = selectionManager;
 }
 
 void AssetTileRender::Update()
@@ -34,7 +38,7 @@ void AssetTileRender::Draw()
     int thumbSize = 64;
     int padding = 8;
     float pw = ImGui::GetContentRegionAvail().x;
-    int cols = max(1, int(pw / (thumbSize + padding)));
+    int cols = max(1, int(pw / (static_cast<float>(thumbSize) + static_cast<float>(padding) * 3)));
 
     ImGui::Columns(cols, "AssetBrowserArea", false);
     int i = 0;
@@ -84,6 +88,7 @@ void AssetTileRender::Draw()
         if (std::shared_ptr<AssetFile> fileSelected = DrawFile(asset, thumbSize, padding))
         {
             // Do something with fileSelected in a future commit.
+            m_selectionManager->SetSelection(fileSelected);
         }
 
         endColumn(i);
@@ -136,6 +141,21 @@ void AssetTileRender::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArgument
         }
 
         m_currentFolder = currentFolder;
+    }
+    else if (auto selectionArguments = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
+    {
+        std::unordered_set<std::shared_ptr<const Guid>> guids = selectionArguments->GetAllSelectableGuids();
+        for (const std::shared_ptr<AssetFile>& asset : m_currentFolder->GetContainingFiles())
+        {
+            if (guids.contains(asset->GetGuid()))
+            {
+                asset->SelectFile();
+            }
+            else
+            {
+                asset->UnselectFile();
+            }
+        }
     }
 }
 
@@ -221,29 +241,70 @@ std::shared_ptr<AssetFile> AssetTileRender::DrawFile(
     int size,
     int padding) const
 {
-    ImGui::BeginGroup();
-    ImVec2 groupMin = ImGui::GetCursorScreenPos();
+    float paddingFloat = static_cast<float>(padding);
+    float halfPadding = paddingFloat / 2;
 
-    RectangleInt screen = RectangleInt(0, 0, size, size);
+    ImGui::BeginGroup();
+
+    // We need to draw the selection rectangle now but we do not know
+    // how big it is going to be. So we split the draw list, and then
+    // come back and merge later. 
+    ImDrawList* drawList = ImGui::GetWindowDrawList();
+    drawList->ChannelsSplit(2);
+    drawList->ChannelsSetCurrent(1);
+
+    // The exact top left of the tile.
+    ImVec2 topLeft = ImGui::GetCursorScreenPos();
+
+    RectangleInt screen = RectangleInt(halfPadding, halfPadding, size, size);
     file->DrawLargeTile(screen);
 
+    // Set the position for the text
     ImVec2 position = ImGui::GetCursorPos();
     ImGui::SetCursorPos(ImVec2(
-        position.x,
+        topLeft.x + halfPadding,
         position.y + static_cast<float>(size) + static_cast<float>(padding)));
 
-    ImGui::PushTextWrapPos(position.x + static_cast<float>(size));
+    // Draw the actual text.
+    ImGui::PushTextWrapPos(position.x + static_cast<float>(size) + static_cast<float>(padding));
     ImGui::TextWrapped("%s", file->GetDisplayName().c_str());
     ImGui::PopTextWrapPos();
 
     ImGui::EndGroup();
 
+    // The main content end (as this is after the text)
     ImVec2 groupMax = ImGui::GetCursorScreenPos();
+    groupMax.x = topLeft.x + static_cast<float>(size);
 
-    groupMax.x = groupMin.x + static_cast<float>(size);
+    // Bottom right is the actual bottom right including any padding.
+    auto bottomRight = ImVec2(topLeft.x + static_cast<float>(size) + static_cast<float>(padding) + static_cast<float>(halfPadding),
+        groupMax.y + static_cast<float>(halfPadding));
+    if (file->IsSelected())
+    {
+        // Draw this first as this is the selection box.
+        drawList->ChannelsSetCurrent(0);
+
+        // Fill
+        drawList->AddRectFilled(
+            topLeft,
+            bottomRight,
+            IM_COL32(0, 0, 0, 128),
+            5.0f,
+            ImDrawFlags_None);
+
+        // Border
+        drawList->AddRect(
+            topLeft,
+            bottomRight,
+            IM_COL32(255, 255, 255, 200),
+            5.0f,
+            ImDrawFlags_None,
+            2.0f);
+    }
+    drawList->ChannelsMerge();
 
     std::shared_ptr<AssetFile> returnFile = {};
-    if (ImGui::IsMouseHoveringRect(groupMin, groupMax) &&
+    if (ImGui::IsMouseHoveringRect(topLeft, bottomRight) &&
         ImGui::IsMouseClicked(ImGuiMouseButton_Left))
     {
         Log::Info("Clicked " + file->GetPackagePath());

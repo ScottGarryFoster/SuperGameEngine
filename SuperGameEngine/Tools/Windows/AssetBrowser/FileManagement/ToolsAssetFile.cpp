@@ -17,6 +17,9 @@ ToolsAssetFile::ToolsAssetFile(
     const std::weak_ptr<AssetFolder>& parent)
 {
     m_parent = parent;
+    m_guid = GUIDHelpers::CreateGUID();
+    m_selectionGroups.insert(SelectionGroup::Inspectable);
+    m_selected = false;
 
     if (std::shared_ptr<GamePackage> gamePackage = package.lock())
     {
@@ -100,7 +103,7 @@ std::string ToolsAssetFile::GetPackagePath() const
     return "Unknown";
 }
 
-void ToolsAssetFile::DrawLargeTile(const SuperGameEngine::RectangleInt& screenRectangle) const
+void ToolsAssetFile::DrawLargeTile(const RectangleInt& screenRectangle) const
 {
     if (m_largeTilePreview)
     {
@@ -108,4 +111,29 @@ void ToolsAssetFile::DrawLargeTile(const SuperGameEngine::RectangleInt& screenRe
         RectangleInt uv = RectangleInt(0, 0, m_largeTilePreview->Size().GetX(), m_largeTilePreview->Size().GetY());
         m_largeTilePreview->Draw(uv, screenRectangle);
     }
+}
+
+void ToolsAssetFile::SelectFile()
+{
+    m_selected = true;
+}
+
+void ToolsAssetFile::UnselectFile()
+{
+    m_selected = false;
+}
+
+bool ToolsAssetFile::IsSelected() const
+{
+    return m_selected;
+}
+
+std::unordered_set<SelectionGroup> ToolsAssetFile::GetSelectionGroup() const
+{
+    return m_selectionGroups;
+}
+
+std::shared_ptr<Guid> ToolsAssetFile::GetGuid() const
+{
+    return m_guid;
 }
