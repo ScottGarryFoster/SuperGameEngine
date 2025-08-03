@@ -18,7 +18,7 @@ namespace SuperGameTools
     /// <summary>
     /// Implementation of <see cref="AssetFile"/>
     /// </summary>
-    class ToolsAssetFile : public AssetFile
+    class ToolsAssetFile : public virtual AssetFile
     {
     public:
 
@@ -27,6 +27,13 @@ namespace SuperGameTools
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
             const std::string& packagePath,
             const std::weak_ptr<AssetFolder>& parent);
+
+        ToolsAssetFile(
+            const std::weak_ptr<FatedQuestLibraries::GamePackage>& package,
+            const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
+            const std::string& packagePath,
+            const std::weak_ptr<AssetFolder>& parent,
+            const std::shared_ptr<const AssetMetaData>& assetMetaData);
 
         /// <summary>
         /// Gets the parent folder.
@@ -69,6 +76,12 @@ namespace SuperGameTools
         virtual bool IsSelected() const override;
 
         /// <summary>
+        /// Get the metadata for this file type. This describes. how to edit the file.
+        /// </summary>
+        /// <returns>The metadata for this file type. This describes. how to edit the file. </returns>
+        virtual const std::shared_ptr<const AssetMetaData> GetMetaData() const override;
+
+        /// <summary>
         /// Describes the group for the selectable which helps to decide the
         /// buckets that the selectable will be added to.
         /// </summary>
@@ -82,8 +95,18 @@ namespace SuperGameTools
         /// <returns>A unique Guid. </returns>
         virtual std::shared_ptr<Guid> GetGuid() const override;
 
+    protected:
+
+        /// <summary>
+        /// Texture for the large tile.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SuperTexture> m_largeTilePreview;
 
     private:
+        /// <summary>
+        /// The default asset tile if one does not exist.
+        /// </summary>
+        const char* m_defaultAssetTexture = "Tools\\Icons\\AssetDefault\\AssetDefault-500.png";
 
         /// <summary>
         /// Loaded asset data.
@@ -91,9 +114,9 @@ namespace SuperGameTools
         std::shared_ptr<SuperGameEngine::GameAsset> m_gameAsset;
 
         /// <summary>
-        /// Texture for the large tile.
+        /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
         /// </summary>
-        std::shared_ptr<SuperGameEngine::SuperTexture> m_largeTilePreview;
+        std::shared_ptr<const AssetMetaData> m_assetMetaData;
 
         /// <summary>
         /// Out parent folder.

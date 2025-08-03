@@ -1,5 +1,5 @@
 <AssetMetaData>
-    <AssetTemplate>
+    <AssetTemplate AssetFileType="ImageAsset">
         <MatchingCriteria AssetTemplateMatchingStyle="Extension">
             <Extension value=".png" />
         </MatchingCriteria>

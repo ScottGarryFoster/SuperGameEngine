@@ -3,6 +3,7 @@
 #include "AssetTemplateCreationMethod.h"
 #include "AssetTemplateMatchingStyle.h"
 #include "../../../../FatedQuestLibraries.h"
+#include "Engine/Structural/Asset/AssetFiles/AssetFileType.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -11,10 +12,11 @@ ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>
 {
     m_matchingStyle = AssetTemplateMatchingStyle::Unknown;
     m_creationMethod = AssetTemplateCreationMethod::Unknown;
+    m_assetFileType = AssetFileType::Unknown;
     m_creationDocumentCopy = {};
 
-    std::shared_ptr<StoredDocumentNode> root = documentNode;
-    for (std::shared_ptr<StoredDocumentNode> current = root->GetFirstChild(); current; current = current->GetAdjacentNode())
+    ParseRootAttributes(documentNode);
+    for (std::shared_ptr<StoredDocumentNode> current = documentNode->GetFirstChild(); current; current = current->GetAdjacentNode())
     {
         std::string nodeName = StringHelpers::ToLower(current->Name());
         if (m_matchingStyle == AssetTemplateMatchingStyle::Unknown && nodeName == "matchingcriteria")
@@ -73,6 +75,27 @@ std::string ToolsAssetTemplate::CreateAssetFile(const std::string& filepath) con
     return {};
 }
 
+AssetFileType ToolsAssetTemplate::GetAssetFileType() const
+{
+    return m_assetFileType;
+}
+
+void ToolsAssetTemplate::ParseRootAttributes(
+    const std::shared_ptr<StoredDocumentNode>& rootNode)
+{
+    if (auto assetFileAttribute = 
+        rootNode->Attribute("assetfiletype", CaseSensitivity::IgnoreCase))
+    {
+        m_assetFileType = EAssetFileType::FromString(assetFileAttribute->Value());
+        if (m_assetFileType == AssetFileType::Unknown)
+        {
+            Log::Error("Could not parse AssetFileType in template, "
+                       "please ensure it is added Tools side. Value: " + assetFileAttribute->Value(),
+                "ToolsAssetTemplate::ParseRootAttributes(const std::shared_ptr<StoredDocumentNode>&)");
+        }
+    }
+}
+
 void ToolsAssetTemplate::CreateDataForMatchingCriteria(
     const std::shared_ptr<StoredDocumentNode>& matchingNodeRoot)
 {
@@ -129,6 +152,12 @@ void ToolsAssetTemplate::CreateDataForMatchingCriteriaExtension(
 bool ToolsAssetTemplate::ShouldUseTemplateExtension(const std::string& filepath) const
 {
     std::string extension = File::GetExtension(filepath);
+    if (StringHelpers::Equals(extension, ".ast", CaseSensitivity::IgnoreCase))
+    {
+        std::string filePathWithOneLessExtension = File::RemoveLastExtension(filepath);
+        extension = File::GetExtension(filePathWithOneLessExtension);
+    }
+
     if (extension.empty())
     {
         return false;

@@ -36,7 +36,7 @@ ToolsAssetFileProvider::ToolsAssetFileProvider(
         gamePackage->Reload();
     }
 
-    auto folder = std::make_shared<ToolsAssetFolder>(package, texture, "");
+    auto folder = std::make_shared<ToolsAssetFolder>(package, texture, assetTemplateProvider, "");
     m_rootFolder = folder;
     folder->PopulateChildren({});
 
@@ -155,9 +155,6 @@ void ToolsAssetFileProvider::TryAddAssetFile(
             {
                 std::string fullpath = Directory::CombinePath(m_packagePaths->ProductsDirectory(), m_packagePaths->ProductsDirectoryName(), assetFilepath);
                 File::WriteLine(fullpath, newFileContents);
-
-                // In next commit create these files.
-                Log::Info("Written asset: " + assetFilepath);
             }
         }
     }

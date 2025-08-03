@@ -1,5 +1,7 @@
 #include "StringHelpers.h"
 
+#include "CaseSensitivity.h"
+
 using namespace FatedQuestLibraries;
 
 std::string StringHelpers::Join(const std::string& separator, const std::vector<std::string>& list)
@@ -242,4 +244,16 @@ std::string StringHelpers::DisplayName(const std::string& input)
     }
 
     return displayName;
+}
+
+bool StringHelpers::Equals(const std::string& left, const std::string& right, CaseSensitivity caseSensitivity)
+{
+    if (caseSensitivity == CaseSensitivity::IgnoreCase)
+    {
+        std::string newLeft = ToLower(left);
+        std::string newRight = ToLower(right);
+        return newLeft == newRight;
+    }
+
+    return left == right;
 }

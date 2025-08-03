@@ -50,14 +50,13 @@ ToolsAssetFile::ToolsAssetFile(
         // Setup the image.
         if (std::shared_ptr<TextureManager> textureManager = texture.lock())
         {
-            std::string fileType = File::GetExtension(originalFilePath);
-            if (StringHelpers::ToLower(fileType) == ".png")
+            // Keep in mind this is cached so we only pay the price once for this.
+            m_largeTilePreview = textureManager->GetTexture(m_defaultAssetTexture);
+            if (!m_largeTilePreview)
             {
-                m_largeTilePreview = textureManager->GetTexture(originalFilePath);
-                if (!m_largeTilePreview)
-                {
-                    Log::Error("Could not load large tile preview from Texture Manager. Path: " + packagePath, "ToolsAssetFile::ToolsAssetFile");
-                }
+                std::string defaultAssetLocation = m_defaultAssetTexture;
+                Log::Error("Could not load large tile preview from Texture Manager. Path: " + defaultAssetLocation, 
+                    "ToolsAssetFile::ToolsAssetFile");
             }
         }
         else
@@ -70,6 +69,17 @@ ToolsAssetFile::ToolsAssetFile(
         Log::Error("Package manager is not given, asset not loaded. Path: " + packagePath, "ToolsAssetFile::ToolsAssetFile");
     }
 
+}
+
+ToolsAssetFile::ToolsAssetFile(
+    const std::weak_ptr<GamePackage>& package,
+    const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
+    const std::string& packagePath,
+    const std::weak_ptr<AssetFolder>& parent,
+    const std::shared_ptr<const AssetMetaData>& assetMetaData) :
+    ToolsAssetFile(package, texture, packagePath, parent)
+{
+    m_assetMetaData = assetMetaData;
 }
 
 std::weak_ptr<AssetFolder> ToolsAssetFile::GetParent() const
@@ -126,6 +136,11 @@ void ToolsAssetFile::UnselectFile()
 bool ToolsAssetFile::IsSelected() const
 {
     return m_selected;
+}
+
+const std::shared_ptr<const AssetMetaData> ToolsAssetFile::GetMetaData() const
+{
+    return m_assetMetaData;
 }
 
 std::unordered_set<SelectionGroup> ToolsAssetFile::GetSelectionGroup() const

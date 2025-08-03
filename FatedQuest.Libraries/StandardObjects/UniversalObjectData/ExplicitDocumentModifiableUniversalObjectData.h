@@ -26,6 +26,13 @@ namespace FatedQuestLibraries
         virtual std::shared_ptr<ModifiableDocument> ExportToDocument() override;
 
         /// <summary>
+        /// Imports data as a document.
+        /// </summary>
+        /// <param name="document">The document to load the information from.</param>
+        /// <returns>True means loaded successfully. </returns>
+        virtual bool ImportAsDocument(const std::shared_ptr<StoredDocument>& document) override;
+
+        /// <summary>
         /// Lists all the strings in the object.
         /// </summary>
         /// <returns>All the String keys. </returns>

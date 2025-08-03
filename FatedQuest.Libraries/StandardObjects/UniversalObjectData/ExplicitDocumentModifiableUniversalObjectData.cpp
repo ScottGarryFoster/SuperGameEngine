@@ -7,6 +7,8 @@
 #include "ModifiableNode.h"
 #include "UniversalObjectParser.h"
 #include "Position/FVector4I.h"
+#include "Text/StringHelpers.h"
+#include "../Logger/AllReferences.h"
 
 using namespace FatedQuestLibraries;
 
@@ -46,6 +48,42 @@ std::shared_ptr<ModifiableDocument> ExplicitDocumentModifiableUniversalObjectDat
     }
 
     return m_modifiableDocument;
+}
+
+bool ExplicitDocumentModifiableUniversalObjectData::ImportAsDocument(const std::shared_ptr<StoredDocument>& document)
+{
+    m_stringValues = {};
+    m_intValues = {};
+    m_vector4IValues = {};
+    isDirty = true;
+
+    std::shared_ptr<StoredDocumentNode> root = document->GetRoot();
+    if (!root)
+    {
+        Log::Error("No root found when importing universal object data.",
+            "ExplicitDocumentModifiableUniversalObjectData::ImportAsDocument(const std::shared_ptr<StoredDocument>&)");
+        return false;
+    }
+
+    m_parser = std::make_shared<UniversalObjectParser>();
+    for (std::shared_ptr<StoredDocumentNode> child = root->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string nodeName = StringHelpers::ToLower(child->Name());
+        if (nodeName == "strings")
+        {
+            m_stringValues = m_parser->ParseStoredDocumentStrings(child);
+        }
+        else if (nodeName == "ints")
+        {
+            m_intValues = m_parser->ParseStoredDocumentInts(child);
+        }
+        else if (nodeName == "vector4is")
+        {
+            m_vector4IValues = m_parser->ParseStoredDocumentVector4I(child);
+        }
+    }
+
+    return true;
 }
 
 std::vector<std::string> ExplicitDocumentModifiableUniversalObjectData::ListStrings() const

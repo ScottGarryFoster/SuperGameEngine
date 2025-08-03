@@ -18,4 +18,8 @@ void AssetLayoutEditorTextInput::Update(
 void AssetLayoutEditorTextInput::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
+    if (1 == 1)
+    {
+        
+    }
 }

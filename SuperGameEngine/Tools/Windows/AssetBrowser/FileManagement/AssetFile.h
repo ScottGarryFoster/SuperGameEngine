@@ -12,12 +12,13 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class AssetMetaData;
     class AssetFolder;
 
     /// <summary>
     /// Represents a single Asset File.
     /// </summary>
-    class AssetFile : public Selectable
+    class AssetFile : public virtual Selectable
     {
     public:
 
@@ -60,5 +61,11 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>True means the file is selected in the browser. </returns>
         virtual bool IsSelected() const = 0;
+
+        /// <summary>
+        /// Get the metadata for this file type. This describes. how to edit the file.
+        /// </summary>
+        /// <returns>The metadata for this file type. This describes. how to edit the file. </returns>
+        virtual const std::shared_ptr<const AssetMetaData> GetMetaData() const = 0;
     };
 }

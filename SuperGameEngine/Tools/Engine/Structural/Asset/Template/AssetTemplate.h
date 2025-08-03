@@ -3,6 +3,8 @@
 
 namespace SuperGameTools
 {
+    enum class AssetFileType : uint8_t;
+
     /// <summary>
     /// Contains a template and the ability to detect whether using the template is correct.
     /// Templates also contain the ability to create fresh versions of the Asset file.
@@ -25,5 +27,12 @@ namespace SuperGameTools
         /// <param name="filepath">Filepath to use as a base. </param>
         /// <returns>An asset file </returns>
         virtual std::string CreateAssetFile(const std::string& filepath) const = 0;
+
+        /// <summary>
+        /// Gets the file type to create when creating a <see cref="AssetFile"/>.
+        /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
+        /// </summary>
+        /// <returns>The file type to be created. </returns>
+        virtual AssetFileType GetAssetFileType() const = 0;
     };
 }

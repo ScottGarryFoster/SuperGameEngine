@@ -1,6 +1,10 @@
 #include "ToolsAssetFolder.h"
 #include "ToolsAssetFile.h"
 #include "../../../FatedQuestLibraries.h"
+#include "Engine/Structural/Asset/Template/AssetMetaData.h"
+#include "../../../Engine/Structural/Asset/ToolsAssetTemplateProvider.h"
+#include "../../../Engine/Structural/Asset/Template/AssetTemplate.h"
+#include "Engine/Structural/Asset/AssetFiles/ToolsImageAsset.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -8,7 +12,8 @@ using namespace SuperGameEngine;
 
 ToolsAssetFolder::ToolsAssetFolder(
     const std::weak_ptr<GamePackage>& package,
-    const std::weak_ptr<TextureManager>& texture, 
+    const std::weak_ptr<TextureManager>& texture,
+    const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider,
     const std::string& packagePath)
 {
     m_gamePackage = package;
@@ -16,7 +21,7 @@ ToolsAssetFolder::ToolsAssetFolder(
     m_packagePath = packagePath;
     m_directoryName = File::GetFilename(packagePath);
     m_parent = {};
-
+    m_assetTemplateProvider = assetTemplateProvider;
 }
 
 std::vector<std::shared_ptr<AssetFile>> ToolsAssetFolder::GetContainingFiles() const
@@ -66,11 +71,9 @@ void ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>& parent
 
             std::string assetFilePackagePath = Directory::CombinePath(m_packagePath, fileName);
 
-            std::shared_ptr<ToolsAssetFile> file = {};
             try
             {
-                file = std::make_shared<ToolsAssetFile>(m_gamePackage, m_textureManager, assetFilePackagePath, shared_from_this());
-                m_files.emplace_back(file);
+                m_files.emplace_back(CreateAssetFile(assetFilePackagePath));
             }
             catch (const std::exception& e)
             {
@@ -83,9 +86,46 @@ void ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>& parent
         std::vector<std::string> directoryList = gamePackage->Directory()->ListDirectories(m_packagePath);
         for (const std::string& directoryPath : directoryList)
         {
-            auto folder = std::make_shared<ToolsAssetFolder>(m_gamePackage, m_textureManager, directoryPath);
+            auto folder = std::make_shared<ToolsAssetFolder>(m_gamePackage, m_textureManager, m_assetTemplateProvider, directoryPath);
             folder->PopulateChildren(shared_from_this());
             m_folders.emplace_back(folder);
         }
     }
+}
+
+std::shared_ptr<AssetFile> ToolsAssetFolder::CreateAssetFile(const std::string& packagePath)
+{
+    for (const std::shared_ptr<const AssetMetaData>& metaData : m_assetTemplateProvider->GetAssetTemplates())
+    {
+        if (metaData->GetTemplate())
+        {
+            if (metaData->GetTemplate()->ShouldUseTemplate(packagePath))
+            {
+                return CreateAssetFile(packagePath, metaData);
+            }
+        }
+    }
+
+    Log::Error("Asset file exists but there is no template. Default was used. Path: " +
+        packagePath,
+        "ToolsAssetFolder::CreateAssetFile(const std::string&)");
+    return std::make_shared<ToolsAssetFile>(m_gamePackage, m_textureManager, packagePath, shared_from_this());
+}
+
+std::shared_ptr<AssetFile> ToolsAssetFolder::CreateAssetFile(
+    const std::string& packagePath,
+    const std::shared_ptr<const AssetMetaData>& metaData)
+{
+    switch (metaData->GetTemplate()->GetAssetFileType())
+    {
+    case AssetFileType::ImageAsset:
+        return std::make_shared<ToolsImageAsset>(m_gamePackage, m_textureManager, packagePath, shared_from_this(), metaData);
+    }
+
+    Log::Error("There is no implementation to create the given AssetFileType. "
+               "Creating a default implementation. Type: "
+                + EAssetFileType::ToString(metaData->GetTemplate()->GetAssetFileType()),
+        "ToolsAssetFolder::CreateAssetFile(const std::string&,AssetFileType)");
+
+    return std::make_shared<ToolsAssetFile>(m_gamePackage, m_textureManager, packagePath, shared_from_this());
 }

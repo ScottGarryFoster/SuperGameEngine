@@ -1,5 +1,6 @@
 #include "InspectorWindow.h"
 
+#include "InspectAssetObject.h"
 #include "InspectGameObject.h"
 #include "../../ImGuiIncludes.h"
 #include "../../GameEngineEquivalents/Component/Component.h"
@@ -23,6 +24,7 @@ InspectorWindow::InspectorWindow()
 {
     m_isSetup = false;
     m_inspectGameObject = std::make_shared<InspectGameObject>();
+    m_inspectAssetObject = std::make_shared<InspectAssetObject>();
 
     m_onMenuDeleteComponent = std::make_shared<FEvent>();
 }
@@ -33,6 +35,8 @@ void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_windowPackage = windowPackage;
     m_inspectGameObject->OnMenuDelete()->Subscribe(GetWeakDistributed());
     m_inspectGameObject->Setup(m_windowPackage);
+
+    m_inspectAssetObject->Setup(windowPackage);
 
     if (!m_windowPackage->GetFrameworkManager())
     {
@@ -72,6 +76,7 @@ void InspectorWindow::Update()
     }
 
     m_inspectGameObject->Update();
+    m_inspectAssetObject->Update();
 }
 
 void InspectorWindow::Draw()
@@ -85,6 +90,7 @@ void InspectorWindow::Draw()
     if (RenderWindow(windowName))
     {
         m_inspectGameObject->Draw();
+        m_inspectAssetObject->Draw();
 
         if (!m_errorMessage.empty())
         {
@@ -98,6 +104,7 @@ void InspectorWindow::Draw()
 void InspectorWindow::TearDown()
 {
     m_inspectGameObject->TearDown();
+    m_inspectAssetObject->TearDown();
 }
 
 std::shared_ptr<FEventSubscriptions> InspectorWindow::OnMenuDelete() const
