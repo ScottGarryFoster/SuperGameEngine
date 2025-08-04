@@ -3,6 +3,7 @@
 
 namespace FatedQuestLibraries
 {
+    class DocumentModifiableUniversalObjectData;
     class ModifiableUniversalObjectData;
 }
 
@@ -48,6 +49,11 @@ namespace SuperGameTools
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
+        /// <summary>
+        /// Called when a user action to say all items opened is called.
+        /// </summary>
+        void OnSaveAll();
+
     private:
 
         /// <summary>
@@ -66,8 +72,13 @@ namespace SuperGameTools
         std::shared_ptr<AssetFile> m_assetFileCurrentlyEdited;
 
         /// <summary>
+        /// Helps to create XML document. Used to save Asset Objects.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::DocumentToXml> m_documentToXml;
+
+        /// <summary>
         /// If asset file is currently being edited this is the current data. It may not be saved.
         /// </summary>
-        std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData> m_currentlyEditedDocument;
+        std::shared_ptr<FatedQuestLibraries::DocumentModifiableUniversalObjectData> m_currentlyEditedDocument;
     };
 }

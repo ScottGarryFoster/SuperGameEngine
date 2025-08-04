@@ -17,6 +17,8 @@
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../../Engine/Structural/GameObject/ComponentFactory.h"
 #include "../SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
+#include "ToolsEngine/ViewElements/Menu/MenuItemView.h"
+#include "ToolsEngine/ViewElements/Menu/MenuView.h"
 
 using namespace SuperGameTools;
 
@@ -37,6 +39,12 @@ void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_inspectGameObject->Setup(m_windowPackage);
 
     m_inspectAssetObject->Setup(windowPackage);
+    {
+        std::shared_ptr<FEventSubscriptions> subscription =
+            m_windowPackage->GetTopMenu()->GetMenuItem("FileSave")->OnSelected();
+        subscription->Subscribe(m_inspectAssetObject);
+    }
+
 
     if (!m_windowPackage->GetFrameworkManager())
     {
@@ -105,6 +113,10 @@ void InspectorWindow::TearDown()
 {
     m_inspectGameObject->TearDown();
     m_inspectAssetObject->TearDown();
+
+    std::shared_ptr<FEventSubscriptions> subscription =
+        m_windowPackage->GetTopMenu()->GetMenuItem("FileSave")->OnSelected();
+    subscription->Unsubscribe(m_inspectAssetObject);
 }
 
 std::shared_ptr<FEventSubscriptions> InspectorWindow::OnMenuDelete() const

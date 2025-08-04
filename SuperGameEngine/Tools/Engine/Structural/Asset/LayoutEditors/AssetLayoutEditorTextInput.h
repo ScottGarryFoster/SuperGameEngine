@@ -16,6 +16,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
         AssetLayoutEditorTextInput(const std::string& map);
+        virtual ~AssetLayoutEditorTextInput();
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -30,6 +31,11 @@ namespace SuperGameTools
         virtual void Draw(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
 
     private:
+
+        /// <summary>
+        /// The size of the text field by default (number of characters;
+        /// </summary>
+        const size_t m_defaultTextCapacity = 2048;
 
         /// <summary>
         /// The parameter within the Asset to modify.

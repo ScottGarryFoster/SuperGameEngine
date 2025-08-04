@@ -9,19 +9,21 @@
 #include "Position/FVector4I.h"
 #include "Text/StringHelpers.h"
 #include "../Logger/AllReferences.h"
+#include "Object/GUID/GUIDHelpers.h"
 
 using namespace FatedQuestLibraries;
 
 ExplicitDocumentModifiableUniversalObjectData::ExplicitDocumentModifiableUniversalObjectData()
 {
-    isDirty = true;
+    m_isDirty = false;
     m_modifiableDocument = std::make_shared<ModifiableDocument>();
     m_parser = std::make_shared<UniversalObjectParser>();
+    m_guid = GUIDHelpers::CreateGUID();
 }
 
 std::shared_ptr<ModifiableDocument> ExplicitDocumentModifiableUniversalObjectData::ExportToDocument()
 {
-    if (isDirty)
+    if (m_isDirty || !m_modifiableDocument)
     {
         m_modifiableDocument = std::make_shared<ModifiableDocument>();
         auto root = std::make_shared<ModifiableNode>();
@@ -55,7 +57,6 @@ bool ExplicitDocumentModifiableUniversalObjectData::ImportAsDocument(const std::
     m_stringValues = {};
     m_intValues = {};
     m_vector4IValues = {};
-    isDirty = true;
 
     std::shared_ptr<StoredDocumentNode> root = document->GetRoot();
     if (!root)
@@ -83,7 +84,18 @@ bool ExplicitDocumentModifiableUniversalObjectData::ImportAsDocument(const std::
         }
     }
 
+    m_isDirty = false;
     return true;
+}
+
+std::shared_ptr<Guid> ExplicitDocumentModifiableUniversalObjectData::GetGuid() const
+{
+    return m_guid;
+}
+
+bool ExplicitDocumentModifiableUniversalObjectData::IsDirty() const
+{
+    return m_isDirty;
 }
 
 std::vector<std::string> ExplicitDocumentModifiableUniversalObjectData::ListStrings() const
@@ -98,7 +110,7 @@ std::vector<std::string> ExplicitDocumentModifiableUniversalObjectData::ListStri
 
 void ExplicitDocumentModifiableUniversalObjectData::SetString(const std::string& key, const std::string& value)
 {
-    isDirty = true;
+    m_isDirty = true;
 
     m_stringValues.insert_or_assign(key, value);
 }
@@ -141,7 +153,7 @@ std::vector<std::string> ExplicitDocumentModifiableUniversalObjectData::ListInts
 
 void ExplicitDocumentModifiableUniversalObjectData::SetInt(const std::string& key, int value)
 {
-    isDirty = true;
+    m_isDirty = true;
 
     m_intValues.insert_or_assign(key, value);
 }
@@ -195,14 +207,14 @@ bool ExplicitDocumentModifiableUniversalObjectData::UnsetVector4I(const std::str
 
 void ExplicitDocumentModifiableUniversalObjectData::SetVector4I(const std::string& key, const FVector4I& value)
 {
-    isDirty = true;
+    m_isDirty = true;
 
     m_vector4IValues.insert_or_assign(key, std::make_shared<FVector4I>(value));
 }
 
 void ExplicitDocumentModifiableUniversalObjectData::SetVector4I(const std::string& key, int x, int y, int z, int w)
 {
-    isDirty = true;
+    m_isDirty = true;
 
     m_vector4IValues.insert_or_assign(key, std::make_shared<FVector4I>(x, y, z, w));
 }

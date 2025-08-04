@@ -107,6 +107,19 @@ void AssetTileRender::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArgument
     {
         std::string cachedCurrentPath = m_currentFolder->GetPackagePath();
 
+        // Ensure we keep the selection from the current files and folders we are rendering.
+        //std::vector<std::shared_ptr<AssetFile>> selectedFiles;
+        std::unordered_set<std::string> packagePaths;
+        for (const std::shared_ptr<AssetFile>& file : m_currentFolder->GetContainingFiles())
+        {
+            if (file->IsSelected())
+            {
+                packagePaths.insert(file->GetPackagePath());
+            }
+        }
+
+        // Note that from this point we should consider the files and folders from the previous
+        // load gone...
         m_rootFolder = packageFileUpdate->GetNewRoot();
         if (cachedCurrentPath.empty())
         {
@@ -141,6 +154,20 @@ void AssetTileRender::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArgument
         }
 
         m_currentFolder = currentFolder;
+
+        if (cachedCurrentPath == m_currentFolder->GetPackagePath())
+        {
+            std::vector<std::weak_ptr<Selectable>> currentVersionOfSelectedFiles;
+            for (const std::shared_ptr<AssetFile>& file : m_currentFolder->GetContainingFiles())
+            {
+                if (packagePaths.contains(file->GetPackagePath()))
+                {
+                    currentVersionOfSelectedFiles.emplace_back(file);
+                }
+            }
+
+            m_selectionManager->SetSelection(currentVersionOfSelectedFiles);
+        }
     }
     else if (auto selectionArguments = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
     {

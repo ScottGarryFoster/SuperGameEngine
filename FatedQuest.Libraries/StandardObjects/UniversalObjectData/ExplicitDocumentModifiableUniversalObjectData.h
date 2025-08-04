@@ -33,6 +33,18 @@ namespace FatedQuestLibraries
         virtual bool ImportAsDocument(const std::shared_ptr<StoredDocument>& document) override;
 
         /// <summary>
+        /// Get the guid for this universal Object Data.
+        /// </summary>
+        /// <returns>The unique ID for this object. </returns>
+        virtual std::shared_ptr<Guid> GetGuid() const override;
+
+        /// <summary>
+        /// True means there were changes in this object differing from creation which would affect an export of the data.
+        /// </summary>
+        /// <returns>True means there were changes in this object differing from creation which would affect an export of the data. </returns>
+        virtual bool IsDirty() const override;
+
+        /// <summary>
         /// Lists all the strings in the object.
         /// </summary>
         /// <returns>All the String keys. </returns>
@@ -147,6 +159,11 @@ namespace FatedQuestLibraries
 
     private:
         /// <summary>
+        /// Unique ID for the Universal Object.
+        /// </summary>
+        std::shared_ptr<Guid> m_guid;
+
+        /// <summary>
         /// A cached version of the document exported.
         /// </summary>
         std::shared_ptr<ModifiableDocument> m_modifiableDocument;
@@ -154,7 +171,7 @@ namespace FatedQuestLibraries
         /// <summary>
         /// True means this file has changed.
         /// </summary>
-        bool isDirty;
+        bool m_isDirty;
 
         /// <summary>
         /// Loaded string values from file.

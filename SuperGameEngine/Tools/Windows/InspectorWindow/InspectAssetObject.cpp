@@ -9,6 +9,8 @@
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
 #include "Engine/Structural/Asset/Template/AssetLayout.h"
 #include "Engine/Structural/Asset/Template/AssetMetaData.h"
+#include "ToolsEngine/ViewElements/Menu/MenuItemView.h"
+#include "ToolsEngine/ViewElements/Menu/MenuItemViewEventArguments.h"
 #include "Windows/AssetBrowser/FileManagement/AssetFile.h"
 
 using namespace SuperGameTools;
@@ -18,6 +20,7 @@ InspectAssetObject::InspectAssetObject()
 {
     m_isSetup = false;
     m_assetFileCurrentlyEdited = {};
+    m_documentToXml = std::make_shared<SimpleDocumentToXml>();
 }
 
 void InspectAssetObject::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -94,6 +97,7 @@ void InspectAssetObject::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (auto selectableArguments = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
     {
+        
         m_assetFileCurrentlyEdited = {};
         m_currentlyEditedDocument = {};
 
@@ -122,8 +126,8 @@ void InspectAssetObject::Invoke(std::shared_ptr<FEventArguments> arguments)
                     return;
                 }
 
-                auto documentModifiableUniversalObjectData = std::make_shared<ExplicitDocumentModifiableUniversalObjectData>();
-                if (!documentModifiableUniversalObjectData->ImportAsDocument(document))
+                m_currentlyEditedDocument = std::make_shared<ExplicitDocumentModifiableUniversalObjectData>();
+                if (!m_currentlyEditedDocument->ImportAsDocument(document))
                 {
                     Log::Error("Could not parse asset file into a universal asset when getting the asset into"
                                "the inspector window. This is unexpected. Report this as an issue. "
@@ -131,9 +135,50 @@ void InspectAssetObject::Invoke(std::shared_ptr<FEventArguments> arguments)
                         "InspectAssetObject::Invoke(std::shared_ptr<FEventArguments>)");
                     return;
                 }
-
-                m_currentlyEditedDocument = documentModifiableUniversalObjectData;
             }
+        }
+    }
+    else if (auto menuItemViewEventArguments = std::dynamic_pointer_cast<MenuItemViewEventArguments>(arguments))
+    {
+        std::shared_ptr<MenuItemView> menuItem = menuItemViewEventArguments->GetMenuItem().lock();
+        if (!menuItem)
+        {
+            return;
+        }
+
+        if (menuItem->GetKey() != "FileSave")
+        {
+            return;
+        }
+
+        OnSaveAll();
+    }
+}
+
+void InspectAssetObject::OnSaveAll()
+{
+    if (!m_assetFileCurrentlyEdited || !m_currentlyEditedDocument)
+    {
+        return;
+    }
+
+    if (m_currentlyEditedDocument->IsDirty())
+    {
+        std::shared_ptr<PackagePaths> paths = m_windowPackage->GetPackagePaths();
+        std::string fullPath = Directory::CombinePath(paths->ProductsDirectory(), paths->ProductsDirectoryName(), m_assetFileCurrentlyEdited->GetPackagePath());
+        if (std::shared_ptr<ModifiableDocument> exported = m_currentlyEditedDocument->ExportToDocument())
+        {
+            std::string xmlDocument = m_documentToXml->ConvertToXml(exported);
+            if (!File::WriteLine(fullPath, xmlDocument))
+            {
+                Log::Error("Could not write to file. Path: " + fullPath,
+                    "InspectAssetObject::OnSaveAll()");
+            }
+        }
+        else
+        {
+            Log::Error("Could not export document. Path: " + fullPath,
+                "InspectAssetObject::OnSaveAll()");
         }
     }
 }

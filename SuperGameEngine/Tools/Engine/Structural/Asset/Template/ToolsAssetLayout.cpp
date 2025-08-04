@@ -1,7 +1,9 @@
 #include "ToolsAssetLayout.h"
 #include "../../../../FatedQuestLibraries.h"
+#include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "Engine/Structural/Asset/LayoutEditors/AssetLayoutEditor.h"
 #include "Engine/Structural/Asset/LayoutEditors/AssetLayoutEditorFactory.h"
+#include "Imgui/External/imgui.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -53,8 +55,11 @@ void ToolsAssetLayout::Update(
 void ToolsAssetLayout::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
+    std::string id = "AssetLayout_" + universalObjectData->GetGuid()->ToString();
+    ImGui::PushID(id.c_str());
     for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
     {
         layout->Draw(universalObjectData);
     }
+    ImGui::PopID();
 }
