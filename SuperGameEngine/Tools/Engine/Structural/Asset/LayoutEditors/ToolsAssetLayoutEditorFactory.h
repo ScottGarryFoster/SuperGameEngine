@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #include "AssetLayoutEditorFactory.h"
 
@@ -49,6 +50,17 @@ namespace SuperGameTools
         /// <param name="node">Node to extract from. </param>
         /// <returns>Map to set to or string empty. </returns>
         std::string ExtractMap(
+            const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const;
+
+        /// <summary>
+        /// Extracts the enum filter tag.
+        /// </summary>
+        /// <param name="node">Node to extract from.</param>
+        /// <returns>
+        /// The list of filters if any found.
+        /// If not enum is found or the tag is not found this is empty.
+        /// </returns>
+        std::vector<std::string> ExtractEnumFilter(
             const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const;
 
 

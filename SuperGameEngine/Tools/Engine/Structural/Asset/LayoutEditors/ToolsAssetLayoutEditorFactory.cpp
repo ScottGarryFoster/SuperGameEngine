@@ -1,7 +1,9 @@
 #include "ToolsAssetLayoutEditorFactory.h"
 
+#include "AssetLayoutEditorFilteredDropdown.h"
 #include "AssetLayoutEditorTextInput.h"
 #include "FatedQuestLibraries.h"
+#include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
 #include "Engine/Structural/Asset/Template/AssetTemplateLayoutMapType.h"
 
 using namespace SuperGameTools;
@@ -32,14 +34,22 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
     }
 
     std::string map = ExtractMap(node);
+    std::vector<std::string> enumFilters = ExtractEnumFilter(node);
 
     switch (type)
     {
         case UniversalStorableType::String:
             switch (maptype)
             {
-                case AssetTemplateLayoutMapType::Single: 
-                    return std::make_shared<AssetLayoutEditorTextInput>(map);
+                case AssetTemplateLayoutMapType::Single:
+                    if (enumFilters.size() == 0)
+                    {
+                        return std::make_shared<AssetLayoutEditorTextInput>(map);
+                    }
+                    else
+                    {
+                        return std::make_shared<AssetLayoutEditorFilteredDropdown>(map, enumFilters);
+                    }
             }
             break;
     }
@@ -95,4 +105,21 @@ std::string ToolsAssetLayoutEditorFactory::ExtractMap(
     }
 
     return map;
+}
+
+std::vector<std::string> ToolsAssetLayoutEditorFactory::ExtractEnumFilter(
+    const std::shared_ptr<const StoredDocumentNode>& node) const
+{
+    std::string enumFilter = {};
+    if (auto enumFilterAttribute = node->Attribute("enumfilter", CaseSensitivity::IgnoreCase))
+    {
+        enumFilter = enumFilterAttribute->Value();
+    }
+
+    if (enumFilter.empty())
+    {
+        return {};
+    }
+
+    return EnumFilterFactory::GetValues(enumFilter);
 }

@@ -24,6 +24,9 @@
 #include "FrameworkManager/ToolsFrameworkManager.h"
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
+// This should be included early in the engine for the inspector.
+#include "UserInputManagement/EnumFilterFactoryFeeder.h"
+
 using namespace SuperGameTools;
 
 ToolsEngine::ToolsEngine()

@@ -2,9 +2,6 @@
     <Header>
     #pragma once
     </Header>
-    <AdditionalIncludes>
-        <Include RootPath="FatedQuest.Libraries\SharedEnums\Objects\EnumFilterFactory.h" />
-    </AdditionalIncludes>
     <Namespace Name="SuperGameTools" />
     <EnumComment>
         The type of the collection stored within the mapping.
@@ -20,10 +17,4 @@
             Edit by appending a number with Array values.
         </Array>
     </EnumName>
-    <Footer>
-    namespace FatedQuestLibraries
-    {
-        REGISTER_TOOLS_ENUM_FILTER("AssetTemplateLayoutMapType", EAssetTemplateLayoutMapType::ToVectorValues());
-    }
-    </Footer>
 </SuperEnum>

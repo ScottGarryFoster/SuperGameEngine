@@ -1,5 +1,4 @@
 #pragma once
-#include "../../../../../FatedQuest.Libraries\SharedEnums\Objects\EnumFilterFactory.h"
 #include <vector>
 #include <string>
 
@@ -128,9 +127,4 @@ namespace SuperGameEngine
             return output;
         }
     };
-}
-
-namespace FatedQuestLibraries
-{
-    REGISTER_TOOLS_ENUM_FILTER("AssetTemplateLayoutMapType", EAssetTemplateLayoutMapType::ToVectorValues());
 }
