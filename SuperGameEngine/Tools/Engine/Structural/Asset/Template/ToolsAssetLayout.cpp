@@ -3,7 +3,8 @@
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "Engine/Structural/Asset/LayoutEditors/AssetLayoutEditor.h"
 #include "Engine/Structural/Asset/LayoutEditors/AssetLayoutEditorFactory.h"
-#include "Imgui/External/imgui.h"
+#include "../../../../ImGuiIncludes.h"
+#include "Imgui/External/imgui_internal.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -55,11 +56,51 @@ void ToolsAssetLayout::Update(
 void ToolsAssetLayout::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
+    ImGui::BeginGroup();
+
     std::string id = "AssetLayout_" + universalObjectData->GetGuid()->ToString();
     ImGui::PushID(id.c_str());
-    for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
+
+    // TODO: Would like to do a better job of this table. See: [#184]
+    if (ImGui::BeginTable("##MyTable", 2,
+        ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings
+    ))
     {
-        layout->Draw(universalObjectData);
+        ImVec2 table_size = ImGui::GetItemRectSize();
+
+        ImGui::TableSetupColumn("##Column0",
+            ImGuiTableColumnFlags_WidthFixed,
+            m_sizeOfLeftColumn);
+
+        ImGui::TableSetupColumn("##Column1",
+            ImGuiTableColumnFlags_WidthStretch
+            );
+
+        float colWidthBefore = -1;
+
+        for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
+        {
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+
+            float wrapX = ImGui::GetColumnOffset(0);
+            
+            ImGui::PushTextWrapPos(wrapX);
+            layout->DrawLabel(universalObjectData);
+            ImGui::PopTextWrapPos();
+
+            ImGui::TableNextColumn();
+
+            ImGui::PushItemWidth(-1);
+            layout->DrawValue(universalObjectData);
+            ImGui::PopItemWidth();
+        }
+        
+        ImGui::EndTable();
     }
+
     ImGui::PopID();
+    ImGui::EndGroup();
+
+
 }

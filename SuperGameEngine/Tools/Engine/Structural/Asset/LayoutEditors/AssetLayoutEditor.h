@@ -27,5 +27,19 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset.</param>
         virtual void Draw(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
+
+        /// <summary>
+        /// Draws the label of the editor.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset.</param>
+        virtual void DrawLabel(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
+
+        /// <summary>
+        /// Draws the value editor for the editor.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset.</param>
+        virtual void DrawValue(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
     };
 }

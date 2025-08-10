@@ -24,21 +24,40 @@ void AssetLayoutEditorTextInput::Update(
 void AssetLayoutEditorTextInput::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
+    DrawLabel(universalObjectData);
+    ImGui::SameLine();
+    DrawValue(universalObjectData);
+}
+
+void AssetLayoutEditorTextInput::DrawLabel(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
     ImGui::BeginGroup();
 
-    std::string id = universalObjectData->GetGuid()->ToString() + "_" + m_map;
+    std::string id = universalObjectData->GetGuid()->ToString() + "_Label_" + m_map;
     ImGui::PushID(id.c_str());
 
     // Label
     ImGui::Text(m_map.c_str());
-    ImGui::SameLine();
+
+    ImGui::PopID();
+    ImGui::EndGroup();
+}
+
+void AssetLayoutEditorTextInput::DrawValue(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
+    ImGui::BeginGroup();
+
+    std::string id = universalObjectData->GetGuid()->ToString() + "_Value_" + m_map;
+    ImGui::PushID(id.c_str());
 
     std::string value = universalObjectData->GetString(m_map);
     if (value.size() + 1 > m_defaultTextCapacity)
     {
         // TODO: Revisit the array resizing but ensure that we do not create separate object.
         Log::Error("String within an Asset is bigger than the text size. "
-                   "Consider raising it. Limit: " + std::to_string(m_defaultTextCapacity),
+            "Consider raising it. Limit: " + std::to_string(m_defaultTextCapacity),
             "AssetLayoutEditorTextInput::Draw(const std::shared_ptr<ModifiableUniversalObjectData>&)");
     }
 

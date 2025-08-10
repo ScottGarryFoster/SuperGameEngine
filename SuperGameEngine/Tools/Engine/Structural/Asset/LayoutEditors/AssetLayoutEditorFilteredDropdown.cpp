@@ -2,6 +2,7 @@
 #include "../../../../ImGuiIncludes.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
+#include "Imgui/External/imgui_internal.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -44,9 +45,35 @@ void AssetLayoutEditorFilteredDropdown::Draw(
     std::string id = universalObjectData->GetGuid()->ToString() + "_" + m_map;
     ImGui::PushID(id.c_str());
 
-    // Label
-    ImGui::Text(m_map.c_str());
+    DrawLabel(universalObjectData);
     ImGui::SameLine();
+    DrawValue(universalObjectData);
+
+    ImGui::PopID();
+    ImGui::EndGroup();
+}
+
+void AssetLayoutEditorFilteredDropdown::DrawLabel(
+    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
+{
+    ImGui::BeginGroup();
+
+    std::string id = universalObjectData->GetGuid()->ToString() + "_Label_" + m_map;
+    ImGui::PushID(id.c_str());
+
+    ImGui::Text(m_map.c_str());
+
+    ImGui::PopID();
+    ImGui::EndGroup();
+}
+
+void AssetLayoutEditorFilteredDropdown::DrawValue(
+    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
+{
+    ImGui::BeginGroup();
+
+    std::string id = universalObjectData->GetGuid()->ToString() + "_Value_" + m_map;
+    ImGui::PushID(id.c_str());
 
     std::string currentValue = universalObjectData->GetString(m_map);
     int selectedItem = -1;
@@ -78,7 +105,6 @@ void AssetLayoutEditorFilteredDropdown::Draw(
             universalObjectData->SetString(m_map, newValue);
         }
     }
-
 
     ImGui::PopID();
     ImGui::EndGroup();
