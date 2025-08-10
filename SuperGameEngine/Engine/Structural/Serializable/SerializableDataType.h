@@ -54,6 +54,16 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Text",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(SerializableDataType value)
         {
             switch (value)
@@ -81,6 +91,8 @@ namespace SuperGameEngine
             
             return SerializableDataType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

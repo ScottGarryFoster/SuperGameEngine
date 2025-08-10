@@ -27,7 +27,7 @@ int main(int argc, char* args[])
     Log::Info("Generating with: " + repoDirectory);
 
     GenerateEnum generator;
-    generator.AllEnums(repoDirectory, ".superenum", ".h");
+    generator.AllEnums(repoDirectory, ".superenum", ".h", {});
     Log::Info("Generated Enums");
 
     //std::string lines;

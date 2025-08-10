@@ -2,6 +2,9 @@
     <Header>
     #pragma once
     </Header>
+    <AdditionalIncludes>
+        <Include RootPath="FatedQuest.Libraries\SharedEnums\Objects\EnumFilterFactory.h" />
+    </AdditionalIncludes>
     <Namespace Name="SuperGameEngine" />
     <EnumComment>
         The method to split the UVs upon the texture.
@@ -21,4 +24,10 @@
             These are all the tiles.
         </UniformByPixel>
     </EnumName>
+    <Footer>
+    namespace FatedQuestLibraries
+    {
+        REGISTER_TOOLS_ENUM_FILTER("AssetTemplateLayoutMapType", EAssetTemplateLayoutMapType::ToVectorValues());
+    }
+    </Footer>
 </SuperEnum>

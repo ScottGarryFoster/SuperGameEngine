@@ -59,6 +59,18 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "String",
+                "Int",
+                "Vector4I",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(UniversalStorableType value)
         {
             switch (value)
@@ -92,6 +104,8 @@ namespace FatedQuestLibraries
             
             return UniversalStorableType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

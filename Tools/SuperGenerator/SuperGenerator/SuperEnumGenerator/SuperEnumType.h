@@ -61,6 +61,17 @@ namespace SuperEnumGenerator
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Standard",
+                "BitFlag",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(SuperEnumType value)
         {
             switch (value)
@@ -91,6 +102,8 @@ namespace SuperEnumGenerator
             
             return SuperEnumType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

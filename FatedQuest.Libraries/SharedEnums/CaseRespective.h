@@ -61,6 +61,17 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "RetainExistingCase",
+                "AlterCaseAsNeeded",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(CaseRespective value)
         {
             switch (value)
@@ -91,6 +102,8 @@ namespace FatedQuestLibraries
             
             return CaseRespective::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

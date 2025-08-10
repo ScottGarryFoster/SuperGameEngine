@@ -1,4 +1,5 @@
 #pragma once
+#include "../../../../../../FatedQuest.Libraries\SharedEnums\Objects\EnumFilterFactory.h"
 #include <vector>
 #include <string>
 
@@ -61,6 +62,17 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Single",
+                "Array",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(AssetTemplateLayoutMapType value)
         {
             switch (value)
@@ -91,6 +103,8 @@ namespace SuperGameTools
             
             return AssetTemplateLayoutMapType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require
@@ -110,4 +124,9 @@ namespace SuperGameTools
             return output;
         }
     };
+}
+
+namespace FatedQuestLibraries
+{
+    REGISTER_TOOLS_ENUM_FILTER("AssetTemplateLayoutMapType", EAssetTemplateLayoutMapType::ToVectorValues());
 }

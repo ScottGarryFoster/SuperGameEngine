@@ -78,6 +78,19 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Xbox360Controller",
+                "XboxSeriesController",
+                "NintendoSwitchProController",
+                "NintendoN64Controller",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(Controller value)
         {
             switch (value)
@@ -114,6 +127,8 @@ namespace SuperGameInput
             
             return Controller::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

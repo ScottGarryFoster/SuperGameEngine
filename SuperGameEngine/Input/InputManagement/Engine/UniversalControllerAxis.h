@@ -71,6 +71,21 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "LeftStickX",
+                "LeftStickY",
+                "RightStickX",
+                "RightStickY",
+                "LeftTrigger",
+                "RightTrigger",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(UniversalControllerAxis value)
         {
             switch (value)
@@ -113,6 +128,8 @@ namespace SuperGameInput
             
             return UniversalControllerAxis::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

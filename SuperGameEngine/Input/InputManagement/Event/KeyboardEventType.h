@@ -61,6 +61,17 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "SDL_KEYDOWN",
+                "SDL_KEYUP",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(KeyboardEventType value)
         {
             switch (value)
@@ -91,6 +102,8 @@ namespace SuperGameInput
             
             return KeyboardEventType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require
