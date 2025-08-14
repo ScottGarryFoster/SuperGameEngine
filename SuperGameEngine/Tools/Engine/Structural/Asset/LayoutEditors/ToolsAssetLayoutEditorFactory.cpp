@@ -2,6 +2,7 @@
 
 #include "AssetLayoutEditorFilteredDropdown.h"
 #include "AssetLayoutEditorTextInput.h"
+#include "AssetLayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
 #include "Engine/Structural/Asset/Template/AssetTemplateLayoutMapType.h"
@@ -52,6 +53,8 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
                     }
             }
             break;
+        case UniversalStorableType::Vector4I:
+            return std::make_shared<AssetLayoutEditorVector4I>(map);
     }
 
     Log::Error("Could not create layout for the following combination: " +
