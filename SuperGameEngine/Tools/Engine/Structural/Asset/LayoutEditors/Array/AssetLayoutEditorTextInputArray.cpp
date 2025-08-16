@@ -49,7 +49,39 @@ void AssetLayoutEditorTextInputArray::DrawValue(
 void AssetLayoutEditorTextInputArray::OnSave(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
-    OnSaveCleanUpArray(universalObjectData, m_map);
+    // Blank string are not saved. Jumps in the indexes are not recognised.
+    // We must therefore remove blanks and shift values to clean the data.
+
+    bool foundBlankEntry = false;
+    do
+    {
+        foundBlankEntry = false;
+        size_t i = 0;
+        while (true)
+        {
+            std::string currentName = GetFullEntryName(m_map, i);
+            if (universalObjectData->IsStringLoaded(currentName))
+            {
+                if (universalObjectData->GetString(currentName).empty())
+                {
+                    foundBlankEntry = true;
+                    break;
+                }
+            }
+            else
+            {
+                break;
+            }
+
+            ++i;
+        }
+
+        if (foundBlankEntry)
+        {
+            RemoveEntry(universalObjectData, i, m_map);
+        }
+
+    } while (foundBlankEntry);
 }
 
 void AssetLayoutEditorTextInputArray::DrawSingleValue(
@@ -114,4 +146,11 @@ void AssetLayoutEditorTextInputArray::RemoveEntry(
 
         ++i;
     }
+}
+
+bool AssetLayoutEditorTextInputArray::DoesObjectContain(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
+    size_t arrayIndex) const
+{
+    return universalObjectData->IsStringLoaded(GetFullEntryName(m_map, arrayIndex));
 }

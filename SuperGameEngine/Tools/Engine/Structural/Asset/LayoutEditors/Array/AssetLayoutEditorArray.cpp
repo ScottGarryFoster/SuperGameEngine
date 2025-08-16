@@ -42,7 +42,7 @@ void AssetLayoutEditorArray::DrawValueInTable(
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
 
-            if (universalObjectData->IsStringLoaded(GetFullEntryName(map, i)))
+            if (DoesObjectContain(universalObjectData, i))
             {
                 if (!DrawASingleRow(universalObjectData, i, map))
                 {
@@ -73,45 +73,6 @@ void AssetLayoutEditorArray::DrawValueInTable(
 
     ImGui::PopID();
     ImGui::EndGroup();
-}
-
-void AssetLayoutEditorArray::OnSaveCleanUpArray(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
-    const std::string& map) const
-{
-    // Blank string are not saved. Jumps in the indexes are not recognised.
-    // We must therefore remove blanks and shift values to clean the data.
-
-    bool foundBlankEntry = false;
-    do
-    {
-        foundBlankEntry = false;
-        size_t i = 0;
-        while (true)
-        {
-            std::string currentName = GetFullEntryName(map, i);
-            if (universalObjectData->IsStringLoaded(currentName))
-            {
-                if (universalObjectData->GetString(currentName).empty())
-                {
-                    foundBlankEntry = true;
-                    break;
-                }
-            }
-            else
-            {
-                break;
-            }
-
-            ++i;
-        }
-
-        if (foundBlankEntry)
-        {
-            RemoveEntry(universalObjectData, i, map);
-        }
-
-    } while (foundBlankEntry);
 }
 
 bool AssetLayoutEditorArray::DrawASingleRow(

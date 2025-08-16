@@ -86,6 +86,16 @@ namespace SuperGameTools
             size_t arrayIndex,
             const std::string& map) const override;
 
+        /// <summary>
+        /// True when the given index is set in the object data.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">Index of the element. </param>
+        /// <returns>True means exists. </returns>
+        virtual bool DoesObjectContain(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+            size_t arrayIndex) const override;
+
     private:
 
         /// <summary>

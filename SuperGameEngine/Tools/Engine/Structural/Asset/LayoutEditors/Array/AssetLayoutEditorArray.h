@@ -25,7 +25,7 @@ namespace SuperGameTools
         /// Add a new string at the given index.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
-        /// <param name="arrayIndex">The index to add a string. </param>
+        /// <param name="arrayIndex">Index of the element. </param>
         /// <param name="map">Name of the entry without the index. </param>
         virtual void AddEntry(
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
@@ -36,7 +36,7 @@ namespace SuperGameTools
         /// Remove an entry at the given point. Note everything will be shifted from this point.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
-        /// <param name="arrayIndex">A pointer to the asset. </param>
+        /// <param name="arrayIndex">Index of the element. </param>
         /// <param name="map">Name of the entry without the index. </param>
         virtual void RemoveEntry(
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
@@ -44,22 +44,21 @@ namespace SuperGameTools
             const std::string& map) const = 0;
 
         /// <summary>
+        /// True when the given index is set in the object data.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">Index of the element. </param>
+        /// <returns>True means exists. </returns>
+        virtual bool DoesObjectContain(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+            size_t arrayIndex) const = 0;
+
+        /// <summary>
         /// Draws and may alter the data within the asset.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset.</param>
         /// <param name="map">Name of the entry without the index. </param>
         virtual void DrawValueInTable(
-            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
-            const std::string& map) const;
-
-        /// <summary>
-        /// Called when the data object is saved.
-        /// This should not actually need to save any data but can be used to clean up anything in edit
-        /// ready to be saved data, most notably things like blank strings in arrays. 
-        /// </summary>
-        /// <param name="universalObjectData">A pointer to the asset. </param>
-        /// <param name="map">Name of the entry without the index. </param>
-        virtual void OnSaveCleanUpArray(
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
             const std::string& map) const;
 

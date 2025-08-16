@@ -177,3 +177,10 @@ void AssetLayoutEditorFilteredDropdownArray::RemoveEntry(
         ++i;
     }
 }
+
+bool AssetLayoutEditorFilteredDropdownArray::DoesObjectContain(
+    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+    size_t arrayIndex) const
+{
+    return universalObjectData->IsStringLoaded(GetFullEntryName(m_map, arrayIndex));
+}

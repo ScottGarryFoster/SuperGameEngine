@@ -7,6 +7,7 @@
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
 #include "Array/AssetLayoutEditorFilteredDropdownArray.h"
+#include "Array/AssetLayoutEditorVector4IArray.h"
 #include "Engine/Structural/Asset/Template/AssetTemplateLayoutMapType.h"
 
 using namespace SuperGameTools;
@@ -65,7 +66,16 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
             }
             break;
         case UniversalStorableType::Vector4I:
-            return std::make_shared<AssetLayoutEditorVector4I>(map);
+            switch (maptype)
+            {
+            case AssetTemplateLayoutMapType::Single:
+                return std::make_shared<AssetLayoutEditorVector4I>(map);
+            case AssetTemplateLayoutMapType::Array:
+                return std::make_shared<AssetLayoutEditorVector4IArray>(map);
+            }
+            break;
+
+            
     }
 
     Log::Error("Could not create layout for the following combination: " +

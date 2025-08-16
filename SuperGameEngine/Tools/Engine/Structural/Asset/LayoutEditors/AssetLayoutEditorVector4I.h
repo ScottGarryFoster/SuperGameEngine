@@ -9,7 +9,7 @@ namespace SuperGameTools
 {
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
-    /// This represents a string input but filtered to a set of options which is represented as a dropdown.
+    /// This represents a vector input.
     /// </summary>
     class AssetLayoutEditorVector4I : public virtual AssetLayoutEditor
     {
