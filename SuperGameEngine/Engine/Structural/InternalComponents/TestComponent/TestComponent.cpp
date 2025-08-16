@@ -10,6 +10,7 @@
 #include "../../Serializable/SerializableParser.h"
 #include "../../Serializable/PropertyByType/TextSerializableProperty.h"
 #include "../SpriteComponent/SpriteComponent.h"
+#include "../Engine/Engine/Graphics/Texture/SuperTexture.h"
 
 using namespace SuperGameEngine;
 

@@ -11,6 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(ENABLE_TOOLS)
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
+    
+    set(CMAKE_C_FLAGS_Tools_Debug "${CMAKE_C_FLAGS_DEBUG}" CACHE STRING "C flags for Tools_Debug" FORCE)
+    set(CMAKE_CXX_FLAGS_Tools_Debug "${CMAKE_CXX_FLAGS_DEBUG}" CACHE STRING "C++ flags for Tools_Debug" FORCE)
 else()
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
 endif()
@@ -54,10 +57,27 @@ if(MSVC)
     target_precompile_headers(Tools PRIVATE ${PCH_HEADER})
 endif()
 
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(Tools PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(Tools PRIVATE "-include ${PCH_HEADER}")
+endif()
+
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(Tools PRIVATE _WINDOWS)
-    target_compile_options(Tools PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+    
+    target_compile_options(Tools PRIVATE
+      /W3
+      /permissive-
+      /Zc:preprocessor
+      /MP
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Set configurations
@@ -73,11 +93,12 @@ NugetInclude("rapidxml" Tools)
 NugetInclude("sdl2" Tools)
 NugetInclude("sdl2Mixer" Tools)
 NugetInclude("sdl2Image" Tools)
+NugetInclude("zlib" Tools)
 
 # Link libraries
 add_subdirectory(../Engine Engine)
 
 # Link dependencies
-target_link_libraries(Tools PUBLIC
+target_link_libraries(Tools PRIVATE
     Engine
 )

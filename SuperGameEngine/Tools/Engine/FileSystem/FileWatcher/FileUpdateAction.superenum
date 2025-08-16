@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes the new information discovered about the file system and the files upon it.
+    </EnumComment>
+    <EnumName Name="FileUpdateAction">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Added>
+            File was newly discovered.
+        </Added>
+        <Removed>
+            A file can no longer be found.
+        </Removed>
+        <Updated>
+            A file has been modified.
+        </Updated>
+    </EnumName>
+</SuperEnum>

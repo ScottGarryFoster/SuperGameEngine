@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        The type of the collection stored within the mapping.
+    </EnumComment>
+    <EnumName Name="AssetTemplateLayoutMapType">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Single>
+            Edit only the exact Map value.
+        </Single>
+        <Array>
+            Edit by appending a number with Array values.
+        </Array>
+    </EnumName>
+</SuperEnum>

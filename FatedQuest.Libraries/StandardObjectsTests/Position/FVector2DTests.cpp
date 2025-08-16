@@ -6,7 +6,7 @@
 
 using namespace FatedQuestLibraries;
 
-namespace FatedQuestLibraries_StandardObjects_Position
+namespace StandardObjectsTests
 {
     class FVector2DTests : public ::testing::Test
     {
@@ -25,9 +25,9 @@ namespace FatedQuestLibraries_StandardObjects_Position
         {
         }
 
-        float Distance(float x1, float y1, float x2, float y2) const
+        double Distance(double x1, double y1, double x2, double y2) const
         {
-            return static_cast<float>(sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
+            return static_cast<double>(sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
         }
     };
 
@@ -42,8 +42,8 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, OnConstruction_XYReturnsGivenValues_WhenGivenAtConstruction)
     {
-        float givenX = 42.2f;
-        float givenY = 12.5f;
+        double givenX = 42.2;
+        double givenY = 12.5;
 
         FVector2D testCase = FVector2D(givenX, givenY);
 
@@ -53,8 +53,8 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, OnConstruction_XYReturnsGivenValues_WhenGivenNegativeValues)
     {
-        float givenX = -54.9f;
-        float givenY = -21.9f;
+        double givenX = -54.9;
+        double givenY = -21.9;
 
         FVector2D testCase = FVector2D(givenX, givenY);
 
@@ -64,8 +64,8 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, OnConstruction_XYReturnsGivenValues_WhenGivenVectorWithValues)
     {
-        float givenX = -54.9f;
-        float givenY = -21.9f;
+        double givenX = -54.9;
+        double givenY = -21.9;
         FVector2D givenVector = FVector2D(givenX, givenY);
 
         FVector2D testCase = FVector2D(givenVector);
@@ -76,8 +76,8 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, OnConstruction_XYReturnsGivenValues_WhenGivenPointWithValues)
     {
-        float givenX = 57;
-        float givenY = 20;
+        double givenX = 57;
+        double givenY = 20;
         FPoint givenVector = FPoint(static_cast<int>(givenX), static_cast<int>(givenY));
 
         FVector2D testCase = FVector2D(givenVector);
@@ -88,10 +88,66 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
 #pragma endregion
 
+#pragma region Constructor From Int
+
+    TEST_F(FVector2DTests, OnConstructionWithFVector2I_CopiesXYValues_WhenGivenPositives)
+    {
+        auto given = FVector2I(1, 2);
+
+        auto testCase = FVector2D(given);
+
+        ASSERT_EQ(given.GetX(), testCase.GetX());
+        ASSERT_EQ(given.GetY(), testCase.GetY());
+    }
+
+    TEST_F(FVector2DTests, OnConstructionWithFVector2I_CopiesXYValues_WhenGivenNegatives)
+    {
+        auto given = FVector2I(-5, -7);
+
+        auto testCase = FVector2D(given);
+
+        ASSERT_EQ(given.GetX(), testCase.GetX());
+        ASSERT_EQ(given.GetY(), testCase.GetY());
+    }
+
+#pragma endregion
+
+#pragma region Constructor From Float
+
+    TEST_F(FVector2DTests, OnConstructionWithFVector2F_CopiesXYValues_WhenGivenPositives)
+    {
+        auto given = FVector2F(1.5f, 9.5f);
+        double expectedX = 1.5;
+        double expectedY = 9.5;
+
+        auto testCase = FVector2D(given);
+
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedX, testCase.GetX()))
+            << "expected: " << expectedX << " actual: " << testCase.GetX();
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedY, testCase.GetY()))
+            << "expected: " << expectedY << " actual: " << testCase.GetY();
+    }
+
+    TEST_F(FVector2DTests, OnConstructionWithFVector2F_CopiesXYValues_WhenGivenNegatives)
+    {
+        auto given = FVector2F(-5.3f, -7.9f);
+        double expectedX = -5.3;
+        double expectedY = -7.9;
+
+        auto testCase = FVector2D(given);
+
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedX, testCase.GetX()))
+            << "expected: " << expectedX << " actual: " << testCase.GetX();
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expectedY, testCase.GetY()))
+            << "expected: " << expectedY << " actual: " << testCase.GetY();
+    }
+
+#pragma endregion
+
 #pragma region SetXY
     TEST_F(FVector2DTests, SetX_UpdatesValueOfX)
     {
-        float expectedX = 23.5f;
+        double expectedX = 23.5;
         FVector2D testCase = FVector2D();
         ASSERT_NE(expectedX, testCase.GetX()) << "X should not equal expected on construction. ";
 
@@ -102,7 +158,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, SetY_UpdatesValueOfY)
     {
-        float expectedY = 98.4f;
+        double expectedY = 98.4;
         FVector2D testCase = FVector2D();
         ASSERT_NE(expectedY, testCase.GetY()) << "Y should not equal expected on construction. ";
 
@@ -111,11 +167,11 @@ namespace FatedQuestLibraries_StandardObjects_Position
         ASSERT_EQ(expectedY, testCase.GetY());
     }
 
-    TEST_F(FVector2DTests, SetXY_UpdatesXYValues_WhenGivenFloatValues)
+    TEST_F(FVector2DTests, SetXY_UpdatesXYValues_WhenGivendoubleValues)
     {
         // Arrange
-        float expectedX = 14.5f;
-        float expectedY = 98.4f;
+        double expectedX = 14.5;
+        double expectedY = 98.4;
 
         FVector2D testCase = FVector2D();
         ASSERT_NE(expectedX, testCase.GetX()) << "X should not equal expected on construction. ";
@@ -132,8 +188,8 @@ namespace FatedQuestLibraries_StandardObjects_Position
     TEST_F(FVector2DTests, SetXY_UpdatesXYValues_WhenGivenVectorValue)
     {
         // Arrange
-        float expectedX = 14.5f;
-        float expectedY = 98.4f;
+        double expectedX = 14.5;
+        double expectedY = 98.4;
         FVector2D given = FVector2D(expectedX, expectedY);
 
         FVector2D testCase = FVector2D();
@@ -274,7 +330,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(2, 2);
         FVector2D given = FVector2D(1, 1);
-        float scalar = 2;
+        double scalar = 2;
 
         FVector2D actual = given * scalar;
 
@@ -285,7 +341,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(-2, -2);
         FVector2D given = FVector2D(1, 1);
-        float scalar = -2;
+        double scalar = -2;
 
         FVector2D actual = given * scalar;
 
@@ -297,7 +353,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(2, 2);
         FVector2D given = FVector2D(1, 1);
-        float scalar = 2;
+        double scalar = 2;
 
         given *= scalar;
 
@@ -308,7 +364,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(-2, -2);
         FVector2D given = FVector2D(1, 1);
-        float scalar = -2;
+        double scalar = -2;
 
         given *= scalar;
 
@@ -323,7 +379,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(0.5f, 0.5f);
         FVector2D given = FVector2D(1, 1);
-        float scalar = 2;
+        double scalar = 2;
 
         FVector2D actual = given / scalar;
 
@@ -334,7 +390,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(0.1f, 0.1f);
         FVector2D given = FVector2D(1, 1);
-        float scalar = 10;
+        double scalar = 10;
 
         FVector2D actual = given / scalar;
 
@@ -345,7 +401,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(-0.5f, -0.5f);
         FVector2D given = FVector2D(1, 1);
-        float scalar = -2;
+        double scalar = -2;
 
         FVector2D actual = given / scalar;
 
@@ -357,7 +413,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(0.5f, 0.5f);
         FVector2D given = FVector2D(1, 1);
-        float scalar = 2;
+        double scalar = 2;
 
         given /= scalar;
 
@@ -368,7 +424,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(0.1f, 0.1f);
         FVector2D given = FVector2D(1, 1);
-        float scalar = 10;
+        double scalar = 10;
 
         given /= scalar;
 
@@ -379,7 +435,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D expected = FVector2D(-0.5f, -0.5f);
         FVector2D given = FVector2D(1, 1);
-        float scalar = -2;
+        double scalar = -2;
 
         given /= scalar;
 
@@ -397,7 +453,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
     TEST_F(FVector2DTests, Normalize_DividesPositionByMagnitude)
     {
         FVector2D given = FVector2D(2, 2);
-        float magnitude = given.Magnitude();
+        double magnitude = given.Magnitude();
         FVector2D expected = given / magnitude;
 
         FVector2D actual = given.Normalize();
@@ -411,10 +467,10 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         // The expected Magnitude will be: 2 * 2 + 2 * 2 = 8 
         // then sq(8) = 2.82843f (the eplision rounds this to 5dp)
-        float expected = 2.82843f;
+        double expected = 2.82843f;
         FVector2D given = FVector2D(2, 2);
 
-        float actual = given.Magnitude();
+        double actual = given.Magnitude();
 
          ASSERT_TRUE(FloatingPointHelpers::AreEqual(expected, actual))
              << "expected: " << expected << " actual: " << actual;
@@ -424,10 +480,10 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         // The expected Magnitude will be: 2 * 2 + -5 * -5 = 29 
         // then sq(29) = 5.38516 (the epsilon rounds this to 5dp)
-        float expected = 5.38516f;
+        double expected = 5.38516f;
         FVector2D given = FVector2D(2, -5);
 
-        float actual = given.Magnitude();
+        double actual = given.Magnitude();
 
          ASSERT_TRUE(FloatingPointHelpers::AreEqual(expected, actual))
              << "expected: " << expected << " actual: " << actual;
@@ -447,7 +503,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, EqualsOperator_ReturnsFalse_WhenTwoValuesAreOnlyUnequalAtThe1stPlace)
     {
-        FVector2D left = FVector2D(1.1f, 1);
+        FVector2D left = FVector2D(1.1, 1);
         FVector2D right = FVector2D(1, 1);
 
         bool actual = left == right;
@@ -457,7 +513,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, EqualsOperator_ReturnsFalse_WhenTwoValuesAreOnlyUnequalAtThe2ndPlace)
     {
-        FVector2D left = FVector2D(1.01f, 1);
+        FVector2D left = FVector2D(1.01, 1);
         FVector2D right = FVector2D(1, 1);
 
         bool actual = left == right;
@@ -467,7 +523,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, EqualsOperator_ReturnsFalse_WhenTwoValuesAreOnlyUnequalAtThe3thPlace)
     {
-        FVector2D left = FVector2D(1.001f, 1);
+        FVector2D left = FVector2D(1.001, 1);
         FVector2D right = FVector2D(1, 1);
 
         bool actual = left == right;
@@ -477,7 +533,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, EqualsOperator_ReturnsFalse_WhenTwoValuesAreOnlyUnequalAtThe4thPlace)
     {
-        FVector2D left = FVector2D(1.0001f, 1);
+        FVector2D left = FVector2D(1.0001, 1);
         FVector2D right = FVector2D(1, 1);
 
         bool actual = left == right;
@@ -487,7 +543,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, EqualsOperator_ReturnsFalse_WhenTwoValuesAreOnlyUnequalAtThe5thPlace)
     {
-        FVector2D left = FVector2D(1.00001f, 1);
+        FVector2D left = FVector2D(1.00001, 1);
         FVector2D right = FVector2D(1, 1);
 
         bool actual = left == right;
@@ -497,7 +553,7 @@ namespace FatedQuestLibraries_StandardObjects_Position
 
     TEST_F(FVector2DTests, EqualsOperator_ReturnsTrue_WhenTwoValuesAreOnlyUnequalAtThe6thPlace)
     {
-        FVector2D left = FVector2D(1.000001f, 1);
+        FVector2D left = FVector2D(1.000001, 1);
         FVector2D right = FVector2D(1, 1);
 
         bool actual = left == right;
@@ -510,11 +566,11 @@ namespace FatedQuestLibraries_StandardObjects_Position
     TEST_F(FVector2DTests, DotProduct_ReturnsDotProductOfVector)
     {
         // 1 * 3 + 2 * 4 = 3 + 8 = 11
-        float expected = 11;
+        double expected = 11;
         FVector2D left = FVector2D(1, 2);
         FVector2D right = FVector2D(3, 4);
 
-        float actual = left.DotProduct(right);
+        double actual = left.DotProduct(right);
 
         ASSERT_EQ(expected, actual);
     }
@@ -526,46 +582,47 @@ namespace FatedQuestLibraries_StandardObjects_Position
     {
         FVector2D left = FVector2D(1, 1);
         FVector2D right = FVector2D(1, 1);
-        float expected = 0;
+        double expected = 0;
 
-        float actual = left.DistanceBetween(right);
+        double actual = left.DistanceBetween(right);
 
         ASSERT_EQ(expected, actual);
     }
 
     TEST_F(FVector2DTests, Distance_Returns1_WhenGivenIsOneAwayOnX)
     {
-        float expected = 1;
+        double expected = 1;
         FVector2D left = FVector2D(2, 1);
         FVector2D right = FVector2D(1, 1);
 
-        float actual = left.DistanceBetween(right);
+        double actual = left.DistanceBetween(right);
 
         ASSERT_EQ(expected, actual);
     }
 
     TEST_F(FVector2DTests, Distance_Returns1_WhenGivenIsOneAwayOnY)
     {
-        float expected = 1;
+        double expected = 1;
         FVector2D left = FVector2D(1, 2);
         FVector2D right = FVector2D(1, 1);
 
-        float actual = left.DistanceBetween(right);
+        double actual = left.DistanceBetween(right);
 
         ASSERT_EQ(expected, actual);
     }
 
     TEST_F(FVector2DTests, Distance_ReturnsCorrectValue_WhenGivenTwoPoints)
     {
-        float expected = Distance(5, 6, 7, 8);
+        double expected = Distance(5, 6, 7, 8);
         FVector2D left = FVector2D(5, 6);
         FVector2D right = FVector2D(7, 8);
 
-        float actual = left.DistanceBetween(right);
+        double actual = left.DistanceBetween(right);
 
         // This should be fine to compare.
-        // If flaky use the float helper compare.
-        ASSERT_EQ(expected, actual);
+        // If flaky use the double helper compare.
+        ASSERT_TRUE(FloatingPointHelpers::AreEqual(expected, actual))
+            << "expected: " << expected << " actual: " << actual;
     }
 
 #pragma endregion

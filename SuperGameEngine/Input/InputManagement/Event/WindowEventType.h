@@ -460,6 +460,75 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "SDL_FIRSTEVENT",
+                "SDL_QUIT",
+                "SDL_APP_TERMINATING",
+                "SDL_APP_LOWMEMORY",
+                "SDL_APP_WILLENTERBACKGROUND",
+                "SDL_APP_DIDENTERBACKGROUND",
+                "SDL_APP_WILLENTERFOREGROUND",
+                "SDL_APP_DIDENTERFOREGROUND",
+                "SDL_LOCALECHANGED",
+                "SDL_DISPLAYEVENT",
+                "SDL_WINDOWEVENT",
+                "SDL_SYSWMEVENT",
+                "SDL_KEYDOWN",
+                "SDL_KEYUP",
+                "SDL_TEXTEDITING",
+                "SDL_TEXTINPUT",
+                "SDL_KEYMAPCHANGED",
+                "SDL_TEXTEDITING_EXT",
+                "SDL_MOUSEMOTION",
+                "SDL_MOUSEBUTTONDOWN",
+                "SDL_MOUSEBUTTONUP",
+                "SDL_MOUSEWHEEL",
+                "SDL_JOYAXISMOTION",
+                "SDL_JOYBALLMOTION",
+                "SDL_JOYHATMOTION",
+                "SDL_JOYBUTTONDOWN",
+                "SDL_JOYBUTTONUP",
+                "SDL_JOYDEVICEADDED",
+                "SDL_JOYDEVICEREMOVED",
+                "SDL_JOYBATTERYUPDATED",
+                "SDL_CONTROLLERAXISMOTION",
+                "SDL_CONTROLLERBUTTONDOWN",
+                "SDL_CONTROLLERBUTTONUP",
+                "SDL_CONTROLLERDEVICEADDED",
+                "SDL_CONTROLLERDEVICEREMOVED",
+                "SDL_CONTROLLERDEVICEREMAPPED",
+                "SDL_CONTROLLERTOUCHPADDOWN",
+                "SDL_CONTROLLERTOUCHPADMOTION",
+                "SDL_CONTROLLERTOUCHPADUP",
+                "SDL_CONTROLLERSENSORUPDATE",
+                "SDL_CONTROLLERUPDATECOMPLETE_RESERVED_FOR_SDL3",
+                "SDL_CONTROLLERSTEAMHANDLEUPDATED",
+                "SDL_FINGERDOWN",
+                "SDL_FINGERUP",
+                "SDL_FINGERMOTION",
+                "SDL_DOLLARGESTURE",
+                "SDL_DOLLARRECORD",
+                "SDL_MULTIGESTURE",
+                "SDL_CLIPBOARDUPDATE",
+                "SDL_DROPFILE",
+                "SDL_DROPTEXT",
+                "SDL_DROPBEGIN",
+                "SDL_DROPCOMPLETE",
+                "SDL_AUDIODEVICEADDED",
+                "SDL_AUDIODEVICEREMOVED",
+                "SDL_SENSORUPDATE",
+                "SDL_RENDER_TARGETS_RESET",
+                "SDL_RENDER_DEVICE_RESET",
+                "SDL_USEREVENT",
+                "SDL_LASTEVENT",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(WindowEventType value)
         {
             switch (value)
@@ -664,6 +733,8 @@ namespace SuperGameInput
             
             return WindowEventType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

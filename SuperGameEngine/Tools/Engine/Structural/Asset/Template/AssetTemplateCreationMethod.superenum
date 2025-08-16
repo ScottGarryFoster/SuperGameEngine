@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        The method used to create a brand new asset file.
+    </EnumComment>
+    <EnumName Name="AssetTemplateCreationMethod">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Simple>
+            Takes the child elements and simply uses a string replace to make it specific.
+        </Simple>
+    </EnumName>
+</SuperEnum>

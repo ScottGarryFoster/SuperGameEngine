@@ -1,0 +1,18 @@
+<AssetMetaData>
+    <AssetTemplate AssetFileType="ImageAsset">
+        <MatchingCriteria AssetTemplateMatchingStyle="Extension">
+            <Extension value=".png" />
+        </MatchingCriteria>
+        <Template AssetTemplateCreationMethod="Simple">
+            <Asset>
+                <Strings>
+                    <String Key="GameAssetName" Value="{FilepathDisplayName}" />
+                </Strings>
+            </Asset>
+        </Template>
+    </AssetTemplate>
+    <AssetLayout>
+        <Data Type="String" EnumFilter="SplitUVMethod" Map="TextureUVMethod" MapType="Single" />
+        <Data Type="Vector4I" Map="TextureUV" MapType="Array" />
+    </AssetLayout>
+</AssetMetaData>

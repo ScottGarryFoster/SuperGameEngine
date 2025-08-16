@@ -61,6 +61,17 @@ namespace ProductsPackager
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Untouched",
+                "Binary",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(PackageFileType value)
         {
             switch (value)
@@ -91,6 +102,8 @@ namespace ProductsPackager
             
             return PackageFileType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

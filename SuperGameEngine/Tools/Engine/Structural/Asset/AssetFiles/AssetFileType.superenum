@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        The type names storable within a Universal Object Data Object.
+    </EnumComment>
+    <EnumName Name="AssetFileType">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <ImageAsset>
+            An Asset File which represents a texture directly commonly a PNG file.
+        </ImageAsset>
+    </EnumName>
+</SuperEnum>

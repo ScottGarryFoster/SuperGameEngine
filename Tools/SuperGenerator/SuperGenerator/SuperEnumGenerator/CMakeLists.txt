@@ -48,6 +48,13 @@ if(MSVC)
     target_precompile_headers(SuperEnumGenerator PRIVATE ${PCH_HEADER})
 endif()
 
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(SuperEnumGenerator PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(SuperEnumGenerator PRIVATE "-include ${PCH_HEADER}")
+endif()
+
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(SuperEnumGenerator PRIVATE _WINDOWS)
@@ -74,7 +81,7 @@ add_subdirectory(../../../../FatedQuest.Libraries/StoredDocument StoredDocument)
 add_subdirectory(../../../../FatedQuest.Libraries/XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(SuperEnumGenerator
+target_link_libraries(SuperEnumGenerator PRIVATE
     Logger
     Observer
     StandardObjects

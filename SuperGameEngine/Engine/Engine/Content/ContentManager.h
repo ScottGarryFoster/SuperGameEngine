@@ -29,7 +29,7 @@ namespace SuperGameEngine
         /// Holds the content for the game.
         /// </summary>
         /// <returns>Holds the content for the game. </returns>
-        virtual const std::shared_ptr<GamePackage> GamePackage() = 0;
+        virtual const std::shared_ptr<FatedQuestLibraries::GamePackage> GamePackage() = 0;
 
         /// <summary>
         /// Provides new scenes for the Grand Scene to create.

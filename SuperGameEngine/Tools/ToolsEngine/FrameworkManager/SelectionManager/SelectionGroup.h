@@ -55,6 +55,16 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Inspectable",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(SelectionGroup value)
         {
             switch (value)
@@ -82,6 +92,8 @@ namespace SuperGameTools
             
             return SelectionGroup::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

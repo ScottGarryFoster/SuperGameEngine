@@ -375,7 +375,7 @@ void ToolsSelectionManager::CallOnSelection(
         }
     }
 
-    auto arguments = std::make_shared<SelectionChangedEventArguments>(change);
+    auto arguments = std::make_shared<SelectionChangedEventArguments>(change, selectable);
     m_onSelectionForAllGroups->Invoke(arguments);
     for (const SelectionGroup& updatedGroup : groups)
     {
@@ -402,7 +402,7 @@ void ToolsSelectionManager::CallOnSelection(
         }
     }
 
-    auto arguments = std::make_shared<SelectionChangedEventArguments>(change);
+    auto arguments = std::make_shared<SelectionChangedEventArguments>(change, selectables);
     m_onSelectionForAllGroups->Invoke(arguments);
     for (const SelectionGroup& updatedGroup : groups)
     {

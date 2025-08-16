@@ -181,6 +181,34 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "SDL_WINDOWEVENT_NONE",
+                "SDL_WINDOWEVENT_SHOWN",
+                "SDL_WINDOWEVENT_HIDDEN",
+                "SDL_WINDOWEVENT_EXPOSED",
+                "SDL_WINDOWEVENT_MOVED",
+                "SDL_WINDOWEVENT_RESIZED",
+                "SDL_WINDOWEVENT_SIZE_CHANGED",
+                "SDL_WINDOWEVENT_MINIMIZED",
+                "SDL_WINDOWEVENT_MAXIMIZED",
+                "SDL_WINDOWEVENT_RESTORED",
+                "SDL_WINDOWEVENT_ENTER",
+                "SDL_WINDOWEVENT_LEAVE",
+                "SDL_WINDOWEVENT_FOCUS_GAINED",
+                "SDL_WINDOWEVENT_FOCUS_LOST",
+                "SDL_WINDOWEVENT_CLOSE",
+                "SDL_WINDOWEVENT_TAKE_FOCUS",
+                "SDL_WINDOWEVENT_HIT_TEST",
+                "SDL_WINDOWEVENT_ICCPROF_CHANGED",
+                "SDL_WINDOWEVENT_DISPLAY_CHANGED",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(WindowUpdateEventID value)
         {
             switch (value)
@@ -262,6 +290,8 @@ namespace SuperGameInput
             
             return WindowUpdateEventID::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

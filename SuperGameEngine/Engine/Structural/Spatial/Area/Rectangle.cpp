@@ -439,6 +439,20 @@ FVector2D Rectangle::ClosestPointTo(const FVector2D& other) const
     return FVector2D(closestX, closestY);
 }
 
+std::string Rectangle::Print() const
+{
+    return ToString();
+}
+
+std::string Rectangle::ToString() const
+{
+    std::string x = std::to_string(m_location.GetX());
+    std::string y = std::to_string(m_location.GetY());
+    std::string w = std::to_string(m_size.GetX());
+    std::string h = std::to_string(m_size.GetY());
+    return "(" + x + ", " + y + ", " + w + ", " + h + ")";
+}
+
 bool Rectangle::IsTouching(const Rectangle& other) const
 {
     if (FloatingPointHelpers::AreEqual(GetLeft(), other.GetRight()))

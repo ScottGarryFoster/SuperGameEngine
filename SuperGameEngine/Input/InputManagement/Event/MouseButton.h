@@ -67,6 +67,20 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Left",
+                "Right",
+                "Middle",
+                "Back",
+                "Forward",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(MouseButton value)
         {
             switch (value)
@@ -106,6 +120,8 @@ namespace SuperGameInput
             
             return MouseButton::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

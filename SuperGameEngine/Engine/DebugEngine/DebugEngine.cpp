@@ -224,6 +224,7 @@ void DebugEngine::CreateGrandScenePackage()
     m_inputManager->Setup(m_combinedGamePackage);
 
     m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage);
+    m_textureManager->UpdateDistributedWeakPointer(m_textureManager);
     m_contentManager->GiveSuperTextureManager(m_textureManager);
 
     m_grandSceneLoadPackage->SetContentManager(m_contentManager);

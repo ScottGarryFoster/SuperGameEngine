@@ -5,18 +5,40 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
+RectangleInt::RectangleInt()
+{
+    // Explicitly calling these.
+    m_location = FPoint();
+    m_size = FPoint();
+    m_center = FVector2D();
+}
+
 RectangleInt::RectangleInt(int x, int y, int width, int height)
 {
     m_location = FPoint(x, y);
     m_size = FPoint(width, height);
-    m_center = FVector2D(x + width / 2.0f, y + height / 2.0f);
+    m_center = FVector2D((int)x + ((int)width / 2.0f), (int)y + ((int)height / 2.0f));
 }
 
 RectangleInt::RectangleInt(int xy, int widthHeight)
 {
     m_location = FPoint(xy, xy);
     m_size = FPoint(widthHeight, widthHeight);
-    m_center = FVector2D(xy + widthHeight / 2.0f, xy + widthHeight / 2.0f);
+    m_center = FVector2D((int)xy + ((int)widthHeight / 2.0f), (int)xy + ((int)widthHeight / 2.0f));
+}
+
+RectangleInt::RectangleInt(const FVector4I& other)
+{
+    m_location = FPoint(other.GetX(), other.GetY());
+    m_size = FPoint(other.GetZ(), other.GetW());
+    m_center = FVector2D((int)other.GetX() + ((int)other.GetZ() / 2.0f), (int)other.GetY() + ((int)other.GetW() / 2.0f));
+}
+
+RectangleInt::RectangleInt(const std::shared_ptr<FVector4I>& other)
+{
+    m_location = FPoint(other->GetX(), other->GetY());
+    m_size = FPoint(other->GetZ(), other->GetW());
+    m_center = FVector2D((int)other->GetX() + ((int)other->GetZ() / 2.0f), (int)other->GetY() + ((int)other->GetW() / 2.0f));
 }
 
 bool RectangleInt::operator==(const RectangleInt& other) const
@@ -175,6 +197,89 @@ bool RectangleInt::Overlaps(const Circle& other) const
 {
     Rectangle copy = Rectangle((float)GetLeft(), (float)GetTop(), (float)GetWidth(), (float)GetHeight());
     return other.Overlaps(copy);
+}
+
+bool RectangleInt::Contains(const Rectangle& other) const
+{
+    if (static_cast<int>(other.GetLeft()) < GetLeft())
+    {
+        return false;
+    }
+
+    if (static_cast<int>(other.GetRight()) > GetRight())
+    {
+        return false;
+    }
+
+    if (static_cast<int>(other.GetTop()) < GetTop())
+    {
+        return false;
+    }
+
+    if (static_cast<int>(other.GetBottom()) > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool RectangleInt::Contains(const RectangleInt& other) const
+{
+    if (other.GetLeft() < GetLeft())
+    {
+        return false;
+    }
+
+    if (other.GetRight() > GetRight())
+    {
+        return false;
+    }
+
+    if (other.GetTop() < GetTop())
+    {
+        return false;
+    }
+
+    if (other.GetBottom() > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool RectangleInt::Contains(const Circle& other) const
+{
+    int x = static_cast<int>(other.GetLocation().GetX());
+    int y = static_cast<int>(other.GetLocation().GetY());
+    int r = static_cast<int>(other.GetRadius());
+
+    int left = x - r;
+    if (left < GetLeft())
+    {
+        return false;
+    }
+
+    int right = x + r;
+    if (right > GetRight())
+    {
+        return false;
+    }
+
+    int top = y - r;
+    if (top < GetTop())
+    {
+        return false;
+    }
+
+    int bottom = y + r;
+    if (bottom > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool RectangleInt::OverlapsOrIsTouching(const Rectangle& other) const
@@ -527,6 +632,20 @@ FPoint RectangleInt::ClosestPointTo(const FPoint& other) const
     }
 
     return {closestX, closestY};
+}
+
+std::string RectangleInt::Print() const
+{
+    return ToString();
+}
+
+std::string RectangleInt::ToString() const
+{
+    std::string x = std::to_string(m_location.GetX());
+    std::string y = std::to_string(m_location.GetY());
+    std::string w = std::to_string(m_size.GetX());
+    std::string h = std::to_string(m_size.GetY());
+    return "(" + x + ", " + y + ", " + w + ", " + h + ")";
 }
 
 bool RectangleInt::IsTouching(const RectangleInt& other) const

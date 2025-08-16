@@ -4,6 +4,8 @@
 namespace FatedQuestLibraries
 {
     class FPoint;
+    class FVector2F;
+    class FVector2I;
 
     /// <summary>
     /// A point or direction in space.
@@ -21,7 +23,7 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="x">X location. </param>
         /// <param name="y">Y location. </param>
-        FVector2D(float x, float y);
+        FVector2D(double x, double y);
 
         /// <summary>
         /// Use the public data of an FVector to create another one.
@@ -35,38 +37,50 @@ namespace FatedQuestLibraries
         /// <param name="other">Other FPoint to use.</param>
         FVector2D(const FPoint& other);
 
+        /// <summary>
+        /// Creates from a FVector2F.
+        /// </summary>
+        /// <param name="other">FVector2F to create from. </param>
+        FVector2D(const FVector2F& other);
+
+        /// <summary>
+        /// Creates from a FVector2I.
+        /// </summary>
+        /// <param name="other">FVector2I to create from. </param>
+        FVector2D(const FVector2I& other);
+
         virtual ~FVector2D();
 
         /// <summary>
         /// X coordinate.
         /// </summary>
         /// <returns>X coordinate. </returns>
-        [[nodiscard]] const float GetX() const;
+        [[nodiscard]] double GetX() const;
 
         /// <summary>
         /// Y coordinate.
         /// </summary>
         /// <returns>Y coordinate. </returns>
-        [[nodiscard]] const float GetY() const;
+        [[nodiscard]] double GetY() const;
 
         /// <summary>
         /// Sets the X Value.
         /// </summary>
         /// <param name="newValue">The new X value. </param>
-        virtual void SetX(float newValue);
+        virtual void SetX(double newValue);
 
         /// <summary>
         /// Sets the Y Value.
         /// </summary>
         /// <param name="newValue">The new Y value. </param>
-        virtual void SetY(float newValue);
+        virtual void SetY(double newValue);
 
         /// <summary>
         /// Sets both the x and y values.
         /// </summary>
         /// <param name="x">New X value. </param>
         /// <param name="y">New Y value. </param>
-        virtual void SetXYValue(float x, float y);
+        virtual void SetXYValue(double x, double y);
 
         /// <summary>
         /// Sets the X and Y based upon the value of another Vector.
@@ -113,28 +127,28 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <param name="scalar">Amount to multiply by. </param>
         /// <returns>Vector multiplied. </returns>
-        FVector2D operator*(float scalar) const;
+        FVector2D operator*(double scalar) const;
 
         /// <summary>
         /// Multiplies the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to multiply by. </param>
         /// <returns>Vector multiplied. </returns>
-        FVector2D& operator*=(float scalar);
+        FVector2D& operator*=(double scalar);
 
         /// <summary>
         /// Divides the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to divide by. </param>
         /// <returns>Vector divided. </returns>
-        FVector2D operator/(float scalar) const;
+        FVector2D operator/(double scalar) const;
 
         /// <summary>
         /// Divides the components of this vector by a scalar value.
         /// </summary>
         /// <param name="scalar">Amount to divide by. </param>
         /// <returns>Vector divided. </returns>
-        FVector2D& operator/=(float scalar);
+        FVector2D& operator/=(double scalar);
 
         /// <summary>
         /// Returns true if two vectors are approximately equal.
@@ -157,21 +171,21 @@ namespace FatedQuestLibraries
         /// The length of this vector.
         /// </summary>
         /// <returns>The magnitude of the vector. </returns>
-        [[nodiscard]] float Magnitude() const;
+        [[nodiscard]] double Magnitude() const;
 
         /// <summary>
         /// The dot product between two vectors.
         /// </summary>
         /// <param name="other">Other vector to find the dot product. </param>
         /// <returns>The dot product. </returns>
-        [[nodiscard]] float DotProduct(const FVector2D& other) const;
+        [[nodiscard]] double DotProduct(const FVector2D& other) const;
 
         /// <summary>
         /// Calculates the distance between two points.
         /// </summary>
         /// <param name="other">Other point to calculate between. </param>
         /// <returns>The distance between the two points. </returns>
-        [[nodiscard]] float DistanceBetween(const FVector2D& other) const;
+        [[nodiscard]] double DistanceBetween(const FVector2D& other) const;
 
         /// <summary>
         /// Prints the Point value.
@@ -184,11 +198,11 @@ namespace FatedQuestLibraries
         /// <summary>
         /// X coordinate.
         /// </summary>
-        float m_x;
+        double m_x;
 
         /// <summary>
         /// Y coordinate.
         /// </summary>
-        float m_y;
+        double m_y;
     };
 }

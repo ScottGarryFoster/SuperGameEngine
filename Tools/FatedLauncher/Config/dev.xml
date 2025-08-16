@@ -1,0 +1,6 @@
+<Launcher>
+    <Option Type="Message" Content="Hello" />
+    <Folder Name="My Folder">
+        <Option Type="Message" Content="Hello2" />
+    </Folder>
+</Launcher>

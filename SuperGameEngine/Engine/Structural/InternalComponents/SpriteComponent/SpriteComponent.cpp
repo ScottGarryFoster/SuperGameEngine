@@ -2,6 +2,7 @@
 
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../Packages/ComponentLoadPackage.h"
+#include "../../../Engine/Structural/Assets/Texture/SuperTextureAsset.h"
 
 using namespace SuperGameEngine;
 
@@ -19,14 +20,10 @@ void SpriteComponent::Setup(
     SuperGameComponent::Setup(componentLoadPackage, parent);
     if (!IsSetup()) return;
 
-    m_superTexture = componentLoadPackage->
-        GetContentManager()->
-        Texture()->
-        GetTexture(
-            R"(Engine\TestImages\A_pressed.png)");
-    if (!m_superTexture)
+    m_textureAsset = componentLoadPackage->GetContentManager()->Texture()->GetTextureAsset(R"(Engine\TestImages\Small-8-Direction-Characters_by_AxulArt.png)");
+    if (!m_textureAsset)
     {
-        Log::Error("Could not create texture: Engine\TestImages\A_pressed.png", "SpriteComponent::Setup()");
+        Log::Error("Could not create texture: Engine\\TestImages\\Small-8-Direction-Characters_by_AxulArt.png", "SpriteComponent::Setup()");
         return;
     }
 
@@ -50,7 +47,12 @@ void SpriteComponent::Draw() const
     SuperGameComponent::Draw();
     if (!IsSetup()) return;
 
-    m_superTexture->Draw(m_location);
+    if (!m_textureAsset)
+    {
+        return;
+    }
+
+    m_textureAsset->Draw(1);
 }
 
 void SpriteComponent::Move(int x, int y)

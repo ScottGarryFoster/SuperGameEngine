@@ -111,6 +111,31 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "FaceButtonDown",
+                "FaceButtonLeft",
+                "FaceButtonRight",
+                "FaceButtonUp",
+                "DPadDown",
+                "DPadLeft",
+                "DPadRight",
+                "DPadUp",
+                "LeftShoulder",
+                "RightShoulder",
+                "LeftTrigger",
+                "RightTrigger",
+                "Start",
+                "Select",
+                "LeftStickClick",
+                "RightStickClick",
+            };
+            
+            return returnVector;
+        }
+
         static std::vector<UniversalControllerButton> GroupDPad()
         {
             static std::vector<UniversalControllerButton> returnVector =
@@ -196,6 +221,8 @@ namespace SuperGameInput
             
             return UniversalControllerButton::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

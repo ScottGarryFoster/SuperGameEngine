@@ -48,6 +48,13 @@ if(MSVC)
     target_precompile_headers(ProductsPackager PRIVATE ${PCH_HEADER})
 endif()
 
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(ProductsPackager PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(ProductsPackager PRIVATE "-include ${PCH_HEADER}")
+endif()
+
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(${PROJECT_NAME} PRIVATE _CONSOLE)
@@ -79,7 +86,7 @@ add_subdirectory(../../../FatedQuest.Libraries/SharedEnums SharedEnums)
 add_subdirectory(../../../FatedQuest.Libraries/StandardOperations StandardOperations)
 
 # Link dependencies
-target_link_libraries(ProductsPackager PUBLIC
+target_link_libraries(ProductsPackager PRIVATE
     BinaryOperations
     GamePackage
     Logger

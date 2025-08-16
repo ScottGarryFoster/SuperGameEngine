@@ -47,7 +47,13 @@ set_target_properties(ToolsTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 # Set compiler options
 if(MSVC)
     target_compile_definitions(ToolsTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(ToolsTests PRIVATE /W3)
+    target_compile_options(ToolsTests PRIVATE
+      /W3
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Include directories
@@ -58,6 +64,13 @@ set(PCH_HEADER "pch.h")
 
 if(MSVC)
     target_precompile_headers(ToolsTests PRIVATE ${PCH_HEADER})
+endif()
+
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(ToolsTests PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(ToolsTests PRIVATE "-include ${PCH_HEADER}")
 endif()
 
 # Platform-specific settings
@@ -90,7 +103,7 @@ add_subdirectory(../Engine Engine)
 add_subdirectory(../Tools Tools)
 
 # Link dependencies
-target_link_libraries(ToolsTests PUBLIC
+target_link_libraries(ToolsTests PRIVATE
     GamePackage
     Logger
     Observer

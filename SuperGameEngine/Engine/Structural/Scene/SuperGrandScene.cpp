@@ -5,6 +5,7 @@
 #include "../../Engine/Content/SceneStorageCache.h"
 #include "../Packages/GrandScenePackage.h"
 #include "../Packages/SuperSceneLoadPackage.h"
+#include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
 
 using namespace SuperGameEngine;
 

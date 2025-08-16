@@ -49,11 +49,7 @@ namespace FatedQuestLibraries
         /// <returns>True means loaded. </returns>
         bool Load(const std::shared_ptr<PackagePaths>& paths);
 
-    private:
-        /// <summary>
-        /// The last set of the paths loaded.
-        /// </summary>
-        std::shared_ptr<PackagePaths> m_packagePaths;
+    protected:
 
         /// <summary>
         /// Methods to zip and unzip binary files.
@@ -64,6 +60,12 @@ namespace FatedQuestLibraries
         /// Handles file and directory methods and sorting.
         /// </summary>
         std::shared_ptr<GamePackageFileSystem> m_fileSystem;
+
+    private:
+        /// <summary>
+        /// The last set of the paths loaded.
+        /// </summary>
+        std::shared_ptr<PackagePaths> m_packagePaths;
 
         /// <summary>
         /// Gets all files on file.

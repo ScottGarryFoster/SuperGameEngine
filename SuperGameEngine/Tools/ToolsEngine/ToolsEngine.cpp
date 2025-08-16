@@ -12,13 +12,20 @@
 #include "../ToolsEngine/Packages/WindowPackage.h"
 #include "../Windows/LoggerOutput/LoggerOutput.h"
 #include "../Windows/MainMenuBar/MainMenuBar.h"
+#include "../Windows/AssetBrowser/AssetBrowser.h"
 
 #include "../Engine/Content/ImGuiTextureManager.h"
 #include "../Windows/DockableContainer/DockableContainer.h"
 #include "../Windows/SceneHierarchy/SceneHierarchy.h"
 #include "../Windows/InspectorWindow/InspectorWindow.h"
+#include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
+#include "Engine/Structural/Asset/AssetTemplateProvider.h"
+#include "Engine/Structural/Asset/ToolsAssetTemplateProvider.h"
 #include "FrameworkManager/ToolsFrameworkManager.h"
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
+
+// This should be included early in the engine for the inspector.
+#include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
 
@@ -43,7 +50,7 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     {
         auto paths = std::make_shared<SGEPackagePaths>();
         m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
-        auto gamePackage = std::make_shared<CombinedGamePackage>();
+        auto gamePackage = std::make_shared<ToolsGamePackage>();
         gamePackage->Load(paths);
         m_superContentManager->GiveGamePackage(gamePackage);
 
@@ -132,6 +139,9 @@ void ToolsEngine::Setup()
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
     loggerWindow->UpdateDistributedWeakPointer(loggerWindow);
 
+    std::shared_ptr<AssetBrowser> assetBrowserWindow = std::make_shared<AssetBrowser>();
+    assetBrowserWindow->UpdateDistributedWeakPointer(assetBrowserWindow);
+
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
     // Ensure we listen to logs early.
@@ -153,6 +163,12 @@ void ToolsEngine::Setup()
     framework->Setup();
     m_windowPackage->SetFrameworkManager(framework);
 
+    // Then assets. Must come before Inspector window and Asset Browser Setup.
+    auto assetTemplateProvider = std::make_shared<ToolsAssetTemplateProvider>
+        (m_windowPackage->GetContentManager()->GamePackage());
+    assetTemplateProvider->LoadAllAssetMeta();
+    m_windowPackage->SetAssetTemplateProvider(assetTemplateProvider);
+
     // Everything else should be able to be in any order
     gameViewport->Setup(m_windowPackage);
     m_updatables.push_back(gameViewport);
@@ -163,4 +179,7 @@ void ToolsEngine::Setup()
     sceneHierarchy->Setup(m_windowPackage);
     inspectorWindow->OnMenuDelete()->Subscribe(sceneHierarchy);
     m_updatables.push_back(sceneHierarchy);
+
+    assetBrowserWindow->Setup(m_windowPackage);
+    m_updatables.push_back(assetBrowserWindow);
 }

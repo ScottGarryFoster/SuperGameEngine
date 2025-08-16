@@ -106,6 +106,30 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         ASSERT_EQ(givenWidthHeight, m_testRectangle->GetHeight());
     }
 
+    TEST_F(RectangleIntTests, OnContruction_ReturnsLocationAndSize_WhenGivenVector4I)
+    {
+        FVector4I given = FVector4I(1, 2, 3, 4);
+
+        m_testRectangle = std::make_shared<RectangleInt>(given);
+
+        ASSERT_EQ(given.GetX(), m_testRectangle->GetLeft());
+        ASSERT_EQ(given.GetY(), m_testRectangle->GetTop());
+        ASSERT_EQ(given.GetZ(), m_testRectangle->GetWidth());
+        ASSERT_EQ(given.GetW(), m_testRectangle->GetHeight());
+    }
+
+    TEST_F(RectangleIntTests, OnContruction_ReturnsLocationAndSize_WhenGivenVector4IPointer)
+    {
+        auto given = std::make_shared<FVector4I>(1, 2, 3, 4);
+
+        m_testRectangle = std::make_shared<RectangleInt>(given);
+
+        ASSERT_EQ(given->GetX(), m_testRectangle->GetLeft());
+        ASSERT_EQ(given->GetY(), m_testRectangle->GetTop());
+        ASSERT_EQ(given->GetZ(), m_testRectangle->GetWidth());
+        ASSERT_EQ(given->GetW(), m_testRectangle->GetHeight());
+    }
+
 #pragma endregion
 
 #pragma region SetAndGet
@@ -2627,4 +2651,217 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         ASSERT_FALSE(actual);
     }
 #pragma endregion
+
+#pragma region Contains RectangleInt
+
+    TEST_F(RectangleIntTests, Contains_ReturnsTrue_WhenLeftIsEqual)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, Contains_ReturnsFalse_WhenRightIsToTheLeft)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(1, 0, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, Contains_ReturnsFalse_WhenRightIsAbove)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(0, 1, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, Contains_ReturnsFalse_WhenRightIsRight)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(11, 0, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, Contains_ReturnsFalse_WhenRightIsBelow)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(0, 11, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, Contains_ReturnsFalse_WhenRightIsTooWide)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(0, 0, 11, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, Contains_ReturnsFalse_WhenRightIsTooTall)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangle = std::make_shared<RectangleInt>(0, 0, 10, 11);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangle->ToString();
+    }
+
+#pragma endregion
+
+#pragma region Contains Rectangle
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsTrue_WhenLeftIsEqual)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 0, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsFalse_WhenRightIsToTheLeft)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(1, 0, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsFalse_WhenRightIsAbove)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 1, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsFalse_WhenRightIsRight)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(11, 0, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsFalse_WhenRightIsBelow)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 11, 10, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsFalse_WhenRightIsTooWide)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 0, 11, 10);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsRectangle_ReturnsFalse_WhenRightIsTooTall)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_otherTestRectangleOriginal = std::make_shared<SuperGameEngine::Rectangle>(0, 0, 10, 11);
+
+        bool actual = m_testRectangle->Contains(*m_otherTestRectangleOriginal);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_otherTestRectangleOriginal->ToString();
+    }
+
+#pragma endregion
+
+#pragma region Contains Rectangle
+
+    TEST_F(RectangleIntTests, ContainsCircle_ReturnsTrue_WhenCircleIsWithin)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_testCircle = std::make_shared<Circle>(5, 5, 5);
+
+        bool actual = m_testRectangle->Contains(*m_testCircle);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_testCircle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsCircle_ReturnsFalse_WhenCircleIsToTheLeft)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_testCircle = std::make_shared<Circle>(4, 5, 5);
+
+        bool actual = m_testRectangle->Contains(*m_testCircle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_testCircle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsCircle_ReturnsFalse_WhenCircleIsToTheRight)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_testCircle = std::make_shared<Circle>(6, 5, 5);
+
+        bool actual = m_testRectangle->Contains(*m_testCircle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_testCircle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsCircle_ReturnsFalse_WhenCircleIsAbove)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_testCircle = std::make_shared<Circle>(5, 4, 5);
+
+        bool actual = m_testRectangle->Contains(*m_testCircle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_testCircle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsCircle_ReturnsFalse_WhenCircleIsBelow)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_testCircle = std::make_shared<Circle>(5, 6, 5);
+
+        bool actual = m_testRectangle->Contains(*m_testCircle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_testCircle->ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsCircle_ReturnsFalse_WhenCircleIsTooBig)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        m_testCircle = std::make_shared<Circle>(5, 6, 6);
+
+        bool actual = m_testRectangle->Contains(*m_testCircle);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << m_testCircle->ToString();
+    }
+
+#pragma endregion
+
 }

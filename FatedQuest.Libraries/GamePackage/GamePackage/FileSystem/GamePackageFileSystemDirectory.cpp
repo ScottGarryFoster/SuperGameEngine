@@ -2,6 +2,7 @@
 
 #include "../PackageFile.h"
 #include "PackageFiles.h"
+#include "../../../SharedEnums/CaseRespective.h"
 #include "../../../StandardOperations/FileHandling/File.h"
 #include "../../../StandardOperations/FileHandling/Directory.h"
 
@@ -83,9 +84,9 @@ void GamePackageFileSystemDirectory::Refresh()
     {
         std::string path = File::Sanitize(file->Path());
         std::vector<std::string> pathPieces = StringHelpers::Split(path, "\\");
-
         std::string directory = Directory::GetParent(path);
-        AddToCollection(m_filePaths, directory, pathPieces.back());
+
+        AddPathToCollection(m_filePaths, directory, file->Path());
 
         if (pathPieces.size() > 1)
         {
@@ -108,7 +109,7 @@ void GamePackageFileSystemDirectory::Refresh()
 void GamePackageFileSystemDirectory::AddToCollection(
     std::unordered_map<std::string, std::unordered_set<std::string>>& collection, 
     const std::string& key, 
-    const std::string& newValue)
+    const std::string& newValue) const
 {
     if (collection.contains(key))
     {
@@ -123,4 +124,15 @@ void GamePackageFileSystemDirectory::AddToCollection(
         paths.insert(newValue);
         collection.insert_or_assign(key, paths);
     }
+}
+
+void GamePackageFileSystemDirectory::AddPathToCollection(
+    std::unordered_map<std::string, std::unordered_set<std::string>>& collection,
+    const std::string& directory,
+    const std::string& rawPath) const
+{
+    std::string path = File::Sanitize(rawPath);
+    std::vector<std::string> pathPieces = StringHelpers::Split(path, "\\");
+
+    AddToCollection(collection, directory, pathPieces.back());
 }

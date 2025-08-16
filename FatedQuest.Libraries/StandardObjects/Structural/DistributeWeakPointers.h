@@ -21,6 +21,15 @@ namespace FatedQuestLibraries
         }
 
         /// <summary>
+        /// Get the weak pointer for this object.
+        /// </summary>
+        /// <returns>Get the weak pointer for this object. </returns>
+        inline std::weak_ptr<T> GetWeakDistributed() const
+        {
+            return m_weakPtr;
+        }
+
+        /// <summary>
         /// Update the weak pointer for this object.
         /// </summary>
         /// <param name="pointer">New weak pointer. </param>

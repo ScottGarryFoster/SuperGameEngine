@@ -47,7 +47,13 @@ set_target_properties(XmlDocumentTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE
 # Set compiler options
 if(MSVC)
     target_compile_definitions(XmlDocumentTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(XmlDocumentTests PRIVATE /W3)
+    target_compile_options(XmlDocumentTests PRIVATE
+      /W3
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Include directories
@@ -58,6 +64,13 @@ set(PCH_HEADER "pch.h")
 
 if(MSVC)
     target_precompile_headers(XmlDocumentTests PRIVATE ${PCH_HEADER})
+endif()
+
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(XmlDocumentTests PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(XmlDocumentTests PRIVATE "-include ${PCH_HEADER}")
 endif()
 
 # Platform-specific settings
@@ -86,7 +99,7 @@ add_subdirectory(../StoredDocument StoredDocument)
 add_subdirectory(../XmlDocument XmlDocument)
 
 # Link dependencies
-target_link_libraries(XmlDocumentTests PUBLIC
+target_link_libraries(XmlDocumentTests PRIVATE
     Logger
     SharedEnums
     StandardOperations

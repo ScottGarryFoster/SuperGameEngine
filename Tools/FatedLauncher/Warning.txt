@@ -1,0 +1,3 @@
+Although this project has a CMake file, do not use it.
+
+C# Does not particularly work with CSharp and I will need to either transition to Make or SharpMake for CSharpProjects.

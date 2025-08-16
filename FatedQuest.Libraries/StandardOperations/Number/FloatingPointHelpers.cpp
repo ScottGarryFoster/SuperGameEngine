@@ -21,6 +21,58 @@ bool FloatingPointHelpers::AreEqual(double left, double right)
     return std::abs(left - right) < epsilon;
 }
 
+bool FloatingPointHelpers::AreEqual(float left, double right)
+{
+    // The places to be accurate within.
+    float epsilon = 0.00001f;
+
+    return std::abs(left - right) < epsilon;
+}
+
+bool FloatingPointHelpers::AreEqual(double left, float right)
+{
+    // The places to be accurate within.
+    float epsilon = 0.00001f;
+
+    return std::abs(left - right) < epsilon;
+}
+
+bool FloatingPointHelpers::AreEqual(float left, int right)
+{
+    // The places to be accurate within.
+    float epsilon = 0.00001f;
+
+    float rightFloat = static_cast<float>(right);
+
+    return std::abs(left - rightFloat) < epsilon;
+}
+
+bool FloatingPointHelpers::AreEqual(int left, float right)
+{
+    // The places to be accurate within.
+    float epsilon = 0.00001f;
+
+    float leftFloat = static_cast<float>(left);
+
+    return std::abs(leftFloat - right) < epsilon;
+}
+
+bool FloatingPointHelpers::AreEqual(double left, int right)
+{
+    // The places to be accurate within.
+    float epsilon = 0.00001f;
+
+    return std::abs(left - right) < epsilon;
+}
+
+bool FloatingPointHelpers::AreEqual(int left, double right)
+{
+    // The places to be accurate within.
+    float epsilon = 0.00001f;
+
+    return std::abs(left - right) < epsilon;
+}
+
 float FloatingPointHelpers::Divide(float dividend, float divisor)
 {
     if (divisor == 0.0) {

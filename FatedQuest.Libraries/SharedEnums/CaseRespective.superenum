@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        When altering a value, describes if the new value respects the input case or not.
+    </EnumComment>
+    <EnumName Name="CaseRespective">
+        <Unknown HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <RetainExistingCase>
+            When modifying do not adjust or alter the case of alphabetical characters.
+        </RetainExistingCase>
+        <AlterCaseAsNeeded>
+            When modifying the method is free to modify the case if it makes sense to.
+        </AlterCaseAsNeeded>
+    </EnumName>
+</SuperEnum>

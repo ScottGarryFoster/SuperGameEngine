@@ -1,6 +1,8 @@
 #include "File.h"
 #include <fstream>
 #include <sstream>
+#include <ctime>
+#include <chrono>
 #include <filesystem>
 #include "CopyOptionsFileSystemHelper.h"
 #include "../../Logger/AllReferences.h"
@@ -8,6 +10,7 @@
 namespace FileSystem = std::filesystem;
 
 using namespace FatedQuestLibraries;
+#undef CopyFile
 
 bool File::Exists(const std::string& filepath)
 {
@@ -113,7 +116,49 @@ std::string File::ChangeExtension(
     return newFilepath;
 }
 
-#undef CopyFile
+std::string File::RemoveAllExtensions(const std::string& filepath)
+{
+    if (filepath.empty())
+    {
+        return {};
+    }
+
+    FileSystem::path input(filepath);
+    while (!input.extension().empty())
+    {
+        input.replace_extension();
+    }
+
+    return input.string();
+}
+
+std::string File::RemoveLastExtension(const std::string& filepath)
+{
+    if (filepath.empty())
+    {
+        return {};
+    }
+
+    FileSystem::path input(filepath);
+    if (!input.extension().empty())
+    {
+        input.replace_extension();
+    }
+
+    return input.string();
+}
+
+std::string File::GetExtension(const std::string& filepath)
+{
+    if (filepath.empty())
+    {
+        return {};
+    }
+
+    FileSystem::path input(filepath);
+    return input.extension().string();
+}
+
 bool File::CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options)
 {
     try
@@ -167,12 +212,16 @@ std::string File::Separator()
     return "\\";
 }
 
-std::string File::Sanitize(const std::string& path)
+std::string File::Sanitize(const std::string& path, CaseRespective caseRespective)
 {
-    std::string returnPath = StringHelpers::ToLower(path);
-    returnPath = StringHelpers::Trim(returnPath);
+    std::string returnPath = StringHelpers::Trim(path);
     returnPath = StringHelpers::ReplaceAll(returnPath,"/","\\");
     returnPath = StringHelpers::ReplaceAll(returnPath,"\\\\","\\");
+
+    if (caseRespective == CaseRespective::AlterCaseAsNeeded)
+    {
+        returnPath = StringHelpers::ToLower(returnPath);
+    }
 
     return returnPath;
 }
@@ -205,3 +254,28 @@ std::string File::MakeRelative(const std::string& base, const std::string& targe
 
     return {};
 }
+
+std::time_t File::GetLastModifiedTime(const std::string& fullFilepath)
+{
+    std::time_t returnTime = 0;
+    if (!File::Exists(fullFilepath))
+    {
+        return returnTime;
+    }
+
+    std::error_code errorCode;
+    auto fileTime = FileSystem::last_write_time(fullFilepath, errorCode);
+    if (errorCode)
+    {
+        Log::Error("Could not get the last modified time from file. Error: " + errorCode.message(), 
+            "GetLastModifiedTime(const std::string&)");
+        return returnTime;
+    }
+
+    // We need this in a universal format as outside the File class,
+    // the filesystem itself should be hidden away.
+    auto systemTime = std::chrono::clock_cast<std::chrono::system_clock>(fileTime);
+    return std::chrono::system_clock::to_time_t(systemTime);
+}
+
+#define CopyFile

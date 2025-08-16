@@ -6,6 +6,7 @@ message(STATUS "ENABLE_TESTS: ${ENABLE_TESTS}")
 message(STATUS "ENABLE_TOOLS: ${ENABLE_TOOLS}")
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+set(CMAKE_BUILD_TYPE Debug)
 
 # Name the project such that each solution could have its own name
 if(ENABLE_TOOLS)
@@ -59,6 +60,7 @@ add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/Observer Observer)
 add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/ClassTypes ClassTypes)
 add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/StoredDocument StoredDocument)
 add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/SharedEnums SharedEnums)
+add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/Exceptions Exceptions)
 
 # Solution Folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -72,6 +74,7 @@ set_target_properties(Observer PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(ClassTypes PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(StoredDocument PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
+set_target_properties(Exceptions PROPERTIES FOLDER "FatedQuest.Libraries")
 
 if(ENABLE_TESTS)
     add_subdirectory(EngineTests)
@@ -84,11 +87,13 @@ if(ENABLE_TESTS)
     add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/XmlDocumentTests XmlDocumentTests)
     add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/StandardObjectsTests StandardObjectsTests)
     add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/GamePackageTests GamePackageTests)
+    add_subdirectory(${FATEDQUEST_LIBRARIES_DIR}/ExceptionsTests ExceptionsTests)
 
     set_target_properties(XmlDocumentTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(StandardOperationsTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(StandardObjectsTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(GamePackageTests PROPERTIES FOLDER "FatedQuest.Libraries")
+    set_target_properties(ExceptionsTests PROPERTIES FOLDER "FatedQuest.Libraries")
 
     set_target_properties(gmock PROPERTIES FOLDER "External")
     set_target_properties(gmock_main PROPERTIES FOLDER "External")

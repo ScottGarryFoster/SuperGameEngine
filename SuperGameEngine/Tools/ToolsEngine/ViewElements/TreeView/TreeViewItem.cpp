@@ -3,6 +3,7 @@
 #include "TreeViewItemOnSelectedEventArguments.h"
 #include "../../../ImGuiIncludes.h"
 #include "../../../../Engine/Engine/Content/ContentManager.h"
+#include "../../../../Engine/Engine/Graphics/Texture/SuperTexture.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;

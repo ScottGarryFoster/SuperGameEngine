@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+
+#include "../../SharedEnums/CaseRespective.h"
 #include "CopyFileOptions.h"
 
 namespace FatedQuestLibraries
@@ -67,6 +69,37 @@ namespace FatedQuestLibraries
         static std::string ChangeExtension(const std::string& filepath, const std::string& originalExtension, const std::string& newExtension);
 
         /// <summary>
+        /// Removes all extensions from the given path.
+        /// </summary>
+        /// <param name="filepath">File path to remove from. </param>
+        /// <returns>A file path without the extensions. </returns>
+        static std::string RemoveAllExtensions(const std::string& filepath);
+
+        /// <summary>
+        /// Removes the last extension.<br/>
+        /// Given: folder\\filepath.png.gz ->
+        /// Returns: folder\\filepath.png<br/>
+        /// Given: folder\\filepath.png ->
+        /// Returns: folder\\filepath
+        /// </summary>
+        /// <param name="filepath">File path to remove from. </param>
+        /// <returns>A file path without the last extension. </returns>
+        static std::string RemoveLastExtension(const std::string& filepath);
+
+        /// <summary>
+        /// Returns the last extension<br/>
+        /// Given: folder\\filepath.png.gz ->
+        /// Returns: .gz<br/>
+        /// Given: folder\\filepath.png ->
+        /// Returns: .png<br />
+        /// If there is no extension returns empty string.
+        /// </summary>
+        /// <param name="filepath">Filepath to inspect. </param>
+        /// <returns>The last extension of the given path. </returns>
+        static std::string GetExtension(const std::string& filepath);
+
+#undef CopyFile
+        /// <summary>
         /// Copies file to directory.
         /// </summary>
         /// <param name="inputFilepath">Filepath to copy. </param>
@@ -74,6 +107,7 @@ namespace FatedQuestLibraries
         /// <param name="options">Options when copying. </param>
         /// <returns>True means copied. </returns>
         static bool CopyFile(const std::string& inputFilepath, const std::string& outputDirectoryPath, const CopyFileOptions& options);
+#define CopyFile
 
         /// <summary>
         /// Writes the line into the file.
@@ -94,8 +128,12 @@ namespace FatedQuestLibraries
         /// Sanitize the path such that it should be comparable to another.
         /// </summary>
         /// <param name="path">Path to sanitize. </param>
+        /// <param name="caseRespective">
+        /// When AlterCaseAsNeeded it will always change the case to a uniform case,
+        /// otherwise it will leave it unchanged.
+        /// </param>
         /// <returns>New path. </returns>
-        static std::string Sanitize(const std::string& path);
+        static std::string Sanitize(const std::string& path, CaseRespective caseRespective = CaseRespective::AlterCaseAsNeeded);
 
         /// <summary>
         /// Get the filename from a given path.
@@ -116,5 +154,13 @@ namespace FatedQuestLibraries
         /// <param name="target">Target to make relative. </param>
         /// <returns>Target path relative to base or empty if target is not in base. </returns>
         static std::string MakeRelative(const std::string& base, const std::string& target);
+
+        /// <summary>
+        /// Returns the last modified time of the given file.
+        /// Will return Unix Epoch if an error occured.
+        /// </summary>
+        /// <param name="fullFilepath">Full path to the file. </param>
+        /// <returns>Last modified time of the file. </returns>
+        static std::time_t GetLastModifiedTime(const std::string& fullFilepath);
     };
 }

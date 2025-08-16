@@ -47,6 +47,13 @@ if(MSVC)
     target_precompile_headers(SuperGenerator PRIVATE ${PCH_HEADER})
 endif()
 
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(SuperGenerator PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(SuperGenerator PRIVATE "-include ${PCH_HEADER}")
+endif()
+
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(SuperGenerator PRIVATE _WINDOWS)
@@ -66,7 +73,7 @@ add_subdirectory(../SuperEnumGenerator SuperEnumGenerator)
 add_subdirectory(../../../../FatedQuest.Libraries/SharedEnums SharedEnums)
 
 # Link dependencies
-target_link_libraries(SuperGenerator
+target_link_libraries(SuperGenerator PRIVATE
     SuperEnumGenerator
     SharedEnums
 )

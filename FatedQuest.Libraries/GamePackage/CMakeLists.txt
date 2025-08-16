@@ -54,10 +54,26 @@ if(MSVC)
     target_precompile_headers(GamePackage PRIVATE ${PCH_HEADER})
 endif()
 
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(GamePackage PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(GamePackage PRIVATE "-include ${PCH_HEADER}")
+endif()
+
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(GamePackage PRIVATE _WINDOWS)
-    target_compile_options(GamePackage PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+    target_compile_options(GamePackage PRIVATE
+      /W3
+      /permissive-
+      /Zc:preprocessor
+      /MP
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Set configurations
@@ -78,7 +94,7 @@ add_subdirectory(../StandardOperations StandardOperations)
 add_subdirectory(../BinaryOperations BinaryOperations)
 
 # Link dependencies
-target_link_libraries(GamePackage PUBLIC
+target_link_libraries(GamePackage PRIVATE
     Logger
     StandardOperations
     BinaryOperations

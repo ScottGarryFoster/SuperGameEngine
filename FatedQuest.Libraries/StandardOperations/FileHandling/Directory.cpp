@@ -49,27 +49,7 @@ bool Directory::IsDirectory(const std::string& path)
 
 std::vector<std::string> Directory::GetFiles(const std::string& path)
 {
-    std::vector<std::string> extracted;
-    try
-    {
-        for (const auto& filepath : FileSystem::directory_iterator(path))
-        {
-            if (filepath.is_regular_file())
-            {
-                extracted.push_back(filepath.path().filename().string());
-            }
-        }
-    }
-    catch (const FileSystem::filesystem_error)
-    {
-        // Caught but unused.
-    }
-    catch (const std::exception)
-    {
-        // Caught but unused.
-    }
-
-    return extracted;
+    return ListFileNames(path);
 }
 
 bool Directory::CreateDirectories(const std::string& path)
@@ -203,6 +183,56 @@ std::vector<std::string> Directory::ListDirectoryNames(const std::string& path)
     }
 
     return directories;
+}
+
+std::vector<std::string> Directory::ListFiles(const std::string& path)
+{
+    std::vector<std::string> extracted;
+    try
+    {
+        for (const auto& filepath : FileSystem::directory_iterator(path))
+        {
+            if (filepath.is_regular_file())
+            {
+                extracted.push_back(filepath.path().string());
+            }
+        }
+    }
+    catch (const FileSystem::filesystem_error)
+    {
+        // Caught but unused.
+    }
+    catch (const std::exception)
+    {
+        // Caught but unused.
+    }
+
+    return extracted;
+}
+
+std::vector<std::string> Directory::ListFileNames(const std::string& path)
+{
+    std::vector<std::string> extracted;
+    try
+    {
+        for (const auto& filepath : FileSystem::directory_iterator(path))
+        {
+            if (filepath.is_regular_file())
+            {
+                extracted.push_back(filepath.path().filename().string());
+            }
+        }
+    }
+    catch (const FileSystem::filesystem_error)
+    {
+        // Caught but unused.
+    }
+    catch (const std::exception)
+    {
+        // Caught but unused.
+    }
+
+    return extracted;
 }
 
 std::string Directory::GetParent(const std::string& path)

@@ -9,7 +9,7 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventSubscriptions.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/FileHandling/File.h"
 #include "../SuperEnumGenerator/GenerateEnum.h"
-#include "FileHandling/FilePaths.h"
+#include "../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
 
 using namespace SuperEnumGenerator;
 
@@ -27,7 +27,7 @@ int main(int argc, char* args[])
     Log::Info("Generating with: " + repoDirectory);
 
     GenerateEnum generator;
-    generator.AllEnums(repoDirectory, ".superenum", ".h");
+    generator.AllEnums(repoDirectory, ".superenum", ".h", {});
     Log::Info("Generated Enums");
 
     //std::string lines;

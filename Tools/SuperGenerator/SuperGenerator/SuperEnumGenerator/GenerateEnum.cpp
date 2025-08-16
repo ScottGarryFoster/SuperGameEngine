@@ -6,7 +6,7 @@
 using namespace SuperEnumGenerator;
 using namespace FatedQuestLibraries;
 
-bool GenerateEnum::SingleFile(const std::string& enumFilepath, const std::string& outputPath) const
+bool GenerateEnum::SingleFile(const std::string& enumFilepath, const std::string& outputPath, const std::string& currentFolder) const
 {
     if (!File::Exists(enumFilepath))
     {
@@ -34,7 +34,7 @@ bool GenerateEnum::SingleFile(const std::string& enumFilepath, const std::string
     }
 
     std::shared_ptr<SuperEnum> superEnum = std::make_shared<SuperEnum>();
-    if (!superEnum->FromString(enumFileContents))
+    if (!superEnum->FromString(enumFileContents, Directory::CombinePath(currentFolder, File::GetFilename(enumFilepath))))
     {
         Log::Error("GenerateEnum::SingleFile: Could not parse enum file. Path: " + enumFilepath,
             "GenerateEnum::SingleFile(std::string, std::string)");
@@ -55,7 +55,8 @@ bool GenerateEnum::SingleFile(const std::string& enumFilepath, const std::string
 void GenerateEnum::AllEnums(
     const std::string& topLevel, 
     const std::string& superEnumExtension,
-    const std::string& destinationExtension) const
+    const std::string& destinationExtension,
+    const std::string& currentFolder) const
 {
     std::vector<std::string> files = Directory::GetFiles(topLevel);
     for (const std::string& file : files)
@@ -68,7 +69,7 @@ void GenerateEnum::AllEnums(
         std::string fullFilePath = Directory::CombinePath(topLevel, file);
         std::string headerFilepath =
             File::ChangeExtension(fullFilePath, superEnumExtension, destinationExtension);
-        if (SingleFile(fullFilePath, headerFilepath))
+        if (SingleFile(fullFilePath, headerFilepath, currentFolder))
         {
             Log::Info("Generated: " + fullFilePath);
         }
@@ -79,9 +80,11 @@ void GenerateEnum::AllEnums(
         }
     }
 
-    std::vector<std::string> directories = Directory::ListDirectories(topLevel);
-    for (const std::string& directory : directories)
+    std::vector<std::string> directories = Directory::ListDirectoryNames(topLevel);
+    for (const std::string& directoryName : directories)
     {
-        AllEnums(directory, superEnumExtension, destinationExtension);
+        std::string folder = Directory::CombinePath(currentFolder, directoryName);
+        std::string newTopLevel = Directory::CombinePath(topLevel, directoryName);
+        AllEnums(newTopLevel, superEnumExtension, destinationExtension, folder);
     }
 }

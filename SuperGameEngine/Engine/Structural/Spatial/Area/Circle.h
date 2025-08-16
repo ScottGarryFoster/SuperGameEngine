@@ -102,6 +102,16 @@ namespace SuperGameEngine
         /// <param name="other">Other to move out of range of. </param>
         /// <returns>Location required. </returns>
         [[nodiscard]] FVector2D GetNewLocationToNotOverlap(const Rectangle& other) const;
+
+        /// <summary>
+        /// Returns this object as a debug string.
+        /// </summary>
+        std::string Print() const;
+
+        /// <summary>
+        /// Returns this object as a debug string.
+        /// </summary>
+        std::string ToString() const;
     private:
         /// <summary>
         /// Location of the circle.

@@ -54,10 +54,27 @@ if(MSVC)
     target_precompile_headers(StoredDocument PRIVATE ${PCH_HEADER})
 endif()
 
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(StoredDocument PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(StoredDocument PRIVATE "-include ${PCH_HEADER}")
+endif()
+
 # Platform-specific settings
 if(WIN32)
     target_compile_definitions(StoredDocument PRIVATE _WINDOWS)
-    target_compile_options(StoredDocument PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+
+    target_compile_options(StoredDocument PRIVATE
+      /W3
+      /permissive-
+      /Zc:preprocessor
+      /MP
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Set configurations
@@ -75,7 +92,7 @@ add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../Observer Observer)
 
 # Link dependencies
-target_link_libraries(StoredDocument PUBLIC
+target_link_libraries(StoredDocument PRIVATE
     Observer
     Logger
     SharedEnums

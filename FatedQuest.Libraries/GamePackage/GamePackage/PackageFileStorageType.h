@@ -63,6 +63,17 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Untouched",
+                "Binary",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(PackageFileStorageType value)
         {
             switch (value)
@@ -93,6 +104,8 @@ namespace FatedQuestLibraries
             
             return PackageFileStorageType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

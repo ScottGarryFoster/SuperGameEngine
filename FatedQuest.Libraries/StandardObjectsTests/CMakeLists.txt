@@ -47,7 +47,13 @@ set_target_properties(StandardObjectsTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CON
 # Set compiler options
 if(MSVC)
     target_compile_definitions(StandardObjectsTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(StandardObjectsTests PRIVATE /W3)
+    target_compile_options(StandardObjectsTests PRIVATE
+      /W3
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Include directories
@@ -58,6 +64,13 @@ set(PCH_HEADER "pch.h")
 
 if(MSVC)
     target_precompile_headers(StandardObjectsTests PRIVATE ${PCH_HEADER})
+endif()
+
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(StandardObjectsTests PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(StandardObjectsTests PRIVATE "-include ${PCH_HEADER}")
 endif()
 
 # Platform-specific settings
@@ -82,13 +95,15 @@ add_subdirectory(../Logger Logger)
 add_subdirectory(../SharedEnums SharedEnums)
 add_subdirectory(../StandardOperations StandardOperations)
 add_subdirectory(../StandardObjects StandardObjects)
+add_subdirectory(../StoredDocument StoredDocument)
 
 # Link dependencies
-target_link_libraries(StandardObjectsTests PUBLIC
+target_link_libraries(StandardObjectsTests PRIVATE
     Logger
     SharedEnums
     StandardOperations
     StandardObjects
+    StoredDocument
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )
