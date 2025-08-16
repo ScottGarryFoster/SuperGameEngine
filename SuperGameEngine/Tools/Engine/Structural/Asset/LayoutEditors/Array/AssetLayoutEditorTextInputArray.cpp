@@ -82,3 +82,36 @@ void AssetLayoutEditorTextInputArray::DrawSingleValue(
         universalObjectData->SetString(map, after);
     }
 }
+
+void AssetLayoutEditorTextInputArray::AddEntry(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
+    const std::string& map) const
+{
+    universalObjectData->SetString(GetFullEntryName(map, arrayIndex), {});
+}
+
+void AssetLayoutEditorTextInputArray::RemoveEntry(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
+    const std::string& map) const
+{
+    universalObjectData->UnsetString(GetFullEntryName(map, arrayIndex));
+
+    size_t i = arrayIndex + 1;
+    while (true)
+    {
+        std::string entryName = GetFullEntryName(map, i);
+        if (universalObjectData->IsStringLoaded(entryName))
+        {
+            universalObjectData->SetString(
+                GetFullEntryName(map, i - 1),
+                universalObjectData->GetString(entryName));
+            universalObjectData->UnsetString(entryName);
+        }
+        else
+        {
+            break;
+        }
+
+        ++i;
+    }
+}

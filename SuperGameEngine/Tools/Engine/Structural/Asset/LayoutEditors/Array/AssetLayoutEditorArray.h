@@ -22,6 +22,28 @@ namespace SuperGameTools
             const std::string& map) const = 0;
 
         /// <summary>
+        /// Add a new string at the given index.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">The index to add a string. </param>
+        /// <param name="map">Name of the entry without the index. </param>
+        virtual void AddEntry(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+            size_t arrayIndex,
+            const std::string& map) const = 0;
+
+        /// <summary>
+        /// Remove an entry at the given point. Note everything will be shifted from this point.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">A pointer to the asset. </param>
+        /// <param name="map">Name of the entry without the index. </param>
+        virtual void RemoveEntry(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+            size_t arrayIndex,
+            const std::string& map) const = 0;
+
+        /// <summary>
         /// Draws and may alter the data within the asset.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset.</param>
@@ -40,6 +62,15 @@ namespace SuperGameTools
         virtual void OnSaveCleanUpArray(
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
             const std::string& map) const;
+
+        /// <summary>
+        /// Create the full name of an entry in the universal data object.
+        /// </summary>
+        /// <param name="map">Name of the entry without the index. </param>
+        /// <param name="index">Index to gather for. </param>
+        /// <returns>The name of the entry. </returns>
+        std::string GetFullEntryName(const std::string& map, size_t index) const;
+
     private:
 
         /// <summary>
@@ -53,35 +84,5 @@ namespace SuperGameTools
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
             size_t arrayIndex,
             const std::string& map) const;
-
-        /// <summary>
-        /// Add a new string at the given index.
-        /// </summary>
-        /// <param name="universalObjectData">A pointer to the asset. </param>
-        /// <param name="arrayIndex">The index to add a string. </param>
-        /// <param name="map">Name of the entry without the index. </param>
-        void AddEntry(
-            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
-            size_t arrayIndex,
-            const std::string& map) const;
-
-        /// <summary>
-        /// Remove an entry at the given point. Note everything will be shifted from this point.
-        /// </summary>
-        /// <param name="universalObjectData">A pointer to the asset. </param>
-        /// <param name="arrayIndex">A pointer to the asset. </param>
-        /// <param name="map">Name of the entry without the index. </param>
-        void RemoveEntry(
-            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
-            size_t arrayIndex,
-            const std::string& map) const;
-
-        /// <summary>
-        /// Create the full name of an entry in the universal data object.
-        /// </summary>
-        /// <param name="map">Name of the entry without the index. </param>
-        /// <param name="index">Index to gather for. </param>
-        /// <returns>The name of the entry. </returns>
-        std::string GetFullEntryName(const std::string& map, size_t index) const;
     };
 }

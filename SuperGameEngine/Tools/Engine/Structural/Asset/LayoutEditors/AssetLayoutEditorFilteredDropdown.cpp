@@ -2,7 +2,6 @@
 #include "../../../../ImGuiIncludes.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
-#include "Imgui/External/imgui_internal.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;

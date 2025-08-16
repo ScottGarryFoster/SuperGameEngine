@@ -2,6 +2,8 @@
 #include "../AssetLayoutEditor.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "AssetLayoutEditorArray.h"
 
@@ -10,15 +12,16 @@ namespace SuperGameTools
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
     /// </summary>
-    class AssetLayoutEditorTextInputArray : public virtual AssetLayoutEditor, AssetLayoutEditorArray
+    class AssetLayoutEditorFilteredDropdownArray : public virtual AssetLayoutEditor, AssetLayoutEditorArray
     {
     public:
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
-        AssetLayoutEditorTextInputArray(const std::string& map);
-        virtual ~AssetLayoutEditorTextInputArray();
+        /// <param name="values">Values to filter to. </param>
+        AssetLayoutEditorFilteredDropdownArray(const std::string& map, const std::vector<std::string>& values);
+        virtual ~AssetLayoutEditorFilteredDropdownArray();
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -85,13 +88,25 @@ namespace SuperGameTools
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
             size_t arrayIndex,
             const std::string& map) const override;
-
     private:
+        /// <summary>
+        /// Values to filter to.
+        /// </summary>
+        std::vector<std::string> m_values;
 
         /// <summary>
-        /// The size of the text field by default (number of characters;
+        /// Values as const char for the ImGui Call.
         /// </summary>
-        const size_t m_defaultTextCapacity = 2048;
+        std::vector<const char*> m_valuesChars;
+
+        /// <summary>
+        /// This is the values stored as a map used to quickly
+        /// get the index from the value.
+        /// </summary>
+        /// <remarks>
+        /// We are trading a little extra memory for quicker search time here.
+        /// </remarks>
+        std::unordered_map<std::string, int> m_valuesValueByIndex;
 
         /// <summary>
         /// The parameter within the Asset to modify.

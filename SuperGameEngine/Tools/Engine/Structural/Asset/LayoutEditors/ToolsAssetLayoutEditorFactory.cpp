@@ -6,6 +6,7 @@
 #include "AssetLayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
+#include "Array/AssetLayoutEditorFilteredDropdownArray.h"
 #include "Engine/Structural/Asset/Template/AssetTemplateLayoutMapType.h"
 
 using namespace SuperGameTools;
@@ -59,7 +60,7 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
                     }
                     else
                     {
-                        // TODO: Dropdown array here.
+                        return std::make_shared<AssetLayoutEditorFilteredDropdownArray>(map, enumFilters);
                     }
             }
             break;
