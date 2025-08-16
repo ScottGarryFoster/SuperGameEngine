@@ -21,12 +21,10 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class SelectionManager;
     class AssetFolder;
     class AssetFile;
-}
 
-namespace SuperGameTools
-{
     /// <summary>
     /// Renders the folder as tiles.
     /// </summary>
@@ -36,7 +34,8 @@ namespace SuperGameTools
 
         AssetTileRender(
             const std::shared_ptr<AssetFolder>& rootFolder, 
-            const std::shared_ptr<SuperGameEngine::TextureManager>& texture);
+            const std::shared_ptr<SuperGameEngine::TextureManager>& texture,
+            const std::shared_ptr<SelectionManager>& selectionManager);
 
         /// <summary>
         /// An update loop ran before the draw.
@@ -55,6 +54,11 @@ namespace SuperGameTools
         virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
     private:
+        /// <summary>
+        /// Manages selection across multiple windows.
+        /// </summary>
+        std::shared_ptr<SelectionManager> m_selectionManager;
+
         /// <summary>
         /// The root folder.
         /// </summary>

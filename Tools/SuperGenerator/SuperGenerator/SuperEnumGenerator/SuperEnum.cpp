@@ -9,8 +9,18 @@ SuperEnum::SuperEnum()
 {
 }
 
-bool SuperEnum::FromString(const std::string& superEnumFile)
+bool SuperEnum::FromString(const std::string& superEnumFile, const std::string& path)
 {
+    m_path = path;
+    m_pathPrefixToRoot = {};
+    for (size_t i = 0; i < m_path.length(); ++i)
+    {
+        if (m_path[i] == '\\' || m_path[i] == '/')
+        {
+            m_pathPrefixToRoot += "../";
+        }
+    }
+
     std::shared_ptr<StoredDocument> xml = std::make_shared<RapidXMLDocument>();
     if (!xml->Load(superEnumFile))
     {
@@ -23,6 +33,8 @@ bool SuperEnum::FromString(const std::string& superEnumFile)
     {
         return false;
     }
+
+    std::shared_ptr<StoredDocumentNode> additionalIncludes = {};
     for (std::shared_ptr<StoredDocumentNode> child = root->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         std::string name = StringHelpers::Trim(StringHelpers::ToLower(child->Name()));
@@ -54,6 +66,29 @@ bool SuperEnum::FromString(const std::string& superEnumFile)
                 return false;
             }
         }
+        else if (name == "additionalincludes")
+        {
+            additionalIncludes = child;
+        }
+        else if (name == "footer")
+        {
+            if (!ParseFooter(child))
+            {
+                return false;
+            }
+        }
+        else if (name == "namespacefooter")
+        {
+            if (!ParseNamespaceFooter(child))
+            {
+                return false;
+            }
+        }
+    }
+
+    if (additionalIncludes)
+    {
+        ParseAdditionalIncludes(additionalIncludes);
     }
 
 
@@ -89,12 +124,17 @@ std::string SuperEnum::ToString()
     output += "\n";
     output += PrintEnumHelper(indents);
 
+    // This goes outside the class but in the namespace.
+    output += PrintNamespaceFooter(indents);
 
     if (m_namespace.Parsed)
     {
         --indents;
         output += "}\n";
     }
+
+    output += PrintFooter(indents);
+
     return output;
 }
 
@@ -123,6 +163,34 @@ bool SuperEnum::ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode)
 
     m_header.Parsed = true;
     m_header.Value = header;
+
+    return true;
+}
+
+bool SuperEnum::ParseFooter(std::shared_ptr<StoredDocumentNode> headerNode)
+{
+    std::string footer = StringHelpers::Trim(headerNode->Inner());
+    if (footer == "")
+    {
+        return false;
+    }
+
+    m_footer.Parsed = true;
+    m_footer.Value = footer;
+
+    return true;
+}
+
+bool SuperEnum::ParseNamespaceFooter(std::shared_ptr<StoredDocumentNode> headerNode)
+{
+    std::string footer = StringHelpers::Trim(headerNode->Inner());
+    if (footer == "")
+    {
+        return false;
+    }
+
+    m_namespaceFooter.Parsed = true;
+    m_namespaceFooter.Value = footer;
 
     return true;
 }
@@ -179,7 +247,7 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode)
     for (std::shared_ptr<StoredDocumentNode> child = enumNode->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         std::shared_ptr<EnumValueString> enumValue = std::make_shared<EnumValueString>();
-        
+
         enumValue->Value = child->Name();
         enumValue->LowercaseValue = StringHelpers::ToLower(child->Name());
         enumValue->Comment = child->Inner();
@@ -267,6 +335,46 @@ bool SuperEnum::ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode)
     return m_enumName.Parsed && m_enumValues.size() > 0;
 }
 
+bool SuperEnum::ParseAdditionalIncludes(std::shared_ptr<StoredDocumentNode> additionalIncludeNode)
+{
+    for (std::shared_ptr<StoredDocumentNode> child = additionalIncludeNode->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string nodeName = StringHelpers::ToLower(child->Name());
+        if (nodeName == "include")
+        {
+            if (std::shared_ptr<StoredDocumentAttribute> attribute = child->Attribute("rootPath", CaseSensitivity::IgnoreCase))
+            {
+                if (attribute->Value().empty())
+                {
+                    continue;
+                }
+
+                AddToIncludes(attribute->Value());
+            }
+        }
+    }
+
+    return true;
+}
+
+void SuperEnum::AddToIncludes(const std::string& rootPath)
+{
+    if (!m_header.Parsed)
+    {
+        m_header.Parsed = true;
+    }
+
+    std::string relativeValue = Directory::CombinePath(m_pathPrefixToRoot, rootPath);
+    if (m_header.Value.empty())
+    {
+        m_header.Value = "#include \"" + relativeValue + "\"";
+    }
+    else
+    {
+        m_header.Value += "\n#include \"" + relativeValue + "\"";
+    }
+}
+
 bool SuperEnum::SetUpImpliedEnumValues()
 {
     int currentIndex = 0;
@@ -330,9 +438,29 @@ std::string SuperEnumGenerator::SuperEnum::PrintHeader(int indents)
     for (const std::string line : lines)
     {
         std::string lineTrimmed = StringHelpers::Trim(line);
-        if (lineTrimmed != "")
+
+        // Our standard is } on a line.
+        if (lineTrimmed == "}")
+        {
+            --indents;
+        }
+
+        if (!lineTrimmed.empty())
         {
             output += PrintIndents(indents) + lineTrimmed + "\n";
+        }
+
+        size_t open = 0, closed = 0;
+        for (size_t i = 0; i < lineTrimmed.length(); ++i)
+        {
+            if (lineTrimmed[i] == '{')
+            {
+                ++open;
+            }
+            else if (lineTrimmed[i] == '}')
+            {
+                ++closed;
+            }
         }
     }
 
@@ -342,6 +470,97 @@ std::string SuperEnumGenerator::SuperEnum::PrintHeader(int indents)
 
     output += PrintIndents(indents) + "\n";
     output += PrintIndents(indents) + "\n";
+
+    return output;
+}
+
+std::string SuperEnum::PrintFooter(int indents)
+{
+    std::string output = {};
+    if (!m_footer.Parsed)
+    {
+        return output;
+    }
+
+    output = "\n";
+
+    std::vector<std::string> lines = StringHelpers::Split(m_footer.Value, "\n");
+    for (const std::string line : lines)
+    {
+        std::string lineTrimmed = StringHelpers::Trim(line);
+
+        // Our standard is } on a line.
+        if (lineTrimmed == "}")
+        {
+            --indents;
+        }
+
+        if (!lineTrimmed.empty())
+        {
+
+            output += PrintIndents(indents) + lineTrimmed + "\n";
+        }
+
+        size_t open = 0, closed = 0;
+        for (size_t i = 0; i < lineTrimmed.length(); ++i)
+        {
+            if (lineTrimmed[i] == '{')
+            {
+                ++open;
+            }
+            else if (lineTrimmed[i] == '}')
+            {
+                ++closed;
+            }
+        }
+
+        indents += static_cast<int>(open) - static_cast<int>(closed);
+    }
+
+    return output;
+}
+
+std::string SuperEnum::PrintNamespaceFooter(int indents)
+{
+    std::string output = {};
+    if (!m_namespaceFooter.Parsed)
+    {
+        return output;
+    }
+
+    output = "\n";
+
+    std::vector<std::string> lines = StringHelpers::Split(m_namespaceFooter.Value, "\n");
+    for (const std::string line : lines)
+    {
+        std::string lineTrimmed = StringHelpers::Trim(line);
+
+        // Our standard is } on a line.
+        if (lineTrimmed == "}")
+        {
+            --indents;
+        }
+
+        if (!lineTrimmed.empty())
+        {
+            output += PrintIndents(indents) + lineTrimmed + "\n";
+        }
+
+        size_t open = 0, closed = 0;
+        for (size_t i = 0; i < lineTrimmed.length(); ++i)
+        {
+            if (lineTrimmed[i] == '{')
+            {
+                ++open;
+            }
+            else if(lineTrimmed[i] == '}')
+            {
+                ++closed;
+            }
+        }
+
+        indents += static_cast<int>(open) - static_cast<int>(closed);
+    }
 
     return output;
 }
@@ -433,6 +652,7 @@ std::string SuperEnum::PrintEnumHelper(int indents)
     output += PrintIndents(indents) + "static " + m_enumName.Value + " Max() { return " + m_enumName.Value + "::" + GetMaxEnumValue() + "; }\n";
     output += PrintToArray(indents);
     output += PrintToVector(indents);
+    output += PrintToVectorValues(indents);
     output += PrintGroups(indents);
     output += PrintToString(indents);
     output += PrintFromString(indents);
@@ -441,6 +661,9 @@ std::string SuperEnum::PrintEnumHelper(int indents)
     {
         output += PrintFlagHelperMethods(indents);
     }
+
+    output += PrintIndents(indents - 1) + "\n private:\n\n";
+    output += PrintToLower(indents);
 
     --indents;
 
@@ -461,25 +684,25 @@ std::string SuperEnum::PrintToArray(int indents)
     output += "\n";
     output += PrintIndents(indents) + "static " + m_enumName.Value + "* ToArray()\n";
     output += PrintIndents(indents) + "{\n";
-        ++indents;
-        output += PrintIndents(indents) + "static " + m_enumName.Value + " returnArray[] =\n";
-        output += PrintIndents(indents) + "{\n";
-            ++indents;
-            for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
-            {
-                if (enumValue->HideFromLists)
-                {
-                    continue;
-                }
+    ++indents;
+    output += PrintIndents(indents) + "static " + m_enumName.Value + " returnArray[] =\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (enumValue->HideFromLists)
+        {
+            continue;
+        }
 
-                output += PrintIndents(indents) + m_enumName.Value + "::" + enumValue->Value + ",\n";
+        output += PrintIndents(indents) + m_enumName.Value + "::" + enumValue->Value + ",\n";
 
-            }
-            --indents;
-            output += PrintIndents(indents) + "};\n";
-            output += PrintIndents(indents) + "\n";
-            output += PrintIndents(indents) + "return returnArray;\n";
-        --indents;
+    }
+    --indents;
+    output += PrintIndents(indents) + "};\n";
+    output += PrintIndents(indents) + "\n";
+    output += PrintIndents(indents) + "return returnArray;\n";
+    --indents;
     output += PrintIndents(indents) + "}\n";
     return output;
 }
@@ -497,23 +720,58 @@ std::string SuperEnum::PrintToVector(int indents)
     output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> ToVector()\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> returnVector =\n";
-        output += PrintIndents(indents) + "{\n";
-        ++indents;
-            for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
-            {
-                if (enumValue->HideFromLists)
-                {
-                    continue;
-                }
+    output += PrintIndents(indents) + "static std::vector<" + m_enumName.Value + "> returnVector =\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (enumValue->HideFromLists)
+        {
+            continue;
+        }
 
-                output += PrintIndents(indents) + m_enumName.Value + "::" + enumValue->Value + ",\n";
+        output += PrintIndents(indents) + m_enumName.Value + "::" + enumValue->Value + ",\n";
 
-            }
-        --indents;
-        output += PrintIndents(indents) + "};\n";
-        output += PrintIndents(indents) + "\n";
-        output += PrintIndents(indents) + "return returnVector;\n";
+    }
+    --indents;
+    output += PrintIndents(indents) + "};\n";
+    output += PrintIndents(indents) + "\n";
+    output += PrintIndents(indents) + "return returnVector;\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    return output;
+}
+
+std::string SuperEnum::PrintToVectorValues(int indents)
+{
+    if (!m_enumName.Parsed)
+    {
+        return std::string();
+    }
+
+    std::string output = "";
+
+    output += "\n";
+    output += PrintIndents(indents) + "static std::vector<std::string> ToVectorValues()\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "static std::vector<std::string> returnVector =\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (enumValue->HideFromLists)
+        {
+            continue;
+        }
+
+        output += PrintIndents(indents) + "\"" + enumValue->Value + "\"" + ",\n";
+
+    }
+    --indents;
+    output += PrintIndents(indents) + "};\n";
+    output += PrintIndents(indents) + "\n";
+    output += PrintIndents(indents) + "return returnVector;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     return output;
@@ -532,19 +790,19 @@ std::string SuperEnum::PrintToString(int indents)
     output += PrintIndents(indents) + "static std::string ToString(" + m_enumName.Value + " value)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "switch (value)\n";
-        output += PrintIndents(indents) + "{\n";
-        ++indents;
-            for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
-            {
-                output += PrintIndents(indents) + "case " + m_enumName.Value + "::" + enumValue->Value;
-                output += ": return \"" + enumValue->Value + "\";\n";
+    output += PrintIndents(indents) + "switch (value)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        output += PrintIndents(indents) + "case " + m_enumName.Value + "::" + enumValue->Value;
+        output += ": return \"" + enumValue->Value + "\";\n";
 
-            }
-        --indents;
-        output += PrintIndents(indents) + "}\n";
-        output += PrintIndents(indents) + "\n";
-        output += PrintIndents(indents) + "return \""+ GetUnknownValue() + "\";\n";
+    }
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += PrintIndents(indents) + "\n";
+    output += PrintIndents(indents) + "return \"" + GetUnknownValue() + "\";\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     return output;
@@ -563,55 +821,28 @@ std::string SuperEnum::PrintFromString(int indents)
     output += PrintIndents(indents) + "static " + m_enumName.Value + " FromString(std::string value, bool checkCase = true)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "if (checkCase)\n";
-        output += PrintIndents(indents) + "{\n";
-        ++indents;
-        for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
-        {
-            output += PrintIndents(indents) + "if (value == \"" + enumValue->Value + "\") return " + m_enumName.Value + "::" + enumValue->Value + ";\n";
-        }
-        --indents;
-        output += PrintIndents(indents) + "}\n";
-        output += PrintIndents(indents) + "else\n";
-        output += PrintIndents(indents) + "{\n";
-        ++indents;
-        output += PrintIndents(indents) + "std::string valueLower = ToLower(value); \n";
-        for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
-        {
-            
-            output += PrintIndents(indents) + "if (valueLower == \"" + enumValue->LowercaseValue + "\") return " + m_enumName.Value + "::" + enumValue->Value + ";\n";
-        }
-        --indents;
-        output += PrintIndents(indents) + "}\n";
-        output += PrintIndents(indents) + "\n";
-        output += PrintIndents(indents) + "return " + m_enumName.Value + "::" + GetUnknownValue() + ";\n";
-    --indents;
-    output += PrintIndents(indents) + "}\n";
-
-    output += "\n";
-
-    // To Lower method
-    output += PrintIndents(indents) + "/// <summary>\n";
-    output += PrintIndents(indents) + "/// Converts to lower. Copy from StringHelpers to ensure Enum does not require\n";
-    output += PrintIndents(indents) + "/// any outside dependency. Although we could include a header, doing so restricts\n";
-    output += PrintIndents(indents) + "/// the project which holds StringHelpers.\n";
-    output += PrintIndents(indents) + "/// </summary>\n";
-    output += PrintIndents(indents) + "static std::string ToLower(const std::string & input)\n";
+    output += PrintIndents(indents) + "if (checkCase)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "std::string output = input;\n";
-        output += PrintIndents(indents) + "for (char& c : output)\n";
-        output += PrintIndents(indents) + "{\n";
-        ++indents;
-            output += PrintIndents(indents) + "if (c >= 'A' && c <= 'Z')\n";
-            output += PrintIndents(indents) + "{\n";
-            ++indents;
-                output += PrintIndents(indents) + "c = c - 'A' + 'a';\n";
-            --indents;
-            output += PrintIndents(indents) + "}\n";
-        --indents;
-        output += PrintIndents(indents) + "}\n";
-        output += PrintIndents(indents) + "return output;\n";
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        output += PrintIndents(indents) + "if (value == \"" + enumValue->Value + "\") return " + m_enumName.Value + "::" + enumValue->Value + ";\n";
+    }
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += PrintIndents(indents) + "else\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "std::string valueLower = ToLower(value); \n";
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+
+        output += PrintIndents(indents) + "if (valueLower == \"" + enumValue->LowercaseValue + "\") return " + m_enumName.Value + "::" + enumValue->Value + ";\n";
+    }
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += PrintIndents(indents) + "\n";
+    output += PrintIndents(indents) + "return " + m_enumName.Value + "::" + GetUnknownValue() + ";\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
 
@@ -659,6 +890,37 @@ std::string SuperEnum::PrintGroups(int indents)
         --indents;
         output += PrintIndents(indents) + "}\n";
     }
+
+    return output;
+}
+
+std::string SuperEnum::PrintToLower(int indents)
+{
+    std::string output = "";
+
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Converts to lower. Copy from StringHelpers to ensure Enum does not require\n";
+    output += PrintIndents(indents) + "/// any outside dependency. Although we could include a header, doing so restricts\n";
+    output += PrintIndents(indents) + "/// the project which holds StringHelpers.\n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+    output += PrintIndents(indents) + "static std::string ToLower(const std::string & input)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "std::string output = input;\n";
+    output += PrintIndents(indents) + "for (char& c : output)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "if (c >= 'A' && c <= 'Z')\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "c = c - 'A' + 'a';\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += PrintIndents(indents) + "return output;\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
 
     return output;
 }
@@ -762,8 +1024,8 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator | (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value  + ">;\n";
-        output += PrintIndents(indents) + "return static_cast<" + m_enumName.Value  + ">(static_cast<T>(lhs) | static_cast<T>(rhs));\n";
+    output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value + ">;\n";
+    output += PrintIndents(indents) + "return static_cast<" + m_enumName.Value + ">(static_cast<T>(lhs) | static_cast<T>(rhs));\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     output += "\n";
@@ -771,8 +1033,8 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator |= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "lhs = lhs | rhs;\n";
-        output += PrintIndents(indents) + "return lhs;\n";
+    output += PrintIndents(indents) + "lhs = lhs | rhs;\n";
+    output += PrintIndents(indents) + "return lhs;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     output += "\n";
@@ -834,7 +1096,7 @@ std::string SuperEnum::PrintFlagHelperMethods(int indents)
     output += PrintIndents(indents) + "static bool HasFlag(" + m_enumName.Value + " origin, " + m_enumName.Value + " lookFor)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-        output += PrintIndents(indents) + "return (origin & lookFor) != " + m_enumName.Value + "::" + closestToZero->Value + ";\n";
+    output += PrintIndents(indents) + "return (origin & lookFor) != " + m_enumName.Value + "::" + closestToZero->Value + ";\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
 
@@ -853,7 +1115,7 @@ std::string SuperEnum::FigureOutType()
         {
             type = "uint8_t";
         }
-        else if(max <= 65535)
+        else if (max <= 65535)
         {
             type = "uint16_t";
         }

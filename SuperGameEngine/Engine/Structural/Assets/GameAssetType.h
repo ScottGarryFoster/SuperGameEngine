@@ -54,6 +54,16 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Texture",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(GameAssetType value)
         {
             switch (value)
@@ -81,6 +91,8 @@ namespace SuperGameEngine
             
             return GameAssetType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

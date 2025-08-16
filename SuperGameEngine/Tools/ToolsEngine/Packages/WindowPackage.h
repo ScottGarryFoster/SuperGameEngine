@@ -3,11 +3,6 @@
 #include <SDL_render.h>
 #include "../../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
-namespace SuperGameTools
-{
-    class ColoursAndStyles;
-}
-
 namespace FatedQuestLibraries
 {
     class PackagePaths;
@@ -29,6 +24,8 @@ namespace SuperGameTools
     class MenuView;
     class EngineEntryCommunication;
     class ColoursAndStyles;
+    class ColoursAndStyles;
+    class AssetTemplateProvider;
 
     /// <summary>
     /// Everything a Window Package might need to run.
@@ -146,6 +143,18 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="colourPalette">New palette. </param>
         void SetColourPalette(const std::shared_ptr<ColoursAndStyles>& colourPalette);
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
+        /// </summary>
+        /// <returns>Loads, holds and provides <see cref="AssetMetaData"/> in a single location. </returns>
+        std::shared_ptr<AssetTemplateProvider> GetAssetTemplateProvider() const;
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
+        /// </summary>
+        /// <param name="assetTemplateProvider">Loads, holds and provides <see cref="AssetMetaData"/> in a single location. </param>
+        void SetAssetTemplateProvider(const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider);
     private:
 
         /// <summary>
@@ -194,5 +203,10 @@ namespace SuperGameTools
         /// The colour palette used.
         /// </summary>
         std::shared_ptr<ColoursAndStyles> m_colorPalette;
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
+        /// </summary>
+        std::shared_ptr<AssetTemplateProvider> m_assetTemplateProvider;
     };
 }

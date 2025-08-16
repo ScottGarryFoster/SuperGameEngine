@@ -71,6 +71,18 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Running",
+                "Close",
+                "Restart",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(ApplicationOperationState value)
         {
             switch (value)
@@ -104,6 +116,8 @@ namespace SuperGameEngine
             
             return ApplicationOperationState::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

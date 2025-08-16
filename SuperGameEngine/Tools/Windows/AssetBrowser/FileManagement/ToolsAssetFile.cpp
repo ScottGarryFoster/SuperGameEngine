@@ -17,6 +17,9 @@ ToolsAssetFile::ToolsAssetFile(
     const std::weak_ptr<AssetFolder>& parent)
 {
     m_parent = parent;
+    m_guid = GUIDHelpers::CreateGUID();
+    m_selectionGroups.insert(SelectionGroup::Inspectable);
+    m_selected = false;
 
     if (std::shared_ptr<GamePackage> gamePackage = package.lock())
     {
@@ -47,14 +50,13 @@ ToolsAssetFile::ToolsAssetFile(
         // Setup the image.
         if (std::shared_ptr<TextureManager> textureManager = texture.lock())
         {
-            std::string fileType = File::GetExtension(originalFilePath);
-            if (StringHelpers::ToLower(fileType) == ".png")
+            // Keep in mind this is cached so we only pay the price once for this.
+            m_largeTilePreview = textureManager->GetTexture(m_defaultAssetTexture);
+            if (!m_largeTilePreview)
             {
-                m_largeTilePreview = textureManager->GetTexture(originalFilePath);
-                if (!m_largeTilePreview)
-                {
-                    Log::Error("Could not load large tile preview from Texture Manager. Path: " + packagePath, "ToolsAssetFile::ToolsAssetFile");
-                }
+                std::string defaultAssetLocation = m_defaultAssetTexture;
+                Log::Error("Could not load large tile preview from Texture Manager. Path: " + defaultAssetLocation, 
+                    "ToolsAssetFile::ToolsAssetFile");
             }
         }
         else
@@ -67,6 +69,17 @@ ToolsAssetFile::ToolsAssetFile(
         Log::Error("Package manager is not given, asset not loaded. Path: " + packagePath, "ToolsAssetFile::ToolsAssetFile");
     }
 
+}
+
+ToolsAssetFile::ToolsAssetFile(
+    const std::weak_ptr<GamePackage>& package,
+    const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
+    const std::string& packagePath,
+    const std::weak_ptr<AssetFolder>& parent,
+    const std::shared_ptr<const AssetMetaData>& assetMetaData) :
+    ToolsAssetFile(package, texture, packagePath, parent)
+{
+    m_assetMetaData = assetMetaData;
 }
 
 std::weak_ptr<AssetFolder> ToolsAssetFile::GetParent() const
@@ -100,7 +113,7 @@ std::string ToolsAssetFile::GetPackagePath() const
     return "Unknown";
 }
 
-void ToolsAssetFile::DrawLargeTile(const SuperGameEngine::RectangleInt& screenRectangle) const
+void ToolsAssetFile::DrawLargeTile(const RectangleInt& screenRectangle) const
 {
     if (m_largeTilePreview)
     {
@@ -108,4 +121,34 @@ void ToolsAssetFile::DrawLargeTile(const SuperGameEngine::RectangleInt& screenRe
         RectangleInt uv = RectangleInt(0, 0, m_largeTilePreview->Size().GetX(), m_largeTilePreview->Size().GetY());
         m_largeTilePreview->Draw(uv, screenRectangle);
     }
+}
+
+void ToolsAssetFile::SelectFile()
+{
+    m_selected = true;
+}
+
+void ToolsAssetFile::UnselectFile()
+{
+    m_selected = false;
+}
+
+bool ToolsAssetFile::IsSelected() const
+{
+    return m_selected;
+}
+
+const std::shared_ptr<const AssetMetaData> ToolsAssetFile::GetMetaData() const
+{
+    return m_assetMetaData;
+}
+
+std::unordered_set<SelectionGroup> ToolsAssetFile::GetSelectionGroup() const
+{
+    return m_selectionGroups;
+}
+
+std::shared_ptr<Guid> ToolsAssetFile::GetGuid() const
+{
+    return m_guid;
 }

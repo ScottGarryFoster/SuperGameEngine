@@ -65,6 +65,17 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Predefined",
+                "UniformByPixel",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(SplitUVMethod value)
         {
             switch (value)
@@ -95,6 +106,8 @@ namespace SuperGameEngine
             
             return SplitUVMethod::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

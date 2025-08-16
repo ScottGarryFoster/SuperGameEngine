@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+#include "../SharedEnums/CaseSensitivity.h"
+
 namespace FatedQuestLibraries
 {
     /// <summary>
@@ -92,5 +94,14 @@ namespace FatedQuestLibraries
         /// <param name="input">Input to  make pretty. </param>
         /// <returns>Display name. </returns>
         static std::string DisplayName(const std::string& input);
+
+        /// <summary>
+        /// True means two strings match.
+        /// </summary>
+        /// <param name="left">First string to match. </param>
+        /// <param name="right">Second string to match.</param>
+        /// <param name="caseSensitivity">Whether case matters. </param>
+        /// <returns>True means the two strings match. </returns>
+        static bool Equals(const std::string& left, const std::string& right, CaseSensitivity caseSensitivity = CaseSensitivity::CaseSensitive);
     };
 }

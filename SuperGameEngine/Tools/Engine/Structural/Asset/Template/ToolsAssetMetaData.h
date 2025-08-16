@@ -8,13 +8,17 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
+    class AssetLayoutEditorFactory;
+
     /// <summary>
     /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
     /// </summary>
     class ToolsAssetMetaData : public AssetMetaData
     {
     public:
-        ToolsAssetMetaData(const std::shared_ptr<FatedQuestLibraries::StoredDocument>& document);
+        ToolsAssetMetaData(
+            const std::shared_ptr<FatedQuestLibraries::StoredDocument>& document,
+            const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory);
 
         /// <summary>
         /// Contains a template and the ability to detect whether using the template is correct.

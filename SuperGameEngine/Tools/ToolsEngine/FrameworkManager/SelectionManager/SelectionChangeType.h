@@ -68,6 +68,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Add",
+                "Remove",
+                "Set",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(SelectionChangeType value)
         {
             switch (value)
@@ -101,6 +113,8 @@ namespace SuperGameTools
             
             return SelectionChangeType::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

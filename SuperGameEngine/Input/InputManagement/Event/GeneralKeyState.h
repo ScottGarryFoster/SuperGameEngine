@@ -55,6 +55,17 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "SDL__RELEASED",
+                "SDL__PRESSED",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(GeneralKeyState value)
         {
             switch (value)
@@ -85,6 +96,8 @@ namespace SuperGameInput
             
             return GeneralKeyState::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

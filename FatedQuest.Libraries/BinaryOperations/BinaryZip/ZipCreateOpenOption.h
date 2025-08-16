@@ -63,6 +63,19 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "CloseAfterOperation",
+                "LeaveOpen",
+                "CreateIfDoesNotExistAndLeaveOpen",
+                "CreateIfDoesNotExistCloseAfter",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(ZipCreateOpenOption value)
         {
             switch (value)
@@ -99,6 +112,8 @@ namespace FatedQuestLibraries
             
             return ZipCreateOpenOption::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

@@ -101,6 +101,19 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Unpressed",
+                "Pressed",
+                "Down",
+                "Up",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(KeyOrButtonState value)
         {
             switch (value)
@@ -139,6 +152,19 @@ namespace SuperGameInput
         }
 
         /// <summary>
+        /// Test to see whether value has the given flag.
+        /// </summary>
+        /// <param name="origin">Origin to look for flag in. </param>
+        /// <param name="lookFor">Value to look for. </param>
+        /// <returns>True means has flag. </returns>
+        static bool HasFlag(KeyOrButtonState origin, KeyOrButtonState lookFor)
+        {
+            return (origin & lookFor) != KeyOrButtonState::Unknown;
+        }
+    
+ private:
+
+        /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require
         /// any outside dependency. Although we could include a header, doing so restricts
         /// the project which holds StringHelpers.
@@ -154,17 +180,6 @@ namespace SuperGameInput
                 }
             }
             return output;
-        }
-
-        /// <summary>
-        /// Test to see whether value has the given flag.
-        /// </summary>
-        /// <param name="origin">Origin to look for flag in. </param>
-        /// <param name="lookFor">Value to look for. </param>
-        /// <returns>True means has flag. </returns>
-        static bool HasFlag(KeyOrButtonState origin, KeyOrButtonState lookFor)
-        {
-            return (origin & lookFor) != KeyOrButtonState::Unknown;
         }
     };
 }

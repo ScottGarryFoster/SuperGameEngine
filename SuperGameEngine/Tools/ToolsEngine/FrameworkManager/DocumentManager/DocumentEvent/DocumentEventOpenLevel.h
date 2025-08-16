@@ -68,6 +68,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "EitherOr",
+                "Exclusive",
+                "Additive",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(DocumentEventOpenLevel value)
         {
             switch (value)
@@ -101,6 +113,8 @@ namespace SuperGameTools
             
             return DocumentEventOpenLevel::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

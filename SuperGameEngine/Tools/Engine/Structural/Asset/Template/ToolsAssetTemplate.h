@@ -47,6 +47,13 @@ namespace SuperGameTools
         /// <returns>An asset file </returns>
         virtual std::string CreateAssetFile(const std::string& filepath) const override;
 
+        /// <summary>
+        /// Gets the file type to create when creating a <see cref="AssetFile"/>.
+        /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
+        /// </summary>
+        /// <returns>The file type to be created. </returns>
+        virtual AssetFileType GetAssetFileType() const override;
+
     private:
         /// <summary>
         /// Describes how a template might figure out if a given file is in fact the template
@@ -60,6 +67,12 @@ namespace SuperGameTools
         std::unordered_set<std::string> m_matchingExtensions;
 
         /// <summary>
+        /// The file type to create when creating a <see cref="AssetFile"/>.
+        /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
+        /// </summary>
+        AssetFileType m_assetFileType;
+
+        /// <summary>
         /// The method used to create a brand-new asset file.
         /// </summary>
         AssetTemplateCreationMethod m_creationMethod;
@@ -68,6 +81,16 @@ namespace SuperGameTools
         /// The empty document to use when recreating the asset file.
         /// </summary>
         std::string m_creationDocumentCopy;
+
+#pragma region Root Parsing
+
+        /// <summary>
+        /// Parses the root node attributes.
+        /// </summary>
+        /// <param name="rootNode">Root template node.</param>
+        void ParseRootAttributes(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& rootNode);
+
+#pragma endregion
 
 #pragma region Matching Criteria Creation
 

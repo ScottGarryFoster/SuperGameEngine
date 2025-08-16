@@ -10,13 +10,9 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class AssetFileProvider;
     class AssetFolderRender;
     class AssetFolder;
-}
-
-namespace SuperGameTools
-{
-    class AssetFileProvider;
 
     /// <summary>
     /// Displays assets for the game package and helps manage these. Also is the selector for the inspector and scene view.

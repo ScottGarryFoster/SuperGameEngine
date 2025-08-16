@@ -7,6 +7,8 @@
 
 namespace FatedQuestLibraries
 {
+    class UniversalObjectParser;
+
     /// <summary>
     /// A universal object which comes from a document.
     /// </summary>
@@ -23,6 +25,12 @@ namespace FatedQuestLibraries
 
     protected:
         /// <summary>
+        /// Lists all the strings in the object.
+        /// </summary>
+        /// <returns>All the String keys. </returns>
+        virtual std::vector<std::string> ListStrings() const override;
+
+        /// <summary>
         /// Get a loaded string value.
         /// Will return empty if nothing found.
         /// </summary>
@@ -38,6 +46,12 @@ namespace FatedQuestLibraries
         virtual bool IsStringLoaded(const std::string& key) const override;
 
         /// <summary>
+        /// Lists all the Ints in the object.
+        /// </summary>
+        /// <returns>All the Int keys. </returns>
+        virtual std::vector<std::string> ListInts() const override;
+
+        /// <summary>
         /// Get a loaded int value.
         /// </summary>
         /// <param name="key">Key to search for. </param>
@@ -51,6 +65,11 @@ namespace FatedQuestLibraries
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsIntLoaded(const std::string& key) const override;
 
+        /// <summary>
+        /// List vector4is in the object.
+        /// </summary>
+        /// <returns>All the keys for any Vector4Is. </returns>
+        virtual std::vector<std::string> ListVector4Is() const override;
 
         /// <summary>
         /// Get a loaded Vector4I value.
@@ -67,6 +86,12 @@ namespace FatedQuestLibraries
         virtual bool IsVector4ILoaded(const std::string& key) const override;
 
     private:
+
+        /// <summary>
+        /// Provides methods to parse in and out of Universal Object Data.
+        /// </summary>
+        std::shared_ptr<UniversalObjectParser> m_parser;
+
         /// <summary>
         /// Loaded string values from file.
         /// </summary>
@@ -81,14 +106,6 @@ namespace FatedQuestLibraries
         /// Loaded FVector4I values from file.
         /// </summary>
         std::unordered_map<std::string, std::shared_ptr<FVector4I>> m_vector4IValues;
-
-        void ParseStoredDocumentStrings(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringsNode);
-        void ParseStoredDocumentSingleString(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& stringNode);
-        void ParseStoredDocumentInts(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intsNode);
-        void ParseStoredDocumentSingleInt(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intNode);
-
-        void ParseStoredDocumentVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node);
-        void ParseStoredDocumentSingleVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node);
     };
 
 }

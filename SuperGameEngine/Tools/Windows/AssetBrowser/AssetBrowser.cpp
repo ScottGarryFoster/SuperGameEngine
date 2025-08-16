@@ -10,6 +10,8 @@
 #include "AssetTileRender.h"
 #include "FileManagement/AssetFile.h"
 #include "FileManagement/AssetFolder.h"
+#include "ToolsEngine/FrameworkManager/FrameworkManager.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
 
 using namespace SuperGameTools;
 
@@ -31,13 +33,21 @@ void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     auto assetFileProvider = std::make_shared<ToolsAssetFileProvider>(
         m_windowPackage->GetContentManager()->GamePackage(), 
         m_windowPackage->GetContentManager()->Texture(),
-        m_windowPackage->GetPackagePaths());
+        m_windowPackage->GetPackagePaths(),
+        m_windowPackage->GetAssetTemplateProvider());
     m_assetFileProvider = assetFileProvider;
 
    auto tileFolderRenderer = std::make_shared<AssetTileRender>(
         m_assetFileProvider->GetRootFolder(), 
-        m_windowPackage->GetContentManager()->Texture());
+        m_windowPackage->GetContentManager()->Texture(),
+       m_windowPackage->GetFrameworkManager()->GetSelectionManager());
     m_tileFolderRenderer = tileFolderRenderer;
+
+    // The asset files are selectable. Ensure we react to selection changes.
+    std::shared_ptr<FEventSubscriptions> subscription = 
+        m_windowPackage->GetFrameworkManager()->GetSelectionManager()->
+            OnSelectionChanged(SelectionGroup::Inspectable);
+    subscription->Subscribe(tileFolderRenderer);
 
     if (auto subscription = assetFileProvider->OnFileSystemUpdated().lock())
     {

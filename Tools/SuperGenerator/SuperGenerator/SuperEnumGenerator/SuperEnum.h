@@ -21,8 +21,9 @@ namespace SuperEnumGenerator
         /// Load object using the format of a SuperEnum.
         /// </summary>
         /// <param name="superEnumFile">The contents of a super Enum file.</param>
+        /// <param name="path">The contents of a super Enum file.</param>
         /// <returns>True means parsed. </returns>
-        bool FromString(const std::string& superEnumFile);
+        bool FromString(const std::string& superEnumFile, const std::string& path);
 
         /// <summary>
         /// Generate an enum based upon what is loaded.
@@ -75,6 +76,16 @@ namespace SuperEnumGenerator
         };
 
         /// <summary>
+        /// The location of this file from the root directory.
+        /// </summary>
+        std::string m_path;
+
+        /// <summary>
+        /// A path to prefix which anything after wards will be relative to the root directory.
+        /// </summary>
+        std::string m_pathPrefixToRoot;
+
+        /// <summary>
         /// How to create the enum from a broad perspective.
         /// </summary>
         SuperEnumType m_enumType;
@@ -101,6 +112,18 @@ namespace SuperEnumGenerator
         ParsedString m_header;
 
         /// <summary>
+        /// The footer of the file.
+        /// Should occur at the very bottom.
+        /// </summary>
+        ParsedString m_footer;
+
+        /// <summary>
+        /// The footer is code at the end of the extra class but not in the extras class.
+        /// The extras class is the one with all the extra methods named EENUMNAME.
+        /// </summary>
+        ParsedString m_namespaceFooter;
+
+        /// <summary>
         /// All the enum values.
         /// </summary>
         std::vector<std::shared_ptr<EnumValueString>> m_enumValues;
@@ -109,11 +132,18 @@ namespace SuperEnumGenerator
 
         bool ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode);
 
+        bool ParseFooter(std::shared_ptr<StoredDocumentNode> headerNode);
+
+        bool ParseNamespaceFooter(std::shared_ptr<StoredDocumentNode> headerNode);
+
         bool ParseNamespace(std::shared_ptr<StoredDocumentNode> namespaceNode);
 
         bool ParseEnumComment(std::shared_ptr<StoredDocumentNode> enumNode);
 
         bool ParseEnumName(std::shared_ptr<StoredDocumentNode> enumNode);
+
+        bool ParseAdditionalIncludes(std::shared_ptr<StoredDocumentNode> additionalIncludeNode);
+        void AddToIncludes(const std::string& rootPath);
 
         bool SetUpImpliedEnumValues();
 
@@ -121,13 +151,17 @@ namespace SuperEnumGenerator
         std::string PrintIndents(int number);
 
         std::string PrintHeader(int indents);
+        std::string PrintFooter(int indents);
+        std::string PrintNamespaceFooter(int indents);
         std::string PrintEnum(int indents);
         std::string PrintEnumHelper(int indents);
         std::string PrintToArray(int indents);
         std::string PrintToVector(int indents);
+        std::string PrintToVectorValues(int indents);
         std::string PrintToString(int indents);
         std::string PrintFromString(int indents);
         std::string PrintGroups(int indents);
+        std::string PrintToLower(int indents);
         std::string GetMinEnumValue();
         std::string GetMaxEnumValue();
         std::string GetUnknownValue();

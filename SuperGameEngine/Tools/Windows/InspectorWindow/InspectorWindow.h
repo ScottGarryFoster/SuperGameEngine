@@ -5,6 +5,11 @@
 
 namespace SuperGameTools
 {
+    class InspectAssetObject;
+}
+
+namespace SuperGameTools
+{
     class InspectGameObject;
 }
 
@@ -82,6 +87,11 @@ namespace SuperGameTools
         /// Inspect window functionality when inspecting a GameObject
         /// </summary>
         std::shared_ptr<InspectGameObject> m_inspectGameObject;
+
+        /// <summary>
+        /// Inspect window functionality when inspecting an asset browser asset.
+        /// </summary>
+        std::shared_ptr<InspectAssetObject> m_inspectAssetObject;
 
         /// <summary>
         /// Called when the user has requested to delete a component.

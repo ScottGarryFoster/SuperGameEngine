@@ -1,10 +1,10 @@
-<Asset>
+<UniversalObjectData>
     <Strings>
-        <String Key="GameAssetName" Value="Small 8 Direction Characters by Axul Art" />
-        <String Key="TextureUVMethod" Value="Predefined" />
+        <String "Key"="GameAssetName" "Value"="Small 8 Direction Characters by Axul Art" />
+        <String "Key"="TextureUVMethod" "Value"="Predefined" />
     </Strings>
     <Vector4Is>
-        <Vector4I Key="TextureUV0" X="0" Y="0" Z="32" W="32" />
-        <Vector4I Key="TextureUV1" X="32" Y="0" Z="32" W="32" />
+        <Vector4I "Key"="TextureUV0" "X"="0" "Y"="0" "Z"="32" "W"="32" />
+        <Vector4I "Key"="TextureUV1" "X"="32" "Y"="0" "Z"="32" "W"="32" />
     </Vector4Is>
-</Asset>
+</UniversalObjectData>

@@ -339,6 +339,16 @@ void SceneHierarchy::OnDocumentActionEvent(const std::shared_ptr<DocumentActionE
 
 void SceneHierarchy::OnSelectionChangedEvent(const std::shared_ptr<SelectionChangedEventArguments>& arguments)
 {
+    if (!m_sceneTreeViewItem)
+    {
+        return;
+    }
+
+    if (!m_sceneTreeViewItem->GetChildrenAsGameObjects())
+    {
+        return;
+    }
+
     for (size_t i = 0; i < m_sceneTreeViewItem->GetChildrenAsGameObjects()->GetValue().size(); ++i)
     {
         std::shared_ptr<GameObjectTreeViewItem> gotvi =

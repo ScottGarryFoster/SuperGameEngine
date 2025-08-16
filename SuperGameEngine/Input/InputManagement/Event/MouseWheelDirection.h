@@ -61,6 +61,17 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "SDL_MOUSEWHEEL_NORMAL",
+                "SDL_MOUSEWHEEL_FLIPPED",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(MouseWheelDirection value)
         {
             switch (value)
@@ -91,6 +102,8 @@ namespace SuperGameInput
             
             return MouseWheelDirection::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require

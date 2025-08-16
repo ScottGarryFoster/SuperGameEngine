@@ -1,6 +1,7 @@
 #pragma once
 #include "AssetFolder.h"
 #include "../../../../../FatedQuest.Libraries/StandardObjects/Structural/DistributeWeakPointers.h"
+#include "Engine/Structural/Asset/AssetFiles/AssetFileType.h"
 
 namespace FatedQuestLibraries
 {
@@ -14,6 +15,9 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class AssetMetaData;
+    class AssetTemplateProvider;
+
     /// <summary>
     /// Implementation of <see cref="AssetFolder"/>
     /// </summary>
@@ -24,6 +28,7 @@ namespace SuperGameTools
         ToolsAssetFolder(
             const std::weak_ptr<FatedQuestLibraries::GamePackage>& package,
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
+            const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider,
             const std::string& packagePath);
 
         /// <summary>
@@ -93,5 +98,25 @@ namespace SuperGameTools
         /// The folder above this one (the parent).
         /// </summary>
         std::weak_ptr<AssetFolder> m_parent;
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
+        /// </summary>
+        std::shared_ptr<AssetTemplateProvider> m_assetTemplateProvider;
+
+        /// <summary>
+        /// Creates an asset file in the correct format.
+        /// </summary>
+        /// <param name="packagePath">Path to the ast. </param>
+        /// <returns>The created asset file. </returns>
+        std::shared_ptr<AssetFile> CreateAssetFile(const std::string& packagePath);
+
+        /// <summary>
+        /// Creates an asset file in the correct format.
+        /// </summary>
+        /// <param name="packagePath">Path to the ast. </param>
+        /// <param name="metaData">The metadata for the asset file.</param>
+        /// <returns>The created asset file. </returns>
+        std::shared_ptr<AssetFile> CreateAssetFile(const std::string& packagePath, const std::shared_ptr<const AssetMetaData>& metaData);
     };
 }

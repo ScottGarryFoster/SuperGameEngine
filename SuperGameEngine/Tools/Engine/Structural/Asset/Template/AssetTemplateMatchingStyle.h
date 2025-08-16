@@ -55,6 +55,16 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::vector<std::string> ToVectorValues()
+        {
+            static std::vector<std::string> returnVector =
+            {
+                "Extension",
+            };
+            
+            return returnVector;
+        }
+
         static std::string ToString(AssetTemplateMatchingStyle value)
         {
             switch (value)
@@ -82,6 +92,8 @@ namespace SuperGameTools
             
             return AssetTemplateMatchingStyle::Unknown;
         }
+    
+ private:
 
         /// <summary>
         /// Converts to lower. Copy from StringHelpers to ensure Enum does not require
