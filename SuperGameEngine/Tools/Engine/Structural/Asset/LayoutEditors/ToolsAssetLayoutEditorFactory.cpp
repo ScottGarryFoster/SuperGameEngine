@@ -2,7 +2,7 @@
 
 #include "AssetLayoutEditorFilteredDropdown.h"
 #include "AssetLayoutEditorTextInput.h"
-#include "AssetLayoutEditorTextInputArray.h"
+#include "Array/AssetLayoutEditorTextInputArray.h"
 #include "AssetLayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
