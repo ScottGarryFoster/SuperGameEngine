@@ -76,8 +76,6 @@ void ToolsAssetLayout::Draw(
             ImGuiTableColumnFlags_WidthStretch
             );
 
-        float colWidthBefore = -1;
-
         for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
         {
             ImGui::TableNextRow();
@@ -103,4 +101,13 @@ void ToolsAssetLayout::Draw(
     ImGui::EndGroup();
 
 
+}
+
+void ToolsAssetLayout::OnSave(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
+    for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
+    {
+        layout->OnSave(universalObjectData);
+    }
 }

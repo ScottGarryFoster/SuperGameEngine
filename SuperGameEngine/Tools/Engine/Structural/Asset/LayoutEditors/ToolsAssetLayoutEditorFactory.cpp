@@ -2,6 +2,7 @@
 
 #include "AssetLayoutEditorFilteredDropdown.h"
 #include "AssetLayoutEditorTextInput.h"
+#include "AssetLayoutEditorTextInputArray.h"
 #include "AssetLayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
@@ -43,13 +44,22 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
             switch (maptype)
             {
                 case AssetTemplateLayoutMapType::Single:
-                    if (enumFilters.size() == 0)
+                    if (enumFilters.empty())
                     {
                         return std::make_shared<AssetLayoutEditorTextInput>(map);
                     }
                     else
                     {
                         return std::make_shared<AssetLayoutEditorFilteredDropdown>(map, enumFilters);
+                    }
+                case AssetTemplateLayoutMapType::Array:
+                    if (enumFilters.empty())
+                    {
+                        return std::make_shared<AssetLayoutEditorTextInputArray>(map);
+                    }
+                    else
+                    {
+                        // TODO: Dropdown array here.
                     }
             }
             break;

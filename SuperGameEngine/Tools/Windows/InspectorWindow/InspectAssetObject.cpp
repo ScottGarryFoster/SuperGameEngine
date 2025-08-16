@@ -164,6 +164,9 @@ void InspectAssetObject::OnSaveAll()
 
     if (m_currentlyEditedDocument->IsDirty())
     {
+        // Ensure the document is ready to be saved.
+        m_assetFileCurrentlyEdited->GetMetaData()->GetLayout()->OnSave(m_currentlyEditedDocument);
+
         std::shared_ptr<PackagePaths> paths = m_windowPackage->GetPackagePaths();
         std::string fullPath = Directory::CombinePath(paths->ProductsDirectory(), paths->ProductsDirectoryName(), m_assetFileCurrentlyEdited->GetPackagePath());
         if (std::shared_ptr<ModifiableDocument> exported = m_currentlyEditedDocument->ExportToDocument())

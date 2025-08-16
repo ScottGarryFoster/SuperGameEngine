@@ -44,6 +44,14 @@ namespace SuperGameTools
         virtual void DrawValue(
             const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
 
+        /// <summary>
+        /// Called when the data object is saved.
+        /// This should not actually need to save any data but can be used to clean up anything in edit
+        /// ready to be saved data, most notably things like blank strings in arrays. 
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override {}//No op
+
     private:
 
         /// <summary>

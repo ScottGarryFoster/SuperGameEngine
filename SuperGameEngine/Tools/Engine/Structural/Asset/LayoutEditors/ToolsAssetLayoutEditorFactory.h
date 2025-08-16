@@ -62,7 +62,5 @@ namespace SuperGameTools
         /// </returns>
         std::vector<std::string> ExtractEnumFilter(
             const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const;
-
-
     };
 }

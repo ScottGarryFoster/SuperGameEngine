@@ -2,25 +2,21 @@
 #include "AssetLayoutEditor.h"
 #include <memory>
 #include <string>
-#include <unordered_map>
-#include <vector>
 
 namespace SuperGameTools
 {
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
-    /// This represents a string input but filtered to a set of options which is represented as a dropdown.
     /// </summary>
-    class AssetLayoutEditorVector4I : public virtual AssetLayoutEditor
+    class AssetLayoutEditorTextInputArray : public virtual AssetLayoutEditor
     {
     public:
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
-        /// <param name="values">Values to filter to. </param>
-        AssetLayoutEditorVector4I(const std::string& map);
-        virtual ~AssetLayoutEditorVector4I();
+        AssetLayoutEditorTextInputArray(const std::string& map);
+        virtual ~AssetLayoutEditorTextInputArray();
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -54,13 +50,13 @@ namespace SuperGameTools
         /// ready to be saved data, most notably things like blank strings in arrays. 
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
-        virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override {}//No op
-
+        virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
     private:
+
         /// <summary>
         /// The size of the text field by default (number of characters;
         /// </summary>
-        const uint16_t m_defaultTextCapacity = 2048;
+        const size_t m_defaultTextCapacity = 2048;
 
         /// <summary>
         /// The parameter within the Asset to modify.
@@ -68,11 +64,38 @@ namespace SuperGameTools
         std::string m_map;
 
         /// <summary>
-        /// Draw a text box.
+        /// Draw a single row in the array.
         /// </summary>
-        /// <param name="label">Label text. </param>
-        /// <param name="value">Value in the box. </param>
-        /// <returns>True means changed. </returns>
-        bool TextInput(const std::string& label, std::string& value) const;
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">Index to draw. </param>
+        /// <returns>True means keep the value. False means delete. </returns>
+        bool DrawSingleArrayValue(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData, 
+            size_t arrayIndex) const;
+
+        /// <summary>
+        /// Add a new string at the given index.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">The index to add a string. </param>
+        void AddEntry(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+            size_t arrayIndex) const;
+
+        /// <summary>
+        /// Remove an entry at the given point. Note everything will be shifted from this point.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <param name="arrayIndex">A pointer to the asset. </param>
+        void RemoveEntry(
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
+            size_t arrayIndex) const;
+
+        /// <summary>
+        /// Create the full name of an entry in the universal data object.
+        /// </summary>
+        /// <param name="index">Index to gather for. </param>
+        /// <returns>The name of the entry. </returns>
+        std::string GetFullEntryName(size_t index) const;
     };
 }

@@ -12,7 +12,8 @@
         </Template>
     </AssetTemplate>
     <AssetLayout>
-        <Data Type="String" Map="TestTextInput" />
+        <Data Type="String" Map="TestTextInput" MapType="Single" />
+        <Data Type="String" Map="TestTextInputArray" MapType="Array" />
         <Data Type="String" EnumFilter="SplitUVMethod" Map="TextureUVMethod" MapType="Single" />
         <Data Type="Vector4I" Map="TextureUV" MapType="Array" />
     </AssetLayout>
