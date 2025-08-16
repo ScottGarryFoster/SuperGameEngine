@@ -43,7 +43,7 @@ int main(int argc, char* args[])
         freopen_s(&pCerr, "CONOUT$", "w", stderr);
     #endif
 
-    std::cout << "Super Game Engine Version 0.0.6 Dev\n";
+    std::cout << "Super Game Engine Version 0.0.7 Dev\n";
 #else
 
     #ifdef _WINDOWS
