@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <ctime>
 
 #include "../../SharedEnums/CaseRespective.h"
 #include "CopyFileOptions.h"
