@@ -70,7 +70,7 @@ namespace SuperGameTools
         /// <summary>
         /// Draw a text box.
         /// </summary>
-        /// <param name="label">Label text. </param>
+        /// <param name="label">Label text. Note: No visible label is drawn, this is the ID label. </param>
         /// <param name="value">Value in the box. </param>
         /// <returns>True means changed. </returns>
         bool TextInput(const std::string& label, std::string& value) const;

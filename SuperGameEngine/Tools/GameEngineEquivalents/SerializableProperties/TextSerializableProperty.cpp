@@ -63,14 +63,18 @@ void TextSerializableProperty::Draw()
         return;
     }
 
+    if (*m_dirty)
+    {
+        ImGui::Text("*");
+        ImGui::SameLine();
+    }
+
     ImGui::Text(m_property->GetName().c_str());
     ImGui::SameLine();
 
     if (*m_dirty)
     {
         ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
-        ImGui::SameLine();
-        ImGui::Text("*");
     }
     else
     {
