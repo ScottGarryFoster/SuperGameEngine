@@ -75,10 +75,75 @@ bool FloatingPointHelpers::AreEqual(int left, double right)
 
 float FloatingPointHelpers::Divide(float dividend, float divisor)
 {
-    if (divisor == 0.0) {
+    if (divisor == 0.0)
+    {
         throw std::runtime_error("Division by zero!");
     }
 
     return std::exp(std::log(std::abs(dividend)) - std::log(std::abs(divisor))) *
         ((dividend < 0) ^ (divisor < 0) ? -1 : 1);
+}
+
+bool FloatingPointHelpers::TryParse(const std::string& parsing, float& outValue)
+{
+    outValue = -1;
+    try
+    {
+        outValue = std::stof(parsing);
+        return true;
+    }
+    catch (const std::exception e)
+    {
+
+    }
+
+    return false;
+}
+
+bool FloatingPointHelpers::TryParse(const std::string& parsing, double& outValue)
+{
+    outValue = -1;
+    try
+    {
+        outValue = std::stod(parsing);
+        return true;
+    }
+    catch (const std::exception e)
+    {
+
+    }
+
+    return false;
+}
+
+std::string FloatingPointHelpers::RemoveUnneededZeros(float value)
+{
+    return RemoveUnneededZeros(std::to_string(value));
+}
+
+std::string FloatingPointHelpers::RemoveUnneededZeros(double value)
+{
+    return RemoveUnneededZeros(std::to_string(value));
+}
+
+std::string FloatingPointHelpers::RemoveUnneededZeros(const std::string& value)
+{
+    size_t decimalPosition = value.find('.');
+    if (decimalPosition == std::string::npos)
+    {
+        return value;
+    }
+
+    size_t end = value.size() - 1;
+    while (end > decimalPosition && value[end] == '0')
+    {
+        --end;
+    }
+
+    if (end == decimalPosition)
+    {
+        --end;
+    }
+
+    return value.substr(0, end + 1);
 }

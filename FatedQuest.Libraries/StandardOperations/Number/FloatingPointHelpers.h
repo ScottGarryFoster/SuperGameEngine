@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace FatedQuestLibraries
 {
@@ -70,5 +71,47 @@ namespace FatedQuestLibraries
         /// <param name="divisor">Number to divide by. </param>
         /// <returns>Result. </returns>
         static float Divide(float dividend, float divisor);
+
+        /// <summary>
+        /// Parses a string to a Float.
+        /// </summary>
+        /// <param name="parsing">Parsing value. </param>
+        /// <param name="outValue">The output of the parsing. Is -1 by default. </param>
+        /// <returns>True means is parsed. </returns>
+        static bool TryParse(const std::string& parsing, float& outValue);
+
+        /// <summary>
+        /// Parses a string to a Double.
+        /// </summary>
+        /// <param name="parsing">Parsing value. </param>
+        /// <param name="outValue">The output of the parsing. Is -1 by default. </param>
+        /// <returns>True means is parsed. </returns>
+        static bool TryParse(const std::string& parsing, double& outValue);
+
+        /// <summary>
+        /// Parses the float such that it does not contain all the
+        /// unneeded zeros on the right after the decimal.
+        /// </summary>
+        /// <param name="value">Value to parse. </param>
+        /// <returns>A nicer string to show a user. </returns>
+        static std::string RemoveUnneededZeros(float value);
+
+        /// <summary>
+        /// Parses the double such that it does not contain all the
+        /// unneeded zeros on the right after the decimal.
+        /// </summary>
+        /// <param name="value">Value to parse. </param>
+        /// <returns>A nicer string to show a user. </returns>
+        static std::string RemoveUnneededZeros(double value);
+
+    private:
+
+        /// <summary>
+        /// Looks at the string. Removes the zeros until it gets to a
+        /// significant value or a decimal point.
+        /// </summary>
+        /// <param name="value">Value to parse. </param>
+        /// <returns>A nicer string to show a user. </returns>
+        static std::string RemoveUnneededZeros(const std::string& value);
     };
 }

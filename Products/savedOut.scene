@@ -1,5 +1,11 @@
 <Scene "Guid"="{A75D7CCB-7FBC-4F4A-BF5E-798A7E1BBF7B}">
     <GameObject "Guid"="{418A83D4-19A4-42B8-A8C0-470A2DF829BB}">
         <Component "Type"="SpriteComponent" />
+        <Component "Type"="TransformComponent">
+            <Property "Name"="Position" "X"="0.147656" "Y"="0" />
+        </Component>
+        <Component "Type"="TransformComponent">
+            <Property "Name"="Position" "X"="0.65" "Y"="5.2" />
+        </Component>
     </GameObject>
 </Scene>

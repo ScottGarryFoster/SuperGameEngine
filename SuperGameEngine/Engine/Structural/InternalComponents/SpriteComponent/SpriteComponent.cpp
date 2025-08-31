@@ -3,6 +3,7 @@
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../Packages/ComponentLoadPackage.h"
 #include "../../../Engine/Structural/Assets/Texture/SuperTextureAsset.h"
+#include "../TransformComponent/TransformComponent.h"
 
 using namespace SuperGameEngine;
 

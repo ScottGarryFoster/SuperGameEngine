@@ -13,5 +13,8 @@
         <Text>
             A string of text.
         </Text>
+        <Vector2F>
+            A vector of two floats.
+        </Vector2F>
     </EnumName>
 </SuperEnum>
