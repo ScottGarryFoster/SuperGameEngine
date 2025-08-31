@@ -46,7 +46,7 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
-            const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
+            const std::weak_ptr <GameObject>& parent) override;
 
         /// <summary>
         /// The type to create to recreate this component.
@@ -81,9 +81,12 @@ namespace SuperGameEngine
 
         /// <summary>
         /// Gets the parent GameObject of this Component.
+        /// Do not store this! Use it as you need it and then get rid of it.
+        /// The game object you are a part of could be destroyed at the point of the update,
+        /// keeping this as a shared pointer would mean you could keep the object alive whilst dead.
         /// </summary>
         /// <returns>The parent game object of this parent. </returns>
-        virtual std::shared_ptr<ExtremelyWeakWrapper<GameObject>> GetParent() const override;
+        virtual std::weak_ptr<GameObject> GetParent() const override;
 
         /// <summary>
         /// True when this component should render.
@@ -168,7 +171,7 @@ namespace SuperGameEngine
         /// This reference however should never be stored or used outside a single method run
         /// by the game loop, Setup, Updates and Draw.
         /// </summary>
-        std::shared_ptr<ExtremelyWeakWrapper<GameObject>> m_parent;
+        std::weak_ptr <GameObject> m_parent;
 
         /// <summary>
         /// Everything a component needs to run.

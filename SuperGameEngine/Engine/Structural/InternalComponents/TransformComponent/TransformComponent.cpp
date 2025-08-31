@@ -24,7 +24,7 @@ TransformComponent::~TransformComponent()
 }
 
 void TransformComponent::Setup(const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
-                               const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
+                               const std::weak_ptr <GameObject>& parent)
 {
     SuperGameComponent::Setup(componentLoadPackage, parent);
     if (!IsSetup()) return;

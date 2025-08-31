@@ -1,4 +1,7 @@
 #include "SuperSceneLoader.h"
+
+#include <queue>
+
 #include "../../FatedQuestReferences.h"
 #include "../../Structural/Scene/SuperScene.h"
 #include "../GameObject/SuperGameObject.h"
@@ -94,6 +97,8 @@ void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
         }
     }
 
+    std::vector<std::string> componentTypes;
+    std::queue<std::pair<std::string, std::shared_ptr<StoredDocumentNode>>> componentData;
     for (std::shared_ptr<StoredDocumentNode> child = gameObjectNode->GetFirstChild(); child; child = child->GetAdjacentNode())
     {
         if (child->Name() != "Component")
@@ -104,21 +109,50 @@ void SuperSceneLoader::CreateGameObjectAttributesAndNodes(
         std::string componentType = {};
         if (auto typeAttribute = child->Attribute("Type", CaseSensitivity::IgnoreCase))
         {
-            componentType = typeAttribute->Value();
+            if (!typeAttribute->Value().empty())
+            {
+                componentTypes.emplace_back(typeAttribute->Value());
+                componentData.push(std::pair(typeAttribute->Value(), child));
+            }
         }
+    }
 
-        // If there is no type on component skip.
-        if (componentType.empty())
+    size_t i = 0;
+    std::vector<std::shared_ptr<GameComponent>> components = superGameObject->AddComponents(componentTypes);
+    while (!componentData.empty())
+    {
+        if (i >= components.size())
         {
-            continue;
+            Log::Error("There were more components in the file than created."
+                       "This likely means a component could not be created. ",
+                "SuperSceneLoader::CreateGameObjectAttributesAndNodes"
+                "(const std::shared_ptr<StoredDocumentNode>&,const std::shared_ptr<SuperGameObject>&)");
+            return;
         }
 
-        std::shared_ptr<GameComponent> component = superGameObject->AddComponent(componentType);
-        component->Load(child);
+        const std::shared_ptr<GameComponent>& component = components.at(i);
+        const std::pair<std::string, std::shared_ptr<StoredDocumentNode>>& data = componentData.front();
+
+        if (component->TypeName() != data.first)
+        {
+            Log::Error("When loading a game object the number of components did not match. "
+                "This likely means a component could not be created. "
+                "Type in file: " + data.first + " "
+                "Component index: " + std::to_string(i),
+                "SuperSceneLoader::CreateGameObjectAttributesAndNodes"
+                "(const std::shared_ptr<StoredDocumentNode>&,const std::shared_ptr<SuperGameObject>&)");
+            return;
+        }
+
+        component->Load(data.second);
+
+        componentData.pop();
+        ++i;
     }
 }
 
-void SuperSceneLoader::CreateGameComponentAttributesAndNodes(const std::shared_ptr<StoredDocumentNode>& componentNode,
+void SuperSceneLoader::CreateGameComponentAttributesAndNodes(
+    const std::shared_ptr<StoredDocumentNode>& componentNode,
     const std::shared_ptr<SuperGameComponent>& superGameComponent) const
 {
 

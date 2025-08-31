@@ -3,6 +3,11 @@
 #include "../../Component/SuperGameComponent.h"
 #include "../../../FatedQuestReferences.h"
 
+namespace SuperGameEngine
+{
+    class TransformComponent;
+}
+
 using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
@@ -25,7 +30,24 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
-            const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
+            const std::weak_ptr <GameObject>& parent) override;
+
+        /// <summary>
+        /// Setup run post load and is run everytime load is run.
+        /// </summary>
+        void PostLoadSetup();
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() override;
 
         /// <summary>
         /// The type to create to recreate this component.
@@ -46,21 +68,33 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw() const override;
 
-        virtual void Move(int x, int y);
-
-        virtual int GetX() { return m_location.GetX(); }
-        virtual int GetY() { return m_location.GetY(); }
+        /// <summary>
+        /// Updates the texture currently loaded.
+        /// </summary>
+        /// <param name="textureName">New texture loaded. </param>
+        virtual void SetTexture(const std::string& textureName);
 
     private:
 
+        /// <summary>
+        /// Actual texture asset created on load or set.
+        /// </summary>
         std::shared_ptr<TextureAsset> m_textureAsset;
 
-        FPoint m_location;
+        /// <summary>
+        /// The saved texture asset location.
+        /// </summary>
+        std::string m_textureAssetLocation;
 
         /// <summary>
-        /// Take up memory so I can see it being destroyed.
+        /// The name of the texture asset property saved.
         /// </summary>
-        char oneMB[1024 * 1024];
+        const char* m_textureAssetLocationName = "TextureAsset";
+
+        /// <summary>
+        /// The transform for this game object.
+        /// </summary>
+        std::shared_ptr<TransformComponent> m_transform;
     };
 
     REGISTER_COMPONENT("SpriteComponent", SpriteComponent);
