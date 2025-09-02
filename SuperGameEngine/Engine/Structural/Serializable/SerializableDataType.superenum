@@ -16,5 +16,8 @@
         <Vector2F>
             A vector of two floats.
         </Vector2F>
+        <Int>
+            A whole number.
+        </Int>
     </EnumName>
 </SuperEnum>

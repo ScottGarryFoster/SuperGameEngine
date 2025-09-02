@@ -10,12 +10,8 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
-    class TextSerializableProperty;
-}
-
-namespace SuperGameEngine
-{
     class SerializableParser;
+    class IntSerializableProperty;
 }
 
 namespace SuperGameTools
@@ -23,11 +19,11 @@ namespace SuperGameTools
     /// <summary>
     /// Represents text input.
     /// </summary>
-    class TextSerializableProperty : public ToolsSerializableProperty
+    class IntSerializableProperty : public ToolsSerializableProperty
     {
     public:
-        TextSerializableProperty(
-            const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
+        IntSerializableProperty(
+            const std::shared_ptr<SuperGameEngine::SerializableParser>& parser,
             const std::shared_ptr<SuperGameEngine::SerializableProperty>& property);
 
         /// <summary>
@@ -63,7 +59,7 @@ namespace SuperGameTools
         /// Gets the text property this tools property represents.
         /// </summary>
         /// <returns>The text property this tools property represents. </returns>
-        std::shared_ptr<SuperGameEngine::TextSerializableProperty> GetActualEngineProperty() const;
+        std::shared_ptr<SuperGameEngine::IntSerializableProperty> GetActualEngineProperty() const;
 
     private:
         /// <summary>
@@ -87,21 +83,27 @@ namespace SuperGameTools
         std::shared_ptr<SuperGameEngine::SerializableParser> m_serializableParser;
 
         /// <summary>
-        /// The text property this tools property represents.
+        /// The property this tools property represents.
         /// </summary>
-        std::shared_ptr<SuperGameEngine::TextSerializableProperty> m_textSerializableProperty;
+        std::shared_ptr<SuperGameEngine::IntSerializableProperty> m_serializableProperty;
 
         /// <summary>
         /// The text stored.
         /// </summary>
-        char m_value[1024];
+        int m_defaultTextCapacity = 1024;
 
         /// <summary>
-        /// Set stored value from string.
+        /// The current value.
         /// </summary>
-        /// <param name="newValue">New value to set. </param>
-        /// <returns>True means could set. </returns>
-        bool SetValueFromString(const std::string& newValue);
+        int m_value;
+
+        /// <summary>
+        /// Draw a text box.
+        /// </summary>
+        /// <param name="label">Label text. Note: No visible label is drawn, this is the ID label. </param>
+        /// <param name="value">Value in the box. </param>
+        /// <returns>True means changed. </returns>
+        bool TextInput(const std::string& label, std::string& value) const;
 
         /// <summary>
         /// Call to update the dirty flag.

@@ -4,6 +4,7 @@
 #include "../../../Engine/Structural/GameObject/ComponentFactory.h"
 #include "../SerializableProperties/TextSerializableProperty.h"
 #include "../../FatedQuestLibraries.h"
+#include "GameEngineEquivalents/SerializableProperties/IntSerializableProperty.h"
 #include "GameEngineEquivalents/SerializableProperties/Vector2FSerializableProperty.h"
 #include "Structural/Serializable/PropertyByType/Vector2FSerializableProperty.h"
 
@@ -48,6 +49,10 @@ std::vector<std::shared_ptr<ToolsSerializableProperty>> SerializablePropertyLoad
             break;
         case SuperGameEngine::SerializableDataType::Vector2F:
             toolsProperties.emplace_back(std::make_shared<Vector2FSerializableProperty>
+                (m_serializableParser, property));
+            break;
+        case SuperGameEngine::SerializableDataType::Int:
+            toolsProperties.emplace_back(std::make_shared<IntSerializableProperty>
                 (m_serializableParser, property));
             break;
         default:

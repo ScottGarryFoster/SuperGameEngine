@@ -1,5 +1,6 @@
 #pragma once
 #include "../GameAsset.h"
+#include "../../../FatedQuestReferences.h"
 
 namespace SuperGameEngine
 {
@@ -24,6 +25,13 @@ namespace SuperGameEngine
         /// The texture tile to render.
         /// </param>
         virtual void Draw(int tile) const = 0;
+
+        /// <summary>
+        /// Draws the tile as defined by the asset meta file.
+        /// </summary>
+        /// <param name="tile"> The texture tile to render. </param>
+        /// <param name="screenLocation"> The location of the texture on screen. </param>
+        virtual void Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const = 0;
     };
 }
 

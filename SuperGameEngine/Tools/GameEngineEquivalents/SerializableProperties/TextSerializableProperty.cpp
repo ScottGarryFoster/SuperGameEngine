@@ -109,7 +109,7 @@ std::shared_ptr<ModifiableNode> TextSerializableProperty::Save() const
     return m_textSerializableProperty->Save(m_serializableParser, str);
 }
 
-std::shared_ptr<SuperGameEngine::TextSerializableProperty> TextSerializableProperty::GetTextProperty() const
+std::shared_ptr<SuperGameEngine::TextSerializableProperty> TextSerializableProperty::GetActualEngineProperty() const
 {
     return m_textSerializableProperty;
 }

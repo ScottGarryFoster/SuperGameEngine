@@ -69,6 +69,18 @@ namespace SuperGameEngine
         virtual std::shared_ptr<GameComponent> AddComponent(const std::string& type) = 0;
 
         /// <summary>
+        /// Adds all the GameComponent to the GameObject.
+        /// Will run Setup on the GameComponent and add it to any
+        /// services such as the Collision.
+        /// Will setup all components at the end, therefore this is better for loading a
+        /// single game object expecting components to exist on a game object.
+        /// Ensure the component is registered see 'ComponentFactory.h'.
+        /// </summary>
+        /// <param name="types">Types to find and add </param>
+        /// <returns>All the new components added. </returns>
+        virtual std::vector<std::shared_ptr<GameComponent>> AddComponents(const std::vector<std::string>& types) = 0;
+
+        /// <summary>
         /// Gets the component.
         /// </summary>
         /// <param name="type">Type to find. </param>

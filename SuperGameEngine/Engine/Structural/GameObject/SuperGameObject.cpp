@@ -132,11 +132,32 @@ std::shared_ptr<GameComponent> SuperGameObject::AddComponent(const std::string& 
 {
     if (std::shared_ptr<GameComponent> component = ComponentFactory::CreateComponent(type))
     {
+        component->Setup(m_componentPackage, shared_from_this());
         AddActualComponent(type, component);
         return component;
     }
 
-    return std::shared_ptr<GameComponent>();
+    return {};
+}
+
+std::vector<std::shared_ptr<GameComponent>> SuperGameObject::AddComponents(const std::vector<std::string>& types)
+{
+    std::vector<std::shared_ptr<GameComponent>> componentsCreated;
+    for (const std::string& type : types)
+    {
+        if (std::shared_ptr<GameComponent> component = ComponentFactory::CreateComponent(type))
+        {
+            AddActualComponent(type, component);
+            componentsCreated.emplace_back(component);
+        }
+    }
+
+    for (const std::shared_ptr<GameComponent>& component : componentsCreated)
+    {
+        component->Setup(m_componentPackage, shared_from_this());
+    }
+
+    return componentsCreated;
 }
 
 void SuperGameObject::Destroy()
@@ -304,8 +325,6 @@ std::vector<std::pair<std::string, std::shared_ptr<GameComponent>>> SuperGameObj
 
 bool SuperGameObject::AddActualComponent(const std::string& type, const std::shared_ptr<GameComponent>& reference)
 {
-    reference->Setup(m_componentPackage, m_pointerToSelf);
-
     AddComponentToDictionary(type, reference, m_pendingGameComponents);
     m_componentsAwaitUpdate = true;
 

@@ -104,6 +104,85 @@ std::string SuperSerializableParser::Parse(
 
 std::shared_ptr<ModifiableNode> SuperSerializableParser::Serialize(
     const std::string& name,
+    int value, 
+    int defaultValue) const
+{
+    // Do not bother if value is default.
+    if (value == defaultValue)
+    {
+        return {};
+    }
+
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("Property");
+
+    auto componentAttributes = std::vector<std::shared_ptr<StoredDocumentAttribute>>();
+    {
+        auto attribute = std::make_shared<ModifiableAttribute>
+            ("Name", name);
+        componentAttributes.emplace_back(attribute);
+    }
+    {
+        auto attribute = std::make_shared<ModifiableAttribute>
+            ("Value", std::to_string(value));
+        componentAttributes.emplace_back(attribute);
+    }
+
+    node->SetAttributes(componentAttributes);
+
+    return node;
+}
+
+int SuperSerializableParser::ParseFromParent(
+    const std::string& name, 
+    int defaultValue,
+    const std::shared_ptr<StoredDocumentNode>& parentOfProperties) const
+{
+    for (std::shared_ptr<StoredDocumentNode> child = parentOfProperties->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        if (child->Name() != "Property")
+        {
+            continue;
+        }
+
+        std::shared_ptr<StoredDocumentAttribute> nameAttribute = child->Attribute("Name", CaseSensitivity::IgnoreCase);
+        if (!nameAttribute)
+        {
+            continue;
+        }
+
+        if (nameAttribute->Value() != name)
+        {
+            continue;
+        }
+
+        return Parse(defaultValue, child);
+    }
+
+    return defaultValue;
+}
+
+int SuperSerializableParser::Parse(
+    int defaultValue,
+    const std::shared_ptr<StoredDocumentNode>& data) const
+{
+    std::shared_ptr<StoredDocumentAttribute> valueAttribute = data->Attribute("Value", CaseSensitivity::IgnoreCase);
+    if (!valueAttribute)
+    {
+        return defaultValue;
+    }
+
+    int outValue = 0;
+    if (IntHelpers::TryParse(valueAttribute->Value(), outValue))
+    {
+        return outValue;
+    }
+
+    return defaultValue;
+}
+
+std::shared_ptr<ModifiableNode> SuperSerializableParser::Serialize(
+    const std::string& name,
     const FVector2F& value, 
     const FVector2F& defaultValue) const
 {
