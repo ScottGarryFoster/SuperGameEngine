@@ -1,8 +1,8 @@
-#include "Vector2FSerializableProperty.h"
+#include "IntSerializableProperty.h"
 #include "../../ImGuiIncludes.h"
 #include "../../../Engine/Structural/Serializable/SerializableProperty.h"
 #include "../../../Engine/Structural/Serializable/SerializableParser.h"
-#include "../../../Engine/Structural/Serializable/PropertyByType/Vector2FSerializableProperty.h"
+#include "../../../Engine/Structural/Serializable/PropertyByType/IntSerializableProperty.h"
 
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
@@ -10,7 +10,8 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-Vector2FSerializableProperty::Vector2FSerializableProperty(
+
+IntSerializableProperty::IntSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableParser>& parser,
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
@@ -21,18 +22,18 @@ Vector2FSerializableProperty::Vector2FSerializableProperty(
     m_property = property;
 
     m_serializableParser = parser;
-    if (std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> textProperty =
-        std::dynamic_pointer_cast<SuperGameEngine::Vector2FSerializableProperty>(m_property))
+    if (std::shared_ptr<SuperGameEngine::IntSerializableProperty> textProperty =
+        std::dynamic_pointer_cast<SuperGameEngine::IntSerializableProperty>(m_property))
     {
         m_serializableProperty = textProperty;
     }
     else
     {
         Log::Warning("Property is not actually a text property but was created as one. Name: " + property->GetName(),
-            "TextSerializableProperty::TextSerializableProperty("
+            "IntSerializableProperty::IntSerializableProperty("
             "std::shared_ptr<SuperGameEngine::SerializableParser>,"
             "std::shared_ptr<SuperGameEngine::SerializableProperty>)");
-        m_serializableProperty = std::make_shared<SuperGameEngine::Vector2FSerializableProperty>();
+        m_serializableProperty = std::make_shared<SuperGameEngine::IntSerializableProperty>();
         m_serializableProperty->SetName(property->GetName());
         m_property = m_serializableProperty;
     }
@@ -40,17 +41,17 @@ Vector2FSerializableProperty::Vector2FSerializableProperty(
     m_value = m_serializableProperty->GetDefault();
 }
 
-std::shared_ptr<FEventSubscriptions> Vector2FSerializableProperty::OnDirtyFlagChanged() const
+std::shared_ptr<FEventSubscriptions> IntSerializableProperty::OnDirtyFlagChanged() const
 {
     return m_onDirtyFlagChanged;
 }
 
-std::shared_ptr<SuperGameEngine::SerializableProperty> Vector2FSerializableProperty::GetEngineProperty() const
+std::shared_ptr<SuperGameEngine::SerializableProperty> IntSerializableProperty::GetEngineProperty() const
 {
     return m_property;
 }
 
-void Vector2FSerializableProperty::Draw()
+void IntSerializableProperty::Draw()
 {
     if (!m_property)
     {
@@ -67,67 +68,41 @@ void Vector2FSerializableProperty::Draw()
     ImGui::SameLine();
 
     {
-        ImGui::Text("X:");
-        ImGui::SameLine();
 
-        std::string valueAsString = FloatingPointHelpers::RemoveUnneededZeros(m_value.GetX());
-        if (TextInput(m_property->GetName() + "_X", valueAsString))
+        std::string valueAsString = std::to_string(m_value);
+        if (TextInput(m_property->GetName() + "_value", valueAsString))
         {
-            float attemptedParse = -1;
-            if (FloatingPointHelpers::TryParse(valueAsString, attemptedParse))
+            int attemptedParse = -1;
+            if (IntHelpers::TryParse(valueAsString, attemptedParse))
             {
-                m_value.SetX(attemptedParse);
-                UpdateDirtyFlag(true);
-            }
-        }
-    }
-
-    ImGui::SameLine();
-
-    {
-        ImGui::Text("Y:");
-        ImGui::SameLine();
-
-        std::string valueAsString = FloatingPointHelpers::RemoveUnneededZeros(m_value.GetY());
-        if (TextInput(m_property->GetName() + "_Y", valueAsString))
-        {
-            float attemptedParse = -1;
-            if (FloatingPointHelpers::TryParse(valueAsString, attemptedParse))
-            {
-                m_value.SetY(attemptedParse);
+                m_value = attemptedParse;
                 UpdateDirtyFlag(true);
             }
         }
     }
 }
 
-void Vector2FSerializableProperty::Load(const std::shared_ptr<StoredDocumentNode>& node)
+void IntSerializableProperty::Load(
+    const std::shared_ptr<StoredDocumentNode>& node)
 {
     m_value = m_serializableProperty->Load(m_serializableParser, node);
     UpdateDirtyFlag(false);
 }
 
-std::shared_ptr<ModifiableNode> Vector2FSerializableProperty::Save() const
+std::shared_ptr<ModifiableNode> IntSerializableProperty::Save() const
 {
     UpdateDirtyFlag(false);
     return m_serializableProperty->Save(m_serializableParser, m_value);
 }
 
-std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> Vector2FSerializableProperty::GetActualEngineProperty() const
+std::shared_ptr<SuperGameEngine::IntSerializableProperty> IntSerializableProperty::GetActualEngineProperty() const
 {
     return m_serializableProperty;
 }
 
-void Vector2FSerializableProperty::UpdateDirtyFlag(bool newValue) const
-{
-    if (newValue != *m_dirty)
-    {
-        *m_dirty = newValue;
-        m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
-    }
-}
-
-bool Vector2FSerializableProperty::TextInput(const std::string& label, std::string& value) const
+bool IntSerializableProperty::TextInput(
+    const std::string& label, 
+    std::string& value) const
 {
     const std::string before = value;
     char* charValue = new char[m_defaultTextCapacity];
@@ -145,4 +120,13 @@ bool Vector2FSerializableProperty::TextInput(const std::string& label, std::stri
 
     value = after;
     return before != after;
+}
+
+void IntSerializableProperty::UpdateDirtyFlag(bool newValue) const
+{
+    if (newValue != *m_dirty)
+    {
+        *m_dirty = newValue;
+        m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
+    }
 }

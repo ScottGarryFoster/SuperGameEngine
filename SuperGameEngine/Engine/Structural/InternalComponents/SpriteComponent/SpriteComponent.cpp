@@ -7,15 +7,23 @@
 #include "Structural/GameObject/GameObject.h"
 #include "Structural/Serializable/PropertyByType/TextSerializableProperty.h"
 #include "Structural/Serializable/SerializableParser.h"
+#include "Structural/Serializable/PropertyByType/IntSerializableProperty.h"
 
 using namespace SuperGameEngine;
 
 SpriteComponent::SpriteComponent()
 {
     {
-        m_textureAssetLocation = "";
-        auto property = std::make_shared<TextSerializableProperty>(m_textureAssetLocation);
-        property->SetName(m_textureAssetLocationName);
+        m_propertyTextureAssetLocation = "";
+        auto property = std::make_shared<TextSerializableProperty>(m_propertyTextureAssetLocation);
+        property->SetName(m_propertyTextureAssetLocationName);
+        m_serializableProperties.emplace_back(property);
+    }
+
+    {
+        m_propertyTile = 0;
+        auto property = std::make_shared<IntSerializableProperty>(m_propertyTile);
+        property->SetName(m_propertyTileName);
         m_serializableProperties.emplace_back(property);
     }
 }
@@ -47,15 +55,16 @@ void SpriteComponent::Setup(
 
 void SpriteComponent::PostLoadSetup()
 {
-    if (!m_textureAssetLocation.empty())
+    if (!m_propertyTextureAssetLocation.empty())
     {
-        SetTexture(m_textureAssetLocation);
+        SetTexture(m_propertyTextureAssetLocation);
     }
 }
 
 void SpriteComponent::Load(const std::shared_ptr<StoredDocumentNode>& documentNode)
 {
-    m_textureAssetLocation = LoadPackage()->GetParser()->ParseFromParent(m_textureAssetLocationName, "", documentNode);
+    m_propertyTextureAssetLocation = LoadPackage()->GetParser()->ParseFromParent(m_propertyTextureAssetLocationName, "", documentNode);
+    m_propertyTile = LoadPackage()->GetParser()->ParseFromParent(m_propertyTileName, 0, documentNode);
 
     PostLoadSetup();
 }
@@ -66,9 +75,10 @@ std::shared_ptr<StoredDocumentNode> SpriteComponent::Save()
     AddAnySuperGameComponentSaves(node);
 
     std::vector<std::shared_ptr<ModifiableNode>> children;
-    children.emplace_back(LoadPackage()->GetParser()->Serialize(m_textureAssetLocationName, m_textureAssetLocation, ""));
+    children.emplace_back(LoadPackage()->GetParser()->Serialize(m_propertyTextureAssetLocationName, m_propertyTextureAssetLocation, ""));
+    children.emplace_back(LoadPackage()->GetParser()->Serialize(m_propertyTileName, m_propertyTile, 0));
 
-    node->SetFirstChild(children.at(0));
+    node->SetAllChildrenNodes(children);
 
     return node;
 }
@@ -99,8 +109,7 @@ void SpriteComponent::Draw() const
         return;
     }
 
-    // TODO: Get transform. Get Position. Feed into here.
-    m_textureAsset->Draw(1, m_transform->Position());
+    m_textureAsset->Draw(m_propertyTile, m_transform->Position());
 }
 
 void SpriteComponent::SetTexture(const std::string& textureName)

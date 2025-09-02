@@ -28,6 +28,11 @@ namespace SuperGameEngine
         /// A vector of two floats.
         /// </summary>
         Vector2F,
+
+        /// <summary>
+        /// A whole number.
+        /// </summary>
+        Int,
     };
 
     /// <summary>
@@ -37,7 +42,7 @@ namespace SuperGameEngine
     {
     public:
         static SerializableDataType Min() { return SerializableDataType::Text; }
-        static SerializableDataType Max() { return SerializableDataType::Vector2F; }
+        static SerializableDataType Max() { return SerializableDataType::Int; }
 
         static SerializableDataType* ToArray()
         {
@@ -45,6 +50,7 @@ namespace SuperGameEngine
             {
                 SerializableDataType::Text,
                 SerializableDataType::Vector2F,
+                SerializableDataType::Int,
             };
             
             return returnArray;
@@ -56,6 +62,7 @@ namespace SuperGameEngine
             {
                 SerializableDataType::Text,
                 SerializableDataType::Vector2F,
+                SerializableDataType::Int,
             };
             
             return returnVector;
@@ -67,6 +74,7 @@ namespace SuperGameEngine
             {
                 "Text",
                 "Vector2F",
+                "Int",
             };
             
             return returnVector;
@@ -79,6 +87,7 @@ namespace SuperGameEngine
                 case SerializableDataType::Unknown: return "Unknown";
                 case SerializableDataType::Text: return "Text";
                 case SerializableDataType::Vector2F: return "Vector2F";
+                case SerializableDataType::Int: return "Int";
             }
             
             return "Unknown";
@@ -91,6 +100,7 @@ namespace SuperGameEngine
                 if (value == "Unknown") return SerializableDataType::Unknown;
                 if (value == "Text") return SerializableDataType::Text;
                 if (value == "Vector2F") return SerializableDataType::Vector2F;
+                if (value == "Int") return SerializableDataType::Int;
             }
             else
             {
@@ -98,6 +108,7 @@ namespace SuperGameEngine
                 if (valueLower == "unknown") return SerializableDataType::Unknown;
                 if (valueLower == "text") return SerializableDataType::Text;
                 if (valueLower == "vector2f") return SerializableDataType::Vector2F;
+                if (valueLower == "int") return SerializableDataType::Int;
             }
             
             return SerializableDataType::Unknown;

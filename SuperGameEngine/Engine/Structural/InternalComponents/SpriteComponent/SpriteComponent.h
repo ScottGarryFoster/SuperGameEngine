@@ -76,20 +76,34 @@ namespace SuperGameEngine
 
     private:
 
-        /// <summary>
-        /// Actual texture asset created on load or set.
-        /// </summary>
-        std::shared_ptr<TextureAsset> m_textureAsset;
+#pragma region Saved Properties
 
         /// <summary>
         /// The saved texture asset location.
         /// </summary>
-        std::string m_textureAssetLocation;
+        std::string m_propertyTextureAssetLocation;
 
         /// <summary>
         /// The name of the texture asset property saved.
         /// </summary>
-        const char* m_textureAssetLocationName = "TextureAsset";
+        const char* m_propertyTextureAssetLocationName = "TextureAsset";
+
+        /// <summary>
+        /// The tile to render.
+        /// </summary>
+        int m_propertyTile;
+
+        /// <summary>
+        /// The name of tile to render.
+        /// </summary>
+        const char* m_propertyTileName = "Tile";
+
+#pragma endregion
+
+        /// <summary>
+        /// Actual texture asset created on load or set.
+        /// </summary>
+        std::shared_ptr<TextureAsset> m_textureAsset;
 
         /// <summary>
         /// The transform for this game object.

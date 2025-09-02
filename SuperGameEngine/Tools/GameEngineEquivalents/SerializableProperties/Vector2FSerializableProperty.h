@@ -35,7 +35,7 @@ namespace SuperGameTools
         /// Event called when this objects dirty flag has changed.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
-        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const override;
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnDirtyFlagChanged() const override;
 
         /// <summary>
         /// Gets the engine side property.
@@ -52,25 +52,25 @@ namespace SuperGameTools
         /// Load the property from stored data.
         /// </summary>
         /// <param name="node">Node for this property. </param>
-        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) override;
+        virtual void Load(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) override;
 
         /// <summary>
         /// Save this property.
         /// </summary>
         /// <returns>A node which contains the data, this is the property node. </returns>
-        virtual std::shared_ptr<ModifiableNode> Save() const override;
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Save() const override;
 
         /// <summary>
         /// Gets the property this tools property represents.
         /// </summary>
         /// <returns>The property this tools property represents. </returns>
-        std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> GetTextProperty() const;
+        std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> GetActualEngineProperty() const;
 
     private:
         /// <summary>
         /// Event called when this component is dirtied.
         /// </summary>
-        std::shared_ptr<FEvent> m_onDirtyFlagChanged;
+        std::shared_ptr<FatedQuestLibraries::FEvent> m_onDirtyFlagChanged;
 
         /// <summary>
         /// True means are dirty.
