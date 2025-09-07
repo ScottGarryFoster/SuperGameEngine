@@ -3,6 +3,7 @@
 #include "../../FatedQuestReferences.h"
 #include "../../Engine/Content/ContentManager.h"
 #include "../Packages/ComponentLoadPackage.h"
+#include "../InternalComponents/InternalComponents.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DataCoupling/KeyPairValue.h"
+
 #include "Position/FPoint.h"
 #include "Position/FVector2D.h"
 #include "Position/FVector2I.h"

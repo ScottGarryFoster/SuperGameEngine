@@ -3,12 +3,16 @@
 #include "../../Component/SuperGameComponent.h"
 #include "../../../FatedQuestReferences.h"
 
+namespace SuperGameInput
+{
+    class InputHandler;
+}
+
 namespace SuperGameEngine
 {
     class TransformComponent;
+    class SpriteComponent;
 }
-
-using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
@@ -17,11 +21,11 @@ namespace SuperGameEngine
     /// <summary>
     /// A component to test basic functionality.
     /// </summary>
-    class SpriteComponent : public SuperGameComponent
+    class SimpleCharacterComponent : public SuperGameComponent
     {
     public:
-        SpriteComponent();
-        virtual ~SpriteComponent();
+        SimpleCharacterComponent();
+        virtual ~SimpleCharacterComponent();
 
         /// <summary>
         /// Sets up the game component.
@@ -41,13 +45,13 @@ namespace SuperGameEngine
         /// Load component from a stored document.
         /// </summary>
         /// <param name="documentNode">Document node to load from.</param>
-        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+        virtual void Load(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode) override;
 
         /// <summary>
         /// Save component to stored document node ready to move to file.
         /// </summary>
         /// <returns>Document node to save to. </returns>
-        virtual std::shared_ptr<StoredDocumentNode> Save() override;
+        virtual std::shared_ptr<FatedQuestLibraries::StoredDocumentNode> Save() override;
 
         /// <summary>
         /// The type to create to recreate this component.
@@ -62,55 +66,52 @@ namespace SuperGameEngine
         /// <param name="gameTime">The current state of time this frame. </param>
         virtual void Update(const std::shared_ptr<GameTime> gameTime) override;
 
-        /// <summary>
-        /// Draws the component.
-        /// For most components this will do nothing.
-        /// </summary>
-        virtual void Draw() const override;
-
-        /// <summary>
-        /// Updates the texture currently loaded.
-        /// </summary>
-        /// <param name="textureName">New texture loaded. </param>
-        virtual void SetTexture(const std::string& textureName);
-
     private:
 
 #pragma region Saved Properties
 
         /// <summary>
-        /// The saved texture asset location.
+        /// The tile to set when moving north.
         /// </summary>
-        std::string m_propertyTextureAssetLocation;
+        KeyPairValue<const char*, int> m_propertyDirectionSpriteNorth;
 
         /// <summary>
-        /// The name of the texture asset property saved.
+        /// The tile to set when moving south.
         /// </summary>
-        const char* m_propertyTextureAssetLocationName = "TextureAsset";
+        KeyPairValue<const char*, int> m_propertyDirectionSpriteSouth;
 
         /// <summary>
-        /// The tile to render.
+        /// The tile to set when moving east.
         /// </summary>
-        int m_propertyTile;
+        KeyPairValue<const char*, int> m_propertyDirectionSpriteEast;
 
         /// <summary>
-        /// The name of tile to render.
+        /// The tile to set when moving west.
         /// </summary>
-        const char* m_propertyTileName = "Tile";
+        KeyPairValue<const char*, int> m_propertyDirectionSpriteWest;
 
 #pragma endregion
 
         /// <summary>
-        /// Actual texture asset created on load or set.
+        /// True when this component is setup.
         /// </summary>
-        std::shared_ptr<TextureAsset> m_textureAsset;
+        bool m_isSetup;
+
+        /// <summary>
+        /// The sprite upon this game object to represent the character.
+        /// </summary>
+        std::shared_ptr<SpriteComponent> m_spriteComponent;
 
         /// <summary>
         /// The transform for this game object.
         /// </summary>
         std::shared_ptr<TransformComponent> m_transform;
+
+        /// <summary>
+        /// A direct link to the input handler.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::InputHandler> m_inputHandler;
     };
 
-    REGISTER_COMPONENT("SpriteComponent", SpriteComponent);
+    REGISTER_COMPONENT("SimpleCharacterComponent", SimpleCharacterComponent);
 }
-

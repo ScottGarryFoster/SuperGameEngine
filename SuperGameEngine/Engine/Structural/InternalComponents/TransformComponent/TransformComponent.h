@@ -48,6 +48,27 @@ namespace SuperGameEngine
         /// <returns></returns>
         [[nodiscard]] const FVector2F& Position() const;
 
+        /// <summary>
+        /// Move Transform By
+        /// </summary>
+        /// <param name="other">Other vector to add. </param>
+        /// <returns>Result of addition. </returns>
+        FVector2F& MoveBy(const FVector2F& other);
+
+        /// <summary>
+        /// Move Transform By.
+        /// </summary>
+        /// <param name="scalar">Amount to multiply movement by. </param>
+        /// <returns>Vector multiplied. </returns>
+        FVector2F& MoveBy(float scalar);
+
+        /// <summary>
+        /// Divides the components of this vector by a scalar value.
+        /// </summary>
+        /// <param name="scalar">Amount to divide by. </param>
+        /// <returns>Vector divided. </returns>
+        FVector2F& ShrinkPositionBy(float scalar);
+
     private:
 
         /// <summary>

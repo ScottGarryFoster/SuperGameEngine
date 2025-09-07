@@ -57,3 +57,21 @@ const FVector2F& TransformComponent::Position() const
 {
     return m_position;
 }
+
+FVector2F& TransformComponent::MoveBy(const FVector2F& other)
+{
+    m_position += other;
+    return m_position;
+}
+
+FVector2F& TransformComponent::MoveBy(float scalar)
+{
+    m_position *= scalar;
+    return m_position;
+}
+
+FVector2F& TransformComponent::ShrinkPositionBy(float scalar)
+{
+    m_position /= scalar;
+    return m_position;
+}

@@ -7,5 +7,11 @@
         <Component "Type"="TransformComponent">
             <Property "Name"="Position" "X"="200" "Y"="100" />
         </Component>
+        <Component "Type"="SimpleCharacterComponent">
+            <Property "Name"="TileNorth" "Value"="5" />
+            <Property "Name"="TileSouth" "Value"="3" />
+            <Property "Name"="TileEast" "Value"="2" />
+            <Property "Name"="TileWest" "Value"="1" />
+        </Component>
     </GameObject>
 </Scene>
