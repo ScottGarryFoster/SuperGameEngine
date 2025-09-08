@@ -2,6 +2,7 @@
 #include "../../GameObject/ComponentFactory.h"
 #include "../../Component/SuperGameComponent.h"
 #include "../../../FatedQuestReferences.h"
+#include "../../../../../FatedQuest.Libraries/SharedEnums/Direction.h"
 
 namespace SuperGameInput
 {
@@ -111,6 +112,29 @@ namespace SuperGameEngine
         /// A direct link to the input handler.
         /// </summary>
         std::shared_ptr<SuperGameInput::InputHandler> m_inputHandler;
+
+        /// <summary>
+        /// Current direction looking in.
+        /// </summary>
+        FatedQuestLibraries::Direction m_currentDirection;
+
+        /// <summary>
+        /// Updates the current direction based on the last movement.
+        /// </summary>
+        /// <param name="x">Movement in the X direction. </param>
+        /// <param name="y">Movement in the Y direction. </param>
+        void UpdateCurrentDirectionFromMovement(float x, float y);
+
+        /// <summary>
+        /// Update the sprite tile based on direction.
+        /// </summary>
+        void UpdateSpriteTile() const;
+
+        /// <summary>
+        /// True when the tiles are setup correctly.
+        /// </summary>
+        /// <returns>True when the tiles are setup correctly. </returns>
+        bool AreDirectionalTilesSetup() const;
     };
 
     REGISTER_COMPONENT("SimpleCharacterComponent", SimpleCharacterComponent);

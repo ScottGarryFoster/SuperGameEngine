@@ -47,6 +47,7 @@ SimpleCharacterComponent::SimpleCharacterComponent()
     }
 
     m_isSetup = false;
+    m_currentDirection = Direction::South;
 }
 
 SimpleCharacterComponent::~SimpleCharacterComponent()
@@ -82,9 +83,9 @@ void SimpleCharacterComponent::Setup(
         }
 
         std::shared_ptr<GameComponent> spriteAsGC = sharedParent->GetComponent("SpriteComponent");
-        if (transformAsGC)
+        if (spriteAsGC)
         {
-            if (std::shared_ptr<SpriteComponent> spriteComponent = std::dynamic_pointer_cast<SpriteComponent>(transformAsGC))
+            if (std::shared_ptr<SpriteComponent> spriteComponent = std::dynamic_pointer_cast<SpriteComponent>(spriteAsGC))
             {
                 m_spriteComponent = spriteComponent;
             }
@@ -118,6 +119,12 @@ void SimpleCharacterComponent::Load(const std::shared_ptr<StoredDocumentNode>& d
     m_propertyDirectionSpriteEast.Value = LoadPackage()->GetParser()->ParseFromParent(m_propertyDirectionSpriteEast.Key, -1, documentNode);
     m_propertyDirectionSpriteWest.Value = LoadPackage()->GetParser()->ParseFromParent(m_propertyDirectionSpriteWest.Key, -1, documentNode);
 
+    if (!AreDirectionalTilesSetup())
+    {
+        Log::Error("Tiles not set for directions in Character. Tiles will not set.",
+            "SimpleCharacterComponent::Load(const std::shared_ptr<StoredDocumentNode>&)");
+    }
+
     PostLoadSetup();
 }
 
@@ -144,7 +151,7 @@ std::string SimpleCharacterComponent::TypeName() const
 
 void SimpleCharacterComponent::Update(const std::shared_ptr<GameTime> gameTime)
 {
-    if (m_isSetup) return;
+    if (!m_isSetup) return;
 
     float x = m_inputHandler->AxisValueNormalised(UniversalControllerAxis::LeftStickX) * 50;
     float y = m_inputHandler->AxisValueNormalised(UniversalControllerAxis::LeftStickY) * 50;
@@ -179,4 +186,81 @@ void SimpleCharacterComponent::Update(const std::shared_ptr<GameTime> gameTime)
     }
 
     m_transform->MoveBy(movement);
+    UpdateCurrentDirectionFromMovement(movement.GetX(), movement.GetY());
+    UpdateSpriteTile();
+}
+
+void SimpleCharacterComponent::UpdateCurrentDirectionFromMovement(float x, float y)
+{
+    if (x > 0)
+    {
+        m_currentDirection = Direction::East;
+        return;
+    }
+
+    if (x < 0)
+    {
+        m_currentDirection = Direction::West;
+        return;
+    }
+
+    if (y > 0)
+    {
+        m_currentDirection = Direction::South;
+        return;
+    }
+
+    if (y < 0)
+    {
+        m_currentDirection = Direction::North;
+        return;
+    }
+}
+
+void SimpleCharacterComponent::UpdateSpriteTile() const
+{
+    switch (m_currentDirection)
+    {
+    case Direction::North:
+        m_spriteComponent->SetTile(m_propertyDirectionSpriteNorth.Value);
+        break;
+    case Direction::South:
+        m_spriteComponent->SetTile(m_propertyDirectionSpriteSouth.Value);
+        break;
+    case Direction::East:
+        m_spriteComponent->SetTile(m_propertyDirectionSpriteEast.Value);
+        break;
+    case Direction::West:
+        m_spriteComponent->SetTile(m_propertyDirectionSpriteWest.Value);
+        break;
+    default:
+        Log::Error("A direction was set which we do not have a tile for. Direction: "
+            + EDirection::ToString(m_currentDirection),
+            "SimpleCharacterComponent::UpdateSpriteTile() const");
+    }
+}
+
+bool SimpleCharacterComponent::AreDirectionalTilesSetup() const
+{
+    if (m_propertyDirectionSpriteNorth.Value <= -1)
+    {
+        return false;
+    }
+
+    if (m_propertyDirectionSpriteSouth.Value <= -1)
+    {
+        return false;
+    }
+
+    if (m_propertyDirectionSpriteEast.Value <= -1)
+    {
+        return false;
+    }
+
+    if (m_propertyDirectionSpriteWest.Value <= -1)
+    {
+        return false;
+    }
+
+    return true;
 }

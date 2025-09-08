@@ -124,3 +124,15 @@ void SpriteComponent::SetTexture(const std::string& textureName)
     bool haveTexture = m_textureAsset ? true : false;
     SetDoRender(haveTexture);
 }
+
+void SpriteComponent::SetTile(int tile)
+{
+    if (tile < 0)
+    {
+        Log::Error("Cannot set tile to draw to a negative number as this is not a valid tile",
+            "SpriteComponent::SetTile(int)");
+        return;
+    }
+
+    m_propertyTile = tile;
+}
