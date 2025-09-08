@@ -429,3 +429,4 @@ FodyWeavers.xsd
 !**SuperGameEngine/Engine/Structural/[Pp]ackages/*
 !**SuperGameEngine/Tools/ToolsEngine/[Pp]ackages/*
 !FatedQuestLibraries/[Bb]uild/*
+built/
