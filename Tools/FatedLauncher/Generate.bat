@@ -1,4 +1,4 @@
-@echo on
+@echo off
 setlocal
 
 rem Call CMake including the Tools Chain.
