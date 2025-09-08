@@ -1,0 +1,22 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        Describes the basic direction one might face.
+    </EnumComment>
+    <EnumName Name="Direction">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <North />
+        <East />
+        <South />
+        <West />
+        <NorthEast />
+        <SouthEast />
+        <SouthWest />
+        <NorthWest />
+    </EnumName>
+</SuperEnum>

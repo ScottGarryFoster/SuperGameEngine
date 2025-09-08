@@ -12,8 +12,8 @@ using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-
     class TextureAsset;
+
     /// <summary>
     /// A component to test basic functionality.
     /// </summary>
@@ -73,6 +73,12 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="textureName">New texture loaded. </param>
         virtual void SetTexture(const std::string& textureName);
+
+        /// <summary>
+        /// Tile to draw.
+        /// </summary>
+        /// <param name="tile">Set the current tile to current draw. </param>
+        void SetTile(int tile);
 
     private:
 
