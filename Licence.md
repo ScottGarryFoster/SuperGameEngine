@@ -282,4 +282,4 @@ This is the icon used in the FatedLauncher application.
 
 Treasure by Heztasia from [Noun Project](https://thenounproject.com/browse/icons/term/treasure/) (CC BY 3.0)
 
-This is lisenced under creative commons 3.0. See this link for more details: [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/3.0/)
+This is lisenced under creative commons 3.0. See this link for more details: [https://creativecommons.org/licenses/by/3.0/](https://creativecommons.org/licenses/by/3.0/)
