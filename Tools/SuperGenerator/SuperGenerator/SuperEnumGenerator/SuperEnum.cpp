@@ -1,4 +1,6 @@
 #include "SuperEnum.h"
+
+#include <iostream>
 #include <memory>
 #include <unordered_map>
 
