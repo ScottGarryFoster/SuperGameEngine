@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 class FatedLauncher
 {
@@ -16,8 +17,8 @@ class FatedLauncher
         StandardFilePaths = new FilePaths();
         string builtDirectory = Path.Combine(StandardFilePaths.RepositoryDirectory(), "built");
 
-        Application.EnableVisualStyles();
-        Application.SetCompatibleTextRenderingDefault(false);
+        System.Windows.Forms.Application.EnableVisualStyles();
+        System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
         NotifyIcon trayIcon = new NotifyIcon();
         trayIcon.Icon = new Icon("Icon.ico");
@@ -25,13 +26,16 @@ class FatedLauncher
         trayIcon.Visible = true;
 
         ContextMenuStrip menu = new ContextMenuStrip();
+        menu.Renderer = new DarkModeRenderer();
+
+        menu.Items.Add(MakeHeading("Fated Launcher"));
 
         // Super Generator
         string superGeneratorDirectory = Path.Combine(builtDirectory, "SuperGenerator");
         string superGeneratorLaunch = GetFindReleaseOrDebugLocation(superGeneratorDirectory, "SuperGenerator");
         if(!string.IsNullOrWhiteSpace(superGeneratorLaunch))
         {
-            menu.Items.Add("Run SuperGenerator", null, (s, e) => RunExe(superGeneratorLaunch));
+            menu.Items.Add(MakeRunable("Run SuperGenerator", superGeneratorLaunch));
         }
 
         // Super Game Engine Generation
@@ -47,19 +51,29 @@ class FatedLauncher
         
         if(sgeRegeneratePath != string.Empty)
         {
-            menu.Items.Add("Generate SuperGameEngine", null, (s, e) => RunExe(superGeneratorLaunch));
+            menu.Items.Add(MakeRunable("Generate SuperGameEngine", sgeRegeneratePath));
         }
 
-        menu.Items.Add("Exit", null, (s, e) => Application.Exit());
+        ToolStripMenuItem exit = new ToolStripMenuItem("Exit", null, (s, e) => System.Windows.Forms.Application.Exit());
+        exit.Enabled = true;
+        exit.Font = new Font(exit.Font, FontStyle.Bold);
+        exit.ForeColor = Color.White;
+        menu.Items.Add(exit);
 
         trayIcon.ContextMenuStrip = menu;
 
-        Application.Run();
+        System.Windows.Forms.Application.Run();
         trayIcon.Visible = false;
     }
 
     static void RunExe(string exePath)
     {
+        if(!File.Exists(exePath))
+        {
+            MessageBox.Show($"File not found {exePath}");
+            return;
+        }
+
         try
         {
             Process.Start(exePath);
@@ -121,5 +135,28 @@ class FatedLauncher
         }
 
         return string.Empty;
+    }
+
+    private static ToolStripMenuItem MakeHeading(string text)
+    {
+        ToolStripMenuItem heading = new ToolStripMenuItem(text);
+        heading.Enabled = true;
+        heading.Font = new Font(heading.Font, FontStyle.Bold);
+        heading.BackColor = Color.FromArgb(54, 19, 90);
+        heading.ForeColor = Color.FromArgb(202, 178, 251);
+
+        return heading;
+    }
+
+    private static ToolStripMenuItem MakeRunable(string text, string run)
+    {
+        ToolStripMenuItem heading = new ToolStripMenuItem(text);
+        heading.Enabled = true;
+        heading.Font = new Font(heading.Font, FontStyle.Bold);
+        heading.ForeColor = Color.White;
+
+        heading.Click += (s, e) => RunExe(run);
+
+        return heading;
     }
 }
