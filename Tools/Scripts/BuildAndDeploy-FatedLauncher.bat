@@ -1,27 +1,27 @@
 @echo off
 setlocal
+pushd "%~dp0"
+call ScriptVariables.bat
+
+REM This will build and deploy FatedLauncher to the built binary location.
 
 REM ========= CONFIGURE THESE PATHS =========
-set GENERATE_SCRIPT="Generate.bat"
-set SOLUTION_PATH="%~dp0\build\SuperGenerator.sln"
+set GENERATE_SCRIPT="..\FatedLauncher\Generate.bat"
+set SOLUTION_PATH="..\FatedLauncher\build\FatedSolution.sln"
 set CONFIGURATION=Release
 set PLATFORM="x64"
-set BUILD_OUTPUT="build\SuperGenerator\Release"
-set DEPLOY_PATH="..\..\..\built\SuperGenerator\Release"
-REM Full MSBuild path (update depending on your VS installation)
-set MSBUILD_EXE="C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
+set BUILD_OUTPUT="..\FatedLauncher\build\bin\Release"
+set DEPLOY_PATH="..\..\built\FatedLauncher\Release"
 REM ========================================
 
-echo.
-echo ==== Step 1: Running Generate.bat ====
+REM Build the basic generation script
 call %GENERATE_SCRIPT%
 if %errorlevel% neq 0 (
     echo Generate.bat failed!
     exit /b %errorlevel%
 )
 
-echo.
-echo ==== Step 2: Clean old Release output ====
+REM Remove old deploy folder
 if exist %DEPLOY_PATH% (
     echo Deleting existing contents of %DEPLOY_PATH%...
     del /q %DEPLOY_PATH%\* >nul 2>&1
@@ -31,21 +31,20 @@ if exist %DEPLOY_PATH% (
     mkdir %DEPLOY_PATH%
 )
 
-echo.
-echo ==== Step 3: Building solution ====
-%MSBUILD_EXE% %SOLUTION_PATH% /p:Configuration=%CONFIGURATION% /p:Platform=%PLATFORM% /m
+REM Kick off the solution build
+%VAR_MSBUILD_EXE% %SOLUTION_PATH% /p:Configuration=%CONFIGURATION% /p:Platform=%PLATFORM% /m
 if %errorlevel% neq 0 (
     echo Build failed!
     pause /b %errorlevel%
 )
 
-echo.
-echo ==== Step 4: Copying build output ====
+REM Double check the folder is definately empty
 if exist %DEPLOY_PATH% (
     echo Cleaning existing deploy folder...
     rmdir /s /q %DEPLOY_PATH%
 )
 
+REM Copy the binary to built
 mkdir %DEPLOY_PATH%
 xcopy %BUILD_OUTPUT%\* %DEPLOY_PATH%\ /s /e /y
 
@@ -56,4 +55,5 @@ if %errorlevel% neq 0 (
     echo Build and deploy succeeded!
 )
 
+popd
 endlocal
