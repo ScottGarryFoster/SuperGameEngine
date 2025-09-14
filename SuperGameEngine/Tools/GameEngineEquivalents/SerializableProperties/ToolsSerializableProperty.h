@@ -13,8 +13,6 @@ namespace SuperGameEngine
     class SerializableProperty;
 }
 
-using namespace FatedQuestLibraries;
-
 namespace SuperGameTools
 {
     /// <summary>
@@ -27,7 +25,7 @@ namespace SuperGameTools
         /// Event called when this objects dirty flag has changed.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
-        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const = 0;
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnDirtyFlagChanged() const = 0;
 
         /// <summary>
         /// Gets the engine side property.
@@ -44,13 +42,13 @@ namespace SuperGameTools
         /// Load the property from stored data.
         /// </summary>
         /// <param name="node">Node for this property. </param>
-        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
+        virtual void Load(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) = 0;
 
         /// <summary>
         /// Save this property.
         /// </summary>
         /// <returns>A node which contains the data, this is the property node. </returns>
-        virtual std::shared_ptr<ModifiableNode> Save() const = 0;
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Save() const = 0;
     };
 
 }

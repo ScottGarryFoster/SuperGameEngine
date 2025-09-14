@@ -22,7 +22,7 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
-            const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
+            const std::weak_ptr <GameObject>& parent) override;
 
         /// <summary>
         /// The type to create to recreate this component.

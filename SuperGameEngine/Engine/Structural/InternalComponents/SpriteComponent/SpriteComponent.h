@@ -3,12 +3,17 @@
 #include "../../Component/SuperGameComponent.h"
 #include "../../../FatedQuestReferences.h"
 
+namespace SuperGameEngine
+{
+    class TransformComponent;
+}
+
 using namespace FatedQuestLibraries;
 
 namespace SuperGameEngine
 {
-
     class TextureAsset;
+
     /// <summary>
     /// A component to test basic functionality.
     /// </summary>
@@ -25,7 +30,24 @@ namespace SuperGameEngine
         /// <param name="parent">The parent of this component. </param>
         virtual void Setup(
             const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
-            const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent) override;
+            const std::weak_ptr <GameObject>& parent) override;
+
+        /// <summary>
+        /// Setup run post load and is run everytime load is run.
+        /// </summary>
+        void PostLoadSetup();
+
+        /// <summary>
+        /// Load component from a stored document.
+        /// </summary>
+        /// <param name="documentNode">Document node to load from.</param>
+        virtual void Load(const std::shared_ptr<StoredDocumentNode>& documentNode) override;
+
+        /// <summary>
+        /// Save component to stored document node ready to move to file.
+        /// </summary>
+        /// <returns>Document node to save to. </returns>
+        virtual std::shared_ptr<StoredDocumentNode> Save() override;
 
         /// <summary>
         /// The type to create to recreate this component.
@@ -46,21 +68,53 @@ namespace SuperGameEngine
         /// </summary>
         virtual void Draw() const override;
 
-        virtual void Move(int x, int y);
+        /// <summary>
+        /// Updates the texture currently loaded.
+        /// </summary>
+        /// <param name="textureName">New texture loaded. </param>
+        virtual void SetTexture(const std::string& textureName);
 
-        virtual int GetX() { return m_location.GetX(); }
-        virtual int GetY() { return m_location.GetY(); }
+        /// <summary>
+        /// Tile to draw.
+        /// </summary>
+        /// <param name="tile">Set the current tile to current draw. </param>
+        void SetTile(int tile);
 
     private:
 
-        std::shared_ptr<TextureAsset> m_textureAsset;
-
-        FPoint m_location;
+#pragma region Saved Properties
 
         /// <summary>
-        /// Take up memory so I can see it being destroyed.
+        /// The saved texture asset location.
         /// </summary>
-        char oneMB[1024 * 1024];
+        std::string m_propertyTextureAssetLocation;
+
+        /// <summary>
+        /// The name of the texture asset property saved.
+        /// </summary>
+        const char* m_propertyTextureAssetLocationName = "TextureAsset";
+
+        /// <summary>
+        /// The tile to render.
+        /// </summary>
+        int m_propertyTile;
+
+        /// <summary>
+        /// The name of tile to render.
+        /// </summary>
+        const char* m_propertyTileName = "Tile";
+
+#pragma endregion
+
+        /// <summary>
+        /// Actual texture asset created on load or set.
+        /// </summary>
+        std::shared_ptr<TextureAsset> m_textureAsset;
+
+        /// <summary>
+        /// The transform for this game object.
+        /// </summary>
+        std::shared_ptr<TransformComponent> m_transform;
     };
 
     REGISTER_COMPONENT("SpriteComponent", SpriteComponent);

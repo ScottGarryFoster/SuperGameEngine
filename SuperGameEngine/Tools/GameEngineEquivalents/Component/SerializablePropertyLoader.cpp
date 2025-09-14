@@ -4,6 +4,10 @@
 #include "../../../Engine/Structural/GameObject/ComponentFactory.h"
 #include "../SerializableProperties/TextSerializableProperty.h"
 #include "../../FatedQuestLibraries.h"
+#include "GameEngineEquivalents/SerializableProperties/IntSerializableProperty.h"
+#include "GameEngineEquivalents/SerializableProperties/TextureAssetSerializableProperty.h"
+#include "GameEngineEquivalents/SerializableProperties/Vector2FSerializableProperty.h"
+#include "Structural/Serializable/PropertyByType/Vector2FSerializableProperty.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -42,6 +46,18 @@ std::vector<std::shared_ptr<ToolsSerializableProperty>> SerializablePropertyLoad
         {
         case SuperGameEngine::SerializableDataType::Text:
             toolsProperties.emplace_back(std::make_shared<TextSerializableProperty>
+                (m_serializableParser, property));
+            break;
+        case SuperGameEngine::SerializableDataType::Vector2F:
+            toolsProperties.emplace_back(std::make_shared<Vector2FSerializableProperty>
+                (m_serializableParser, property));
+            break;
+        case SuperGameEngine::SerializableDataType::Int:
+            toolsProperties.emplace_back(std::make_shared<IntSerializableProperty>
+                (m_serializableParser, property));
+            break;
+        case SuperGameEngine::SerializableDataType::TextureAsset:
+            toolsProperties.emplace_back(std::make_shared<TextureAssetSerializableProperty>
                 (m_serializableParser, property));
             break;
         default:

@@ -417,6 +417,8 @@ FodyWeavers.xsd
 **/*.fsproj
 **/*.fsproj.user
 **/*.fsproj.filters
+**/*.lnk
+**/*.lnk*
 
 # Ignore IntelliSense and browsing database files
 **/*.VC.db
@@ -429,3 +431,4 @@ FodyWeavers.xsd
 !**SuperGameEngine/Engine/Structural/[Pp]ackages/*
 !**SuperGameEngine/Tools/ToolsEngine/[Pp]ackages/*
 !FatedQuestLibraries/[Bb]uild/*
+built/

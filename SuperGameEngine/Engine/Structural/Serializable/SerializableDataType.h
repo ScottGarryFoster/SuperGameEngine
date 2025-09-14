@@ -23,6 +23,22 @@ namespace SuperGameEngine
         /// A string of text.
         /// </summary>
         Text,
+
+        /// <summary>
+        /// A vector of two floats.
+        /// </summary>
+        Vector2F,
+
+        /// <summary>
+        /// A whole number.
+        /// </summary>
+        Int,
+
+        /// <summary>
+        /// An Asset loaded from the Texture Manager.
+        /// Represented and linked by the asset relative path from products.
+        /// </summary>
+        TextureAsset,
     };
 
     /// <summary>
@@ -32,13 +48,16 @@ namespace SuperGameEngine
     {
     public:
         static SerializableDataType Min() { return SerializableDataType::Text; }
-        static SerializableDataType Max() { return SerializableDataType::Text; }
+        static SerializableDataType Max() { return SerializableDataType::TextureAsset; }
 
         static SerializableDataType* ToArray()
         {
             static SerializableDataType returnArray[] =
             {
                 SerializableDataType::Text,
+                SerializableDataType::Vector2F,
+                SerializableDataType::Int,
+                SerializableDataType::TextureAsset,
             };
             
             return returnArray;
@@ -49,6 +68,9 @@ namespace SuperGameEngine
             static std::vector<SerializableDataType> returnVector =
             {
                 SerializableDataType::Text,
+                SerializableDataType::Vector2F,
+                SerializableDataType::Int,
+                SerializableDataType::TextureAsset,
             };
             
             return returnVector;
@@ -59,6 +81,9 @@ namespace SuperGameEngine
             static std::vector<std::string> returnVector =
             {
                 "Text",
+                "Vector2F",
+                "Int",
+                "TextureAsset",
             };
             
             return returnVector;
@@ -70,6 +95,9 @@ namespace SuperGameEngine
             {
                 case SerializableDataType::Unknown: return "Unknown";
                 case SerializableDataType::Text: return "Text";
+                case SerializableDataType::Vector2F: return "Vector2F";
+                case SerializableDataType::Int: return "Int";
+                case SerializableDataType::TextureAsset: return "TextureAsset";
             }
             
             return "Unknown";
@@ -81,12 +109,18 @@ namespace SuperGameEngine
             {
                 if (value == "Unknown") return SerializableDataType::Unknown;
                 if (value == "Text") return SerializableDataType::Text;
+                if (value == "Vector2F") return SerializableDataType::Vector2F;
+                if (value == "Int") return SerializableDataType::Int;
+                if (value == "TextureAsset") return SerializableDataType::TextureAsset;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return SerializableDataType::Unknown;
                 if (valueLower == "text") return SerializableDataType::Text;
+                if (valueLower == "vector2f") return SerializableDataType::Vector2F;
+                if (valueLower == "int") return SerializableDataType::Int;
+                if (valueLower == "textureasset") return SerializableDataType::TextureAsset;
             }
             
             return SerializableDataType::Unknown;

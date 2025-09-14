@@ -3,6 +3,7 @@
 #include "../../FatedQuestReferences.h"
 #include "../../Engine/Content/ContentManager.h"
 #include "../Packages/ComponentLoadPackage.h"
+#include "../InternalComponents/InternalComponents.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -70,7 +71,7 @@ SuperGameComponent& SuperGameComponent::operator=(SuperGameComponent&& other) no
 
 void SuperGameComponent::Setup(
     const std::shared_ptr<ComponentLoadPackage>& componentLoadPackage,
-    const std::shared_ptr<ExtremelyWeakWrapper<GameObject>>& parent)
+    const std::weak_ptr <GameObject>& parent)
 {
     m_loadPackage = componentLoadPackage;
     m_parent = parent;
@@ -125,7 +126,7 @@ void SuperGameComponent::Draw() const
 {
 }
 
-std::shared_ptr<ExtremelyWeakWrapper<GameObject>> SuperGameComponent::GetParent() const
+std::weak_ptr<GameObject> SuperGameComponent::GetParent() const
 {
     return m_parent;
 }

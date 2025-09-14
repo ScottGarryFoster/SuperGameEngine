@@ -4,8 +4,6 @@
 
 #include "SerializableParser.h"
 
-using namespace FatedQuestLibraries;
-
 namespace SuperGameEngine
 {
     /// <summary>
@@ -20,8 +18,10 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="gameComponent">Value of the game component. </param>
         /// <returns>A node representing the top level of the Game Component. </returns>
-        virtual std::shared_ptr<ModifiableNode> Serialize(const std::shared_ptr<GameComponent>& gameComponent) const;
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Serialize(
+            const std::shared_ptr<GameComponent>& gameComponent) const;
 
+#pragma region String
         /// <summary>
         /// Serialises a string to a document node.
         /// </summary>
@@ -29,7 +29,10 @@ namespace SuperGameEngine
         /// <param name="value">Value of the property. </param>
         /// <param name="defaultValue">Value which is default in the class anyway. </param>
         /// <returns>A document node representing the property. </returns>
-        virtual std::shared_ptr<ModifiableNode> Serialize(const std::string& name, const std::string& value, const std::string& defaultValue) const override;
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Serialize(
+            const std::string& name, 
+            const std::string& value, 
+            const std::string& defaultValue) const override;
 
         /// <summary>
         /// Parses the given property from the parent which owns the value.
@@ -39,7 +42,10 @@ namespace SuperGameEngine
         /// <param name="defaultValue">If not found, the value to return. </param>
         /// <param name="parentOfProperties">Parent of the property. </param>
         /// <returns>The parsed value of the property or the default. </returns>
-        virtual std::string ParseFromParent(const std::string& name, const std::string& defaultValue, const std::shared_ptr<StoredDocumentNode>& parentOfProperties) const override;
+        virtual std::string ParseFromParent(
+            const std::string& name, 
+            const std::string& defaultValue, 
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& parentOfProperties) const override;
 
         /// <summary>
         /// Parses the given property from the node which owns the value.
@@ -47,6 +53,84 @@ namespace SuperGameEngine
         /// <param name="defaultValue">If not found, the value to return. </param>
         /// <param name="data">Node containing the data. </param>
         /// <returns>The parsed value of the property or the default. </returns>
-        virtual std::string Parse(const std::string& defaultValue, const std::shared_ptr<StoredDocumentNode>& data) const override;
+        virtual std::string Parse(
+            const std::string& defaultValue, 
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& data) const override;
+#pragma endregion
+
+#pragma region Int
+        /// <summary>
+        /// Serialises a property to a document node.
+        /// </summary>
+        /// <param name="name">Name of the property. </param>
+        /// <param name="value">Value of the property. </param>
+        /// <param name="defaultValue">Value which is default in the class anyway. </param>
+        /// <returns>A document node representing the property. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Serialize(
+            const std::string& name, 
+            int value, 
+            int defaultValue) const override;
+
+        /// <summary>
+        /// Parses the given property from the parent which owns the value.
+        /// The StoredDocumentNode should have this property as a child (or potentially).
+        /// </summary>
+        /// <param name="name">Name of the property. </param>
+        /// <param name="defaultValue">If not found, the value to return. </param>
+        /// <param name="parentOfProperties">Parent of the property. </param>
+        /// <returns>The parsed value of the property or the default. </returns>
+        virtual int ParseFromParent(
+            const std::string& name, 
+            int defaultValue, 
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& parentOfProperties) const override;
+
+        /// <summary>
+        /// Parses the given property from the node which owns the value.
+        /// </summary>
+        /// <param name="defaultValue">If not found, the value to return. </param>
+        /// <param name="data">Node containing the data. </param>
+        /// <returns>The parsed value of the property or the default. </returns>
+        virtual int Parse(
+            int defaultValue, 
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& data) const override;
+
+#pragma endregion
+
+#pragma region Vector2
+        /// <summary>
+        /// Serialises a property to a document node.
+        /// </summary>
+        /// <param name="name">Name of the property. </param>
+        /// <param name="value">Value of the property. </param>
+        /// <param name="defaultValue">Value which is default in the class anyway. </param>
+        /// <returns>A document node representing the property. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Serialize(
+            const std::string& name, 
+            const FatedQuestLibraries::FVector2F& value, 
+            const FatedQuestLibraries::FVector2F& defaultValue) const override;
+
+        /// <summary>
+        /// Parses the given property from the parent which owns the value.
+        /// The StoredDocumentNode should have this property as a child (or potentially).
+        /// </summary>
+        /// <param name="name">Name of the property. </param>
+        /// <param name="defaultValue">If not found, the value to return. </param>
+        /// <param name="parentOfProperties">Parent of the property. </param>
+        /// <returns>The parsed value of the property or the default. </returns>
+        virtual FatedQuestLibraries::FVector2F ParseFromParent(
+            const std::string& name, 
+            const FatedQuestLibraries::FVector2F& defaultValue, 
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& parentOfProperties) const override;
+
+        /// <summary>
+        /// Parses the given property from the node which owns the value.
+        /// </summary>
+        /// <param name="defaultValue">If not found, the value to return. </param>
+        /// <param name="data">Node containing the data. </param>
+        /// <returns>The parsed value of the property or the default. </returns>
+        virtual FatedQuestLibraries::FVector2F Parse(
+            const FatedQuestLibraries::FVector2F& defaultValue, 
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& data) const override;
+#pragma endregion
     };
 }

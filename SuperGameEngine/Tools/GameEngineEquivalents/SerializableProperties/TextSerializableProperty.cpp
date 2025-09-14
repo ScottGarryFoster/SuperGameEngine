@@ -63,14 +63,18 @@ void TextSerializableProperty::Draw()
         return;
     }
 
+    if (*m_dirty)
+    {
+        ImGui::Text("*");
+        ImGui::SameLine();
+    }
+
     ImGui::Text(m_property->GetName().c_str());
     ImGui::SameLine();
 
     if (*m_dirty)
     {
         ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
-        ImGui::SameLine();
-        ImGui::Text("*");
     }
     else
     {
@@ -105,7 +109,7 @@ std::shared_ptr<ModifiableNode> TextSerializableProperty::Save() const
     return m_textSerializableProperty->Save(m_serializableParser, str);
 }
 
-std::shared_ptr<SuperGameEngine::TextSerializableProperty> TextSerializableProperty::GetTextProperty() const
+std::shared_ptr<SuperGameEngine::TextSerializableProperty> TextSerializableProperty::GetActualEngineProperty() const
 {
     return m_textSerializableProperty;
 }

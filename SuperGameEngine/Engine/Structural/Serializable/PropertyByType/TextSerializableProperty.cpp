@@ -21,7 +21,8 @@ std::string TextSerializableProperty::GetDefault() const
     return m_defaultValue;
 }
 
-std::string TextSerializableProperty::Load(const std::shared_ptr<SerializableParser>& parser,
+std::string TextSerializableProperty::Load(
+    const std::shared_ptr<SerializableParser>& parser,
     const std::shared_ptr<StoredDocumentNode>& node) const
 {
     if (!parser)

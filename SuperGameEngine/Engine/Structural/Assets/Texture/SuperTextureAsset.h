@@ -49,6 +49,13 @@ namespace SuperGameEngine
         /// </param>
         virtual void Draw(int tile) const override;
 
+        /// <summary>
+        /// Draws the tile as defined by the asset meta file.
+        /// </summary>
+        /// <param name="tile"> The texture tile to render. </param>
+        /// <param name="screenLocation"> The location of the texture on screen. </param>
+        virtual void Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const override;
+
     private:
 
         /// <summary>
@@ -84,6 +91,8 @@ namespace SuperGameEngine
         void SetupPredefinedUVs();
 
         void DrawPredefined(int tile) const;
+
+        void DrawPredefined(int tile, const FVector2F& screenLocation) const;
     };
 }
 

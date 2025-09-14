@@ -15,7 +15,7 @@ namespace SuperGameEngine
     /// Core object in the Engine holding Components with Logic and
     /// managing how these components move around and collide.
     /// </summary>
-    class SuperGameObject : public GameObject
+    class SuperGameObject : public GameObject, public std::enable_shared_from_this<SuperGameObject>
     {
     public:
         SuperGameObject();
@@ -78,6 +78,18 @@ namespace SuperGameEngine
         /// <param name="type">Type to find. </param>
         /// <returns>The new component. </returns>
         virtual std::shared_ptr<GameComponent> AddComponent(const std::string& type) override;
+
+        /// <summary>
+        /// Adds all the GameComponent to the GameObject.
+        /// Will run Setup on the GameComponent and add it to any
+        /// services such as the Collision.
+        /// Will setup all components at the end, therefore this is better for loading a
+        /// single game object expecting components to exist on a game object.
+        /// Ensure the component is registered see 'ComponentFactory.h'.
+        /// </summary>
+        /// <param name="types">Types to find and add </param>
+        /// <returns>All the new components added. </returns>
+        virtual std::vector<std::shared_ptr<GameComponent>> AddComponents(const std::vector<std::string>& types) override;
 
         /// <summary>
         /// Gets the component.

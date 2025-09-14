@@ -4,7 +4,9 @@
         <String "Key"="TextureUVMethod" "Value"="Predefined" />
     </Strings>
     <Vector4Is>
-        <Vector4I "Key"="TextureUV0" "X"="0" "Y"="0" "Z"="32" "W"="32" />
-        <Vector4I "Key"="TextureUV1" "X"="32" "Y"="0" "Z"="32" "W"="32" />
+        <Vector4I "Key"="TextureUV0" "X"="0" "Y"="24" "Z"="16" "W"="24" />
+        <Vector4I "Key"="TextureUV1" "X"="32" "Y"="48" "Z"="16" "W"="24" />
+        <Vector4I "Key"="TextureUV2" "X"="96" "Y"="48" "Z"="16" "W"="24" />
+        <Vector4I "Key"="TextureUV3" "X"="64" "Y"="48" "Z"="16" "W"="24" />
     </Vector4Is>
 </UniversalObjectData>

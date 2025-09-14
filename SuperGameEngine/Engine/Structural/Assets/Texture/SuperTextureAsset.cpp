@@ -80,6 +80,21 @@ void SuperTextureAsset::Draw(int tile) const
     }
 }
 
+void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const
+{
+    if (m_superTexture)
+    {
+        switch (m_splitMethod)
+        {
+        case SplitUVMethod::Predefined:
+            DrawPredefined(tile, screenLocation);
+            break;
+        default:
+            m_superTexture->Draw();
+        }
+    }
+}
+
 void SuperTextureAsset::SetupPredefinedUVs()
 {
     int vectors = 0;
@@ -136,5 +151,33 @@ void SuperTextureAsset::DrawPredefined(int tile) const
         return;
     }
 
-    m_superTexture->Draw(m_predefinedUVs[tile].second, m_predefinedUVs[tile].second);
+    m_superTexture->Draw(m_predefinedUVs[tile].second, RectangleInt());
+}
+
+void SuperTextureAsset::DrawPredefined(int tile, const FVector2F& screenLocation) const
+{
+    if (tile < 0)
+    {
+        return;
+    }
+
+    // Cast to Size_T to remove warning here.
+    // We are never going to use so many segments as to reach the int limit.
+    if (static_cast<size_t>(tile) >= m_predefinedUVs.size())
+    {
+        return;
+    }
+
+    // If the bool is false, the rectangle is invalid
+    if (!m_predefinedUVs[tile].first)
+    {
+        return;
+    }
+
+    m_superTexture->Draw(m_predefinedUVs[tile].second, 
+        RectangleInt(
+            static_cast<int>(screenLocation.GetX()), 
+            static_cast<int>(screenLocation.GetY()), 
+            m_predefinedUVs[tile].second.GetWidth(),
+            m_predefinedUVs[tile].second.GetHeight()));
 }
