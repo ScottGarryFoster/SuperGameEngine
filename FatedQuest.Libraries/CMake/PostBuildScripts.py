@@ -146,11 +146,91 @@ def CleanCSProjFile(filePath, debug=False):
     except Exception as e:
         print(f"ERROR: Exception occurred while processing {filePath}: {e}")
         return False
+        
+def CleanCSProjFileNoConsole(filePath, debug=False):
+    """
+    Ensure that the given .csproj file has <OutputType>WinExe</OutputType>.
+
+    Args:
+        filePath: Path to the .csproj file.
+        debug: True means more debug logs will be printed.
+
+    Returns:
+        True if modified/written successfully, False otherwise.
+    """
+    import os, xml.etree.ElementTree as ET
+
+    if not filePath or not os.path.isfile(filePath):
+        print(f"ERROR: Invalid file path: {filePath}")
+        return False
+
+    try:
+        if debug:
+            print(f"DEBUG: Attempting to open {filePath}")
+
+        tree = ET.parse(filePath)
+        root = tree.getroot()
+
+        # Standard MSBuild namespace handling
+        namespace = {"msbuild": "http://schemas.microsoft.com/developer/msbuild/2003"}
+        ET.register_namespace("", namespace["msbuild"])
+
+        ns = "{http://schemas.microsoft.com/developer/msbuild/2003}"
+
+        modified = False
+
+        # Find or create PropertyGroup with OutputType
+        propGroups = root.findall(f"{ns}PropertyGroup")
+        outputTypeElement = None
+        for pg in propGroups:
+            ot = pg.find(f"{ns}OutputType")
+            if ot is not None:
+                outputTypeElement = ot
+                break
+
+        if outputTypeElement is not None:
+            if outputTypeElement.text == "Exe":
+                if debug:
+                    print(
+                        f"DEBUG: Changing <OutputType> from {outputTypeElement.text} to WinExe in {filePath}"
+                    )
+                outputTypeElement.text = "WinExe"
+                modified = True
+            else:
+                if debug:
+                    print(f"DEBUG: Already WinExe in {filePath}")
+        else:
+            # No OutputType defined, add one into the first PropertyGroup
+            if not propGroups:
+                # If no property groups exist at all, create one
+                pg = ET.SubElement(root, f"{ns}PropertyGroup")
+            else:
+                pg = propGroups[0]
+            ET.SubElement(pg, f"{ns}OutputType").text = "WinExe"
+            if debug:
+                print(f"DEBUG: Added <OutputType>WinExe</OutputType> to {filePath}")
+            modified = True
+
+        if modified:
+            tempFile = filePath + ".tmp"
+            with open(tempFile, "wb") as file:
+                tree.write(file, encoding="utf-8", xml_declaration=True)
+                file.flush()
+                os.fsync(file.fileno())
+            os.replace(tempFile, filePath)  # atomic replace
+            return True
+        else:
+            return False
+
+    except Exception as e:
+        print(f"ERROR: Exception occurred while processing {filePath}: {e}")
+        return False
 
 def main():
     parser = argparse.ArgumentParser(description="Find all .vcproj files in a given directory.")
     parser.add_argument("directory", nargs="?", default=os.getcwd(), help="Directory to search in (default: current directory)")
     parser.add_argument("--debug", action="store_true", default=False, help="Enable debug logging")
+    parser.add_argument("--noconsole", action="store_true", default=False, help="True means any console only application will become a windows application for CSharp")
     args = parser.parse_args()
     
     projectFiles = FindCProjectFiles(args.directory)
@@ -169,6 +249,9 @@ def main():
         for file in cSharpProjectFiles:
             if CleanCSProjFile(file, args.debug):
                 numberOfReplaces += 1
+            if args.noconsole:
+                if CleanCSProjFileNoConsole(file, args.debug):
+                    numberOfReplaces += 1
 
         print(f"Cleaned {numberOfReplaces} files in {args.directory}")
     else:

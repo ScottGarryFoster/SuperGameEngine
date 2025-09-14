@@ -271,6 +271,7 @@ std::shared_ptr<AssetFile> AssetTileRender::DrawFile(
     float paddingFloat = static_cast<float>(padding);
     float halfPadding = paddingFloat / 2;
 
+    ImVec2 beforeEverything = ImGui::GetCursorScreenPos();
     ImGui::BeginGroup();
 
     // We need to draw the selection rectangle now but we do not know
@@ -330,13 +331,54 @@ std::shared_ptr<AssetFile> AssetTileRender::DrawFile(
     }
     drawList->ChannelsMerge();
 
+    // Drag and Drop behaviour
+    {
+        ImVec2 before = ImGui::GetCursorScreenPos();
+        float ySize = bottomRight.y - topLeft.y;
+        auto topLeftAsset = ImVec2(before.x, before.y - ySize);
+
+        auto bottom = ImVec2(topLeftAsset.x + static_cast<float>(size) + static_cast<float>(padding) + static_cast<float>(halfPadding),
+            topLeftAsset.y + (bottomRight.y - topLeft.y));
+        EnableDropTarget(file->GetPackagePath(), topLeftAsset.x, topLeftAsset.y, bottom.x, bottom.y);
+    }
+
     std::shared_ptr<AssetFile> returnFile = {};
     if (ImGui::IsMouseHoveringRect(topLeft, bottomRight) &&
-        ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+        ImGui::IsMouseReleased(ImGuiMouseButton_Left))
     {
         Log::Info("Clicked " + file->GetPackagePath());
         returnFile = file;
     }
 
     return returnFile;
+}
+
+void AssetTileRender::EnableDropTarget(
+    const std::string& packagePath, 
+    float xTop, 
+    float yTop, 
+    float xBottom,
+    float yBottom) const
+{
+
+    ImVec2 before = ImGui::GetCursorScreenPos();
+    auto top = ImVec2(xTop, xTop);
+    auto bottom = ImVec2(xBottom, yBottom);
+    auto size = ImVec2(bottom.x - top.x, bottom.y - top.y);
+    ImGui::SetCursorScreenPos(top);
+
+    ImGui::InvisibleButton("##drag_area", size);
+    if (ImGui::BeginDragDropSource())
+    {
+        const std::string payload = File::RemoveLastExtension(packagePath);
+
+        ImGui::SetDragDropPayload("AssetPackagePath",
+            payload.c_str(),
+            strlen(payload.c_str()) + 1);
+
+        ImGui::TextUnformatted(payload.c_str());
+
+        ImGui::EndDragDropSource();
+    }
+    ImGui::SetCursorPos(before);
 }

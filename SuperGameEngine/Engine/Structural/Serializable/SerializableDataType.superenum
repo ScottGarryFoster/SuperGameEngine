@@ -19,5 +19,9 @@
         <Int>
             A whole number.
         </Int>
+        <TextureAsset>
+            An Asset loaded from the Texture Manager.
+            Represented and linked by the asset relative path from products.
+        </TextureAsset>
     </EnumName>
 </SuperEnum>

@@ -8,6 +8,7 @@
 #include "Structural/Serializable/PropertyByType/TextSerializableProperty.h"
 #include "Structural/Serializable/SerializableParser.h"
 #include "Structural/Serializable/PropertyByType/IntSerializableProperty.h"
+#include "Structural/Serializable/PropertyByType/TextureAssetSerializableProperty.h"
 
 using namespace SuperGameEngine;
 
@@ -15,7 +16,7 @@ SpriteComponent::SpriteComponent()
 {
     {
         m_propertyTextureAssetLocation = "";
-        auto property = std::make_shared<TextSerializableProperty>(m_propertyTextureAssetLocation);
+        auto property = std::make_shared<TextureAssetSerializableProperty>(m_propertyTextureAssetLocation);
         property->SetName(m_propertyTextureAssetLocationName);
         m_serializableProperties.emplace_back(property);
     }
