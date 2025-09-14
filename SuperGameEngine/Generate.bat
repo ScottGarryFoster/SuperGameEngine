@@ -1,5 +1,6 @@
 @echo off
 setlocal
+pushd "%~dp0"
 
 rem Some packages we get via vcpkg
 call ..\FatedQuest.Libraries\cmake\EnsureVCPKGIsFound.bat
@@ -40,4 +41,7 @@ python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x6
 
 python ../FatedQuest.Libraries/CMake/CreateShortcut.py build\SuperGameEngine.sln SuperGameEngine.sln
 python ../FatedQuest.Libraries/CMake/CreateShortcut.py Generate.bat Regenerate
+
+popd
+endlocal
 pause

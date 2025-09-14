@@ -114,5 +114,15 @@ namespace SuperGameTools
             const std::shared_ptr<AssetFile>& file,
             int size,
             int padding) const;
+
+        /// <summary>
+        /// Add the drag and drop functionality.
+        /// </summary>
+        /// <param name="packagePath">File package path. </param>
+        /// <param name="xTop">X at the beginning of the element. </param>
+        /// <param name="yTop">Y at the beginning of the element. </param>
+        /// <param name="xBottom">X at the end of the element. </param>
+        /// <param name="yBottom">Y at the end of the element. </param>
+        void EnableDropTarget(const std::string& packagePath, float xTop, float yTop, float xBottom, float yBottom) const;
     };
 }
