@@ -278,8 +278,8 @@ std::shared_ptr<AssetFile> AssetTileRender::DrawFile(
     // how big it is going to be. So we split the draw list, and then
     // come back and merge later. 
     ImDrawList* drawList = ImGui::GetWindowDrawList();
-    drawList->ChannelsSplit(2);
-    drawList->ChannelsSetCurrent(1);
+    drawList->ChannelsSplit(3);
+    drawList->ChannelsSetCurrent(2);
 
     // The exact top left of the tile.
     ImVec2 topLeft = ImGui::GetCursorScreenPos();
@@ -329,7 +329,7 @@ std::shared_ptr<AssetFile> AssetTileRender::DrawFile(
             ImDrawFlags_None,
             2.0f);
     }
-    drawList->ChannelsMerge();
+
 
     // Drag and Drop behaviour
     {
@@ -340,16 +340,65 @@ std::shared_ptr<AssetFile> AssetTileRender::DrawFile(
         auto bottom = ImVec2(topLeftAsset.x + static_cast<float>(size) + static_cast<float>(padding) + static_cast<float>(halfPadding),
             topLeftAsset.y + (bottomRight.y - topLeft.y));
         EnableDropTarget(file->GetPackagePath(), topLeftAsset.x, topLeftAsset.y, bottom.x, bottom.y);
+        ImGui::SetCursorScreenPos(before);
     }
+
+    UpdateInteractionStateForFileTile(file, ImGui::IsMouseHoveringRect(topLeft, bottomRight));
+
+    AssetTileInteractionRawState currentState = file->GetAssetTileInteractionRawState();
+    auto haveState = [currentState](AssetTileInteractionRawState state)
+        { return EAssetTileInteractionRawState::HasFlag(currentState, state); };
 
     std::shared_ptr<AssetFile> returnFile = {};
-    if (ImGui::IsMouseHoveringRect(topLeft, bottomRight) &&
-        ImGui::IsMouseReleased(ImGuiMouseButton_Left))
+    if (haveState(AssetTileInteractionRawState::Hover))
     {
-        Log::Info("Clicked " + file->GetPackagePath());
-        returnFile = file;
+        if (haveState(AssetTileInteractionRawState::LeftClickReleased))
+        {
+            Log::Info("Clicked " + file->GetPackagePath());
+            returnFile = file;
+
+            // Note: Do not attempt to draw a frame here, it will just flash
+            // probably not a good idea.
+        }
+        else if (haveState(AssetTileInteractionRawState::LeftClickDown))
+        {
+            // Draw on mouse down but not click complete
+            drawList->ChannelsSetCurrent(1);
+
+            // Fill
+            drawList->AddRectFilled(
+                topLeft,
+                bottomRight,
+                IM_COL32(44, 0, 74, 255),
+                5.0f,
+                ImDrawFlags_None);
+
+            // Border
+            drawList->AddRect(
+                topLeft,
+                bottomRight,
+                IM_COL32(255, 255, 255, 200),
+                5.0f,
+                ImDrawFlags_None,
+                2.0f);
+        }
+        else
+        {
+            // Draw a for mouse over
+            drawList->ChannelsSetCurrent(1);
+
+            // Border
+            drawList->AddRect(
+                topLeft,
+                bottomRight,
+                IM_COL32(62, 184, 0, 255),
+                5.0f,
+                ImDrawFlags_None,
+                2.0f);
+        }
     }
 
+    drawList->ChannelsMerge();
     return returnFile;
 }
 
@@ -360,8 +409,6 @@ void AssetTileRender::EnableDropTarget(
     float xBottom,
     float yBottom) const
 {
-
-    ImVec2 before = ImGui::GetCursorScreenPos();
     auto top = ImVec2(xTop, xTop);
     auto bottom = ImVec2(xBottom, yBottom);
     auto size = ImVec2(bottom.x - top.x, bottom.y - top.y);
@@ -380,5 +427,43 @@ void AssetTileRender::EnableDropTarget(
 
         ImGui::EndDragDropSource();
     }
-    ImGui::SetCursorPos(before);
+}
+
+void AssetTileRender::UpdateInteractionStateForFileTile(const std::shared_ptr<AssetFile>& file, bool areHovering) const
+{
+    AssetTileInteractionRawState currentState = file->GetAssetTileInteractionRawState();
+    auto stateContainsHover = [currentState]()
+        { return EAssetTileInteractionRawState::HasFlag(currentState, AssetTileInteractionRawState::Hover); };
+    auto stateContainsClick = [currentState]()
+        { return EAssetTileInteractionRawState::HasFlag(currentState, AssetTileInteractionRawState::LeftClickDown); };
+
+    if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && !stateContainsHover())
+    {
+        file->SetAssetTileInteractionRawState(AssetTileInteractionRawState::NoInteraction);
+    }
+    else if (areHovering)
+    {
+        if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+        {
+            file->SetAssetTileInteractionRawState(AssetTileInteractionRawState::Hover | AssetTileInteractionRawState::LeftClickDown);
+        }
+        else
+        {
+            if (stateContainsClick())
+            {
+                file->SetAssetTileInteractionRawState(
+                    AssetTileInteractionRawState::Hover | AssetTileInteractionRawState::LeftClickReleased);
+            }
+            else
+            {
+                file->SetAssetTileInteractionRawState(
+                    AssetTileInteractionRawState::Hover);
+            }
+
+        }
+    }
+    else
+    {
+        file->SetAssetTileInteractionRawState(AssetTileInteractionRawState::NoInteraction);
+    }
 }
