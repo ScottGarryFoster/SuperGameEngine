@@ -124,5 +124,14 @@ namespace SuperGameTools
         /// <param name="xBottom">X at the end of the element. </param>
         /// <param name="yBottom">Y at the end of the element. </param>
         void EnableDropTarget(const std::string& packagePath, float xTop, float yTop, float xBottom, float yBottom) const;
+
+        /// <summary>
+        /// Update how a tile has been interacted with.
+        /// Creating this manually means we can ensure drag and drop works whilst controlling
+        /// auto select as you navigate (mis-clicks).
+        /// </summary>
+        /// <param name="file">File to update. </param>
+        /// <param name="areHovering">True means are hovering. </param>
+        void UpdateInteractionStateForFileTile(const std::shared_ptr<AssetFile>& file, bool areHovering) const;
     };
 }

@@ -20,6 +20,7 @@ ToolsAssetFile::ToolsAssetFile(
     m_guid = GUIDHelpers::CreateGUID();
     m_selectionGroups.insert(SelectionGroup::Inspectable);
     m_selected = false;
+    m_assetTileInteractionRawState = AssetTileInteractionRawState::NoInteraction;
 
     if (std::shared_ptr<GamePackage> gamePackage = package.lock())
     {
@@ -151,4 +152,14 @@ std::unordered_set<SelectionGroup> ToolsAssetFile::GetSelectionGroup() const
 std::shared_ptr<Guid> ToolsAssetFile::GetGuid() const
 {
     return m_guid;
+}
+
+AssetTileInteractionRawState ToolsAssetFile::GetAssetTileInteractionRawState() const
+{
+    return m_assetTileInteractionRawState;
+}
+
+void ToolsAssetFile::SetAssetTileInteractionRawState(AssetTileInteractionRawState newValue)
+{
+    m_assetTileInteractionRawState = newValue;
 }

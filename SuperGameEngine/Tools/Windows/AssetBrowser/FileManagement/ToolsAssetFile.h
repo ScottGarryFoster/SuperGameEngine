@@ -95,6 +95,22 @@ namespace SuperGameTools
         /// <returns>A unique Guid. </returns>
         virtual std::shared_ptr<Guid> GetGuid() const override;
 
+        /// <summary>
+        /// Gets the raw interaction state.
+        /// This describes how the tile is being interacted with and should describe the whole tile
+        /// not just the image but is stored here.
+        /// </summary>
+        /// <returns>Describes interactions to the Asset Tiles rendered via the Asset Browser. </returns>
+        virtual AssetTileInteractionRawState GetAssetTileInteractionRawState() const override;
+
+        /// <summary>
+        /// Sets the raw interaction state.
+        /// This describes how the tile is being interacted with and should describe the whole tile
+        /// not just the image but is stored here.
+        /// </summary>
+        /// <param name="newValue">New Raw State. </param>
+        virtual void SetAssetTileInteractionRawState(AssetTileInteractionRawState newValue) override;
+
     protected:
 
         /// <summary>
@@ -103,6 +119,7 @@ namespace SuperGameTools
         std::shared_ptr<SuperGameEngine::SuperTexture> m_largeTilePreview;
 
     private:
+
         /// <summary>
         /// The default asset tile if one does not exist.
         /// </summary>
@@ -138,5 +155,10 @@ namespace SuperGameTools
         /// The file is selected currently and is in the inspector.
         /// </summary>
         bool m_selected;
+
+        /// <summary>
+        /// Describes interactions to the Asset Tiles rendered via the Asset Browser.
+        /// </summary>
+        AssetTileInteractionRawState m_assetTileInteractionRawState;
     };
 }

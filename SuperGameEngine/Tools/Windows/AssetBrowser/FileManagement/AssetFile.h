@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "AssetTileInteractionRawState.h"
 #include "ToolsEngine/FrameworkManager/SelectionManager/Selectable.h"
 
 namespace SuperGameEngine
@@ -67,5 +68,21 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>The metadata for this file type. This describes. how to edit the file. </returns>
         virtual const std::shared_ptr<const AssetMetaData> GetMetaData() const = 0;
+
+        /// <summary>
+        /// Gets the raw interaction state.
+        /// This describes how the tile is being interacted with and should describe the whole tile
+        /// not just the image but is stored here.
+        /// </summary>
+        /// <returns>Describes interactions to the Asset Tiles rendered via the Asset Browser. </returns>
+        virtual AssetTileInteractionRawState GetAssetTileInteractionRawState() const = 0;
+
+        /// <summary>
+        /// Sets the raw interaction state.
+        /// This describes how the tile is being interacted with and should describe the whole tile
+        /// not just the image but is stored here.
+        /// </summary>
+        /// <param name="newValue">New Raw State. </param>
+        virtual void SetAssetTileInteractionRawState(AssetTileInteractionRawState newValue) = 0;
     };
 }

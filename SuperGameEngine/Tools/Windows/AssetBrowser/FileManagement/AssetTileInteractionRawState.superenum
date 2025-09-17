@@ -1,0 +1,24 @@
+<SuperEnum Type="BitFlag">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes interactions to the Asset Tiles rendered via the Asset Browser.
+    </EnumComment>
+    <EnumName Name="AssetTileInteractionRawState">
+        <NoInteraction>
+            No hover or interaction.
+        </NoInteraction>
+        <Hover>
+            Tile is hovered or should be rendered as such.
+            If this is not paired with an action assume only hover has occured.
+        </Hover>
+        <LeftClickDown>
+            Left click is currently down.
+        </LeftClickDown>
+        <LeftClickReleased>
+            Left click was down and now has been released.
+        </LeftClickReleased>
+    </EnumName>
+</SuperEnum>
