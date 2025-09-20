@@ -25,6 +25,7 @@ Steps to reproduce the behaviour:
 `If applicable, add screenshots to help explain your problem.`
 
 **Environment (please complete the following information):**
+` - Engine Version: [e.g. RL 34]`
 ` - OS: [e.g., Windows, macOS]`
 ` - Version: [e.g., 22]`
 
