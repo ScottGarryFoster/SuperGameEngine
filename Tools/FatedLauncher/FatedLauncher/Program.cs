@@ -29,30 +29,11 @@ class FatedLauncher
         menu.Renderer = new DarkModeRenderer();
 
         menu.Items.Add(MakeHeading("Fated Launcher"));
+        RunSuperGenerator(builtDirectory, menu);
 
-        // Super Generator
-        string superGeneratorDirectory = Path.Combine(builtDirectory, "SuperGenerator");
-        string superGeneratorLaunch = GetFindReleaseOrDebugLocation(superGeneratorDirectory, "SuperGenerator");
-        if(!string.IsNullOrWhiteSpace(superGeneratorLaunch))
-        {
-            menu.Items.Add(MakeRunable("Run SuperGenerator", superGeneratorLaunch));
-        }
-
-        // Super Game Engine Generation
-        string sgeRegeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "SuperGameEngine", "Regenerate");
-        if(!File.Exists(sgeRegeneratePath))
-        {
-            sgeRegeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "SuperGameEngine", "Generate-Tools-With-Tests.bat");
-            if (!File.Exists(sgeRegeneratePath))
-            {
-                sgeRegeneratePath = string.Empty;
-            }
-        }
-        
-        if(sgeRegeneratePath != string.Empty)
-        {
-            menu.Items.Add(MakeRunable("Generate SuperGameEngine", sgeRegeneratePath));
-        }
+        menu.Items.Add(MakeHeading("Generate"));
+        GenerateSuperGameEngine(menu);
+        GenerateDocumentationSiteGenerator(menu);
 
         ToolStripMenuItem exit = new ToolStripMenuItem("Exit", null, (s, e) => System.Windows.Forms.Application.Exit());
         exit.Enabled = true;
@@ -64,6 +45,55 @@ class FatedLauncher
 
         System.Windows.Forms.Application.Run();
         trayIcon.Visible = false;
+    }
+
+    private static void GenerateDocumentationSiteGenerator(ContextMenuStrip menu)
+    {
+        // Documentation Site Generator Generation
+        string sgeRegeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "Tools", "DocumentationSiteGenerator", "Regenerate");
+        if (!File.Exists(sgeRegeneratePath))
+        {
+            sgeRegeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "Tools", "DocumentationSiteGenerator", "Generate-With-Tests.bat");
+            if (!File.Exists(sgeRegeneratePath))
+            {
+                sgeRegeneratePath = string.Empty;
+            }
+        }
+
+        if (sgeRegeneratePath != string.Empty)
+        {
+            menu.Items.Add(MakeRunable("Generate Documentation Site Generator", sgeRegeneratePath));
+        }
+    }
+
+    private static void GenerateSuperGameEngine(ContextMenuStrip menu)
+    {
+        // Super Game Engine Generation
+        string sgeRegeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "SuperGameEngine", "Regenerate");
+        if (!File.Exists(sgeRegeneratePath))
+        {
+            sgeRegeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "SuperGameEngine", "Generate-Tools-With-Tests.bat");
+            if (!File.Exists(sgeRegeneratePath))
+            {
+                sgeRegeneratePath = string.Empty;
+            }
+        }
+
+        if (sgeRegeneratePath != string.Empty)
+        {
+            menu.Items.Add(MakeRunable("Generate SuperGameEngine", sgeRegeneratePath));
+        }
+    }
+
+    private static void RunSuperGenerator(string builtDirectory, ContextMenuStrip menu)
+    {
+        // Super Generator
+        string superGeneratorDirectory = Path.Combine(builtDirectory, "SuperGenerator");
+        string superGeneratorLaunch = GetFindReleaseOrDebugLocation(superGeneratorDirectory, "SuperGenerator");
+        if (!string.IsNullOrWhiteSpace(superGeneratorLaunch))
+        {
+            menu.Items.Add(MakeRunable("Run SuperGenerator", superGeneratorLaunch));
+        }
     }
 
     static void RunExe(string exePath)

@@ -17,7 +17,7 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 # Add subdirectories in main
 add_subdirectory(DocumentationSiteGenerator)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT DocumentationSiteGenerator)
-add_subdirectory(MarkdownToDocumentation)
+add_subdirectory(TwilightDocumentationGenerator)
 
 # Libraries under FatedQuest.Libraries
 add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
@@ -27,6 +27,7 @@ add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
 add_subdirectory(../../FatedQuest.Libraries/Observer Observer)
 add_subdirectory(../../FatedQuest.Libraries/Logger Logger)
 add_subdirectory(../../FatedQuest.Libraries/SharedEnums SharedEnums)
+add_subdirectory(../../FatedQuest.Libraries/Markdown Markdown)
 
 # Solution Folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -37,15 +38,18 @@ set_target_properties(StoredDocument PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(Observer PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(Logger PROPERTIES FOLDER "FatedQuest.Libraries")
 set_target_properties(SharedEnums PROPERTIES FOLDER "FatedQuest.Libraries")
+set_target_properties(Markdown PROPERTIES FOLDER "FatedQuest.Libraries")
 
 if(ENABLE_TESTS)
     add_subdirectory(../../FatedQuest.Libraries/XmlDocumentTests XmlDocumentTests)
     add_subdirectory(../../FatedQuest.Libraries/StandardOperationsTests StandardOperationsTests)
     add_subdirectory(../../FatedQuest.Libraries/StandardObjectsTests StandardObjectsTests)
+    add_subdirectory(../../FatedQuest.Libraries/MarkdownTests MarkdownTests)
 
     set_target_properties(XmlDocumentTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(StandardOperationsTests PROPERTIES FOLDER "FatedQuest.Libraries")
     set_target_properties(StandardObjectsTests PROPERTIES FOLDER "FatedQuest.Libraries")
+    set_target_properties(MarkdownTests PROPERTIES FOLDER "FatedQuest.Libraries")
 
     set_target_properties(gmock PROPERTIES FOLDER "External")
     set_target_properties(gmock_main PROPERTIES FOLDER "External")

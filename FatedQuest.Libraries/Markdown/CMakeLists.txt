@@ -1,14 +1,19 @@
 cmake_minimum_required(VERSION 3.20)
-project(DocumentationSiteGenerator)
-include(../../../FatedQuest.Libraries/CMake/Main.cmake)
+option(ENABLE_TOOLS "Enable tools" OFF)
+project(Markdown)
+include(../CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define build configurations
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
-set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
+if(ENABLE_TOOLS)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
+else()
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
+endif()
 
 # Collect source files
 file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
@@ -34,49 +39,55 @@ foreach(FILE ${HEADER_FILES})
     source_group("Header Files\\${GROUP_NAME}" FILES "${FILE}")
 endforeach()
 
-# Create executable
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
+# Create the library
+if(NOT TARGET Markdown)
+    add_library(Markdown STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
+endif()
 
 # Include directories
-target_include_directories(DocumentationSiteGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Markdown PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
 
 if(MSVC)
-    target_precompile_headers(DocumentationSiteGenerator PRIVATE ${PCH_HEADER})
+    target_precompile_headers(Markdown PRIVATE ${PCH_HEADER})
 endif()
 
 # Include these by default in all CPP files.
 if (MSVC)
-    target_compile_options(DocumentationSiteGenerator PRIVATE "/FI${PCH_HEADER}")
+    target_compile_options(Markdown PRIVATE "/FI${PCH_HEADER}")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    target_compile_options(DocumentationSiteGenerator PRIVATE "-include ${PCH_HEADER}")
+    target_compile_options(Markdown PRIVATE "-include ${PCH_HEADER}")
 endif()
 
 # Platform-specific settings
 if(WIN32)
-    target_compile_definitions(DocumentationSiteGenerator PRIVATE _WINDOWS)
-    target_compile_options(DocumentationSiteGenerator PRIVATE /W3 /permissive- /Zc:preprocessor /MP)
+    target_compile_definitions(Markdown PRIVATE _WINDOWS)
+    target_compile_options(Markdown PRIVATE
+      /W3
+      /permissive-
+      /Zc:preprocessor
+      /MP
+      
+      # Ensure Tools Debug and Debug have symbols.
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
+      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
+    )
 endif()
 
 # Set configurations
 foreach(OUTPUTCONFIG Debug Release Tools_Debug)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(DocumentationSiteGenerator PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "DocumentationSiteGenerator_${OUTPUTCONFIG}"
+    set_target_properties(Markdown PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "Markdown_${OUTPUTCONFIG}"
     )
 endforeach()
 
 # Link libraries
-add_subdirectory(../TwilightDocumentationGenerator TwilightDocumentationGenerator)
-add_subdirectory(../../../FatedQuest.Libraries/SharedEnums SharedEnums)
+add_subdirectory(../Logger Logger)
 
 # Link dependencies
-target_link_libraries(DocumentationSiteGenerator PRIVATE
-    TwilightDocumentationGenerator
-    SharedEnums
+target_link_libraries(Markdown PRIVATE
+    Logger
 )
-
-# Get Packages
-#NugetInclude("rapidxml" DocumentationSiteGenerator)

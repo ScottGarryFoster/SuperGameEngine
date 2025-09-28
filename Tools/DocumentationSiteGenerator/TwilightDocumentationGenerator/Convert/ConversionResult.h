@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace MarkdownToDocumentation
+namespace TwilightDocumentationGenerator
 {
     /// <summary>
     /// The result from a conversion.

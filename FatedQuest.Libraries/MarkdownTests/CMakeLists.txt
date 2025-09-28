@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 option(ENABLE_TOOLS "Enable tools" OFF)
-project(MarkdownToDocumentation)
-include(../../../FatedQuest.Libraries/CMake/Main.cmake)
+project(MarkdownTests)
+include(../CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Define build configurations
 if(ENABLE_TOOLS)
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
+    set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
 else()
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
@@ -19,10 +20,6 @@ endif()
 file(GLOB_RECURSE UNFILTERED_SOURCE_FILES "*.cpp")
 file(GLOB_RECURSE UNFILTERED_HEADER_FILES "*.h")
 file(GLOB_RECURSE PCH_FILES "pch.cpp")
-
-# If generated files (from FetchContent) are causing issues, exclude them
-set_source_files_properties(${SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY OFF)
-set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY OFF)
 
 # Filter out build directory
 FilterDirectoryFromGiven(UNFILTERED_SOURCE_FILES "build" SOURCE_FILES)
@@ -43,36 +40,15 @@ foreach(FILE ${HEADER_FILES})
     source_group("Header Files\\${GROUP_NAME}" FILES "${FILE}")
 endforeach()
 
-# Create the library
-if(NOT TARGET MarkdownToDocumentation)
-    add_library(MarkdownToDocumentation STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
-endif()
+# Create executable
+add_executable(MarkdownTests  ${SOURCE_FILES} ${HEADER_FILES})
+set_target_properties(MarkdownTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 
-# Include directories
-target_include_directories(MarkdownToDocumentation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Enable precompiled headers
-set(PCH_HEADER "pch.h")
-
+# Set compiler options
 if(MSVC)
-    target_precompile_headers(MarkdownToDocumentation PRIVATE ${PCH_HEADER})
-endif()
-
-# Include these by default in all CPP files.
-if (MSVC)
-    target_compile_options(MarkdownToDocumentation PRIVATE "/FI${PCH_HEADER}")
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    target_compile_options(MarkdownToDocumentation PRIVATE "-include ${PCH_HEADER}")
-endif()
-
-# Platform-specific settings
-if(WIN32)
-    target_compile_definitions(MarkdownToDocumentation PRIVATE _WINDOWS)
-    target_compile_options(MarkdownToDocumentation PRIVATE
+    target_compile_definitions(MarkdownTests PRIVATE _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(MarkdownTests PRIVATE
       /W3
-      /permissive-
-      /Zc:preprocessor
-      /MP
       
       # Ensure Tools Debug and Debug have symbols.
       $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
@@ -80,23 +56,48 @@ if(WIN32)
     )
 endif()
 
+# Include directories
+target_include_directories(MarkdownTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Enable precompiled headers
+set(PCH_HEADER "pch.h")
+
+if(MSVC)
+    target_precompile_headers(MarkdownTests PRIVATE ${PCH_HEADER})
+endif()
+
+# Include these by default in all CPP files.
+if (MSVC)
+    target_compile_options(MarkdownTests PRIVATE "/FI${PCH_HEADER}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(MarkdownTests PRIVATE "-include ${PCH_HEADER}")
+endif()
+
+# Platform-specific settings
+if(WIN32)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE _CONSOLE)
+endif()
+
 # Set configurations
-foreach(OUTPUTCONFIG Debug Release Tools_Debug)
+foreach(OUTPUTCONFIG Debug Release)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(MarkdownToDocumentation PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "MarkdownToDocumentation_${OUTPUTCONFIG}"
+    set_target_properties(MarkdownTests PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "MarkdownTests_${OUTPUTCONFIG}"
     )
 endforeach()
 
+# Get packages (must occur before projects below)
+NugetInclude("gtest" MarkdownTests)
+set_target_properties(MarkdownTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
+
 # Link libraries
-add_subdirectory(../../../FatedQuest.Libraries/Logger Logger)
-add_subdirectory(../../../FatedQuest.Libraries/StandardOperations StandardOperations)
+add_subdirectory(../Logger Logger)
+add_subdirectory(../Markdown Markdown)
 
 # Link dependencies
-target_link_libraries(MarkdownToDocumentation PRIVATE
+target_link_libraries(MarkdownTests PRIVATE
     Logger
-    StandardOperations
+    Markdown
+    $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
+    $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )
-
-# Get Packages
-#NugetInclude("rapidxml" MarkdownToDocumentation)

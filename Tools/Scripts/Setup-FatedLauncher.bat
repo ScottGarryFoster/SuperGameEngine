@@ -17,4 +17,4 @@ call BuildAndDeploy-FatedLauncher.bat
 REM Launch the Launcher
 call Launch-FatedLauncher.bat
 
-pause
+REM pause
