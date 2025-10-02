@@ -1,2 +1,8 @@
-#include "E:/Development/SuperGameEngine-Myriad/Tools/DocumentationSiteGenerator/build/Markdown/CMakeFiles/Markdown.dir/Debug/cmake_pch.hxx"
 #include "MarkdownDocumentParser.h"
+
+using namespace FatedQuestLibraries;
+
+std::vector<std::shared_ptr<DocumentElement>> MarkdownDocumentParser::ParseDocument(const std::string& filepath)
+{
+    return {};
+}

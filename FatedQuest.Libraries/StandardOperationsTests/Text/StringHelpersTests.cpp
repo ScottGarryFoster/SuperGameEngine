@@ -196,4 +196,86 @@ namespace FatedQuestLibraries_StandardOperations_Text
     }
 
 #pragma endregion
+
+#pragma region Trim
+
+    TEST_F(StringHelpersTests, Trim_ReturnsGiven_WhenNoSpacesAreOnEitherSide)
+    {
+        // Arrange
+        std::string given = "I am text";
+        std::string expected = "I am text";
+
+        // Act
+        std::string actual = StringHelpers::Trim(given);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(StringHelpersTests, Trim_TrimsLeftSpaces_WhenSpacesAreFoundLeft)
+    {
+        // Arrange
+        std::string given = "  I am text";
+        std::string expected = "I am text";
+
+        // Act
+        std::string actual = StringHelpers::Trim(given);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(StringHelpersTests, Trim_TrimsRightSpaces_WhenSpacesAreFoundRight)
+    {
+        // Arrange
+        std::string given = "I am text  ";
+        std::string expected = "I am text";
+
+        // Act
+        std::string actual = StringHelpers::Trim(given);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(StringHelpersTests, Trim_TrimsBothSideSpaces_WhenSpacesAreFoundOnBothSides)
+    {
+        // Arrange
+        std::string given = "  I am text  ";
+        std::string expected = "I am text";
+
+        // Act
+        std::string actual = StringHelpers::Trim(given);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(StringHelpersTests, Trim_ReturnsEmpty_WhenGivenAllSpaces)
+    {
+        // Arrange
+        std::string given = "  ";
+        std::string expected = {};
+
+        // Act
+        std::string actual = StringHelpers::Trim(given);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(StringHelpersTests, Trim_ReturnsEmpty_WhenGivenEmpty)
+    {
+        // Arrange
+        std::string given = {};
+        std::string expected = {};
+
+        // Act
+        std::string actual = StringHelpers::Trim(given);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+#pragma endregion
 }

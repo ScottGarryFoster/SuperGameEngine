@@ -1,0 +1,24 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        Describes the type of a single aspect of a markdown document.
+    </EnumComment>
+    <EnumName Name="MarkdownElementType">
+         <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Paragraph>
+            A paragraph of text.
+        </Paragraph>
+        <Heading1>
+            Top Level Heading
+        </Heading1>
+        <Table>
+            Tile is hovered or should be rendered as such.
+            If this is not paired with an action assume only hover has occured.
+        </Table>
+    </EnumName>
+</SuperEnum>
