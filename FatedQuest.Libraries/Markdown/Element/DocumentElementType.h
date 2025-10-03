@@ -29,6 +29,16 @@ namespace FatedQuestLibraries
         /// </summary>
         Heading1,
 
+        Heading2,
+
+        Heading3,
+
+        Heading4,
+
+        Heading5,
+
+        Heading6,
+
         /// <summary>
         /// Tile is hovered or should be rendered as such.
         /// If this is not paired with an action assume only hover has occured.
@@ -51,6 +61,11 @@ namespace FatedQuestLibraries
             {
                 DocumentElementType::Paragraph,
                 DocumentElementType::Heading1,
+                DocumentElementType::Heading2,
+                DocumentElementType::Heading3,
+                DocumentElementType::Heading4,
+                DocumentElementType::Heading5,
+                DocumentElementType::Heading6,
                 DocumentElementType::Table,
             };
             
@@ -63,6 +78,11 @@ namespace FatedQuestLibraries
             {
                 DocumentElementType::Paragraph,
                 DocumentElementType::Heading1,
+                DocumentElementType::Heading2,
+                DocumentElementType::Heading3,
+                DocumentElementType::Heading4,
+                DocumentElementType::Heading5,
+                DocumentElementType::Heading6,
                 DocumentElementType::Table,
             };
             
@@ -75,6 +95,11 @@ namespace FatedQuestLibraries
             {
                 "Paragraph",
                 "Heading1",
+                "Heading2",
+                "Heading3",
+                "Heading4",
+                "Heading5",
+                "Heading6",
                 "Table",
             };
             
@@ -88,6 +113,11 @@ namespace FatedQuestLibraries
                 case DocumentElementType::Unknown: return "Unknown";
                 case DocumentElementType::Paragraph: return "Paragraph";
                 case DocumentElementType::Heading1: return "Heading1";
+                case DocumentElementType::Heading2: return "Heading2";
+                case DocumentElementType::Heading3: return "Heading3";
+                case DocumentElementType::Heading4: return "Heading4";
+                case DocumentElementType::Heading5: return "Heading5";
+                case DocumentElementType::Heading6: return "Heading6";
                 case DocumentElementType::Table: return "Table";
             }
             
@@ -101,6 +131,11 @@ namespace FatedQuestLibraries
                 if (value == "Unknown") return DocumentElementType::Unknown;
                 if (value == "Paragraph") return DocumentElementType::Paragraph;
                 if (value == "Heading1") return DocumentElementType::Heading1;
+                if (value == "Heading2") return DocumentElementType::Heading2;
+                if (value == "Heading3") return DocumentElementType::Heading3;
+                if (value == "Heading4") return DocumentElementType::Heading4;
+                if (value == "Heading5") return DocumentElementType::Heading5;
+                if (value == "Heading6") return DocumentElementType::Heading6;
                 if (value == "Table") return DocumentElementType::Table;
             }
             else
@@ -109,6 +144,11 @@ namespace FatedQuestLibraries
                 if (valueLower == "unknown") return DocumentElementType::Unknown;
                 if (valueLower == "paragraph") return DocumentElementType::Paragraph;
                 if (valueLower == "heading1") return DocumentElementType::Heading1;
+                if (valueLower == "heading2") return DocumentElementType::Heading2;
+                if (valueLower == "heading3") return DocumentElementType::Heading3;
+                if (valueLower == "heading4") return DocumentElementType::Heading4;
+                if (valueLower == "heading5") return DocumentElementType::Heading5;
+                if (valueLower == "heading6") return DocumentElementType::Heading6;
                 if (valueLower == "table") return DocumentElementType::Table;
             }
             

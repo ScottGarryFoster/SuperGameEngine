@@ -16,6 +16,11 @@
         <Heading1>
             Top Level Heading
         </Heading1>
+        <Heading2 />
+        <Heading3 />
+        <Heading4 />
+        <Heading5 />
+        <Heading6 />
         <Table>
             Tile is hovered or should be rendered as such.
             If this is not paired with an action assume only hover has occured.

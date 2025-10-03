@@ -29,6 +29,16 @@ namespace FatedQuestLibraries
         /// </summary>
         Heading1,
 
+        Heading2,
+
+        Heading3,
+
+        Heading4,
+
+        Heading5,
+
+        Heading6,
+
         /// <summary>
         /// Tile is hovered or should be rendered as such.
         /// If this is not paired with an action assume only hover has occured.
@@ -51,6 +61,11 @@ namespace FatedQuestLibraries
             {
                 MarkdownElementType::Paragraph,
                 MarkdownElementType::Heading1,
+                MarkdownElementType::Heading2,
+                MarkdownElementType::Heading3,
+                MarkdownElementType::Heading4,
+                MarkdownElementType::Heading5,
+                MarkdownElementType::Heading6,
                 MarkdownElementType::Table,
             };
             
@@ -63,6 +78,11 @@ namespace FatedQuestLibraries
             {
                 MarkdownElementType::Paragraph,
                 MarkdownElementType::Heading1,
+                MarkdownElementType::Heading2,
+                MarkdownElementType::Heading3,
+                MarkdownElementType::Heading4,
+                MarkdownElementType::Heading5,
+                MarkdownElementType::Heading6,
                 MarkdownElementType::Table,
             };
             
@@ -75,6 +95,11 @@ namespace FatedQuestLibraries
             {
                 "Paragraph",
                 "Heading1",
+                "Heading2",
+                "Heading3",
+                "Heading4",
+                "Heading5",
+                "Heading6",
                 "Table",
             };
             
@@ -88,6 +113,11 @@ namespace FatedQuestLibraries
                 case MarkdownElementType::Unknown: return "Unknown";
                 case MarkdownElementType::Paragraph: return "Paragraph";
                 case MarkdownElementType::Heading1: return "Heading1";
+                case MarkdownElementType::Heading2: return "Heading2";
+                case MarkdownElementType::Heading3: return "Heading3";
+                case MarkdownElementType::Heading4: return "Heading4";
+                case MarkdownElementType::Heading5: return "Heading5";
+                case MarkdownElementType::Heading6: return "Heading6";
                 case MarkdownElementType::Table: return "Table";
             }
             
@@ -101,6 +131,11 @@ namespace FatedQuestLibraries
                 if (value == "Unknown") return MarkdownElementType::Unknown;
                 if (value == "Paragraph") return MarkdownElementType::Paragraph;
                 if (value == "Heading1") return MarkdownElementType::Heading1;
+                if (value == "Heading2") return MarkdownElementType::Heading2;
+                if (value == "Heading3") return MarkdownElementType::Heading3;
+                if (value == "Heading4") return MarkdownElementType::Heading4;
+                if (value == "Heading5") return MarkdownElementType::Heading5;
+                if (value == "Heading6") return MarkdownElementType::Heading6;
                 if (value == "Table") return MarkdownElementType::Table;
             }
             else
@@ -109,6 +144,11 @@ namespace FatedQuestLibraries
                 if (valueLower == "unknown") return MarkdownElementType::Unknown;
                 if (valueLower == "paragraph") return MarkdownElementType::Paragraph;
                 if (valueLower == "heading1") return MarkdownElementType::Heading1;
+                if (valueLower == "heading2") return MarkdownElementType::Heading2;
+                if (valueLower == "heading3") return MarkdownElementType::Heading3;
+                if (valueLower == "heading4") return MarkdownElementType::Heading4;
+                if (valueLower == "heading5") return MarkdownElementType::Heading5;
+                if (valueLower == "heading6") return MarkdownElementType::Heading6;
                 if (valueLower == "table") return MarkdownElementType::Table;
             }
             
