@@ -7,8 +7,7 @@ using namespace FatedQuestLibraries;
 
 MarkdownHeading::MarkdownHeading(const std::string& input)
 {
-    std::string rawHeadingInput = StringHelpers::Trim(input);
-    std::tuple<DocumentElementType, MarkdownElementType, std::string> headingLevel = GetHeadingLevel(rawHeadingInput);
+    std::tuple<DocumentElementType, MarkdownElementType, std::string> headingLevel = GetHeadingLevel(input);
     m_documentElementType = std::get<0>(headingLevel);
     m_markdownElementType = std::get<1>(headingLevel);
 
@@ -56,19 +55,27 @@ std::string MarkdownHeading::Render() const
     return m_markdownRender;
 }
 
+bool MarkdownHeading::IsInputValidForElement(const std::string& input) const
+{
+    std::tuple<DocumentElementType, MarkdownElementType, std::string> headingLevel = GetHeadingLevel(input);
+    MarkdownElementType elementType = std::get<1>(headingLevel);
+    return elementType != MarkdownElementType::Unknown;
+}
+
 std::tuple<DocumentElementType, MarkdownElementType, std::string> MarkdownHeading::GetHeadingLevel(const std::string& input) const
 {
-    std::tuple answer = { DocumentElementType::Unknown, MarkdownElementType::Unknown, input };
-    if (input.empty())
+    std::string rawInput = StringHelpers::Trim(input);
+    std::tuple answer = { DocumentElementType::Unknown, MarkdownElementType::Unknown, rawInput };
+    if (rawInput.empty())
     {
         return answer;
     }
 
-    std::string headingText = input;
+    std::string headingText = rawInput;
     int heading = 0;
-    if (input[0] == '#')
+    if (rawInput[0] == '#')
     {
-        std::tuple<int, std::string> extracted = ExtractHeadingTextAndLevelWhenUsingHashNotation(input);
+        std::tuple<int, std::string> extracted = ExtractHeadingTextAndLevelWhenUsingHashNotation(rawInput);
         heading = std::get<0>(extracted);
         headingText = std::get<1>(extracted);
     }

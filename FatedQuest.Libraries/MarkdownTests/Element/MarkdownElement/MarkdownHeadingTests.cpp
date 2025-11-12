@@ -20,6 +20,8 @@ namespace FatedQuestLibraries_Element_MarkdownElement
 
         std::shared_ptr<ConsoleLog> m_logger;
 
+        const char* m_errorMessage = "Error: Not a heading.";
+
         void SetUp() override
         {
             m_logger = std::make_shared<ConsoleLog>();
@@ -44,8 +46,8 @@ namespace FatedQuestLibraries_Element_MarkdownElement
     {
         // Arrange
         std::string given = "Heading";
-        std::string render = "Error: Not a heading.";
-        std::string text = "Error: Not a heading.";
+        std::string render = m_errorMessage;
+        std::string text = m_errorMessage;
         auto expectedDocumentElementType = DocumentElementType::Unknown;
         auto expectedMarkdownElementType = MarkdownElementType::Unknown;
 
@@ -69,8 +71,8 @@ namespace FatedQuestLibraries_Element_MarkdownElement
     {
         // Arrange
         std::string given = "#Heading";
-        std::string render = "Error: Not a heading.";
-        std::string text = "Error: Not a heading.";
+        std::string render = m_errorMessage;
+        std::string text = m_errorMessage;
         auto expectedDocumentElementType = DocumentElementType::Unknown;
         auto expectedMarkdownElementType = MarkdownElementType::Unknown;
 
@@ -94,8 +96,8 @@ namespace FatedQuestLibraries_Element_MarkdownElement
     {
         // Arrange
         std::string given = "#";
-        std::string render = "Error: Not a heading.";
-        std::string text = "Error: Not a heading.";
+        std::string render = m_errorMessage;
+        std::string text = m_errorMessage;
         auto expectedDocumentElementType = DocumentElementType::Unknown;
         auto expectedMarkdownElementType = MarkdownElementType::Unknown;
 
@@ -119,8 +121,8 @@ namespace FatedQuestLibraries_Element_MarkdownElement
     {
         // Arrange
         std::string given = {};
-        std::string render = "Error: Not a heading.";
-        std::string text = "Error: Not a heading.";
+        std::string render = m_errorMessage;
+        std::string text = m_errorMessage;
         auto expectedDocumentElementType = DocumentElementType::Unknown;
         auto expectedMarkdownElementType = MarkdownElementType::Unknown;
 
@@ -501,6 +503,56 @@ namespace FatedQuestLibraries_Element_MarkdownElement
         std::string text = "#Valid";
         auto expectedDocumentElementType = DocumentElementType::Heading1;
         auto expectedMarkdownElementType = MarkdownElementType::Heading1;
+
+        // Act
+        auto testClass = std::make_shared<MarkdownHeading>(given);
+
+        // Assert
+        ASSERT_EQ(expectedDocumentElementType, testClass->GetType())
+            << "DocumentElementType did not match. "
+            << "Expected: " << EDocumentElementType::ToString(expectedDocumentElementType)
+            << " Actual: " << EDocumentElementType::ToString(testClass->GetType());
+        ASSERT_EQ(expectedMarkdownElementType, testClass->GetMarkdownType())
+            << "MarkdownElementType did not match. "
+            << "Expected: " << EMarkdownElementType::ToString(expectedMarkdownElementType)
+            << " Actual: " << EMarkdownElementType::ToString(testClass->GetMarkdownType());
+        ASSERT_EQ(text, testClass->GetText()) << "GetText did not match.";
+        ASSERT_EQ(render, testClass->Render()) << "Render did not match.";
+    }
+
+    TEST_F(MarkdownHeadingTests, OnConstruction_CreatesHeading_WhenFirstCharacterOfTextIsLitteral)
+    {
+        // Arrange
+        std::string given = "# \\#Valid";
+        std::string render = "# \\#Valid";
+        std::string text = "\\#Valid";
+        auto expectedDocumentElementType = DocumentElementType::Heading1;
+        auto expectedMarkdownElementType = MarkdownElementType::Heading1;
+
+        // Act
+        auto testClass = std::make_shared<MarkdownHeading>(given);
+
+        // Assert
+        ASSERT_EQ(expectedDocumentElementType, testClass->GetType())
+            << "DocumentElementType did not match. "
+            << "Expected: " << EDocumentElementType::ToString(expectedDocumentElementType)
+            << " Actual: " << EDocumentElementType::ToString(testClass->GetType());
+        ASSERT_EQ(expectedMarkdownElementType, testClass->GetMarkdownType())
+            << "MarkdownElementType did not match. "
+            << "Expected: " << EMarkdownElementType::ToString(expectedMarkdownElementType)
+            << " Actual: " << EMarkdownElementType::ToString(testClass->GetMarkdownType());
+        ASSERT_EQ(text, testClass->GetText()) << "GetText did not match.";
+        ASSERT_EQ(render, testClass->Render()) << "Render did not match.";
+    }
+
+    TEST_F(MarkdownHeadingTests, OnConstruction_DoesNotCreateHeading_WhenFirstCharacterIsLitteral)
+    {
+        // Arrange
+        std::string given = "\\# #Invalid";
+        std::string render = m_errorMessage;
+        std::string text = m_errorMessage;
+        auto expectedDocumentElementType = DocumentElementType::Unknown;
+        auto expectedMarkdownElementType = MarkdownElementType::Unknown;
 
         // Act
         auto testClass = std::make_shared<MarkdownHeading>(given);

@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        Describes whether the text segement has a special behaviour applied to it outside of styling.
+    </EnumComment>
+    <EnumName Name="MarkdownTextStyleSpecialAttribute">
+        <None>
+            Just styling.
+        </None>
+        <Link>
+            Hyperlink to a location.
+        </Link>
+        <Image>
+            An inline image.
+        </Image>
+    </EnumName>
+</SuperEnum>
