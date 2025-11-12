@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "StringHelpers.h"
 
 #include "CaseSensitivity.h"
@@ -39,62 +40,26 @@ std::string StringHelpers::Trim(const std::string& input)
 {
     if (input.empty())
     {
-        return std::string();
+        return {};
     }
 
-    size_t end = input.length();
+    auto start = 
+        std::find_if_not(
+        input.begin(), input.end(),
+        [](unsigned char ch) { return std::isspace(ch); });
 
-    std::string copy = std::string();
-    bool found = false;
-    if (input[0] == ' ')
+    // The string is all whitespace
+    if (start == input.end())
     {
-        for (size_t i = 0; i < input.length(); ++i)
-        {
-            if (found)
-            {
-                copy += input[i];
-            }
-            else if (input[i] != ' ')
-            {
-                found = true;
-                copy += input[i];
-            }
-        }
-    }
-    else
-    {
-        copy = input;
+        return {};
     }
 
-    // If all whitespace
-    if (copy.empty())
-    {
-        return std::string();
-    }
+    auto end = 
+        std::find_if_not(
+        input.rbegin(), input.rend(),
+        [](unsigned char ch) { return std::isspace(ch); }).base();
 
-    std::string returnn = std::string();
-    if (copy[copy.length() - 1] == ' ')
-    {
-        for (size_t i = copy.length() - 1; i > 0; --i)
-        {
-            if (copy[i] != ' ')
-            {
-                end = i;
-                break;
-            }
-        }
-
-        for (size_t i = 0; i < end + 1; ++i)
-        {
-            returnn += copy[i];
-        }
-    }
-    else
-    {
-        returnn = copy;
-    }
-
-    return returnn;
+    return { start, end };
 }
 
 void StringHelpers::ConvertToLower(std::string& input)

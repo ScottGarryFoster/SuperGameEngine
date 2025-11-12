@@ -66,6 +66,24 @@ namespace SuperGameInput
         return lhs;
     }
 
+    inline KeyOrButtonState operator ^ (KeyOrButtonState lhs, KeyOrButtonState rhs)
+    {
+        using T = std::underlying_type_t <KeyOrButtonState>;
+        return static_cast<KeyOrButtonState>(static_cast<T>(lhs) ^ static_cast<T>(rhs));
+    }
+
+    inline KeyOrButtonState& operator ^= (KeyOrButtonState& lhs, KeyOrButtonState rhs)
+    {
+        lhs = lhs ^ rhs;
+        return lhs;
+    }
+
+    inline KeyOrButtonState operator ~ (KeyOrButtonState lhs)
+    {
+        using T = std::underlying_type_t <KeyOrButtonState>;
+        return static_cast<KeyOrButtonState>(~static_cast<T>(lhs));
+    }
+
     /// <summary>
     /// Accompanies enums to provide extra functionality.
     /// </summary>
@@ -116,16 +134,46 @@ namespace SuperGameInput
 
         static std::string ToString(KeyOrButtonState value)
         {
-            switch (value)
+            if(value == KeyOrButtonState::Unpressed)
             {
-                case KeyOrButtonState::Unknown: return "Unknown";
-                case KeyOrButtonState::Unpressed: return "Unpressed";
-                case KeyOrButtonState::Pressed: return "Pressed";
-                case KeyOrButtonState::Down: return "Down";
-                case KeyOrButtonState::Up: return "Up";
+                return "Unpressed";
             }
             
-            return "Unknown";
+            std::vector<std::string> entries;
+            if(HasFlag(value,KeyOrButtonState::Unknown))
+            {
+                entries.emplace_back("Unknown");
+            }
+            if(HasFlag(value,KeyOrButtonState::Unpressed))
+            {
+                entries.emplace_back("Unpressed");
+            }
+            if(HasFlag(value,KeyOrButtonState::Pressed))
+            {
+                entries.emplace_back("Pressed");
+            }
+            if(HasFlag(value,KeyOrButtonState::Down))
+            {
+                entries.emplace_back("Down");
+            }
+            if(HasFlag(value,KeyOrButtonState::Up))
+            {
+                entries.emplace_back("Up");
+            }
+            
+            std::string returnToString = {};
+            for (const std::string& entry : entries)
+            {
+                if (returnToString.empty())
+                {
+                    returnToString = entry;
+                }
+                else
+                {
+                    returnToString += " | " + entry;
+                }
+            }
+            return returnToString;
         }
 
         static KeyOrButtonState FromString(std::string value, bool checkCase = true)

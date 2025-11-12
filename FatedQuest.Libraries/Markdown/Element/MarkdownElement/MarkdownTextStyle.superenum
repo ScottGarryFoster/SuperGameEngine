@@ -1,0 +1,18 @@
+<SuperEnum Type="BitFlag">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="FatedQuestLibraries" />
+    <EnumComment>
+        Describes how to display text using basic styles from markdown.
+    </EnumComment>
+    <EnumName Name="MarkdownTextStyle">
+        <Plain />
+        <Bold />
+        <Italic />
+        <Strike />
+        <Highlight />
+        <InlineCode />
+        <Underline />
+    </EnumName>
+</SuperEnum>

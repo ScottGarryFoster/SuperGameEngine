@@ -14,4 +14,4 @@ if errorlevel 1 (
 REM Build and Deploy 
 call BuildAndDeploy-SuperGenerator.bat
 
-pause
+rem pause

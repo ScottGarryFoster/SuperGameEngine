@@ -656,7 +656,16 @@ std::string SuperEnum::PrintEnumHelper(int indents)
     output += PrintToVector(indents);
     output += PrintToVectorValues(indents);
     output += PrintGroups(indents);
-    output += PrintToString(indents);
+
+    // Standard ToString does not make sense for bitflags as many items could be set.
+    if (m_enumType == SuperEnumType::BitFlag)
+    {
+        output += PrintToStringBitFlag(indents);
+    }
+    else
+    {
+        output += PrintToString(indents);
+    }
     output += PrintFromString(indents);
 
     if (m_enumType == SuperEnumType::BitFlag)
@@ -805,6 +814,66 @@ std::string SuperEnum::PrintToString(int indents)
     output += PrintIndents(indents) + "}\n";
     output += PrintIndents(indents) + "\n";
     output += PrintIndents(indents) + "return \"" + GetUnknownValue() + "\";\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    return output;
+}
+
+std::string SuperEnum::PrintToStringBitFlag(int indents)
+{
+    if (!m_enumName.Parsed)
+    {
+        return std::string();
+    }
+
+    
+
+    std::string output = {};
+
+    output += "\n";
+    output += PrintIndents(indents) + "static std::string ToString(" + m_enumName.Value + " value)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+        output += PrintIndents(indents) + "if(value == " + m_enumName.Value + "::" + GetMinEnumValue() + ")\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+            output += PrintIndents(indents) + "return \"" + GetMinEnumValue() + "\";\n";
+        --indents;
+        output += PrintIndents(indents) + "}\n";
+    output += PrintIndents(indents) + "\n";
+
+    output += PrintIndents(indents) + "std::vector<std::string> entries;\n";
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        output += PrintIndents(indents) + "if(HasFlag(value," + m_enumName.Value + "::" + enumValue->Value + "))\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+            output += PrintIndents(indents) + "entries.emplace_back(\"" + enumValue->Value + "\");\n";
+        --indents;
+        output += PrintIndents(indents) + "}\n";
+    }
+    output += PrintIndents(indents) + "\n";
+
+    output += PrintIndents(indents) + "std::string returnToString = {};\n";
+    output += PrintIndents(indents) + "for (const std::string& entry : entries)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+        output += PrintIndents(indents) + "if (returnToString.empty())\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+            output += PrintIndents(indents) + "returnToString = entry;\n";
+        --indents;
+        output += PrintIndents(indents) + "}\n";
+        output += PrintIndents(indents) + "else\n";
+        output += PrintIndents(indents) + "{\n";
+        ++indents;
+            output += PrintIndents(indents) + "returnToString += \" | \" + entry;\n";
+        --indents;
+        output += PrintIndents(indents) + "}\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+
+    output += PrintIndents(indents) + "return returnToString;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     return output;
@@ -1023,6 +1092,8 @@ std::string SuperEnum::PrintSingleComment(const std::string& rawComment, int ind
 std::string SuperEnum::PrintFlagMethods(int indents)
 {
     std::string output = {};
+
+    // |
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator | (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
@@ -1041,6 +1112,7 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += PrintIndents(indents) + "}\n";
     output += "\n";
 
+    // &
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator & (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
@@ -1057,6 +1129,36 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += PrintIndents(indents) + "return lhs;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
+    output += "\n";
+
+    // ^
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator ^ (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value + ">;\n";
+    output += PrintIndents(indents) + "return static_cast<" + m_enumName.Value + ">(static_cast<T>(lhs) ^ static_cast<T>(rhs));\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += "\n";
+
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator ^= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "lhs = lhs ^ rhs;\n";
+    output += PrintIndents(indents) + "return lhs;\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    output += "\n";
+
+    // ~
+    output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator ~ (" + m_enumName.Value + " lhs)\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "using T = std::underlying_type_t <" + m_enumName.Value + ">;\n";
+    output += PrintIndents(indents) + "return static_cast<" + m_enumName.Value + ">(~static_cast<T>(lhs));\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+
 
     return output;
 }

@@ -60,6 +60,24 @@ namespace SuperGameTools
         return lhs;
     }
 
+    inline AssetTileInteractionRawState operator ^ (AssetTileInteractionRawState lhs, AssetTileInteractionRawState rhs)
+    {
+        using T = std::underlying_type_t <AssetTileInteractionRawState>;
+        return static_cast<AssetTileInteractionRawState>(static_cast<T>(lhs) ^ static_cast<T>(rhs));
+    }
+
+    inline AssetTileInteractionRawState& operator ^= (AssetTileInteractionRawState& lhs, AssetTileInteractionRawState rhs)
+    {
+        lhs = lhs ^ rhs;
+        return lhs;
+    }
+
+    inline AssetTileInteractionRawState operator ~ (AssetTileInteractionRawState lhs)
+    {
+        using T = std::underlying_type_t <AssetTileInteractionRawState>;
+        return static_cast<AssetTileInteractionRawState>(~static_cast<T>(lhs));
+    }
+
     /// <summary>
     /// Accompanies enums to provide extra functionality.
     /// </summary>
@@ -110,15 +128,42 @@ namespace SuperGameTools
 
         static std::string ToString(AssetTileInteractionRawState value)
         {
-            switch (value)
+            if(value == AssetTileInteractionRawState::NoInteraction)
             {
-                case AssetTileInteractionRawState::NoInteraction: return "NoInteraction";
-                case AssetTileInteractionRawState::Hover: return "Hover";
-                case AssetTileInteractionRawState::LeftClickDown: return "LeftClickDown";
-                case AssetTileInteractionRawState::LeftClickReleased: return "LeftClickReleased";
+                return "NoInteraction";
             }
             
-            return "NoInteraction";
+            std::vector<std::string> entries;
+            if(HasFlag(value,AssetTileInteractionRawState::NoInteraction))
+            {
+                entries.emplace_back("NoInteraction");
+            }
+            if(HasFlag(value,AssetTileInteractionRawState::Hover))
+            {
+                entries.emplace_back("Hover");
+            }
+            if(HasFlag(value,AssetTileInteractionRawState::LeftClickDown))
+            {
+                entries.emplace_back("LeftClickDown");
+            }
+            if(HasFlag(value,AssetTileInteractionRawState::LeftClickReleased))
+            {
+                entries.emplace_back("LeftClickReleased");
+            }
+            
+            std::string returnToString = {};
+            for (const std::string& entry : entries)
+            {
+                if (returnToString.empty())
+                {
+                    returnToString = entry;
+                }
+                else
+                {
+                    returnToString += " | " + entry;
+                }
+            }
+            return returnToString;
         }
 
         static AssetTileInteractionRawState FromString(std::string value, bool checkCase = true)
