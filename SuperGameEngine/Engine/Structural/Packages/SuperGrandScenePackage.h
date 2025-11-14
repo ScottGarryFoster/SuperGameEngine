@@ -44,13 +44,13 @@ namespace SuperGameEngine
         /// Given to Tools and Engine to provide Input.
         /// </summary>
         /// <returns>Given to Tools and Engine to provide Input. </returns>
-        virtual std::shared_ptr<InputHandler> GetInput() const override;
+        virtual std::shared_ptr<SuperGameInput::InputHandler> GetInput() const override;
 
         /// <summary>
         /// Given to Tools and Engine to provide Input.
         /// </summary>
         /// <param name="inputHandler">Given to Tools and Engine to provide Input. </param>
-        virtual void SetInputHandler(const std::shared_ptr<InputHandler>& inputHandler);
+        virtual void SetInputHandler(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler);
 
         /// <summary>
         /// Gets a scene load package based on the Grand Scene Package.
@@ -85,7 +85,7 @@ namespace SuperGameEngine
         /// <summary>
         /// Given to Tools and Engine to provide Input.
         /// </summary>
-        std::shared_ptr<InputHandler> m_inputHandler;
+        std::shared_ptr<SuperGameInput::InputHandler> m_inputHandler;
 
         /// <summary>
         /// Attempts to create a scene load package.

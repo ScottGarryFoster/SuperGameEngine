@@ -63,13 +63,13 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     
 }
 
-void DebugEngine::GiveInput(const std::shared_ptr<SDLInputManager>& inputManager)
+void DebugEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager)
 {
     m_inputManager = inputManager;
 
     if (m_grandSceneLoadPackage)
     {
-        m_grandSceneLoadPackage->SetInputHandler(std::static_pointer_cast<InputHandler>(m_inputManager));
+        m_grandSceneLoadPackage->SetInputHandler(m_inputManager);
     }
 }
 

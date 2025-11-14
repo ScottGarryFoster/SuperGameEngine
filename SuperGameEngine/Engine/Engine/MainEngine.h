@@ -4,12 +4,24 @@
 
 namespace SuperGameEngine
 {
+    class EngineTextureManager;
+    class GrandScene;
+    class SuperGameTime;
+    class TextureManager;
+    class GrandScenePackage;
+    class SuperGrandScenePackage;
+    class DebugLogger;
+
     /// <summary>
     /// Main game engine.
     /// </summary>
-    class MainEngine : public Engine
+    class MainEngine : public virtual Engine
     {
     public:
+
+        MainEngine();
+        ~MainEngine();
+
         /// <summary>
         /// Gives the engine a renderer.
         /// This can be called multiple times whilst the application is open
@@ -62,5 +74,66 @@ namespace SuperGameEngine
         /// Called when the window is torndown.
         /// </summary>
         virtual void WindowTeardown() override;
-};
+
+    private:
+
+#ifdef _DEBUG
+        /// <summary>
+        /// Allows this to log issues to the console.
+        /// </summary>
+        std::shared_ptr<DebugLogger> m_logger;
+#endif
+
+        /// <summary>
+        /// Handles and updates user input.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// Everything a grand scene needs to operate.
+        /// </summary>
+        //std::shared_ptr<GrandScenePackage> m_grandSceneLoadPackage;
+
+        /// <summary>
+        /// Creates, stores and manages all textures in the engine.
+        /// </summary>
+        std::shared_ptr<EngineTextureManager> m_textureManager;
+
+        /// <summary>
+        /// Keeps track of time whilst the engine is running.
+        /// </summary>
+        std::shared_ptr<SuperGameTime> m_gameTime;
+
+        /// <summary>
+        /// Holds all scenes.
+        /// </summary>
+        std::shared_ptr<GrandScene> m_grandScene;
+
+        /// <summary>
+        /// The renderer to use for all textures.
+        /// This needs to be at the level of SDL Renderers as this is one level down from the engine entry.
+        /// </summary>
+        std::shared_ptr<SDLRendererReader> m_renderer;
+
+        /// <summary>
+        /// Everything a grand scene needs to operate.
+        /// </summary>
+        std::shared_ptr<GrandScenePackage> m_grandSceneLoadPackage;
+
+        /// <summary>
+        /// True when the engine has loaded.
+        /// </summary>
+        bool m_haveLoaded;
+
+        /// <summary>
+        /// Sets up the engine for first time loading into a game.
+        /// </summary>
+        void Setup();
+
+        /// <summary>
+        /// Creates the Grand Scene Package.
+        /// </summary>
+        /// <returns>The created grand scene package. </returns>
+        std::shared_ptr<GrandScenePackage> CreateGrandScenePackage();
+    };
 }

@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <memory>
-#include "../Engine/Graphics/Texture/SDLRendererReader.h"
 #include "ApplicationOperationState.h"
 
 namespace SuperGameInput
@@ -12,6 +11,8 @@ namespace SuperGameInput
 
 namespace SuperGameEngine
 {
+    class SDLRendererReader;
+
     /// <summary>
     /// An object capable of running applications such as games or tools.
     /// </summary>

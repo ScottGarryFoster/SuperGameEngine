@@ -30,7 +30,7 @@ namespace SuperGameEngine
     /// <summary>
     /// An engine just for debugging. It is independent from other engines.
     /// </summary>
-    class DebugEngine : public Engine
+    class DebugEngine : public virtual Engine
     {
     public:
         DebugEngine();
