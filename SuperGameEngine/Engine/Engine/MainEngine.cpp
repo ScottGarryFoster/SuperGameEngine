@@ -109,14 +109,14 @@ void MainEngine::Setup()
         return;
     }
 
-    m_haveLoaded = true;
-
     m_grandScene = std::make_shared<SuperGrandScene>();
     m_grandSceneLoadPackage = CreateGrandScenePackage();
     m_grandScene->Setup(m_grandSceneLoadPackage);
 
     // TODO: #220 Change this to the scene loaded from properties.
     m_grandScene->CreateAndAddNewScene("savedOut.scene");
+
+    m_haveLoaded = true;
 }
 
 std::shared_ptr<GrandScenePackage> MainEngine::CreateGrandScenePackage()
@@ -129,13 +129,13 @@ std::shared_ptr<GrandScenePackage> MainEngine::CreateGrandScenePackage()
 
     if (!m_inputManager)
     {
-        Log::Error("No input package. Cannot load scene.", "DebugEngine::CreateGrandScenePackage");
+        Log::Error("No input package. Cannot load scene.", "MainEngine::CreateGrandScenePackage");
         return {};
     }
 
     if (!m_renderer)
     {
-        Log::Error("No Renderer. Cannot load scene.", "DebugEngine::CreateGrandScenePackage");
+        Log::Error("No Renderer. Cannot load scene.", "MainEngine::CreateGrandScenePackage");
         return {};
     }
 

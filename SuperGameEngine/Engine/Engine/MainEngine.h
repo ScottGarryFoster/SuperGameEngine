@@ -2,6 +2,8 @@
 #include "../EngineEntry/Engine.h"
 #include <SDL.h>
 
+#include "Factory/EngineFactory.h"
+
 namespace SuperGameEngine
 {
     class EngineTextureManager;
@@ -136,4 +138,6 @@ namespace SuperGameEngine
         /// <returns>The created grand scene package. </returns>
         std::shared_ptr<GrandScenePackage> CreateGrandScenePackage();
     };
+
+    REGISTER_ENGINE("MainEngine", MainEngine);
 }

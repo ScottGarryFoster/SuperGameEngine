@@ -11,6 +11,7 @@ namespace SuperGameInput
 
 namespace SuperGameEngine
 {
+    class SDLEngineWindowManager;
     class EngineFactory;
 
     /// <summary>
@@ -50,11 +51,9 @@ namespace SuperGameEngine
         ApplicationOperationState RunSDLWindow(const std::string& engineType);
 
         /// <summary>
-        /// The renderer for the current window.
-        /// This will flip flop and change with windows but is the
-        /// active window.
+        /// Holds and creates the window and renderer.
         /// </summary>
-        std::shared_ptr<SDLRenderer> m_renderer;
+        std::shared_ptr<SDLEngineWindowManager> m_engineWindowManager;
 
         /// <summary>
         /// If the engine is not destroyed between loops this is the engine.

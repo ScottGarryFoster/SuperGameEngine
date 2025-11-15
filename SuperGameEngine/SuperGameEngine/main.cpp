@@ -12,6 +12,7 @@
 
 #include "../Engine/EngineEntry/EngineEntry.h"
 #include "../../FatedQuest.Libraries/Logger/Logger/Log.h"
+#include "../Engine/Engine/MainEngine.h"
 
 // Any external projects should define their components here:
 #ifdef _TOOLS
@@ -29,7 +30,7 @@ using namespace SuperGameEngine;
 int main(int argc, char* args[])
 {
     // Is not required but is nice to get this in early.
-    Log::Initialise();
+    FatedQuestLibraries::Log::Initialise();
 
 #ifdef _DEBUG
 
