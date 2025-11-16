@@ -39,7 +39,7 @@ std::shared_ptr<InputHandler> SuperGrandScenePackage::GetInput() const
     return m_inputHandler;
 }
 
-void SuperGrandScenePackage::SetInputHandler(const std::shared_ptr<InputHandler>& inputHandler)
+void SuperGrandScenePackage::SetInputHandler(const std::shared_ptr<SuperGameInput::InputHandler>& inputHandler)
 {
     m_inputHandler = inputHandler;
     AttemptToCreateAGameObjectLoadPackage();

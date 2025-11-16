@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        Describes a set of predefined locations for window spawning or movement.
+    </EnumComment>
+    <EnumName Name="WindowPredefinedPosition">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Centered>
+            Centers the window on the screen it was opened on  (at least in windows)
+        </Centered>
+    </EnumName>
+</SuperEnum>

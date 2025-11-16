@@ -11,9 +11,8 @@
 #endif
 
 #include "../Engine/EngineEntry/EngineEntry.h"
-#include "../Engine/Engine/MainEngine.h"
-#include "../Engine/DebugEngine/DebugEngine.h"
 #include "../../FatedQuest.Libraries/Logger/Logger/Log.h"
+#include "../Engine/Engine/MainEngine.h"
 
 // Any external projects should define their components here:
 #ifdef _TOOLS
@@ -25,13 +24,13 @@ using namespace SuperGameEngine;
 // The logic for the engine is split amongst Engine and library projects, with games having their own components.
 // The SuperGameEngine project is just an entry point for Engine. Engine contains all the logic for the Game Engine.
 // There is a very good reason for this - testing!
-// Try as I might, pulling in the .exe via GTest proved to either not work or become a flaky mess,
+// Try as I might, pulling in the .exe via GTest proved to either not work or became a flaky mess,
 // with the two projects split apart I could add unit tests and create a more stable Engine for many of the systems
 // within the GameEngine.
 int main(int argc, char* args[])
 {
     // Is not required but is nice to get this in early.
-    Log::Initialise();
+    FatedQuestLibraries::Log::Initialise();
 
 #ifdef _DEBUG
 
@@ -43,7 +42,7 @@ int main(int argc, char* args[])
         freopen_s(&pCerr, "CONOUT$", "w", stderr);
     #endif
 
-    std::cout << "Super Game Engine Version 0.0.7 Dev\n";
+    std::cout << "Super Game Engine Version 0.0.8 Dev\n";
 #else
 
     #ifdef _WINDOWS
@@ -55,11 +54,14 @@ int main(int argc, char* args[])
 
 #endif
 
+    // This should be set to the engine to use for the game engine
+    // MainEngine by default but you may create more.
+    const char* gameEngineClassName = "MainEngine";
 #ifdef _TOOLS
     // Attempt to load the tools project.
     if (auto entryEntryPtr = EngineEntryFactory::CreateEngineEntry("ToolsEngineEntry"))
     {
-        return entryEntryPtr->RunApplication("DebugEngine");
+        return entryEntryPtr->RunApplication(gameEngineClassName);
     }
     else
     {
@@ -71,6 +73,6 @@ int main(int argc, char* args[])
 #else
     // No need to use pointers this high in the stack.
     EngineEntry engineEntry = EngineEntry();
-    return engineEntry.RunApplication("DebugEngine");
+    return engineEntry.RunApplication(gameEngineClassName);
 #endif
 }

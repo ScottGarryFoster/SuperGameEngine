@@ -6,7 +6,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Stores and updates GameTime.
     /// </summary>
-    class SuperGameTime : public GameTime
+    class SuperGameTime : public virtual GameTime
     {
     public:
         SuperGameTime();

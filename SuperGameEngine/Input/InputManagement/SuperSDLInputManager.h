@@ -8,16 +8,15 @@
 #include "Event/WindowEvent.h"
 #include <SDL.h>
 
+#include "InputManager.h"
 #include "Event/JoyHatEvent.h"
 
 namespace SuperGameInput
 {
-    class InputManager;
-
     /// <summary>
     /// Handles and updates user input.
     /// </summary>
-    class SuperSDLInputManager : public SDLInputManager
+    class SuperSDLInputManager : public virtual SDLInputManager
     {
     public:
         virtual ~SuperSDLInputManager() override = default;

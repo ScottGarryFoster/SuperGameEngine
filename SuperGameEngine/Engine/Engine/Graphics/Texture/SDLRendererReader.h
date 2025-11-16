@@ -20,7 +20,7 @@ namespace SuperGameEngine
         /// The SDL renderer from the window.
         /// Used to create textures and render to the screen.
         /// Might be nullptr.
-        /// Might be destoryed! - So do not store it, use these methods instead.
+        /// Might be destroyed! - So do not store it, use these methods instead.
         /// Used <see ref="SDLRendererState" /> to question this.
         /// </summary>
         /// <returns>The renderer to use when rendering to screen. </returns>
@@ -38,7 +38,7 @@ namespace SuperGameEngine
         /// The SDL renderer from the window.
         /// Used to create textures and render to the screen.
         /// Might be nullptr.
-        /// Might be destoryed!
+        /// Might be destroyed!
         /// Used <see ref="SDLRendererState" /> to question this.
         /// </summary>
         SDL_Renderer* m_renderer;

@@ -28,9 +28,9 @@ namespace SuperGameEngine
 {
 
     /// <summary>
-    /// An engine just for debugging. It is independent from other engines.
+    /// An engine just for debugging. It is independent of  other engines.
     /// </summary>
-    class DebugEngine : public Engine
+    class DebugEngine : public virtual Engine
     {
     public:
         DebugEngine();
@@ -54,13 +54,26 @@ namespace SuperGameEngine
         virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
 
         /// <summary>
+        /// The data for the game.
+        /// This is loaded in the engine entry as it contains information about the window state.
+        /// </summary>
+        /// <param name="gamePackage">The data for the game. </param>
+        virtual void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) override;
+
+        /// <summary>
+        /// Give project properties which contains the information for how to treat the product.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
         /// <returns>
         /// ApplicationOperationState::Running will keep the window running.
-        /// ApplicationOperationState::Restart will restart the window at the next opertunity.
-        /// ApplicationOperationState::Close will close the game window at the next opertunity.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
         /// </returns>
         virtual ApplicationOperationState Event(SDL_Event event) override;
 
@@ -102,6 +115,11 @@ namespace SuperGameEngine
         /// Everything a grand scene needs to operate.
         /// </summary>
         std::shared_ptr<SuperGrandScenePackage> m_grandSceneLoadPackage;
+
+        /// <summary>
+        /// The data for the game.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
 
         /// <summary>
         /// Given to Tools and Engine to provide Input.

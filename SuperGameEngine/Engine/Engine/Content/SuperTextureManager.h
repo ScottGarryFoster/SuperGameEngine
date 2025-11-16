@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 
-#include "TextureManager.h"
+#include "EngineTextureManager.h"
 #include "../Graphics/Texture/SuperTexture.h"
 #include "../Graphics/Texture/SDLRendererReader.h"
 #include "../Graphics/Texture/SuperTextureWrapper.h"
@@ -20,7 +20,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Creates, stores and manages all textures in the engine.
     /// </summary>
-    class SuperTextureManager : public TextureManager, public DistributeWeakPointers<TextureManager>
+    class SuperTextureManager : public virtual EngineTextureManager, public DistributeWeakPointers<TextureManager>
     {
     public:
         explicit SuperTextureManager(
@@ -50,7 +50,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="errors">Any errors which occured after remaking textures. </param>
         /// <returns>True means there were not errors. </returns>
-        virtual bool RemakeAllTextures(std::vector<std::string>& errors);
+        virtual bool RemakeAllTextures(std::vector<std::string>& errors) override;
 
     protected:
         /// <summary>
