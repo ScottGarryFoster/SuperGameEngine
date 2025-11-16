@@ -17,6 +17,14 @@ namespace SuperGameEngine
         virtual ~SDLWindowManager();
 
         /// <summary>
+        /// Setup the window manager.
+        /// This can be run more than once and should be run if anything given fundamentally changes and
+        /// it would be better to use the data from these.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void Setup(const std::shared_ptr<ProjectProperties>& projectProperties) override;
+
+        /// <summary>
         /// Creates new window.
         /// </summary>
         /// <param name="name">Title of the window. </param>
@@ -56,6 +64,11 @@ namespace SuperGameEngine
         /// The renderer created when the window was created.
         /// </summary>
         std::shared_ptr<SDLRenderer> m_defaultRenderer;
+
+        /// <summary>
+        /// The foundational properties for setting up the project for the product.
+        /// </summary>
+        std::shared_ptr<ProjectProperties> m_projectProperties;
 
         /// <summary>
         /// All destroy operations for this level.

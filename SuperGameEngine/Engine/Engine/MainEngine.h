@@ -42,6 +42,19 @@ namespace SuperGameEngine
         virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
 
         /// <summary>
+        /// The data for the game.
+        /// This is loaded in the engine entry as it contains information about the window state.
+        /// </summary>
+        /// <param name="gamePackage">The data for the game. </param>
+        virtual void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) override;
+
+        /// <summary>
+        /// Give project properties which contains the information for how to treat the product.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
@@ -79,7 +92,7 @@ namespace SuperGameEngine
 
     private:
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && !defined(_TOOLS)
         /// <summary>
         /// Allows this to log issues to the console.
         /// </summary>
@@ -92,9 +105,14 @@ namespace SuperGameEngine
         std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
 
         /// <summary>
-        /// Everything a grand scene needs to operate.
+        /// All data for the game.
         /// </summary>
-        //std::shared_ptr<GrandScenePackage> m_grandSceneLoadPackage;
+        std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
+
+        /// <summary>
+        /// The foundational properties for setting up the project for the product.
+        /// </summary>
+        std::shared_ptr<ProjectProperties> m_projectProperties;
 
         /// <summary>
         /// Creates, stores and manages all textures in the engine.

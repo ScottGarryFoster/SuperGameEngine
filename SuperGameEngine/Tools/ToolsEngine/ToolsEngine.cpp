@@ -50,11 +50,9 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     {
         auto paths = std::make_shared<SGEPackagePaths>();
         m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
-        auto gamePackage = std::make_shared<ToolsGamePackage>();
-        gamePackage->Load(paths);
-        m_superContentManager->GiveGamePackage(gamePackage);
+        m_superContentManager->GiveGamePackage(m_gamePackage);
 
-        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, gamePackage);
+        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, m_gamePackage);
         m_superContentManager->GiveSuperTextureManager(textureManager);
 
         m_windowPackage->SetContentManager(m_superContentManager);
@@ -66,6 +64,17 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 void ToolsEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager)
 {
     m_inputManager = inputManager;
+}
+
+void ToolsEngine::GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage)
+{
+    m_gamePackage = gamePackage;
+}
+
+void ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties)
+{
+    Log::Info("ToolsEngine does not use ProjectProperties.", 
+        "ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
 void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)

@@ -73,6 +73,16 @@ void DebugEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManage
     }
 }
 
+void DebugEngine::GiveGamePackage(const std::shared_ptr<GamePackage>& gamePackage)
+{
+    m_gamePackage = gamePackage;
+}
+
+void DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties)
+{
+    Log::Info("Project properties not used.", "DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
+}
+
 ApplicationOperationState DebugEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;

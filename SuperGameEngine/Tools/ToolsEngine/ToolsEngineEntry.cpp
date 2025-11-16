@@ -11,6 +11,8 @@
 #include "Communication/ToolsEngineEntryCommunication.h"
 #include "Communication/EngineFlowPlayControl.h"
 #include "Communication/ToolsEngineControl.h"
+#include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
+#include "Engine/Foundation/ProjectPropertiesProvider.h"
 #include "Settings/ToolsLayoutSettings.h"
 #include "Settings/ToolsSettingsPaths.h"
 
@@ -30,6 +32,12 @@ ToolsEngineEntry::ToolsEngineEntry()
         std::make_shared<SimpleDocumentToXml>());
 
     m_inputManager = std::make_shared<SuperGameInput::SuperSDLInputManager>();
+
+    // TODO: Consider this reloading when the window restarts.
+    auto combinedGamePackage = std::make_shared<ToolsGamePackage>();
+    auto paths = std::make_shared<SGEPackagePaths>();
+    combinedGamePackage->Load(paths);
+    m_gamePackage = combinedGamePackage;
 }
 
 int ToolsEngineEntry::RunApplication(const std::string& engineType)
@@ -110,6 +118,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     if (m_toolsEngine)
     {
         m_Toolsrenderer->SetRenderer(renderer);
+        m_toolsEngine->GiveGamePackage(m_gamePackage);
         m_toolsEngine->GiveRenderer(m_Toolsrenderer);
         m_toolsEngine->GiveInput(m_inputManager);
         m_toolsEngine->WindowStart();
@@ -134,11 +143,16 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
                 return ApplicationOperationState::Close;
             }
 
+            auto provider = std::make_shared<ProjectPropertiesProvider>();
+            std::shared_ptr<ProjectProperties> projectProperties = provider->LoadProjectProperties(m_gamePackage);
+
             if (engine)
             {
                 m_gameRenderer->SetRenderer(renderer);
                 engine->GiveRenderer(m_gameRenderer);
                 engine->GiveInput(m_inputManager);
+                engine->GiveGamePackage(m_gamePackage);
+                engine->GiveProjectProperties(projectProperties);
                 engine->WindowStart();
             }
 

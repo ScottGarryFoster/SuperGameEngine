@@ -3,6 +3,7 @@
 #include "../../../../FatedQuest.Libraries/StandardObjects/AllReferences.h"
 #include <SDL.h>
 
+#include "Engine/Foundation/ProjectProperties.h"
 #include "Engine/Graphics/Texture/SDLRenderer.h"
 
 using namespace SuperGameEngine;
@@ -25,6 +26,11 @@ SDLWindowManager::~SDLWindowManager()
     {
         DestroySDLWindow();
     }
+}
+
+void SDLWindowManager::Setup(const std::shared_ptr<ProjectProperties>& projectProperties)
+{
+    m_projectProperties = projectProperties;
 }
 
 bool SDLWindowManager::CreateGameWindow(
@@ -51,7 +57,7 @@ bool SDLWindowManager::CreateGameWindow(
 
     // Create our window
     FPoint actualPosition = PredefinedPositionConverter(position);
-    m_window = SDL_CreateWindow(name.c_str(), actualPosition.GetX(), actualPosition.GetY(), 1280, 720, SDL_WINDOW_SHOWN);
+    m_window = SDL_CreateWindow(m_projectProperties->GetWindowTitle().c_str(), actualPosition.GetX(), actualPosition.GetY(), 1280, 720, SDL_WINDOW_SHOWN);
 
     // Make sure creating the window succeeded
     if (!m_window)

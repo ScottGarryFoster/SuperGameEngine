@@ -11,12 +11,23 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
+    class ProjectProperties;
+
     /// <summary>
     /// Provides the ability to create and manage the window the engine runs within.
     /// </summary>
     class EngineWindowManager : public virtual WindowManager
     {
     public:
+
+        /// <summary>
+        /// Setup the window manager.
+        /// This can be run more than once and should be run if anything given fundamentally changes and
+        /// it would be better to use the data from these.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void Setup(const std::shared_ptr<ProjectProperties>& projectProperties) = 0;
+
         /// <summary>
         /// Creates new window.
         /// </summary>

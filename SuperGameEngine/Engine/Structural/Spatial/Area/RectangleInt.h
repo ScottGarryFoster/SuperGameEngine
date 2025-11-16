@@ -1,8 +1,6 @@
 #pragma once
 #include "../../../FatedQuestReferences.h"
 
-using namespace FatedQuestLibraries;
-
 namespace SuperGameEngine
 {
     class Circle;
@@ -39,13 +37,13 @@ namespace SuperGameEngine
         /// Create from a Vector.
         /// </summary>
         /// <param name="other">Other vector to create from.</param>
-        RectangleInt(const FVector4I& other);
+        RectangleInt(const FatedQuestLibraries::FVector4I& other);
 
         /// <summary>
         /// Create from a Vector.
         /// </summary>
         /// <param name="other">Other vector to create from.</param>
-        RectangleInt(const std::shared_ptr<FVector4I>& other);
+        RectangleInt(const std::shared_ptr<FatedQuestLibraries::FVector4I>& other);
 
         /// <summary>
         /// Does this shape equal the other functionally.
@@ -94,13 +92,13 @@ namespace SuperGameEngine
         /// The top left X and Y point of the Rectangle.
         /// </summary>
         /// <returns>The top left X and Y point of the Rectangle. </returns>
-        [[nodiscard]] FPoint GetTopLeft() const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetTopLeft() const;
 
         /// <summary>
         /// The bottom Left X Y point of the Rectangle.
         /// </summary>
         /// <returns>The bottom Left X Y point of the Rectangle. </returns>
-        [[nodiscard]] FPoint GetBottomRight() const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetBottomRight() const;
 
         /// <summary>
         /// Sets the location of the Rectangle.
@@ -144,7 +142,7 @@ namespace SuperGameEngine
         /// Moves the shape the given distance.
         /// </summary>
         /// <param name="amount">Amount to move. </param>
-        void MoveShape(const FPoint& amount);
+        void MoveShape(const FatedQuestLibraries::FPoint& amount);
 
         /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.
@@ -213,7 +211,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="location">Location to test. </param>
         /// <returns>True means is within area. </returns>
-        [[nodiscard]] bool PointIsWithin(FPoint& location) const;
+        [[nodiscard]] bool PointIsWithin(FatedQuestLibraries::FPoint& location) const;
 
         /// <summary>
         /// Calculates the overlap amount between two shapes.
@@ -224,7 +222,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other shape to use. </param>
         /// <returns>The overlap amount. </returns>
-        [[nodiscard]] FPoint OverlapAmount(const Rectangle& other) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint OverlapAmount(const Rectangle& other) const;
 
         /// <summary>
         /// Calculates the overlap amount between two shapes.
@@ -235,7 +233,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other shape to use. </param>
         /// <returns>The overlap amount. </returns>
-        [[nodiscard]] FPoint OverlapAmount(const RectangleInt& other) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint OverlapAmount(const RectangleInt& other) const;
 
         /// <summary>
         /// Calculates the overlap amount between two shapes.
@@ -249,7 +247,7 @@ namespace SuperGameEngine
         /// Previous location to this overlap - used as a direction.
         /// </param>
         /// <returns>The overlap amount. </returns>
-        [[nodiscard]] FPoint OverlapAmount(const Rectangle& other, const FPoint& previousLocation) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint OverlapAmount(const Rectangle& other, const FatedQuestLibraries::FPoint& previousLocation) const;
 
         /// <summary>
         /// Calculates the overlap amount between two shapes.
@@ -263,7 +261,7 @@ namespace SuperGameEngine
         /// Previous location to this overlap - used as a direction.
         /// </param>
         /// <returns>The overlap amount. </returns>
-        [[nodiscard]] FPoint OverlapAmount(const RectangleInt& other, const FPoint& previousLocation) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint OverlapAmount(const RectangleInt& other, const FatedQuestLibraries::FPoint& previousLocation) const;
 
         /// <summary>
         /// Moves rectangle out of range of other Rectangle.
@@ -285,7 +283,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         /// <param name="previousLocation">Direction to move in. </param>
-        void MoveOutOfOverlapRangeOf(const Rectangle& other, const FPoint& previousLocation);
+        void MoveOutOfOverlapRangeOf(const Rectangle& other, const FatedQuestLibraries::FPoint& previousLocation);
 
         /// <summary>
         /// Moves rectangle out of range of other Rectangle.
@@ -293,7 +291,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         /// <param name="previousLocation">Direction to move in. </param>
-        void MoveOutOfOverlapRangeOf(const RectangleInt& other, const FPoint& previousLocation);
+        void MoveOutOfOverlapRangeOf(const RectangleInt& other, const FatedQuestLibraries::FPoint& previousLocation);
 
         /// <summary>
         /// Returns the location required to no overlap the shape.
@@ -301,7 +299,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         /// <returns>Location required. </returns>
-        [[nodiscard]] FPoint GetNewLocationToNotOverlap(const Rectangle& other) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const Rectangle& other) const;
 
         /// <summary>
         /// Returns the location required to no overlap the shape.
@@ -309,7 +307,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         /// <returns>Location required. </returns>
-        [[nodiscard]] FPoint GetNewLocationToNotOverlap(const RectangleInt& other) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const RectangleInt& other) const;
 
         /// <summary>
         /// Returns the location required to no overlap the shape.
@@ -318,7 +316,7 @@ namespace SuperGameEngine
         /// <param name="other">Other to move out of range of. </param>
         /// <param name="previousLocation">Direction to move in.</param>
         /// <returns>Location required. </returns>
-        [[nodiscard]] FPoint GetNewLocationToNotOverlap(const Rectangle& other, const FPoint& previousLocation) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const Rectangle& other, const FatedQuestLibraries::FPoint& previousLocation) const;
 
         /// <summary>
         /// Returns the location required to no overlap the shape.
@@ -327,7 +325,7 @@ namespace SuperGameEngine
         /// <param name="other">Other to move out of range of. </param>
         /// <param name="previousLocation">Direction to move in.</param>
         /// <returns>Location required. </returns>
-        [[nodiscard]] FPoint GetNewLocationToNotOverlap(const RectangleInt& other, const FPoint& previousLocation) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const RectangleInt& other, const FatedQuestLibraries::FPoint& previousLocation) const;
 
         /// <summary>
         /// Returns the location required to no overlap the shape.
@@ -335,7 +333,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Other to move out of range of. </param>
         /// <returns>Location required. </returns>
-        [[nodiscard]] FPoint GetNewLocationToNotOverlap(const Circle& other) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const Circle& other) const;
 
         /// <summary>
         /// Returns the closest point on the Shape to the given point.
@@ -343,7 +341,7 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="other">Point to test. </param>
         /// <returns>Closest point on shape to point.</returns>
-        [[nodiscard]] FPoint ClosestPointTo(const FPoint& other) const;
+        [[nodiscard]] FatedQuestLibraries::FPoint ClosestPointTo(const FatedQuestLibraries::FPoint& other) const;
 
         /// <summary>
         /// Returns this object as a debug string.
@@ -359,17 +357,17 @@ namespace SuperGameEngine
         /// <summary>
         /// Stores the location, top left of the rectangle.
         /// </summary>
-        FPoint m_location;
+        FatedQuestLibraries::FPoint m_location;
 
         /// <summary>
         /// Stores the width and height, X width, Y height.
         /// </summary>
-        FPoint m_size;
+        FatedQuestLibraries::FPoint m_size;
 
         /// <summary>
         /// The center of the shape.
         /// </summary>
-        FVector2D m_center;
+        FatedQuestLibraries::FVector2D m_center;
 
         /// <summary>
         /// Checks to see if the other rectangle is touching.
@@ -397,7 +395,7 @@ namespace SuperGameEngine
         /// Returns the center of the shape.
         /// </summary>
         /// <returns>Finds the center of the shape. </returns>
-        FVector2D GetCenter() const;
+        FatedQuestLibraries::FVector2D GetCenter() const;
 
         /// <summary>
         /// Returns the Center point and generates this value.
@@ -405,7 +403,7 @@ namespace SuperGameEngine
         /// <param name="location">Location of the shape. </param>
         /// <param name="size">Size of the shape. </param>
         /// <returns>Finds the center of the shape. </returns>
-        FVector2D GenerateCenter(const FPoint& location, const FPoint& size) const;
+        FatedQuestLibraries::FVector2D GenerateCenter(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FPoint& size) const;
 
         /// <summary>
         /// Returns the Center point and generates this value.
@@ -413,6 +411,6 @@ namespace SuperGameEngine
         /// <param name="location">Location of the shape. </param>
         /// <param name="size">Size of the shape. </param>
         /// <returns>Finds the center of the shape. </returns>
-        FVector2D GenerateCenter(const FVector2D& location, const FVector2D& size) const;
+        FatedQuestLibraries::FVector2D GenerateCenter(const FatedQuestLibraries::FVector2D& location, const FatedQuestLibraries::FVector2D& size) const;
     };
 }

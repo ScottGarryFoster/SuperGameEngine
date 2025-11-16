@@ -3,8 +3,6 @@
 #include "../../../FatedQuestReferences.h"
 #include "../../../Structural/Spatial/Area/RectangleInt.h"
 
-using namespace FatedQuestLibraries;
-
 namespace SuperGameEngine
 {
     /// <summary>
@@ -24,14 +22,14 @@ namespace SuperGameEngine
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
-        virtual void Draw(const FPoint& location) const = 0;
+        virtual void Draw(const FatedQuestLibraries::FPoint& location) const = 0;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        virtual void Draw(const FPoint& location, const FPoint& size) const = 0;
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FPoint& size) const = 0;
 
         /// <summary>
         /// Draws to the screen.
@@ -58,7 +56,7 @@ namespace SuperGameEngine
         /// Get the size of the Texture in Pixels.
         /// </summary>
         /// <returns>Returns the size of the Texture. </returns>
-        virtual FPoint Size() const = 0;
+        virtual FatedQuestLibraries::FPoint Size() const = 0;
     };
 
 }

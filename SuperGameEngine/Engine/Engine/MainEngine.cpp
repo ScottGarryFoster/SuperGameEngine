@@ -12,13 +12,14 @@
 #include "Structural/Scene/GrandScene.h"
 #include "Structural/Scene/SuperGrandScene.h"
 #include "Structural/Serializable/SuperSerializableParser.h"
+#include "../Structural/InternalComponents/InternalComponents.h"
+#include "Foundation/ProjectProperties.h"
 
 using namespace SuperGameEngine;
 
 MainEngine::MainEngine()
 {
-#ifdef _DEBUG
-#ifndef _TOOLS
+#if defined(_DEBUG) && !defined(_TOOLS)
 
     m_logger = std::make_shared<DebugLogger>();
     if (auto shared = Log::GetEvent().lock())
@@ -26,16 +27,13 @@ MainEngine::MainEngine()
         shared->Subscribe(m_logger);
     }
 #endif
-#endif
 
     m_haveLoaded = false;
 }
 
 MainEngine::~MainEngine()
 {
-#ifdef _DEBUG
-#ifndef _TOOLS
-
+#if defined(_DEBUG) && !defined(_TOOLS)
     if (m_logger)
     {
         if (auto shared = Log::GetEvent().lock())
@@ -43,7 +41,6 @@ MainEngine::~MainEngine()
             shared->Unsubscribe(m_logger);
         }
     }
-#endif
 #endif
 }
 
@@ -60,6 +57,16 @@ void MainEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager
     {
         superGrandScene->SetInputHandler(m_inputManager);
     }
+}
+
+void MainEngine::GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage)
+{
+    m_gamePackage = gamePackage;
+}
+
+void MainEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties)
+{
+    m_projectProperties = projectProperties;
 }
 
 ApplicationOperationState MainEngine::Event(SDL_Event event)
@@ -113,8 +120,7 @@ void MainEngine::Setup()
     m_grandSceneLoadPackage = CreateGrandScenePackage();
     m_grandScene->Setup(m_grandSceneLoadPackage);
 
-    // TODO: #220 Change this to the scene loaded from properties.
-    m_grandScene->CreateAndAddNewScene("savedOut.scene");
+    m_grandScene->CreateAndAddNewScene(m_projectProperties->GetStartScene());
 
     m_haveLoaded = true;
 }
@@ -141,17 +147,13 @@ std::shared_ptr<GrandScenePackage> MainEngine::CreateGrandScenePackage()
 
     auto grandSceneLoadPackage = std::make_shared<SuperGrandScenePackage>();
     auto contentManager = std::make_shared<SuperContentManager>();
-    auto combinedGamePackage = std::make_shared<CombinedGamePackage>();
-    auto paths = std::make_shared<SGEPackagePaths>();
-
-    combinedGamePackage->Load(paths);
-    contentManager->GiveGamePackage(combinedGamePackage);
+    contentManager->GiveGamePackage(m_gamePackage);
 
     // Loads configurations.
-    m_inputManager->Setup(combinedGamePackage);
+    m_inputManager->Setup(m_gamePackage);
 
     std::shared_ptr<SuperTextureManager> textureManager = 
-        std::make_shared<SuperTextureManager>(m_renderer, combinedGamePackage);
+        std::make_shared<SuperTextureManager>(m_renderer, m_gamePackage);
     m_textureManager = textureManager;
     textureManager->UpdateDistributedWeakPointer(m_textureManager);
     contentManager->GiveSuperTextureManager(textureManager);
@@ -166,7 +168,7 @@ std::shared_ptr<GrandScenePackage> MainEngine::CreateGrandScenePackage()
     std::shared_ptr<SceneLoadPackage> sceneLoadPackage = grandSceneLoadPackage->GetSceneLoadPackage();
     auto sceneLoader = std::make_shared<SuperSceneLoader>(sceneLoadPackage);
     auto sceneLoadCache = std::make_shared<SuperSceneStorageCache>();
-    sceneLoadCache->Setup(sceneLoader, combinedGamePackage);
+    sceneLoadCache->Setup(sceneLoader, m_gamePackage);
     contentManager->GiveSceneCache(sceneLoadCache);
 
     m_gameTime = std::make_shared<SuperGameTime>();

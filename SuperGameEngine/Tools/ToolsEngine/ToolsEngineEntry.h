@@ -102,6 +102,11 @@ namespace SuperGameTools
         /// Handles and updates user input.
         /// </summary>
         std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// All data for the game.
+        /// </summary>
+        std::shared_ptr<GamePackage> m_gamePackage;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);

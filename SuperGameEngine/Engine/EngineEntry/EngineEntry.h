@@ -4,6 +4,11 @@
 #include "ApplicationOperationState.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 
+namespace FatedQuestLibraries
+{
+    class GamePackage;
+}
+
 namespace SuperGameInput
 {
     class SDLInputManager;
@@ -13,6 +18,7 @@ namespace SuperGameEngine
 {
     class SDLEngineWindowManager;
     class EngineFactory;
+    class ProjectProperties;
 
     /// <summary>
     /// The entry point for the engine and the top most level before main.
@@ -64,5 +70,21 @@ namespace SuperGameEngine
         /// Handles and updates user input.
         /// </summary>
         std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// A directory of all paths for the game product.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
+
+        /// <summary>
+        /// The foundational properties for setting up the project for the product.
+        /// </summary>
+        std::shared_ptr<ProjectProperties> m_projectProperties;
+
+        /// <summary>
+        /// Loads the project properties.
+        /// </summary>
+        /// <returns>True means could create. </returns>
+        bool InitialiseProjectProperties();
     };
 }

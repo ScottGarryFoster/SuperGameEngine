@@ -3,10 +3,13 @@
 
 #include <Windows.h>
 
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/CombinedGamePackage.h"
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
 #include "../Engine/Factory/EngineFactory.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 #include "../.././../FatedQuest.Libraries/Logger/AllReferences.h"
 #include "../../Input/InputManagement/SuperSDLInputManager.h"
+#include "Engine/Foundation/ProjectPropertiesProvider.h"
 #include "Engine/Window/SDLWindowManager.h"
 
 using namespace SuperGameEngine;
@@ -17,6 +20,12 @@ EngineEntry::EngineEntry()
 {
     m_inputManager = std::make_shared<SuperSDLInputManager>();
     m_engineWindowManager = std::make_shared<SDLWindowManager>();
+
+    // TODO: Consider this reloading when the window restarts.
+    auto combinedGamePackage = std::make_shared<CombinedGamePackage>();
+    auto paths = std::make_shared<SGEPackagePaths>();
+    combinedGamePackage->Load(paths);
+    m_gamePackage = combinedGamePackage;
 }
 
 int EngineEntry::RunApplication(const std::string& engineType)
@@ -32,8 +41,11 @@ int EngineEntry::RunApplication(const std::string& engineType)
 
 ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineType)
 {
-    // Pointers to our window and surface
-    SDL_Window* window = nullptr;
+    if (!InitialiseProjectProperties())
+    {
+        Log::Error("Could not create Project Properties. Application aborted.");
+        return ApplicationOperationState::Close;
+    }
 
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0)
@@ -50,10 +62,8 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         return ApplicationOperationState::Close;
     }
 
+    m_engineWindowManager->Setup(m_projectProperties);
     m_engineWindowManager->CreateGameWindow("New", WindowPredefinedPosition::Centered, FPoint(1280, 720));
-
-    // Event handler
-    SDL_Event e;
 
     // Setup the engine.
     if (!m_engine)
@@ -66,9 +76,14 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         }
     }
 
+    m_engine->GiveGamePackage(m_gamePackage);
     m_engine->GiveRenderer(m_engineWindowManager->GetDefaultRenderer());
     m_engine->GiveInput(m_inputManager);
+    m_engine->GiveProjectProperties(m_projectProperties);
     m_engine->WindowStart();
+
+    // Event handler
+    SDL_Event e;
 
     Uint64 startTime = SDL_GetTicks64();
 
@@ -153,4 +168,17 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
 #endif
 
     return operationState;
+}
+
+bool EngineEntry::InitialiseProjectProperties()
+{
+    auto provider = std::make_shared<ProjectPropertiesProvider>();
+    m_projectProperties = provider->LoadProjectProperties(m_gamePackage);
+
+    if (m_projectProperties)
+    {
+        return true;
+    }
+    
+    return false;
 }
