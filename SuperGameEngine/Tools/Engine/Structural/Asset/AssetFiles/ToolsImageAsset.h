@@ -1,6 +1,6 @@
 #pragma once
 #include "ImageAsset.h"
-#include "Windows/AssetBrowser/FileManagement/ToolsAssetFile.h"
+#include "Panels/AssetBrowser/FileManagement/ToolsAssetFile.h"
 
 namespace SuperGameTools
 {

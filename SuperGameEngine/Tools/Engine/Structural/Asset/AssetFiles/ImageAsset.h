@@ -1,5 +1,5 @@
 #pragma once
-#include "Windows/AssetBrowser/FileManagement/AssetFile.h"
+#include "Panels/AssetBrowser/FileManagement/AssetFile.h"
 
 namespace SuperGameTools
 {

@@ -11,7 +11,7 @@
 #include "Engine/Structural/Asset/Template/AssetMetaData.h"
 #include "ToolsEngine/ViewElements/Menu/MenuItemView.h"
 #include "ToolsEngine/ViewElements/Menu/MenuItemViewEventArguments.h"
-#include "Windows/AssetBrowser/FileManagement/AssetFile.h"
+#include "Panels/AssetBrowser/FileManagement/AssetFile.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
