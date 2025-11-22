@@ -33,7 +33,7 @@ InspectorWindow::InspectorWindow()
 
 void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
-    WindowElement::Setup(windowPackage->GetColourPalette());
+    ToolsWindowElement::SetupWindow(windowPackage->GetColourPalette());
     m_windowPackage = windowPackage;
     m_inspectGameObject->OnMenuDelete()->Subscribe(GetWeakDistributed());
     m_inspectGameObject->Setup(m_windowPackage);
@@ -94,8 +94,7 @@ void InspectorWindow::Draw()
         return;
     }
 
-    const char* windowName = "Inspector Window";
-    if (RenderWindow(windowName))
+    if (RenderWindow(GetPanelName()))
     {
         m_inspectGameObject->Draw();
         m_inspectAssetObject->Draw();
@@ -106,7 +105,7 @@ void InspectorWindow::Draw()
         }
 
     }
-    EndWindowRender(windowName);
+    EndWindowRender(GetPanelName());
 }
 
 void InspectorWindow::TearDown()
@@ -135,4 +134,9 @@ void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         m_onMenuDeleteComponent->Invoke(arguments);
     }
+}
+
+const char* InspectorWindow::GetPanelName()
+{
+    return "Inspector Window";
 }

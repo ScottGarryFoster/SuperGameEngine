@@ -28,10 +28,9 @@
 #include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
 
-
 using namespace SuperGameTools;
 
-SceneHierarchy::SceneHierarchy() : WindowElement()
+SceneHierarchy::SceneHierarchy()
 {
     m_testPopup = false;
     m_testPopupText = {};
@@ -40,7 +39,7 @@ SceneHierarchy::SceneHierarchy() : WindowElement()
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    WindowElement::Setup(m_windowPackage->GetColourPalette());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette());
 
     const std::string method = "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)";
     if (!m_windowPackage->GetFrameworkManager())
@@ -85,8 +84,7 @@ void SceneHierarchy::Update()
 
 void SceneHierarchy::Draw()
 {
-    const char* windowName = "Scene Hierarchy";
-    if (RenderWindow(windowName))
+    if (RenderWindow(GetPanelName()))
     {
         if (m_tree)
         {
@@ -95,7 +93,7 @@ void SceneHierarchy::Draw()
 
         DrawWindowWideContextClickMenu();
     }
-    EndWindowRender(windowName);
+    EndWindowRender(GetPanelName());
         
 
     // Test popup
@@ -141,6 +139,11 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         DeleteComponent(onMenuDeleteComponent->GetComponent());
     }
+}
+
+const char* SceneHierarchy::GetPanelName()
+{
+    return "Scene Hierarchy";
 }
 
 bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)

@@ -1,7 +1,6 @@
 #pragma once
-#include "../UpdateableObject/UpdateableObject.h"
 #include "../../FatedQuestLibraries.h"
-#include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
+#include "Panels/SuperToolsPanel.h"
 
 namespace SuperGameEngine
 {
@@ -19,7 +18,7 @@ namespace SuperGameTools
     /// <summary>
     /// Holds the viewport.
     /// </summary>
-    class LoggerOutput : public UpdateableObject, public FEventObserver, public WindowElement
+    class LoggerOutput : public SuperToolsPanel, public FEventObserver
     {
     public:
         LoggerOutput();
@@ -51,6 +50,12 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+
+        /// <summary>
+        /// The name of the window to draw.
+        /// </summary>
+        /// <returns>The name of the window to draw. </returns>
+        virtual const char* GetPanelName() override;
 
     private:
 

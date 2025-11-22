@@ -26,7 +26,7 @@ AssetBrowser::~AssetBrowser()
 void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    WindowElement::Setup(m_windowPackage->GetColourPalette());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette());
 
     // Setup Selection Manager or Document Manager if you're going to in the future.
 
@@ -63,10 +63,9 @@ void AssetBrowser::Update()
 
 void AssetBrowser::Draw()
 {
-    const char* windowName = "Asset Browser";
-    RenderWindow(windowName);
+    RenderWindow(GetPanelName());
 
-    ImGuiWindow* window = ImGui::FindWindowByName(windowName);
+    ImGuiWindow* window = ImGui::FindWindowByName(GetPanelName());
     if (window->Size.x < 50 || window->Size.y < 50)
     {
         ImGui::SetWindowPos(window, ImVec2(0, 100));
@@ -75,7 +74,7 @@ void AssetBrowser::Draw()
 
     m_tileFolderRenderer->Draw();
 
-    EndWindowRender(windowName);
+    EndWindowRender(GetPanelName());
 }
 
 void AssetBrowser::TearDown()
@@ -84,4 +83,9 @@ void AssetBrowser::TearDown()
 
 void AssetBrowser::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
 {
+}
+
+const char* AssetBrowser::GetPanelName()
+{
+    return "Asset Browser";
 }

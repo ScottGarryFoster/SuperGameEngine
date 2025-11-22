@@ -4,8 +4,7 @@
 #include <vector>
 
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
-#include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
-#include "../UpdateableObject/UpdateableObject.h"
+#include "Panels/SuperToolsPanel.h"
 
 namespace SuperGameTools
 {
@@ -44,7 +43,7 @@ namespace SuperGameTools
     /// <summary>
     /// Contains the scenes and game objects.
     /// </summary>
-    class SceneHierarchy : public UpdateableObject, public FEventObserver, public WindowElement
+    class SceneHierarchy : public SuperToolsPanel, public FEventObserver
     {
     public:
         SceneHierarchy();
@@ -78,6 +77,13 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+
+        /// <summary>
+        /// The name of the window to draw.
+        /// </summary>
+        /// <returns>The name of the window to draw. </returns>
+        virtual const char* GetPanelName() override;
+
     private:
         /// <summary>
         /// Everything a Window Package might need to run.

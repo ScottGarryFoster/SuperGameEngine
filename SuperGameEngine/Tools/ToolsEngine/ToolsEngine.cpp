@@ -25,6 +25,7 @@
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 // This should be included early in the engine for the inspector.
+#include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
@@ -151,6 +152,9 @@ void ToolsEngine::Setup()
     std::shared_ptr<AssetBrowser> assetBrowserWindow = std::make_shared<AssetBrowser>();
     assetBrowserWindow->UpdateDistributedWeakPointer(assetBrowserWindow);
 
+    auto projectProperties = std::make_shared<ProjectPropertiesPanel>();
+    projectProperties->UpdateDistributedWeakPointer(projectProperties);
+
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
     // Ensure we listen to logs early.
@@ -191,4 +195,7 @@ void ToolsEngine::Setup()
 
     assetBrowserWindow->Setup(m_windowPackage);
     m_updatables.push_back(assetBrowserWindow);
+
+    projectProperties->Setup(m_windowPackage);
+    m_updatables.push_back(projectProperties);
 }

@@ -1,7 +1,6 @@
 #pragma once
-#include "../UpdateableObject/UpdateableObject.h"
 #include "../../FatedQuestLibraries.h"
-#include "../../ToolsEngine/ViewElements/Window/WindowElement.h"
+#include "Panels/SuperToolsPanel.h"
 
 namespace SuperGameEngine
 {
@@ -17,7 +16,7 @@ namespace SuperGameTools
     /// <summary>
     /// Displays assets for the game package and helps manage these. Also is the selector for the inspector and scene view.
     /// </summary>
-    class AssetBrowser : public UpdateableObject, public FatedQuestLibraries::FEventObserver, public WindowElement
+    class AssetBrowser : public SuperToolsPanel, public FatedQuestLibraries::FEventObserver
     {
     public:
         AssetBrowser();
@@ -49,6 +48,12 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
+
+        /// <summary>
+        /// The name of the window to draw.
+        /// </summary>
+        /// <returns>The name of the window to draw. </returns>
+        virtual const char* GetPanelName() override;
 
     private:
 

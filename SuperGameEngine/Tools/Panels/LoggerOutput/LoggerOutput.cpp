@@ -22,7 +22,7 @@ LoggerOutput::~LoggerOutput()
 void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    WindowElement::Setup(m_windowPackage->GetColourPalette());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette());
 
     auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Warning\Warning-25.png)");
     m_warningIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
@@ -50,10 +50,9 @@ void LoggerOutput::Update()
 
 void LoggerOutput::Draw()
 {
-    const char* windowName = "Logger Output";
-    RenderWindow(windowName);
+    RenderWindow(GetPanelName());
 
-    ImGuiWindow* window = ImGui::FindWindowByName("Logger Output");
+    ImGuiWindow* window = ImGui::FindWindowByName(GetPanelName());
     if (window->Size.x < 50 || window->Size.y < 50)
     {
         ImGui::SetWindowPos(window, ImVec2(0, 100));
@@ -108,7 +107,7 @@ void LoggerOutput::Draw()
         ImGui::EndTable();
     }
 
-    EndWindowRender(windowName);
+    EndWindowRender(GetPanelName());
 }
 
 void LoggerOutput::TearDown()
@@ -127,4 +126,9 @@ void LoggerOutput::Invoke(std::shared_ptr<FEventArguments> arguments)
 
         m_logEntries.emplace_back(logEntry);
     }
+}
+
+const char* LoggerOutput::GetPanelName()
+{
+    return "Logger Output";
 }

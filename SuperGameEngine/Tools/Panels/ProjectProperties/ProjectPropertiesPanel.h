@@ -1,17 +1,19 @@
 #pragma once
-#include <SDL_rect.h>
+#include <memory>
 
-#include "../../ToolsEngine/ViewElements/Window/ToolsWindowElement.h"
-#include "../UpdateableObject/UpdateableObject.h"
+#include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "Panels/SuperToolsPanel.h"
 
 namespace SuperGameTools
 {
-    /// <summary>
-    /// Holds the viewport.
-    /// </summary>
-    class GameViewport : public SuperToolsPanel
+    class WindowPackage;
+
+    class ProjectPropertiesPanel : public SuperToolsPanel, public FatedQuestLibraries::FEventObserver
     {
+    public:
+        ProjectPropertiesPanel();
+        virtual ~ProjectPropertiesPanel() override;
+
         /// <summary>
         /// Called once on setup.
         /// </summary>
@@ -34,32 +36,22 @@ namespace SuperGameTools
         virtual void TearDown() override;
 
         /// <summary>
+        /// Subscribed to the logger events.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
+
+        /// <summary>
         /// The name of the window to draw.
         /// </summary>
         /// <returns>The name of the window to draw. </returns>
         virtual const char* GetPanelName() override;
 
     private:
-        /// <summary>
-        /// Where to position the SDL Viewport.
-        /// </summary>
-        SDL_Rect m_viewport;
 
         /// <summary>
-        /// Wraps the SDL Renderer such that upon the death of the
-        /// SDL Window this becomes invalid and the textures wait for a
-        /// new texture.
-        /// </summary>
-        std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
-
-        /// <summary>
-        /// Everything a Window Package might need to run.
+        /// Services to run a window.
         /// </summary>
         std::shared_ptr<WindowPackage> m_windowPackage;
-
-        /// <summary>
-        /// Updates the viewport to match the window.
-        /// </summary>
-        void UpdateTheSDLViewport();
     };
 }
