@@ -136,7 +136,12 @@ void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
 }
 
-const char* InspectorWindow::GetPanelName()
+const char* InspectorWindow::GetPanelName() const
 {
     return "Inspector Window";
+}
+
+bool InspectorWindow::OpenState() const
+{
+    return true;
 }

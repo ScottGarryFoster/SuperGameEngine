@@ -32,8 +32,16 @@ bool SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>& panel)
     menuItem->OnSelected()->Subscribe(GetWeakDistributed());
     panel->OnWindowShownOrHidden()->Subscribe(GetWeakDistributed());
 
-    menuItem->GetSelected()->SetValue(true);
-    panel->ShowWindow();
+    if (panel->OpenState())
+    {
+        panel->ShowWindow();
+    }
+    else
+    {
+        panel->HideWindow();
+    }
+
+    menuItem->GetSelected()->SetValue(panel->OpenState());
 
     m_panels.insert_or_assign(uniqueName, PanelMenuPacket { .Panel = panel, .MenuItem = menuItem });
     return true;

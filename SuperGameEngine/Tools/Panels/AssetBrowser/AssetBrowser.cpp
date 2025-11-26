@@ -85,7 +85,12 @@ void AssetBrowser::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> 
 {
 }
 
-const char* AssetBrowser::GetPanelName()
+const char* AssetBrowser::GetPanelName() const
 {
     return "Asset Browser";
+}
+
+bool AssetBrowser::OpenState() const
+{
+    return true;
 }

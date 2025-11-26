@@ -39,7 +39,12 @@ void ProjectPropertiesPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventA
 {
 }
 
-const char* ProjectPropertiesPanel::GetPanelName()
+const char* ProjectPropertiesPanel::GetPanelName() const
 {
     return "Project Properties";
+}
+
+bool ProjectPropertiesPanel::OpenState() const
+{
+    return false;
 }

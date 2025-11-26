@@ -55,7 +55,14 @@ namespace SuperGameTools
         /// The name of the window to draw.
         /// </summary>
         /// <returns>The name of the window to draw. </returns>
-        virtual const char* GetPanelName() override;
+        virtual const char* GetPanelName() const override;
+
+        /// <summary>
+        /// If no settings have saved the panel state, how would you like this panel to
+        /// begin. True means open.
+        /// </summary>
+        /// <returns>True means open, provided window settings or layouts do not say otherwise. </returns>
+        virtual bool OpenState() const override;
 
     private:
 

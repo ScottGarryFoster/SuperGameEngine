@@ -141,9 +141,14 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
 }
 
-const char* SceneHierarchy::GetPanelName()
+const char* SceneHierarchy::GetPanelName() const
 {
     return "Scene Hierarchy";
+}
+
+bool SceneHierarchy::OpenState() const
+{
+    return true;
 }
 
 bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)

@@ -88,9 +88,14 @@ void GameViewport::TearDown()
 {
 }
 
-const char* GameViewport::GetPanelName()
+const char* GameViewport::GetPanelName() const
 {
     return "My Window";
+}
+
+bool GameViewport::OpenState() const
+{
+    return true;
 }
 
 void GameViewport::UpdateTheSDLViewport()

@@ -128,7 +128,12 @@ void LoggerOutput::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
 }
 
-const char* LoggerOutput::GetPanelName()
+const char* LoggerOutput::GetPanelName() const
 {
     return "Logger Output";
+}
+
+bool LoggerOutput::OpenState() const
+{
+    return true;
 }
