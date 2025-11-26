@@ -7,6 +7,7 @@
 #include "../../../Engine/Imgui/External/imgui_internal.h"
 #include "../../Engine/Graphics/ImGuiSuperTexture.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
+#include "Panels/PanelManager/PanelManager.h"
 
 using namespace SuperGameTools;
 
@@ -41,7 +42,6 @@ void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
         m_logEntries.emplace_back(logEntry);
     }
-
 }
 
 void LoggerOutput::Update()

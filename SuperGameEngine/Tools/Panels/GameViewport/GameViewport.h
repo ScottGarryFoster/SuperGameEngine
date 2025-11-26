@@ -12,6 +12,7 @@ namespace SuperGameTools
     /// </summary>
     class GameViewport : public SuperToolsPanel
     {
+    public:
         /// <summary>
         /// Called once on setup.
         /// </summary>

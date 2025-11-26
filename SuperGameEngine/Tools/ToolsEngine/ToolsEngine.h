@@ -7,6 +7,11 @@
 #include "../../Engine/Engine/Factory/EngineFactory.h"
 #include "../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace SuperGameTools
+{
+    class PanelManager;
+}
+
 namespace SuperGameEngine
 {
     class SuperContentManager;
@@ -182,6 +187,11 @@ namespace SuperGameTools
         /// Given to Tools and Engine to provide Input.
         /// </summary>
         std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// Manages panels, the visibility and layouts.
+        /// </summary>
+        std::shared_ptr<PanelManager> m_panelManager;
 
         /// <summary>
         /// Sets up the engine.

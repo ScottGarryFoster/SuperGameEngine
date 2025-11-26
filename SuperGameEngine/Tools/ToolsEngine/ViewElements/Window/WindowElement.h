@@ -2,12 +2,18 @@
 #include <memory>
 #include <string>
 
+namespace FatedQuestLibraries
+{
+    class FEventSubscriptions;
+}
+
 namespace SuperGameTools
 {
     class ColoursAndStyles;
 
     /// <summary>
     /// Renders a window using ImGui.
+    /// Called a Panel in most places as opposed to a separate window.
     /// </summary>
     class WindowElement
     {
@@ -30,6 +36,23 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="name">Name of the window.</param>
         virtual void EndWindowRender(const char* name) = 0;
+
+        /// <summary>
+        /// Shows the panel.
+        /// </summary>
+        virtual void ShowWindow() = 0;
+
+        /// <summary>
+        /// Hides the panel.
+        /// </summary>
+        virtual void HideWindow() = 0;
+
+        /// <summary>
+        /// Called when the window is shown or hidden.
+        /// </summary>
+        /// <returns>Called when the window is shown or hidden. </returns>
+        /// <remarks>Uses these arguments <see cref="SuperGameTools::ToolsWindowShownArguments" /></remarks>
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnWindowShownOrHidden() = 0;
     };
 }
 

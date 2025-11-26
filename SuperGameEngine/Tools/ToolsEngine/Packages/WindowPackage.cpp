@@ -101,3 +101,13 @@ void WindowPackage::SetAssetTemplateProvider(const std::shared_ptr<AssetTemplate
 {
     m_assetTemplateProvider = assetTemplateProvider;
 }
+
+std::shared_ptr<PanelManager> WindowPackage::GetPanelManager() const
+{
+    return m_panelManager;
+}
+
+void WindowPackage::SetPanelManager(const std::shared_ptr<PanelManager>& panelManager)
+{
+    m_panelManager = panelManager;
+}

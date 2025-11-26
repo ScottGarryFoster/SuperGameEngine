@@ -25,6 +25,7 @@
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 // This should be included early in the engine for the inspector.
+#include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
@@ -36,6 +37,12 @@ ToolsEngine::ToolsEngine()
     m_haveSetup = false;
     m_superContentManager = std::make_shared<SuperContentManager>();
     m_dockableContainer = std::make_shared<DockableContainer>();
+
+    m_panelManager = std::make_shared<SuperPanelManager>();
+    m_panelManager->UpdateDistributedWeakPointer(m_panelManager);
+    m_windowPackage->SetPanelManager(m_panelManager);
+    m_panelManager->Setup(m_windowPackage);
+
 }
 
 ToolsEngine::~ToolsEngine()
@@ -138,24 +145,29 @@ void ToolsEngine::WindowTeardown()
 void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
-    std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
+    std::shared_ptr<GameViewport> gameViewport = std::make_shared<GameViewport>();
 
     std::shared_ptr<SceneHierarchy> sceneHierarchy = std::make_shared<SceneHierarchy>();
-    sceneHierarchy->UpdateDistributedWeakPointer(sceneHierarchy);
+    sceneHierarchy->FEventObserver::UpdateDistributedWeakPointer(sceneHierarchy);
 
     std::shared_ptr<InspectorWindow> inspectorWindow = std::make_shared<InspectorWindow>();
-    inspectorWindow->UpdateDistributedWeakPointer(inspectorWindow);
+    inspectorWindow->FEventObserver::UpdateDistributedWeakPointer(inspectorWindow);
 
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
-    loggerWindow->UpdateDistributedWeakPointer(loggerWindow);
+    loggerWindow->FEventObserver::UpdateDistributedWeakPointer(loggerWindow);
 
     std::shared_ptr<AssetBrowser> assetBrowserWindow = std::make_shared<AssetBrowser>();
-    assetBrowserWindow->UpdateDistributedWeakPointer(assetBrowserWindow);
+    assetBrowserWindow->FEventObserver::UpdateDistributedWeakPointer(assetBrowserWindow);
 
     auto projectProperties = std::make_shared<ProjectPropertiesPanel>();
-    projectProperties->UpdateDistributedWeakPointer(projectProperties);
+    projectProperties->FEventObserver::UpdateDistributedWeakPointer(projectProperties);
 
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
+
+    // Must be made first as other things latch on to it.
+    menuBar->Setup(m_windowPackage);
+    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
+    m_updatables.push_back(menuBar);
 
     // Ensure we listen to logs early.
     loggerWindow->Setup(m_windowPackage);
@@ -165,11 +177,7 @@ void ToolsEngine::Setup()
         shared->Subscribe(weak);
     }
     m_updatables.push_back(loggerWindow);
-
-    // Must be made first as other things latch on to it.
-    menuBar->Setup(m_windowPackage);
-    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
-    m_updatables.push_back(menuBar);
+    m_windowPackage->GetPanelManager()->RegisterPanel(loggerWindow);
 
     // Then framework
     auto framework = std::make_shared<ToolsFrameworkManager>(m_windowPackage);
@@ -185,17 +193,22 @@ void ToolsEngine::Setup()
     // Everything else should be able to be in any order
     gameViewport->Setup(m_windowPackage);
     m_updatables.push_back(gameViewport);
+    m_windowPackage->GetPanelManager()->RegisterPanel(gameViewport);
 
     inspectorWindow->Setup(m_windowPackage);
     m_updatables.push_back(inspectorWindow);
+    m_windowPackage->GetPanelManager()->RegisterPanel(inspectorWindow);
 
     sceneHierarchy->Setup(m_windowPackage);
     inspectorWindow->OnMenuDelete()->Subscribe(sceneHierarchy);
     m_updatables.push_back(sceneHierarchy);
+    m_windowPackage->GetPanelManager()->RegisterPanel(sceneHierarchy);
 
     assetBrowserWindow->Setup(m_windowPackage);
     m_updatables.push_back(assetBrowserWindow);
+    m_windowPackage->GetPanelManager()->RegisterPanel(assetBrowserWindow);
 
     projectProperties->Setup(m_windowPackage);
     m_updatables.push_back(projectProperties);
+    m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
 }

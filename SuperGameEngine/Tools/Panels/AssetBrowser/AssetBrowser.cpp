@@ -26,7 +26,7 @@ AssetBrowser::~AssetBrowser()
 void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette());
+    SetupWindow(m_windowPackage->GetColourPalette());
 
     // Setup Selection Manager or Document Manager if you're going to in the future.
 
