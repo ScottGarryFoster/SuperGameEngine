@@ -13,21 +13,17 @@ ToolsWindowElement::ToolsWindowElement()
     m_tabIsHovered = false;
     m_windowIsShown = true;
     m_onWindowShownOrHidden = std::make_shared<FatedQuestLibraries::FEvent>();
-    m_firstWindowCalled = {};
+    m_windowUniqueName = {};
 }
 
-void ToolsWindowElement::SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles)
+void ToolsWindowElement::SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName)
 {
     m_coloursAndStyles = colorsAndStyles;
+    m_windowUniqueName = uniqueName;
 }
 
 bool ToolsWindowElement::RenderWindow(const char* name)
 {
-    if (m_firstWindowCalled.empty())
-    {
-        m_firstWindowCalled = name;
-    }
-
     if (!m_windowIsShown)
     {
         return m_windowIsShown;
@@ -66,7 +62,7 @@ void ToolsWindowElement::ShowWindow()
     m_windowIsShown = true;
     m_onWindowShownOrHidden->Invoke
         (std::make_shared<ToolsWindowShownArguments>
-        (m_windowIsShown, m_firstWindowCalled));
+        (m_windowIsShown, m_windowUniqueName));
 }
 
 void ToolsWindowElement::HideWindow()
@@ -74,7 +70,7 @@ void ToolsWindowElement::HideWindow()
     m_windowIsShown = false;
     m_onWindowShownOrHidden->Invoke
         (std::make_shared<ToolsWindowShownArguments>
-        (m_windowIsShown, m_firstWindowCalled));
+        (m_windowIsShown, m_windowUniqueName));
 }
 
 std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> ToolsWindowElement::OnWindowShownOrHidden()

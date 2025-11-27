@@ -33,8 +33,9 @@ InspectorWindow::InspectorWindow()
 
 void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
-    ToolsWindowElement::SetupWindow(windowPackage->GetColourPalette());
+    ToolsWindowElement::SetupWindow(windowPackage->GetColourPalette(), GetPanelUniqueName());
     m_windowPackage = windowPackage;
+
     m_inspectGameObject->OnMenuDelete()->Subscribe(GetWeakDistributed());
     m_inspectGameObject->Setup(m_windowPackage);
 
@@ -138,7 +139,12 @@ void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
 
 const char* InspectorWindow::GetPanelName() const
 {
-    return "Inspector Window";
+    return "Scene Inspector";
+}
+
+const char* InspectorWindow::GetPanelUniqueName() const
+{
+    return "Scene Inspector";
 }
 
 bool InspectorWindow::OpenState() const

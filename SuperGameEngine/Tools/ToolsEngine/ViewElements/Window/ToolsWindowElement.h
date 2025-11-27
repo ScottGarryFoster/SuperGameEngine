@@ -25,7 +25,8 @@ namespace SuperGameTools
         /// Sets up the window rendering code.
         /// </summary>
         /// <param name="colorsAndStyles">Helps to keep the colours and styles uniform.</param>
-        void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles) override;
+        /// <param name="uniqueName">A unique name for this window. </param>
+        void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName) override;
 
         /// <summary>
         /// Start rendering window.
@@ -84,13 +85,9 @@ namespace SuperGameTools
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onWindowShownOrHidden;
 
         /// <summary>
-        /// The first window called.
+        /// Window Unique name.
         /// </summary>
-        /// <remarks>
-        /// This is used specifically for events.
-        /// If we ever have this used for more than one window this should be an array.
-        /// </remarks>
-        std::string m_firstWindowCalled;
+        std::string m_windowUniqueName;
     };
 }
 

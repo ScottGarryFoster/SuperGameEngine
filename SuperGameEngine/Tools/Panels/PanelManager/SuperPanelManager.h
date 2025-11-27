@@ -44,7 +44,7 @@ namespace SuperGameTools
     private:
 
         /// <summary>
-        /// 
+        /// Contains pointers to everything required for a panel.
         /// </summary>
         struct PanelMenuPacket
         {
@@ -61,5 +61,11 @@ namespace SuperGameTools
         /// All registered panels.
         /// </summary>
         std::unordered_map<std::string, PanelMenuPacket> m_panels;
+
+        /// <summary>
+        /// Setup panel for the open state.
+        /// </summary>
+        /// <param name="panel">Points to the panel. </param>
+        void SetupPanelForPanelOpen(const std::shared_ptr<ToolsPanel>& panel) const;
     };
 }

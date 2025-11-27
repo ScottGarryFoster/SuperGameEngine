@@ -20,6 +20,12 @@ namespace SuperGameTools
         virtual const char* GetPanelName() const = 0;
 
         /// <summary>
+        /// The unique name of the panel. This must be unique to this panel.
+        /// </summary>
+        /// <returns>The unique name of the panel. This must be unique to this panel. </returns>
+        virtual const char* GetPanelUniqueName() const = 0;
+
+        /// <summary>
         /// If no settings have saved the panel state, how would you like this panel to
         /// begin. True means open.
         /// </summary>

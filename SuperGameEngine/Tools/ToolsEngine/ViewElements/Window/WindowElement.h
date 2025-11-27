@@ -22,7 +22,8 @@ namespace SuperGameTools
         /// Sets up the window rendering code.
         /// </summary>
         /// <param name="colorsAndStyles">Helps to keep the colours and styles uniform.</param>
-        virtual void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles) = 0;
+        /// <param name="uniqueName">A unique name for this window. </param>
+        virtual void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName) = 0;
 
         /// <summary>
         /// Start rendering window.

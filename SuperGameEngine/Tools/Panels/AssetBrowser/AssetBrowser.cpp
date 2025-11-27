@@ -26,7 +26,7 @@ AssetBrowser::~AssetBrowser()
 void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    SetupWindow(m_windowPackage->GetColourPalette());
+    SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
 
     // Setup Selection Manager or Document Manager if you're going to in the future.
 
@@ -88,6 +88,11 @@ void AssetBrowser::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> 
 const char* AssetBrowser::GetPanelName() const
 {
     return "Asset Browser";
+}
+
+const char* AssetBrowser::GetPanelUniqueName() const
+{
+    return "AssetBrowser";
 }
 
 bool AssetBrowser::OpenState() const

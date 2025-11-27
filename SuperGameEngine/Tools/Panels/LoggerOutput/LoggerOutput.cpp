@@ -23,7 +23,7 @@ LoggerOutput::~LoggerOutput()
 void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
 
     auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Warning\Warning-25.png)");
     m_warningIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
@@ -131,6 +131,11 @@ void LoggerOutput::Invoke(std::shared_ptr<FEventArguments> arguments)
 const char* LoggerOutput::GetPanelName() const
 {
     return "Logger Output";
+}
+
+const char* LoggerOutput::GetPanelUniqueName() const
+{
+    return "LoggerOutput";
 }
 
 bool LoggerOutput::OpenState() const

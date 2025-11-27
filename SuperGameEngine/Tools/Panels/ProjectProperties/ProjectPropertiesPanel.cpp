@@ -15,7 +15,7 @@ ProjectPropertiesPanel::~ProjectPropertiesPanel()
 void ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    SetupWindow(m_windowPackage->GetColourPalette());
+    SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
 }
 
 void ProjectPropertiesPanel::Update()
@@ -42,6 +42,11 @@ void ProjectPropertiesPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventA
 const char* ProjectPropertiesPanel::GetPanelName() const
 {
     return "Project Properties";
+}
+
+const char* ProjectPropertiesPanel::GetPanelUniqueName() const
+{
+    return "ProjectProperties";
 }
 
 bool ProjectPropertiesPanel::OpenState() const

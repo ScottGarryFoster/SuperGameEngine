@@ -17,7 +17,7 @@ void SuperPanelManager::Setup(const std::shared_ptr<WindowPackage>& windowPackag
 
 bool SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>& panel)
 {
-    std::string uniqueName = panel->GetPanelName();
+    std::string uniqueName = panel->GetPanelUniqueName();
     if (m_panels.contains(uniqueName))
     {
         Log::Error("Panel already registered with that name. Name: " + uniqueName,
@@ -25,25 +25,15 @@ bool SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>& panel)
         return false;
     }
 
-
     auto menuItem = std::make_shared<MenuItemView>(uniqueName, uniqueName);
     m_windowPackage->GetTopMenu()->AddInnerMenuItem("Windows", menuItem);
 
     menuItem->OnSelected()->Subscribe(GetWeakDistributed());
     panel->OnWindowShownOrHidden()->Subscribe(GetWeakDistributed());
-
-    if (panel->OpenState())
-    {
-        panel->ShowWindow();
-    }
-    else
-    {
-        panel->HideWindow();
-    }
-
-    menuItem->GetSelected()->SetValue(panel->OpenState());
-
     m_panels.insert_or_assign(uniqueName, PanelMenuPacket { .Panel = panel, .MenuItem = menuItem });
+
+    SetupPanelForPanelOpen(panel);
+
     return true;
 }
 
@@ -77,5 +67,24 @@ void SuperPanelManager::Invoke(std::shared_ptr<FEventArguments> arguments)
             bool isShown = windowShownArguments->GetNewShownValue();
             m_panels.at(uniqueName).MenuItem->GetSelected()->SetValue(isShown);
         }
+    }
+}
+
+void SuperPanelManager::SetupPanelForPanelOpen(const std::shared_ptr<ToolsPanel>& panel) const
+{
+    bool openState = panel->OpenState();
+    if (openState)
+    {
+        panel->ShowWindow();
+    }
+    else
+    {
+        panel->HideWindow();
+    }
+
+    const char* uniqueName = panel->GetPanelUniqueName();
+    if (m_panels.contains(uniqueName))
+    {
+        m_panels.at(uniqueName).MenuItem->GetSelected()->SetValue(openState);
     }
 }
