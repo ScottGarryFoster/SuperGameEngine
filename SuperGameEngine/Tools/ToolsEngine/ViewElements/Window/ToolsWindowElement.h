@@ -1,4 +1,5 @@
 #pragma once
+#include "SingleWindowLayoutSettings.h"
 #include "WindowElement.h"
 
 namespace FatedQuestLibraries
@@ -26,7 +27,8 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="colorsAndStyles">Helps to keep the colours and styles uniform.</param>
         /// <param name="uniqueName">A unique name for this window. </param>
-        void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName) override;
+        /// <param name="layoutSettings">Defines the layout for a single window. </param>
+        void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName, const SingleWindowLayoutSettings& layoutSettings) override;
 
         /// <summary>
         /// Start rendering window.
@@ -58,6 +60,17 @@ namespace SuperGameTools
         /// <remarks>Uses these arguments <see cref="SuperGameTools::ToolsWindowShownArguments" /></remarks>
         virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnWindowShownOrHidden() override;
 
+        /// <summary>
+        /// Whether the window is currently open.
+        /// </summary>
+        /// <returns>True means the window is currently open. </returns>
+        virtual bool OpenState() const override;
+
+        /// <summary>
+        /// Reset the window layout to how it began or last was set to in the layout.
+        /// </summary>
+        virtual void ResetWindowLayout() override;
+
     private:
         /// <summary>
         /// Helps to keep the colours and styles uniform.
@@ -88,6 +101,21 @@ namespace SuperGameTools
         /// Window Unique name.
         /// </summary>
         std::string m_windowUniqueName;
+
+        /// <summary>
+        /// True means the window requires some layout changes for some reason.
+        /// </summary>
+        bool m_layoutResetEvent;
+
+        /// <summary>
+        /// Defines the layout for a single window.
+        /// </summary>
+        SingleWindowLayoutSettings m_layoutSettings;
+
+        /// <summary>
+        /// Resets the window to layout settings.
+        /// </summary>
+        void ResetWindowToLayout() const;
     };
 }
 

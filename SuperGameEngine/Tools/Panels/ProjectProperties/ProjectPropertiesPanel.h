@@ -58,7 +58,12 @@ namespace SuperGameTools
         /// begin. True means open.
         /// </summary>
         /// <returns>True means open, provided window settings or layouts do not say otherwise. </returns>
-        virtual bool OpenState() const override;
+        virtual bool OnLoadOpenState() const override;
+
+        /// <summary>
+        /// Reset the panel for whatever that means, location, content etc.
+        /// </summary>
+        virtual void ResetPanel() override;
 
     private:
 

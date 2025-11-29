@@ -9,6 +9,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
+    struct SingleWindowLayoutSettings;
     class ColoursAndStyles;
 
     /// <summary>
@@ -23,7 +24,8 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="colorsAndStyles">Helps to keep the colours and styles uniform.</param>
         /// <param name="uniqueName">A unique name for this window. </param>
-        virtual void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName) = 0;
+        /// <param name="layoutSettings">Defines the layout for a single window. </param>
+        virtual void SetupWindow(const std::shared_ptr<ColoursAndStyles>& colorsAndStyles, const std::string& uniqueName, const SingleWindowLayoutSettings& layoutSettings) = 0;
 
         /// <summary>
         /// Start rendering window.
@@ -54,6 +56,17 @@ namespace SuperGameTools
         /// <returns>Called when the window is shown or hidden. </returns>
         /// <remarks>Uses these arguments <see cref="SuperGameTools::ToolsWindowShownArguments" /></remarks>
         virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnWindowShownOrHidden() = 0;
+
+        /// <summary>
+        /// Whether the window is currently open.
+        /// </summary>
+        /// <returns>True means the window is currently open. </returns>
+        virtual bool OpenState() const = 0;
+
+        /// <summary>
+        /// Reset the window layout to how it began or last was set to in the layout.
+        /// </summary>
+        virtual void ResetWindowLayout() = 0;
     };
 }
 

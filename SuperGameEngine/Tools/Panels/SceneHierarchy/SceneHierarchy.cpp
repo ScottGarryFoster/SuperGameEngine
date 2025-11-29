@@ -39,7 +39,7 @@ SceneHierarchy::SceneHierarchy()
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(), {});
 
     const std::string method = "SceneHierarchy::Setup(std::shared_ptr<WindowPackage>)";
     if (!m_windowPackage->GetFrameworkManager())
@@ -151,7 +151,7 @@ const char* SceneHierarchy::GetPanelUniqueName() const
     return "SceneHierarchy";
 }
 
-bool SceneHierarchy::OpenState() const
+bool SceneHierarchy::OnLoadOpenState() const
 {
     return true;
 }

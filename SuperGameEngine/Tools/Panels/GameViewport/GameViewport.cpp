@@ -12,7 +12,7 @@ void GameViewport::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_viewport = { 50, 50, 500, 250 };;
     m_renderer = windowPackage->GetRenderer();
     m_windowPackage = windowPackage;
-    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(), {});
 }
 
 void GameViewport::Update()
@@ -98,7 +98,7 @@ const char* GameViewport::GetPanelUniqueName() const
     return "GameViewport";
 }
 
-bool GameViewport::OpenState() const
+bool GameViewport::OnLoadOpenState() const
 {
     return true;
 }

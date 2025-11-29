@@ -15,7 +15,11 @@ ProjectPropertiesPanel::~ProjectPropertiesPanel()
 void ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
+    SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(), 
+        {
+            .ResetLayoutUsingLayouts = true,
+            .StartPosition = {.X = 50, .Y = 50}
+            });
 }
 
 void ProjectPropertiesPanel::Update()
@@ -49,7 +53,12 @@ const char* ProjectPropertiesPanel::GetPanelUniqueName() const
     return "ProjectProperties";
 }
 
-bool ProjectPropertiesPanel::OpenState() const
+bool ProjectPropertiesPanel::OnLoadOpenState() const
 {
     return false;
+}
+
+void ProjectPropertiesPanel::ResetPanel()
+{
+    ResetWindowLayout();
 }

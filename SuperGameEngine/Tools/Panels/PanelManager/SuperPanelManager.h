@@ -41,6 +41,13 @@ namespace SuperGameTools
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
+        /// <summary>
+        /// Try to find the panel provided that it has been registered.
+        /// </summary>
+        /// <param name="key">The key of the panel. Defined within the Tools panel itself. </param>
+        /// <returns>The panel or empty if could not find. </returns>
+        virtual std::shared_ptr<ToolsPanel> TryFindPanel(const std::string& key) const override;
+
     private:
 
         /// <summary>

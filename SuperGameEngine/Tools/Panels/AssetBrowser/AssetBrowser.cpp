@@ -26,7 +26,7 @@ AssetBrowser::~AssetBrowser()
 void AssetBrowser::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
+    SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(), {});
 
     // Setup Selection Manager or Document Manager if you're going to in the future.
 
@@ -95,7 +95,7 @@ const char* AssetBrowser::GetPanelUniqueName() const
     return "AssetBrowser";
 }
 
-bool AssetBrowser::OpenState() const
+bool AssetBrowser::OnLoadOpenState() const
 {
     return true;
 }

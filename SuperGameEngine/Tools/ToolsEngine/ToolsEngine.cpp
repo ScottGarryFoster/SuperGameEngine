@@ -145,7 +145,7 @@ void ToolsEngine::WindowTeardown()
 void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
-    std::shared_ptr<GameViewport> gameViewport = std::make_shared<GameViewport>();
+    menuBar->UpdateDistributedWeakPointer(menuBar);
 
     std::shared_ptr<SceneHierarchy> sceneHierarchy = std::make_shared<SceneHierarchy>();
     sceneHierarchy->FEventObserver::UpdateDistributedWeakPointer(sceneHierarchy);
@@ -191,6 +191,7 @@ void ToolsEngine::Setup()
     m_windowPackage->SetAssetTemplateProvider(assetTemplateProvider);
 
     // Everything else should be able to be in any order
+    std::shared_ptr<GameViewport> gameViewport = std::make_shared<GameViewport>();
     gameViewport->Setup(m_windowPackage);
     m_updatables.push_back(gameViewport);
     m_windowPackage->GetPanelManager()->RegisterPanel(gameViewport);
@@ -211,4 +212,7 @@ void ToolsEngine::Setup()
     projectProperties->Setup(m_windowPackage);
     m_updatables.push_back(projectProperties);
     m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
+
+    // Run last after all panels have been run.
+    menuBar->SetupPostPanels();
 }

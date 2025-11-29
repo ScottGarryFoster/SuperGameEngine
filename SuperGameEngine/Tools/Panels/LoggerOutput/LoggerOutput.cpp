@@ -23,7 +23,7 @@ LoggerOutput::~LoggerOutput()
 void LoggerOutput::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName());
+    ToolsWindowElement::SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(), {});
 
     auto texture = m_windowPackage->GetContentManager()->Texture()->GetTexture(R"(Tools\Icons\Warning\Warning-25.png)");
     m_warningIcon = std::static_pointer_cast<ImGuiSuperTexture>(texture);
@@ -138,7 +138,7 @@ const char* LoggerOutput::GetPanelUniqueName() const
     return "LoggerOutput";
 }
 
-bool LoggerOutput::OpenState() const
+bool LoggerOutput::OnLoadOpenState() const
 {
     return true;
 }

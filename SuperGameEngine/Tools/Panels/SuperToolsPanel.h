@@ -14,5 +14,10 @@ namespace SuperGameTools
     {
     public:
         SuperToolsPanel() : ToolsWindowElement() {}
+
+        /// <summary>
+        /// Reset the panel for whatever that means, location, content etc.
+        /// </summary>
+        virtual void ResetPanel() override {}
     };
 }

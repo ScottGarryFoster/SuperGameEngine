@@ -31,14 +31,10 @@ namespace SuperGameTools
         virtual bool RegisterPanel(const std::shared_ptr<ToolsPanel>& panel) = 0;
 
         /// <summary>
-        /// Registers the given panel with the manager.
-        /// Ensure a unique name is provided, this will fail the registration.
+        /// Try to find the panel provided that it has been registered.
         /// </summary>
-        /// <param name="panel">Panel to register. </param>
-        /// <returns>
-        /// True means could register.
-        /// False means it could not be registered.
-        /// </returns>
-        //virtual bool RegisterPanel(const std::weak_ptr<ToolsPanel>& panel) = 0;
+        /// <param name="key">The key of the panel. Defined within the Tools panel itself. </param>
+        /// <returns>The panel or empty if could not find. </returns>
+        virtual std::shared_ptr<ToolsPanel> TryFindPanel(const std::string& key) const = 0;
     };
 }

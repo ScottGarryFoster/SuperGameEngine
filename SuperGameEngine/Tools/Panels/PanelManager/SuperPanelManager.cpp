@@ -70,9 +70,19 @@ void SuperPanelManager::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
 }
 
+std::shared_ptr<ToolsPanel> SuperPanelManager::TryFindPanel(const std::string& key) const
+{
+    if (m_panels.contains(key))
+    {
+        return m_panels.at(key).Panel;
+    }
+
+    return {};
+}
+
 void SuperPanelManager::SetupPanelForPanelOpen(const std::shared_ptr<ToolsPanel>& panel) const
 {
-    bool openState = panel->OpenState();
+    bool openState = panel->OnLoadOpenState();
     if (openState)
     {
         panel->ShowWindow();
