@@ -14,17 +14,17 @@ std::shared_ptr<ProjectProperties> ProjectPropertiesProvider::LoadProjectPropert
     const std::shared_ptr<GamePackage>& gamePackage) const
 {
     std::string relativePath = {};
-    if (gamePackage->File()->Exists(m_prjectPropertiesFileName))
+    if (gamePackage->File()->Exists(m_projectPropertiesFileName))
     {
-        relativePath = m_prjectPropertiesFileName;
+        relativePath = m_projectPropertiesFileName;
     }
     else
     {
         for (const std::string& name : gamePackage->Directory()->ListDirectoryNames({}))
         {
-            if (gamePackage->File()->Exists(name + "\\" + m_prjectPropertiesFileName))
+            if (gamePackage->File()->Exists(name + "\\" + m_projectPropertiesFileName))
             {
-                relativePath = name + "\\" + m_prjectPropertiesFileName;
+                relativePath = name + "\\" + m_projectPropertiesFileName;
             }
         }
     }

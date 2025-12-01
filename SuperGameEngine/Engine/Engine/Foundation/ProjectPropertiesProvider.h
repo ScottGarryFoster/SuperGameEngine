@@ -31,6 +31,6 @@ namespace SuperGameEngine
         /// <summary>
         /// The file name to look for in the file system for a project properties file.
         /// </summary>
-        const char* m_prjectPropertiesFileName = "ProjectProperties.uod";
+        const char* m_projectPropertiesFileName = "ProjectProperties.uod";
     };
 }
