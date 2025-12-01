@@ -20,7 +20,7 @@ namespace SuperGameEngine
         Unknown = 0,
 
         /// <summary>
-        /// Centers the window on the screen it was openned on  (at least in windows)
+        /// Centers the window on the screen it was opened on  (at least in windows)
         /// </summary>
         Centered,
     };

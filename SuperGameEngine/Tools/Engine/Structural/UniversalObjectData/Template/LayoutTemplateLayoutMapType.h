@@ -33,7 +33,7 @@ namespace SuperGameTools
     /// <summary>
     /// Accompanies enums to provide extra functionality.
     /// </summary>
-    class EAssetTemplateLayoutMapType
+    class ELayoutTemplateLayoutMapType
     {
     public:
         static LayoutTemplateLayoutMapType Min() { return LayoutTemplateLayoutMapType::Single; }

@@ -4,15 +4,17 @@
     </Header>
     <Namespace Name="SuperGameTools" />
     <EnumComment>
-        Describes how a template might figure out if a given file is in fact the template
-        for which it is defined. For instance does the file path make a match.
+        The type of the collection stored within the mapping.
     </EnumComment>
-    <EnumName Name="AssetTemplateMatchingStyle">
+    <EnumName Name="LayoutTemplateLayoutMapType">
         <Unknown Value="0" HideFromLists="true">
             Only used for unsuccessful parsing.
         </Unknown>
-        <Extension>
-            The extension matches the given template.
-        </Extension>
+        <Single>
+            Edit only the exact Map value.
+        </Single>
+        <Array>
+            Edit by appending a number with Array values.
+        </Array>
     </EnumName>
 </SuperEnum>

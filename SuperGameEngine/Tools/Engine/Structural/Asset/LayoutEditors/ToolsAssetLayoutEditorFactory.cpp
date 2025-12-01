@@ -79,7 +79,7 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
     }
 
     Log::Error("Could not create layout for the following combination: " +
-        EUniversalStorableType::ToString(type) + " / " + EAssetTemplateLayoutMapType::ToString(maptype),
+        EUniversalStorableType::ToString(type) + " / " + ELayoutTemplateLayoutMapType::ToString(maptype),
         "ToolsAssetLayoutEditorFactory::Create(const std::shared_ptr<const StoredDocumentNode>&)");
 
     return {};
@@ -103,7 +103,7 @@ LayoutTemplateLayoutMapType ToolsAssetLayoutEditorFactory::ExtractMapType(
     auto mapType = LayoutTemplateLayoutMapType::Unknown;
     if (auto mapAttribute = node->Attribute("maptype", CaseSensitivity::IgnoreCase))
     {
-        mapType = EAssetTemplateLayoutMapType::FromString(mapAttribute->Value(), false);
+        mapType = ELayoutTemplateLayoutMapType::FromString(mapAttribute->Value(), false);
         if (mapType == LayoutTemplateLayoutMapType::Unknown)
         {
             // Do not set unknown map types to single as this suggests corruption.
