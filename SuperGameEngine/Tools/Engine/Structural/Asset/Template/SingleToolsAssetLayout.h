@@ -2,7 +2,7 @@
 #include <memory>
 #include <vector>
 
-#include "AssetLayout.h"
+#include "SingleLayout.h"
 
 namespace FatedQuestLibraries
 {
@@ -12,18 +12,18 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditorFactory;
+    class LayoutEditorFactory;
 
     /// <summary>
     /// Describes how to edit the given asset and how the data is laid out.
     /// </summary>
-    class ToolsAssetLayout : public AssetLayout
+    class SingleToolsAssetLayout : public SingleLayout
     {
     public:
 
-        ToolsAssetLayout(
+        SingleToolsAssetLayout(
             const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode,
-            const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory);
+            const std::shared_ptr<LayoutEditorFactory>& layoutFactory);
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -55,6 +55,6 @@ namespace SuperGameTools
         /// <summary>
         /// The editor providing the structure to edit the data.
         /// </summary>
-        std::vector<std::shared_ptr<const AssetLayoutEditor>> m_assetLayoutEditor;
+        std::vector<std::shared_ptr<const LayoutEditor>> m_assetLayoutEditor;
     };
 }

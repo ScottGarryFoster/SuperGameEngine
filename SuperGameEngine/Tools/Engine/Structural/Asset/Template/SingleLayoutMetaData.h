@@ -4,12 +4,12 @@
 namespace SuperGameTools
 {
     class AssetTemplate;
-    class AssetLayout;
+    class SingleLayout;
 
     /// <summary>
     /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
     /// </summary>
-    class AssetMetaData
+    class SingleLayoutMetaData
     {
     public:
 
@@ -25,7 +25,7 @@ namespace SuperGameTools
         /// itself should be treated.
         /// </summary>
         /// <returns>Describes how to edit the given asset and how the data is laid out. </returns>
-        virtual std::shared_ptr<AssetLayout> GetLayout() const = 0;
+        virtual std::shared_ptr<SingleLayout> GetLayout() const = 0;
     };
 }
 

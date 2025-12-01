@@ -7,7 +7,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditorFactory;
+    class LayoutEditorFactory;
 
     /// <summary>
     /// Loads, holds and provides <see cref="AssetTemplate"/> in a single location.
@@ -22,7 +22,7 @@ namespace SuperGameTools
         /// Retrieve all the <see cref="AssetTemplate"/> objects loaded. 
         /// </summary>
         /// <returns>All the <see cref="AssetTemplate"/> objects loaded. </returns>
-        virtual std::vector<std::shared_ptr<const AssetMetaData>> GetAssetTemplates() const override;
+        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetAssetTemplates() const override;
 
         /// <summary>
         /// Load all the asset metadata into the provider.
@@ -49,11 +49,11 @@ namespace SuperGameTools
         /// <summary>
         /// The factory to create layouts.
         /// </summary>
-        std::shared_ptr<AssetLayoutEditorFactory> m_assetLayoutEditorFactory;
+        std::shared_ptr<LayoutEditorFactory> m_assetLayoutEditorFactory;
 
         /// <summary>
         /// All asset templates.
         /// </summary>
-        std::vector<std::shared_ptr<const AssetMetaData>> m_assetTemplates;
+        std::vector<std::shared_ptr<const SingleLayoutMetaData>> m_assetTemplates;
     };
 }

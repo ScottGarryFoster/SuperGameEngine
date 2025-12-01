@@ -12,7 +12,7 @@ namespace SuperGameTools
     /// <summary>
     /// The type of the collection stored within the mapping.
     /// </summary>
-    enum class AssetTemplateLayoutMapType : uint8_t
+    enum class LayoutTemplateLayoutMapType : uint8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
@@ -36,26 +36,26 @@ namespace SuperGameTools
     class EAssetTemplateLayoutMapType
     {
     public:
-        static AssetTemplateLayoutMapType Min() { return AssetTemplateLayoutMapType::Single; }
-        static AssetTemplateLayoutMapType Max() { return AssetTemplateLayoutMapType::Array; }
+        static LayoutTemplateLayoutMapType Min() { return LayoutTemplateLayoutMapType::Single; }
+        static LayoutTemplateLayoutMapType Max() { return LayoutTemplateLayoutMapType::Array; }
 
-        static AssetTemplateLayoutMapType* ToArray()
+        static LayoutTemplateLayoutMapType* ToArray()
         {
-            static AssetTemplateLayoutMapType returnArray[] =
+            static LayoutTemplateLayoutMapType returnArray[] =
             {
-                AssetTemplateLayoutMapType::Single,
-                AssetTemplateLayoutMapType::Array,
+                LayoutTemplateLayoutMapType::Single,
+                LayoutTemplateLayoutMapType::Array,
             };
             
             return returnArray;
         }
 
-        static std::vector<AssetTemplateLayoutMapType> ToVector()
+        static std::vector<LayoutTemplateLayoutMapType> ToVector()
         {
-            static std::vector<AssetTemplateLayoutMapType> returnVector =
+            static std::vector<LayoutTemplateLayoutMapType> returnVector =
             {
-                AssetTemplateLayoutMapType::Single,
-                AssetTemplateLayoutMapType::Array,
+                LayoutTemplateLayoutMapType::Single,
+                LayoutTemplateLayoutMapType::Array,
             };
             
             return returnVector;
@@ -72,35 +72,35 @@ namespace SuperGameTools
             return returnVector;
         }
 
-        static std::string ToString(AssetTemplateLayoutMapType value)
+        static std::string ToString(LayoutTemplateLayoutMapType value)
         {
             switch (value)
             {
-                case AssetTemplateLayoutMapType::Unknown: return "Unknown";
-                case AssetTemplateLayoutMapType::Single: return "Single";
-                case AssetTemplateLayoutMapType::Array: return "Array";
+                case LayoutTemplateLayoutMapType::Unknown: return "Unknown";
+                case LayoutTemplateLayoutMapType::Single: return "Single";
+                case LayoutTemplateLayoutMapType::Array: return "Array";
             }
             
             return "Unknown";
         }
 
-        static AssetTemplateLayoutMapType FromString(std::string value, bool checkCase = true)
+        static LayoutTemplateLayoutMapType FromString(std::string value, bool checkCase = true)
         {
             if (checkCase)
             {
-                if (value == "Unknown") return AssetTemplateLayoutMapType::Unknown;
-                if (value == "Single") return AssetTemplateLayoutMapType::Single;
-                if (value == "Array") return AssetTemplateLayoutMapType::Array;
+                if (value == "Unknown") return LayoutTemplateLayoutMapType::Unknown;
+                if (value == "Single") return LayoutTemplateLayoutMapType::Single;
+                if (value == "Array") return LayoutTemplateLayoutMapType::Array;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
-                if (valueLower == "unknown") return AssetTemplateLayoutMapType::Unknown;
-                if (valueLower == "single") return AssetTemplateLayoutMapType::Single;
-                if (valueLower == "array") return AssetTemplateLayoutMapType::Array;
+                if (valueLower == "unknown") return LayoutTemplateLayoutMapType::Unknown;
+                if (valueLower == "single") return LayoutTemplateLayoutMapType::Single;
+                if (valueLower == "array") return LayoutTemplateLayoutMapType::Array;
             }
             
-            return AssetTemplateLayoutMapType::Unknown;
+            return LayoutTemplateLayoutMapType::Unknown;
         }
     
  private:

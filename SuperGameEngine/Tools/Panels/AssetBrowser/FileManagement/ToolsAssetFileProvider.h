@@ -19,7 +19,7 @@ namespace SuperGameTools
 {
     class AssetTemplateProvider;
     class FileUpdateEventArguments;
-    class AssetMetaData;
+    class SingleLayoutMetaData;
     class FileWatcher;
     class ToolsAssetFolder;
 

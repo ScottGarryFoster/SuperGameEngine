@@ -1,48 +1,46 @@
 #pragma once
-#include "AssetLayoutEditor.h"
 #include <memory>
-#include <string>
+
+namespace FatedQuestLibraries
+{
+    class ModifiableUniversalObjectData;
+}
 
 namespace SuperGameTools
 {
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
     /// </summary>
-    class AssetLayoutEditorTextInput : public virtual AssetLayoutEditor
+    class LayoutEditor
     {
     public:
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="map">Parameter to modify within the asset. </param>
-        AssetLayoutEditorTextInput(const std::string& map);
-        virtual ~AssetLayoutEditorTextInput();
+        virtual ~LayoutEditor() = default;
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
-        virtual void Update(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
+        virtual void Update(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
 
         /// <summary>
         /// Draws and may alter the data within the asset.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset.</param>
-        virtual void Draw(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
+        virtual void Draw(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
 
         /// <summary>
         /// Draws the label of the editor.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset.</param>
         virtual void DrawLabel(
-            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
 
         /// <summary>
         /// Draws the value editor for the editor.
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset.</param>
         virtual void DrawValue(
-            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
 
         /// <summary>
         /// Called when the data object is saved.
@@ -50,18 +48,6 @@ namespace SuperGameTools
         /// ready to be saved data, most notably things like blank strings in arrays. 
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
-        virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override {}//No op
-
-    private:
-
-        /// <summary>
-        /// The size of the text field by default (number of characters;
-        /// </summary>
-        const size_t m_defaultTextCapacity = 2048;
-
-        /// <summary>
-        /// The parameter within the Asset to modify.
-        /// </summary>
-        std::string m_map;
+        virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
     };
 }

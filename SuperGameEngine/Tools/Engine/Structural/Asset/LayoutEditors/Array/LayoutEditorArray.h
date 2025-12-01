@@ -1,5 +1,5 @@
 #pragma once
-#include "../AssetLayoutEditor.h"
+#include "../LayoutEditor.h"
 #include <memory>
 #include <string>
 
@@ -8,7 +8,7 @@ namespace SuperGameTools
     /// <summary>
     /// The array logic for Asset Layouts.
     /// </summary>
-    class AssetLayoutEditorArray
+    class LayoutEditorArray
     {
     public:
         /// <summary>

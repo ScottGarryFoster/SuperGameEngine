@@ -1,17 +1,17 @@
-#include "ToolsAssetLayout.h"
+#include "SingleToolsAssetLayout.h"
 #include "../../../../FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
-#include "Engine/Structural/Asset/LayoutEditors/AssetLayoutEditor.h"
-#include "Engine/Structural/Asset/LayoutEditors/AssetLayoutEditorFactory.h"
+#include "Engine/Structural/Asset/LayoutEditors/LayoutEditor.h"
+#include "Engine/Structural/Asset/LayoutEditors/LayoutEditorFactory.h"
 #include "../../../../ImGuiIncludes.h"
 #include "Imgui/External/imgui_internal.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-ToolsAssetLayout::ToolsAssetLayout(
+SingleToolsAssetLayout::SingleToolsAssetLayout(
     const std::shared_ptr<StoredDocumentNode>& documentNode,
-    const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory)
+    const std::shared_ptr<LayoutEditorFactory>& layoutFactory)
 {
     if (!layoutFactory)
     {
@@ -28,7 +28,7 @@ ToolsAssetLayout::ToolsAssetLayout(
         std::string nodeName = StringHelpers::ToLower(current->Name());
         if (nodeName == "data")
         {
-            std::shared_ptr<AssetLayoutEditor> layout = layoutFactory->Create(current);
+            std::shared_ptr<LayoutEditor> layout = layoutFactory->Create(current);
             if (layout)
             {
                 m_assetLayoutEditor.emplace_back(layout);
@@ -44,16 +44,16 @@ ToolsAssetLayout::ToolsAssetLayout(
     }
 }
 
-void ToolsAssetLayout::Update(
+void SingleToolsAssetLayout::Update(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
-    for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
+    for (const std::shared_ptr<const LayoutEditor>& layout : m_assetLayoutEditor)
     {
         layout->Update(universalObjectData);
     }
 }
 
-void ToolsAssetLayout::Draw(
+void SingleToolsAssetLayout::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -76,7 +76,7 @@ void ToolsAssetLayout::Draw(
             ImGuiTableColumnFlags_WidthStretch
             );
 
-        for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
+        for (const std::shared_ptr<const LayoutEditor>& layout : m_assetLayoutEditor)
         {
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
@@ -103,10 +103,10 @@ void ToolsAssetLayout::Draw(
 
 }
 
-void ToolsAssetLayout::OnSave(
+void SingleToolsAssetLayout::OnSave(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
-    for (const std::shared_ptr<const AssetLayoutEditor>& layout : m_assetLayoutEditor)
+    for (const std::shared_ptr<const LayoutEditor>& layout : m_assetLayoutEditor)
     {
         layout->OnSave(universalObjectData);
     }

@@ -8,12 +8,12 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditor;
+    class LayoutEditor;
 
     /// <summary>
     /// Creates AssetLayoutEditor objects.
     /// </summary>
-    class AssetLayoutEditorFactory
+    class LayoutEditorFactory
     {
     public:
         /// <summary>
@@ -21,7 +21,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="node">Node loaded from a document. </param>
         /// <returns>Created Asset layout or empty if invalid. </returns>
-        virtual std::shared_ptr<AssetLayoutEditor> Create(
+        virtual std::shared_ptr<LayoutEditor> Create(
             const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const = 0;
     };
 }

@@ -14,7 +14,7 @@ ToolsAssetTemplateProvider::ToolsAssetTemplateProvider(
     m_assetLayoutEditorFactory = std::make_shared<ToolsAssetLayoutEditorFactory>();
 }
 
-std::vector<std::shared_ptr<const AssetMetaData>>
+std::vector<std::shared_ptr<const SingleLayoutMetaData>>
     ToolsAssetTemplateProvider::GetAssetTemplates() const
 {
     return m_assetTemplates;

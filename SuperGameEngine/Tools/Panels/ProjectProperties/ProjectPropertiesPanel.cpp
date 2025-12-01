@@ -20,6 +20,8 @@ void ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>& windowP
             .ResetLayoutUsingLayouts = true,
             .StartPosition = {.X = 50, .Y = 50}
             });
+
+    //ProjectPropertiesProvider
 }
 
 void ProjectPropertiesPanel::Update()

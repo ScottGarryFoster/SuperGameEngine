@@ -13,7 +13,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
-    class AssetMetaData;
+    class SingleLayoutMetaData;
     class AssetFolder;
 
     /// <summary>
@@ -67,7 +67,7 @@ namespace SuperGameTools
         /// Get the metadata for this file type. This describes. how to edit the file.
         /// </summary>
         /// <returns>The metadata for this file type. This describes. how to edit the file. </returns>
-        virtual const std::shared_ptr<const AssetMetaData> GetMetaData() const = 0;
+        virtual const std::shared_ptr<const SingleLayoutMetaData> GetMetaData() const = 0;
 
         /// <summary>
         /// Gets the raw interaction state.

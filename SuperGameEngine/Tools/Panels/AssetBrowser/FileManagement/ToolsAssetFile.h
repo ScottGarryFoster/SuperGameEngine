@@ -33,7 +33,7 @@ namespace SuperGameTools
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
             const std::string& packagePath,
             const std::weak_ptr<AssetFolder>& parent,
-            const std::shared_ptr<const AssetMetaData>& assetMetaData);
+            const std::shared_ptr<const SingleLayoutMetaData>& assetMetaData);
 
         /// <summary>
         /// Gets the parent folder.
@@ -79,7 +79,7 @@ namespace SuperGameTools
         /// Get the metadata for this file type. This describes. how to edit the file.
         /// </summary>
         /// <returns>The metadata for this file type. This describes. how to edit the file. </returns>
-        virtual const std::shared_ptr<const AssetMetaData> GetMetaData() const override;
+        virtual const std::shared_ptr<const SingleLayoutMetaData> GetMetaData() const override;
 
         /// <summary>
         /// Describes the group for the selectable which helps to decide the
@@ -133,7 +133,7 @@ namespace SuperGameTools
         /// <summary>
         /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
         /// </summary>
-        std::shared_ptr<const AssetMetaData> m_assetMetaData;
+        std::shared_ptr<const SingleLayoutMetaData> m_assetMetaData;
 
         /// <summary>
         /// Out parent folder.

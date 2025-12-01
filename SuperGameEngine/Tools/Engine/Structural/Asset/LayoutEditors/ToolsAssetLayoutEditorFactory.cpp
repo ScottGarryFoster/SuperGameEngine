@@ -1,19 +1,19 @@
 #include "ToolsAssetLayoutEditorFactory.h"
 
-#include "AssetLayoutEditorFilteredDropdown.h"
-#include "AssetLayoutEditorTextInput.h"
-#include "Array/AssetLayoutEditorTextInputArray.h"
-#include "AssetLayoutEditorVector4I.h"
+#include "LayoutEditorFilteredDropdown.h"
+#include "LayoutEditorTextInput.h"
+#include "Array/LayoutEditorTextInputArray.h"
+#include "LayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
-#include "Array/AssetLayoutEditorFilteredDropdownArray.h"
-#include "Array/AssetLayoutEditorVector4IArray.h"
-#include "Engine/Structural/Asset/Template/AssetTemplateLayoutMapType.h"
+#include "Array/LayoutEditorFilteredDropdownArray.h"
+#include "Array/LayoutEditorVector4IArray.h"
+#include "Engine/Structural/Asset/Template/LayoutTemplateLayoutMapType.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
+std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
     const std::shared_ptr<const StoredDocumentNode>& node) const
 {
     if (!node)
@@ -29,8 +29,8 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
         return {};
     }
 
-    AssetTemplateLayoutMapType maptype = ExtractMapType(node);
-    if (maptype == AssetTemplateLayoutMapType::Unknown)
+    LayoutTemplateLayoutMapType maptype = ExtractMapType(node);
+    if (maptype == LayoutTemplateLayoutMapType::Unknown)
     {
         Log::Error("Unknown map type value in template.",
             "ToolsAssetLayoutEditorFactory::Create(const std::shared_ptr<const StoredDocumentNode>&)");
@@ -45,33 +45,33 @@ std::shared_ptr<AssetLayoutEditor> ToolsAssetLayoutEditorFactory::Create(
         case UniversalStorableType::String:
             switch (maptype)
             {
-                case AssetTemplateLayoutMapType::Single:
+                case LayoutTemplateLayoutMapType::Single:
                     if (enumFilters.empty())
                     {
-                        return std::make_shared<AssetLayoutEditorTextInput>(map);
+                        return std::make_shared<LayoutEditorTextInput>(map);
                     }
                     else
                     {
-                        return std::make_shared<AssetLayoutEditorFilteredDropdown>(map, enumFilters);
+                        return std::make_shared<LayoutEditorFilteredDropdown>(map, enumFilters);
                     }
-                case AssetTemplateLayoutMapType::Array:
+                case LayoutTemplateLayoutMapType::Array:
                     if (enumFilters.empty())
                     {
-                        return std::make_shared<AssetLayoutEditorTextInputArray>(map);
+                        return std::make_shared<LayoutEditorTextInputArray>(map);
                     }
                     else
                     {
-                        return std::make_shared<AssetLayoutEditorFilteredDropdownArray>(map, enumFilters);
+                        return std::make_shared<LayoutEditorFilteredDropdownArray>(map, enumFilters);
                     }
             }
             break;
         case UniversalStorableType::Vector4I:
             switch (maptype)
             {
-            case AssetTemplateLayoutMapType::Single:
-                return std::make_shared<AssetLayoutEditorVector4I>(map);
-            case AssetTemplateLayoutMapType::Array:
-                return std::make_shared<AssetLayoutEditorVector4IArray>(map);
+            case LayoutTemplateLayoutMapType::Single:
+                return std::make_shared<LayoutEditorVector4I>(map);
+            case LayoutTemplateLayoutMapType::Array:
+                return std::make_shared<LayoutEditorVector4IArray>(map);
             }
             break;
 
@@ -97,23 +97,23 @@ UniversalStorableType ToolsAssetLayoutEditorFactory::ExtractType(
     return universalStorableType;
 }
 
-AssetTemplateLayoutMapType ToolsAssetLayoutEditorFactory::ExtractMapType(
+LayoutTemplateLayoutMapType ToolsAssetLayoutEditorFactory::ExtractMapType(
     const std::shared_ptr<const StoredDocumentNode>& node) const
 {
-    auto mapType = AssetTemplateLayoutMapType::Unknown;
+    auto mapType = LayoutTemplateLayoutMapType::Unknown;
     if (auto mapAttribute = node->Attribute("maptype", CaseSensitivity::IgnoreCase))
     {
         mapType = EAssetTemplateLayoutMapType::FromString(mapAttribute->Value(), false);
-        if (mapType == AssetTemplateLayoutMapType::Unknown)
+        if (mapType == LayoutTemplateLayoutMapType::Unknown)
         {
             // Do not set unknown map types to single as this suggests corruption.
-            return AssetTemplateLayoutMapType::Unknown;
+            return LayoutTemplateLayoutMapType::Unknown;
         }
     }
 
-    if (mapType == AssetTemplateLayoutMapType::Unknown)
+    if (mapType == LayoutTemplateLayoutMapType::Unknown)
     {
-        mapType = AssetTemplateLayoutMapType::Single;
+        mapType = LayoutTemplateLayoutMapType::Single;
     }
 
     return mapType;

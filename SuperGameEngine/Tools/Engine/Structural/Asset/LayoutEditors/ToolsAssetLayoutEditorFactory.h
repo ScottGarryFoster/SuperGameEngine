@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include "AssetLayoutEditorFactory.h"
+#include "LayoutEditorFactory.h"
 
 namespace FatedQuestLibraries
 {
@@ -11,12 +11,12 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    enum class AssetTemplateLayoutMapType : uint8_t;
+    enum class LayoutTemplateLayoutMapType : uint8_t;
 
     /// <summary>
     /// Creates AssetLayoutEditor objects.
     /// </summary>
-    class ToolsAssetLayoutEditorFactory : public AssetLayoutEditorFactory
+    class ToolsAssetLayoutEditorFactory : public LayoutEditorFactory
     {
     public:
         /// <summary>
@@ -24,7 +24,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="node">Node loaded from a document. </param>
         /// <returns>Created Asset layout or empty if invalid. </returns>
-        virtual std::shared_ptr<AssetLayoutEditor> Create(
+        virtual std::shared_ptr<LayoutEditor> Create(
             const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const override;
 
     private:
@@ -41,7 +41,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="node">Node to extract from. </param>
         /// <returns>Map type or Unknown if none. </returns>
-        AssetTemplateLayoutMapType ExtractMapType(
+        LayoutTemplateLayoutMapType ExtractMapType(
             const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const;
 
         /// <summary>

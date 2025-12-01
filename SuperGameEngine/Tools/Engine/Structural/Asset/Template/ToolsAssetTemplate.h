@@ -6,21 +6,13 @@
 
 namespace FatedQuestLibraries
 {
+    class StoredDocumentNode;
     class StoredDocument;
 }
 
 namespace SuperGameTools
 {
     enum class AssetTemplateCreationMethod : uint8_t;
-}
-
-namespace FatedQuestLibraries
-{
-    class StoredDocumentNode;
-}
-
-namespace SuperGameTools
-{
     enum class AssetTemplateMatchingStyle : uint8_t;
 
     /// <summary>

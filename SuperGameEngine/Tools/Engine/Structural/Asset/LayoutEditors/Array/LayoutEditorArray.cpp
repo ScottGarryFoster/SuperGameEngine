@@ -1,4 +1,4 @@
-#include "AssetLayoutEditorArray.h"
+#include "LayoutEditorArray.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "../../../../../ImGuiIncludes.h"
@@ -6,7 +6,7 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-void AssetLayoutEditorArray::DrawValueInTable(
+void LayoutEditorArray::DrawValueInTable(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
     const std::string& map) const
 {
@@ -75,7 +75,7 @@ void AssetLayoutEditorArray::DrawValueInTable(
     ImGui::EndGroup();
 }
 
-bool AssetLayoutEditorArray::DrawASingleRow(
+bool LayoutEditorArray::DrawASingleRow(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, 
     size_t arrayIndex,
     const std::string& map) const
@@ -104,7 +104,7 @@ bool AssetLayoutEditorArray::DrawASingleRow(
     return !deleteEntry;
 }
 
-std::string AssetLayoutEditorArray::GetFullEntryName(const std::string& map, size_t index) const
+std::string LayoutEditorArray::GetFullEntryName(const std::string& map, size_t index) const
 {
     return map + std::to_string(index);
 }

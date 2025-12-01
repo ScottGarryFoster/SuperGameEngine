@@ -1,7 +1,7 @@
 #include "ToolsAssetFolder.h"
 #include "ToolsAssetFile.h"
 #include "../../../FatedQuestLibraries.h"
-#include "Engine/Structural/Asset/Template/AssetMetaData.h"
+#include "Engine/Structural/Asset/Template/SingleLayoutMetaData.h"
 #include "../../../Engine/Structural/Asset/ToolsAssetTemplateProvider.h"
 #include "../../../Engine/Structural/Asset/Template/AssetTemplate.h"
 #include "Engine/Structural/Asset/AssetFiles/ToolsImageAsset.h"
@@ -95,7 +95,7 @@ void ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>& parent
 
 std::shared_ptr<AssetFile> ToolsAssetFolder::CreateAssetFile(const std::string& packagePath)
 {
-    for (const std::shared_ptr<const AssetMetaData>& metaData : m_assetTemplateProvider->GetAssetTemplates())
+    for (const std::shared_ptr<const SingleLayoutMetaData>& metaData : m_assetTemplateProvider->GetAssetTemplates())
     {
         if (metaData->GetTemplate())
         {
@@ -114,7 +114,7 @@ std::shared_ptr<AssetFile> ToolsAssetFolder::CreateAssetFile(const std::string& 
 
 std::shared_ptr<AssetFile> ToolsAssetFolder::CreateAssetFile(
     const std::string& packagePath,
-    const std::shared_ptr<const AssetMetaData>& metaData)
+    const std::shared_ptr<const SingleLayoutMetaData>& metaData)
 {
     switch (metaData->GetTemplate()->GetAssetFileType())
     {

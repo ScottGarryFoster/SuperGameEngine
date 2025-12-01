@@ -1,24 +1,27 @@
 #pragma once
-#include "../AssetLayoutEditor.h"
+#include "../LayoutEditor.h"
 #include <memory>
 #include <string>
+#include <vector>
 
-#include "AssetLayoutEditorArray.h"
+#include "LayoutEditorArray.h"
 
 namespace SuperGameTools
 {
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
+    /// This represents a vector input as an array of vectors.
     /// </summary>
-    class AssetLayoutEditorTextInputArray : public virtual AssetLayoutEditor, AssetLayoutEditorArray
+    class LayoutEditorVector4IArray : public virtual LayoutEditor, LayoutEditorArray
     {
     public:
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
-        AssetLayoutEditorTextInputArray(const std::string& map);
-        virtual ~AssetLayoutEditorTextInputArray();
+        /// <param name="values">Values to filter to. </param>
+        LayoutEditorVector4IArray(const std::string& map);
+        virtual ~LayoutEditorVector4IArray();
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -97,15 +100,22 @@ namespace SuperGameTools
             size_t arrayIndex) const override;
 
     private:
-
         /// <summary>
         /// The size of the text field by default (number of characters;
         /// </summary>
-        const size_t m_defaultTextCapacity = 2048;
+        const uint16_t m_defaultTextCapacity = 2048;
 
         /// <summary>
         /// The parameter within the Asset to modify.
         /// </summary>
         std::string m_map;
+
+        /// <summary>
+        /// Draw a text box.
+        /// </summary>
+        /// <param name="label">Label text. </param>
+        /// <param name="value">Value in the box. </param>
+        /// <returns>True means changed. </returns>
+        bool TextInput(const std::string& label, std::string& value) const;
     };
 }

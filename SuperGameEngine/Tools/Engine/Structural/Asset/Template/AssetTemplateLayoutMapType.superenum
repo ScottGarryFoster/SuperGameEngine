@@ -6,7 +6,7 @@
     <EnumComment>
         The type of the collection stored within the mapping.
     </EnumComment>
-    <EnumName Name="AssetTemplateLayoutMapType">
+    <EnumName Name="LayoutTemplateLayoutMapType">
         <Unknown Value="0" HideFromLists="true">
             Only used for unsuccessful parsing.
         </Unknown>

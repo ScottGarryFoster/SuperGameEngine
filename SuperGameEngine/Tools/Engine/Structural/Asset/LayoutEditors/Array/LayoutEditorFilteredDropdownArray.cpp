@@ -1,4 +1,4 @@
-#include "AssetLayoutEditorFilteredDropdownArray.h"
+#include "LayoutEditorFilteredDropdownArray.h"
 #include "../../../../../ImGuiIncludes.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
@@ -6,7 +6,7 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-AssetLayoutEditorFilteredDropdownArray::AssetLayoutEditorFilteredDropdownArray(const std::string& map,
+LayoutEditorFilteredDropdownArray::LayoutEditorFilteredDropdownArray(const std::string& map,
     const std::vector<std::string>& values)
 {
     m_map = map;
@@ -26,16 +26,16 @@ AssetLayoutEditorFilteredDropdownArray::AssetLayoutEditorFilteredDropdownArray(c
     }
 }
 
-AssetLayoutEditorFilteredDropdownArray::~AssetLayoutEditorFilteredDropdownArray()
+LayoutEditorFilteredDropdownArray::~LayoutEditorFilteredDropdownArray()
 {
 }
 
-void AssetLayoutEditorFilteredDropdownArray::Update(
+void LayoutEditorFilteredDropdownArray::Update(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void AssetLayoutEditorFilteredDropdownArray::Draw(
+void LayoutEditorFilteredDropdownArray::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -51,7 +51,7 @@ void AssetLayoutEditorFilteredDropdownArray::Draw(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorFilteredDropdownArray::DrawLabel(
+void LayoutEditorFilteredDropdownArray::DrawLabel(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -65,13 +65,13 @@ void AssetLayoutEditorFilteredDropdownArray::DrawLabel(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorFilteredDropdownArray::DrawValue(
+void LayoutEditorFilteredDropdownArray::DrawValue(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawValueInTable(universalObjectData, m_map);
 }
 
-void AssetLayoutEditorFilteredDropdownArray::OnSave(
+void LayoutEditorFilteredDropdownArray::OnSave(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     // Ensure there is a value for anything in the list.
@@ -97,7 +97,7 @@ void AssetLayoutEditorFilteredDropdownArray::OnSave(
     }
 }
 
-void AssetLayoutEditorFilteredDropdownArray::DrawSingleValue(
+void LayoutEditorFilteredDropdownArray::DrawSingleValue(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
     const std::string& map) const
 {
@@ -143,7 +143,7 @@ void AssetLayoutEditorFilteredDropdownArray::DrawSingleValue(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorFilteredDropdownArray::AddEntry(
+void LayoutEditorFilteredDropdownArray::AddEntry(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
     size_t arrayIndex,
     const std::string& map) const
@@ -151,7 +151,7 @@ void AssetLayoutEditorFilteredDropdownArray::AddEntry(
     universalObjectData->SetString(GetFullEntryName(map, arrayIndex), m_values.at(0));
 }
 
-void AssetLayoutEditorFilteredDropdownArray::RemoveEntry(
+void LayoutEditorFilteredDropdownArray::RemoveEntry(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
     size_t arrayIndex,
     const std::string& map) const
@@ -178,7 +178,7 @@ void AssetLayoutEditorFilteredDropdownArray::RemoveEntry(
     }
 }
 
-bool AssetLayoutEditorFilteredDropdownArray::DoesObjectContain(
+bool LayoutEditorFilteredDropdownArray::DoesObjectContain(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
     size_t arrayIndex) const
 {

@@ -1,37 +1,35 @@
-#include "AssetLayoutEditorVector4IArray.h"
-#include "FatedQuestLibraries.h"
-#include "../../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
-#include "../../../../../ImGuiIncludes.h"
+#include "LayoutEditorVector4I.h"
+#include "../../../../FatedQuestLibraries.h"
+#include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
+#include "../../../../ImGuiIncludes.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-AssetLayoutEditorVector4IArray::AssetLayoutEditorVector4IArray(
-    const std::string& map)
+LayoutEditorVector4I::LayoutEditorVector4I(const std::string& map)
 {
     m_map = map;
 }
 
-AssetLayoutEditorVector4IArray::~AssetLayoutEditorVector4IArray()
-{
-
-}
-
-void AssetLayoutEditorVector4IArray::Update(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
+LayoutEditorVector4I::~LayoutEditorVector4I()
 {
 }
 
-void AssetLayoutEditorVector4IArray::Draw(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
+void LayoutEditorVector4I::Update(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
+}
+
+void LayoutEditorVector4I::Draw(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawLabel(universalObjectData);
     ImGui::SameLine();
     DrawValue(universalObjectData);
 }
 
-void AssetLayoutEditorVector4IArray::DrawLabel(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
+void LayoutEditorVector4I::DrawLabel(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
 
@@ -45,25 +43,12 @@ void AssetLayoutEditorVector4IArray::DrawLabel(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorVector4IArray::DrawValue(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
-{
-    DrawValueInTable(universalObjectData, m_map);
-}
-
-void AssetLayoutEditorVector4IArray::OnSave(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
-{
-    // No clean up needed
-}
-
-void AssetLayoutEditorVector4IArray::DrawSingleValue(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
-    const std::string& map) const
+void LayoutEditorVector4I::DrawValue(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
 
-    std::string id = universalObjectData->GetGuid()->ToString() + "_Value_" + map;
+    std::string id = universalObjectData->GetGuid()->ToString() + "_Value_" + m_map;
     ImGui::PushID(id.c_str());
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 4));
 
@@ -73,7 +58,7 @@ void AssetLayoutEditorVector4IArray::DrawSingleValue(
     {
         bool newValue = false;
         int x = 0, y = 0, z = 0, w = 0;
-        if (std::shared_ptr<FVector4I> value = universalObjectData->GetVector4I(map))
+        if (std::shared_ptr<FVector4I> value = universalObjectData->GetVector4I(m_map))
         {
             x = value->GetX();
             y = value->GetY();
@@ -145,7 +130,7 @@ void AssetLayoutEditorVector4IArray::DrawSingleValue(
 
         if (newValue)
         {
-            universalObjectData->SetVector4I(map, x, y, z, w);
+            universalObjectData->SetVector4I(m_map, x, y, z, w);
         }
     }
 
@@ -154,48 +139,9 @@ void AssetLayoutEditorVector4IArray::DrawSingleValue(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorVector4IArray::AddEntry(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
-    const std::string& map) const
+bool LayoutEditorVector4I::TextInput(const std::string& label, std::string& value) const
 {
-    universalObjectData->SetVector4I(GetFullEntryName(map, arrayIndex), {});
-}
 
-void AssetLayoutEditorVector4IArray::RemoveEntry(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
-    const std::string& map) const
-{
-    universalObjectData->UnsetVector4I(GetFullEntryName(map, arrayIndex));
-
-    size_t i = arrayIndex + 1;
-    while (true)
-    {
-        std::string entryName = GetFullEntryName(map, i);
-        if (universalObjectData->IsVector4ILoaded(entryName))
-        {
-            universalObjectData->SetVector4I(
-                GetFullEntryName(map, i - 1),
-                *universalObjectData->GetVector4I(entryName));
-            universalObjectData->UnsetVector4I(entryName);
-        }
-        else
-        {
-            break;
-        }
-
-        ++i;
-    }
-}
-
-bool AssetLayoutEditorVector4IArray::DoesObjectContain(
-    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
-    size_t arrayIndex) const
-{
-    return universalObjectData->IsVector4ILoaded(GetFullEntryName(m_map, arrayIndex));
-}
-
-bool AssetLayoutEditorVector4IArray::TextInput(const std::string& label, std::string& value) const
-{
     const std::string before = value;
     char* charValue = new char[m_defaultTextCapacity];
     size_t written = std::snprintf(charValue, m_defaultTextCapacity, "%s", value.c_str());

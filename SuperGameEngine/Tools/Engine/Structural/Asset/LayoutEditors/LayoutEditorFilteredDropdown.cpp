@@ -1,4 +1,4 @@
-#include "AssetLayoutEditorFilteredDropdown.h"
+#include "LayoutEditorFilteredDropdown.h"
 #include "../../../../ImGuiIncludes.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
@@ -6,7 +6,7 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-AssetLayoutEditorFilteredDropdown::AssetLayoutEditorFilteredDropdown(
+LayoutEditorFilteredDropdown::LayoutEditorFilteredDropdown(
     const std::string& map,
     const std::vector<std::string>& values)
 {
@@ -27,16 +27,16 @@ AssetLayoutEditorFilteredDropdown::AssetLayoutEditorFilteredDropdown(
     }
 }
 
-AssetLayoutEditorFilteredDropdown::~AssetLayoutEditorFilteredDropdown()
+LayoutEditorFilteredDropdown::~LayoutEditorFilteredDropdown()
 {
 }
 
-void AssetLayoutEditorFilteredDropdown::Update(
+void LayoutEditorFilteredDropdown::Update(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void AssetLayoutEditorFilteredDropdown::Draw(
+void LayoutEditorFilteredDropdown::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -52,7 +52,7 @@ void AssetLayoutEditorFilteredDropdown::Draw(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorFilteredDropdown::DrawLabel(
+void LayoutEditorFilteredDropdown::DrawLabel(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -66,7 +66,7 @@ void AssetLayoutEditorFilteredDropdown::DrawLabel(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorFilteredDropdown::DrawValue(
+void LayoutEditorFilteredDropdown::DrawValue(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();

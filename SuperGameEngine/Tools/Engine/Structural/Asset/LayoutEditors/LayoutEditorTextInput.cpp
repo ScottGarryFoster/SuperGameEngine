@@ -1,4 +1,4 @@
-#include "AssetLayoutEditorTextInput.h"
+#include "LayoutEditorTextInput.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "../../../../ImGuiIncludes.h"
@@ -6,22 +6,22 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-AssetLayoutEditorTextInput::AssetLayoutEditorTextInput(const std::string& map)
+LayoutEditorTextInput::LayoutEditorTextInput(const std::string& map)
 {
     Log::Info("Create AssetLayoutEditorTextInput");
     m_map = map;
 }
 
-AssetLayoutEditorTextInput::~AssetLayoutEditorTextInput()
+LayoutEditorTextInput::~LayoutEditorTextInput()
 {
 }
 
-void AssetLayoutEditorTextInput::Update(
+void LayoutEditorTextInput::Update(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void AssetLayoutEditorTextInput::Draw(
+void LayoutEditorTextInput::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawLabel(universalObjectData);
@@ -29,7 +29,7 @@ void AssetLayoutEditorTextInput::Draw(
     DrawValue(universalObjectData);
 }
 
-void AssetLayoutEditorTextInput::DrawLabel(
+void LayoutEditorTextInput::DrawLabel(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -44,7 +44,7 @@ void AssetLayoutEditorTextInput::DrawLabel(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorTextInput::DrawValue(
+void LayoutEditorTextInput::DrawValue(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();

@@ -1,4 +1,4 @@
-#include "AssetLayoutEditorTextInputArray.h"
+#include "LayoutEditorTextInputArray.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "../../../../../ImGuiIncludes.h"
@@ -6,26 +6,26 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-AssetLayoutEditorTextInputArray::AssetLayoutEditorTextInputArray(const std::string& map)
+LayoutEditorTextInputArray::LayoutEditorTextInputArray(const std::string& map)
 {
     m_map = map;
 }
 
-AssetLayoutEditorTextInputArray::~AssetLayoutEditorTextInputArray()
+LayoutEditorTextInputArray::~LayoutEditorTextInputArray()
 {
 }
 
-void AssetLayoutEditorTextInputArray::Update(
+void LayoutEditorTextInputArray::Update(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void AssetLayoutEditorTextInputArray::Draw(
+void LayoutEditorTextInputArray::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void AssetLayoutEditorTextInputArray::DrawLabel(
+void LayoutEditorTextInputArray::DrawLabel(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -40,13 +40,13 @@ void AssetLayoutEditorTextInputArray::DrawLabel(
     ImGui::EndGroup();
 }
 
-void AssetLayoutEditorTextInputArray::DrawValue(
+void LayoutEditorTextInputArray::DrawValue(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawValueInTable(universalObjectData, m_map);
 }
 
-void AssetLayoutEditorTextInputArray::OnSave(
+void LayoutEditorTextInputArray::OnSave(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     // Blank string are not saved. Jumps in the indexes are not recognised.
@@ -84,7 +84,7 @@ void AssetLayoutEditorTextInputArray::OnSave(
     } while (foundBlankEntry);
 }
 
-void AssetLayoutEditorTextInputArray::DrawSingleValue(
+void LayoutEditorTextInputArray::DrawSingleValue(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
     const std::string& map) const
 {
@@ -115,14 +115,14 @@ void AssetLayoutEditorTextInputArray::DrawSingleValue(
     }
 }
 
-void AssetLayoutEditorTextInputArray::AddEntry(
+void LayoutEditorTextInputArray::AddEntry(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
     const std::string& map) const
 {
     universalObjectData->SetString(GetFullEntryName(map, arrayIndex), {});
 }
 
-void AssetLayoutEditorTextInputArray::RemoveEntry(
+void LayoutEditorTextInputArray::RemoveEntry(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
     const std::string& map) const
 {
@@ -148,7 +148,7 @@ void AssetLayoutEditorTextInputArray::RemoveEntry(
     }
 }
 
-bool AssetLayoutEditorTextInputArray::DoesObjectContain(
+bool LayoutEditorTextInputArray::DoesObjectContain(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData,
     size_t arrayIndex) const
 {

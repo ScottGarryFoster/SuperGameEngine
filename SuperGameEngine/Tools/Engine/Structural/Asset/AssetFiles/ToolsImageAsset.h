@@ -21,7 +21,7 @@ namespace SuperGameTools
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
             const std::string& packagePath,
             const std::weak_ptr<AssetFolder>& parent,
-            const std::shared_ptr<const AssetMetaData>& assetMetaData);
+            const std::shared_ptr<const SingleLayoutMetaData>& assetMetaData);
 
     private:
 

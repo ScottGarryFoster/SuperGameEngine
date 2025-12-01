@@ -8,15 +8,15 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditor;
+    class LayoutEditor;
 
     /// <summary>
     /// Describes how to edit the given asset and how the data is laid out.
     /// </summary>
-    class AssetLayout
+    class SingleLayout
     {
     public:
-        virtual ~AssetLayout() = default;
+        virtual ~SingleLayout() = default;
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
