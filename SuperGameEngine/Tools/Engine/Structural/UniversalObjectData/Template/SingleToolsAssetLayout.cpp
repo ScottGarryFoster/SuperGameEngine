@@ -1,8 +1,8 @@
 #include "SingleToolsAssetLayout.h"
 #include "../../../../FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
-#include "Engine/Structural/Asset/LayoutEditors/LayoutEditor.h"
-#include "Engine/Structural/Asset/LayoutEditors/LayoutEditorFactory.h"
+#include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutEditor.h"
+#include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutEditorFactory.h"
 #include "../../../../ImGuiIncludes.h"
 #include "Imgui/External/imgui_internal.h"
 

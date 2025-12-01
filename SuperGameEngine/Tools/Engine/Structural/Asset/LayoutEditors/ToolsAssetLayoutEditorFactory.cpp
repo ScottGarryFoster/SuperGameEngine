@@ -1,14 +1,14 @@
 #include "ToolsAssetLayoutEditorFactory.h"
 
-#include "LayoutEditorFilteredDropdown.h"
-#include "LayoutEditorTextInput.h"
-#include "Array/LayoutEditorTextInputArray.h"
-#include "LayoutEditorVector4I.h"
+#include "../../UniversalObjectData/LayoutEditors/LayoutEditorFilteredDropdown.h"
+#include "../../UniversalObjectData/LayoutEditors/LayoutEditorTextInput.h"
+#include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorTextInputArray.h"
+#include "../../UniversalObjectData/LayoutEditors/LayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
-#include "Array/LayoutEditorFilteredDropdownArray.h"
-#include "Array/LayoutEditorVector4IArray.h"
-#include "Engine/Structural/Asset/Template/LayoutTemplateLayoutMapType.h"
+#include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorFilteredDropdownArray.h"
+#include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorVector4IArray.h"
+#include "../../UniversalObjectData/Template/LayoutTemplateLayoutMapType.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
