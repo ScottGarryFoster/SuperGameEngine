@@ -7,6 +7,7 @@
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionGroup.h"
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
+#include "Engine/Structural/Asset/Template/SingleAssetLayoutMetaData.h"
 #include "Engine/Structural/UniversalObjectData/Template/SingleLayout.h"
 #include "Engine/Structural/UniversalObjectData/Template/SingleLayoutMetaData.h"
 #include "ToolsEngine/ViewElements/Menu/MenuItemView.h"

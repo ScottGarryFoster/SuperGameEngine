@@ -21,7 +21,7 @@ ToolsImageAsset::ToolsImageAsset(
     const std::weak_ptr<SuperGameEngine::TextureManager>& texture, 
     const std::string& packagePath,
     const std::weak_ptr<AssetFolder>& parent, 
-    const std::shared_ptr<const SingleLayoutMetaData>& assetMetaData)
+    const std::shared_ptr<const SingleAssetLayoutMetaData>& assetMetaData)
     : ToolsAssetFile(package, texture, packagePath, parent, assetMetaData)
 {
     Setup(package, texture, packagePath, parent);

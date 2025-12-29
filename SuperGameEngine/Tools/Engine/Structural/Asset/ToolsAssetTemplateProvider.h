@@ -22,7 +22,7 @@ namespace SuperGameTools
         /// Retrieve all the <see cref="AssetTemplate"/> objects loaded. 
         /// </summary>
         /// <returns>All the <see cref="AssetTemplate"/> objects loaded. </returns>
-        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetAssetTemplates() const override;
+        virtual std::vector<std::shared_ptr<const SingleAssetLayoutMetaData>> GetAssetTemplates() const override;
 
         /// <summary>
         /// Load all the asset metadata into the provider.
@@ -54,6 +54,6 @@ namespace SuperGameTools
         /// <summary>
         /// All asset templates.
         /// </summary>
-        std::vector<std::shared_ptr<const SingleLayoutMetaData>> m_assetTemplates;
+        std::vector<std::shared_ptr<const SingleAssetLayoutMetaData>> m_assetTemplates;
     };
 }

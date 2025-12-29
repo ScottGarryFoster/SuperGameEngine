@@ -77,7 +77,7 @@ ToolsAssetFile::ToolsAssetFile(
     const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
     const std::string& packagePath,
     const std::weak_ptr<AssetFolder>& parent,
-    const std::shared_ptr<const SingleLayoutMetaData>& assetMetaData) :
+    const std::shared_ptr<const SingleAssetLayoutMetaData>& assetMetaData) :
     ToolsAssetFile(package, texture, packagePath, parent)
 {
     m_assetMetaData = assetMetaData;
@@ -139,7 +139,7 @@ bool ToolsAssetFile::IsSelected() const
     return m_selected;
 }
 
-const std::shared_ptr<const SingleLayoutMetaData> ToolsAssetFile::GetMetaData() const
+const std::shared_ptr<const SingleAssetLayoutMetaData> ToolsAssetFile::GetMetaData() const
 {
     return m_assetMetaData;
 }

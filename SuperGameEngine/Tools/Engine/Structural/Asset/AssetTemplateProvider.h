@@ -4,7 +4,7 @@
 
 namespace SuperGameTools
 {
-    class SingleLayoutMetaData;
+    class SingleAssetLayoutMetaData;
 
     /// <summary>
     /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
@@ -17,6 +17,6 @@ namespace SuperGameTools
         /// Retrieve all the <see cref="AssetMetaData"/> objects loaded. 
         /// </summary>
         /// <returns>All the <see cref="AssetMetaData"/> objects loaded. </returns>
-        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetAssetTemplates() const = 0;
+        virtual std::vector<std::shared_ptr<const SingleAssetLayoutMetaData>> GetAssetTemplates() const = 0;
     };
 }

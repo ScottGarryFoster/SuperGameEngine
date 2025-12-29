@@ -1,5 +1,5 @@
 #pragma once
-#include "../../UniversalObjectData/Template/SingleLayoutMetaData.h"
+#include "SingleAssetLayoutMetaData.h"
 
 namespace FatedQuestLibraries
 {
@@ -13,7 +13,7 @@ namespace SuperGameTools
     /// <summary>
     /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
     /// </summary>
-    class ToolsAssetMetaData : public SingleLayoutMetaData
+    class ToolsAssetMetaData : public SingleAssetLayoutMetaData
     {
     public:
         ToolsAssetMetaData(

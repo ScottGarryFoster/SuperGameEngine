@@ -124,7 +124,7 @@ void ToolsAssetFileProvider::CreateAssetFilesForValidAssets()
 
 bool ToolsAssetFileProvider::TryFindAssetFileTemplate(const std::string& packagePath, std::string& assetFileContents)
 {
-    for (const std::shared_ptr<const SingleLayoutMetaData>& metaData : m_assetTemplateProvider->GetAssetTemplates())
+    for (const std::shared_ptr<const SingleAssetLayoutMetaData>& metaData : m_assetTemplateProvider->GetAssetTemplates())
     {
         if (metaData->GetTemplate())
         {

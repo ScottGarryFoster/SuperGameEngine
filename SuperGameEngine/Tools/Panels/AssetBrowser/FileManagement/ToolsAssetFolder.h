@@ -15,6 +15,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class SingleAssetLayoutMetaData;
     class SingleLayoutMetaData;
     class AssetTemplateProvider;
 
@@ -117,6 +118,6 @@ namespace SuperGameTools
         /// <param name="packagePath">Path to the ast. </param>
         /// <param name="metaData">The metadata for the asset file.</param>
         /// <returns>The created asset file. </returns>
-        std::shared_ptr<AssetFile> CreateAssetFile(const std::string& packagePath, const std::shared_ptr<const SingleLayoutMetaData>& metaData);
+        std::shared_ptr<AssetFile> CreateAssetFile(const std::string& packagePath, const std::shared_ptr<const SingleAssetLayoutMetaData>& metaData);
     };
 }
