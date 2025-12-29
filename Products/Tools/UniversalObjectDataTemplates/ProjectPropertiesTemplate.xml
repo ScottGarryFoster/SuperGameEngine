@@ -1,0 +1,15 @@
+<MetaData>
+    <Template FileType="Properties">
+        <Template TemplateCreationMethod="Simple">
+            <UniversalObjectData>
+                <Strings>
+                    <String Key="GameAssetName" Value="{FilepathDisplayName}" />
+                </Strings>
+            </UniversalObjectData>
+        </Template>
+    </Template>
+    <Layout>
+        <Data Type="String" EnumFilter="SplitUVMethod" Map="TextureUVMethod" MapType="Single" />
+        <Data Type="Vector4I" Map="TextureUV" MapType="Array" />
+    </Layout>
+</MetaData>
