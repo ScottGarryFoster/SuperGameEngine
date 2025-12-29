@@ -130,7 +130,7 @@ bool ToolsAssetFileProvider::TryFindAssetFileTemplate(const std::string& package
         {
             if (metaData->GetTemplate()->ShouldUseTemplate(packagePath))
             {
-                assetFileContents = metaData->GetTemplate()->CreateAssetFile(packagePath);
+                assetFileContents = metaData->GetTemplate()->CreateBaseFile(packagePath);
                 return true;
             }
         }

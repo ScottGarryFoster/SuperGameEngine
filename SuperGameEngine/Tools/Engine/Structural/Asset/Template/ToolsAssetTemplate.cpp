@@ -43,10 +43,6 @@ ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>
     }
 }
 
-ToolsAssetTemplate::~ToolsAssetTemplate()
-{
-}
-
 bool ToolsAssetTemplate::ShouldUseTemplate(const std::string& filepath) const
 {
     // Cannot use if there is no way to create.
@@ -64,7 +60,7 @@ bool ToolsAssetTemplate::ShouldUseTemplate(const std::string& filepath) const
     return false;
 }
 
-std::string ToolsAssetTemplate::CreateAssetFile(const std::string& filepath) const
+std::string ToolsAssetTemplate::CreateBaseFile(const std::string& filepath) const
 {
     switch (m_creationMethod)
     {

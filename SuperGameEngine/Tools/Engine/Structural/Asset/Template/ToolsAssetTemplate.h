@@ -18,12 +18,11 @@ namespace SuperGameTools
     /// <summary>
     /// Contains a template and the ability to detect whether using the template is correct.
     /// </summary>
-    class ToolsAssetTemplate : public AssetTemplate
+    class ToolsAssetTemplate : public virtual AssetTemplate
     {
     public:
 
         ToolsAssetTemplate(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode);
-        virtual ~ToolsAssetTemplate() override;
 
         /// <summary>
         /// Determines if this template is the one to use.
@@ -37,7 +36,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="filepath">Filepath to use as a base. </param>
         /// <returns>An asset file </returns>
-        virtual std::string CreateAssetFile(const std::string& filepath) const override;
+        virtual std::string CreateBaseFile(const std::string& filepath) const override;
 
         /// <summary>
         /// Gets the file type to create when creating a <see cref="AssetFile"/>.

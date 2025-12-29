@@ -8,7 +8,7 @@ using namespace FatedQuestLibraries;
 
 LayoutEditorTextInput::LayoutEditorTextInput(const std::string& map)
 {
-    Log::Info("Create AssetLayoutEditorTextInput");
+    Log::Info("Create LayoutEditorTextInput");
     m_map = map;
 }
 
@@ -58,7 +58,7 @@ void LayoutEditorTextInput::DrawValue(
         // TODO: Revisit the array resizing but ensure that we do not create separate object.
         Log::Error("String within an Asset is bigger than the text size. "
             "Consider raising it. Limit: " + std::to_string(m_defaultTextCapacity),
-            "AssetLayoutEditorTextInput::Draw(const std::shared_ptr<ModifiableUniversalObjectData>&)");
+            "LayoutEditorTextInput::Draw(const std::shared_ptr<ModifiableUniversalObjectData>&)");
     }
 
     char* charValue = new char[m_defaultTextCapacity];

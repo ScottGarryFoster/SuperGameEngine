@@ -1,6 +1,6 @@
 #include "ToolsAssetMetaData.h"
 
-#include "../../UniversalObjectData/Template/SingleToolsAssetLayout.h"
+#include "../../UniversalObjectData/Template/SingleToolsUniversalLayout.h"
 #include "ToolsAssetTemplate.h"
 #include "../../../../FatedQuestLibraries.h"
 
@@ -34,7 +34,7 @@ ToolsAssetMetaData::ToolsAssetMetaData(
 
         if (!m_layout && nodeName == "assetlayout")
         {
-            m_layout = std::make_shared<SingleToolsAssetLayout>(current, layoutFactory);
+            m_layout = std::make_shared<SingleToolsUniversalLayout>(current, layoutFactory);
         }
     }
 }

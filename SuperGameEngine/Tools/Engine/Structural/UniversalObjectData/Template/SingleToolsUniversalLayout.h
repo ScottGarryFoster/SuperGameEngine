@@ -17,11 +17,11 @@ namespace SuperGameTools
     /// <summary>
     /// Describes how to edit the given asset and how the data is laid out.
     /// </summary>
-    class SingleToolsAssetLayout : public SingleLayout
+    class SingleToolsUniversalLayout : public SingleLayout
     {
     public:
 
-        SingleToolsAssetLayout(
+        SingleToolsUniversalLayout(
             const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode,
             const std::shared_ptr<LayoutEditorFactory>& layoutFactory);
 

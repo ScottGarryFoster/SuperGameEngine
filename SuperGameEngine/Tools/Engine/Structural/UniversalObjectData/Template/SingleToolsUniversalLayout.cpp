@@ -1,4 +1,4 @@
-#include "SingleToolsAssetLayout.h"
+#include "SingleToolsUniversalLayout.h"
 #include "../../../../FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutEditor.h"
@@ -9,7 +9,7 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-SingleToolsAssetLayout::SingleToolsAssetLayout(
+SingleToolsUniversalLayout::SingleToolsUniversalLayout(
     const std::shared_ptr<StoredDocumentNode>& documentNode,
     const std::shared_ptr<LayoutEditorFactory>& layoutFactory)
 {
@@ -36,15 +36,15 @@ SingleToolsAssetLayout::SingleToolsAssetLayout(
             else
             {
                 Log::Error("Failed to parse a layout data tag.",
-                    "ToolsAssetLayout::ToolsAssetLayout("
+                    "SingleToolsUniversalLayout::SingleToolsUniversalLayout("
                     "const std::shared_ptr<StoredDocumentNode>&,"
-                    "const std::shared_ptr<AssetLayoutEditorFactory>&)");
+                    "const std::shared_ptr<LayoutEditorFactory>&)");
             }
         }
     }
 }
 
-void SingleToolsAssetLayout::Update(
+void SingleToolsUniversalLayout::Update(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     for (const std::shared_ptr<const LayoutEditor>& layout : m_assetLayoutEditor)
@@ -53,12 +53,12 @@ void SingleToolsAssetLayout::Update(
     }
 }
 
-void SingleToolsAssetLayout::Draw(
+void SingleToolsUniversalLayout::Draw(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
 
-    std::string id = "AssetLayout_" + universalObjectData->GetGuid()->ToString();
+    std::string id = "UniversalLayout_" + universalObjectData->GetGuid()->ToString();
     ImGui::PushID(id.c_str());
 
     // TODO: Would like to do a better job of this table. See: [#184]
@@ -103,7 +103,7 @@ void SingleToolsAssetLayout::Draw(
 
 }
 
-void SingleToolsAssetLayout::OnSave(
+void SingleToolsUniversalLayout::OnSave(
     const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     for (const std::shared_ptr<const LayoutEditor>& layout : m_assetLayoutEditor)

@@ -95,7 +95,7 @@ void LayoutEditorFilteredDropdown::DrawValue(
         if (m_values.size() <= selectedItem)
         {
             Log::Error("Selected item is outside of the range of this enum, setting nothing. Map: " + m_map + " Selected Item Index: " + std::to_string(selectedItem),
-                "AssetLayoutEditorFilteredDropdown::Draw(const std::shared_ptr<ModifiableUniversalObjectData>&) const");
+                "LayoutEditorFilteredDropdown::Draw(const std::shared_ptr<ModifiableUniversalObjectData>&) const");
 
         }
         else
