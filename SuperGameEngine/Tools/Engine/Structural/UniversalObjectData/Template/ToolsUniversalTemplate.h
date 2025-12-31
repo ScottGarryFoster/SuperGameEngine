@@ -17,7 +17,7 @@ namespace SuperGameTools
 {
     /// <summary>
     /// Contains a template and the ability to detect whether using the template is correct.
-    /// </summary>
+    /// </summary>f
     class ToolsUniversalTemplate : public virtual UniversalObjectDataTemplate
     {
     public:
@@ -32,10 +32,10 @@ namespace SuperGameTools
         virtual bool ShouldUseTemplate(const std::string& filepath) const override;
 
         /// <summary>
-        /// Create an asset file based on the file path.
+        /// Create a universal object data file based on the file path.
         /// </summary>
         /// <param name="filepath">Filepath to use as a base. </param>
-        /// <returns>An asset file </returns>
+        /// <returns>An universal object data file </returns>
         virtual std::string CreateBaseFile(const std::string& filepath) const override;
 
         /// <summary>
@@ -59,18 +59,18 @@ namespace SuperGameTools
         std::unordered_set<std::string> m_matchingExtensions;
 
         /// <summary>
-        /// The file type to create when creating a <see cref="AssetFile"/>.
-        /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
+        /// The file type to create when creating a <see cref="UniverObjectData"/> file.
+        /// <see cref="UniversalObjectDataFileType::Unknown"/> means there is none set and the default should be used.
         /// </summary>
         UniversalObjectDataFileType m_universalObjectDataFileType;;
 
         /// <summary>
-        /// The method used to create a brand-new asset file.
+        /// The method used to create a brand-new Universal Object Data file.
         /// </summary>
         UniversalObjectDataTemplateCreationMethod m_creationMethod;
 
         /// <summary>
-        /// The empty document to use when recreating the asset file.
+        /// The empty document to use when recreating the Universal Object Data file.
         /// </summary>
         std::string m_creationDocumentCopy;
 
@@ -111,30 +111,30 @@ namespace SuperGameTools
 
 #pragma endregion
 
-#pragma region CreateAssetFile Creation
+#pragma region CreateUODFile Creation
 
         /// <summary>
-        /// Creates the data for the Template node which allows us to create asset files.
+        /// Creates the data for the Template node which allows us to create Universal Object Data files.
         /// </summary>
         /// <param name="templateNode">The Template node. </param>
-        void CreateDataForCreateAssetFile(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
+        void CreateDataForCreateUniversalObjectDataFile(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
 
         /// <summary>
-        /// Creates the data for the Template node which allows us to create asset files.
+        /// Creates the data for the Template node which allows us to create Universal Object Data files.
         /// This is the logic for simple creation.
         /// </summary>
         /// <param name="templateNode">The Template node. </param>
-        void CreateDataForCreateAssetFileSimple(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
+        void CreateDataForCreateUniversalObjectDataFileSimple(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
 
 #pragma endregion
 
-#pragma region CreateAssetFile
+#pragma region CreateUODFile
         /// <summary>
-        /// Create an asset file based on the file path using the simple logic.
+        /// Create an Universal Object Data file based on the file path using the simple logic.
         /// </summary>
         /// <param name="filepath">Filepath to use as a base. </param>
-        /// <returns>An asset file </returns>
-        virtual std::string CreateAssetFileSimple(const std::string& filepath) const;
+        /// <returns>An Universal Object Data file </returns>
+        virtual std::string CreateUniversalObjectDataFileSimple(const std::string& filepath) const;
 
 #pragma endregion
     };

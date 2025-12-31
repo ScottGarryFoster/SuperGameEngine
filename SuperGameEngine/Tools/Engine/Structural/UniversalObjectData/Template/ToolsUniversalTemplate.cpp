@@ -24,20 +24,20 @@ ToolsUniversalTemplate::ToolsUniversalTemplate(const std::shared_ptr<StoredDocum
 
         if (m_creationMethod == UniversalObjectDataTemplateCreationMethod::Unknown && nodeName == "template")
         {
-            CreateDataForCreateAssetFile(current);
+            CreateDataForCreateUniversalObjectDataFile(current);
         }
     }
 
     if (m_matchingStyle == UniversalObjectDataTemplateMatchingStyle::Unknown)
     {
-        Log::Error("AssetTemplateMatchingStyle Could not be parsed or found. This asset type will never be matched.",
-            "ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>");
+        Log::Error("UniversalObjectDataTemplateMatchingStyle Could not be parsed or found. This file type will never be matched.",
+            "ToolsUniversalTemplate::ToolsUniversalTemplate(const std::shared_ptr<StoredDocumentNode>");
     }
 
     if (m_creationMethod == UniversalObjectDataTemplateCreationMethod::Unknown)
     {
-        Log::Error("AssetTemplateCreationMethod Could not be parsed or found. This asset type will never be created.",
-            "ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>");
+        Log::Error("UniversalObjectDataTemplateCreationMethod Could not be parsed or found. This file type will never be created.",
+            "ToolsUniversalTemplate::ToolsUniversalTemplate(const std::shared_ptr<StoredDocumentNode>");
     }
 }
 
@@ -63,7 +63,7 @@ std::string ToolsUniversalTemplate::CreateBaseFile(const std::string& filepath) 
     switch (m_creationMethod)
     {
     case UniversalObjectDataTemplateCreationMethod::Simple:
-        return CreateAssetFileSimple(filepath);
+        return CreateUniversalObjectDataFileSimple(filepath);
     }
 
     return {};
@@ -84,7 +84,7 @@ void ToolsUniversalTemplate::ParseRootAttributes(const std::shared_ptr<StoredDoc
         {
             Log::Error("Could not parse UniversalObjectDataFileType in template, "
                 "please ensure it is added Tools side. Value: " + fileAttribute->Value(),
-                "ToolsAssetTemplate::ParseRootAttributes(const std::shared_ptr<StoredDocumentNode>&)");
+                "ToolsUniversalTemplate::ParseRootAttributes(const std::shared_ptr<StoredDocumentNode>&)");
         }
     }
     else
@@ -118,7 +118,7 @@ void ToolsUniversalTemplate::CreateDataForMatchingCriteria(
     default:
         Log::Error("Case not implemented for UniversalObjectDataTemplateMatchingStyle. Value: " +
             EUniversalObjectDataTemplateMatchingStyle::ToString(m_matchingStyle),
-            "ToolsAssetTemplate::CreateDataForMatchingCriteria(const std::shared_ptr<StoredDocumentNode>&)");
+            "ToolsUniversalTemplate::CreateDataForMatchingCriteria(const std::shared_ptr<StoredDocumentNode>&)");
     }
 }
 
@@ -164,7 +164,7 @@ bool ToolsUniversalTemplate::ShouldUseTemplateExtension(const std::string& filep
     return m_matchingExtensions.contains(extension);
 }
 
-void ToolsUniversalTemplate::CreateDataForCreateAssetFile(
+void ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFile(
     const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode)
 {
     if (std::shared_ptr<StoredDocumentAttribute> matchingStyleAttribute =
@@ -182,31 +182,31 @@ void ToolsUniversalTemplate::CreateDataForCreateAssetFile(
     switch (m_creationMethod)
     {
     case UniversalObjectDataTemplateCreationMethod::Simple:
-        CreateDataForCreateAssetFileSimple(templateNode);
+        CreateDataForCreateUniversalObjectDataFileSimple(templateNode);
         break;
     default:
         Log::Error("Case not implemented for UniversalObjectDataTemplateCreationMethod. Value: " +
             EUniversalObjectDataTemplateCreationMethod::ToString(m_creationMethod),
-            "ToolsAssetTemplate::CreateDataForCreateAssetFile(const std::shared_ptr<StoredDocumentNode>&)");
+            "ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFile(const std::shared_ptr<StoredDocumentNode>&)");
     }
 }
 
-void ToolsUniversalTemplate::CreateDataForCreateAssetFileSimple(
+void ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFileSimple(
     const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode)
 {
     std::shared_ptr<StoredDocumentNode> firstChild = templateNode->GetFirstChild();
     if (!firstChild)
     {
-        Log::Error("No child of template found therefore no asset file contents found.",
-            "ToolsAssetTemplate::CreateDataForCreateAssetFileSimple(const std::shared_ptr<StoredDocumentNode>&)");
+        Log::Error("No child of template found therefore no file contents found.",
+            "ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFileSimple(const std::shared_ptr<StoredDocumentNode>&)");
         return;
     }
 
     auto templateDocument = std::make_shared<ModifiableDocument>();
     if (!templateDocument->Load(firstChild))
     {
-        Log::Error("Could not load asset file from the first child of template.",
-            "ToolsAssetTemplate::CreateDataForCreateAssetFileSimple(const std::shared_ptr<StoredDocumentNode>&)");
+        Log::Error("Could not load file from the first child of template.",
+            "ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFileSimple(const std::shared_ptr<StoredDocumentNode>&)");
         return;
     }
 
@@ -214,13 +214,13 @@ void ToolsUniversalTemplate::CreateDataForCreateAssetFileSimple(
     m_creationDocumentCopy = documentToXml->ConvertToXml(templateDocument);
     if (m_creationDocumentCopy.empty())
     {
-        Log::Error("Could not convert the asset template into a simple string.",
-            "ToolsAssetTemplate::CreateDataForCreateAssetFileSimple(const std::shared_ptr<StoredDocumentNode>&)");
+        Log::Error("Could not convert the template into a simple string.",
+            "ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFileSimple(const std::shared_ptr<StoredDocumentNode>&)");
         return;
     }
 }
 
-std::string ToolsUniversalTemplate::CreateAssetFileSimple(const std::string& filepath) const
+std::string ToolsUniversalTemplate::CreateUniversalObjectDataFileSimple(const std::string& filepath) const
 {
     // Can use StringHelpers::ReplaceAll here in future commit
     std::string displayName = File::GetFilename(filepath);

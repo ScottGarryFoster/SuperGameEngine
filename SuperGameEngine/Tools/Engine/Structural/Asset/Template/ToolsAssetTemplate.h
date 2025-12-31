@@ -5,6 +5,7 @@
 #include "AssetTemplate.h"
 #include "../../UniversalObjectData/Template/UniversalObjectDataTemplateCreationMethod.h"
 #include "../../UniversalObjectData/Template/UniversalObjectDataTemplateMatchingStyle.h"
+#include "Engine/Structural/UniversalObjectData/Template/ToolsUniversalTemplate.h"
 
 namespace FatedQuestLibraries
 {
@@ -17,33 +18,11 @@ namespace SuperGameTools
     /// <summary>
     /// Contains a template and the ability to detect whether using the template is correct.
     /// </summary>
-    class ToolsAssetTemplate : public virtual AssetTemplate
+    class ToolsAssetTemplate : public ToolsUniversalTemplate, public virtual AssetTemplate
     {
     public:
 
         ToolsAssetTemplate(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode);
-
-        /// <summary>
-        /// Determines if this template is the one to use.
-        /// </summary>
-        /// <param name="filepath">Filepath to test. </param>
-        /// <returns>True means this template is correct. </returns>
-        virtual bool ShouldUseTemplate(const std::string& filepath) const override;
-
-        /// <summary>
-        /// Create an asset file based on the file path.
-        /// </summary>
-        /// <param name="filepath">Filepath to use as a base. </param>
-        /// <returns>An asset file </returns>
-        virtual std::string CreateBaseFile(const std::string& filepath) const override;
-
-        /// <summary>
-        /// Gets the file type to create when creating a <see cref="UniversalObjectData"/> file type.
-        /// <see cref="UniversalObjectDataFileType::Unknown"/> means there is none set and the default should be used.
-        /// This is very general and there tend to be more specific types at higher levels.
-        /// </summary>
-        /// <returns>The file type to be created. </returns>
-        virtual UniversalObjectDataFileType GetUniversalObjectDataFileType() const override;
 
         /// <summary>
         /// Gets the file type to create when creating a <see cref="AssetFile"/>.
@@ -53,37 +32,12 @@ namespace SuperGameTools
         virtual AssetFileType GetAssetFileType() const override;
 
     private:
-        /// <summary>
-        /// Describes how a template might figure out if a given file is in fact the template
-        /// for which it is defined. For instance does the file path make a match.
-        /// </summary>
-        UniversalObjectDataTemplateMatchingStyle m_matchingStyle;
-
-        /// <summary>
-        /// In some matching criteria the extensions are how a template is matched to the date it relates.
-        /// </summary>
-        std::unordered_set<std::string> m_matchingExtensions;
-
-        /// <summary>
-        /// A general file type for this file.
-        /// </summary>
-        UniversalObjectDataFileType m_universalObjectDataFileType;
 
         /// <summary>
         /// The file type to create when creating a <see cref="AssetFile"/>.
         /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
         /// </summary>
         AssetFileType m_assetFileType;
-
-        /// <summary>
-        /// The method used to create a brand-new asset file.
-        /// </summary>
-        UniversalObjectDataTemplateCreationMethod m_creationMethod;
-
-        /// <summary>
-        /// The empty document to use when recreating the asset file.
-        /// </summary>
-        std::string m_creationDocumentCopy;
 
 #pragma region Root Parsing
 
@@ -95,58 +49,5 @@ namespace SuperGameTools
 
 #pragma endregion
 
-#pragma region Matching Criteria Creation
-
-        /// <summary>
-        /// Creates the data for MatchingCriteria.
-        /// </summary>
-        /// <param name="matchingNodeRoot">The MatchingCriteria node. </param>
-        void CreateDataForMatchingCriteria(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot);
-
-        /// <summary>
-        /// Extract all the extensions which are children of
-        /// MatchingCriteria and are values of nodes called Extensions.
-        /// </summary>
-        /// <param name="matchingNodeRoot">The MatchingCriteria node. </param>
-        void CreateDataForMatchingCriteriaExtension(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot);
-
-#pragma endregion
-#pragma region Should Use Template
-
-        /// <summary>
-        /// Should use template logic when extension is selected.
-        /// </summary>
-        /// <param name="filepath">Filepath of the original file. </param>
-        /// <returns>True means should use template. </returns>
-        bool ShouldUseTemplateExtension(const std::string& filepath) const;
-
-#pragma endregion
-
-#pragma region CreateAssetFile Creation
-
-        /// <summary>
-        /// Creates the data for the Template node which allows us to create asset files.
-        /// </summary>
-        /// <param name="templateNode">The Template node. </param>
-        void CreateDataForCreateAssetFile(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
-
-        /// <summary>
-        /// Creates the data for the Template node which allows us to create asset files.
-        /// This is the logic for simple creation.
-        /// </summary>
-        /// <param name="templateNode">The Template node. </param>
-        void CreateDataForCreateAssetFileSimple(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode);
-
-#pragma endregion
-
-#pragma region CreateAssetFile
-        /// <summary>
-        /// Create an asset file based on the file path using the simple logic.
-        /// </summary>
-        /// <param name="filepath">Filepath to use as a base. </param>
-        /// <returns>An asset file </returns>
-        virtual std::string CreateAssetFileSimple(const std::string& filepath) const;
-
-#pragma endregion
     };
 }
