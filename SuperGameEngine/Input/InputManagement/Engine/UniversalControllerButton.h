@@ -175,7 +175,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static UniversalControllerButton FromString(std::string value, bool checkCase = true)
+        static UniversalControllerButton FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

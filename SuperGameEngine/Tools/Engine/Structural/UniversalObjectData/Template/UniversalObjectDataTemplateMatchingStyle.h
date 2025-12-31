@@ -24,6 +24,11 @@ namespace SuperGameTools
         /// The extension matches the given template.
         /// </summary>
         Extension,
+
+        /// <summary>
+        /// Match the end of the path to this value. This will always be relative to the products folder.
+        /// </summary>
+        RelativePathAndFileName,
     };
 
     /// <summary>
@@ -33,13 +38,14 @@ namespace SuperGameTools
     {
     public:
         static UniversalObjectDataTemplateMatchingStyle Min() { return UniversalObjectDataTemplateMatchingStyle::Extension; }
-        static UniversalObjectDataTemplateMatchingStyle Max() { return UniversalObjectDataTemplateMatchingStyle::Extension; }
+        static UniversalObjectDataTemplateMatchingStyle Max() { return UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName; }
 
         static UniversalObjectDataTemplateMatchingStyle* ToArray()
         {
             static UniversalObjectDataTemplateMatchingStyle returnArray[] =
             {
                 UniversalObjectDataTemplateMatchingStyle::Extension,
+                UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName,
             };
             
             return returnArray;
@@ -50,6 +56,7 @@ namespace SuperGameTools
             static std::vector<UniversalObjectDataTemplateMatchingStyle> returnVector =
             {
                 UniversalObjectDataTemplateMatchingStyle::Extension,
+                UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName,
             };
             
             return returnVector;
@@ -60,6 +67,7 @@ namespace SuperGameTools
             static std::vector<std::string> returnVector =
             {
                 "Extension",
+                "RelativePathAndFileName",
             };
             
             return returnVector;
@@ -71,23 +79,26 @@ namespace SuperGameTools
             {
                 case UniversalObjectDataTemplateMatchingStyle::Unknown: return "Unknown";
                 case UniversalObjectDataTemplateMatchingStyle::Extension: return "Extension";
+                case UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName: return "RelativePathAndFileName";
             }
             
             return "Unknown";
         }
 
-        static UniversalObjectDataTemplateMatchingStyle FromString(std::string value, bool checkCase = true)
+        static UniversalObjectDataTemplateMatchingStyle FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {
                 if (value == "Unknown") return UniversalObjectDataTemplateMatchingStyle::Unknown;
                 if (value == "Extension") return UniversalObjectDataTemplateMatchingStyle::Extension;
+                if (value == "RelativePathAndFileName") return UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return UniversalObjectDataTemplateMatchingStyle::Unknown;
                 if (valueLower == "extension") return UniversalObjectDataTemplateMatchingStyle::Extension;
+                if (valueLower == "relativepathandfilename") return UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName;
             }
             
             return UniversalObjectDataTemplateMatchingStyle::Unknown;

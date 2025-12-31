@@ -102,7 +102,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static LogLevel FromString(std::string value, bool checkCase = true)
+        static LogLevel FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

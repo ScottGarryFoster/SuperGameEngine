@@ -75,7 +75,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static EmbeddedFont FromString(std::string value, bool checkCase = true)
+        static EmbeddedFont FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

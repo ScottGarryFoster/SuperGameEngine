@@ -166,7 +166,7 @@ namespace SuperGameTools
             return returnToString;
         }
 
-        static AssetTileInteractionRawState FromString(std::string value, bool checkCase = true)
+        static AssetTileInteractionRawState FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

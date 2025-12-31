@@ -84,7 +84,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static UniversalObjectDataFileType FromString(std::string value, bool checkCase = true)
+        static UniversalObjectDataFileType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

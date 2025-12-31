@@ -889,7 +889,7 @@ std::string SuperEnum::PrintFromString(int indents)
     std::string output = "";
 
     output += "\n";
-    output += PrintIndents(indents) + "static " + m_enumName.Value + " FromString(std::string value, bool checkCase = true)\n";
+    output += PrintIndents(indents) + "static " + m_enumName.Value + " FromString(const std::string& value, bool checkCase = true)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
     output += PrintIndents(indents) + "if (checkCase)\n";
@@ -1076,7 +1076,7 @@ std::string SuperEnum::PrintSingleComment(const std::string& rawComment, int ind
 
     output += PrintIndents(indents) + "/// <summary>\n";
     std::vector<std::string> lines = StringHelpers::Split(rawComment, "\n");
-    for (const std::string line : lines)
+    for (const std::string& line : lines)
     {
         std::string lineTrimmed = StringHelpers::Trim(line);
         if (lineTrimmed != "")

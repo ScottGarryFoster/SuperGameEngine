@@ -86,7 +86,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static TextureDataOrigin FromString(std::string value, bool checkCase = true)
+        static TextureDataOrigin FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

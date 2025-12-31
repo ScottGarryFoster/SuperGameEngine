@@ -84,7 +84,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static PackageFileOrigin FromString(std::string value, bool checkCase = true)
+        static PackageFileOrigin FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

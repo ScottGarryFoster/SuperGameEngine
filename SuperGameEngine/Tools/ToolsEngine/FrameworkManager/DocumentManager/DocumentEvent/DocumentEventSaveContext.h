@@ -84,7 +84,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static DocumentEventSaveContext FromString(std::string value, bool checkCase = true)
+        static DocumentEventSaveContext FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

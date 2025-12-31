@@ -93,7 +93,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static SelectionChangeType FromString(std::string value, bool checkCase = true)
+        static SelectionChangeType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

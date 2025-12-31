@@ -75,7 +75,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static UniversalObjectDataTemplateCreationMethod FromString(std::string value, bool checkCase = true)
+        static UniversalObjectDataTemplateCreationMethod FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

@@ -75,7 +75,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static AssetFileType FromString(std::string value, bool checkCase = true)
+        static AssetFileType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

@@ -176,7 +176,7 @@ namespace SuperGameInput
             return returnToString;
         }
 
-        static KeyOrButtonState FromString(std::string value, bool checkCase = true)
+        static KeyOrButtonState FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

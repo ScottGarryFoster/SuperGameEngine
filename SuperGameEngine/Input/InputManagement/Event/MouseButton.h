@@ -96,7 +96,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static MouseButton FromString(std::string value, bool checkCase = true)
+        static MouseButton FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

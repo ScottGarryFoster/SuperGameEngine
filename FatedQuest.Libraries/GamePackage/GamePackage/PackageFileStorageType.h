@@ -86,7 +86,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static PackageFileStorageType FromString(std::string value, bool checkCase = true)
+        static PackageFileStorageType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

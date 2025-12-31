@@ -75,7 +75,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static GameAssetType FromString(std::string value, bool checkCase = true)
+        static GameAssetType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

@@ -75,7 +75,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static WindowPredefinedPosition FromString(std::string value, bool checkCase = true)
+        static WindowPredefinedPosition FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

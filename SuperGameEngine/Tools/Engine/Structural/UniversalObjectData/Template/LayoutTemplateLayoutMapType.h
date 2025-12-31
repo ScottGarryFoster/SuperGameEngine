@@ -84,7 +84,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static LayoutTemplateLayoutMapType FromString(std::string value, bool checkCase = true)
+        static LayoutTemplateLayoutMapType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

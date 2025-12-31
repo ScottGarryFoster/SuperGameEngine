@@ -120,7 +120,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static ColourIdentity FromString(std::string value, bool checkCase = true)
+        static ColourIdentity FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

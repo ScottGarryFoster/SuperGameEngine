@@ -120,7 +120,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static HatPosition FromString(std::string value, bool checkCase = true)
+        static HatPosition FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

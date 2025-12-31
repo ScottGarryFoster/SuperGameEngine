@@ -114,7 +114,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static Direction FromString(std::string value, bool checkCase = true)
+        static Direction FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {
