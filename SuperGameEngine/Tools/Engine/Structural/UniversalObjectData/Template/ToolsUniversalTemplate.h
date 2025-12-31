@@ -2,9 +2,10 @@
 #include <memory>
 #include <unordered_set>
 
-#include "AssetTemplate.h"
-#include "../../UniversalObjectData/Template/UniversalObjectDataTemplateCreationMethod.h"
-#include "../../UniversalObjectData/Template/UniversalObjectDataTemplateMatchingStyle.h"
+#include "UniversalObjectDataTemplate.h"
+#include "UniversalTemplate.h"
+#include "UniversalObjectDataTemplateCreationMethod.h"
+#include "UniversalObjectDataTemplateMatchingStyle.h"
 
 namespace FatedQuestLibraries
 {
@@ -17,11 +18,11 @@ namespace SuperGameTools
     /// <summary>
     /// Contains a template and the ability to detect whether using the template is correct.
     /// </summary>
-    class ToolsAssetTemplate : public virtual AssetTemplate
+    class ToolsUniversalTemplate : public virtual UniversalObjectDataTemplate
     {
     public:
 
-        ToolsAssetTemplate(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode);
+        ToolsUniversalTemplate(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode);
 
         /// <summary>
         /// Determines if this template is the one to use.
@@ -45,13 +46,6 @@ namespace SuperGameTools
         /// <returns>The file type to be created. </returns>
         virtual UniversalObjectDataFileType GetUniversalObjectDataFileType() const override;
 
-        /// <summary>
-        /// Gets the file type to create when creating a <see cref="AssetFile"/>.
-        /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
-        /// </summary>
-        /// <returns>The file type to be created. </returns>
-        virtual AssetFileType GetAssetFileType() const override;
-
     private:
         /// <summary>
         /// Describes how a template might figure out if a given file is in fact the template
@@ -65,15 +59,10 @@ namespace SuperGameTools
         std::unordered_set<std::string> m_matchingExtensions;
 
         /// <summary>
-        /// A general file type for this file.
-        /// </summary>
-        UniversalObjectDataFileType m_universalObjectDataFileType;
-
-        /// <summary>
         /// The file type to create when creating a <see cref="AssetFile"/>.
         /// <see cref="AssetFileType::Unknown"/> means there is none set and the default should be used.
         /// </summary>
-        AssetFileType m_assetFileType;
+        UniversalObjectDataFileType m_universalObjectDataFileType;;
 
         /// <summary>
         /// The method used to create a brand-new asset file.

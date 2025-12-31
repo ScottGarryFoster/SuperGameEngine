@@ -1,16 +1,15 @@
-#include "ToolsAssetTemplate.h"
-
-#include "../../../../FatedQuestLibraries.h"
-#include "Engine/Structural/Asset/AssetFiles/AssetFileType.h"
+#include "ToolsUniversalTemplate.h"
+#include "../../../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
+#include "../../../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
+#include "../../../../../../FatedQuest.Libraries/Logger/AllReferences.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>& documentNode)
+ToolsUniversalTemplate::ToolsUniversalTemplate(const std::shared_ptr<StoredDocumentNode>& documentNode)
 {
     m_matchingStyle = UniversalObjectDataTemplateMatchingStyle::Unknown;
     m_creationMethod = UniversalObjectDataTemplateCreationMethod::Unknown;
-    m_assetFileType = AssetFileType::Unknown;
     m_universalObjectDataFileType = UniversalObjectDataFileType::Unknown;
     m_creationDocumentCopy = {};
 
@@ -31,7 +30,7 @@ ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>
 
     if (m_matchingStyle == UniversalObjectDataTemplateMatchingStyle::Unknown)
     {
-        Log::Error("AssetTemplateMatchingStyle Could not be parsed or found. This asset type will never be matched.", 
+        Log::Error("AssetTemplateMatchingStyle Could not be parsed or found. This asset type will never be matched.",
             "ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>");
     }
 
@@ -42,7 +41,7 @@ ToolsAssetTemplate::ToolsAssetTemplate(const std::shared_ptr<StoredDocumentNode>
     }
 }
 
-bool ToolsAssetTemplate::ShouldUseTemplate(const std::string& filepath) const
+bool ToolsUniversalTemplate::ShouldUseTemplate(const std::string& filepath) const
 {
     // Cannot use if there is no way to create.
     if (m_creationMethod == UniversalObjectDataTemplateCreationMethod::Unknown)
@@ -59,7 +58,7 @@ bool ToolsAssetTemplate::ShouldUseTemplate(const std::string& filepath) const
     return false;
 }
 
-std::string ToolsAssetTemplate::CreateBaseFile(const std::string& filepath) const
+std::string ToolsUniversalTemplate::CreateBaseFile(const std::string& filepath) const
 {
     switch (m_creationMethod)
     {
@@ -70,31 +69,13 @@ std::string ToolsAssetTemplate::CreateBaseFile(const std::string& filepath) cons
     return {};
 }
 
-UniversalObjectDataFileType ToolsAssetTemplate::GetUniversalObjectDataFileType() const
+UniversalObjectDataFileType ToolsUniversalTemplate::GetUniversalObjectDataFileType() const
 {
     return m_universalObjectDataFileType;
 }
 
-AssetFileType ToolsAssetTemplate::GetAssetFileType() const
+void ToolsUniversalTemplate::ParseRootAttributes(const std::shared_ptr<StoredDocumentNode>& rootNode)
 {
-    return m_assetFileType;
-}
-
-void ToolsAssetTemplate::ParseRootAttributes(
-    const std::shared_ptr<StoredDocumentNode>& rootNode)
-{
-    if (auto assetFileAttribute = 
-        rootNode->Attribute("assetfiletype", CaseSensitivity::IgnoreCase))
-    {
-        m_assetFileType = EAssetFileType::FromString(assetFileAttribute->Value());
-        if (m_assetFileType == AssetFileType::Unknown)
-        {
-            Log::Error("Could not parse AssetFileType in template, "
-                       "please ensure it is added Tools side. Value: " + assetFileAttribute->Value(),
-                "ToolsAssetTemplate::ParseRootAttributes(const std::shared_ptr<StoredDocumentNode>&)");
-        }
-    }
-
     if (auto fileAttribute =
         rootNode->Attribute("UniversalObjectDataFileType", CaseSensitivity::IgnoreCase))
     {
@@ -113,11 +94,10 @@ void ToolsAssetTemplate::ParseRootAttributes(
     }
 }
 
-void ToolsAssetTemplate::CreateDataForMatchingCriteria(
-    const std::shared_ptr<StoredDocumentNode>& matchingNodeRoot)
+void ToolsUniversalTemplate::CreateDataForMatchingCriteria(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot)
 {
-
-    if (std::shared_ptr<StoredDocumentAttribute> matchingStyleAttribute = 
+    if (std::shared_ptr<StoredDocumentAttribute> matchingStyleAttribute =
         matchingNodeRoot->Attribute("UniversalObjectDataTemplateMatchingStyle", CaseSensitivity::IgnoreCase))
     {
         m_matchingStyle = EUniversalObjectDataTemplateMatchingStyle::FromString(matchingStyleAttribute->Value(), false);
@@ -136,14 +116,14 @@ void ToolsAssetTemplate::CreateDataForMatchingCriteria(
         break;
 
     default:
-        Log::Error("Case not implemented for UniversalObjectDataTemplateMatchingStyle. Value: " + 
+        Log::Error("Case not implemented for UniversalObjectDataTemplateMatchingStyle. Value: " +
             EUniversalObjectDataTemplateMatchingStyle::ToString(m_matchingStyle),
             "ToolsAssetTemplate::CreateDataForMatchingCriteria(const std::shared_ptr<StoredDocumentNode>&)");
     }
 }
 
-void ToolsAssetTemplate::CreateDataForMatchingCriteriaExtension(
-    const std::shared_ptr<StoredDocumentNode>& matchingNodeRoot)
+void ToolsUniversalTemplate::CreateDataForMatchingCriteriaExtension(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot)
 {
     std::shared_ptr<StoredDocumentNode> root = matchingNodeRoot;
     for (std::shared_ptr<StoredDocumentNode> current = root->GetFirstChild(); current; current = current->GetAdjacentNode())
@@ -166,7 +146,7 @@ void ToolsAssetTemplate::CreateDataForMatchingCriteriaExtension(
     }
 }
 
-bool ToolsAssetTemplate::ShouldUseTemplateExtension(const std::string& filepath) const
+bool ToolsUniversalTemplate::ShouldUseTemplateExtension(const std::string& filepath) const
 {
     std::string extension = File::GetExtension(filepath);
     if (StringHelpers::Equals(extension, ".ast", CaseSensitivity::IgnoreCase))
@@ -184,8 +164,8 @@ bool ToolsAssetTemplate::ShouldUseTemplateExtension(const std::string& filepath)
     return m_matchingExtensions.contains(extension);
 }
 
-void ToolsAssetTemplate::CreateDataForCreateAssetFile(
-    const std::shared_ptr<StoredDocumentNode>& templateNode)
+void ToolsUniversalTemplate::CreateDataForCreateAssetFile(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode)
 {
     if (std::shared_ptr<StoredDocumentAttribute> matchingStyleAttribute =
         templateNode->Attribute("UniversalObjectDataTemplateCreationMethod", CaseSensitivity::IgnoreCase))
@@ -205,14 +185,14 @@ void ToolsAssetTemplate::CreateDataForCreateAssetFile(
         CreateDataForCreateAssetFileSimple(templateNode);
         break;
     default:
-        Log::Error("Case not implemented for AssetTemplateCreationMethod. Value: " +
+        Log::Error("Case not implemented for UniversalObjectDataTemplateCreationMethod. Value: " +
             EUniversalObjectDataTemplateCreationMethod::ToString(m_creationMethod),
             "ToolsAssetTemplate::CreateDataForCreateAssetFile(const std::shared_ptr<StoredDocumentNode>&)");
     }
 }
 
-void ToolsAssetTemplate::CreateDataForCreateAssetFileSimple(
-    const std::shared_ptr<StoredDocumentNode>& templateNode)
+void ToolsUniversalTemplate::CreateDataForCreateAssetFileSimple(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& templateNode)
 {
     std::shared_ptr<StoredDocumentNode> firstChild = templateNode->GetFirstChild();
     if (!firstChild)
@@ -240,7 +220,7 @@ void ToolsAssetTemplate::CreateDataForCreateAssetFileSimple(
     }
 }
 
-std::string ToolsAssetTemplate::CreateAssetFileSimple(const std::string& filepath) const
+std::string ToolsUniversalTemplate::CreateAssetFileSimple(const std::string& filepath) const
 {
     // Can use StringHelpers::ReplaceAll here in future commit
     std::string displayName = File::GetFilename(filepath);

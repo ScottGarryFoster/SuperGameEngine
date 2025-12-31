@@ -1,9 +1,9 @@
 <AssetMetaData>
     <AssetTemplate AssetFileType="ImageAsset">
-        <MatchingCriteria AssetTemplateMatchingStyle="Extension">
+        <MatchingCriteria UniversalObjectDataTemplateMatchingStyle="Extension">
             <Extension value=".png" />
         </MatchingCriteria>
-        <Template AssetTemplateCreationMethod="Simple">
+        <Template UniversalObjectDataTemplateCreationMethod="Simple">
             <Asset>
                 <Strings>
                     <String Key="GameAssetName" Value="{FilepathDisplayName}" />

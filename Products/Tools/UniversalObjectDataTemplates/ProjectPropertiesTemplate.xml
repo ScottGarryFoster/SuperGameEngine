@@ -1,6 +1,9 @@
 <MetaData>
-    <Template FileType="Properties">
-        <Template TemplateCreationMethod="Simple">
+    <Template UniversalObjectDataFileType="Properties">
+        <MatchingCriteria UniversalObjectDataTemplateMatchingStyle="Extension">
+            <Extension value=".png" />
+        </MatchingCriteria>
+        <Template UniversalObjectDataTemplateCreationMethod="Simple">
             <UniversalObjectData>
                 <Strings>
                     <String Key="GameAssetName" Value="{FilepathDisplayName}" />

@@ -10,9 +10,9 @@
 namespace SuperGameTools
 {
     /// <summary>
-    /// The method used to create a brand new asset file.
+    /// The method used to create a brand new universal object data file.
     /// </summary>
-    enum class AssetTemplateCreationMethod : uint8_t
+    enum class UniversalObjectDataTemplateCreationMethod : uint8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
@@ -28,27 +28,27 @@ namespace SuperGameTools
     /// <summary>
     /// Accompanies enums to provide extra functionality.
     /// </summary>
-    class EAssetTemplateCreationMethod
+    class EUniversalObjectDataTemplateCreationMethod
     {
     public:
-        static AssetTemplateCreationMethod Min() { return AssetTemplateCreationMethod::Simple; }
-        static AssetTemplateCreationMethod Max() { return AssetTemplateCreationMethod::Simple; }
+        static UniversalObjectDataTemplateCreationMethod Min() { return UniversalObjectDataTemplateCreationMethod::Simple; }
+        static UniversalObjectDataTemplateCreationMethod Max() { return UniversalObjectDataTemplateCreationMethod::Simple; }
 
-        static AssetTemplateCreationMethod* ToArray()
+        static UniversalObjectDataTemplateCreationMethod* ToArray()
         {
-            static AssetTemplateCreationMethod returnArray[] =
+            static UniversalObjectDataTemplateCreationMethod returnArray[] =
             {
-                AssetTemplateCreationMethod::Simple,
+                UniversalObjectDataTemplateCreationMethod::Simple,
             };
             
             return returnArray;
         }
 
-        static std::vector<AssetTemplateCreationMethod> ToVector()
+        static std::vector<UniversalObjectDataTemplateCreationMethod> ToVector()
         {
-            static std::vector<AssetTemplateCreationMethod> returnVector =
+            static std::vector<UniversalObjectDataTemplateCreationMethod> returnVector =
             {
-                AssetTemplateCreationMethod::Simple,
+                UniversalObjectDataTemplateCreationMethod::Simple,
             };
             
             return returnVector;
@@ -64,32 +64,32 @@ namespace SuperGameTools
             return returnVector;
         }
 
-        static std::string ToString(AssetTemplateCreationMethod value)
+        static std::string ToString(UniversalObjectDataTemplateCreationMethod value)
         {
             switch (value)
             {
-                case AssetTemplateCreationMethod::Unknown: return "Unknown";
-                case AssetTemplateCreationMethod::Simple: return "Simple";
+                case UniversalObjectDataTemplateCreationMethod::Unknown: return "Unknown";
+                case UniversalObjectDataTemplateCreationMethod::Simple: return "Simple";
             }
             
             return "Unknown";
         }
 
-        static AssetTemplateCreationMethod FromString(std::string value, bool checkCase = true)
+        static UniversalObjectDataTemplateCreationMethod FromString(std::string value, bool checkCase = true)
         {
             if (checkCase)
             {
-                if (value == "Unknown") return AssetTemplateCreationMethod::Unknown;
-                if (value == "Simple") return AssetTemplateCreationMethod::Simple;
+                if (value == "Unknown") return UniversalObjectDataTemplateCreationMethod::Unknown;
+                if (value == "Simple") return UniversalObjectDataTemplateCreationMethod::Simple;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
-                if (valueLower == "unknown") return AssetTemplateCreationMethod::Unknown;
-                if (valueLower == "simple") return AssetTemplateCreationMethod::Simple;
+                if (valueLower == "unknown") return UniversalObjectDataTemplateCreationMethod::Unknown;
+                if (valueLower == "simple") return UniversalObjectDataTemplateCreationMethod::Simple;
             }
             
-            return AssetTemplateCreationMethod::Unknown;
+            return UniversalObjectDataTemplateCreationMethod::Unknown;
         }
     
  private:

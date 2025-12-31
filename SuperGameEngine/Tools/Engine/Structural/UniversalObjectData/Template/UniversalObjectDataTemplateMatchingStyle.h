@@ -13,7 +13,7 @@ namespace SuperGameTools
     /// Describes how a template might figure out if a given file is in fact the template
     /// for which it is defined. For instance does the file path make a match.
     /// </summary>
-    enum class AssetTemplateMatchingStyle : uint8_t
+    enum class UniversalObjectDataTemplateMatchingStyle : uint8_t
     {
         /// <summary>
         /// Only used for unsuccessful parsing.
@@ -29,27 +29,27 @@ namespace SuperGameTools
     /// <summary>
     /// Accompanies enums to provide extra functionality.
     /// </summary>
-    class EAssetTemplateMatchingStyle
+    class EUniversalObjectDataTemplateMatchingStyle
     {
     public:
-        static AssetTemplateMatchingStyle Min() { return AssetTemplateMatchingStyle::Extension; }
-        static AssetTemplateMatchingStyle Max() { return AssetTemplateMatchingStyle::Extension; }
+        static UniversalObjectDataTemplateMatchingStyle Min() { return UniversalObjectDataTemplateMatchingStyle::Extension; }
+        static UniversalObjectDataTemplateMatchingStyle Max() { return UniversalObjectDataTemplateMatchingStyle::Extension; }
 
-        static AssetTemplateMatchingStyle* ToArray()
+        static UniversalObjectDataTemplateMatchingStyle* ToArray()
         {
-            static AssetTemplateMatchingStyle returnArray[] =
+            static UniversalObjectDataTemplateMatchingStyle returnArray[] =
             {
-                AssetTemplateMatchingStyle::Extension,
+                UniversalObjectDataTemplateMatchingStyle::Extension,
             };
             
             return returnArray;
         }
 
-        static std::vector<AssetTemplateMatchingStyle> ToVector()
+        static std::vector<UniversalObjectDataTemplateMatchingStyle> ToVector()
         {
-            static std::vector<AssetTemplateMatchingStyle> returnVector =
+            static std::vector<UniversalObjectDataTemplateMatchingStyle> returnVector =
             {
-                AssetTemplateMatchingStyle::Extension,
+                UniversalObjectDataTemplateMatchingStyle::Extension,
             };
             
             return returnVector;
@@ -65,32 +65,32 @@ namespace SuperGameTools
             return returnVector;
         }
 
-        static std::string ToString(AssetTemplateMatchingStyle value)
+        static std::string ToString(UniversalObjectDataTemplateMatchingStyle value)
         {
             switch (value)
             {
-                case AssetTemplateMatchingStyle::Unknown: return "Unknown";
-                case AssetTemplateMatchingStyle::Extension: return "Extension";
+                case UniversalObjectDataTemplateMatchingStyle::Unknown: return "Unknown";
+                case UniversalObjectDataTemplateMatchingStyle::Extension: return "Extension";
             }
             
             return "Unknown";
         }
 
-        static AssetTemplateMatchingStyle FromString(std::string value, bool checkCase = true)
+        static UniversalObjectDataTemplateMatchingStyle FromString(std::string value, bool checkCase = true)
         {
             if (checkCase)
             {
-                if (value == "Unknown") return AssetTemplateMatchingStyle::Unknown;
-                if (value == "Extension") return AssetTemplateMatchingStyle::Extension;
+                if (value == "Unknown") return UniversalObjectDataTemplateMatchingStyle::Unknown;
+                if (value == "Extension") return UniversalObjectDataTemplateMatchingStyle::Extension;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
-                if (valueLower == "unknown") return AssetTemplateMatchingStyle::Unknown;
-                if (valueLower == "extension") return AssetTemplateMatchingStyle::Extension;
+                if (valueLower == "unknown") return UniversalObjectDataTemplateMatchingStyle::Unknown;
+                if (valueLower == "extension") return UniversalObjectDataTemplateMatchingStyle::Extension;
             }
             
-            return AssetTemplateMatchingStyle::Unknown;
+            return UniversalObjectDataTemplateMatchingStyle::Unknown;
         }
     
  private:
