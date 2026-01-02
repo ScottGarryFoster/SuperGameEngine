@@ -22,7 +22,7 @@ ToolsUniversalTemplate::ToolsUniversalTemplate(const std::shared_ptr<StoredDocum
             CreateDataForMatchingCriteria(current);
         }
 
-        if (m_creationMethod == UniversalObjectDataTemplateCreationMethod::Unknown && nodeName == "template")
+        if (m_creationMethod == UniversalObjectDataTemplateCreationMethod::Unknown && nodeName == "basefiletemplate")
         {
             CreateDataForCreateUniversalObjectDataFile(current);
         }
@@ -53,6 +53,8 @@ bool ToolsUniversalTemplate::ShouldUseTemplate(const std::string& filepath) cons
     {
     case UniversalObjectDataTemplateMatchingStyle::Extension:
         return ShouldUseTemplateExtension(filepath);
+    case UniversalObjectDataTemplateMatchingStyle::FileName:
+        return ShouldUseTemplateFileName(filepath);
     }
 
     return false;
@@ -114,7 +116,9 @@ void ToolsUniversalTemplate::CreateDataForMatchingCriteria(
     case UniversalObjectDataTemplateMatchingStyle::Extension:
         CreateDataForMatchingCriteriaExtension(matchingNodeRoot);
         break;
-
+    case UniversalObjectDataTemplateMatchingStyle::FileName:
+        CreateDataForMatchingCriteriaFileName(matchingNodeRoot);
+        break;
     default:
         Log::Error("Case not implemented for UniversalObjectDataTemplateMatchingStyle. Value: " +
             EUniversalObjectDataTemplateMatchingStyle::ToString(m_matchingStyle),
@@ -125,8 +129,7 @@ void ToolsUniversalTemplate::CreateDataForMatchingCriteria(
 void ToolsUniversalTemplate::CreateDataForMatchingCriteriaExtension(
     const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot)
 {
-    std::shared_ptr<StoredDocumentNode> root = matchingNodeRoot;
-    for (std::shared_ptr<StoredDocumentNode> current = root->GetFirstChild(); current; current = current->GetAdjacentNode())
+    for (std::shared_ptr<StoredDocumentNode> current = matchingNodeRoot->GetFirstChild(); current; current = current->GetAdjacentNode())
     {
         std::string nodeName = StringHelpers::ToLower(current->Name());
         if (nodeName == "extension")
@@ -140,7 +143,30 @@ void ToolsUniversalTemplate::CreateDataForMatchingCriteriaExtension(
                 }
 
                 // Ensure we store the extension in a lower case form.
-                m_matchingExtensions.insert(StringHelpers::ToLower(valueAttribute->Value()));
+                m_matchingValues.insert(StringHelpers::ToLower(valueAttribute->Value()));
+            }
+        }
+    }
+}
+
+void ToolsUniversalTemplate::CreateDataForMatchingCriteriaFileName(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot)
+{
+    for (std::shared_ptr<StoredDocumentNode> current = matchingNodeRoot->GetFirstChild(); current; current = current->GetAdjacentNode())
+    {
+        std::string nodeName = StringHelpers::ToLower(current->Name());
+        if (nodeName == "filename")
+        {
+            if (std::shared_ptr<StoredDocumentAttribute> valueAttribute =
+                current->Attribute("value", CaseSensitivity::IgnoreCase))
+            {
+                if (valueAttribute->Value().empty())
+                {
+                    continue;
+                }
+
+                // Ensure we store the extension in a lower case form.
+                m_matchingValues.insert(StringHelpers::ToLower(valueAttribute->Value()));
             }
         }
     }
@@ -161,7 +187,25 @@ bool ToolsUniversalTemplate::ShouldUseTemplateExtension(const std::string& filep
     }
 
     extension = StringHelpers::ToLower(extension);
-    return m_matchingExtensions.contains(extension);
+    return m_matchingValues.contains(extension);
+}
+
+bool ToolsUniversalTemplate::ShouldUseTemplateFileName(const std::string& filepath) const
+{
+    std::string matchTo = File::GetFilename(filepath);
+    if (StringHelpers::Equals(File::GetExtension(filepath), ".ast", CaseSensitivity::IgnoreCase))
+    {
+        std::string filePathWithOneLessExtension = File::RemoveLastExtension(filepath);
+        matchTo = File::GetFilename(filePathWithOneLessExtension);
+    }
+
+    if (matchTo.empty())
+    {
+        return false;
+    }
+
+    matchTo = StringHelpers::ToLower(matchTo);
+    return m_matchingValues.contains(matchTo);
 }
 
 void ToolsUniversalTemplate::CreateDataForCreateUniversalObjectDataFile(

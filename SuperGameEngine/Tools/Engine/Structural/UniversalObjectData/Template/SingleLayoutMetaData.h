@@ -3,7 +3,7 @@
 
 namespace SuperGameTools
 {
-    class UniversalTemplate;
+    class UniversalObjectDataTemplate;
     class SingleLayout;
 
     /// <summary>
@@ -18,7 +18,7 @@ namespace SuperGameTools
         /// Templates also contain the ability to create fresh versions of the Asset file.
         /// </summary>
         /// <returns>The template for this asset metadata. </returns>
-        virtual std::shared_ptr<UniversalTemplate> GetTemplate() const = 0;
+        virtual std::shared_ptr<UniversalObjectDataTemplate> GetTemplate() const = 0;
 
         /// <summary>
         /// Get the layout for the asset, this is how to display edits and how the data

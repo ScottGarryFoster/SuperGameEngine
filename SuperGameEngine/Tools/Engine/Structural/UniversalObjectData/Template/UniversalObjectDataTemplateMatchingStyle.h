@@ -26,9 +26,9 @@ namespace SuperGameTools
         Extension,
 
         /// <summary>
-        /// Match the end of the path to this value. This will always be relative to the products folder.
+        /// Match just the file name with the extension authoured.
         /// </summary>
-        RelativePathAndFileName,
+        FileName,
     };
 
     /// <summary>
@@ -38,14 +38,14 @@ namespace SuperGameTools
     {
     public:
         static UniversalObjectDataTemplateMatchingStyle Min() { return UniversalObjectDataTemplateMatchingStyle::Extension; }
-        static UniversalObjectDataTemplateMatchingStyle Max() { return UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName; }
+        static UniversalObjectDataTemplateMatchingStyle Max() { return UniversalObjectDataTemplateMatchingStyle::FileName; }
 
         static UniversalObjectDataTemplateMatchingStyle* ToArray()
         {
             static UniversalObjectDataTemplateMatchingStyle returnArray[] =
             {
                 UniversalObjectDataTemplateMatchingStyle::Extension,
-                UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName,
+                UniversalObjectDataTemplateMatchingStyle::FileName,
             };
             
             return returnArray;
@@ -56,7 +56,7 @@ namespace SuperGameTools
             static std::vector<UniversalObjectDataTemplateMatchingStyle> returnVector =
             {
                 UniversalObjectDataTemplateMatchingStyle::Extension,
-                UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName,
+                UniversalObjectDataTemplateMatchingStyle::FileName,
             };
             
             return returnVector;
@@ -67,7 +67,7 @@ namespace SuperGameTools
             static std::vector<std::string> returnVector =
             {
                 "Extension",
-                "RelativePathAndFileName",
+                "FileName",
             };
             
             return returnVector;
@@ -79,7 +79,7 @@ namespace SuperGameTools
             {
                 case UniversalObjectDataTemplateMatchingStyle::Unknown: return "Unknown";
                 case UniversalObjectDataTemplateMatchingStyle::Extension: return "Extension";
-                case UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName: return "RelativePathAndFileName";
+                case UniversalObjectDataTemplateMatchingStyle::FileName: return "FileName";
             }
             
             return "Unknown";
@@ -91,14 +91,14 @@ namespace SuperGameTools
             {
                 if (value == "Unknown") return UniversalObjectDataTemplateMatchingStyle::Unknown;
                 if (value == "Extension") return UniversalObjectDataTemplateMatchingStyle::Extension;
-                if (value == "RelativePathAndFileName") return UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName;
+                if (value == "FileName") return UniversalObjectDataTemplateMatchingStyle::FileName;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return UniversalObjectDataTemplateMatchingStyle::Unknown;
                 if (valueLower == "extension") return UniversalObjectDataTemplateMatchingStyle::Extension;
-                if (valueLower == "relativepathandfilename") return UniversalObjectDataTemplateMatchingStyle::RelativePathAndFileName;
+                if (valueLower == "filename") return UniversalObjectDataTemplateMatchingStyle::FileName;
             }
             
             return UniversalObjectDataTemplateMatchingStyle::Unknown;

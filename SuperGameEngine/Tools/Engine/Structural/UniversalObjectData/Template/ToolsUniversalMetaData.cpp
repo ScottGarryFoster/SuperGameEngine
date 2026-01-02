@@ -28,7 +28,7 @@ SuperGameTools::ToolsUniversalMetaData::ToolsUniversalMetaData(
         current = current->GetAdjacentNode())
     {
         std::string nodeName = StringHelpers::ToLower(current->Name());
-        if (!m_template && nodeName == "assettemplate")
+        if (!m_template && nodeName == "template")
         {
             // TODO: This should make a non-asset template.
             m_template = std::make_shared<ToolsUniversalTemplate>(current);
@@ -41,7 +41,7 @@ SuperGameTools::ToolsUniversalMetaData::ToolsUniversalMetaData(
     }
 }
 
-std::shared_ptr<SuperGameTools::UniversalTemplate> SuperGameTools::ToolsUniversalMetaData::GetTemplate() const
+std::shared_ptr<SuperGameTools::UniversalObjectDataTemplate> SuperGameTools::ToolsUniversalMetaData::GetTemplate() const
 {
     return m_template;
 }

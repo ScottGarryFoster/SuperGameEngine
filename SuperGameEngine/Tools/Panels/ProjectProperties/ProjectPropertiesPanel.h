@@ -4,8 +4,14 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "Panels/SuperToolsPanel.h"
 
+namespace SuperGameEngine
+{
+    class ProjectPropertiesProvider;
+}
+
 namespace SuperGameTools
 {
+    class SingleLayoutMetaData;
     class WindowPackage;
 
     class ProjectPropertiesPanel : public SuperToolsPanel, public FatedQuestLibraries::FEventObserver
@@ -71,5 +77,26 @@ namespace SuperGameTools
         /// Services to run a window.
         /// </summary>
         std::shared_ptr<WindowPackage> m_windowPackage;
+
+        /// <summary>
+        /// Loads and Project Property file and provides the results.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::ProjectPropertiesProvider> m_projectPropertiesProvider;
+
+        /// <summary>
+        /// The file name to look for in the file system for a project properties file.
+        /// </summary>
+        const char* m_projectPropertiesFileName = "ProjectProperties.uod";
+
+        /// <summary>
+        /// The ability to create and edit the project properties file with its layout.
+        /// </summary>
+        std::shared_ptr<const SingleLayoutMetaData> m_projectPropertyLayout;
+
+        /// <summary>
+        /// Looks for the project properties layout and returns the value.
+        /// </summary>
+        /// <returns>The ability to create and edit the project properties file with its layout. </returns>
+        std::shared_ptr<const SingleLayoutMetaData> FindProjectPropertyFileAndTemplateLayout() const;
     };
 }

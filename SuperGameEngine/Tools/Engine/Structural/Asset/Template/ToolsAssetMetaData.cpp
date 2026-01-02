@@ -27,7 +27,7 @@ ToolsAssetMetaData::ToolsAssetMetaData(
         current = current->GetAdjacentNode())
     {
         std::string nodeName = StringHelpers::ToLower(current->Name());
-        if (!m_template && nodeName == "assettemplate")
+        if (!m_template && nodeName == "template")
         {
             m_template = std::make_shared<ToolsAssetTemplate>(current);
         }

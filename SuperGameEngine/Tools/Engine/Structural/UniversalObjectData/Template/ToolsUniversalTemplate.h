@@ -54,9 +54,10 @@ namespace SuperGameTools
         UniversalObjectDataTemplateMatchingStyle m_matchingStyle;
 
         /// <summary>
-        /// In some matching criteria the extensions are how a template is matched to the date it relates.
+        /// In some matching criteria such as extensions are how a template is matched to the date it relates.
+        /// This stores the string to match with. This reused for a few matching styles.
         /// </summary>
-        std::unordered_set<std::string> m_matchingExtensions;
+        std::unordered_set<std::string> m_matchingValues;
 
         /// <summary>
         /// The file type to create when creating a <see cref="UniverObjectData"/> file.
@@ -99,6 +100,13 @@ namespace SuperGameTools
         /// <param name="matchingNodeRoot">The MatchingCriteria node. </param>
         void CreateDataForMatchingCriteriaExtension(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot);
 
+        /// <summary>
+        /// Extract all the extensions which are children of
+        /// MatchingCriteria and are values of nodes called Filename.
+        /// </summary>
+        /// <param name="matchingNodeRoot">The MatchingCriteria node. </param>
+        void CreateDataForMatchingCriteriaFileName(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& matchingNodeRoot);
+
 #pragma endregion
 #pragma region Should Use Template
 
@@ -108,6 +116,13 @@ namespace SuperGameTools
         /// <param name="filepath">Filepath of the original file. </param>
         /// <returns>True means should use template. </returns>
         bool ShouldUseTemplateExtension(const std::string& filepath) const;
+
+        /// <summary>
+        /// Should use template logic when filename is selected.
+        /// </summary>
+        /// <param name="filepath">Filepath of the original file. </param>
+        /// <returns>True means should use template. </returns>
+        bool ShouldUseTemplateFileName(const std::string& filepath) const;
 
 #pragma endregion
 

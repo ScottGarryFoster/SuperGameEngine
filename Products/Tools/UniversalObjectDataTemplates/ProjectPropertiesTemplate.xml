@@ -1,18 +1,19 @@
 <MetaData>
     <Template UniversalObjectDataFileType="Properties">
-        <MatchingCriteria UniversalObjectDataTemplateMatchingStyle="Extension">
-            <Extension value=".png" />
+        <MatchingCriteria UniversalObjectDataTemplateMatchingStyle="FileName">
+            <Filename value="ProjectProperties.uod" />
         </MatchingCriteria>
-        <Template UniversalObjectDataTemplateCreationMethod="Simple">
+        <BaseFileTemplate UniversalObjectDataTemplateCreationMethod="Simple">
             <UniversalObjectData>
                 <Strings>
-                    <String Key="GameAssetName" Value="{FilepathDisplayName}" />
+                    <String "Key"="StartScene" "Value"="Napman/savedOut.scene" />
+                    <String "Key"="WindowTitle" "Value"="Napman" />
                 </Strings>
             </UniversalObjectData>
-        </Template>
+        </BaseFileTemplate>
     </Template>
     <Layout>
-        <Data Type="String" EnumFilter="SplitUVMethod" Map="TextureUVMethod" MapType="Single" />
-        <Data Type="Vector4I" Map="TextureUV" MapType="Array" />
+        <Data Type="String" Map="StartScene" MapType="Single" />
+        <Data Type="String" Map="WindowTitle" MapType="Single" />
     </Layout>
 </MetaData>
