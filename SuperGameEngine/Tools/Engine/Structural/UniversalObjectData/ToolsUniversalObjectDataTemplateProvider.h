@@ -20,13 +20,13 @@ namespace SuperGameTools
         ToolsUniversalObjectDataTemplateProvider(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage);
 
         /// <summary>
-        /// Retrieve all the <see cref="AssetTemplate"/> objects loaded. 
+        /// Retrieve all the <see cref="SingleLayoutMetaData"/> objects loaded. 
         /// </summary>
-        /// <returns>All the <see cref="AssetTemplate"/> objects loaded. </returns>
-        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetAssetTemplates() const override;
+        /// <returns>All the <see cref="SingleLayoutMetaData"/> objects loaded. </returns>
+        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetObjectDataTemplates() const override;
 
         /// <summary>
-        /// Load all the asset metadata into the provider.
+        /// Load all the metadata into the provider.
         /// This should only be called once but if it is called again
         /// it will act as a reload and empty the templates it already has.
         /// </summary>
@@ -34,7 +34,7 @@ namespace SuperGameTools
         /// True means load was successful.
         /// False means could not load templates.
         /// </returns>
-        bool LoadAllAssetMeta();
+        bool LoadAllTemplateMetaData();
 
     private:
         /// <summary>

@@ -5,6 +5,7 @@
 
 namespace SuperGameTools
 {
+    class UniversalObjectDataTemplateProvider;
     class PanelManager;
 }
 
@@ -173,6 +174,18 @@ namespace SuperGameTools
         /// <param name="panelManager">Manages panels, the visibility and layouts. </param>
         void SetPanelManager(const std::shared_ptr<PanelManager>& panelManager);
 
+        /// <summary>
+        /// Loads, holds and provides <see cref="SingleLayoutMetaData"/> in a single location.
+        /// </summary>
+        /// <returns>Loads, holds and provides <see cref="SingleLayoutMetaData"/> in a single location. </returns>
+        std::shared_ptr<UniversalObjectDataTemplateProvider> GetUniversalObjectDataTemplateProvider() const;
+
+        /// <summary>
+        /// Gives a new <see cref="UniversalObjectDataTemplateProvider"/>.
+        /// </summary>
+        /// <param name="newValue">New <see cref="UniversalObjectDataTemplateProvider" /></param>
+        void SetUniversalObjectDataTemplateProvider(const std::shared_ptr<UniversalObjectDataTemplateProvider>& newValue);
+
     private:
 
         /// <summary>
@@ -231,5 +244,10 @@ namespace SuperGameTools
         /// Manages panels, the visibility and layouts.
         /// </summary>
         std::shared_ptr<PanelManager> m_panelManager;
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="SingleLayoutMetaData"/> in a single location.
+        /// </summary>
+        std::shared_ptr<UniversalObjectDataTemplateProvider> m_universalObjectDataTemplateProvider;
     };
 }

@@ -25,6 +25,7 @@
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 // This should be included early in the engine for the inspector.
+#include "Engine/Structural/UniversalObjectData/ToolsUniversalObjectDataTemplateProvider.h"
 #include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
@@ -184,12 +185,20 @@ void ToolsEngine::Setup()
     framework->Setup();
     m_windowPackage->SetFrameworkManager(framework);
 
-    // Then assets. Must come before Inspector window and Asset Browser Setup.
+    // We are restricted to doing this at the main setup because only here do we 100% know that the
+    // game package exists.
+    // Load asset templates which must come before Inspector window and Asset Browser Setup.
     auto assetTemplateProvider = std::make_shared<ToolsAssetTemplateProvider>
         (m_windowPackage->GetContentManager()->GamePackage());
     assetTemplateProvider->LoadAllAssetMeta();
     m_windowPackage->SetAssetTemplateProvider(assetTemplateProvider);
 
+    // And general UOD which at the time of writing should be fine before the majority of windows as it is used for properties.
+    auto universalObjectTemplateProvider = std::make_shared<ToolsUniversalObjectDataTemplateProvider>
+        (m_windowPackage->GetContentManager()->GamePackage());
+    universalObjectTemplateProvider->LoadAllTemplateMetaData();
+    m_windowPackage->SetUniversalObjectDataTemplateProvider(universalObjectTemplateProvider);
+        
     // Everything else should be able to be in any order
     std::shared_ptr<GameViewport> gameViewport = std::make_shared<GameViewport>();
     gameViewport->Setup(m_windowPackage);

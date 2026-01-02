@@ -145,6 +145,7 @@ function(NugetIncludeGTest TARGET)
     # For some reason this does not appear to work for GTest
     # You need to actually add these yourself (PRIVATE appears to make no difference)
     target_link_libraries(${TARGET} PRIVATE $<$<NOT:$<CONFIG:Release>>:GTest::gtest> $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>)
+    target_link_libraries(${TARGET} PRIVATE $<$<NOT:$<CONFIG:Release>>:GTest::gmock> $<$<NOT:$<CONFIG:Release>>:GTest::gmock_main>)
 
 endfunction()
 

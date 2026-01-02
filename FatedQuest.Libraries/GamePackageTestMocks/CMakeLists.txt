@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 option(ENABLE_TOOLS "Enable tools" OFF)
-project(EngineTests)
-include(../../FatedQuest.Libraries/CMake/Main.cmake)
+project(GamePackageTestMocks)
+include(../CMake/Main.cmake)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Define build configurations
 if(ENABLE_TOOLS)
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Available build types" FORCE)
-    set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
+    # set(CMAKE_EXE_LINKER_FLAGS_TOOLS_DEBUG "")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:Debug>DLL")
 else()
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
@@ -40,37 +40,26 @@ foreach(FILE ${HEADER_FILES})
     source_group("Header Files\\${GROUP_NAME}" FILES "${FILE}")
 endforeach()
 
-# Create executable
-add_executable(EngineTests  ${SOURCE_FILES} ${HEADER_FILES})
-set_target_properties(EngineTests PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
-
-# Set compiler options
-if(MSVC)
-    target_compile_definitions(EngineTests PRIVATE _CRT_SECURE_NO_WARNINGS)
-    target_compile_options(EngineTests PRIVATE
-      /W3
-      
-      # Ensure Tools Debug and Debug have symbols.
-      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Zi>
-      $<$<OR:$<CONFIG:Debug>,$<CONFIG:Tools_Debug>>:/Od>
-    )
+# Create the library
+if(NOT TARGET GamePackageTestMocks)
+    add_library(GamePackageTestMocks STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PCH_FILES})
 endif()
 
 # Include directories
-target_include_directories(EngineTests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(GamePackageTestMocks PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable precompiled headers
 set(PCH_HEADER "pch.h")
 
 if(MSVC)
-    target_precompile_headers(EngineTests PRIVATE ${PCH_HEADER})
+    target_precompile_headers(GamePackageTestMocks PRIVATE ${PCH_HEADER})
 endif()
 
 # Include these by default in all CPP files.
 if (MSVC)
-    target_compile_options(EngineTests PRIVATE "/FI${PCH_HEADER}")
+    target_compile_options(GamePackageTestMocks PRIVATE "/FI${PCH_HEADER}")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    target_compile_options(EngineTests PRIVATE "-include ${PCH_HEADER}")
+    target_compile_options(GamePackageTestMocks PRIVATE "-include ${PCH_HEADER}")
 endif()
 
 # Platform-specific settings
@@ -81,38 +70,29 @@ endif()
 # Set configurations
 foreach(OUTPUTCONFIG Debug Release)
     string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG_UPPER)
-    set_target_properties(EngineTests PROPERTIES 
-        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "EngineTests_${OUTPUTCONFIG}"
+    set_target_properties(GamePackageTestMocks PROPERTIES 
+        OUTPUT_NAME_${OUTPUTCONFIG_UPPER} "GamePackageTestMocks_${OUTPUTCONFIG}"
     )
 endforeach()
 
 # Get packages (must occur before projects below)
-NugetInclude("rapidxml" EngineTests)
-NugetInclude("gtest" EngineTests)
-set_target_properties(EngineTests PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
+NugetInclude("zlib" GamePackageTestMocks)
+NugetInclude("rapidxml" GamePackageTestMocks)
+NugetInclude("gtest" GamePackageTestMocks)
+set_target_properties(GamePackageTestMocks PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD_RELEASE ON)
 
 # Link libraries
-add_subdirectory(../../FatedQuest.Libraries/Logger Logger)
-add_subdirectory(../../FatedQuest.Libraries/Observer Observer)
-add_subdirectory(../../FatedQuest.Libraries/SharedEnums SharedEnums)
-add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
-add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
-add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
-add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
-add_subdirectory(../../FatedQuest.Libraries/GamePackageTestMocks GamePackageTestMocks)
-add_subdirectory(../Engine Engine)
+add_subdirectory(../Logger Logger)
+add_subdirectory(../GamePackage GamePackage)
+add_subdirectory(../StandardOperations StandardOperations)
+add_subdirectory(../StandardObjects StandardObjects)
 
 # Link dependencies
-target_link_libraries(EngineTests PRIVATE
+target_link_libraries(GamePackageTestMocks PRIVATE
     Logger
-    Observer
-    SharedEnums
-    StandardObjects
+    GamePackage
     StandardOperations
-    StoredDocument
-    XmlDocument
-    Engine
-    GamePackageTestMocks
+    StandardObjects
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )

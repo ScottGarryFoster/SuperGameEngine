@@ -111,3 +111,14 @@ void WindowPackage::SetPanelManager(const std::shared_ptr<PanelManager>& panelMa
 {
     m_panelManager = panelManager;
 }
+
+std::shared_ptr<UniversalObjectDataTemplateProvider> WindowPackage::GetUniversalObjectDataTemplateProvider() const
+{
+    return m_universalObjectDataTemplateProvider;
+}
+
+void WindowPackage::SetUniversalObjectDataTemplateProvider(
+    const std::shared_ptr<UniversalObjectDataTemplateProvider>& newValue)
+{
+    m_universalObjectDataTemplateProvider = newValue;
+}

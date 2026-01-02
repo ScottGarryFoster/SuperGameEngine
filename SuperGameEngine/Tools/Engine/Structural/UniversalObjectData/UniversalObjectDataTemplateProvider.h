@@ -17,6 +17,6 @@ namespace SuperGameTools
         /// Retrieve all the <see cref="SingleLayoutMetaData"/> objects loaded. 
         /// </summary>
         /// <returns>All the <see cref="SingleLayoutMetaData"/> objects loaded. </returns>
-        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetAssetTemplates() const = 0;
+        virtual std::vector<std::shared_ptr<const SingleLayoutMetaData>> GetObjectDataTemplates() const = 0;
     };
 }

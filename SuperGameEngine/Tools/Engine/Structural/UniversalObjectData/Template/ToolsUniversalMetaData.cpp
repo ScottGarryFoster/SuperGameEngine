@@ -1,10 +1,10 @@
 #include "ToolsUniversalMetaData.h"
 
 #include "SingleToolsUniversalLayout.h"
+#include "ToolsUniversalTemplate.h"
 #include "../../../../FatedQuest.Libraries/Exceptions/AllReferences.h"
 #include "../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
-#include "Engine/Structural/Asset/Template/ToolsAssetTemplate.h"
 
 using namespace FatedQuestLibraries;
 
@@ -31,7 +31,7 @@ SuperGameTools::ToolsUniversalMetaData::ToolsUniversalMetaData(
         if (!m_template && nodeName == "assettemplate")
         {
             // TODO: This should make a non-asset template.
-            m_template = std::make_shared<ToolsAssetTemplate>(current);
+            m_template = std::make_shared<ToolsUniversalTemplate>(current);
         }
 
         if (!m_layout && nodeName == "layout")

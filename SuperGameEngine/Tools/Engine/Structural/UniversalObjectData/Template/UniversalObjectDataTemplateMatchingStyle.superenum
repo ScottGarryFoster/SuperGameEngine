@@ -14,5 +14,8 @@
         <Extension>
             The extension matches the given template.
         </Extension>
+        <RelativePathAndFileName>
+            Match the end of the path to this value. This will always be relative to the products folder.
+        </RelativePathAndFileName>
     </EnumName>
 </SuperEnum>

@@ -35,6 +35,7 @@ std::shared_ptr<ProjectProperties> ProjectPropertiesProvider::LoadProjectPropert
         return {};
     }
 
+    // TODO: [#227] Project properties is not always going to be XML. Ensure this can be loaded binary.
     auto document = std::make_shared<RapidXMLDocument>();
     if (!document->Load(gamePackage->File()->ReadFileContents(relativePath)))
     {

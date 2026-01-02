@@ -19,16 +19,16 @@ SuperGameTools::ToolsUniversalObjectDataTemplateProvider::ToolsUniversalObjectDa
 }
 
 std::vector<std::shared_ptr<const SuperGameTools::SingleLayoutMetaData>>
-    SuperGameTools::ToolsUniversalObjectDataTemplateProvider::GetAssetTemplates() const
+    SuperGameTools::ToolsUniversalObjectDataTemplateProvider::GetObjectDataTemplates() const
 {
     return m_objectTemplates;
 }
 
-bool SuperGameTools::ToolsUniversalObjectDataTemplateProvider::LoadAllAssetMeta()
+bool SuperGameTools::ToolsUniversalObjectDataTemplateProvider::LoadAllTemplateMetaData()
 {
     if (!m_gamePackage->Directory()->Exists(m_templateFolder))
     {
-        Log::Error("No Asset Template folder. Cannot create asset templates automatically.",
+        Log::Error("No Universal Template folder. Cannot create UOD templates automatically.",
             "ToolsAssetTemplateProvider::LoadAllAssetMeta");
         return false;
     }
@@ -56,7 +56,7 @@ bool SuperGameTools::ToolsUniversalObjectDataTemplateProvider::LoadAllAssetMeta(
         {
             Log::Exception("Could not load template file due to an exception." +
                 e.Message() + " Filepath: " + fullGamepackagePath,
-                "ToolsAssetTemplateProvider::LoadAllAssetMeta",
+                "ToolsUniversalObjectDataTemplateProvider::LoadAllTemplateMetaData",
                 e.Type());
             loadedSuccessfully = false;
         }
