@@ -45,3 +45,21 @@ std::shared_ptr<ProjectProperties> ProjectPropertiesProvider::LoadProjectPropert
 
     return std::make_shared<SuperProjectProperties>(document);
 }
+
+bool ProjectPropertiesProvider::CanLoadProjectProperties(const std::shared_ptr<GamePackage>& gamePackage) const
+{
+    if (gamePackage->File()->Exists(m_projectPropertiesFileName))
+    {
+        return true;
+    }
+
+    for (const std::string& name : gamePackage->Directory()->ListDirectoryNames({}))
+    {
+        if (gamePackage->File()->Exists(name + "\\" + m_projectPropertiesFileName))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}

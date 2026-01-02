@@ -26,6 +26,14 @@ namespace SuperGameEngine
         std::shared_ptr<ProjectProperties> LoadProjectProperties(
             const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) const;
 
+        /// <summary>
+        /// Will search for project properties to find the file.
+        /// If it finds a file it could in theory load, returns true.
+        /// </summary>
+        /// <param name="gamePackage">All the files loaded for the product. </param>
+        /// <returns>True means there is a valid project properties file to load. </returns>
+        bool CanLoadProjectProperties(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) const;
+
     private:
 
         /// <summary>

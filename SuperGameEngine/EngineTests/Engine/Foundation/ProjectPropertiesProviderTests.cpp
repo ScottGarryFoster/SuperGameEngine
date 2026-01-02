@@ -8,6 +8,7 @@
 #include "../../FatedQuest.Libraries/GamePackageTestMocks/GamePackage/GamePackageMock.h"
 #include "../../FatedQuest.Libraries/GamePackageTestMocks/GamePackage/FileSystem/PackageFileSystemFileMock.h"
 #include "../../FatedQuest.Libraries/GamePackageTestMocks/GamePackage/FileSystem/PackageFileSystemDirectoryMock.h"
+#include "FileHandling/Directory.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -29,6 +30,8 @@ namespace SuperGameEngineTests_Engine_Foundation
         std::shared_ptr<GamePackageMock> m_gamePackageMock;
         std::shared_ptr<PackageFileSystemFileMock> m_packageFileSystemFileMock;
         std::shared_ptr<PackageFileSystemDirectoryMock> m_packageFileSystemDirectoryMock;
+
+        const char* m_propertiesFileName = "ProjectProperties.uod";
 
         const char* m_validProjectProperties = "<UniversalObjectData>"
             "<Strings>"
@@ -78,12 +81,10 @@ namespace SuperGameEngineTests_Engine_Foundation
     TEST_F(ProjectPropertiesProviderTests, LoadProjectProperties_ReturnsAValidClass_WhenFileIsInRootAndIsReadableAsXML)
     {
         // Arrange
-        std::string propertyFileName = "ProjectProperties.uod";
-
-        EXPECT_CALL(*m_packageFileSystemFileMock, Exists(propertyFileName))
+        EXPECT_CALL(*m_packageFileSystemFileMock, Exists(m_propertiesFileName))
             .WillOnce(testing::Return(true));
 
-        EXPECT_CALL(*m_packageFileSystemFileMock, ReadFileContents(propertyFileName))
+        EXPECT_CALL(*m_packageFileSystemFileMock, ReadFileContents(m_propertiesFileName))
             .WillOnce(testing::Return(m_validProjectProperties));
 
         // Act
@@ -99,12 +100,10 @@ namespace SuperGameEngineTests_Engine_Foundation
         // to the project properties successful. Use the actual project properties tests to add new values and test those.
 
         // Arrange
-        std::string propertyFileName = "ProjectProperties.uod";
-
-        EXPECT_CALL(*m_packageFileSystemFileMock, Exists(propertyFileName))
+        EXPECT_CALL(*m_packageFileSystemFileMock, Exists(m_propertiesFileName))
             .WillOnce(testing::Return(true));
 
-        EXPECT_CALL(*m_packageFileSystemFileMock, ReadFileContents(propertyFileName))
+        EXPECT_CALL(*m_packageFileSystemFileMock, ReadFileContents(m_propertiesFileName))
             .WillOnce(testing::Return(m_validProjectProperties));
 
         // Act
@@ -113,5 +112,147 @@ namespace SuperGameEngineTests_Engine_Foundation
         // Assert
         ASSERT_EQ("sceneName.scene", actual->GetStartScene());
         ASSERT_EQ("WindowTitle", actual->GetWindowTitle());
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, LoadProjectProperties_LoadValueFromDirectory_WhenRootFileDoesNotExist)
+    {
+        // Do not update these to add more parsed values, this purely tests to see if the provider did pass the XML
+        // to the project properties successful. Use the actual project properties tests to add new values and test those.
+
+        // Arrange
+
+
+        std::string validDirectory = "MyDirectory";
+        std::vector<std::string> givenDirectories = { "Directory", validDirectory, "Another" };
+
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectories(""))
+            .WillByDefault(testing::Return(givenDirectories));
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectoryNames(""))
+            .WillByDefault(testing::Return(givenDirectories));
+
+        std::string fullPathToFile = validDirectory + "\\" + m_propertiesFileName;
+        ON_CALL(*m_packageFileSystemFileMock, Exists(fullPathToFile))
+            .WillByDefault(testing::Return(true));
+        EXPECT_CALL(*m_packageFileSystemFileMock, ReadFileContents(fullPathToFile))
+            .WillOnce(testing::Return(m_validProjectProperties));
+
+        // Act
+        std::shared_ptr<ProjectProperties> actual = m_testClass->LoadProjectProperties(m_gamePackageMock);
+
+        // Assert
+        ASSERT_EQ("sceneName.scene", actual->GetStartScene());
+        ASSERT_EQ("WindowTitle", actual->GetWindowTitle());
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, LoadProjectProperties_PrioritisesOutterFile_WhenOneIsFoundAtTheRootLevel)
+    {
+        // Do not update these to add more parsed values, this purely tests to see if the provider did pass the XML
+        // to the project properties successful. Use the actual project properties tests to add new values and test those.
+
+        // Arrange
+        EXPECT_CALL(*m_packageFileSystemFileMock, Exists(m_propertiesFileName))
+            .WillOnce(testing::Return(true));
+
+        EXPECT_CALL(*m_packageFileSystemFileMock, ReadFileContents(m_propertiesFileName))
+            .WillOnce(testing::Return(m_validProjectProperties));
+
+        std::string validDirectory = "MyDirectory";
+        std::vector<std::string> givenDirectories = { "Directory", validDirectory, "Another" };
+
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectories(""))
+            .WillByDefault(testing::Return(givenDirectories));
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectoryNames(""))
+            .WillByDefault(testing::Return(givenDirectories));
+
+        const char* unexpectedFileRead = "<UniversalObjectData>"
+            "<Strings>"
+            "<String \"Key\"=\"StartScene\" \"Value\"=\"somethingElse\" />"
+            "<String \"Key\"=\"WindowTitle\" \"Value\"=\"SomethingElse\" />"
+            "</Strings>"
+            "</UniversalObjectData>";
+        ASSERT_NE(unexpectedFileRead, m_validProjectProperties)
+            << "Ensure the given value for the sub directory and the root do not equal so that the assertions make sense.";
+
+        std::string fullPathToFile = validDirectory + "\\" + m_propertiesFileName;
+        ON_CALL(*m_packageFileSystemFileMock, Exists(fullPathToFile))
+            .WillByDefault(testing::Return(true));
+        ON_CALL(*m_packageFileSystemFileMock, ReadFileContents(fullPathToFile))
+            .WillByDefault(testing::Return(unexpectedFileRead));
+
+        // Act
+        std::shared_ptr<ProjectProperties> actual = m_testClass->LoadProjectProperties(m_gamePackageMock);
+
+        // Assert
+        ASSERT_EQ("sceneName.scene", actual->GetStartScene());
+        ASSERT_EQ("WindowTitle", actual->GetWindowTitle());
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, CanLoadProjectProperties_ReturnsFalse_WhenTheFileDoesNotExist)
+    {
+        // Arrange
+        // Nothing to arrange, File will not exist and no directories will exist.
+
+        // Act
+        bool actual = m_testClass->CanLoadProjectProperties(m_gamePackageMock);
+
+        // Assert
+        ASSERT_FALSE(actual);
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, CanLoadProjectProperties_ReturnsTrue_WhenTheFileExistsInTheRootDirectory)
+    {
+        // Arrange
+        ON_CALL(*m_packageFileSystemFileMock, Exists(m_propertiesFileName))
+            .WillByDefault(testing::Return(true));
+
+        ON_CALL(*m_packageFileSystemFileMock, ReadFileContents(m_propertiesFileName))
+            .WillByDefault(testing::Return(m_validProjectProperties));
+
+        // Act
+        bool actual = m_testClass->CanLoadProjectProperties(m_gamePackageMock);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, CanLoadProjectProperties_ReturnsTrue_WhenTheFileExistsOneDirectoryBelowTheRoot)
+    {
+        // Arrange
+
+
+        std::string validDirectory = "MyDirectory";
+        std::vector<std::string> givenDirectories = { "Directory", validDirectory, "Another" };
+
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectories(""))
+            .WillByDefault(testing::Return(givenDirectories));
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectoryNames(""))
+            .WillByDefault(testing::Return(givenDirectories));
+
+        std::string fullPathToFile = validDirectory + "\\" + m_propertiesFileName;
+        ON_CALL(*m_packageFileSystemFileMock, Exists(fullPathToFile))
+            .WillByDefault(testing::Return(true));
+
+        // Act
+        bool actual = m_testClass->CanLoadProjectProperties(m_gamePackageMock);
+
+        // Assert
+        ASSERT_TRUE(actual);
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, CanLoadProjectProperties_ReturnsFalse_WhenTheFileDoesNotExistInAnySubdirectory)
+    {
+        // Arrange
+        std::vector<std::string> givenDirectories = { "Directory", "Another" };
+
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectories(""))
+            .WillByDefault(testing::Return(givenDirectories));
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectoryNames(""))
+            .WillByDefault(testing::Return(givenDirectories));
+
+        // Act
+        bool actual = m_testClass->CanLoadProjectProperties(m_gamePackageMock);
+
+        // Assert
+        ASSERT_FALSE(actual);
     }
 }
