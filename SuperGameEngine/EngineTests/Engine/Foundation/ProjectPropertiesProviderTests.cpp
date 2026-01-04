@@ -66,6 +66,8 @@ namespace SuperGameEngineTests_Engine_Foundation
         }
     };
 
+#pragma region LoadProjectProperties
+
     TEST_F(ProjectPropertiesProviderTests, LoadProjectProperties_ReturnsNothing_WhenNoFileCanBeFound)
     {
         // Arrange
@@ -187,6 +189,9 @@ namespace SuperGameEngineTests_Engine_Foundation
         ASSERT_EQ("WindowTitle", actual->GetWindowTitle());
     }
 
+#pragma endregion
+#pragma region CanLoadProjectProperties
+
     TEST_F(ProjectPropertiesProviderTests, CanLoadProjectProperties_ReturnsFalse_WhenTheFileDoesNotExist)
     {
         // Arrange
@@ -218,8 +223,6 @@ namespace SuperGameEngineTests_Engine_Foundation
     TEST_F(ProjectPropertiesProviderTests, CanLoadProjectProperties_ReturnsTrue_WhenTheFileExistsOneDirectoryBelowTheRoot)
     {
         // Arrange
-
-
         std::string validDirectory = "MyDirectory";
         std::vector<std::string> givenDirectories = { "Directory", validDirectory, "Another" };
 
@@ -255,4 +258,57 @@ namespace SuperGameEngineTests_Engine_Foundation
         // Assert
         ASSERT_FALSE(actual);
     }
+
+#pragma endregion
+#pragma region GetProjectPropertiesPath
+
+    TEST_F(ProjectPropertiesProviderTests, GetProjectPropertiesPath_ReturnsEmpty_WhenThereIsNoFileCurrently)
+    {
+        // Arrange
+        // Nothing to arrange, File will not exist and no directories will exist.
+        std::string expected = {};
+
+        // Act
+        std::string actual = m_testClass->GetProjectPropertiesPath(m_gamePackageMock);
+
+        // Assert
+        ASSERT_EQ(expected, actual);
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, GetProjectPropertiesPath_ReturnsTheNameOfTheFile_WhenThereIsAProjectPropertiesFileAtTheRoot)
+    {
+        // Arrange
+        ON_CALL(*m_packageFileSystemFileMock, Exists(m_propertiesFileName))
+            .WillByDefault(testing::Return(true));
+
+        // Act
+        std::string actual = m_testClass->GetProjectPropertiesPath(m_gamePackageMock);
+
+        // Assert
+        ASSERT_EQ(m_propertiesFileName, actual);
+    }
+
+    TEST_F(ProjectPropertiesProviderTests, GetProjectPropertiesPath_ReturnsThePathWithSubdirectory_WhenTheOnlyFileFoundIsInASubDirectory)
+    {
+        // Arrange
+        std::string validDirectory = "MyDirectory";
+        std::vector<std::string> givenDirectories = { "Directory", validDirectory, "Another" };
+
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectories(""))
+            .WillByDefault(testing::Return(givenDirectories));
+        ON_CALL(*m_packageFileSystemDirectoryMock, ListDirectoryNames(""))
+            .WillByDefault(testing::Return(givenDirectories));
+
+        std::string fullPathToFile = validDirectory + "\\" + m_propertiesFileName;
+        ON_CALL(*m_packageFileSystemFileMock, Exists(fullPathToFile))
+            .WillByDefault(testing::Return(true));
+
+        // Act
+        std::string actual = m_testClass->GetProjectPropertiesPath(m_gamePackageMock);
+
+        // Assert
+        ASSERT_EQ(fullPathToFile, actual);
+    }
+
+#pragma endregion
 }

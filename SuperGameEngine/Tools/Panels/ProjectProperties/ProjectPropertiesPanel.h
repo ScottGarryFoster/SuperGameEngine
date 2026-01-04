@@ -4,6 +4,11 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "Panels/SuperToolsPanel.h"
 
+namespace FatedQuestLibraries
+{
+    class ExplicitDocumentModifiableUniversalObjectData;
+}
+
 namespace SuperGameEngine
 {
     class ProjectPropertiesProvider;
@@ -11,6 +16,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class EditableProjectPropertiesUniversalObjectData;
     class SingleLayoutMetaData;
     class WindowPackage;
 
@@ -94,9 +100,31 @@ namespace SuperGameTools
         std::shared_ptr<const SingleLayoutMetaData> m_projectPropertyLayout;
 
         /// <summary>
+        /// The path to the actual file.
+        /// We manage updating this from the provider and this is a cached location.
+        /// </summary>
+        std::string m_projectFilePath;
+
+        /// <summary>
+        /// Manages the data currently being edited. Could be not commited to file.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::ExplicitDocumentModifiableUniversalObjectData> m_universalObjectData;
+
+        /// <summary>
         /// Looks for the project properties layout and returns the value.
         /// </summary>
         /// <returns>The ability to create and edit the project properties file with its layout. </returns>
         std::shared_ptr<const SingleLayoutMetaData> FindProjectPropertyFileAndTemplateLayout() const;
+
+        /// <summary>
+        /// Check to see if the provider can find a properties file, if not attempt to create one.
+        /// The outcome of this is either that a properties file exists, or the provider fails.
+        /// </summary>
+        /// <returns>Were there errors? True means yes there were errors, false means the file exists. </returns>
+        /// <remarks>
+        /// This logic is here because it is only used by the Tools and creating a custom class for this is
+        /// likely overkill.
+        /// </remarks>
+        bool CreateBaseFileIfOneDoesNotExist() const;
     };
 }

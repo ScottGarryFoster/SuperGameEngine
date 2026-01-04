@@ -3,12 +3,15 @@
 #include "../../../../FatedQuest.Libraries/GamePackage/GamePackage/PackagePaths.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
 #include "Engine/Content/ContentManager.h"
-#include "Engine/Foundation/ProjectPropertiesProvider.h"
 #include "Engine/Structural/UniversalObjectData/UniversalObjectDataTemplateProvider.h"
 #include "Engine/Structural/UniversalObjectData/Template/SingleLayoutMetaData.h"
 #include "Engine/Structural/UniversalObjectData/Template/UniversalObjectDataTemplate.h"
 #include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ExplicitDocumentModifiableUniversalObjectData.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
+#include "../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
+#include "Engine/Foundation/ProjectPropertiesProvider.h"
+#include "Engine/Structural/UniversalObjectData/Template/SingleLayout.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -16,6 +19,7 @@ using namespace FatedQuestLibraries;
 ProjectPropertiesPanel::ProjectPropertiesPanel()
 {
     m_projectPropertiesProvider = std::make_shared<ProjectPropertiesProvider>();
+    m_universalObjectData = std::make_shared<ExplicitDocumentModifiableUniversalObjectData>();
 }
 
 ProjectPropertiesPanel::~ProjectPropertiesPanel()
@@ -39,26 +43,7 @@ void ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>& windowP
         return;
     }
 
-    if (!m_projectPropertiesProvider->CanLoadProjectProperties(windowPackage->GetContentManager()->GamePackage()))
-    {
-        std::string basicPropertiesFilePath = Directory::CombinePath(
-            m_windowPackage->GetPackagePaths()->ProductsDirectory(), 
-            m_windowPackage->GetPackagePaths()->ProductsDirectoryName(),
-            m_projectPropertiesFileName);
-
-        std::string fileContents = m_projectPropertyLayout->GetTemplate()->CreateBaseFile(basicPropertiesFilePath);
-        if (fileContents.empty())
-        {
-            Log::Error("Tried to make a project properties file but failed. Contents was empty.",
-                "ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>&)");
-            return;
-        }
-
-        File::WriteLine(basicPropertiesFilePath, fileContents);
-    }
-
-    //ProjectPropertiesProvider
-
+    LoadProjectPropertiesFile();
 }
 
 void ProjectPropertiesPanel::Update()
@@ -69,7 +54,7 @@ void ProjectPropertiesPanel::Draw()
 {
     if (RenderWindow(GetPanelName()))
     {
-        
+        m_projectPropertyLayout->GetLayout()->Draw(m_universalObjectData);
     }
     EndWindowRender(GetPanelName());
 }
@@ -123,4 +108,66 @@ std::shared_ptr<const SingleLayoutMetaData> ProjectPropertiesPanel::FindProjectP
     }
 
     return propertyLayout;
+}
+
+bool ProjectPropertiesPanel::CreateBaseFileIfOneDoesNotExist() const
+{
+    bool errorOccuredWhenCreatingFile = false;
+    if (!m_projectPropertiesProvider->CanLoadProjectProperties(m_windowPackage->GetContentManager()->GamePackage()))
+    {
+        std::string basicPropertiesFilePath = Directory::CombinePath(
+            m_windowPackage->GetPackagePaths()->ProductsDirectory(),
+            m_windowPackage->GetPackagePaths()->ProductsDirectoryName(),
+            m_projectPropertiesFileName);
+
+        std::string fileContents = m_projectPropertyLayout->GetTemplate()->CreateBaseFile(basicPropertiesFilePath);
+        if (fileContents.empty())
+        {
+            Log::Error("Tried to make a project properties file but failed. Contents was empty.",
+                "ProjectPropertiesPanel::CreateBaseFileIfOneDoesNotExist(const std::shared_ptr<WindowPackage>&)");
+            errorOccuredWhenCreatingFile = true;
+        }
+
+        File::WriteLine(basicPropertiesFilePath, fileContents);
+    }
+
+    return errorOccuredWhenCreatingFile;
+}
+
+void ProjectPropertiesPanel::LoadProjectPropertiesFile()
+{
+    if (CreateBaseFileIfOneDoesNotExist())
+    {
+        // Loading the base file will fail, could not create one. Errors called out in the method which attempted this.
+        return;
+    }
+
+    {
+        std::string relativePath = m_projectPropertiesProvider->GetProjectPropertiesPath
+            (m_windowPackage->GetContentManager()->GamePackage());
+        if (relativePath.empty())
+        {
+            Log::Error("No project path found. "
+                       "This should be impossible. Report this as a bug with the "
+                       "state of your base products folder and all sub directories one deep.",
+                "ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>&)");
+            return;
+        }
+
+        m_projectFilePath = Directory::CombinePath(
+            m_windowPackage->GetPackagePaths()->ProductsDirectory(), 
+            m_windowPackage->GetPackagePaths()->ProductsDirectoryName(), 
+            relativePath);
+    }
+
+    auto xml = std::make_shared<RapidXMLDocument>();
+    if (!xml->LoadFromFile(m_projectFilePath))
+    {
+        Log::Error("Project properties is invalid as an XML file. "
+                   "It should be a Universal Object Data file in XML format. Report this.",
+            "ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>&)");
+        return;
+    }
+
+    m_universalObjectData->ImportAsDocument(xml);
 }
