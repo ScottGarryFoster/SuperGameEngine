@@ -87,6 +87,17 @@ void ProjectPropertiesPanel::ResetPanel()
     ResetWindowLayout();
 }
 
+bool ProjectPropertiesPanel::HideWindow()
+{
+    if (m_universalObjectData->IsDirty())
+    {
+        return false;
+    }
+
+    Log::Info("Close");
+    return SuperToolsPanel::HideWindow();
+}
+
 std::shared_ptr<const SingleLayoutMetaData> ProjectPropertiesPanel::FindProjectPropertyFileAndTemplateLayout() const
 {
     std::vector<std::shared_ptr<const SingleLayoutMetaData>> fileLayouts =

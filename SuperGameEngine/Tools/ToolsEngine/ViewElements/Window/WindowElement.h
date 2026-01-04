@@ -48,7 +48,9 @@ namespace SuperGameTools
         /// <summary>
         /// Hides the panel.
         /// </summary>
-        virtual void HideWindow() = 0;
+        /// <return>True means window is hidden. </return>
+        /// <remarks>Hiding is not hard , but you might not want a window to hide to allow windows to interject. </remark>
+        virtual bool HideWindow() = 0;
 
         /// <summary>
         /// Called when the window is shown or hidden.

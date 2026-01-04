@@ -77,6 +77,12 @@ namespace SuperGameTools
         /// </summary>
         virtual void ResetPanel() override;
 
+        /// <summary>
+        /// Hides the panel.
+        /// </summary>
+        virtual bool HideWindow() override;
+
+
     private:
 
         /// <summary>
@@ -126,5 +132,10 @@ namespace SuperGameTools
         /// likely overkill.
         /// </remarks>
         bool CreateBaseFileIfOneDoesNotExist() const;
+
+        /// <summary>
+        /// Refresh/Load the project properties file ensuring it exists and is now editable in this editor.
+        /// </summary>
+        void LoadProjectPropertiesFile();
     };
 }

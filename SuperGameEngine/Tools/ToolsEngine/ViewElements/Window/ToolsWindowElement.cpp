@@ -46,12 +46,17 @@ bool ToolsWindowElement::RenderWindow(const char* name)
     m_currentOpenClosedState = ImGui::Begin(name, &m_windowIsShown);
     if (!m_windowIsShown)
     {
-        // Ensure we pop anything and close the window.
-        m_coloursAndStyles->PopWindowTabColoursAndStyles();
-        ImGui::End();
+        // Ensure we set this variable with whether we did hide the window.
+        // This ensures that the X button is also injectable.
+        m_windowIsShown = !HideWindow();
+        if (!m_windowIsShown)
+        {
+            // Ensure we pop anything and close the window.
+            m_coloursAndStyles->PopWindowTabColoursAndStyles();
+            ImGui::End();
 
-        HideWindow();
-        return false;
+            return m_windowIsShown;
+        }
     }
 
     m_tabIsHovered = ImGui::IsItemHovered();
@@ -77,12 +82,13 @@ void ToolsWindowElement::ShowWindow()
         (m_windowIsShown, m_windowUniqueName));
 }
 
-void ToolsWindowElement::HideWindow()
+bool ToolsWindowElement::HideWindow()
 {
     m_windowIsShown = false;
     m_onWindowShownOrHidden->Invoke
         (std::make_shared<ToolsWindowShownArguments>
         (m_windowIsShown, m_windowUniqueName));
+    return true;
 }
 
 std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> ToolsWindowElement::OnWindowShownOrHidden()

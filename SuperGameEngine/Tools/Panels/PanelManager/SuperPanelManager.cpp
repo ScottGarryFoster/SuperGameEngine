@@ -55,7 +55,9 @@ void SuperPanelManager::Invoke(std::shared_ptr<FEventArguments> arguments)
                     m_panels.at(menuItem->GetKey()).Panel->ShowWindow();
                 }
 
-                m_panels.at(menuItem->GetKey()).MenuItem->GetSelected()->SetValue(!currentSelected);
+                // It is important to poll the state again in case the panel has jumped in and stopped the panel opening or closing.
+                bool currentState = m_panels.at(menuItem->GetKey()).Panel->OpenState();
+                m_panels.at(menuItem->GetKey()).MenuItem->GetSelected()->SetValue(currentState);
             }
         }
     }
@@ -90,6 +92,13 @@ void SuperPanelManager::SetupPanelForPanelOpen(const std::shared_ptr<ToolsPanel>
     else
     {
         panel->HideWindow();
+    }
+
+    bool openStateAfterwards = panel->OnLoadOpenState();
+    if (openState != openStateAfterwards)
+    {
+        // The panel itself is stopping us from changing the state.
+        return;
     }
 
     const char* uniqueName = panel->GetPanelUniqueName();

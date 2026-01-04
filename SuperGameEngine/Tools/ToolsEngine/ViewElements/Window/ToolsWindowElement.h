@@ -51,7 +51,8 @@ namespace SuperGameTools
         /// <summary>
         /// Hides the panel.
         /// </summary>
-        void HideWindow() override;
+        /// <remarks>Hiding is not hard , but you might not want a window to hide to allow windows to interject. </remark>
+        bool HideWindow() override;
 
         /// <summary>
         /// Called when the window is shown or hidden.
