@@ -1212,6 +1212,13 @@ std::string SuperEnum::FigureOutType()
     int min = GetMinEnumNumberValue();
     int max = GetMaxEnumNumberValue();
 
+    // Enum values are a little different as each new entry above the first multiplies the max value by 2.
+    if (m_enumType == SuperEnumType::BitFlag)
+    {
+        int entries = max - 1;
+        max = static_cast<int>(std::pow(2, entries));
+    }
+
     std::string type = {};
     if (min >= 0)
     {
