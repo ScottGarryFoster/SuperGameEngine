@@ -24,6 +24,11 @@ namespace FatedQuestLibraries
         virtual bool IsDirty() const = 0;
 
         /// <summary>
+        /// Update the dirty state to saved. This should be applied after an export or the data is used and will now be disregarded.
+        /// </summary>
+        virtual void MarkSaved() = 0;
+
+        /// <summary>
         /// Sets the string to the given value.
         /// </summary>
         /// <param name="key">Key to search for. </param>

@@ -1,5 +1,6 @@
 #include "ProjectPropertiesPanel.h"
 
+#include "../../ImGuiIncludes.h"
 #include "../../../../FatedQuest.Libraries/GamePackage/GamePackage/PackagePaths.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
 #include "Engine/Content/ContentManager.h"
@@ -20,6 +21,7 @@ ProjectPropertiesPanel::ProjectPropertiesPanel()
 {
     m_projectPropertiesProvider = std::make_shared<ProjectPropertiesProvider>();
     m_universalObjectData = std::make_shared<ExplicitDocumentModifiableUniversalObjectData>();
+    m_documentToXml = std::make_shared<SimpleDocumentToXml>();
 }
 
 ProjectPropertiesPanel::~ProjectPropertiesPanel()
@@ -55,13 +57,57 @@ void ProjectPropertiesPanel::Update()
     }
 }
 
+bool ProjectPropertiesPanel::ActionButtons()
+{
+    bool closeWindow = false;
+
+    float okButtonWidth = 50;
+    float cancelButtonWidth = 60;
+    float applyButtonWidth = 50;
+    float padding = 10;
+    float windowVisibleX2 = ImGui::GetWindowContentRegionMax().x;
+
+    float rightMost = okButtonWidth + padding + cancelButtonWidth + padding + applyButtonWidth - 2;
+    ImGui::SetCursorPosX(windowVisibleX2 - rightMost);
+        
+    if (ImGui::Button("Ok", ImVec2(okButtonWidth, 0)))
+    {
+        SaveProperties();
+        closeWindow = true;
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::Button("Cancel", ImVec2(cancelButtonWidth, 0)))
+    {
+        LoadProjectPropertiesFile();
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::Button("Apply", ImVec2(applyButtonWidth, 0)))
+    {
+        SaveProperties();
+    }
+
+    return closeWindow;
+}
+
 void ProjectPropertiesPanel::Draw()
 {
+    bool closeWindow = false;
     if (RenderWindow(GetPanelName()))
     {
         m_projectPropertyLayout->GetLayout()->Draw(m_universalObjectData);
+
+        closeWindow = ActionButtons();
     }
     EndWindowRender(GetPanelName());
+
+    if (closeWindow)
+    {
+        HideWindow();
+    }
 }
 
 void ProjectPropertiesPanel::TearDown()
@@ -186,4 +232,34 @@ void ProjectPropertiesPanel::LoadProjectPropertiesFile()
     }
 
     m_universalObjectData->ImportAsDocument(xml);
+}
+
+void ProjectPropertiesPanel::SaveProperties()
+{
+    // Do not save if there was nothing to save.
+    if (!m_universalObjectData->IsDirty())
+    {
+        return;
+    }
+
+    std::shared_ptr<ModifiableDocument> document = m_universalObjectData->ExportToDocument();
+    if (!document)
+    {
+        Log::Error("Could not export universal document to xml: " + m_projectFilePath,
+            "ProjectPropertiesPanel::SaveProperties()");
+        return;
+    }
+
+    std::string fileContents = m_documentToXml->ConvertToXml(document);
+
+    if (!File::WriteLine(m_projectFilePath, fileContents))
+    {
+        Log::Error("Could not write file contents to path: " + m_projectFilePath,
+            "ProjectPropertiesPanel::SaveProperties()");
+        return;
+    }
+
+    m_universalObjectData->MarkSaved();
+    m_previousDirtyStateOfDocument = false;
+    UpdateUnsavedState(m_previousDirtyStateOfDocument);
 }

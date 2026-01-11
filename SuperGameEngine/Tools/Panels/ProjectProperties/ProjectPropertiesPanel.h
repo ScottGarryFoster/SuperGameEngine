@@ -123,6 +123,11 @@ namespace SuperGameTools
         bool m_previousDirtyStateOfDocument;
 
         /// <summary>
+        /// Converts a Stored Document to XML.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::DocumentToXml> m_documentToXml;
+
+        /// <summary>
         /// Looks for the project properties layout and returns the value.
         /// </summary>
         /// <returns>The ability to create and edit the project properties file with its layout. </returns>
@@ -143,5 +148,17 @@ namespace SuperGameTools
         /// Refresh/Load the project properties file ensuring it exists and is now editable in this editor.
         /// </summary>
         void LoadProjectPropertiesFile();
+
+        /// <summary>
+        /// Saves the project properties file.
+        /// </summary>
+        void SaveProperties();
+
+        /// <summary>
+        /// Displays and creates the logic for the action buttons.
+        /// </summary>
+        /// <returns>True means close the window. </returns>
+        /// <remarks>Ensure to close the window outside of any existing window.</remarks>
+        bool ActionButtons();
     };
 }

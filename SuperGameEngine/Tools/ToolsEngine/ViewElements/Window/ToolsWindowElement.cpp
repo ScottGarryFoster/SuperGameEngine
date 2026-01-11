@@ -47,13 +47,6 @@ bool ToolsWindowElement::RenderWindow(const char* name)
 
     m_coloursAndStyles->SetWindowTabColoursAndStyles(m_currentOpenClosedState, m_tabIsHovered);
 
-    ImGuiWindowFlags_ left = WindowFlagsToImGuiConverter::Convert(m_windowFlags);
-    ImGuiWindowFlags_ right = WindowFlagsToImGuiConverter::Convert(WindowFlags::None);
-    if (left != right)
-    {
-        Log::Info("Nope");
-    }
-
     m_currentOpenClosedState = ImGui::Begin(name, &m_windowIsShown, WindowFlagsToImGuiConverter::Convert(m_windowFlags));
     if (!m_windowIsShown)
     {
@@ -128,7 +121,11 @@ void ToolsWindowElement::UpdateUnsavedState(bool newValue)
     }
     else
     {
-        if (EWindowFlags::HasFlag(m_windowFlags, WindowFlags::UnsavedDocument))
+        if (m_windowFlags == WindowFlags::UnsavedDocument)
+        {
+            m_windowFlags = WindowFlags::None;
+        }
+        else if (EWindowFlags::HasFlag(m_windowFlags, WindowFlags::UnsavedDocument))
         {
             m_windowFlags &= ~WindowFlags::UnsavedDocument;
         }
