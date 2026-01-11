@@ -8,7 +8,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Provides and manages all shared resources.
     /// </summary>
-    class SuperContentManager : public ContentManager
+    class SuperContentManager : public virtual ContentManager
     {
     public:
         SuperContentManager();

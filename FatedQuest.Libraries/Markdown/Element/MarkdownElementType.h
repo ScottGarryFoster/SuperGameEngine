@@ -124,7 +124,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static MarkdownElementType FromString(std::string value, bool checkCase = true)
+        static MarkdownElementType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

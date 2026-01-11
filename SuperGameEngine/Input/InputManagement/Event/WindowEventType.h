@@ -599,7 +599,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static WindowEventType FromString(std::string value, bool checkCase = true)
+        static WindowEventType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

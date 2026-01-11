@@ -180,7 +180,7 @@ namespace FatedQuestLibraries
             return returnToString;
         }
 
-        static MarkdownTextStyle FromString(std::string value, bool checkCase = true)
+        static MarkdownTextStyle FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

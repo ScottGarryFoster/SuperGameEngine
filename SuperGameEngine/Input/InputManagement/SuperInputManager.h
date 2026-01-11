@@ -10,7 +10,7 @@ namespace SuperGameInput
     /// <summary>
     /// Handles and updates user input.
     /// </summary>
-    class SuperInputManager : public InputManager
+    class SuperInputManager : public virtual InputManager
     {
     public:
         SuperInputManager();

@@ -1,5 +1,6 @@
 @echo off
 setlocal
+pushd "%~dp0"
 
 rem Call CMake update with tools chain if we need vcpkg in future.
 cmake -S . -B build -DENABLE_TESTS=ON

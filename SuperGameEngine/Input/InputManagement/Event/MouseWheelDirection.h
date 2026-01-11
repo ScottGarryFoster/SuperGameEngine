@@ -84,7 +84,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static MouseWheelDirection FromString(std::string value, bool checkCase = true)
+        static MouseWheelDirection FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

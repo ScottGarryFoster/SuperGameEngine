@@ -94,7 +94,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static TreeViewItemCollapsibleIcon FromString(std::string value, bool checkCase = true)
+        static TreeViewItemCollapsibleIcon FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

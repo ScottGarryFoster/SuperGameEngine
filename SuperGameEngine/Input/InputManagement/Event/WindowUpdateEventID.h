@@ -238,7 +238,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static WindowUpdateEventID FromString(std::string value, bool checkCase = true)
+        static WindowUpdateEventID FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

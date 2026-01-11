@@ -84,6 +84,20 @@ foreach(OUTPUTCONFIG Debug Release Tools_Debug)
     )
 endforeach()
 
+# Set preprocessor definitions per configuration
+if(ENABLE_TOOLS)
+    target_compile_definitions(Engine PRIVATE
+        $<$<CONFIG:Debug>:DEBUG _DEBUG _CONSOLE>
+        $<$<CONFIG:Release>:NDEBUG>
+        $<$<CONFIG:Tools_Debug>:_TOOLS _DEBUG _CONSOLE>
+    )
+else()
+    target_compile_definitions(Engine PRIVATE
+        $<$<CONFIG:Debug>:DEBUG _DEBUG _CONSOLE>
+        $<$<CONFIG:Release>:NDEBUG>
+    )
+endif()
+
 # Get packages
 NugetInclude("rapidxml" Engine)
 NugetInclude("sdl2" Engine)

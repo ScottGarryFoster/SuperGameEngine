@@ -3,10 +3,14 @@
 
 #include <Windows.h>
 
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/CombinedGamePackage.h"
+#include "../../../FatedQuest.Libraries/GamePackage/GamePackage/SGEPackagePaths.h"
 #include "../Engine/Factory/EngineFactory.h"
 #include "../Engine/Graphics/Texture/SDLRenderer.h"
 #include "../.././../FatedQuest.Libraries/Logger/AllReferences.h"
 #include "../../Input/InputManagement/SuperSDLInputManager.h"
+#include "Engine/Foundation/ProjectPropertiesProvider.h"
+#include "Engine/Window/SDLWindowManager.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -15,11 +19,17 @@ using namespace SuperGameInput;
 EngineEntry::EngineEntry()
 {
     m_inputManager = std::make_shared<SuperSDLInputManager>();
+    m_engineWindowManager = std::make_shared<SDLWindowManager>();
+
+    // TODO: Consider this reloading when the window restarts.
+    auto combinedGamePackage = std::make_shared<CombinedGamePackage>();
+    auto paths = std::make_shared<SGEPackagePaths>();
+    combinedGamePackage->Load(paths);
+    m_gamePackage = combinedGamePackage;
 }
 
 int EngineEntry::RunApplication(const std::string& engineType)
 {
-    m_renderer = std::make_shared<SDLRenderer>();
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
     {
@@ -31,8 +41,11 @@ int EngineEntry::RunApplication(const std::string& engineType)
 
 ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineType)
 {
-    // Pointers to our window and surface
-    SDL_Window* window = nullptr;
+    if (!InitialiseProjectProperties())
+    {
+        Log::Error("Could not create Project Properties. Application aborted.");
+        return ApplicationOperationState::Close;
+    }
 
     // Initialize SDL. SDL_Init will return -1 if it fails.
     if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0)
@@ -49,34 +62,8 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         return ApplicationOperationState::Close;
     }
 
-    // Create our window
-    window = SDL_CreateWindow("Example", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
-
-    // Make sure creating the window succeeded
-    if (!window)
-    {
-        std::string sdlError = SDL_GetError();
-        Log::Error("Error creating window: " + sdlError);
-        return ApplicationOperationState::Close;
-    }
-
-    // Create a renderer
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (renderer == nullptr)
-    {
-        std::string sdlError = SDL_GetError();
-        Log::Error("Could not create Renderer: " + sdlError);
-
-        // Handle renderer creation failure
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-
-        return ApplicationOperationState::Close;
-    }
-
-
-    // Event handler
-    SDL_Event e;
+    m_engineWindowManager->Setup(m_projectProperties);
+    m_engineWindowManager->CreateGameWindow("New", WindowPredefinedPosition::Centered, FPoint(1280, 720));
 
     // Setup the engine.
     if (!m_engine)
@@ -89,10 +76,14 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
         }
     }
 
-    m_renderer->SetRenderer(renderer);
-    m_engine->GiveRenderer(m_renderer);
+    m_engine->GiveGamePackage(m_gamePackage);
+    m_engine->GiveRenderer(m_engineWindowManager->GetDefaultRenderer());
     m_engine->GiveInput(m_inputManager);
+    m_engine->GiveProjectProperties(m_projectProperties);
     m_engine->WindowStart();
+
+    // Event handler
+    SDL_Event e;
 
     Uint64 startTime = SDL_GetTicks64();
 
@@ -148,13 +139,13 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
 #endif
 
         // Clear the renderer
-        SDL_SetRenderDrawColor(renderer, 103, 235, 229, 255);
-        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(m_engineWindowManager->GetDefaultRenderer()->GetRenderer(), 103, 235, 229, 255);
+        SDL_RenderClear(m_engineWindowManager->GetDefaultRenderer()->GetRenderer());
 
         m_engine->Draw();
 
         // Update screen
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent(m_engineWindowManager->GetDefaultRenderer()->GetRenderer());
 
         // Add a small delay to avoid 100% CPU usage
         SDL_Delay(3);
@@ -165,13 +156,8 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
     // Wait
     //system("pause");
 
-    // Ensure the engine knows we no longer have a window
-    SDL_DestroyRenderer(m_renderer->GetRenderer());
-    m_renderer->SetRenderer(nullptr);
     m_engine->WindowTeardown();
-
-    // Destroy the window. This will also destroy the surface
-    SDL_DestroyWindow(window);
+    m_engineWindowManager->DestroyWindow();
 
     // Quit SDL
     SDL_Quit();
@@ -182,4 +168,17 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
 #endif
 
     return operationState;
+}
+
+bool EngineEntry::InitialiseProjectProperties()
+{
+    auto provider = std::make_shared<ProjectPropertiesProvider>();
+    m_projectProperties = provider->LoadProjectProperties(m_gamePackage);
+
+    if (m_projectProperties)
+    {
+        return true;
+    }
+    
+    return false;
 }

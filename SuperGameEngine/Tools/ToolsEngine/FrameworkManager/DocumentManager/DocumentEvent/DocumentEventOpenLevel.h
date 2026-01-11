@@ -93,7 +93,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static DocumentEventOpenLevel FromString(std::string value, bool checkCase = true)
+        static DocumentEventOpenLevel FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

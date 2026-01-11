@@ -45,6 +45,11 @@ namespace FatedQuestLibraries
         virtual bool IsDirty() const override;
 
         /// <summary>
+        /// Update the dirty state to saved. This should be applied after an export or the data is used and will now be disregarded.
+        /// </summary>
+        virtual void MarkSaved() override;
+
+        /// <summary>
         /// Lists all the strings in the object.
         /// </summary>
         /// <returns>All the String keys. </returns>

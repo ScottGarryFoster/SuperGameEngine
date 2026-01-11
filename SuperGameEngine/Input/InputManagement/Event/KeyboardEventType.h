@@ -84,7 +84,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static KeyboardEventType FromString(std::string value, bool checkCase = true)
+        static KeyboardEventType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

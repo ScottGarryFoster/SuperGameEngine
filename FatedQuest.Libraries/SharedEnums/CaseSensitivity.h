@@ -84,7 +84,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static CaseSensitivity FromString(std::string value, bool checkCase = true)
+        static CaseSensitivity FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

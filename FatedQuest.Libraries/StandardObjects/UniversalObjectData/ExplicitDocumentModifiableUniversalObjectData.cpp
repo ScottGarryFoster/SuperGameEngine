@@ -23,7 +23,7 @@ ExplicitDocumentModifiableUniversalObjectData::ExplicitDocumentModifiableUnivers
 
 std::shared_ptr<ModifiableDocument> ExplicitDocumentModifiableUniversalObjectData::ExportToDocument()
 {
-    if (m_isDirty || !m_modifiableDocument)
+    if (m_isDirty || !m_modifiableDocument || !m_modifiableDocument->GetModifiableRoot())
     {
         m_modifiableDocument = std::make_shared<ModifiableDocument>();
         auto root = std::make_shared<ModifiableNode>();
@@ -96,6 +96,11 @@ std::shared_ptr<Guid> ExplicitDocumentModifiableUniversalObjectData::GetGuid() c
 bool ExplicitDocumentModifiableUniversalObjectData::IsDirty() const
 {
     return m_isDirty;
+}
+
+void ExplicitDocumentModifiableUniversalObjectData::MarkSaved()
+{
+    m_isDirty = false;
 }
 
 std::vector<std::string> ExplicitDocumentModifiableUniversalObjectData::ListStrings() const

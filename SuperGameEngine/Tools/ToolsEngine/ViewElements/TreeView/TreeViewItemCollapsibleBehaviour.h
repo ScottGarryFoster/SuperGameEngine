@@ -102,7 +102,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static TreeViewItemCollapsibleBehaviour FromString(std::string value, bool checkCase = true)
+        static TreeViewItemCollapsibleBehaviour FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

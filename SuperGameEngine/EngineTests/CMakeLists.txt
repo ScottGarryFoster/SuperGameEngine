@@ -99,6 +99,7 @@ add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
 add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
 add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
 add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
+add_subdirectory(../../FatedQuest.Libraries/GamePackageTestMocks GamePackageTestMocks)
 add_subdirectory(../Engine Engine)
 
 # Link dependencies
@@ -111,6 +112,7 @@ target_link_libraries(EngineTests PRIVATE
     StoredDocument
     XmlDocument
     Engine
+    GamePackageTestMocks
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest_main>
 )

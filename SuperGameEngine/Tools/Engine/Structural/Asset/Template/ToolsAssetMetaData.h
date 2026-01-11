@@ -1,5 +1,5 @@
 #pragma once
-#include "AssetMetaData.h"
+#include "SingleAssetLayoutMetaData.h"
 
 namespace FatedQuestLibraries
 {
@@ -8,17 +8,17 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
-    class AssetLayoutEditorFactory;
+    class LayoutEditorFactory;
 
     /// <summary>
     /// Describes what asset metadata files are exactly, what files they relate to, how to edit them and so on.
     /// </summary>
-    class ToolsAssetMetaData : public AssetMetaData
+    class ToolsAssetMetaData : public SingleAssetLayoutMetaData
     {
     public:
         ToolsAssetMetaData(
             const std::shared_ptr<FatedQuestLibraries::StoredDocument>& document,
-            const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory);
+            const std::shared_ptr<LayoutEditorFactory>& layoutFactory);
 
         /// <summary>
         /// Contains a template and the ability to detect whether using the template is correct.
@@ -32,7 +32,7 @@ namespace SuperGameTools
         /// itself should be treated.
         /// </summary>
         /// <returns>Describes how to edit the given asset and how the data is laid out. </returns>
-        virtual std::shared_ptr<AssetLayout> GetLayout() const override;
+        virtual std::shared_ptr<SingleLayout> GetLayout() const override;
 
     private:
         /// <summary>
@@ -43,7 +43,7 @@ namespace SuperGameTools
         /// <summary>
         /// Layout for the asset.
         /// </summary>
-        std::shared_ptr<AssetLayout> m_layout;
+        std::shared_ptr<SingleLayout> m_layout;
     };
 }
 

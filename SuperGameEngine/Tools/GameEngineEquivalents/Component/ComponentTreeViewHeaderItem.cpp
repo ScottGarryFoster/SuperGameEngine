@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "../../Windows/SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
+#include "../../Panels/SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
 
 using namespace SuperGameTools;
 

@@ -25,14 +25,14 @@ namespace SuperGameTools
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
-        virtual void Draw(const FPoint& location) const override;
+        virtual void Draw(const FatedQuestLibraries::FPoint& location) const override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        virtual void Draw(const FPoint& location, const FPoint& size) const override;
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FPoint& size) const override;
 
         /// <summary>
         /// Draws to the screen.
@@ -59,7 +59,7 @@ namespace SuperGameTools
         /// Get the size of the Texture in Pixels.
         /// </summary>
         /// <returns>Returns the size of the Texture. </returns>
-        virtual FPoint Size() const override;
+        virtual FatedQuestLibraries::FPoint Size() const override;
 
     private:
         /// <summary>

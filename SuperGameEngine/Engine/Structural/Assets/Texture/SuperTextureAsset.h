@@ -92,7 +92,7 @@ namespace SuperGameEngine
 
         void DrawPredefined(int tile) const;
 
-        void DrawPredefined(int tile, const FVector2F& screenLocation) const;
+        void DrawPredefined(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const;
     };
 }
 

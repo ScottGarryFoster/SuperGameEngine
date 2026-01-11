@@ -86,7 +86,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static SDLRendererState FromString(std::string value, bool checkCase = true)
+        static SDLRendererState FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

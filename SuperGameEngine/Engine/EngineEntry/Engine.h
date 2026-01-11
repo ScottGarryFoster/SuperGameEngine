@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <memory>
-#include "../Engine/Graphics/Texture/SDLRendererReader.h"
 #include "ApplicationOperationState.h"
 
 namespace SuperGameInput
@@ -10,8 +9,16 @@ namespace SuperGameInput
     class InputHandler;
 }
 
+namespace FatedQuestLibraries
+{
+    class GamePackage;
+}
+
 namespace SuperGameEngine
 {
+    class SDLRendererReader;
+    class ProjectProperties;
+
     /// <summary>
     /// An object capable of running applications such as games or tools.
     /// </summary>
@@ -34,6 +41,19 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="inputManager">User input. </param>
         virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) = 0;
+
+        /// <summary>
+        /// The data for the game.
+        /// This is loaded in the engine entry as it contains information about the window state.
+        /// </summary>
+        /// <param name="gamePackage">The data for the game. </param>
+        virtual void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) = 0;
+
+        /// <summary>
+        /// Give project properties which contains the information for how to treat the product.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) = 0;
 
         /// <summary>
         /// Handle the current event.

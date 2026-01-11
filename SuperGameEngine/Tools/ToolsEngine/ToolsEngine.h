@@ -7,6 +7,11 @@
 #include "../../Engine/Engine/Factory/EngineFactory.h"
 #include "../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace SuperGameTools
+{
+    class PanelManager;
+}
+
 namespace SuperGameEngine
 {
     class SuperContentManager;
@@ -29,7 +34,7 @@ namespace SuperGameTools
     /// <summary>
     /// An engine just for debugging. It is independent of  other engines.
     /// </summary>
-    class ToolsEngine : public Engine
+    class ToolsEngine : public virtual Engine
     {
     public:
         ToolsEngine();
@@ -51,6 +56,19 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="inputManager">User input. </param>
         virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
+
+        /// <summary>
+        /// The data for the game.
+        /// This is loaded in the engine entry as it contains information about the window state.
+        /// </summary>
+        /// <param name="gamePackage">The data for the game. </param>
+        virtual void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) override;
+
+        /// <summary>
+        /// Give project properties which contains the information for how to treat the product.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) override;
 
         /// <summary>
         /// Handle the current event.
@@ -119,6 +137,11 @@ namespace SuperGameTools
         std::shared_ptr<SuperSceneLoadPackage> m_sceneLoadPackage;
 
         /// <summary>
+        /// All the data for the game.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
+
+        /// <summary>
         /// Everything we'll be running.
         /// </summary>
         std::vector<std::shared_ptr<UpdateableObject>> m_updatables;
@@ -164,6 +187,11 @@ namespace SuperGameTools
         /// Given to Tools and Engine to provide Input.
         /// </summary>
         std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// Manages panels, the visibility and layouts.
+        /// </summary>
+        std::shared_ptr<PanelManager> m_panelManager;
 
         /// <summary>
         /// Sets up the engine.

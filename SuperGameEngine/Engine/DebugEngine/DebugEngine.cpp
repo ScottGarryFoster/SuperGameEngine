@@ -63,14 +63,24 @@ void DebugEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     
 }
 
-void DebugEngine::GiveInput(const std::shared_ptr<SDLInputManager>& inputManager)
+void DebugEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager)
 {
     m_inputManager = inputManager;
 
     if (m_grandSceneLoadPackage)
     {
-        m_grandSceneLoadPackage->SetInputHandler(std::static_pointer_cast<InputHandler>(m_inputManager));
+        m_grandSceneLoadPackage->SetInputHandler(m_inputManager);
     }
+}
+
+void DebugEngine::GiveGamePackage(const std::shared_ptr<GamePackage>& gamePackage)
+{
+    m_gamePackage = gamePackage;
+}
+
+void DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties)
+{
+    Log::Info("Project properties not used.", "DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
 ApplicationOperationState DebugEngine::Event(SDL_Event event)

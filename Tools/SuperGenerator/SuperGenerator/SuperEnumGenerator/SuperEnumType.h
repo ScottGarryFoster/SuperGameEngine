@@ -84,7 +84,7 @@ namespace SuperEnumGenerator
             return "Unknown";
         }
 
-        static SuperEnumType FromString(std::string value, bool checkCase = true)
+        static SuperEnumType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

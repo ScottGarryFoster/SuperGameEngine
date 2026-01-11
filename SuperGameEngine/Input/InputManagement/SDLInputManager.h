@@ -16,7 +16,7 @@ namespace SuperGameInput
     /// <summary>
     /// Handles and updates user input.
     /// </summary>
-    class SDLInputManager : public InputHandler
+    class SDLInputManager : public virtual InputHandler
     {
     public:
         virtual ~SDLInputManager() = default;

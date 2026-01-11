@@ -8,16 +8,16 @@
 #include "../../Engine/Engine/Content/SuperContentManager.h"
 #include "../ImGuiIncludes.h"
 #include "../../Engine/Structural/Serializable/SuperSerializableParser.h"
-#include "../Windows/GameViewport/GameViewport.h"
+#include "../Panels/GameViewport/GameViewport.h"
 #include "../ToolsEngine/Packages/WindowPackage.h"
-#include "../Windows/LoggerOutput/LoggerOutput.h"
-#include "../Windows/MainMenuBar/MainMenuBar.h"
-#include "../Windows/AssetBrowser/AssetBrowser.h"
+#include "../Panels/LoggerOutput/LoggerOutput.h"
+#include "../Panels/MainMenuBar/MainMenuBar.h"
+#include "../Panels/AssetBrowser/AssetBrowser.h"
 
 #include "../Engine/Content/ImGuiTextureManager.h"
-#include "../Windows/DockableContainer/DockableContainer.h"
-#include "../Windows/SceneHierarchy/SceneHierarchy.h"
-#include "../Windows/InspectorWindow/InspectorWindow.h"
+#include "../Panels/DockableContainer/DockableContainer.h"
+#include "../Panels/SceneHierarchy/SceneHierarchy.h"
+#include "../Panels/InspectorWindow/InspectorWindow.h"
 #include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
 #include "Engine/Structural/Asset/AssetTemplateProvider.h"
 #include "Engine/Structural/Asset/ToolsAssetTemplateProvider.h"
@@ -25,6 +25,9 @@
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 // This should be included early in the engine for the inspector.
+#include "Engine/Structural/UniversalObjectData/ToolsUniversalObjectDataTemplateProvider.h"
+#include "Panels/PanelManager/SuperPanelManager.h"
+#include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
@@ -35,6 +38,12 @@ ToolsEngine::ToolsEngine()
     m_haveSetup = false;
     m_superContentManager = std::make_shared<SuperContentManager>();
     m_dockableContainer = std::make_shared<DockableContainer>();
+
+    m_panelManager = std::make_shared<SuperPanelManager>();
+    m_panelManager->UpdateDistributedWeakPointer(m_panelManager);
+    m_windowPackage->SetPanelManager(m_panelManager);
+    m_panelManager->Setup(m_windowPackage);
+
 }
 
 ToolsEngine::~ToolsEngine()
@@ -50,11 +59,9 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
     {
         auto paths = std::make_shared<SGEPackagePaths>();
         m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
-        auto gamePackage = std::make_shared<ToolsGamePackage>();
-        gamePackage->Load(paths);
-        m_superContentManager->GiveGamePackage(gamePackage);
+        m_superContentManager->GiveGamePackage(m_gamePackage);
 
-        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, gamePackage);
+        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, m_gamePackage);
         m_superContentManager->GiveSuperTextureManager(textureManager);
 
         m_windowPackage->SetContentManager(m_superContentManager);
@@ -66,6 +73,17 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
 void ToolsEngine::GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager)
 {
     m_inputManager = inputManager;
+}
+
+void ToolsEngine::GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage)
+{
+    m_gamePackage = gamePackage;
+}
+
+void ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties)
+{
+    Log::Info("ToolsEngine does not use ProjectProperties.", 
+        "ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
 void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
@@ -128,21 +146,29 @@ void ToolsEngine::WindowTeardown()
 void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
-    std::shared_ptr<UpdateableObject> gameViewport = std::make_shared<GameViewport>();
+    menuBar->UpdateDistributedWeakPointer(menuBar);
 
     std::shared_ptr<SceneHierarchy> sceneHierarchy = std::make_shared<SceneHierarchy>();
-    sceneHierarchy->UpdateDistributedWeakPointer(sceneHierarchy);
+    sceneHierarchy->FEventObserver::UpdateDistributedWeakPointer(sceneHierarchy);
 
     std::shared_ptr<InspectorWindow> inspectorWindow = std::make_shared<InspectorWindow>();
-    inspectorWindow->UpdateDistributedWeakPointer(inspectorWindow);
+    inspectorWindow->FEventObserver::UpdateDistributedWeakPointer(inspectorWindow);
 
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
-    loggerWindow->UpdateDistributedWeakPointer(loggerWindow);
+    loggerWindow->FEventObserver::UpdateDistributedWeakPointer(loggerWindow);
 
     std::shared_ptr<AssetBrowser> assetBrowserWindow = std::make_shared<AssetBrowser>();
-    assetBrowserWindow->UpdateDistributedWeakPointer(assetBrowserWindow);
+    assetBrowserWindow->FEventObserver::UpdateDistributedWeakPointer(assetBrowserWindow);
+
+    auto projectProperties = std::make_shared<ProjectPropertiesPanel>();
+    projectProperties->FEventObserver::UpdateDistributedWeakPointer(projectProperties);
 
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
+
+    // Must be made first as other things latch on to it.
+    menuBar->Setup(m_windowPackage);
+    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
+    m_updatables.push_back(menuBar);
 
     // Ensure we listen to logs early.
     loggerWindow->Setup(m_windowPackage);
@@ -152,34 +178,50 @@ void ToolsEngine::Setup()
         shared->Subscribe(weak);
     }
     m_updatables.push_back(loggerWindow);
-
-    // Must be made first as other things latch on to it.
-    menuBar->Setup(m_windowPackage);
-    m_windowPackage->SetTopMenu(menuBar->GetTopMenuBar());
-    m_updatables.push_back(menuBar);
+    m_windowPackage->GetPanelManager()->RegisterPanel(loggerWindow);
 
     // Then framework
     auto framework = std::make_shared<ToolsFrameworkManager>(m_windowPackage);
     framework->Setup();
     m_windowPackage->SetFrameworkManager(framework);
 
-    // Then assets. Must come before Inspector window and Asset Browser Setup.
+    // We are restricted to doing this at the main setup because only here do we 100% know that the
+    // game package exists.
+    // Load asset templates which must come before Inspector window and Asset Browser Setup.
     auto assetTemplateProvider = std::make_shared<ToolsAssetTemplateProvider>
         (m_windowPackage->GetContentManager()->GamePackage());
     assetTemplateProvider->LoadAllAssetMeta();
     m_windowPackage->SetAssetTemplateProvider(assetTemplateProvider);
 
+    // And general UOD which at the time of writing should be fine before the majority of windows as it is used for properties.
+    auto universalObjectTemplateProvider = std::make_shared<ToolsUniversalObjectDataTemplateProvider>
+        (m_windowPackage->GetContentManager()->GamePackage());
+    universalObjectTemplateProvider->LoadAllTemplateMetaData();
+    m_windowPackage->SetUniversalObjectDataTemplateProvider(universalObjectTemplateProvider);
+        
     // Everything else should be able to be in any order
+    std::shared_ptr<GameViewport> gameViewport = std::make_shared<GameViewport>();
     gameViewport->Setup(m_windowPackage);
     m_updatables.push_back(gameViewport);
+    m_windowPackage->GetPanelManager()->RegisterPanel(gameViewport);
 
     inspectorWindow->Setup(m_windowPackage);
     m_updatables.push_back(inspectorWindow);
+    m_windowPackage->GetPanelManager()->RegisterPanel(inspectorWindow);
 
     sceneHierarchy->Setup(m_windowPackage);
     inspectorWindow->OnMenuDelete()->Subscribe(sceneHierarchy);
     m_updatables.push_back(sceneHierarchy);
+    m_windowPackage->GetPanelManager()->RegisterPanel(sceneHierarchy);
 
     assetBrowserWindow->Setup(m_windowPackage);
     m_updatables.push_back(assetBrowserWindow);
+    m_windowPackage->GetPanelManager()->RegisterPanel(assetBrowserWindow);
+
+    projectProperties->Setup(m_windowPackage);
+    m_updatables.push_back(projectProperties);
+    m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
+
+    // Run last after all panels have been run.
+    menuBar->SetupPostPanels();
 }

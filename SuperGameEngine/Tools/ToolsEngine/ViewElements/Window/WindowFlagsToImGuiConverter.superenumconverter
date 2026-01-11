@@ -1,0 +1,39 @@
+<SuperEnumConverter Type="BitFlag">
+    <Header>
+    #pragma once
+    #include &lt;Imgui/External/imgui.h&gt;
+    #include "WindowFlags.h"
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumConverterComment>
+        Converter for &lt;see cref=&quot;WindowFlags&quot;/&gt; to the ImGui version.
+    </EnumConverterComment>
+    <EnumDefinition Side="Left" Type="WindowFlags" />
+    <EnumDefinition Side="Right" Type="ImGuiWindowFlags_" UseTypeAsPrefix="False" />
+    <Converter Name="WindowFlagsToImGuiConverter">
+        <Default Left="None" Right="ImGuiWindowFlags_None" />
+        <Value Left="NoTitleBar" Right="ImGuiWindowFlags_NoTitleBar" />
+        <Value Left="NoResize" Right="ImGuiWindowFlags_NoResize" />
+        <Value Left="NoMove" Right="ImGuiWindowFlags_NoMove" />
+        <Value Left="NoScrollbar" Right="ImGuiWindowFlags_NoScrollbar" />
+        <Value Left="NoScrollWithMouse" Right="ImGuiWindowFlags_NoScrollWithMouse" />
+        <Value Left="NoCollapse" Right="ImGuiWindowFlags_NoCollapse" />
+        <Value Left="AlwaysAutoResize" Right="ImGuiWindowFlags_AlwaysAutoResize" />
+        <Value Left="NoBackground" Right="ImGuiWindowFlags_NoBackground" />
+        <Value Left="NoSavedSettings" Right="ImGuiWindowFlags_NoSavedSettings" />
+        <Value Left="NoMouseInputs" Right="ImGuiWindowFlags_NoMouseInputs" />
+        <Value Left="MenuBar" Right="ImGuiWindowFlags_MenuBar" />
+        <Value Left="HorizontalScrollbar" Right="ImGuiWindowFlags_HorizontalScrollbar" />
+        <Value Left="NoFocusOnAppearing" Right="ImGuiWindowFlags_NoFocusOnAppearing" />
+        <Value Left="NoBringToFrontOnFocus" Right="ImGuiWindowFlags_NoBringToFrontOnFocus" />
+        <Value Left="AlwaysVerticalScrollbar" Right="ImGuiWindowFlags_AlwaysVerticalScrollbar" />
+        <Value Left="AlwaysHorizontalScrollbar" Right="ImGuiWindowFlags_AlwaysHorizontalScrollbar" />
+        <Value Left="NoNavInputs" Right="ImGuiWindowFlags_NoNavInputs" />
+        <Value Left="NoNavFocus" Right="ImGuiWindowFlags_NoNavFocus" />
+        <Value Left="UnsavedDocument" Right="ImGuiWindowFlags_UnsavedDocument" />
+        <Value Left="NoDocking" Right="ImGuiWindowFlags_NoDocking" />
+        <Value Left="NoNav" Right="ImGuiWindowFlags_NoNav" />
+        <Value Left="NoDecoration" Right="ImGuiWindowFlags_NoDecoration" />
+        <Value Left="NoInputs" Right="ImGuiWindowFlags_NoInputs" />
+    </Converter>
+</SuperEnumConverter>
