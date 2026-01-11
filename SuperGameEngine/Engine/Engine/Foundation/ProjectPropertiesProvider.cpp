@@ -13,28 +13,14 @@ using namespace FatedQuestLibraries;
 std::shared_ptr<ProjectProperties> ProjectPropertiesProvider::LoadProjectProperties(
     const std::shared_ptr<GamePackage>& gamePackage) const
 {
-    std::string relativePath = {};
-    if (gamePackage->File()->Exists(m_prjectPropertiesFileName))
-    {
-        relativePath = m_prjectPropertiesFileName;
-    }
-    else
-    {
-        for (const std::string& name : gamePackage->Directory()->ListDirectoryNames({}))
-        {
-            if (gamePackage->File()->Exists(name + "\\" + m_prjectPropertiesFileName))
-            {
-                relativePath = name + "\\" + m_prjectPropertiesFileName;
-            }
-        }
-    }
-
+    std::string relativePath = GetProjectPropertiesPath(gamePackage);
     if (relativePath.empty())
     {
         Log::Error("Could not find a project properties file. Ensure it is in either the root or one directory deep.");
         return {};
     }
 
+    // TODO: [#227] Project properties is not always going to be XML. Ensure this can be loaded binary.
     auto document = std::make_shared<RapidXMLDocument>();
     if (!document->Load(gamePackage->File()->ReadFileContents(relativePath)))
     {
@@ -42,5 +28,51 @@ std::shared_ptr<ProjectProperties> ProjectPropertiesProvider::LoadProjectPropert
         return {};
     }
 
-    return std::make_shared<SuperProjectProperties>(document);
+    return CreateProjectProperties(document);
+}
+
+bool ProjectPropertiesProvider::CanLoadProjectProperties(const std::shared_ptr<GamePackage>& gamePackage) const
+{
+    if (gamePackage->File()->Exists(m_projectPropertiesFileName))
+    {
+        return true;
+    }
+
+    for (const std::string& name : gamePackage->Directory()->ListDirectoryNames({}))
+    {
+        if (gamePackage->File()->Exists(name + "\\" + m_projectPropertiesFileName))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+std::string ProjectPropertiesProvider::GetProjectPropertiesPath(
+    const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) const
+{
+    std::string relativePath = {};
+    if (gamePackage->File()->Exists(m_projectPropertiesFileName))
+    {
+        relativePath = m_projectPropertiesFileName;
+    }
+    else
+    {
+        for (const std::string& name : gamePackage->Directory()->ListDirectoryNames({}))
+        {
+            if (gamePackage->File()->Exists(name + "\\" + m_projectPropertiesFileName))
+            {
+                relativePath = name + "\\" + m_projectPropertiesFileName;
+            }
+        }
+    }
+
+    return relativePath;
+}
+
+std::shared_ptr<ProjectProperties> ProjectPropertiesProvider::CreateProjectProperties(
+    const std::shared_ptr<StoredDocument>& storedDocument) const
+{
+    return std::make_shared<SuperProjectProperties>(storedDocument);
 }

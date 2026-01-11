@@ -3,6 +3,12 @@
 #include <SDL_render.h>
 #include "../../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
 
+namespace SuperGameTools
+{
+    class UniversalObjectDataTemplateProvider;
+    class PanelManager;
+}
+
 namespace FatedQuestLibraries
 {
     class PackagePaths;
@@ -155,6 +161,31 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="assetTemplateProvider">Loads, holds and provides <see cref="AssetMetaData"/> in a single location. </param>
         void SetAssetTemplateProvider(const std::shared_ptr<AssetTemplateProvider>& assetTemplateProvider);
+
+        /// <summary>
+        /// Manages panels, the visibility and layouts.
+        /// </summary>
+        /// <returns>Manages panels, the visibility and layouts.</returns>
+        std::shared_ptr<PanelManager> GetPanelManager() const;
+
+        /// <summary>
+        /// Manages panels, the visibility and layouts.
+        /// </summary>
+        /// <param name="panelManager">Manages panels, the visibility and layouts. </param>
+        void SetPanelManager(const std::shared_ptr<PanelManager>& panelManager);
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="SingleLayoutMetaData"/> in a single location.
+        /// </summary>
+        /// <returns>Loads, holds and provides <see cref="SingleLayoutMetaData"/> in a single location. </returns>
+        std::shared_ptr<UniversalObjectDataTemplateProvider> GetUniversalObjectDataTemplateProvider() const;
+
+        /// <summary>
+        /// Gives a new <see cref="UniversalObjectDataTemplateProvider"/>.
+        /// </summary>
+        /// <param name="newValue">New <see cref="UniversalObjectDataTemplateProvider" /></param>
+        void SetUniversalObjectDataTemplateProvider(const std::shared_ptr<UniversalObjectDataTemplateProvider>& newValue);
+
     private:
 
         /// <summary>
@@ -208,5 +239,15 @@ namespace SuperGameTools
         /// Loads, holds and provides <see cref="AssetMetaData"/> in a single location.
         /// </summary>
         std::shared_ptr<AssetTemplateProvider> m_assetTemplateProvider;
+
+        /// <summary>
+        /// Manages panels, the visibility and layouts.
+        /// </summary>
+        std::shared_ptr<PanelManager> m_panelManager;
+
+        /// <summary>
+        /// Loads, holds and provides <see cref="SingleLayoutMetaData"/> in a single location.
+        /// </summary>
+        std::shared_ptr<UniversalObjectDataTemplateProvider> m_universalObjectDataTemplateProvider;
     };
 }

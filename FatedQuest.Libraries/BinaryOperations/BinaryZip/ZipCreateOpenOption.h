@@ -90,7 +90,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static ZipCreateOpenOption FromString(std::string value, bool checkCase = true)
+        static ZipCreateOpenOption FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

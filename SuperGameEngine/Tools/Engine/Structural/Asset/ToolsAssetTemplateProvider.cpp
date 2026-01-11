@@ -1,7 +1,7 @@
 #include "ToolsAssetTemplateProvider.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
-#include "LayoutEditors/ToolsAssetLayoutEditorFactory.h"
+#include "../UniversalObjectData/LayoutEditors/ToolsAssetLayoutEditorFactory.h"
 #include "Template/ToolsAssetMetaData.h"
 
 using namespace SuperGameTools;
@@ -14,7 +14,7 @@ ToolsAssetTemplateProvider::ToolsAssetTemplateProvider(
     m_assetLayoutEditorFactory = std::make_shared<ToolsAssetLayoutEditorFactory>();
 }
 
-std::vector<std::shared_ptr<const AssetMetaData>>
+std::vector<std::shared_ptr<const SingleAssetLayoutMetaData>>
     ToolsAssetTemplateProvider::GetAssetTemplates() const
 {
     return m_assetTemplates;

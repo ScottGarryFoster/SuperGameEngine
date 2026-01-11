@@ -1,6 +1,6 @@
 #include "ToolsAssetMetaData.h"
 
-#include "ToolsAssetLayout.h"
+#include "../../UniversalObjectData/Template/SingleToolsUniversalLayout.h"
 #include "ToolsAssetTemplate.h"
 #include "../../../../FatedQuestLibraries.h"
 
@@ -9,7 +9,7 @@ using namespace FatedQuestLibraries;
 
 ToolsAssetMetaData::ToolsAssetMetaData(
     const std::shared_ptr<StoredDocument>& document,
-    const std::shared_ptr<AssetLayoutEditorFactory>& layoutFactory)
+    const std::shared_ptr<LayoutEditorFactory>& layoutFactory)
 {
     if (!document)
     {
@@ -27,14 +27,14 @@ ToolsAssetMetaData::ToolsAssetMetaData(
         current = current->GetAdjacentNode())
     {
         std::string nodeName = StringHelpers::ToLower(current->Name());
-        if (!m_template && nodeName == "assettemplate")
+        if (!m_template && nodeName == "template")
         {
             m_template = std::make_shared<ToolsAssetTemplate>(current);
         }
 
         if (!m_layout && nodeName == "assetlayout")
         {
-            m_layout = std::make_shared<ToolsAssetLayout>(current, layoutFactory);
+            m_layout = std::make_shared<SingleToolsUniversalLayout>(current, layoutFactory);
         }
     }
 }
@@ -44,7 +44,7 @@ std::shared_ptr<AssetTemplate> ToolsAssetMetaData::GetTemplate() const
     return m_template;
 }
 
-std::shared_ptr<AssetLayout> ToolsAssetMetaData::GetLayout() const
+std::shared_ptr<SingleLayout> ToolsAssetMetaData::GetLayout() const
 {
     return m_layout;
 }

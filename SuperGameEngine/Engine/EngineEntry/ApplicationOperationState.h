@@ -96,7 +96,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static ApplicationOperationState FromString(std::string value, bool checkCase = true)
+        static ApplicationOperationState FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

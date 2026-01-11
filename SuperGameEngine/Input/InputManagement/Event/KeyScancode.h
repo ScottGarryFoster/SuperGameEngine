@@ -1506,7 +1506,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static KeyScancode FromString(std::string value, bool checkCase = true)
+        static KeyScancode FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

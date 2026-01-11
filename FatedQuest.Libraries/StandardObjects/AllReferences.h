@@ -13,6 +13,10 @@
 #include "Position/FVector4D.h"
 #include "Position/FVector4I.h"
 
+#include "Position/Simple/PVector2D.h"
+#include "Position/Simple/PVector2I.h"
+#include "Position/Simple/PVector2F.h"
+
 #include "Object/GUID/GUID.h"
 #include "Object/GUID/GUIDHelpers.h"
 #include "Object/GUID/WindowsGUID.h"

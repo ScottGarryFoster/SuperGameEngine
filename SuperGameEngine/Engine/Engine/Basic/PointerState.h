@@ -85,7 +85,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static PointerState FromString(std::string value, bool checkCase = true)
+        static PointerState FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

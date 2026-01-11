@@ -84,7 +84,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static CaseRespective FromString(std::string value, bool checkCase = true)
+        static CaseRespective FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

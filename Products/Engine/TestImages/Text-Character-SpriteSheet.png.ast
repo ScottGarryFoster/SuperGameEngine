@@ -1,5 +1,9 @@
 <UniversalObjectData>
     <Strings>
         <String "Key"="GameAssetName" "Value"="Text Character Sprite Sheet" />
+        <String "Key"="TextureUVMethod" "Value"="UniformByPixel" />
     </Strings>
+    <Vector4Is>
+        <Vector4I "Key"="TextureUV0" "X"="4" "Y"="6" "Z"="7" "W"="9" />
+    </Vector4Is>
 </UniversalObjectData>

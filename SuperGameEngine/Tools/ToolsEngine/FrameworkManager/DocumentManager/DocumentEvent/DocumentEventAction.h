@@ -111,7 +111,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static DocumentEventAction FromString(std::string value, bool checkCase = true)
+        static DocumentEventAction FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

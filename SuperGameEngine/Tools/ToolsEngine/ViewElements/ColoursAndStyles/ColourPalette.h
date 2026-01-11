@@ -84,7 +84,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static ColourPalette FromString(std::string value, bool checkCase = true)
+        static ColourPalette FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

@@ -88,7 +88,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static SplitUVMethod FromString(std::string value, bool checkCase = true)
+        static SplitUVMethod FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

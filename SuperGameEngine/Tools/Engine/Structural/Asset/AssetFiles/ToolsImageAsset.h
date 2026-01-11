@@ -1,6 +1,6 @@
 #pragma once
 #include "ImageAsset.h"
-#include "Windows/AssetBrowser/FileManagement/ToolsAssetFile.h"
+#include "Panels/AssetBrowser/FileManagement/ToolsAssetFile.h"
 
 namespace SuperGameTools
 {
@@ -21,7 +21,7 @@ namespace SuperGameTools
             const std::weak_ptr<SuperGameEngine::TextureManager>& texture,
             const std::string& packagePath,
             const std::weak_ptr<AssetFolder>& parent,
-            const std::shared_ptr<const AssetMetaData>& assetMetaData);
+            const std::shared_ptr<const SingleAssetLayoutMetaData>& assetMetaData);
 
     private:
 

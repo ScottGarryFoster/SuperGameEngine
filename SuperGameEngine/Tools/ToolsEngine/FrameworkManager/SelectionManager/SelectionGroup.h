@@ -76,7 +76,7 @@ namespace SuperGameTools
             return "Unknown";
         }
 
-        static SelectionGroup FromString(std::string value, bool checkCase = true)
+        static SelectionGroup FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

@@ -124,7 +124,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static DocumentElementType FromString(std::string value, bool checkCase = true)
+        static DocumentElementType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

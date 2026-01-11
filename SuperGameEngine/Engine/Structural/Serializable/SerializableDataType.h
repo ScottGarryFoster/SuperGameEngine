@@ -103,7 +103,7 @@ namespace SuperGameEngine
             return "Unknown";
         }
 
-        static SerializableDataType FromString(std::string value, bool checkCase = true)
+        static SerializableDataType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

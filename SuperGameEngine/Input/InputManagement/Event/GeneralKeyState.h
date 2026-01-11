@@ -78,7 +78,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static GeneralKeyState FromString(std::string value, bool checkCase = true)
+        static GeneralKeyState FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

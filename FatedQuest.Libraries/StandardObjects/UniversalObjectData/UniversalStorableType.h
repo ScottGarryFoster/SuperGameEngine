@@ -84,7 +84,7 @@ namespace FatedQuestLibraries
             return "Unknown";
         }
 
-        static UniversalStorableType FromString(std::string value, bool checkCase = true)
+        static UniversalStorableType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

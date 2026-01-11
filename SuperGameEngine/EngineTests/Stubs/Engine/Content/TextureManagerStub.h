@@ -20,7 +20,7 @@ namespace SuperGameEngineTests_Stubs
         /// <returns>The texture or <c>nullptr</c> if not found. </returns>
         virtual std::shared_ptr<SuperGameEngine::SuperTexture> GetTexture(const std::string& filePath) override
         {
-            std::string cleanPath = File::Sanitize(filePath);
+            std::string cleanPath = FatedQuestLibraries::File::Sanitize(filePath);
             if (m_textures.contains(cleanPath))
             {
                 return m_textures.at(cleanPath);
@@ -44,7 +44,7 @@ namespace SuperGameEngineTests_Stubs
             const std::shared_ptr<SuperGameEngine::SuperTexture>& 
             texture, const std::string& filePath)
         {
-            std::string cleanPath = File::Sanitize(filePath);
+            std::string cleanPath = FatedQuestLibraries::File::Sanitize(filePath);
             m_textures.insert_or_assign(cleanPath, texture);
         }
 

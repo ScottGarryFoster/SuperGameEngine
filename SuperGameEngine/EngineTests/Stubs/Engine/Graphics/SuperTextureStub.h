@@ -14,7 +14,7 @@ namespace SuperGameEngineTests_Stubs
             m_lastDrawnScreen = std::make_shared<SuperGameEngine::RectangleInt>(0,0);
 
             m_size = size;
-            m_path = File::Sanitize(path);
+            m_path = FatedQuestLibraries::File::Sanitize(path);
 
             m_timesDrawn = std::make_shared<int>(0);
         }
@@ -37,7 +37,7 @@ namespace SuperGameEngineTests_Stubs
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
-        virtual void Draw(const FPoint& location) const override
+        virtual void Draw(const FatedQuestLibraries::FPoint& location) const override
         {
             m_lastDrawnTexture->SetLocation(0, 0);
             m_lastDrawnTexture->SetSize(m_size.GetX(), m_size.GetY());
@@ -53,7 +53,7 @@ namespace SuperGameEngineTests_Stubs
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        virtual void Draw(const FPoint& location, const FPoint& size) const override
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FPoint& size) const override
         {
             m_lastDrawnTexture->SetLocation(0, 0);
             m_lastDrawnTexture->SetSize(m_size.GetX(), m_size.GetY());
@@ -87,7 +87,7 @@ namespace SuperGameEngineTests_Stubs
         /// <returns>True means are the same. </returns>
         virtual bool RepresentSameImage(std::shared_ptr<SuperTexture> texture) const override
         {
-            Log::Error("Cannot detect whether texture is the same because path is private in tests.");
+            FatedQuestLibraries::Log::Error("Cannot detect whether texture is the same because path is private in tests.");
             return false;
         }
 
@@ -98,14 +98,14 @@ namespace SuperGameEngineTests_Stubs
         /// <returns>True means this uses the same file path. </returns>
         virtual bool RepresentSameImage(std::string filePath) const override
         {
-            return m_path == File::Sanitize(filePath);
+            return m_path == FatedQuestLibraries::File::Sanitize(filePath);
         }
 
         /// <summary>
         /// Get the size of the Texture in Pixels.
         /// </summary>
         /// <returns>Returns the size of the Texture. </returns>
-        virtual FPoint Size() const override
+        virtual FatedQuestLibraries::FPoint Size() const override
         {
             return m_size;
         }
@@ -157,7 +157,7 @@ namespace SuperGameEngineTests_Stubs
         /// <summary>
         /// The size of the image.
         /// </summary>
-        FPoint m_size;
+        FatedQuestLibraries::FPoint m_size;
 
         /// <summary>
         /// Keeps a count of the times drawn.

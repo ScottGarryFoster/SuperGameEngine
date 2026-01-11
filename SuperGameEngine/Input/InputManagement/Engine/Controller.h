@@ -105,7 +105,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static Controller FromString(std::string value, bool checkCase = true)
+        static Controller FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

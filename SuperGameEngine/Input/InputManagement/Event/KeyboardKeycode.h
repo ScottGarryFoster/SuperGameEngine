@@ -1476,7 +1476,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static KeyboardKeycode FromString(std::string value, bool checkCase = true)
+        static KeyboardKeycode FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

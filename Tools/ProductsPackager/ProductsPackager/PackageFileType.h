@@ -84,7 +84,7 @@ namespace ProductsPackager
             return "Unknown";
         }
 
-        static PackageFileType FromString(std::string value, bool checkCase = true)
+        static PackageFileType FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

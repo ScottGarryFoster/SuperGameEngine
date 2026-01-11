@@ -102,7 +102,7 @@ namespace SuperGameInput
             return "Unknown";
         }
 
-        static UniversalControllerAxis FromString(std::string value, bool checkCase = true)
+        static UniversalControllerAxis FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {

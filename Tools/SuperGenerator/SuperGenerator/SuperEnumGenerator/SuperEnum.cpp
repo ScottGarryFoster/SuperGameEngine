@@ -158,7 +158,7 @@ bool SuperEnum::ParseRoot(std::shared_ptr<StoredDocumentNode> rootNode)
 bool SuperEnum::ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode)
 {
     std::string header = StringHelpers::Trim(headerNode->Inner());
-    if (header == "")
+    if (header.empty())
     {
         return false;
     }
@@ -172,7 +172,7 @@ bool SuperEnum::ParseHeader(std::shared_ptr<StoredDocumentNode> headerNode)
 bool SuperEnum::ParseFooter(std::shared_ptr<StoredDocumentNode> headerNode)
 {
     std::string footer = StringHelpers::Trim(headerNode->Inner());
-    if (footer == "")
+    if (footer.empty())
     {
         return false;
     }
@@ -186,7 +186,7 @@ bool SuperEnum::ParseFooter(std::shared_ptr<StoredDocumentNode> headerNode)
 bool SuperEnum::ParseNamespaceFooter(std::shared_ptr<StoredDocumentNode> headerNode)
 {
     std::string footer = StringHelpers::Trim(headerNode->Inner());
-    if (footer == "")
+    if (footer.empty())
     {
         return false;
     }
@@ -889,7 +889,7 @@ std::string SuperEnum::PrintFromString(int indents)
     std::string output = "";
 
     output += "\n";
-    output += PrintIndents(indents) + "static " + m_enumName.Value + " FromString(std::string value, bool checkCase = true)\n";
+    output += PrintIndents(indents) + "static " + m_enumName.Value + " FromString(const std::string& value, bool checkCase = true)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
     output += PrintIndents(indents) + "if (checkCase)\n";
@@ -1076,7 +1076,7 @@ std::string SuperEnum::PrintSingleComment(const std::string& rawComment, int ind
 
     output += PrintIndents(indents) + "/// <summary>\n";
     std::vector<std::string> lines = StringHelpers::Split(rawComment, "\n");
-    for (const std::string line : lines)
+    for (const std::string& line : lines)
     {
         std::string lineTrimmed = StringHelpers::Trim(line);
         if (lineTrimmed != "")
@@ -1212,39 +1212,51 @@ std::string SuperEnum::FigureOutType()
     int min = GetMinEnumNumberValue();
     int max = GetMaxEnumNumberValue();
 
+    // Enum values are a little different as each new entry above the first multiplies the max value by 2.
+    int64_t bigMax = max;
+    if (m_enumType == SuperEnumType::BitFlag)
+    {
+        int entries = max - 1;
+        bigMax = static_cast<int64_t>(std::pow(2, entries));
+    }
+
     std::string type = {};
     if (min >= 0)
     {
-        if (max <= 255)
+        if (bigMax <= 255)
         {
             type = "uint8_t";
         }
-        else if (max <= 65535)
+        else if (bigMax <= 65535)
         {
             type = "uint16_t";
         }
-        else if (max <= 65535)
+        else if (bigMax <= 4294967295)
         {
-            type = "uint16_t";
+            type = "uint32_t";
         }
         else
         {
-            type = "uint32_t";
+            type = "uint64_t";
         }
     }
     else
     {
-        if (min >= -128 && max <= 127)
+        if (bigMax >= -128 && bigMax <= 127)
         {
             type = "int8_t";
         }
-        else if (min >= -32768 && max <= 32767)
+        else if (bigMax >= -32768 && bigMax <= 32767)
         {
             type = "int16_t";
         }
-        else
+        else if (bigMax >= -2147483647 && bigMax <= 2147483647)
         {
             type = "int32_t";
+        }
+        else
+        {
+            type = "int64_t";
         }
     }
 

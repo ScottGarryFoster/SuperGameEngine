@@ -87,7 +87,7 @@ namespace FatedQuestLibraries
             return "None";
         }
 
-        static MarkdownTextStyleSpecialAttribute FromString(std::string value, bool checkCase = true)
+        static MarkdownTextStyleSpecialAttribute FromString(const std::string& value, bool checkCase = true)
         {
             if (checkCase)
             {
