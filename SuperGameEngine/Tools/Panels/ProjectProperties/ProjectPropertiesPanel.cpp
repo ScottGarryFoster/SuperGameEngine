@@ -140,12 +140,7 @@ void ProjectPropertiesPanel::ResetPanel()
 
 bool ProjectPropertiesPanel::HideWindow()
 {
-    if (m_universalObjectData->IsDirty())
-    {
-        return false;
-    }
-
-    Log::Info("Close");
+    // TODO: Add a message box to force action here. Ticket [#228]
     return SuperToolsPanel::HideWindow();
 }
 
