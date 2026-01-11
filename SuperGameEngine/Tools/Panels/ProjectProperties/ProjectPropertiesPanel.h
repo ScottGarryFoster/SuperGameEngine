@@ -117,6 +117,12 @@ namespace SuperGameTools
         std::shared_ptr<FatedQuestLibraries::ExplicitDocumentModifiableUniversalObjectData> m_universalObjectData;
 
         /// <summary>
+        /// The last state of the dirty flag of the properties document.
+        /// Used to update windows and ensure we are not calling things unnecessarily. 
+        /// </summary>
+        bool m_previousDirtyStateOfDocument;
+
+        /// <summary>
         /// Looks for the project properties layout and returns the value.
         /// </summary>
         /// <returns>The ability to create and edit the project properties file with its layout. </returns>

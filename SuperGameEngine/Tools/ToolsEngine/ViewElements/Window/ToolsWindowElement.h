@@ -1,6 +1,7 @@
 #pragma once
 #include "SingleWindowLayoutSettings.h"
 #include "WindowElement.h"
+#include "WindowFlags.h"
 
 namespace FatedQuestLibraries
 {
@@ -72,6 +73,13 @@ namespace SuperGameTools
         /// </summary>
         virtual void ResetWindowLayout() override;
 
+        /// <summary>
+        /// Update whether this window marks as 'unsaved'.
+        /// This will add a little gui marker near the name of the panel to state there is unsaved work.
+        /// </summary>
+        /// <param name="newValue">True means document unsaved. </param>
+        virtual void UpdateUnsavedState(bool newValue) override;
+
     private:
         /// <summary>
         /// Helps to keep the colours and styles uniform.
@@ -112,6 +120,11 @@ namespace SuperGameTools
         /// Defines the layout for a single window.
         /// </summary>
         SingleWindowLayoutSettings m_layoutSettings;
+
+        /// <summary>
+        /// The flags sent to the window itself.
+        /// </summary>
+        WindowFlags m_windowFlags;
 
         /// <summary>
         /// Resets the window to layout settings.

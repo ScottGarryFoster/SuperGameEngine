@@ -48,6 +48,11 @@ void ProjectPropertiesPanel::Setup(const std::shared_ptr<WindowPackage>& windowP
 
 void ProjectPropertiesPanel::Update()
 {
+    if (m_previousDirtyStateOfDocument != m_universalObjectData->IsDirty())
+    {
+        m_previousDirtyStateOfDocument = m_universalObjectData->IsDirty();
+        UpdateUnsavedState(m_previousDirtyStateOfDocument);
+    }
 }
 
 void ProjectPropertiesPanel::Draw()

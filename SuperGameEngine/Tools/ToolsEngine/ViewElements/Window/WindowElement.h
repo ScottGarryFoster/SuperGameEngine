@@ -69,6 +69,13 @@ namespace SuperGameTools
         /// Reset the window layout to how it began or last was set to in the layout.
         /// </summary>
         virtual void ResetWindowLayout() = 0;
+
+        /// <summary>
+        /// Update whether this window marks as 'unsaved'.
+        /// This will add a little gui marker near the name of the panel to state there is unsaved work.
+        /// </summary>
+        /// <param name="newValue">True means document unsaved. </param>
+        virtual void UpdateUnsavedState(bool newValue) = 0;
     };
 }
 

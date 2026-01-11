@@ -1,11 +1,14 @@
 #include "ToolsWindowElement.h"
 
 #include "ToolsWindowShownArguments.h"
+#include "WindowFlagsToImGuiConverter.h"
 #include "../ColoursAndStyles/ColoursAndStyles.h"
 #include "../../../ImGuiIncludes.h"
 #include "../../../../FatedQuest.Libraries/Observer/AllReferences.h"
+#include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
 
 using namespace SuperGameTools;
+using namespace FatedQuestLibraries;
 
 ToolsWindowElement::ToolsWindowElement()
 {
@@ -15,6 +18,7 @@ ToolsWindowElement::ToolsWindowElement()
     m_onWindowShownOrHidden = std::make_shared<FatedQuestLibraries::FEvent>();
     m_windowUniqueName = {};
     m_layoutResetEvent = false;
+    m_windowFlags = WindowFlags::None;
 }
 
 void ToolsWindowElement::SetupWindow(
@@ -43,7 +47,14 @@ bool ToolsWindowElement::RenderWindow(const char* name)
 
     m_coloursAndStyles->SetWindowTabColoursAndStyles(m_currentOpenClosedState, m_tabIsHovered);
 
-    m_currentOpenClosedState = ImGui::Begin(name, &m_windowIsShown);
+    ImGuiWindowFlags_ left = WindowFlagsToImGuiConverter::Convert(m_windowFlags);
+    ImGuiWindowFlags_ right = WindowFlagsToImGuiConverter::Convert(WindowFlags::None);
+    if (left != right)
+    {
+        Log::Info("Nope");
+    }
+
+    m_currentOpenClosedState = ImGui::Begin(name, &m_windowIsShown, WindowFlagsToImGuiConverter::Convert(m_windowFlags));
     if (!m_windowIsShown)
     {
         // Ensure we set this variable with whether we did hide the window.
@@ -104,6 +115,24 @@ bool ToolsWindowElement::OpenState() const
 void ToolsWindowElement::ResetWindowLayout()
 {
     m_layoutResetEvent = true;
+}
+
+void ToolsWindowElement::UpdateUnsavedState(bool newValue)
+{
+    if (newValue)
+    {
+        if (!EWindowFlags::HasFlag(m_windowFlags, WindowFlags::UnsavedDocument))
+        {
+            m_windowFlags |= WindowFlags::UnsavedDocument;
+        }
+    }
+    else
+    {
+        if (EWindowFlags::HasFlag(m_windowFlags, WindowFlags::UnsavedDocument))
+        {
+            m_windowFlags &= ~WindowFlags::UnsavedDocument;
+        }
+    }
 }
 
 void ToolsWindowElement::ResetWindowToLayout() const
