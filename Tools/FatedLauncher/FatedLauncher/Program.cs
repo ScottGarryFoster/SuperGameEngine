@@ -33,6 +33,7 @@ class FatedLauncher
 
         menu.Items.Add(MakeHeading("Generate"));
         GenerateSuperGameEngine(menu);
+        GenerateSuperGenerator(menu);
         GenerateDocumentationSiteGenerator(menu);
 
         ToolStripMenuItem exit = new ToolStripMenuItem("Exit", null, (s, e) => System.Windows.Forms.Application.Exit());
@@ -82,6 +83,25 @@ class FatedLauncher
         if (sgeRegeneratePath != string.Empty)
         {
             menu.Items.Add(MakeRunable("Generate SuperGameEngine", sgeRegeneratePath));
+        }
+    }
+
+    private static void GenerateSuperGenerator(ContextMenuStrip menu)
+    {
+        // Super Game Engine Generation
+        string regeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "Tools", "SuperGenerator", "SuperGenerator", "Regenerate");
+        if (!File.Exists(regeneratePath))
+        {
+            regeneratePath = Path.Combine(StandardFilePaths.RepositoryDirectory(), "Tools", "SuperGenerator", "SuperGenerator", "Generate-With-Tests.bat");
+            if (!File.Exists(regeneratePath))
+            {
+                regeneratePath = string.Empty;
+            }
+        }
+
+        if (regeneratePath != string.Empty)
+        {
+            menu.Items.Add(MakeRunable("Generate SuperGenerator", regeneratePath));
         }
     }
 

@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperEnumGenerator" />
+    <EnumComment>
+        How to match two enums (convert them) together.
+    </EnumComment>
+    <EnumName Name="SuperEnumConverterType">
+        <Unknown HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Standard>
+            Enums are simply values and should match one another.
+        </Standard>
+        <BitFlag>
+            Values are a part of bit flags and may represent multiple values. When matching consider this.
+        </BitFlag>
+    </EnumName>
+</SuperEnum>
