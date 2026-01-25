@@ -61,6 +61,13 @@ namespace SuperGameTools
         std::shared_ptr<SDLRenderer> m_gameRenderer;
 
         /// <summary>
+        /// Renderer given to the tools viewport engine.
+        /// This will act as though it is destroyed when the game is
+        /// 'stopped' to simulate the game restarting.
+        /// </summary>
+        std::shared_ptr<SDLRenderer> m_toolsViewportRenderer;
+
+        /// <summary>
         /// The renderer for the current window.
         /// This will flip flop and change with windows but is the
         /// active window.
@@ -81,7 +88,12 @@ namespace SuperGameTools
         /// <summary>
         /// The last frame rendered by the game engine.
         /// </summary>
-        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlTexture;
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlGameViewportTexture;
+
+        /// <summary>
+        /// The last frame rendered by the tools viewport engine.
+        /// </summary>
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlToolsViewportTexture;
 
         /// <summary>
         /// Complete control over how and when the game engine runs.

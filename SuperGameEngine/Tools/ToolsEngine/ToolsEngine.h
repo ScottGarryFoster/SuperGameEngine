@@ -112,9 +112,18 @@ namespace SuperGameTools
         /// <summary>
         /// Gives the engine the texture the SDL Render is rendering to.
         /// This is used to display what the engine is doing.
+        /// This texture is for the game viewport.
         /// </summary>
         /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
-        virtual void GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
+        virtual void GiveSDLGameEngineTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
+
+        /// <summary>
+        /// Gives the engine the texture the SDL Render is rendering to.
+        /// This is used to display what the engine is doing.
+        /// This texture is for the tools viewport.
+        /// </summary>
+        /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
+        virtual void GiveSDLViewportTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
 
         /// <summary>
         /// Gives the ability for the tools engine to control
@@ -160,7 +169,13 @@ namespace SuperGameTools
         /// Gives the engine the texture the SDL Render is rendering to.
         /// This is used to display what the engine is doing.
         /// </summary>
-        std::shared_ptr< ExtremelyWeakWrapper<SDL_Texture>> m_sdlRenderTexture;
+        std::shared_ptr< ExtremelyWeakWrapper<SDL_Texture>> m_sdlGameViewportRenderTexture;
+
+        /// <summary>
+        /// Gives the engine the texture the SDL Render is rendering to.
+        /// This is used to display what the tools engine (viewport) is doing.
+        /// </summary>
+        std::shared_ptr< ExtremelyWeakWrapper<SDL_Texture>> m_sdlToolsViewportRenderTexture;
 
         /// <summary>
         /// Everything a window needs to run.

@@ -28,6 +28,7 @@
 #include "Engine/Structural/UniversalObjectData/ToolsUniversalObjectDataTemplateProvider.h"
 #include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
+#include "Panels/Viewport/ViewportPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
@@ -86,11 +87,18 @@ void ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>
         "ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
-void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+void ToolsEngine::GiveSDLGameEngineTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
 {
-    m_sdlRenderTexture = sdlRenderTexture;
+    m_sdlGameViewportRenderTexture = sdlRenderTexture;
 
-    m_windowPackage->SetSDLRenderTexture(m_sdlRenderTexture);
+    m_windowPackage->SetSDLGameViewportRenderTexture(m_sdlGameViewportRenderTexture);
+}
+
+void ToolsEngine::GiveSDLViewportTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+{
+    m_sdlToolsViewportRenderTexture = sdlRenderTexture;
+
+    m_windowPackage->SetSDLToolsViewportRenderTexture(m_sdlToolsViewportRenderTexture);
 }
 
 void ToolsEngine::GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication)
@@ -163,6 +171,9 @@ void ToolsEngine::Setup()
     auto projectProperties = std::make_shared<ProjectPropertiesPanel>();
     projectProperties->FEventObserver::UpdateDistributedWeakPointer(projectProperties);
 
+    auto viewportPanel = std::make_shared<ViewportPanel>();
+    viewportPanel->UpdateDistributedWeakPointer(viewportPanel);
+
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
     // Must be made first as other things latch on to it.
@@ -221,6 +232,10 @@ void ToolsEngine::Setup()
     projectProperties->Setup(m_windowPackage);
     m_updatables.push_back(projectProperties);
     m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
+
+    viewportPanel->Setup(m_windowPackage);
+    m_updatables.push_back(viewportPanel);
+    m_windowPackage->GetPanelManager()->RegisterPanel(viewportPanel);
 
     // Run last after all panels have been run.
     menuBar->SetupPostPanels();

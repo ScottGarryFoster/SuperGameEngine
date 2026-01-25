@@ -13,6 +13,7 @@
 #include "Communication/ToolsEngineControl.h"
 #include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
 #include "Engine/Foundation/ProjectPropertiesProvider.h"
+#include "Panels/Viewport/ViewportEngine.h"
 #include "Settings/ToolsLayoutSettings.h"
 #include "Settings/ToolsSettingsPaths.h"
 
@@ -27,8 +28,8 @@ ToolsEngineEntry::ToolsEngineEntry()
     toolsEngineEntry->SetPlayControls(m_engineFlow);
 
     m_layoutSettings = std::make_shared<ToolsLayoutSettings>(
-        std::make_shared<ToolsSettingsPaths>(), 
-        "layoutSettings.xml", 
+        std::make_shared<ToolsSettingsPaths>(),
+        "layoutSettings.xml",
         std::make_shared<SimpleDocumentToXml>());
 
     m_inputManager = std::make_shared<SuperGameInput::SuperSDLInputManager>();
@@ -46,10 +47,14 @@ int ToolsEngineEntry::RunApplication(const std::string& engineType)
     m_toolsEngine = std::make_shared<ToolsEngine>();
     m_toolsEngine->GiveEnginePlayControls(m_engineEntryCommunication);
 
-    m_sdlTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
-    m_toolsEngine->GiveSDLTexture(m_sdlTexture);
+    m_sdlGameViewportTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
+    m_toolsEngine->GiveSDLGameEngineTexture(m_sdlGameViewportTexture);
+
+    m_sdlToolsViewportTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
+    m_toolsEngine->GiveSDLViewportTexture(m_sdlToolsViewportTexture);
 
     m_gameRenderer = std::make_shared<SDLRenderer>();
+    m_toolsViewportRenderer = std::make_shared<SDLRenderer>();
     m_Toolsrenderer = std::make_shared<SDLRenderer>();
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
@@ -128,6 +133,13 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
     std::shared_ptr<Engine> engine = {};
 
+    std::shared_ptr<Engine> toolsViewport = std::make_shared<ViewportEngine>();
+    m_toolsViewportRenderer->SetRenderer(renderer);
+    toolsViewport->GiveRenderer(m_toolsViewportRenderer);
+    toolsViewport->GiveInput(m_inputManager);
+    toolsViewport->GiveGamePackage(m_gamePackage);
+    toolsViewport->WindowStart();
+
     // Main loop
     ApplicationOperationState operationState = ApplicationOperationState::Running;
     while (operationState == ApplicationOperationState::Running)
@@ -172,6 +184,14 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
                 }
             }
 
+            if (toolsViewport)
+            {
+                eventAnswer = toolsViewport->Event(e);
+                if (eventAnswer != ApplicationOperationState::Running)
+                {
+                    operationState = eventAnswer;
+                }
+            }
 
             // Tools Engine should also take events
             if (m_toolsEngine)
@@ -221,6 +241,14 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             m_engineFlow->RanUpdate();
         }
 
+        if (toolsViewport)
+        {
+            updateAnswer = toolsViewport->Update(ticksThisFrame);
+            if (updateAnswer != ApplicationOperationState::Running)
+            {
+                operationState = updateAnswer;
+            }
+        }
 
         // Predraw update for Tools.
         if (m_toolsEngine)
@@ -256,10 +284,10 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         {
             // We only want to refresh this if we have a new frame.
             // This is so we can move one frame at a time.
-            if (m_sdlTexture->GetState() == PointerState::Active)
+            if (m_sdlGameViewportTexture->GetState() == PointerState::Active)
             {
-                SDL_DestroyTexture(m_sdlTexture->Get());
-                m_sdlTexture->Set(nullptr);
+                SDL_DestroyTexture(m_sdlGameViewportTexture->Get());
+                m_sdlGameViewportTexture->Set(nullptr);
             }
 
             // Make texture to render the SDL Viewport
@@ -280,9 +308,43 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             SDL_SetRenderTarget(renderer, nullptr);
 
             // Give the texture the tools
-            m_sdlTexture->Set(sdlTexture);
+            m_sdlGameViewportTexture->Set(sdlTexture);
 
             m_engineFlow->RanDraw();
+        }
+
+        // ImGui Background Colour
+        SDL_SetRenderDrawColor(renderer, 30, 33, 36, 255);
+
+        if (toolsViewport)
+        {
+            // We only want to refresh this if we have a new frame.
+            // This is so we can move one frame at a time.
+            if (m_sdlToolsViewportTexture->GetState() == PointerState::Active)
+            {
+                SDL_DestroyTexture(m_sdlToolsViewportTexture->Get());
+                m_sdlToolsViewportTexture->Set(nullptr);
+            }
+
+            // Make texture to render the SDL Viewport
+            SDL_Texture* sdlTexture = SDL_CreateTexture(
+                renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+            if (sdlTexture == nullptr)
+            {
+                std::string sdlError = SDL_GetError();
+                Log::Error("Could not create Viewport texture: " + sdlError);
+                return ApplicationOperationState::Close;
+            }
+
+            SDL_SetRenderTarget(renderer, sdlTexture);
+            SDL_RenderClear(renderer);
+
+            // Render the game itself
+            toolsViewport->Draw();
+            SDL_SetRenderTarget(renderer, nullptr);
+
+            // Give the texture the tools
+            m_sdlToolsViewportTexture->Set(sdlTexture);
         }
 
         // ImGui Background Colour
@@ -327,8 +389,10 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     m_imgui->Teardown();
 
     // Ensure the engine knows we no longer have a window
+    // Note: Tools and Game renderers are the same.
     SDL_DestroyRenderer(m_gameRenderer->GetRenderer());
     m_gameRenderer->SetRenderer(nullptr);
+    m_toolsViewportRenderer->SetRenderer(nullptr);
 
     if (engine)
     {

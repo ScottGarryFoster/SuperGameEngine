@@ -68,12 +68,12 @@ void GameViewport::Draw()
     m_viewport.w = static_cast<int>(windowSize.x);
     m_viewport.h = static_cast<int>(windowSize.y);
 
-    if (m_windowPackage->GetSDLRenderTexture())
+    if (m_windowPackage->GetSDLGameViewportRenderTexture())
     {
-        if (m_windowPackage->GetSDLRenderTexture()->GetState() == PointerState::Active)
+        if (m_windowPackage->GetSDLGameViewportRenderTexture()->GetState() == PointerState::Active)
         {
             ImVec2 imageSize = ImVec2((float)1280, (float)720);
-            SDL_Texture* texture = m_windowPackage->GetSDLRenderTexture()->Get();
+            SDL_Texture* texture = m_windowPackage->GetSDLGameViewportRenderTexture()->Get();
             ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<void*>(texture)), imageSize);
         }
     }

@@ -45,13 +45,26 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="texture">The texture SDL is rendering to. </param>
         /// <remarks>Should be called by the engine entry. </remarks>
-        void SetSDLRenderTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> texture);
+        void SetSDLGameViewportRenderTexture(const std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>>& texture);
 
         /// <summary>
         /// Gets the texture sdl will render to.
         /// </summary>
         /// <returns>The render texture sdl is rendering to. </returns>
-        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> GetSDLRenderTexture() const;
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> GetSDLGameViewportRenderTexture() const;
+
+        /// <summary>
+        /// Sets the render texture which the SDL window will render to.
+        /// </summary>
+        /// <param name="texture">The texture SDL is rendering to. </param>
+        /// <remarks>Should be called by the engine entry. </remarks>
+        void SetSDLToolsViewportRenderTexture(const std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>>& texture);
+
+        /// <summary>
+        /// Gets the texture sdl will render to.
+        /// </summary>
+        /// <returns>The render texture sdl is rendering to. </returns>
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> GetSDLToolsViewportRenderTexture() const;
 
         /// <summary>
         /// Sets the renderer SDL is using for the whole window.
@@ -190,8 +203,15 @@ namespace SuperGameTools
 
         /// <summary>
         /// The render texture sdl is rendering to.
+        /// This is the game engine viewport texture.
         /// </summary>
-        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_texture;
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_gameViewportTexture;
+
+        /// <summary>
+        /// The render texture sdl is rendering to.
+        /// This is the game engine viewport texture.
+        /// </summary>
+        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_toolsViewportTexture;
 
         /// <summary>
         /// Wraps the SDL Renderer such that upon the death of the
