@@ -29,6 +29,11 @@ void ViewportEngine::GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::
     m_gamePackage = gamePackage;
 }
 
+void ViewportEngine::GiveControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engineControls)
+{
+    m_engineControls = engineControls;
+}
+
 ApplicationOperationState ViewportEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;
@@ -53,5 +58,13 @@ void ViewportEngine::WindowStart()
 }
 
 void ViewportEngine::WindowTeardown()
+{
+}
+
+void ViewportEngine::EngineStart()
+{
+}
+
+void ViewportEngine::EngineEnd()
 {
 }

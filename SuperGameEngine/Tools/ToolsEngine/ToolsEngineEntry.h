@@ -20,7 +20,7 @@ namespace SuperGameTools
     /// <summary>
     /// The entry point for the engine and the top most level before main.
     /// </summary>
-    class ToolsEngineEntry : public EngineEntry
+    class ToolsEngineEntry : public EngineEntry, public FatedQuestLibraries::FEventObserver
     {
     public:
         ToolsEngineEntry();
@@ -38,6 +38,12 @@ namespace SuperGameTools
         /// attempting to start the application.
         /// </returns>
         virtual int RunApplication(const std::string& engineType) override;
+
+        /// <summary>
+        /// Call back for listening to events.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
 
     private:
 

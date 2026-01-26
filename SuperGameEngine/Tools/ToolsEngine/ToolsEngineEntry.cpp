@@ -11,6 +11,8 @@
 #include "Communication/ToolsEngineEntryCommunication.h"
 #include "Communication/EngineFlowPlayControl.h"
 #include "Communication/ToolsEngineControl.h"
+#include "Engine/Basic/SuperEngineControls.h"
+#include "Engine/Basic/ViewportSizeChangedEventArguments.h"
 #include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
 #include "Engine/Foundation/ProjectPropertiesProvider.h"
 #include "Panels/Viewport/ViewportEngine.h"
@@ -63,6 +65,52 @@ int ToolsEngineEntry::RunApplication(const std::string& engineType)
     }
 
     return 0;
+}
+
+void ToolsEngineEntry::Invoke(std::shared_ptr<FEventArguments> arguments)
+{
+    if (auto viewportArgs = std::dynamic_pointer_cast<ViewportSizeChangedEventArguments>(arguments))
+    {
+        SDL_Renderer* renderer = nullptr;
+        if (viewportArgs->GetName() == "ToolsMainViewport")
+        {
+            renderer = m_toolsViewportRenderer->GetRenderer();
+            SDL_DestroyTexture(m_sdlToolsViewportTexture->Get());
+        }
+        else if (viewportArgs->GetName() == "GameEngine")
+        {
+            renderer = m_gameRenderer->GetRenderer();
+            SDL_DestroyTexture(m_sdlGameViewportTexture->Get());
+        }
+
+        if (renderer == nullptr)
+        {
+            Log::Error("No valid viewport name when requesting a change. Name: " + viewportArgs->GetName(),
+                "ToolsEngineEntry::Invoke(std::shared_ptr<FEventArguments>)");
+            return;
+        }
+
+        // Make texture to render the SDL Viewport
+        SDL_Texture* sdlTexture = SDL_CreateTexture(
+            renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 
+            viewportArgs->GetNewWidth(), viewportArgs->GetNewHeight());
+        if (sdlTexture == nullptr)
+        {
+            std::string sdlError = SDL_GetError();
+            Log::Error("Could not create Viewport texture: " + sdlError,
+                "ToolsEngineEntry::Invoke(std::shared_ptr<FEventArguments>)");
+            return;
+        }
+
+        if (viewportArgs->GetName() == "ToolsMainViewport")
+        {
+            m_sdlToolsViewportTexture->Set(sdlTexture);
+        }
+        else if (viewportArgs->GetName() == "GameEngine")
+        {
+            m_sdlGameViewportTexture->Set(sdlTexture);
+        }
+    }
 }
 
 ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engineType)
@@ -119,6 +167,13 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     // Event handler
     SDL_Event e;
 
+    std::shared_ptr<Engine> engine = {};
+    auto provider = std::make_shared<ProjectPropertiesProvider>();
+    auto engineControlsGameViewport = std::make_shared<SuperEngineControls>("GameEngine");
+    auto engineControlsToolsViewport = std::make_shared<SuperEngineControls>("ToolsMainViewport");
+    engineControlsGameViewport->OnViewportSizeChanged()->Subscribe(FEventObserver::shared_from_this());
+    engineControlsToolsViewport->OnViewportSizeChanged()->Subscribe(FEventObserver::shared_from_this());
+
     // Setup the Tools Engine
     if (m_toolsEngine)
     {
@@ -126,12 +181,12 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         m_toolsEngine->GiveGamePackage(m_gamePackage);
         m_toolsEngine->GiveRenderer(m_Toolsrenderer);
         m_toolsEngine->GiveInput(m_inputManager);
+        m_toolsEngine->GiveControls(engineControlsToolsViewport);
         m_toolsEngine->WindowStart();
+        m_toolsEngine->EngineStart();
     }
 
     Uint64 startTime = SDL_GetTicks64();
-
-    std::shared_ptr<Engine> engine = {};
 
     std::shared_ptr<Engine> toolsViewport = std::make_shared<ViewportEngine>();
     m_toolsViewportRenderer->SetRenderer(renderer);
@@ -139,6 +194,8 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     toolsViewport->GiveInput(m_inputManager);
     toolsViewport->GiveGamePackage(m_gamePackage);
     toolsViewport->WindowStart();
+    toolsViewport->GiveControls(engineControlsToolsViewport);
+
 
     // Main loop
     ApplicationOperationState operationState = ApplicationOperationState::Running;
@@ -155,7 +212,6 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
                 return ApplicationOperationState::Close;
             }
 
-            auto provider = std::make_shared<ProjectPropertiesProvider>();
             std::shared_ptr<ProjectProperties> projectProperties = provider->LoadProjectProperties(m_gamePackage);
 
             if (engine)
@@ -165,9 +221,10 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
                 engine->GiveInput(m_inputManager);
                 engine->GiveGamePackage(m_gamePackage);
                 engine->GiveProjectProperties(projectProperties);
+                engine->GiveControls(engineControlsGameViewport);
                 engine->WindowStart();
+                engine->EngineStart();
             }
-
         }
 
         // Handle events on the queue
@@ -284,31 +341,28 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         {
             // We only want to refresh this if we have a new frame.
             // This is so we can move one frame at a time.
-            if (m_sdlGameViewportTexture->GetState() == PointerState::Active)
+            if (m_sdlGameViewportTexture->GetState() != PointerState::Active)
             {
-                SDL_DestroyTexture(m_sdlGameViewportTexture->Get());
-                m_sdlGameViewportTexture->Set(nullptr);
+                // Make texture to render the SDL Viewport
+                SDL_Texture* sdlTexture = SDL_CreateTexture(
+                    renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+                if (sdlTexture == nullptr)
+                {
+                    std::string sdlError = SDL_GetError();
+                    Log::Error("Could not create Viewport texture: " + sdlError);
+                    return ApplicationOperationState::Close;
+                }
+
+                // Give the texture the tools
+                m_sdlGameViewportTexture->Set(sdlTexture);
             }
 
-            // Make texture to render the SDL Viewport
-            SDL_Texture* sdlTexture = SDL_CreateTexture(
-                renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
-            if (sdlTexture == nullptr)
-            {
-                std::string sdlError = SDL_GetError();
-                Log::Error("Could not create Viewport texture: " + sdlError);
-                return ApplicationOperationState::Close;
-            }
-
-            SDL_SetRenderTarget(renderer, sdlTexture);
+            SDL_SetRenderTarget(renderer, m_sdlGameViewportTexture->Get());
             SDL_RenderClear(renderer);
 
             // Render the game itself
             engine->Draw();
             SDL_SetRenderTarget(renderer, nullptr);
-
-            // Give the texture the tools
-            m_sdlGameViewportTexture->Set(sdlTexture);
 
             m_engineFlow->RanDraw();
         }
@@ -318,25 +372,24 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
         if (toolsViewport)
         {
-            // We only want to refresh this if we have a new frame.
+            // We only want to refresh this if we have a new frame and there is no texture.
             // This is so we can move one frame at a time.
-            if (m_sdlToolsViewportTexture->GetState() == PointerState::Active)
+            if (m_sdlToolsViewportTexture->GetState() != PointerState::Active)
             {
-                SDL_DestroyTexture(m_sdlToolsViewportTexture->Get());
-                m_sdlToolsViewportTexture->Set(nullptr);
+                // Make texture to render the SDL Viewport
+                SDL_Texture* sdlTexture = SDL_CreateTexture(
+                    renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+                if (sdlTexture == nullptr)
+                {
+                    std::string sdlError = SDL_GetError();
+                    Log::Error("Could not create Viewport texture: " + sdlError);
+                    return ApplicationOperationState::Close;
+                }
+
+                m_sdlToolsViewportTexture->Set(sdlTexture);
             }
 
-            // Make texture to render the SDL Viewport
-            SDL_Texture* sdlTexture = SDL_CreateTexture(
-                renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
-            if (sdlTexture == nullptr)
-            {
-                std::string sdlError = SDL_GetError();
-                Log::Error("Could not create Viewport texture: " + sdlError);
-                return ApplicationOperationState::Close;
-            }
-
-            SDL_SetRenderTarget(renderer, sdlTexture);
+            SDL_SetRenderTarget(renderer, m_sdlToolsViewportTexture->Get());
             SDL_RenderClear(renderer);
 
             // Render the game itself
@@ -344,7 +397,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
             SDL_SetRenderTarget(renderer, nullptr);
 
             // Give the texture the tools
-            m_sdlToolsViewportTexture->Set(sdlTexture);
+            //m_sdlToolsViewportTexture->Set(sdlTexture);
         }
 
         // ImGui Background Colour
@@ -375,8 +428,15 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
         if (engine && m_engineFlow->DoDestroy())
         {
+            /*if (m_sdlGameViewportTexture->GetState() == PointerState::Active)
+            {
+                SDL_DestroyTexture(m_sdlGameViewportTexture->Get());
+                m_sdlGameViewportTexture->Set(nullptr);
+            }*/
+
             m_gameRenderer->SetRenderer(nullptr);
             engine->WindowTeardown();
+            engine->EngineEnd();
             engine = {};
         }
 
@@ -384,6 +444,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         SDL_Delay(3);
     }
 
+    // Ensure we no longer listen to these.
+    engineControlsGameViewport->OnViewportSizeChanged()->Unsubscribe(FEventObserver::shared_from_this());
+    engineControlsToolsViewport->OnViewportSizeChanged()->Unsubscribe(FEventObserver::shared_from_this());
 
     // Cleanup Imgui
     m_imgui->Teardown();
@@ -394,6 +457,8 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     m_gameRenderer->SetRenderer(nullptr);
     m_toolsViewportRenderer->SetRenderer(nullptr);
 
+
+
     if (engine)
     {
         engine->WindowTeardown();
@@ -403,11 +468,15 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     // Cleanup Tools
     if (m_toolsEngine)
     {
+        m_toolsEngine->WindowTeardown();
+        m_toolsEngine->EngineEnd();
+
         // There should be nothing here.
         m_Toolsrenderer->SetRenderer(nullptr);
         if (engine)
         {
             engine->WindowTeardown();
+            engine->EngineEnd();
         }
     }
 

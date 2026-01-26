@@ -71,6 +71,14 @@ namespace SuperGameTools
         virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) override;
 
         /// <summary>
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </summary>
+        /// <param name="engineControls">
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </param>
+        virtual void GiveControls(const std::shared_ptr<EngineControls>& engineControls) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
@@ -108,6 +116,22 @@ namespace SuperGameTools
         /// Called when the window is torndown.
         /// </summary>
         virtual void WindowTeardown() override;
+
+        /// <summary>
+        /// Called as the engine is created (ensure you have given the engine anything it requires).
+        /// This will remake all the items in the engine.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineStart() override;
+
+        /// <summary>
+        /// Called as the engine is destroyed (ensure you have given the engine anything it requires).
+        /// This will ensure that any setup is re-run on engine start.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineEnd() override;
 
         /// <summary>
         /// Gives the engine the texture the SDL Render is rendering to.
@@ -149,6 +173,11 @@ namespace SuperGameTools
         /// All the data for the game.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
+
+        /// <summary>
+        /// Defines and communicates engine level changes you can manipulate.
+        /// </summary>
+        std::shared_ptr<EngineControls> m_engineControls;
 
         /// <summary>
         /// Everything we'll be running.

@@ -67,6 +67,14 @@ namespace SuperGameEngine
         virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) override;
 
         /// <summary>
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </summary>
+        /// <param name="engineControls">
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </param>
+        virtual void GiveControls(const std::shared_ptr<EngineControls>& engineControls) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
@@ -105,6 +113,22 @@ namespace SuperGameEngine
         /// </summary>
         virtual void WindowTeardown() override;
 
+        /// <summary>
+        /// Called as the engine is created (ensure you have given the engine anything it requires).
+        /// This will remake all the items in the engine.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineStart() override;
+
+        /// <summary>
+        /// Called as the engine is destroyed (ensure you have given the engine anything it requires).
+        /// This will ensure that any setup is re-run on engine start.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineEnd() override;
+
     private:
         /// <summary>
         /// Creates, stores and manages all textures in the engine.
@@ -125,6 +149,11 @@ namespace SuperGameEngine
         /// Given to Tools and Engine to provide Input.
         /// </summary>
         std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// Defines and communicates engine level changes you can manipulate.
+        /// </summary>
+        std::shared_ptr<EngineControls> m_engineControls;
 
         std::shared_ptr<CombinedGamePackage> m_combinedGamePackage;
 

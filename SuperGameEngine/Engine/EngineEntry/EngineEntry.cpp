@@ -81,6 +81,7 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
     m_engine->GiveInput(m_inputManager);
     m_engine->GiveProjectProperties(m_projectProperties);
     m_engine->WindowStart();
+    m_engine->EngineStart();
 
     // Event handler
     SDL_Event e;
@@ -157,6 +158,7 @@ ApplicationOperationState EngineEntry::RunSDLWindow(const std::string& engineTyp
     //system("pause");
 
     m_engine->WindowTeardown();
+    m_engine->EngineEnd();
     m_engineWindowManager->DestroyWindow();
 
     // Quit SDL

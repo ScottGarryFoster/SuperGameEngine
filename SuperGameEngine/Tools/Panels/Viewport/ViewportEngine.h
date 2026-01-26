@@ -46,6 +46,14 @@ namespace SuperGameTools
         virtual void GiveProjectProperties(const std::shared_ptr<SuperGameEngine::ProjectProperties>& projectProperties) override {}
 
         /// <summary>
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </summary>
+        /// <param name="engineControls">
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </param>
+        virtual void GiveControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engineControls) override;
+
+        /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
@@ -84,6 +92,22 @@ namespace SuperGameTools
         /// </summary>
         virtual void WindowTeardown() override;
 
+        /// <summary>
+        /// Called as the engine is created (ensure you have given the engine anything it requires).
+        /// This will remake all the items in the engine.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineStart() override;
+
+        /// <summary>
+        /// Called as the engine is destroyed (ensure you have given the engine anything it requires).
+        /// This will ensure that any setup is re-run on engine start.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineEnd() override;
+
     private:
 
         /// <summary>
@@ -110,5 +134,10 @@ namespace SuperGameTools
         /// A test texture for the first submit.
         /// </summary>
         std::shared_ptr<SuperGameEngine::TextureAsset> testTexture;
+
+        /// <summary>
+        /// Defines and communicates engine level changes.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
     };
 }

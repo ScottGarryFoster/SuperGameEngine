@@ -2,6 +2,7 @@
 
 #include "ToolsEngine/Packages/WindowPackage.h"
 #include "../../FatedQuestLibraries.h"
+#include "Engine/Basic/EngineControls.h"
 #include "Engine/Graphics/Texture/SDLRendererReader.h"
 #include "Engine/Graphics/Texture/SDLRendererState.h"
 #include "Imgui/External/imgui.h"
@@ -26,12 +27,19 @@ void ViewportPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
             .StartPosition = {.X = 50, .Y = 50}
         });
 
-    m_viewport = { 50, 50, 500, 250 };;
+    m_viewport = { 50, 50, 500, 250 };
     m_renderer = windowPackage->GetRenderer();
 }
 
 void ViewportPanel::Update()
 {
+    if (m_sizeHasChanged)
+    {
+        int newWidth = m_viewport.w;
+        int newHeight = m_viewport.h;
+        m_engineControls->SetNewViewportSize(newWidth, newHeight);
+        m_sizeHasChanged = false;
+    }
 }
 
 void ViewportPanel::Draw()
@@ -42,16 +50,27 @@ void ViewportPanel::Draw()
         ImVec2 windowTopLeftBelowTitleBar = ImVec2(windowPos.x, windowPos.y + ImGui::GetFrameHeight());
         ImVec2 windowSize = ImGui::GetContentRegionAvail();
 
+        SDL_Rect originalRect = m_viewport;
+        int width = m_viewport.w;
+        int height = m_viewport.h;
+
         m_viewport.x = static_cast<int>(windowTopLeftBelowTitleBar.x);
         m_viewport.y = static_cast<int>(windowTopLeftBelowTitleBar.y);
         m_viewport.w = static_cast<int>(windowSize.x);
         m_viewport.h = static_cast<int>(windowSize.y);
 
+        int newWidth = m_viewport.w;
+        int newHeight = m_viewport.h;
+        if (width != newWidth || height != newHeight)
+        {
+            m_sizeHasChanged = true;
+        }
+
         if (m_windowPackage->GetSDLToolsViewportRenderTexture())
         {
             if (m_windowPackage->GetSDLToolsViewportRenderTexture()->GetState() == PointerState::Active)
             {
-                ImVec2 imageSize = ImVec2((float)1280, (float)720);
+                ImVec2 imageSize = ImVec2(width, height);
                 SDL_Texture* texture = m_windowPackage->GetSDLToolsViewportRenderTexture()->Get();
                 ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<void*>(texture)), imageSize);
             }
@@ -77,7 +96,7 @@ const char* ViewportPanel::GetPanelName() const
 
 const char* ViewportPanel::GetPanelUniqueName() const
 {
-    return "Viewport";
+    return "ToolsMainViewport";
 }
 
 bool ViewportPanel::OnLoadOpenState() const
@@ -88,6 +107,11 @@ bool ViewportPanel::OnLoadOpenState() const
 void ViewportPanel::ResetPanel()
 {
     SuperToolsPanel::ResetPanel();
+}
+
+void ViewportPanel::GiveEngineControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engine)
+{
+    m_engineControls = engine;
 }
 
 void ViewportPanel::UpdateTheSDLViewport() const

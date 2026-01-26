@@ -87,6 +87,11 @@ void ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>
         "ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
+void ToolsEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
+{
+    m_engineControls = engineControls;
+}
+
 void ToolsEngine::GiveSDLGameEngineTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
 {
     m_sdlGameViewportRenderTexture = sdlRenderTexture;
@@ -114,12 +119,6 @@ ApplicationOperationState ToolsEngine::Event(SDL_Event event)
 
 ApplicationOperationState ToolsEngine::Update(Uint64 ticks)
 {
-    if (!m_haveSetup)
-    {
-        Setup();
-        m_haveSetup = true;
-    }
-
     for (const std::shared_ptr<UpdateableObject>& obj : m_updatables)
     {
         obj->Update();
@@ -151,6 +150,20 @@ void ToolsEngine::WindowTeardown()
 {
 }
 
+void ToolsEngine::EngineStart()
+{
+    if (!m_haveSetup)
+    {
+        Setup();
+        m_haveSetup = true;
+    }
+}
+
+void ToolsEngine::EngineEnd()
+{
+    m_haveSetup = false;
+}
+
 void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
@@ -173,6 +186,7 @@ void ToolsEngine::Setup()
 
     auto viewportPanel = std::make_shared<ViewportPanel>();
     viewportPanel->UpdateDistributedWeakPointer(viewportPanel);
+    viewportPanel->GiveEngineControls(m_engineControls);
 
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 

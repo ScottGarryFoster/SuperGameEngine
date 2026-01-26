@@ -83,6 +83,11 @@ void DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>
     Log::Info("Project properties not used.", "DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
+void DebugEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
+{
+    m_engineControls = engineControls;
+}
+
 ApplicationOperationState DebugEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;
@@ -182,6 +187,14 @@ void DebugEngine::WindowStart()
 }
 
 void DebugEngine::WindowTeardown()
+{
+}
+
+void DebugEngine::EngineStart()
+{
+}
+
+void DebugEngine::EngineEnd()
 {
 }
 

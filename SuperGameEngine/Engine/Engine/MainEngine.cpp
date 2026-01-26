@@ -69,6 +69,11 @@ void MainEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>&
     m_projectProperties = projectProperties;
 }
 
+void MainEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
+{
+    m_engineControls = engineControls;
+}
+
 ApplicationOperationState MainEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;
@@ -76,11 +81,6 @@ ApplicationOperationState MainEngine::Event(SDL_Event event)
 
 ApplicationOperationState MainEngine::Update(Uint64 ticks)
 {
-    if (!m_haveLoaded)
-    {
-        Setup();
-    }
-
     m_gameTime->SetTicksSinceLastFrame(ticks);
     m_grandScene->Update(m_gameTime);
 
@@ -106,6 +106,20 @@ void MainEngine::WindowStart()
 
 void MainEngine::WindowTeardown()
 {
+}
+
+void MainEngine::EngineStart()
+{
+    if (!m_haveLoaded)
+    {
+        Setup();
+        m_haveLoaded = true;
+    }
+}
+
+void MainEngine::EngineEnd()
+{
+    m_haveLoaded = false;
 }
 
 void MainEngine::Setup()

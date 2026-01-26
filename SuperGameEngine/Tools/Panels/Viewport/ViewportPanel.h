@@ -4,6 +4,11 @@
 #include "Engine/Basic/ExtremelyWeakWrapper.h"
 #include <SDL.h>
 
+namespace SuperGameEngine
+{
+    class EngineControls;
+}
+
 namespace SuperGameTools
 {
     /// <summary>
@@ -66,6 +71,12 @@ namespace SuperGameTools
         /// </summary>
         virtual void ResetPanel() override;
 
+        /// <summary>
+        /// Defines and communicates engine level changes.
+        /// </summary>
+        /// <param name="engine">Defines and communicates engine level changes. </param>
+        void GiveEngineControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engine);
+
     private:
 
         /// <summary>
@@ -79,9 +90,19 @@ namespace SuperGameTools
         std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
 
         /// <summary>
+        /// Defines and communicates engine level changes.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
+
+        /// <summary>
         /// Where to position the SDL Viewport.
         /// </summary>
         SDL_Rect m_viewport;
+
+        /// <summary>
+        /// True means the size has changed and another texture size is required.
+        /// </summary>
+        bool m_sizeHasChanged;
 
         /// <summary>
         /// Updates the viewport to match the window.
