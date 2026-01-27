@@ -1,28 +1,19 @@
 #pragma once
-#include "../EngineEntry/Engine.h"
-#include <SDL.h>
-
-#include "Factory/EngineFactory.h"
+#include "EngineEntry/Engine.h"
 
 namespace SuperGameEngine
 {
+    class TextureAsset;
     class EngineTextureManager;
-    class GrandScene;
-    class SuperGameTime;
-    class TextureManager;
-    class GrandScenePackage;
-    class SuperGrandScenePackage;
-    class DebugLogger;
+}
 
-    /// <summary>
-    /// Main game engine.
-    /// </summary>
-    class MainEngine : public virtual Engine
+namespace SuperGameTools
+{
+    class ViewportEngine : public virtual SuperGameEngine::Engine
     {
     public:
-
-        MainEngine();
-        ~MainEngine();
+        ViewportEngine();
+        virtual ~ViewportEngine();
 
         /// <summary>
         /// Gives the engine a renderer.
@@ -33,7 +24,7 @@ namespace SuperGameEngine
         /// is recreated on this new renderer.
         /// </summary>
         /// <param name="renderer">The current window Renderer. </param>
-        virtual void GiveRenderer(std::shared_ptr<SDLRendererReader> renderer) override;
+        virtual void GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer) override;
 
         /// <summary>
         /// Gives the input manager.
@@ -52,7 +43,7 @@ namespace SuperGameEngine
         /// Give project properties which contains the information for how to treat the product.
         /// </summary>
         /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
-        virtual void GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties) override;
+        virtual void GiveProjectProperties(const std::shared_ptr<SuperGameEngine::ProjectProperties>& projectProperties) override {}
 
         /// <summary>
         /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
@@ -60,17 +51,18 @@ namespace SuperGameEngine
         /// <param name="engineControls">
         /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
         /// </param>
-        virtual void GiveControls(const std::shared_ptr<EngineControls>& engineControls) override;
+        virtual void GiveControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engineControls) override;
 
         /// <summary>
         /// Handle the current event.
         /// </summary>
         /// <param name="event">Current event. </param>
         /// <returns>
-        /// True means keep running the application.
-        /// False will quit the application.
+        /// ApplicationOperationState::Running will keep the window running.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
         /// </returns>
-        virtual ApplicationOperationState Event(SDL_Event event) override;
+        virtual SuperGameEngine::ApplicationOperationState Event(SDL_Event event) override;
 
         /// <summary>
         /// Update the application each frame.
@@ -78,15 +70,17 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="ticks">Ticks between this frame and the last. </param>
         /// <returns>
-        /// True means keep running the application.
-        /// False will quit the application.
+        /// ApplicationOperationState::Running will keep the window running.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
         /// </returns>
-        virtual ApplicationOperationState Update(Uint64 ticks) override;
+        virtual SuperGameEngine::ApplicationOperationState Update(Uint64 ticks) override;
 
         /// <summary>
         /// Draw to the screen.
         /// </summary>
         virtual void Draw() override;
+
 
         /// <summary>
         /// Called as the window starts.
@@ -116,12 +110,10 @@ namespace SuperGameEngine
 
     private:
 
-#if defined(_DEBUG) && !defined(_TOOLS)
         /// <summary>
-        /// Allows this to log issues to the console.
+        /// The SDL Renderer we should output to.
         /// </summary>
-        std::shared_ptr<DebugLogger> m_logger;
-#endif
+        std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
 
         /// <summary>
         /// Handles and updates user input.
@@ -134,57 +126,18 @@ namespace SuperGameEngine
         std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
 
         /// <summary>
-        /// The foundational properties for setting up the project for the product.
-        /// </summary>
-        std::shared_ptr<ProjectProperties> m_projectProperties;
-
-        /// <summary>
         /// Creates, stores and manages all textures in the engine.
         /// </summary>
-        std::shared_ptr<EngineTextureManager> m_textureManager;
+        std::shared_ptr<SuperGameEngine::EngineTextureManager> m_textureManager;
 
         /// <summary>
-        /// Keeps track of time whilst the engine is running.
+        /// A test texture for the first submit.
         /// </summary>
-        std::shared_ptr<SuperGameTime> m_gameTime;
+        std::shared_ptr<SuperGameEngine::TextureAsset> testTexture;
 
         /// <summary>
-        /// Holds all scenes.
+        /// Defines and communicates engine level changes.
         /// </summary>
-        std::shared_ptr<GrandScene> m_grandScene;
-
-        /// <summary>
-        /// The renderer to use for all textures.
-        /// This needs to be at the level of SDL Renderers as this is one level down from the engine entry.
-        /// </summary>
-        std::shared_ptr<SDLRendererReader> m_renderer;
-
-        /// <summary>
-        /// Everything a grand scene needs to operate.
-        /// </summary>
-        std::shared_ptr<GrandScenePackage> m_grandSceneLoadPackage;
-
-        /// <summary>
-        /// Defines and communicates engine level changes you can manipulate.
-        /// </summary>
-        std::shared_ptr<EngineControls> m_engineControls;
-
-        /// <summary>
-        /// True when the engine has loaded.
-        /// </summary>
-        bool m_haveLoaded;
-
-        /// <summary>
-        /// Sets up the engine for first time loading into a game.
-        /// </summary>
-        void Setup();
-
-        /// <summary>
-        /// Creates the Grand Scene Package.
-        /// </summary>
-        /// <returns>The created grand scene package. </returns>
-        std::shared_ptr<GrandScenePackage> CreateGrandScenePackage();
+        std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
     };
-
-    REGISTER_ENGINE("MainEngine", MainEngine);
 }

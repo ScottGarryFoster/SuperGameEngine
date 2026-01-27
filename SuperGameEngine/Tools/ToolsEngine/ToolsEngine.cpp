@@ -28,6 +28,7 @@
 #include "Engine/Structural/UniversalObjectData/ToolsUniversalObjectDataTemplateProvider.h"
 #include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
+#include "Panels/Viewport/ViewportPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
@@ -86,11 +87,23 @@ void ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>
         "ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
-void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+void ToolsEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
 {
-    m_sdlRenderTexture = sdlRenderTexture;
+    m_engineControls = engineControls;
+}
 
-    m_windowPackage->SetSDLRenderTexture(m_sdlRenderTexture);
+void ToolsEngine::GiveSDLGameEngineTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+{
+    m_sdlGameViewportRenderTexture = sdlRenderTexture;
+
+    m_windowPackage->SetSDLGameViewportRenderTexture(m_sdlGameViewportRenderTexture);
+}
+
+void ToolsEngine::GiveSDLViewportTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+{
+    m_sdlToolsViewportRenderTexture = sdlRenderTexture;
+
+    m_windowPackage->SetSDLToolsViewportRenderTexture(m_sdlToolsViewportRenderTexture);
 }
 
 void ToolsEngine::GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication)
@@ -106,12 +119,6 @@ ApplicationOperationState ToolsEngine::Event(SDL_Event event)
 
 ApplicationOperationState ToolsEngine::Update(Uint64 ticks)
 {
-    if (!m_haveSetup)
-    {
-        Setup();
-        m_haveSetup = true;
-    }
-
     for (const std::shared_ptr<UpdateableObject>& obj : m_updatables)
     {
         obj->Update();
@@ -143,6 +150,20 @@ void ToolsEngine::WindowTeardown()
 {
 }
 
+void ToolsEngine::EngineStart()
+{
+    if (!m_haveSetup)
+    {
+        Setup();
+        m_haveSetup = true;
+    }
+}
+
+void ToolsEngine::EngineEnd()
+{
+    m_haveSetup = false;
+}
+
 void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
@@ -162,6 +183,10 @@ void ToolsEngine::Setup()
 
     auto projectProperties = std::make_shared<ProjectPropertiesPanel>();
     projectProperties->FEventObserver::UpdateDistributedWeakPointer(projectProperties);
+
+    auto viewportPanel = std::make_shared<ViewportPanel>();
+    viewportPanel->UpdateDistributedWeakPointer(viewportPanel);
+    viewportPanel->GiveEngineControls(m_engineControls);
 
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
@@ -221,6 +246,10 @@ void ToolsEngine::Setup()
     projectProperties->Setup(m_windowPackage);
     m_updatables.push_back(projectProperties);
     m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
+
+    viewportPanel->Setup(m_windowPackage);
+    m_updatables.push_back(viewportPanel);
+    m_windowPackage->GetPanelManager()->RegisterPanel(viewportPanel);
 
     // Run last after all panels have been run.
     menuBar->SetupPostPanels();

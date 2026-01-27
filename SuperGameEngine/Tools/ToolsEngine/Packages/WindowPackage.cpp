@@ -2,14 +2,24 @@
 
 using namespace SuperGameTools;
 
-void WindowPackage::SetSDLRenderTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> texture)
+void WindowPackage::SetSDLGameViewportRenderTexture(const std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>>& texture)
 {
-    m_texture = texture;
+    m_gameViewportTexture = texture;
 }
 
-std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> WindowPackage::GetSDLRenderTexture() const
+std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> WindowPackage::GetSDLGameViewportRenderTexture() const
 {
-    return m_texture;
+    return m_gameViewportTexture;
+}
+
+void WindowPackage::SetSDLToolsViewportRenderTexture(const std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>>& texture)
+{
+    m_toolsViewportTexture = texture;
+}
+
+std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> WindowPackage::GetSDLToolsViewportRenderTexture() const
+{
+    return m_toolsViewportTexture;
 }
 
 void WindowPackage::SetRenderer(std::shared_ptr<SDLRendererReader> sdlRendererReader)
