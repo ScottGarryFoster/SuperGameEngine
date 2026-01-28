@@ -23,7 +23,7 @@ void ViewportPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
     m_windowPackage = windowPackage;
     SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(),
         {
-            .ResetLayoutUsingLayouts = true,
+            .ResetLayoutUsingLayouts = false,
             .StartPosition = {.X = 50, .Y = 50}
         });
 
