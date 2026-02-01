@@ -101,14 +101,14 @@ function(NugetIncludeRapid TARGET)
 
     FetchContent_Declare(
         RapidXML
-        GIT_REPOSITORY "https://github.com/0x08088405/rapidxml.git"
+        GIT_REPOSITORY "https://github.com/Fe-Bell/RapidXML"
         GIT_TAG "master"
         DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     )
     FetchContent_MakeAvailable(RapidXML)
 
     # Check the actual path where the headers are installed
-    set(RAPIDXML_INCLUDE_DIR "${CMAKE_BINARY_DIR}/_deps/rapidxml-src")
+    set(RAPIDXML_INCLUDE_DIR "${CMAKE_BINARY_DIR}/_deps/rapidxml-src/RapidXML")
 
     # Make sure the path is valid
     if (EXISTS "${RAPIDXML_INCLUDE_DIR}/rapidxml.hpp")

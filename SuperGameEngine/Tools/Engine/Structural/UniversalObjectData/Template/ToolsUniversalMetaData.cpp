@@ -2,9 +2,9 @@
 
 #include "SingleToolsUniversalLayout.h"
 #include "ToolsUniversalTemplate.h"
-#include "../../../../FatedQuest.Libraries/Exceptions/AllReferences.h"
-#include "../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
-#include "../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/Exceptions/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/StoredDocument/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
 
 using namespace FatedQuestLibraries;
 

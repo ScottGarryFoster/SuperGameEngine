@@ -106,5 +106,5 @@ bool ImGuiSuperTextureWrapper::RepresentSameImage(std::string filePath) const
 
 FPoint ImGuiSuperTextureWrapper::Size() const
 {
-    return {};
+    return m_texture->Size();
 }

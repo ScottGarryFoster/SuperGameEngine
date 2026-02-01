@@ -4,8 +4,8 @@
 #include "WindowFlagsToImGuiConverter.h"
 #include "../ColoursAndStyles/ColoursAndStyles.h"
 #include "../../../ImGuiIncludes.h"
-#include "../../../../FatedQuest.Libraries/Observer/AllReferences.h"
-#include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/Observer/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/Logger/AllReferences.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;

@@ -6,6 +6,8 @@
 #include "Engine/Graphics/Texture/SDLRendererReader.h"
 #include "Engine/Graphics/Texture/SDLRendererState.h"
 #include "Imgui/External/imgui.h"
+#include "Panels/ViewportTools/ViewportTools.h"
+#include "ToolsEngine/ViewElements/Window/ToolsWindowShownArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -59,6 +61,13 @@ void ViewportPanel::Draw()
         m_viewport.w = static_cast<int>(windowSize.x);
         m_viewport.h = static_cast<int>(windowSize.y);
 
+        if (m_renderViewportTools)
+        {
+            m_viewport.x += 35;
+            m_viewport.h -= 35;
+            m_viewportTools->Draw();
+        }
+
         int newWidth = m_viewport.w;
         int newHeight = m_viewport.h;
         if (width != newWidth || height != newHeight)
@@ -87,6 +96,15 @@ void ViewportPanel::TearDown()
 
 void ViewportPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
 {
+    if (auto shownArgs = std::dynamic_pointer_cast<ToolsWindowShownArguments>(arguments))
+    {
+        if (shownArgs->GetUniqueName() != "ViewportTools")
+        {
+            return;
+        }
+
+        m_renderViewportTools = !shownArgs->GetNewShownValue();
+    }
 }
 
 const char* ViewportPanel::GetPanelName() const
@@ -112,6 +130,11 @@ void ViewportPanel::ResetPanel()
 void ViewportPanel::GiveEngineControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engine)
 {
     m_engineControls = engine;
+}
+
+void ViewportPanel::GiveViewportTools(const std::shared_ptr<ViewportTools>& viewportTools)
+{
+    m_viewportTools = viewportTools;
 }
 
 void ViewportPanel::UpdateTheSDLViewport() const

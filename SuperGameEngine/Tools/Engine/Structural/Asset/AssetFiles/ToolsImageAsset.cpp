@@ -1,6 +1,6 @@
 #include "ToolsImageAsset.h"
 #include "FatedQuestLibraries.h"
-#include "../../../Engine/Engine/Content/TextureManager.h"
+#include "../../../../Engine/Engine/Content/TextureManager.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;

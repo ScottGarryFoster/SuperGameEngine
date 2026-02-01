@@ -2,12 +2,6 @@
 #include "Panels/SuperToolsPanel.h"
 #include "../../../../FatedQuest.Libraries/Observer/AllReferences.h"
 #include "Engine/Basic/ExtremelyWeakWrapper.h"
-#include <SDL.h>
-
-namespace SuperGameEngine
-{
-    class EngineControls;
-}
 
 namespace SuperGameTools
 {
@@ -16,11 +10,11 @@ namespace SuperGameTools
     /// <summary>
     /// Renders the scene and allows visual modification.
     /// </summary>
-    class ViewportPanel : public SuperToolsPanel, public FatedQuestLibraries::FEventObserver
+    class ViewportToolsPanel : public SuperToolsPanel, public FatedQuestLibraries::FEventObserver
     {
     public:
-        ViewportPanel();
-        virtual ~ViewportPanel() override;
+        ViewportToolsPanel();
+        virtual ~ViewportToolsPanel() override;
 
         /// <summary>
         /// Called once on setup.
@@ -74,17 +68,10 @@ namespace SuperGameTools
         virtual void ResetPanel() override;
 
         /// <summary>
-        /// Defines and communicates engine level changes.
-        /// </summary>
-        /// <param name="engine">Defines and communicates engine level changes. </param>
-        void GiveEngineControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engine);
-
-        /// <summary>
         /// The tools which accompany the scene viewport.
-        /// These are rendered in a panel or as part of the viewport panel.
         /// </summary>
-        /// <param name="viewportTools">The tools which accompany the scene viewport. </param>
-        void GiveViewportTools(const std::shared_ptr<ViewportTools>& viewportTools);
+        /// <returns>The tools which accompany the scene viewport. </returns>
+        virtual std::shared_ptr<ViewportTools> GetViewportTools() const;
 
     private:
 
@@ -94,38 +81,8 @@ namespace SuperGameTools
         std::shared_ptr<WindowPackage> m_windowPackage;
 
         /// <summary>
-        /// A cached link to the SDL Renderer.
-        /// </summary>
-        std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
-
-        /// <summary>
-        /// Defines and communicates engine level changes.
-        /// </summary>
-        std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
-
-        /// <summary>
-        /// Where to position the SDL Viewport.
-        /// </summary>
-        SDL_Rect m_viewport;
-
-        /// <summary>
-        /// True means the size has changed and another texture size is required.
-        /// </summary>
-        bool m_sizeHasChanged;
-
-        /// <summary>
-        /// True means we should render the viewport tools at the top.
-        /// </summary>
-        bool m_renderViewportTools;
-
-        /// <summary>
         /// The tools which accompany the scene viewport.
         /// </summary>
         std::shared_ptr<ViewportTools> m_viewportTools;
-
-        /// <summary>
-        /// Updates the viewport to match the window.
-        /// </summary>
-        void UpdateTheSDLViewport() const;
     };
 }
