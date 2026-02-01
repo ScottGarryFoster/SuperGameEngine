@@ -29,6 +29,8 @@
 #include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
 #include "Panels/Viewport/ViewportPanel.h"
+#include "Panels/ViewportTools/ViewportTools.h"
+#include "Panels/ViewportTools/ViewportToolsPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
@@ -188,6 +190,9 @@ void ToolsEngine::Setup()
     viewportPanel->UpdateDistributedWeakPointer(viewportPanel);
     viewportPanel->GiveEngineControls(m_engineControls);
 
+    auto viewportToolsPanel = std::make_shared<ViewportToolsPanel>();
+    viewportToolsPanel->UpdateDistributedWeakPointer(viewportToolsPanel);
+
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
     // Must be made first as other things latch on to it.
@@ -250,6 +255,10 @@ void ToolsEngine::Setup()
     viewportPanel->Setup(m_windowPackage);
     m_updatables.push_back(viewportPanel);
     m_windowPackage->GetPanelManager()->RegisterPanel(viewportPanel);
+
+    viewportToolsPanel->Setup(m_windowPackage);
+    m_updatables.push_back(viewportToolsPanel);
+    m_windowPackage->GetPanelManager()->RegisterPanel(viewportToolsPanel);
 
     // Run last after all panels have been run.
     menuBar->SetupPostPanels();
