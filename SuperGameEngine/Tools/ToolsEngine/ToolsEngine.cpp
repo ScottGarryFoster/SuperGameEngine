@@ -260,6 +260,10 @@ void ToolsEngine::Setup()
     m_updatables.push_back(viewportToolsPanel);
     m_windowPackage->GetPanelManager()->RegisterPanel(viewportToolsPanel);
 
+    // This must occur after setup of these.
+    viewportToolsPanel->OnWindowShownOrHidden()->Subscribe(viewportPanel);
+    viewportPanel->GiveViewportTools(viewportToolsPanel->GetViewportTools());
+
     // Run last after all panels have been run.
     menuBar->SetupPostPanels();
 }

@@ -98,8 +98,6 @@ void SuperViewportToolsButton::Invoke(std::shared_ptr<FEventArguments> arguments
     if (auto buttonsArguments = std::dynamic_pointer_cast<ViewportToolsButtonSelectedArguments>(arguments))
     {
         std::string name = EViewportToolsType::ToString(buttonsArguments->GetButtonSelected());
-        Log::Info("Called on selected: " + name);
-
         m_isSelected = false;
     }
 }

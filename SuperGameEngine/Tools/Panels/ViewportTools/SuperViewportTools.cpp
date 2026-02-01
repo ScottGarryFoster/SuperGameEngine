@@ -60,4 +60,9 @@ void SuperViewportTools::Draw() const
         m_toolsButtons.at(toolsType)->Draw();
         ImGui::SameLine();
     }
+
+    // Add a little margin to anything rendered after the tools.
+    ImVec2 groupMin = ImGui::GetCursorPos();
+    ImGui::SetCursorPosY(groupMin.y + 35);
+    ImGui::SetCursorPosX(8);
 }

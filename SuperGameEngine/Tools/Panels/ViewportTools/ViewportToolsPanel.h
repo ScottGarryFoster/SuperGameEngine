@@ -67,6 +67,12 @@ namespace SuperGameTools
         /// </summary>
         virtual void ResetPanel() override;
 
+        /// <summary>
+        /// The tools which accompany the scene viewport.
+        /// </summary>
+        /// <returns>The tools which accompany the scene viewport. </returns>
+        virtual std::shared_ptr<ViewportTools> GetViewportTools() const;
+
     private:
 
         /// <summary>

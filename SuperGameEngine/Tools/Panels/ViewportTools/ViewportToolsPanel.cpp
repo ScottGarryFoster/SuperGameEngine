@@ -64,3 +64,8 @@ void ViewportToolsPanel::ResetPanel()
 {
     SuperToolsPanel::ResetPanel();
 }
+
+std::shared_ptr<ViewportTools> ViewportToolsPanel::GetViewportTools() const
+{
+    return m_viewportTools;
+}

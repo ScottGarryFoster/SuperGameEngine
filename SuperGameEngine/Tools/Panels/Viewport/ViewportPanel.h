@@ -11,6 +11,8 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class ViewportTools;
+
     /// <summary>
     /// Renders the scene and allows visual modification.
     /// </summary>
@@ -77,6 +79,13 @@ namespace SuperGameTools
         /// <param name="engine">Defines and communicates engine level changes. </param>
         void GiveEngineControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engine);
 
+        /// <summary>
+        /// The tools which accompany the scene viewport.
+        /// These are rendered in a panel or as part of the viewport panel.
+        /// </summary>
+        /// <param name="viewportTools">The tools which accompany the scene viewport. </param>
+        void GiveViewportTools(const std::shared_ptr<ViewportTools>& viewportTools);
+
     private:
 
         /// <summary>
@@ -103,6 +112,16 @@ namespace SuperGameTools
         /// True means the size has changed and another texture size is required.
         /// </summary>
         bool m_sizeHasChanged;
+
+        /// <summary>
+        /// True means we should render the viewport tools at the top.
+        /// </summary>
+        bool m_renderViewportTools;
+
+        /// <summary>
+        /// The tools which accompany the scene viewport.
+        /// </summary>
+        std::shared_ptr<ViewportTools> m_viewportTools;
 
         /// <summary>
         /// Updates the viewport to match the window.
