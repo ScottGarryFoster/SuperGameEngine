@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes what updated (or how) when the scene updates.
+    </EnumComment>
+    <EnumName Name="SceneUpdateAction">
+        <Unknown HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <NewScene>
+            The scene has been loaded or replaced with another.
+        </NewScene>
+    </EnumName>
+</SuperEnum>

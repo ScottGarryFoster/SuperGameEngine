@@ -4,7 +4,7 @@
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
-SuperTextureWrapper::SuperTextureWrapper(const std::shared_ptr<Texture>& texture)
+SuperTextureWrapper::SuperTextureWrapper(const std::shared_ptr<PureTexture>& texture)
 {
     if (!texture)
     {

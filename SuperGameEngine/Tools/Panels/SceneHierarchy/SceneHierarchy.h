@@ -8,6 +8,7 @@
 
 namespace SuperGameTools
 {
+    class CrossEngineObjects;
     class Component;
     class GameObject;
 }
@@ -97,6 +98,14 @@ namespace SuperGameTools
         /// <returns>True means open, provided window settings or layouts do not say otherwise. </returns>
         virtual bool OnLoadOpenState() const override;
 
+        /// <summary>
+        /// Give this engine a reference to the objects shared by the main engine.
+        /// </summary>
+        /// <param name="crossEngineObjects">
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </param>
+        void GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects);
+
     private:
         /// <summary>
         /// Everything a Window Package might need to run.
@@ -140,6 +149,11 @@ namespace SuperGameTools
         /// The top level game object tree view items in the current scene.
         /// </summary>
         std::vector<std::shared_ptr<GameObjectTreeViewItem>> m_gameObjectTreeViewItems;
+
+        /// <summary>
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </summary>
+        std::shared_ptr<CrossEngineObjects> m_crossEngineObjects;
 
         /// <summary>
         /// Loads a scene from file.

@@ -5,6 +5,8 @@
 #include "TextureDataOrigin.h"
 #include "../../../FatedQuestReferences.h"
 #include "../../../Structural/Spatial/Area/RectangleInt.h"
+#include "Engine/Content/SuperTextureFactory.h"
+#include "PureTexture.h"
 
 using namespace FatedQuestLibraries;
 
@@ -13,7 +15,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Contains texture data and the raw ability to render a texture.
     /// </summary>
-    class Texture
+    class Texture : public virtual PureTexture
     {
     public:
         Texture(const std::shared_ptr<SDLRendererReader>& renderer);
@@ -25,7 +27,7 @@ namespace SuperGameEngine
         /// <param name="filePath">File path to the texture. </param>
         /// <param name="errors">If there are errors this is the reason why the texture could not be created. </param>
         /// <returns>True means created, false means not. </returns>
-        virtual bool LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors);
+        virtual bool LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors) override;
 
         /// <summary>
         /// Loads a texture from raw data.
@@ -37,44 +39,44 @@ namespace SuperGameEngine
         /// </param>
         /// <param name="errors">Errors if not created. </param>
         /// <returns>True means created. </returns>
-        virtual bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors);
+        virtual bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors) override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
-        void Draw() const;
+        void Draw() const override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
-        void Draw(const FPoint& location) const;
+        void Draw(const FPoint& location) const override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        void Draw(const FPoint& location, const FPoint& size) const;
+        void Draw(const FPoint& location, const FPoint& size) const override;
 
         /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
         /// <param name="screenRectangle">Where on the screen to render. </param>
-        void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const;
+        void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const override;
 
         /// <summary>
         /// Get the Filepath of the loaded texture.
         /// </summary>
         /// <returns>The filepath of the texture loaded. </returns>
-        [[nodiscard]] std::string GetLoadedFilePath() const;
+        [[nodiscard]] std::string GetLoadedFilePath() const override;
 
         /// <summary>
          /// Get the size of the Texture in Pixels.
          /// </summary>
          /// <returns>Returns the size of the Texture. </returns>
-        FPoint Size() const;
+        FPoint Size() const override;
 
         /// <summary>
         /// Remakes the texture if possible.
@@ -82,7 +84,7 @@ namespace SuperGameEngine
         /// or if the filepath now have new data within it.
         /// Will remake in the same way it was last successfully attempted.
         /// </summary>
-        bool Remake(std::vector<std::string>& errors);
+        bool Remake(std::vector<std::string>& errors) override;
 
     protected:
 

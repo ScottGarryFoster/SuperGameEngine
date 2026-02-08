@@ -118,6 +118,11 @@ std::shared_ptr<SuperGameEngine::TextureAssetSerializableProperty> TextureAssetS
     return m_serializableProperty;
 }
 
+std::string TextureAssetSerializableProperty::GetTextureValue() const
+{
+    return m_value;
+}
+
 bool TextureAssetSerializableProperty::SetValueFromString(const std::string& newValue)
 {
     size_t written = std::snprintf(m_value, sizeof(m_value), "%s", newValue.c_str());

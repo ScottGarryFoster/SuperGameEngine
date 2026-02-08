@@ -14,6 +14,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class CrossEngineObjects;
     class ToolsLayoutSettings;
     class EngineFlowPlayControl;
 
@@ -125,6 +126,16 @@ namespace SuperGameTools
         /// All data for the game.
         /// </summary>
         std::shared_ptr<GamePackage> m_gamePackage;
+
+        /// <summary>
+        /// Tools objects passed between the engine.
+        /// </summary>
+        std::shared_ptr<CrossEngineObjects> m_crossEngineObjects;
+
+        /// <summary>
+        /// Creates, stores and manages all textures in the engine.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::TextureManager> m_engineTextureManager;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);

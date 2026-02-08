@@ -23,6 +23,8 @@
 #include "../Structural/Loaders/SuperSceneLoader.h"
 #include "../Structural/Serializable/SuperSerializableParser.h"
 #include "../Input/InputManagement/SDLInputManager.h"
+#include "Engine/Content/SuperTextureAssetFactory.h"
+#include "Engine/Content/SuperTextureWrapperFactory.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -246,7 +248,14 @@ void DebugEngine::CreateGrandScenePackage()
     // Loads configurations.
     m_inputManager->Setup(m_combinedGamePackage);
 
-    m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage);
+    // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    auto factories = ContentFactories
+    {
+        .TextureFactory = std::make_shared<SuperTextureFactory>(),
+        .TextureAssetFactory = std::make_shared<SuperTextureAssetFactory>(),
+        .TextureWrapperFactory = std::make_shared<SuperTextureWrapperFactory>()
+    };
+    m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage, factories);
     m_textureManager->UpdateDistributedWeakPointer(m_textureManager);
     m_contentManager->GiveSuperTextureManager(m_textureManager);
 

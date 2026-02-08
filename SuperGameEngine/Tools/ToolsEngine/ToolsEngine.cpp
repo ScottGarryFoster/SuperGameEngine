@@ -25,6 +25,10 @@
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 // This should be included early in the engine for the inspector.
+#include "Engine/Content/ToolsTextureAssetFactory.h"
+#include "Engine/Content/ToolsTextureFactory.h"
+#include "Engine/Content/ToolsTextureWrapperFactory.h"
+#include "Engine/CrossEngineObjects/CrossEngineObjects.h"
 #include "Engine/Structural/UniversalObjectData/ToolsUniversalObjectDataTemplateProvider.h"
 #include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
@@ -64,7 +68,14 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
         m_superContentManager->GiveGamePackage(m_gamePackage);
 
-        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, m_gamePackage);
+        auto factories = ContentFactories
+        {
+            .TextureFactory = std::make_shared<ToolsTextureFactory>(),
+            .TextureAssetFactory = std::make_shared<ToolsTextureAssetFactory>(),
+            .TextureWrapperFactory = std::make_shared<ToolsTextureWrapperFactory>()
+        };
+        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, m_gamePackage, factories);
+        textureManager->UpdateDistributedWeakPointer(textureManager);
         m_superContentManager->GiveSuperTextureManager(textureManager);
 
         m_windowPackage->SetContentManager(m_superContentManager);
@@ -112,6 +123,12 @@ void ToolsEngine::GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommun
 {
     m_engineEntryCommunication = engineEntryCommunication;
     m_windowPackage->SetEngineEntryCommunication(m_engineEntryCommunication);
+}
+
+void ToolsEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
+{
+    m_crossEngineObjects = crossEngineObjects;
+    m_crossEngineObjects->SetWindowPackage(m_windowPackage);
 }
 
 ApplicationOperationState ToolsEngine::Event(SDL_Event event)
@@ -164,6 +181,7 @@ void ToolsEngine::EngineStart()
 void ToolsEngine::EngineEnd()
 {
     m_haveSetup = false;
+    m_crossEngineObjects->Reset();
 }
 
 void ToolsEngine::Setup()
@@ -172,6 +190,7 @@ void ToolsEngine::Setup()
     menuBar->UpdateDistributedWeakPointer(menuBar);
 
     std::shared_ptr<SceneHierarchy> sceneHierarchy = std::make_shared<SceneHierarchy>();
+    sceneHierarchy->GiveCrossEngineObjects(m_crossEngineObjects);
     sceneHierarchy->FEventObserver::UpdateDistributedWeakPointer(sceneHierarchy);
 
     std::shared_ptr<InspectorWindow> inspectorWindow = std::make_shared<InspectorWindow>();

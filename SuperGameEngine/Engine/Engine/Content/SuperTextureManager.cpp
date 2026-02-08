@@ -1,4 +1,7 @@
 #include "SuperTextureManager.h"
+
+#include "TextureAssetFactory.h"
+#include "TextureWrapperFactory.h"
 #include "../../FatedQuestReferences.h"
 #include "../../Structural/Assets/Texture/SuperTextureAsset.h"
 #include "../../FatedQuest.Libraries/XmlDocument/AllReferences.h"
@@ -8,12 +11,17 @@ using namespace FatedQuestLibraries;
 
 SuperTextureManager::SuperTextureManager(
     const std::shared_ptr<SDLRendererReader>& renderer,
-    const std::shared_ptr<GamePackage>& gamePackage)
+    const std::shared_ptr<GamePackage>& gamePackage,
+    const ContentFactories& contentFactories)
 {
+    // Be aware that the renderer is likely not to exist here and this is created early in the engine flow.
     m_renderer = renderer;
-    m_storedTextures = std::make_shared<std::unordered_map<std::string, std::shared_ptr<SuperTextureWrapper>>>();
+    m_storedTextures = std::make_shared<std::unordered_map<std::string, std::shared_ptr<PureSuperTextureWrapper>>>();
     m_storedTextureAssets = std::make_shared<std::unordered_map<std::string, std::shared_ptr<SuperTextureAsset>>>();
     m_gamePackage = gamePackage;
+
+// TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    m_contentFactories = contentFactories;
 }
 
 SuperTextureManager::~SuperTextureManager() = default;
@@ -51,7 +59,8 @@ std::shared_ptr<SuperTexture> SuperTextureManager::GetTexture(const std::string&
         }
 
         std::vector<std::string> errors;
-        auto texture = std::make_shared<Texture>(m_renderer);
+        // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+        std::shared_ptr<PureTexture> texture = m_contentFactories.TextureFactory->Create(m_renderer);
         if (texture->LoadImageFromData(fileData, path, errors))
         {
             return AddTextureToStore(path, texture);
@@ -69,13 +78,6 @@ std::shared_ptr<SuperTexture> SuperTextureManager::GetTexture(const std::string&
 
 std::shared_ptr<TextureAsset> SuperTextureManager::GetTextureAsset(const std::string& filepath)
 {
-    if (GetWeakDistributed().lock() == nullptr)
-    {
-        Log::Error("No weak pointer provided for Super Texture Manager.",
-            "SuperTextureManager::GetTextureAsset(const std::string&)");
-        return nullptr;
-    }
-
     // Clean the path such that there is no asset or binary suffix.
     std::string path = File::Sanitize(filepath);
     for (int i = 0; i < 2; ++i)
@@ -132,12 +134,6 @@ std::shared_ptr<TextureAsset> SuperTextureManager::GetTextureAsset(const std::st
         return textureAsset;
     }
 
-    std::string appendedBinary = appendedAsset + m_binaryExtension;
-    if (m_gamePackage->File()->Exists(appendedBinary))
-    {
-
-    }
-
     return {};
 }
 
@@ -154,10 +150,11 @@ bool SuperTextureManager::RemakeAllTextures(std::vector<std::string>& errors)
     return true;
 }
 
-std::shared_ptr<SuperTextureWrapper> SuperTextureManager::AddTextureToStore(
-    const std::string& path, const std::shared_ptr<Texture>& texture) const
+std::shared_ptr<PureSuperTextureWrapper> SuperTextureManager::AddTextureToStore(
+    const std::string& path, const std::shared_ptr<PureTexture>& texture) const
 {
-    auto textureWrapper = std::make_shared<SuperTextureWrapper>(texture);
+    // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    std::shared_ptr<PureSuperTextureWrapper> textureWrapper = m_contentFactories.TextureWrapperFactory->Create(texture);
     m_storedTextures->insert_or_assign(path, textureWrapper);
     return textureWrapper;
 }
@@ -166,7 +163,8 @@ std::shared_ptr<SuperTextureAsset> SuperTextureManager::AddTextureAssetsToStore(
     const std::string& path,
     const std::shared_ptr<StoredDocument> document) const
 {
-    auto textureWrapper = std::make_shared<SuperTextureAsset>(document, path, GetWeakDistributed());
+    // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    auto textureWrapper = m_contentFactories.TextureAssetFactory->Create(document, path, GetWeakDistributed());
     m_storedTextureAssets->insert_or_assign(path, textureWrapper);
     return textureWrapper;
 }

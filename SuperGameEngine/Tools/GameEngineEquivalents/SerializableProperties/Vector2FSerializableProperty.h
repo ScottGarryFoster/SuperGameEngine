@@ -66,6 +66,12 @@ namespace SuperGameTools
         /// <returns>The property this tools property represents. </returns>
         std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> GetActualEngineProperty() const;
 
+        /// <summary>
+        /// Get the value stored in this property.
+        /// </summary>
+        /// <returns>The value stored in this property. </returns>
+        FatedQuestLibraries::FVector2F GetValue() const;
+
     private:
         /// <summary>
         /// Event called when this component is dirtied.

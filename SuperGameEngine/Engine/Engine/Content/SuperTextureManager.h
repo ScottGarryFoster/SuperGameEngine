@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 
+#include "ContentFactories.h"
 #include "EngineTextureManager.h"
 #include "../Graphics/Texture/SuperTexture.h"
 #include "../Graphics/Texture/SDLRendererReader.h"
@@ -14,8 +15,11 @@ namespace FatedQuestLibraries
 
 namespace SuperGameEngine
 {
+    class TextureWrapperFactory;
+    class TextureAssetFactory;
     class TextureAsset;
     class SuperTextureAsset;
+    class PureSuperTextureWrapper;
 
     /// <summary>
     /// Creates, stores and manages all textures in the engine.
@@ -23,9 +27,13 @@ namespace SuperGameEngine
     class SuperTextureManager : public virtual EngineTextureManager, public DistributeWeakPointers<TextureManager>
     {
     public:
-        explicit SuperTextureManager(
+
+        // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+        SuperTextureManager(
             const std::shared_ptr<SDLRendererReader>& renderer,
-            const std::shared_ptr<GamePackage>& gamePackage);
+            const std::shared_ptr<GamePackage>& gamePackage,
+            const ContentFactories& contentFactories
+            );
         virtual ~SuperTextureManager() override;
 
         /// <summary>
@@ -77,10 +85,17 @@ namespace SuperGameEngine
         /// </summary>
         const std::string m_binaryExtension = ".bin";
 
+        // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+
+        /// <summary>
+        /// All the factories to create content.
+        /// </summary>
+        ContentFactories m_contentFactories;
+
         /// <summary>
         /// All textures stored as filepath names and pointers to the wrappers.
         /// </summary>
-        std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<SuperTextureWrapper>>> m_storedTextures;
+        std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<PureSuperTextureWrapper>>> m_storedTextures;
 
         /// <summary>
         /// Adds a texture to the cache.
@@ -88,9 +103,9 @@ namespace SuperGameEngine
         /// <param name="path">Path of the Texture. </param>
         /// <param name="texture">Texture. </param>
         /// <returns>A Super Texture. </returns>
-        std::shared_ptr<SuperTextureWrapper> AddTextureToStore(
+        std::shared_ptr<PureSuperTextureWrapper> AddTextureToStore(
             const std::string& path, 
-            const std::shared_ptr<Texture>& texture) const;
+            const std::shared_ptr<PureTexture>& texture) const;
 
         /// <summary>
         /// All textures stored as filepath names and pointers to the wrappers.
