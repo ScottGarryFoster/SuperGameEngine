@@ -13,6 +13,8 @@
 #include "Structural/Scene/SuperGrandScene.h"
 #include "Structural/Serializable/SuperSerializableParser.h"
 #include "../Structural/InternalComponents/InternalComponents.h"
+#include "Content/SuperTextureAssetFactory.h"
+#include "Content/SuperTextureWrapperFactory.h"
 #include "Foundation/ProjectProperties.h"
 
 using namespace SuperGameEngine;
@@ -166,8 +168,15 @@ std::shared_ptr<GrandScenePackage> MainEngine::CreateGrandScenePackage()
     // Loads configurations.
     m_inputManager->Setup(m_gamePackage);
 
+    // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    auto factories = ContentFactories
+    {
+        .TextureFactory = std::make_shared<SuperTextureFactory>(),
+        .TextureAssetFactory = std::make_shared<SuperTextureAssetFactory>(),
+        .TextureWrapperFactory = std::make_shared<SuperTextureWrapperFactory>()
+    };
     std::shared_ptr<SuperTextureManager> textureManager = 
-        std::make_shared<SuperTextureManager>(m_renderer, m_gamePackage);
+        std::make_shared<SuperTextureManager>(m_renderer, m_gamePackage, factories);
     m_textureManager = textureManager;
     textureManager->UpdateDistributedWeakPointer(m_textureManager);
     contentManager->GiveSuperTextureManager(textureManager);

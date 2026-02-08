@@ -118,6 +118,11 @@ std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> Vector2FSerializa
     return m_serializableProperty;
 }
 
+FatedQuestLibraries::FVector2F Vector2FSerializableProperty::GetValue() const
+{
+    return m_value;
+}
+
 void Vector2FSerializableProperty::UpdateDirtyFlag(bool newValue) const
 {
     if (newValue != *m_dirty)

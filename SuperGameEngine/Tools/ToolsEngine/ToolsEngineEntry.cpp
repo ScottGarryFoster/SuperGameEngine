@@ -11,8 +11,11 @@
 #include "Communication/ToolsEngineEntryCommunication.h"
 #include "Communication/EngineFlowPlayControl.h"
 #include "Communication/ToolsEngineControl.h"
+#include "Engine/CrossEngineObjects/ToolsCrossEngineObjects.h"
 #include "Engine/Basic/SuperEngineControls.h"
 #include "Engine/Basic/ViewportSizeChangedEventArguments.h"
+#include "Engine/Content/SuperTextureAssetFactory.h"
+#include "Engine/Content/SuperTextureWrapperFactory.h"
 #include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
 #include "Engine/Foundation/ProjectPropertiesProvider.h"
 #include "Panels/Viewport/ViewportEngine.h"
@@ -41,6 +44,8 @@ ToolsEngineEntry::ToolsEngineEntry()
     auto paths = std::make_shared<SGEPackagePaths>();
     combinedGamePackage->Load(paths);
     m_gamePackage = combinedGamePackage;
+
+    m_crossEngineObjects = std::make_shared<ToolsCrossEngineObjects>();
 }
 
 int ToolsEngineEntry::RunApplication(const std::string& engineType)
@@ -55,9 +60,23 @@ int ToolsEngineEntry::RunApplication(const std::string& engineType)
     m_sdlToolsViewportTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
     m_toolsEngine->GiveSDLViewportTexture(m_sdlToolsViewportTexture);
 
+    m_toolsEngine->GiveCrossEngineObjects(m_crossEngineObjects);
+
     m_gameRenderer = std::make_shared<SDLRenderer>();
     m_toolsViewportRenderer = std::make_shared<SDLRenderer>();
     m_Toolsrenderer = std::make_shared<SDLRenderer>();
+
+    auto factories = ContentFactories
+    {
+        .TextureFactory = std::make_shared<SuperTextureFactory>(),
+        .TextureAssetFactory = std::make_shared<SuperTextureAssetFactory>(),
+        .TextureWrapperFactory = std::make_shared<SuperTextureWrapperFactory>()
+    };
+    auto textureManager = std::make_shared<SuperTextureManager>(m_toolsViewportRenderer, m_gamePackage, factories);
+    m_engineTextureManager = textureManager;
+    textureManager->UpdateDistributedWeakPointer(m_engineTextureManager);
+    m_crossEngineObjects->SetEngineTextureManager(m_engineTextureManager);
+
     ApplicationOperationState windowState = ApplicationOperationState::Restart;
     while (windowState != ApplicationOperationState::Close)
     {
@@ -188,13 +207,14 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
 
     Uint64 startTime = SDL_GetTicks64();
 
-    std::shared_ptr<Engine> toolsViewport = std::make_shared<ViewportEngine>();
+    auto toolsViewport = std::make_shared<ViewportEngine>();
     m_toolsViewportRenderer->SetRenderer(renderer);
     toolsViewport->GiveRenderer(m_toolsViewportRenderer);
     toolsViewport->GiveInput(m_inputManager);
     toolsViewport->GiveGamePackage(m_gamePackage);
     toolsViewport->WindowStart();
     toolsViewport->GiveControls(engineControlsToolsViewport);
+    toolsViewport->GiveCrossEngineObjects(m_crossEngineObjects);
 
 
     // Main loop
@@ -468,6 +488,9 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     // Cleanup Tools
     if (m_toolsEngine)
     {
+        toolsViewport->WindowTeardown();
+        toolsViewport->EngineEnd();
+
         m_toolsEngine->WindowTeardown();
         m_toolsEngine->EngineEnd();
 

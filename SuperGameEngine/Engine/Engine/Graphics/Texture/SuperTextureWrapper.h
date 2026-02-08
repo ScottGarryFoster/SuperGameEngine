@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+#include "PureSuperTextureWrapper.h"
 #include "SuperTexture.h"
 #include "Texture.h"
 
@@ -9,11 +10,11 @@ namespace SuperGameEngine
     /// <summary>
     /// A texture 
     /// </summary>
-    class SuperTextureWrapper : public SuperTexture
+    class SuperTextureWrapper : public PureSuperTextureWrapper
     {
     public:
-        SuperTextureWrapper(const std::shared_ptr<Texture>& texture);
-        virtual ~SuperTextureWrapper();
+        SuperTextureWrapper(const std::shared_ptr<PureTexture>& texture);
+        virtual ~SuperTextureWrapper() override;
 
         /// <summary>
         /// Draws to screen.
@@ -66,12 +67,12 @@ namespace SuperGameEngine
         /// or if the filepath now have new data within it.
         /// Will remake in the same way it was last successfully attempted.
         /// </summary>
-        virtual bool Remake(std::vector<std::string>& errors);
+        virtual bool Remake(std::vector<std::string>& errors) override;
 
     private:
         /// <summary>
         /// Reference to the texture to render.
         /// </summary>
-        std::shared_ptr<Texture> m_texture;
+        std::shared_ptr<PureTexture> m_texture;
     };
 }

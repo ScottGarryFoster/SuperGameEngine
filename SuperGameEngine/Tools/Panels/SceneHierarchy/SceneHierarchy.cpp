@@ -24,6 +24,7 @@
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
 #include "SceneTreeViewItem.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "Engine/CrossEngineObjects/CrossEngineObjects.h"
 #include "EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
@@ -102,9 +103,11 @@ void SceneHierarchy::Draw()
         ImGui::OpenPopup("Selectable Popup");
     }
 
-    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
         ImGui::Text(m_testPopupText.c_str());
-        if (ImGui::Button("Close")) {
+        if (ImGui::Button("Close"))
+        {
             ImGui::CloseCurrentPopup();
             m_testPopup = false;
         }
@@ -156,6 +159,11 @@ bool SceneHierarchy::OnLoadOpenState() const
     return true;
 }
 
+void SceneHierarchy::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
+{
+    m_crossEngineObjects = crossEngineObjects;
+}
+
 bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
 {
     if (!document)
@@ -190,6 +198,8 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
             "bool SceneHierarchy::LoadScene(std::shared_ptr<SceneDocument>)");
         return false;
     }
+
+    m_crossEngineObjects->SetScene(m_scene);
 
     // It is important to store the shared pointer as a TreeViewItem so Shared from works.
     m_treeViewItem = std::make_shared<SceneTreeViewItem>(m_windowPackage->GetContentManager());
@@ -229,6 +239,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         children.emplace_back(childItem);
         childrenAsGameObjectTVI.emplace_back(childItem);
     }
+
     m_treeViewItem->GetChildren()->SetValue(children);
     m_sceneTreeViewItem->GetChildrenAsGameObjects()->SetValue(childrenAsGameObjectTVI);
 

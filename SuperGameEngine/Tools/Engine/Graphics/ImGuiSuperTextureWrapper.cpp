@@ -108,3 +108,9 @@ FPoint ImGuiSuperTextureWrapper::Size() const
 {
     return m_texture->Size();
 }
+
+bool ImGuiSuperTextureWrapper::Remake(std::vector<std::string>& errors)
+{
+    Log::Error("Remake is not implemented in ImGui Textures");
+    return false;
+}

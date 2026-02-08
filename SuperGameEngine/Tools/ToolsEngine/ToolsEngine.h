@@ -9,6 +9,7 @@
 
 namespace SuperGameTools
 {
+    class CrossEngineObjects;
     class PanelManager;
 }
 
@@ -158,6 +159,14 @@ namespace SuperGameTools
         /// </param>
         virtual void GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication);
 
+        /// <summary>
+        /// Give this engine a reference to the objects shared by the main engine.
+        /// </summary>
+        /// <param name="crossEngineObjects">
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </param>
+        void GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects);
+
     private:
         /// <summary>
         /// Creates, stores and manages all textures in the engine.
@@ -236,6 +245,11 @@ namespace SuperGameTools
         /// Manages panels, the visibility and layouts.
         /// </summary>
         std::shared_ptr<PanelManager> m_panelManager;
+
+        /// <summary>
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </summary>
+        std::shared_ptr<CrossEngineObjects> m_crossEngineObjects;
 
         /// <summary>
         /// Sets up the engine.

@@ -65,6 +65,12 @@ namespace SuperGameTools
         /// <returns>The text property this tools property represents. </returns>
         std::shared_ptr<SuperGameEngine::TextureAssetSerializableProperty> GetActualEngineProperty() const;
 
+        /// <summary>
+        /// Get the value stored within the texture asset property.
+        /// </summary>
+        /// <returns>Get the value stored within the texture asset property. </returns>
+        std::string GetTextureValue() const;
+
     private:
         /// <summary>
         /// Event called when this component is dirtied.

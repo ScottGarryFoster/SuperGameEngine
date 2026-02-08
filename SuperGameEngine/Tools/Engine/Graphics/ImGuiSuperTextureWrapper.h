@@ -61,6 +61,14 @@ namespace SuperGameTools
         /// <returns>Returns the size of the Texture. </returns>
         virtual FatedQuestLibraries::FPoint Size() const override;
 
+        /// <summary>
+        /// Remakes the texture if possible.
+        /// Used when the window has just been torn apart and is now new,
+        /// or if the filepath now have new data within it.
+        /// Will remake in the same way it was last successfully attempted.
+        /// </summary>
+        virtual bool Remake(std::vector<std::string>& errors) override;
+
     private:
         /// <summary>
         /// The actual texture.

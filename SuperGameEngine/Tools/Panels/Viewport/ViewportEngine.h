@@ -1,4 +1,6 @@
 #pragma once
+#include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
+#include "Engine/CrossEngineObjects/ViewportObjectDrawBundle.h"
 #include "EngineEntry/Engine.h"
 
 namespace SuperGameEngine
@@ -9,7 +11,9 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
-    class ViewportEngine : public virtual SuperGameEngine::Engine
+    class CrossEngineObjects;
+
+    class ViewportEngine : public virtual SuperGameEngine::Engine, public FatedQuestLibraries::FEventObserver
     {
     public:
         ViewportEngine();
@@ -81,7 +85,6 @@ namespace SuperGameTools
         /// </summary>
         virtual void Draw() override;
 
-
         /// <summary>
         /// Called as the window starts.
         /// </summary>
@@ -107,6 +110,22 @@ namespace SuperGameTools
         /// the state of the engine itself.
         /// </summary>
         virtual void EngineEnd() override;
+
+        /// <summary>
+        /// Inform the observer an event has taken place.
+        /// Do not store this pointer it is intended as a point for dynamic casting
+        /// and not as long term storage. Directly after invocation it will be deleted.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
+
+        /// <summary>
+        /// Give this engine a reference to the objects shared by the main engine.
+        /// </summary>
+        /// <param name="crossEngineObjects">
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </param>
+        void GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects);
 
     private:
 
@@ -139,5 +158,18 @@ namespace SuperGameTools
         /// Defines and communicates engine level changes.
         /// </summary>
         std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
+
+        /// <summary>
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </summary>
+        std::shared_ptr<CrossEngineObjects> m_crossEngineObjects;
+
+        /// <summary>
+        /// Contains information to draw textures on the screen.
+        /// </summary>
+        ViewportObjectDrawBundle m_drawBundle;
+
+        // TODO: We need texture manager in here, that is actually from the engine side not from the tools side because we are a
+        // game engine here not a ImGui thing.
     };
 }
