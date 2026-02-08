@@ -2,6 +2,7 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "Engine/CrossEngineObjects/ViewportObjectDrawBundle.h"
 #include "EngineEntry/Engine.h"
+#include "../../FatedQuestLibraries.h"
 
 namespace SuperGameEngine
 {
@@ -167,7 +168,7 @@ namespace SuperGameTools
         /// <summary>
         /// Contains information to draw textures on the screen.
         /// </summary>
-        ViewportObjectDrawBundle m_drawBundle;
+        std::unordered_map<FatedQuestLibraries::Guid, ViewportObjectDrawBundle> m_drawBundle;
 
         // TODO: We need texture manager in here, that is actually from the engine side not from the tools side because we are a
         // game engine here not a ImGui thing.

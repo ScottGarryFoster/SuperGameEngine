@@ -63,12 +63,15 @@ ApplicationOperationState ViewportEngine::Update(Uint64 ticks)
 
 void ViewportEngine::Draw()
 {
-    if (!m_drawBundle.TextureAsset)
+    for (const std::pair<const Guid, ViewportObjectDrawBundle>& drawBundle : m_drawBundle)
     {
-        return;
-    }
+        if (!drawBundle.second.TextureAsset)
+        {
+            return;
+        }
 
-    m_drawBundle.TextureAsset->Draw(0, m_drawBundle.TransformPosition);
+        drawBundle.second.TextureAsset->Draw(0, drawBundle.second.TransformPosition);
+    }
 }
 
 void ViewportEngine::WindowStart()
@@ -90,11 +93,12 @@ void ViewportEngine::EngineEnd()
 
 void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
-    m_drawBundle = ViewportObjectDrawBundle();
+    m_drawBundle.clear();
     if (auto onSceneArgs = std::dynamic_pointer_cast<OnSceneUpdatedEventArguments>(arguments))
     {
         for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
         {
+            auto drawBundle = ViewportObjectDrawBundle();
             for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
             {
                 if (component->GetType() == "SpriteComponent")
@@ -111,7 +115,7 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
                             if (auto textureProperty = std::dynamic_pointer_cast<TextureAssetSerializableProperty>(property))
                             {
                                 // We are an engine, ensure to use this version.
-                                m_drawBundle.TextureAsset = m_crossEngineObjects->
+                                drawBundle.TextureAsset = m_crossEngineObjects->
                                     GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
                             }
                         }
@@ -130,7 +134,7 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
 
                             if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
                             {
-                                m_drawBundle.TransformPosition = toolsProperty->GetValue();
+                                drawBundle.TransformPosition = toolsProperty->GetValue();
                             }
                         }
                     }
@@ -138,7 +142,11 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
                 
             }
 
-            if (!m_drawBundle.TextureAsset)
+            if (drawBundle.TextureAsset)
+            {
+                m_drawBundle.insert_or_assign(*gameObject->GetGuid(), drawBundle);
+            }
+            else
             {
                 Log::Error("No texture defined in object. " + gameObject->GetGuid()->ToString());
             }
