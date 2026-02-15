@@ -96,125 +96,11 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (auto onSceneArgs = std::dynamic_pointer_cast<OnSceneUpdatedEventArguments>(arguments))
     {
-        m_drawBundle.clear();
-        for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
-        {
-            auto drawBundle = ViewportObjectDrawBundle();
-            for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
-            {
-                if (component->GetType() == "SpriteComponent")
-                {
-                    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
-                    {
-                        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
-                        {
-                            if (property->GetEngineProperty()->GetType() != SerializableDataType::TextureAsset)
-                            {
-                                continue;
-                            }
-
-                            if (auto textureProperty = std::dynamic_pointer_cast<TextureAssetSerializableProperty>(property))
-                            {
-                                // We are an engine, ensure to use this version.
-                                drawBundle.TextureAsset = m_crossEngineObjects->
-                                    GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
-                            }
-                        }
-                    }
-
-                    component->OnPropertyChanged()->Subscribe(shared_from_this());
-                }
-                else if (component->GetType() == "TransformComponent")
-                {
-                    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
-                    {
-                        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
-                        {
-                            if (property->GetEngineProperty()->GetType() != SerializableDataType::Vector2F)
-                            {
-                                continue;
-                            }
-
-                            if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
-                            {
-                                drawBundle.TransformPosition = toolsProperty->GetValue();
-                            }
-                        }
-                    }
-
-                    component->OnPropertyChanged()->Subscribe(shared_from_this());
-                }
-                
-            }
-
-            if (drawBundle.TextureAsset)
-            {
-                Log::Info("GUID added: " + gameObject->GetGuid()->ToString());
-                m_drawBundle.insert_or_assign(gameObject->GetGuid()->AsNumber(), drawBundle);
-            }
-            else
-            {
-                Log::Error("No texture defined in object. " + gameObject->GetGuid()->ToString());
-            }
-        }
+        SetupNewScene();
     }
     else if (auto componentChangedArgs = std::dynamic_pointer_cast<ComponentDataChangedEventArguments>(arguments))
     {
-        const uint64_t gameObjectGuid = componentChangedArgs->GetGameObjectGuid()->AsNumber();
-        for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
-        {
-            if (gameObject->GetGuid() != componentChangedArgs->GetGameObjectGuid())
-            {
-                continue;
-            }
-
-            for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
-            {
-                if (component->GetUniqueID() != componentChangedArgs->GetComponentGuid())
-                {
-                    continue;
-                }
-
-                if (component->GetType() == "SpriteComponent")
-                {
-                    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
-                    {
-                        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
-                        {
-                            if (property->GetEngineProperty()->GetType() != SerializableDataType::TextureAsset)
-                            {
-                                continue;
-                            }
-
-                            if (auto textureProperty = std::dynamic_pointer_cast<TextureAssetSerializableProperty>(property))
-                            {
-                                // We are an engine, ensure to use this version.
-                                m_drawBundle.at(gameObjectGuid).TextureAsset = m_crossEngineObjects->
-                                    GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
-                            }
-                        }
-                    }
-                }
-                else if (component->GetType() == "TransformComponent")
-                {
-                    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
-                    {
-                        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
-                        {
-                            if (property->GetEngineProperty()->GetType() != SerializableDataType::Vector2F)
-                            {
-                                continue;
-                            }
-
-                            if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
-                            {
-                                m_drawBundle.at(gameObjectGuid).TransformPosition = toolsProperty->GetValue();
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        ChangeDrawBundleBasedOnComponentChange(componentChangedArgs);
     }
 
 }
@@ -223,4 +109,157 @@ void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObj
 {
     m_crossEngineObjects = crossEngineObjects;
     m_crossEngineObjects->OnNewScene()->Subscribe(shared_from_this());
+}
+
+void ViewportEngine::SetupNewScene()
+{
+    m_drawBundle.clear();
+    for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
+    {
+        AddGameObjectToScene(gameObject);
+    }
+}
+
+void ViewportEngine::AddGameObjectToScene(const std::shared_ptr<GameObject>& gameObject)
+{
+    auto drawBundle = ViewportObjectDrawBundle();
+    for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
+    {
+        bool foundType = false;
+        if (component->GetType() == "SpriteComponent")
+        {
+            foundType = true;
+            ExractSpriteDrawBundleProperties(drawBundle, component);
+        }
+        else if (component->GetType() == "TransformComponent")
+        {
+            foundType = true;
+            ExtractTransformDrawBundleProperties(drawBundle, component);
+        }
+
+        if (foundType)
+        {
+            component->OnPropertyChanged()->Subscribe(shared_from_this());
+        }
+    }
+
+    // TODO: Remove this testing.
+    if (drawBundle.TextureAsset)
+    {
+        Log::Info("TESTING: GUID added: " + gameObject->GetGuid()->ToString());
+        m_drawBundle.insert_or_assign(gameObject->GetGuid()->AsNumber(), drawBundle);
+    }
+    else
+    {
+        Log::Error("No texture defined in object. " + gameObject->GetGuid()->ToString());
+    }
+}
+
+void ViewportEngine::ExractSpriteDrawBundleProperties(ViewportObjectDrawBundle& drawBundle, const std::shared_ptr<Component>& component) const
+{
+    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
+    {
+        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
+        {
+            if (property->GetEngineProperty()->GetType() != SerializableDataType::TextureAsset)
+            {
+                continue;
+            }
+
+            if (auto textureProperty = std::dynamic_pointer_cast<TextureAssetSerializableProperty>(property))
+            {
+                // We are an engine, ensure to use this version.
+                drawBundle.TextureAsset = m_crossEngineObjects->
+                    GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
+            }
+        }
+    }
+}
+
+void ViewportEngine::ExtractTransformDrawBundleProperties(ViewportObjectDrawBundle& drawBundle, const std::shared_ptr<Component>& component) const
+{
+    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
+    {
+        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
+        {
+            if (property->GetEngineProperty()->GetType() != SerializableDataType::Vector2F)
+            {
+                continue;
+            }
+
+            if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
+            {
+                drawBundle.TransformPosition = toolsProperty->GetValue();
+            }
+        }
+    }
+}
+
+void ViewportEngine::ChangeDrawBundleBasedOnComponentChange(const std::shared_ptr<ComponentDataChangedEventArguments>& componentChangedArgs)
+{
+    const uint64_t gameObjectGuid = componentChangedArgs->GetGameObjectGuid()->AsNumber();
+    for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
+    {
+        if (gameObject->GetGuid() != componentChangedArgs->GetGameObjectGuid())
+        {
+            continue;
+        }
+
+        for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
+        {
+            if (component->GetUniqueID() != componentChangedArgs->GetComponentGuid())
+            {
+                continue;
+            }
+
+            if (component->GetType() == "SpriteComponent")
+            {
+                UpdateSpriteBasedOnComponentChange(gameObjectGuid, component);
+            }
+            else if (component->GetType() == "TransformComponent")
+            {
+                UpdateTransformBasedOnComponentChange(gameObjectGuid, component);
+            }
+        }
+    }
+}
+
+void ViewportEngine::UpdateSpriteBasedOnComponentChange(const uint64_t gameObjectGuid, const std::shared_ptr<Component>& component)
+{
+    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
+    {
+        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
+        {
+            if (property->GetEngineProperty()->GetType() != SerializableDataType::TextureAsset)
+            {
+                continue;
+            }
+
+            if (auto textureProperty = std::dynamic_pointer_cast<TextureAssetSerializableProperty>(property))
+            {
+                // We are an engine, ensure to use this version.
+                m_drawBundle.at(gameObjectGuid).TextureAsset = m_crossEngineObjects->
+                    GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
+            }
+        }
+    }
+}
+
+void ViewportEngine::UpdateTransformBasedOnComponentChange(const uint64_t gameObjectGuid, const std::shared_ptr<Component>& component)
+{
+    if (auto toolsComponent = std::dynamic_pointer_cast<ToolsComponent>(component))
+    {
+        for (const std::shared_ptr<ToolsSerializableProperty>& property : toolsComponent->GetToolsProperties())
+        {
+            if (property->GetEngineProperty()->GetType() != SerializableDataType::Vector2F)
+            {
+                continue;
+            }
+
+            if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
+            {
+                m_drawBundle.at(gameObjectGuid).TransformPosition = toolsProperty->GetValue();
+            }
+        }
+    }
 }
