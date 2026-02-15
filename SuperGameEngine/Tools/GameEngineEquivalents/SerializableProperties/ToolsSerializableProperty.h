@@ -28,6 +28,12 @@ namespace SuperGameTools
         virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnDirtyFlagChanged() const = 0;
 
         /// <summary>
+        /// Event called when this objects dirty flag has changed.
+        /// </summary>
+        /// <returns>Event called when this objects dirty flag has changed. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnPropertyChanged() const = 0;
+
+        /// <summary>
         /// Gets the engine side property.
         /// </summary>
         /// <returns>The engine side property. </returns>

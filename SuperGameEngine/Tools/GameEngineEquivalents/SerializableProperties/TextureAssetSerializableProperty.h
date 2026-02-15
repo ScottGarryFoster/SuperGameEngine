@@ -23,7 +23,7 @@ namespace SuperGameTools
     /// <summary>
     /// Represents text input.
     /// </summary>
-    class TextureAssetSerializableProperty : public ToolsSerializableProperty
+    class TextureAssetSerializableProperty : public ToolsSerializableProperty, public std::enable_shared_from_this<TextureAssetSerializableProperty>
     {
     public:
         TextureAssetSerializableProperty(
@@ -32,9 +32,16 @@ namespace SuperGameTools
 
         /// <summary>
         /// Event called when this objects dirty flag has changed.
+        /// Uses DirtiedDataEventArguments.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnDirtyFlagChanged() const override;
+
+        /// <summary>
+        /// Event called when this property is changed (everytime).
+        /// </summary>
+        /// <returns>Event called when this property is changed (everytime). </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnPropertyChanged() const override;
 
         /// <summary>
         /// Gets the engine side property.
@@ -73,9 +80,14 @@ namespace SuperGameTools
 
     private:
         /// <summary>
-        /// Event called when this component is dirtied.
+        /// Event called when this property is dirtied.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onDirtyFlagChanged;
+
+        /// <summary>
+        /// Event called when this property changes.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::FEvent> m_onPropertyChanged;
 
         /// <summary>
         /// True means are dirty.

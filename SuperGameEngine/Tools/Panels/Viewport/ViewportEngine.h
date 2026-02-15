@@ -168,9 +168,6 @@ namespace SuperGameTools
         /// <summary>
         /// Contains information to draw textures on the screen.
         /// </summary>
-        std::unordered_map<FatedQuestLibraries::Guid, ViewportObjectDrawBundle> m_drawBundle;
-
-        // TODO: We need texture manager in here, that is actually from the engine side not from the tools side because we are a
-        // game engine here not a ImGui thing.
+        std::unordered_map<uint64_t, ViewportObjectDrawBundle> m_drawBundle;
     };
 }
