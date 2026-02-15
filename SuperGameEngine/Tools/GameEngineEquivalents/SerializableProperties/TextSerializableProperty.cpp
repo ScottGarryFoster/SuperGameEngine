@@ -79,11 +79,6 @@ void TextSerializableProperty::Draw()
     ImGui::Text(m_property->GetName().c_str());
     ImGui::SameLine();
 
-    if (*m_dirty)
-    {
-        ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
-    }
-    else
     {
         std::string before = m_value;
         ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));

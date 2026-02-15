@@ -212,9 +212,10 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     toolsViewport->GiveRenderer(m_toolsViewportRenderer);
     toolsViewport->GiveInput(m_inputManager);
     toolsViewport->GiveGamePackage(m_gamePackage);
-    toolsViewport->WindowStart();
     toolsViewport->GiveControls(engineControlsToolsViewport);
     toolsViewport->GiveCrossEngineObjects(m_crossEngineObjects);
+    toolsViewport->WindowStart();
+    toolsViewport->EngineStart();
 
 
     // Main loop

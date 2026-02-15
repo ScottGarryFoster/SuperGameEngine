@@ -25,6 +25,7 @@
 #include "SceneTreeViewItem.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
 #include "Engine/CrossEngineObjects/CrossEngineObjects.h"
+#include "Engine/CrossEngineObjects/OnSceneUpdatedEventArguments.h"
 #include "EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
@@ -35,6 +36,9 @@ SceneHierarchy::SceneHierarchy()
 {
     m_testPopup = false;
     m_testPopupText = {};
+    m_onNewScene = std::make_shared<FEvent>();
+    m_onGameObjectAdded = std::make_shared<FEvent>();
+    m_onGameObjectDeleted = std::make_shared<FEvent>();
 }
 
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -133,10 +137,12 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto onMenuNewGameObject = std::dynamic_pointer_cast<OnMenuNewGameObjectEventArguments>(arguments))
     {
         CreateNewGameObject();
+        m_onGameObjectAdded->Invoke(arguments);
     }
     else if (auto onMenuDeleteGameObject = std::dynamic_pointer_cast<OnMenuDeleteGameObjectEventArguments>(arguments))
     {
         DeleteGameObject(onMenuDeleteGameObject->GetUniqueId(), onMenuDeleteGameObject->GetGameObject());
+        m_onGameObjectDeleted->Invoke(arguments);
     }
     else if (auto onMenuDeleteComponent = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
     {
@@ -159,9 +165,19 @@ bool SceneHierarchy::OnLoadOpenState() const
     return true;
 }
 
-void SceneHierarchy::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
+std::shared_ptr<FEventSubscriptions> SceneHierarchy::OnNewScene() const
 {
-    m_crossEngineObjects = crossEngineObjects;
+    return m_onNewScene;
+}
+
+std::shared_ptr<FEventSubscriptions> SceneHierarchy::OnGameObjectAdded() const
+{
+    return m_onGameObjectAdded;
+}
+
+std::shared_ptr<FEventSubscriptions> SceneHierarchy::OnGameObjectDeleted() const
+{
+    return m_onGameObjectDeleted;
 }
 
 bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
@@ -199,7 +215,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         return false;
     }
 
-    m_crossEngineObjects->SetScene(m_scene);
+    m_onNewScene->Invoke(std::make_shared<OnSceneUpdatedEventArguments>(SceneUpdateAction::NewScene, m_scene));
 
     // It is important to store the shared pointer as a TreeViewItem so Shared from works.
     m_treeViewItem = std::make_shared<SceneTreeViewItem>(m_windowPackage->GetContentManager());

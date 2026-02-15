@@ -16,6 +16,11 @@ namespace SuperGameTools
     public:
 
         /// <summary>
+        /// True means this draw bundle is complete and able to render.
+        /// </summary>
+        bool IsValidToRender;
+
+        /// <summary>
         /// The GUID of the game object.
         /// </summary>
         FatedQuestLibraries::Guid Guid;

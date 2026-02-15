@@ -14,6 +14,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class Scene;
     class CrossEngineObjects;
 
     class ViewportEngine : public virtual SuperGameEngine::Engine, public FatedQuestLibraries::FEventObserver
@@ -172,12 +173,18 @@ namespace SuperGameTools
         /// </summary>
         std::unordered_map<uint64_t, ViewportObjectDrawBundle> m_drawBundle;
 
+        /// <summary>
+        /// The current scene as far as you are aware.
+        /// </summary>
+        std::shared_ptr<Scene> m_currentScene;
+
         // New Scene Event Handles
 
         /// <summary>
         /// Sets up a new scene and all the bundles for this.
         /// </summary>
-        void SetupNewScene();
+        /// <param name="newScene">The current scene as far as you are aware. </param>
+        void SetupNewScene(const std::shared_ptr<Scene>& newScene);
 
         /// <summary>
         /// Adds the given game object to the scene.
@@ -208,9 +215,10 @@ namespace SuperGameTools
         /// <summary>
         /// Updates any draw bundles based on direct changes to components.
         /// </summary>
-        /// <param name="componentChangedArgs">All the things which changes on a component.</param>
+        /// <param name="gameObjectGuid">The Guid of the GameObject. </param>
+        /// <param name="componentGuid">The Guid of the Component to change or to read the change of. </param>
         void ChangeDrawBundleBasedOnComponentChange(
-            const std::shared_ptr<ComponentDataChangedEventArguments>& componentChangedArgs);
+            const std::shared_ptr<Guid>& gameObjectGuid, const std::shared_ptr<Guid>& componentGuid);
 
         /// <summary>
         /// Update a sprite based on the component changing.
@@ -230,5 +238,43 @@ namespace SuperGameTools
             uint64_t gameObjectGuid,
             const std::shared_ptr<Component>& component);
 
+        // On Component Added.
+
+        /// <summary>
+        /// Handles event on component added.
+        /// </summary>
+        /// <param name="gameObjectGuid">The Guid of the GameObject. </param>
+        /// <param name="componentGuid">The Guid of the Component to change or to read the change of. </param>
+        void OnComponentAdded(
+            const std::shared_ptr<Guid>& gameObjectGuid,
+            const std::shared_ptr<Guid>& componentGuid);
+
+        /// <summary>
+        /// Handles event on component removed.
+        /// </summary>
+        /// <param name="component">The component removed. </param>
+        void OnComponentRemoved(const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// This component has been removed. Remove any content this component had
+        /// from the draw bundle.
+        /// </summary>
+        /// <param name="drawBundle">Draw bundle to remove information from. </param>
+        /// <param name="component">Component to look in. </param>
+        void RemoveComponentFromDrawBundleIfExists(
+            ViewportObjectDrawBundle& drawBundle, 
+            const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// Inspects draw bundle to see if it is currently valid to render.
+        /// </summary>
+        /// <param name="drawBundle">Inspects draw bundle to see if it is currently valid to render. </param>
+        void ValidateDrawBundle(ViewportObjectDrawBundle& drawBundle) const;
+
+        /// <summary>
+        /// Handle on game object deleted.
+        /// </summary>
+        /// <param name="gameObject">Handle on game object deleted. </param>
+        void OnGameObjectDeleted(const std::shared_ptr<GameObject>& gameObject);
     };
 }
