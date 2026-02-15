@@ -24,24 +24,40 @@ namespace SuperGameTools
     /// <summary>
     /// A component which represents the data of a game component.
     /// </summary>
-    class ToolsComponent : public Component, public FEventObserver
+    class ToolsComponent : public Component, public FEventObserver, public DistributeWeakPointers<ToolsComponent>
     {
     public:
         virtual ~ToolsComponent() override = default;
-        ToolsComponent(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser);
+        ToolsComponent(
+            const std::shared_ptr<SuperGameEngine::SerializableParser>& parser,
+            const std::shared_ptr<Guid>& gameObjectGuid);
 
         /// <summary>
         /// The unique ID for this component.
         /// </summary>
         /// <returns>A unique ID for this component. </returns>
         /// <remarks>This is currently not stored on file and is used for adding and deleting. </remarks>
-        virtual std::shared_ptr<Guid> GetUniqueID() const;
+        virtual std::shared_ptr<Guid> GetUniqueID() const override;
+
+        /// <summary>
+        /// Guid for the game object.
+        /// </summary>
+        /// <returns>Guid for the game object. </returns>
+        virtual std::shared_ptr<Guid> GetObjectGuid() const override;
 
         /// <summary>
         /// Event called when this objects dirty flag has changed.
+        /// Will use: ComponentDataChangedEventArguments
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
         virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const override;
+
+        /// <summary>
+        /// Event called when something has changed on this property. Will happen everytime.
+        /// Will use: ComponentDataChangedEventArguments
+        /// </summary>
+        /// <returns>Event called when something has changed on this property. Will happen everytime. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnPropertyChanged() const override;
 
         /// <summary>
         /// The type of the component.
@@ -76,7 +92,7 @@ namespace SuperGameTools
         /// <summary>
         /// Load from just the type information.
         /// </summary>
-        virtual void Load();
+        virtual void Load() override;
 
         /// <summary>
         /// Save this component.
@@ -100,9 +116,19 @@ namespace SuperGameTools
         std::shared_ptr<Guid> m_guid;
 
         /// <summary>
+        /// The guid for the game object this component is a part of.
+        /// </summary>
+        std::shared_ptr<Guid> m_gameObjectGuid;
+
+        /// <summary>
         /// Event called when this component is dirtied.
         /// </summary>
         std::shared_ptr<FEvent> m_onDirtyFlagChanged;
+
+        /// <summary>
+        /// Event called when this component changed.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onPropertyChanges;
 
         /// <summary>
         /// True when there is unsaved data.

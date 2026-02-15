@@ -6,6 +6,7 @@
 
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "ToolsEngine/SharedEventArguments/ToolsPropertyChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -15,6 +16,7 @@ TextureAssetSerializableProperty::TextureAssetSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_onPropertyChanged = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
 
@@ -49,6 +51,11 @@ TextureAssetSerializableProperty::TextureAssetSerializableProperty(
 std::shared_ptr<FEventSubscriptions> TextureAssetSerializableProperty::OnDirtyFlagChanged() const
 {
     return m_onDirtyFlagChanged;
+}
+
+std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> TextureAssetSerializableProperty::OnPropertyChanged() const
+{
+    return m_onPropertyChanged;
 }
 
 std::shared_ptr<SuperGameEngine::SerializableProperty> TextureAssetSerializableProperty::GetEngineProperty() const
@@ -151,6 +158,8 @@ void TextureAssetSerializableProperty::UpdateDirtyFlag(bool newValue) const
         *m_dirty = newValue;
         m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
     }
+
+    m_onPropertyChanged->Invoke(std::make_shared<ToolsPropertyChangedArguments>(shared_from_this()));
 }
 
 void TextureAssetSerializableProperty::EnableDropTarget(float xTop, float yTop, float xBottom, float yBottom)

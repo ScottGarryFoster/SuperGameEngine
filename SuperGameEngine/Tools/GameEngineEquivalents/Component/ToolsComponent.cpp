@@ -1,22 +1,28 @@
 #include "ToolsComponent.h"
 
+#include "ComponentDataChangedEventArguments.h"
 #include "SerializablePropertyLoader.h"
 #include "../SerializableProperties/ToolsSerializableProperty.h"
 #include "../../FatedQuestLibraries.h"
 #include "../../../Engine/Structural/Serializable/SerializableProperty.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "ToolsEngine/SharedEventArguments/ToolsPropertyChangedArguments.h"
 
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-ToolsComponent::ToolsComponent(const std::shared_ptr<SuperGameEngine::SerializableParser>& parser)
+ToolsComponent::ToolsComponent(
+    const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
+    const std::shared_ptr<Guid>& gameObjectGuid)
 {
     m_serializableParser = parser;
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_onPropertyChanges = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
     m_guid = GUIDHelpers::CreateGUID();
+    m_gameObjectGuid = gameObjectGuid;
 }
 
 std::shared_ptr<Guid> ToolsComponent::GetUniqueID() const
@@ -24,9 +30,19 @@ std::shared_ptr<Guid> ToolsComponent::GetUniqueID() const
     return m_guid;
 }
 
+std::shared_ptr<Guid> ToolsComponent::GetObjectGuid() const
+{
+    return m_gameObjectGuid;
+}
+
 std::shared_ptr<FEventSubscriptions> ToolsComponent::OnDirtyFlagChanged() const
 {
     return m_onDirtyFlagChanged;
+}
+
+std::shared_ptr<FEventSubscriptions> ToolsComponent::OnPropertyChanged() const
+{
+    return m_onPropertyChanges;
 }
 
 std::string ToolsComponent::GetType() const
@@ -42,7 +58,8 @@ void ToolsComponent::SetType(const std::string& type)
     // Ensure we unsubscribe from old events.
     for (const std::shared_ptr<ToolsSerializableProperty>& serializableProperty : m_serializableToolsProperties)
     {
-        serializableProperty->OnDirtyFlagChanged()->Unsubscribe(shared_from_this());
+        serializableProperty->OnDirtyFlagChanged()->Unsubscribe(FEventObserver::shared_from_this());
+        serializableProperty->OnPropertyChanged()->Unsubscribe(FEventObserver::shared_from_this());
     }
 
     auto loader = std::make_shared<SerializablePropertyLoader>(m_serializableParser);
@@ -97,7 +114,8 @@ void ToolsComponent::Load(const std::shared_ptr<StoredDocumentNode>& node)
 
     for (const std::shared_ptr<ToolsSerializableProperty>& serializableProperty : m_serializableToolsProperties)
     {
-        serializableProperty->OnDirtyFlagChanged()->Subscribe(shared_from_this());
+        serializableProperty->OnDirtyFlagChanged()->Subscribe(FEventObserver::shared_from_this());
+        serializableProperty->OnPropertyChanged()->Subscribe(FEventObserver::shared_from_this());
     }
 
     *m_dirty = false;
@@ -107,7 +125,8 @@ void ToolsComponent::Load()
 {
     for (const std::shared_ptr<ToolsSerializableProperty>& serializableProperty : m_serializableToolsProperties)
     {
-        serializableProperty->OnDirtyFlagChanged()->Subscribe(shared_from_this());
+        serializableProperty->OnDirtyFlagChanged()->Subscribe(FEventObserver::shared_from_this());
+        serializableProperty->OnPropertyChanged()->Subscribe(FEventObserver::shared_from_this());
     }
 
     *m_dirty = false;
@@ -153,6 +172,11 @@ void ToolsComponent::Invoke(std::shared_ptr<FEventArguments> arguments)
         {
             UpdateDirtyFlag(dirtyArgs->GetDirtyFlagState());
         }
+
+    }
+    else if (auto dirtyArgs = std::dynamic_pointer_cast<ToolsPropertyChangedArguments>(arguments))
+    {
+        m_onPropertyChanges->Invoke(std::make_shared<ComponentDataChangedEventArguments>(GetUniqueID(), GetObjectGuid(), *m_dirty));
     }
 }
 
@@ -161,6 +185,6 @@ void ToolsComponent::UpdateDirtyFlag(bool newValue) const
     if (newValue != *m_dirty)
     {
         *m_dirty = newValue;
-        m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
+        m_onDirtyFlagChanged->Invoke(std::make_shared<ComponentDataChangedEventArguments>(GetUniqueID(), GetObjectGuid(), newValue));
     }
 }

@@ -83,7 +83,7 @@ void ToolsGameObject::Load(const std::shared_ptr<StoredDocumentNode>& node)
     {
 
         // The component to the game object.
-        auto componentObject = std::make_shared<ToolsComponent>(m_serializableParser);
+        auto componentObject = std::make_shared<ToolsComponent>(m_serializableParser, GetGuid());
         componentObject->Load(compChild);
         componentObject->OnDirtyFlagChanged()->Subscribe(FEventObserver::shared_from_this());
         GetComponents()->emplace_back(componentObject);
@@ -118,7 +118,7 @@ std::shared_ptr<ModifiableNode> ToolsGameObject::Save() const
 
 std::shared_ptr<Component> ToolsGameObject::AddComponent(const std::string& type)
 {
-    auto component = std::make_shared<ToolsComponent>(m_serializableParser);
+    auto component = std::make_shared<ToolsComponent>(m_serializableParser, GetGuid());
     component->SetType(type);
     component->Load();
     component->OnDirtyFlagChanged()->Subscribe(FEventObserver::shared_from_this());

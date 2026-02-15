@@ -432,3 +432,6 @@ FodyWeavers.xsd
 !**SuperGameEngine/Tools/ToolsEngine/[Pp]ackages/*
 !FatedQuestLibraries/[Bb]uild/*
 built/
+
+# Sym Links used for easier regeneration
+**/*.lnk

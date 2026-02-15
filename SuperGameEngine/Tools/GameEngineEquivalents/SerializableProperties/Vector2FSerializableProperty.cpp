@@ -6,6 +6,7 @@
 
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "ToolsEngine/SharedEventArguments/ToolsPropertyChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -15,6 +16,7 @@ Vector2FSerializableProperty::Vector2FSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_onPropertyChanged = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
 
@@ -43,6 +45,11 @@ Vector2FSerializableProperty::Vector2FSerializableProperty(
 std::shared_ptr<FEventSubscriptions> Vector2FSerializableProperty::OnDirtyFlagChanged() const
 {
     return m_onDirtyFlagChanged;
+}
+
+std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> Vector2FSerializableProperty::OnPropertyChanged() const
+{
+    return m_onPropertyChanged;
 }
 
 std::shared_ptr<SuperGameEngine::SerializableProperty> Vector2FSerializableProperty::GetEngineProperty() const
@@ -130,6 +137,8 @@ void Vector2FSerializableProperty::UpdateDirtyFlag(bool newValue) const
         *m_dirty = newValue;
         m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
     }
+
+    m_onPropertyChanged->Invoke(std::make_shared<ToolsPropertyChangedArguments>(shared_from_this()));
 }
 
 bool Vector2FSerializableProperty::TextInput(const std::string& label, std::string& value) const

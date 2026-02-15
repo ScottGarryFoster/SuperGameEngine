@@ -6,6 +6,7 @@
 
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "ToolsEngine/SharedEventArguments/ToolsPropertyChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -15,6 +16,7 @@ TextSerializableProperty::TextSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_onPropertyChanged = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
 
@@ -49,6 +51,11 @@ TextSerializableProperty::TextSerializableProperty(
 std::shared_ptr<FEventSubscriptions> TextSerializableProperty::OnDirtyFlagChanged() const
 {
     return m_onDirtyFlagChanged;
+}
+
+std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> TextSerializableProperty::OnPropertyChanged() const
+{
+    return m_onPropertyChanged;
 }
 
 std::shared_ptr<SuperGameEngine::SerializableProperty> TextSerializableProperty::GetEngineProperty() const
@@ -142,4 +149,6 @@ void TextSerializableProperty::UpdateDirtyFlag(bool newValue) const
         *m_dirty = newValue;
         m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
     }
+
+    m_onPropertyChanged->Invoke(std::make_shared<ToolsPropertyChangedArguments>(shared_from_this()));
 }

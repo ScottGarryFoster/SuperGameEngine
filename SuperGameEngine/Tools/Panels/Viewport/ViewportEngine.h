@@ -2,6 +2,9 @@
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "Engine/CrossEngineObjects/ViewportObjectDrawBundle.h"
 #include "EngineEntry/Engine.h"
+#include "../../FatedQuestLibraries.h"
+#include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
+#include "GameEngineEquivalents/GameObject/GameObject.h"
 
 namespace SuperGameEngine
 {
@@ -167,9 +170,65 @@ namespace SuperGameTools
         /// <summary>
         /// Contains information to draw textures on the screen.
         /// </summary>
-        ViewportObjectDrawBundle m_drawBundle;
+        std::unordered_map<uint64_t, ViewportObjectDrawBundle> m_drawBundle;
 
-        // TODO: We need texture manager in here, that is actually from the engine side not from the tools side because we are a
-        // game engine here not a ImGui thing.
+        // New Scene Event Handles
+
+        /// <summary>
+        /// Sets up a new scene and all the bundles for this.
+        /// </summary>
+        void SetupNewScene();
+
+        /// <summary>
+        /// Adds the given game object to the scene.
+        /// </summary>
+        /// <param name="gameObject">GameObject to add.</param>
+        void AddGameObjectToScene(const std::shared_ptr<GameObject>& gameObject);
+
+        /// <summary>
+        /// Extract and add the given Sprite Properties into the draw bundle.
+        /// </summary>
+        /// <param name="drawBundle">DrawBundle to add the information into. </param>
+        /// <param name="component">Component to find the sprite information in. </param>
+        void ExractSpriteDrawBundleProperties(
+            ViewportObjectDrawBundle& drawBundle,
+            const std::shared_ptr<Component>& component) const;
+
+        /// <summary>
+        /// Extract and add the given Transform Properties into the draw bundle.
+        /// </summary>
+        /// <param name="drawBundle">DrawBundle to add the information into .</param>
+        /// <param name="component">Component to find the sprite information in. </param>
+        void ExtractTransformDrawBundleProperties(
+            ViewportObjectDrawBundle& drawBundle,
+            const std::shared_ptr<Component>& component) const;
+
+        // Component Change Event Handles
+
+        /// <summary>
+        /// Updates any draw bundles based on direct changes to components.
+        /// </summary>
+        /// <param name="componentChangedArgs">All the things which changes on a component.</param>
+        void ChangeDrawBundleBasedOnComponentChange(
+            const std::shared_ptr<ComponentDataChangedEventArguments>& componentChangedArgs);
+
+        /// <summary>
+        /// Update a sprite based on the component changing.
+        /// </summary>
+        /// <param name="gameObjectGuid">GUID of the game object. </param>
+        /// <param name="component">Component to look for changes. </param>
+        void UpdateSpriteBasedOnComponentChange(
+            uint64_t gameObjectGuid, 
+            const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// Update a transform based on the component changing.
+        /// </summary>
+        /// <param name="gameObjectGuid">GUID of the game object. </param>
+        /// <param name="component">Component to look for changes. </param>
+        void UpdateTransformBasedOnComponentChange(
+            uint64_t gameObjectGuid,
+            const std::shared_ptr<Component>& component);
+
     };
 }
