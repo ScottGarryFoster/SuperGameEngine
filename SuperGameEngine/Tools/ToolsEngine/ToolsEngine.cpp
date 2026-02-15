@@ -190,11 +190,13 @@ void ToolsEngine::Setup()
     menuBar->UpdateDistributedWeakPointer(menuBar);
 
     std::shared_ptr<SceneHierarchy> sceneHierarchy = std::make_shared<SceneHierarchy>();
-    sceneHierarchy->GiveCrossEngineObjects(m_crossEngineObjects);
     sceneHierarchy->FEventObserver::UpdateDistributedWeakPointer(sceneHierarchy);
 
     std::shared_ptr<InspectorWindow> inspectorWindow = std::make_shared<InspectorWindow>();
     inspectorWindow->FEventObserver::UpdateDistributedWeakPointer(inspectorWindow);
+
+    m_sharedSceneChangedEvents = std::make_shared<ToolsSharedSceneChangedEvents>(sceneHierarchy, inspectorWindow);
+    m_crossEngineObjects->SetSharedSceneChangedEvents(m_sharedSceneChangedEvents);
 
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
     loggerWindow->FEventObserver::UpdateDistributedWeakPointer(loggerWindow);

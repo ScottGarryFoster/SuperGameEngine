@@ -283,11 +283,11 @@ FVector2F SuperSerializableParser::Parse(
         float value = 0;
         if (FloatingPointHelpers::TryParse(valueAttribute->Value(), value))
         {
-            Log::Error("Could not parse Y value in Vector2F. Value: " + valueAttribute->Value(), methodName);
             returnVector.SetY(value);
         }
         else
         {
+            Log::Error("Could not parse Y value in Vector2F. Value: " + valueAttribute->Value(), methodName);
             return defaultValue;
         }
     }

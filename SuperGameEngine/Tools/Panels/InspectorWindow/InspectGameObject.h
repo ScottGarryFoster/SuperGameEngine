@@ -58,6 +58,12 @@ namespace SuperGameTools
         virtual std::shared_ptr<FEventSubscriptions> OnMenuDelete() const;
 
         /// <summary>
+        /// Called when the user has requested to add a component.
+        /// </summary>
+        /// <returns>Called when the user has requested to add a component. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnMenuAddComponent() const;
+
+        /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
         /// and not as long term storage. Directly after invocation it will be deleted.
@@ -96,6 +102,11 @@ namespace SuperGameTools
         /// Called when the user has requested to delete a component.
         /// </summary>
         std::shared_ptr<FEvent> m_onMenuDeleteComponent;
+
+        /// <summary>
+        /// Called when the user has requested to add a component.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onMenuAddComponent;
 
         /// <summary>
         /// Create a tree view from a game object.

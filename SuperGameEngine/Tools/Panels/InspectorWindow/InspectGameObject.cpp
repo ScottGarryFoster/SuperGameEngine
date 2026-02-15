@@ -14,6 +14,7 @@
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../../Engine/Structural/GameObject/ComponentFactory.h"
 #include "../SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
+#include "Panels/SceneHierarchy/EventArguments/OnMenuAddComponentEventArguments.h"
 
 using namespace SuperGameTools;
 
@@ -21,6 +22,7 @@ InspectGameObject::InspectGameObject()
 {
     m_isSetup = false;
     m_onMenuDeleteComponent = std::make_shared<FEvent>();
+    m_onMenuAddComponent = std::make_shared<FEvent>();
 }
 
 void InspectGameObject::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -111,6 +113,11 @@ std::shared_ptr<FEventSubscriptions> InspectGameObject::OnMenuDelete() const
     return m_onMenuDeleteComponent;
 }
 
+std::shared_ptr<FEventSubscriptions> InspectGameObject::OnMenuAddComponent() const
+{
+    return m_onMenuAddComponent;
+}
+
 void InspectGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (!m_isSetup)
@@ -183,6 +190,8 @@ void InspectGameObject::DrawInspectContextWindow()
                 children.emplace_back(componentTVI);
 
                 m_components->GetRootItem()->GetChildren()->SetValue(children);
+
+                m_onMenuAddComponent->Invoke(std::make_shared<OnMenuAddComponentEventArguments>(componentTVI->GetUniqueID(), component));
             }
         }
 
@@ -191,8 +200,7 @@ void InspectGameObject::DrawInspectContextWindow()
     }
 }
 
-std::shared_ptr<TreeViewItem>
-InspectGameObject::CreateComponentTreeViewItemFromComponent(
+std::shared_ptr<TreeViewItem> InspectGameObject::CreateComponentTreeViewItemFromComponent(
     const std::shared_ptr<Component>& component)
 {
     auto item = std::make_shared<ComponentTreeViewHeaderItem>(m_windowPackage->GetContentManager());

@@ -27,8 +27,6 @@ InspectorWindow::InspectorWindow()
     m_isSetup = false;
     m_inspectGameObject = std::make_shared<InspectGameObject>();
     m_inspectAssetObject = std::make_shared<InspectAssetObject>();
-
-    m_onMenuDeleteComponent = std::make_shared<FEvent>();
 }
 
 void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -45,7 +43,6 @@ void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
             m_windowPackage->GetTopMenu()->GetMenuItem("FileSave")->OnSelected();
         subscription->Subscribe(m_inspectAssetObject);
     }
-
 
     if (!m_windowPackage->GetFrameworkManager())
     {
@@ -121,7 +118,12 @@ void InspectorWindow::TearDown()
 
 std::shared_ptr<FEventSubscriptions> InspectorWindow::OnMenuDelete() const
 {
-    return m_onMenuDeleteComponent;
+    return m_inspectGameObject->OnMenuDelete();
+}
+
+std::shared_ptr<FEventSubscriptions> InspectorWindow::OnMenuAddComponent() const
+{
+    return m_inspectGameObject->OnMenuAddComponent();
 }
 
 void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
@@ -131,10 +133,7 @@ void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
         return;
     }
 
-    if (auto onMenuDeleteComponent = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
-    {
-        m_onMenuDeleteComponent->Invoke(arguments);
-    }
+
 }
 
 const char* InspectorWindow::GetPanelName() const

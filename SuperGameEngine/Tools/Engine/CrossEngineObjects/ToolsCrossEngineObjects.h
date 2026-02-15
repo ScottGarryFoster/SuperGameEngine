@@ -23,18 +23,6 @@ namespace SuperGameTools
         virtual void Reset() override;
 
         /// <summary>
-        /// Get the current scene.
-        /// </summary>
-        /// <returns>Get the current scene. </returns>
-        virtual std::shared_ptr<Scene> GetScene() const override;
-
-        /// <summary>
-        /// Set the scene given.
-        /// </summary>
-        /// <param name="scene">Set the new main scene. </param>
-        virtual void SetScene(const std::shared_ptr<Scene>& scene) override;
-
-        /// <summary>
         /// Called when a new scene is set as the current scene.
         /// Uses: OnSceneUpdatedEventArguments
         /// </summary>
@@ -67,12 +55,19 @@ namespace SuperGameTools
         /// <returns>Returns the texture manager. </returns>
         virtual void SetEngineTextureManager(const std::shared_ptr<SuperGameEngine::TextureManager>& newValue) override;
 
-    private:
+        /// <summary>
+        /// Gets Shared Scene Changed Events.
+        /// </summary>
+        /// <returns>Gets Shared Scene Changed Events. </returns>
+        virtual std::shared_ptr<SharedSceneChangedEvents> GetSharedSceneChangedEvents() const override;
 
         /// <summary>
-        /// Current scene.
+        /// Gives this Shared Scene Changed Events.
         /// </summary>
-        std::shared_ptr<Scene> m_scene;
+        /// <param name="newValue">Gives this Shared Scene Changed Events. </param>
+        virtual void SetSharedSceneChangedEvents(const std::shared_ptr<SharedSceneChangedEvents>& newValue) override;
+
+    private:
 
         /// <summary>
         /// Called when a new scene is set as the current scene.
@@ -88,6 +83,12 @@ namespace SuperGameTools
         /// The texture manager used for engine based rendering.
         /// </summary>
         std::shared_ptr<SuperGameEngine::TextureManager> m_engineTextureManager;
+
+        /// <summary>
+        /// Holds and links together events from the scene and inspector which contain core concepts
+        /// such as 'oncomponentadded' which are in the main engine but affect behaviour in other engines.
+        /// </summary>
+        std::shared_ptr<SharedSceneChangedEvents> m_sharedSceneChangedEvents;
     };
 }
 

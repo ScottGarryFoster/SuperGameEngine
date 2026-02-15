@@ -13,6 +13,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class SharedSceneChangedEvents;
     class WindowPackage;
     class Scene;
 
@@ -27,18 +28,6 @@ namespace SuperGameTools
         /// Resets everything within this object.
         /// </summary>
         virtual void Reset() = 0;
-
-        /// <summary>
-        /// Get the current scene.
-        /// </summary>
-        /// <returns>Get the current scene. </returns>
-        virtual std::shared_ptr<Scene> GetScene() const = 0;
-
-        /// <summary>
-        /// Set the scene given.
-        /// </summary>
-        /// <param name="scene">Set the new main scene. </param>
-        virtual void SetScene(const std::shared_ptr<Scene>& scene) = 0;
 
         /// <summary>
         /// Called when a new scene is set as the current scene.
@@ -71,5 +60,17 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Returns the texture manager. </returns>
         virtual void SetEngineTextureManager(const std::shared_ptr<SuperGameEngine::TextureManager>& newValue) = 0;
+
+        /// <summary>
+        /// Gets Shared Scene Changed Events.
+        /// </summary>
+        /// <returns>Gets Shared Scene Changed Events. </returns>
+        virtual std::shared_ptr<SharedSceneChangedEvents> GetSharedSceneChangedEvents() const = 0;
+
+        /// <summary>
+        /// Gives this Shared Scene Changed Events.
+        /// </summary>
+        /// <param name="newValue">Gives this Shared Scene Changed Events. </param>
+        virtual void SetSharedSceneChangedEvents(const std::shared_ptr<SharedSceneChangedEvents>& newValue) = 0;
     };
 }

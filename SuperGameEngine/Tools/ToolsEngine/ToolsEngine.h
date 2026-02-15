@@ -6,6 +6,7 @@
 #include "../../Engine/Engine/Content/SuperTextureManager.h"
 #include "../../Engine/Engine/Factory/EngineFactory.h"
 #include "../../Engine/Engine/Basic/ExtremelyWeakWrapper.h"
+#include "Engine/CrossEngineObjects/ToolsSharedSceneChangedEvents.h"
 
 namespace SuperGameTools
 {
@@ -250,6 +251,12 @@ namespace SuperGameTools
         /// Holds links to objects which can be passed between engines within the tools.
         /// </summary>
         std::shared_ptr<CrossEngineObjects> m_crossEngineObjects;
+
+        /// <summary>
+        /// Holds and links together events from the scene and inspector which contain core concepts
+        /// such as 'oncomponentadded' which are in the main engine but affect behaviour in other engines.
+        /// </summary>
+        std::shared_ptr<ToolsSharedSceneChangedEvents> m_sharedSceneChangedEvents;
 
         /// <summary>
         /// Sets up the engine.

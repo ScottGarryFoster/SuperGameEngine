@@ -13,28 +13,8 @@ ToolsCrossEngineObjects::ToolsCrossEngineObjects()
 
 void ToolsCrossEngineObjects::Reset()
 {
-    m_scene = nullptr;
     m_windowPackage = nullptr;
-}
-
-std::shared_ptr<Scene> ToolsCrossEngineObjects::GetScene() const
-{
-    return m_scene;
-}
-
-void ToolsCrossEngineObjects::SetScene(const std::shared_ptr<Scene>& scene)
-{
-    bool sceneIsNew = false;
-    if (m_scene != scene)
-    {
-        sceneIsNew = true;
-    }
-    m_scene = scene;
-
-    if (sceneIsNew)
-    {
-        m_onNewScene->Invoke(std::make_shared<OnSceneUpdatedEventArguments>(SceneUpdateAction::NewScene));
-    }
+    m_sharedSceneChangedEvents = nullptr;
 }
 
 std::shared_ptr<FEventSubscriptions> ToolsCrossEngineObjects::OnNewScene() const
@@ -60,4 +40,14 @@ const std::shared_ptr<SuperGameEngine::TextureManager> ToolsCrossEngineObjects::
 void ToolsCrossEngineObjects::SetEngineTextureManager(const std::shared_ptr<SuperGameEngine::TextureManager>& newValue)
 {
     m_engineTextureManager = newValue;
+}
+
+std::shared_ptr<SharedSceneChangedEvents> ToolsCrossEngineObjects::GetSharedSceneChangedEvents() const
+{
+    return m_sharedSceneChangedEvents;
+}
+
+void ToolsCrossEngineObjects::SetSharedSceneChangedEvents(const std::shared_ptr<SharedSceneChangedEvents>& newValue)
+{
+    m_sharedSceneChangedEvents = newValue;
 }

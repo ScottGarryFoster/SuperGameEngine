@@ -4,6 +4,7 @@
 #include "Engine/CrossEngineObjects/CrossEngineObjects.h"
 #include "Engine/Content/SuperTextureManager.h"
 #include "Engine/CrossEngineObjects/OnSceneUpdatedEventArguments.h"
+#include "Engine/CrossEngineObjects/SharedSceneChangedEvents.h"
 #include "GameEngineEquivalents/Component/Component.h"
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/Component/ToolsComponent.h"
@@ -12,6 +13,9 @@
 #include "GameEngineEquivalents/SerializableProperties/TextureAssetSerializableProperty.h"
 #include "GameEngineEquivalents/SerializableProperties/ToolsSerializableProperty.h"
 #include "GameEngineEquivalents/SerializableProperties/Vector2FSerializableProperty.h"
+#include "Panels/SceneHierarchy/EventArguments/OnMenuAddComponentEventArguments.h"
+#include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
+#include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "Structural/Assets/Texture/TextureAsset.h"
 #include "Structural/Serializable/SerializableProperty.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
@@ -21,6 +25,7 @@ using namespace SuperGameEngine;
 
 ViewportEngine::ViewportEngine()
 {
+    m_currentScene = nullptr;
 }
 
 ViewportEngine::~ViewportEngine()
@@ -54,7 +59,7 @@ ApplicationOperationState ViewportEngine::Event(SDL_Event event)
 
 ApplicationOperationState ViewportEngine::Update(Uint64 ticks)
 {
-    if (!m_crossEngineObjects->GetScene())
+    if (!m_currentScene)
     {
         return ApplicationOperationState::Running;
     }
@@ -66,9 +71,9 @@ void ViewportEngine::Draw()
 {
     for (const std::pair<const uint64_t, ViewportObjectDrawBundle>& drawBundle : m_drawBundle)
     {
-        if (!drawBundle.second.TextureAsset)
+        if (!drawBundle.second.IsValidToRender)
         {
-            return;
+            continue;
         }
 
         drawBundle.second.TextureAsset->Draw(0, drawBundle.second.TransformPosition);
@@ -85,6 +90,19 @@ void ViewportEngine::WindowTeardown()
 
 void ViewportEngine::EngineStart()
 {
+    const std::shared_ptr<SharedSceneChangedEvents>& sharedEvents = m_crossEngineObjects->GetSharedSceneChangedEvents();
+    if (!sharedEvents)
+    {
+        Log::Error("No shared events given to Viewport Engine. "
+                   "This will not be able to render a scene.",
+            "void ViewportEngine::EngineStart()");
+        return;
+    }
+
+    sharedEvents->OnSceneLoaded()->Subscribe(shared_from_this());
+    sharedEvents->OnComponentAdded()->Subscribe(shared_from_this());
+    sharedEvents->OnComponentDeleted()->Subscribe(shared_from_this());
+    sharedEvents->OnGameObjectDeleted()->Subscribe(shared_from_this());
 }
 
 void ViewportEngine::EngineEnd()
@@ -96,13 +114,25 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
 {
     if (auto onSceneArgs = std::dynamic_pointer_cast<OnSceneUpdatedEventArguments>(arguments))
     {
-        SetupNewScene();
+        SetupNewScene(onSceneArgs->GetScene());
     }
     else if (auto componentChangedArgs = std::dynamic_pointer_cast<ComponentDataChangedEventArguments>(arguments))
     {
-        ChangeDrawBundleBasedOnComponentChange(componentChangedArgs);
+        ChangeDrawBundleBasedOnComponentChange(componentChangedArgs->GetGameObjectGuid(), componentChangedArgs->GetComponentGuid());
     }
-
+    else if (auto componentAdded = std::dynamic_pointer_cast<OnMenuAddComponentEventArguments>(arguments))
+    {
+        OnComponentAdded(componentAdded->GetComponent()->GetObjectGuid(), componentAdded->GetComponent()->GetUniqueID());
+    }
+    else if (auto componentDeleted = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
+    {
+        OnComponentRemoved(componentDeleted->GetComponent());
+        Log::Info("Component Deleted");
+    }
+    else if (auto gameObjectDeleted = std::dynamic_pointer_cast<OnMenuDeleteGameObjectEventArguments>(arguments))
+    {
+        OnGameObjectDeleted(gameObjectDeleted->GetGameObject());
+    }
 }
 
 void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
@@ -111,10 +141,11 @@ void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObj
     m_crossEngineObjects->OnNewScene()->Subscribe(shared_from_this());
 }
 
-void ViewportEngine::SetupNewScene()
+void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)
 {
     m_drawBundle.clear();
-    for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
+    m_currentScene = newScene;
+    for (const std::shared_ptr<GameObject>& gameObject : m_currentScene->GetGameObjects())
     {
         AddGameObjectToScene(gameObject);
     }
@@ -143,15 +174,17 @@ void ViewportEngine::AddGameObjectToScene(const std::shared_ptr<GameObject>& gam
         }
     }
 
+    ValidateDrawBundle(drawBundle);
+
     // TODO: Remove this testing.
-    if (drawBundle.TextureAsset)
+    if (drawBundle.IsValidToRender)
     {
         Log::Info("TESTING: GUID added: " + gameObject->GetGuid()->ToString());
         m_drawBundle.insert_or_assign(gameObject->GetGuid()->AsNumber(), drawBundle);
     }
     else
     {
-        Log::Error("No texture defined in object. " + gameObject->GetGuid()->ToString());
+        Log::Error("Not valid to render object, defined in: " + gameObject->GetGuid()->ToString());
     }
 }
 
@@ -195,33 +228,35 @@ void ViewportEngine::ExtractTransformDrawBundleProperties(ViewportObjectDrawBund
     }
 }
 
-void ViewportEngine::ChangeDrawBundleBasedOnComponentChange(const std::shared_ptr<ComponentDataChangedEventArguments>& componentChangedArgs)
+void ViewportEngine::ChangeDrawBundleBasedOnComponentChange(const std::shared_ptr<Guid>& gameObjectGuid, const std::shared_ptr<Guid>& componentGuid)
 {
-    const uint64_t gameObjectGuid = componentChangedArgs->GetGameObjectGuid()->AsNumber();
-    for (const std::shared_ptr<GameObject>& gameObject : m_crossEngineObjects->GetScene()->GetGameObjects())
+    const uint64_t gameObjectGuidAsNumber = gameObjectGuid->AsNumber();
+    for (const std::shared_ptr<GameObject>& gameObject : m_currentScene->GetGameObjects())
     {
-        if (gameObject->GetGuid() != componentChangedArgs->GetGameObjectGuid())
+        if (gameObject->GetGuid() != gameObjectGuid)
         {
             continue;
         }
 
         for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
         {
-            if (component->GetUniqueID() != componentChangedArgs->GetComponentGuid())
+            if (component->GetUniqueID() != componentGuid)
             {
                 continue;
             }
 
             if (component->GetType() == "SpriteComponent")
             {
-                UpdateSpriteBasedOnComponentChange(gameObjectGuid, component);
+                UpdateSpriteBasedOnComponentChange(gameObjectGuidAsNumber, component);
             }
             else if (component->GetType() == "TransformComponent")
             {
-                UpdateTransformBasedOnComponentChange(gameObjectGuid, component);
+                UpdateTransformBasedOnComponentChange(gameObjectGuidAsNumber, component);
             }
         }
     }
+
+    ValidateDrawBundle(m_drawBundle.at(gameObjectGuid->AsNumber()));
 }
 
 void ViewportEngine::UpdateSpriteBasedOnComponentChange(const uint64_t gameObjectGuid, const std::shared_ptr<Component>& component)
@@ -237,6 +272,11 @@ void ViewportEngine::UpdateSpriteBasedOnComponentChange(const uint64_t gameObjec
 
             if (auto textureProperty = std::dynamic_pointer_cast<TextureAssetSerializableProperty>(property))
             {
+                if (textureProperty->GetTextureValue().empty())
+                {
+                    return;
+                }
+
                 // We are an engine, ensure to use this version.
                 m_drawBundle.at(gameObjectGuid).TextureAsset = m_crossEngineObjects->
                     GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
@@ -262,4 +302,87 @@ void ViewportEngine::UpdateTransformBasedOnComponentChange(const uint64_t gameOb
             }
         }
     }
+}
+
+void ViewportEngine::OnComponentAdded(
+    const std::shared_ptr<Guid>& gameObjectGuid,
+    const std::shared_ptr<Guid>& componentGuid)
+{
+    if (!m_drawBundle.contains(gameObjectGuid->AsNumber()))
+    {
+        m_drawBundle.insert_or_assign(gameObjectGuid->AsNumber(), ViewportObjectDrawBundle());
+    }
+
+    // Listen for changes.
+    for (const std::shared_ptr<GameObject>& gameObject : m_currentScene->GetGameObjects())
+    {
+        if (gameObject->GetGuid() != gameObjectGuid)
+        {
+            continue;
+        }
+
+        for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
+        {
+            if (component->GetUniqueID() != componentGuid)
+            {
+                continue;
+            }
+
+            component->OnPropertyChanged()->Subscribe(shared_from_this());
+        }
+    }
+
+    ChangeDrawBundleBasedOnComponentChange(gameObjectGuid, componentGuid);
+}
+
+void ViewportEngine::OnComponentRemoved(const std::shared_ptr<Component>& component)
+{
+    // Stop listening for changes.
+    component->OnPropertyChanged()->Unsubscribe(shared_from_this());
+
+    if (!component)
+    {
+        return;
+    }
+
+    ViewportObjectDrawBundle& drawBundle = m_drawBundle.at(component->GetObjectGuid()->AsNumber());
+    RemoveComponentFromDrawBundleIfExists(drawBundle, component);
+}
+
+void ViewportEngine::RemoveComponentFromDrawBundleIfExists(
+    ViewportObjectDrawBundle& drawBundle,
+    const std::shared_ptr<Component>& component)
+{
+    if (component->GetType() == "SpriteComponent")
+    {
+        drawBundle.TextureAsset = nullptr;
+    }
+    else if (component->GetType() == "TransformComponent")
+    {
+        drawBundle.TransformPosition = {};
+    }
+
+    ValidateDrawBundle(drawBundle);
+}
+
+void ViewportEngine::ValidateDrawBundle(ViewportObjectDrawBundle& drawBundle) const
+{
+    if (drawBundle.TextureAsset)
+    {
+        drawBundle.IsValidToRender = true;
+    }
+    else
+    {
+        drawBundle.IsValidToRender = false;
+    }
+}
+
+void ViewportEngine::OnGameObjectDeleted(const std::shared_ptr<GameObject>& gameObject)
+{
+    for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
+    {
+        component->OnPropertyChanged()->Unsubscribe(shared_from_this());
+    }
+
+    m_drawBundle.erase(gameObject->GetGuid()->AsNumber());
 }
