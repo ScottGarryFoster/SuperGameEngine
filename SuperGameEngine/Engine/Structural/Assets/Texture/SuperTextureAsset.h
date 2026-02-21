@@ -56,6 +56,12 @@ namespace SuperGameEngine
         /// <param name="screenLocation"> The location of the texture on screen. </param>
         virtual void Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const override;
 
+        /// <summary>
+        /// Gets the size of a single tile or the entire image if tiles are not used.
+        /// </summary>
+        /// <returns>Gets the size of a single tile or the entire image if tiles are not used. </returns>
+        virtual FatedQuestLibraries::FVector2I SizeOfSingleTile() const override;
+
     private:
 
         /// <summary>
@@ -83,6 +89,11 @@ namespace SuperGameEngine
         /// upon a texture.
         /// </summary>
         std::vector<std::pair<bool, RectangleInt>> m_predefinedUVs;
+
+        /// <summary>
+        /// Gets the size of a single tile or the entire image if tiles are not used.
+        /// </summary>
+        FatedQuestLibraries::FVector2I m_singleTileSize;
 
         /// <summary>
         /// Sets up the Predefined UVs upon a texture.

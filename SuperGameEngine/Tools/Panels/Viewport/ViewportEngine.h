@@ -8,6 +8,8 @@
 
 namespace SuperGameEngine
 {
+    class PrimitiveRectangle;
+    class PrimitiveShapeProvider;
     class TextureAsset;
     class EngineTextureManager;
 }
@@ -21,7 +23,6 @@ namespace SuperGameTools
     {
     public:
         ViewportEngine();
-        virtual ~ViewportEngine();
 
         /// <summary>
         /// Gives the engine a renderer.
@@ -178,6 +179,16 @@ namespace SuperGameTools
         /// </summary>
         std::shared_ptr<Scene> m_currentScene;
 
+        /// <summary>
+        /// Provides render-able debug primitive shapes.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::PrimitiveShapeProvider> m_primitiveShapeProvider;
+
+        /// <summary>
+        /// A rectangle for debug drawing.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::PrimitiveRectangle> m_debugRectangle;
+
         // New Scene Event Handles
 
         /// <summary>
@@ -276,5 +287,11 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="gameObject">Handle on game object deleted. </param>
         void OnGameObjectDeleted(const std::shared_ptr<GameObject>& gameObject);
+
+        /// <summary>
+        /// Updates the rectangle drawn around the game object.
+        /// </summary>
+        /// <param name="drawBundle">Draw bundle to update.</param>
+        void UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBundle) const;
     };
 }

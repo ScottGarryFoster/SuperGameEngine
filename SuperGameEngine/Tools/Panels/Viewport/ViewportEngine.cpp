@@ -5,6 +5,8 @@
 #include "Engine/Content/SuperTextureManager.h"
 #include "Engine/CrossEngineObjects/OnSceneUpdatedEventArguments.h"
 #include "Engine/CrossEngineObjects/SharedSceneChangedEvents.h"
+#include "Engine/Graphics/Geometry/PrimitiveRectangle.h"
+#include "Engine/Graphics/Geometry/SuperPrimitiveShapeProvider.h"
 #include "GameEngineEquivalents/Component/Component.h"
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/Component/ToolsComponent.h"
@@ -26,10 +28,6 @@ using namespace SuperGameEngine;
 ViewportEngine::ViewportEngine()
 {
     m_currentScene = nullptr;
-}
-
-ViewportEngine::~ViewportEngine()
-{
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -59,11 +57,6 @@ ApplicationOperationState ViewportEngine::Event(SDL_Event event)
 
 ApplicationOperationState ViewportEngine::Update(Uint64 ticks)
 {
-    if (!m_currentScene)
-    {
-        return ApplicationOperationState::Running;
-    }
-
     return ApplicationOperationState::Running;
 }
 
@@ -77,6 +70,12 @@ void ViewportEngine::Draw()
         }
 
         drawBundle.second.TextureAsset->Draw(0, drawBundle.second.TransformPosition);
+
+        m_debugRectangle->DrawInPlace(
+            drawBundle.second.FaceRectangle.GetLeft(), 
+            drawBundle.second.FaceRectangle.GetTop(),
+            drawBundle.second.FaceRectangle.GetWidth(),
+            drawBundle.second.FaceRectangle.GetHeight());
     }
 }
 
@@ -103,6 +102,16 @@ void ViewportEngine::EngineStart()
     sharedEvents->OnComponentAdded()->Subscribe(shared_from_this());
     sharedEvents->OnComponentDeleted()->Subscribe(shared_from_this());
     sharedEvents->OnGameObjectDeleted()->Subscribe(shared_from_this());
+
+    if (!m_renderer)
+    {
+        Log::Error("No renderer was given to the viewport engine.",
+            "void ViewportEngine::EngineStart()");
+        return;
+    }
+
+    m_primitiveShapeProvider = std::make_shared<SuperPrimitiveShapeProvider>(m_renderer);
+    m_debugRectangle = m_primitiveShapeProvider->CreateRectangle(FVector2F(), FVector2F(50, 50));
 }
 
 void ViewportEngine::EngineEnd()
@@ -204,6 +213,8 @@ void ViewportEngine::ExractSpriteDrawBundleProperties(ViewportObjectDrawBundle& 
                 // We are an engine, ensure to use this version.
                 drawBundle.TextureAsset = m_crossEngineObjects->
                     GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
+                UpdateCollisionRectangle(drawBundle);
+                return;
             }
         }
     }
@@ -223,6 +234,8 @@ void ViewportEngine::ExtractTransformDrawBundleProperties(ViewportObjectDrawBund
             if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
             {
                 drawBundle.TransformPosition = toolsProperty->GetValue();
+                UpdateCollisionRectangle(drawBundle);
+                return;
             }
         }
     }
@@ -280,6 +293,8 @@ void ViewportEngine::UpdateSpriteBasedOnComponentChange(const uint64_t gameObjec
                 // We are an engine, ensure to use this version.
                 m_drawBundle.at(gameObjectGuid).TextureAsset = m_crossEngineObjects->
                     GetEngineTextureManager()->GetTextureAsset(textureProperty->GetTextureValue());
+                UpdateCollisionRectangle(m_drawBundle.at(gameObjectGuid));
+                return;
             }
         }
     }
@@ -299,6 +314,8 @@ void ViewportEngine::UpdateTransformBasedOnComponentChange(const uint64_t gameOb
             if (auto toolsProperty = std::dynamic_pointer_cast<Vector2FSerializableProperty>(property))
             {
                 m_drawBundle.at(gameObjectGuid).TransformPosition = toolsProperty->GetValue();
+                UpdateCollisionRectangle(m_drawBundle.at(gameObjectGuid));
+                return;
             }
         }
     }
@@ -356,10 +373,12 @@ void ViewportEngine::RemoveComponentFromDrawBundleIfExists(
     if (component->GetType() == "SpriteComponent")
     {
         drawBundle.TextureAsset = nullptr;
+        UpdateCollisionRectangle(drawBundle);
     }
     else if (component->GetType() == "TransformComponent")
     {
         drawBundle.TransformPosition = {};
+        UpdateCollisionRectangle(drawBundle);
     }
 
     ValidateDrawBundle(drawBundle);
@@ -385,4 +404,18 @@ void ViewportEngine::OnGameObjectDeleted(const std::shared_ptr<GameObject>& game
     }
 
     m_drawBundle.erase(gameObject->GetGuid()->AsNumber());
+}
+
+void ViewportEngine::UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBundle) const
+{
+    auto size = FVector2I(32, 32);
+    if (drawBundle.TextureAsset)
+    {
+        size = drawBundle.TextureAsset->SizeOfSingleTile();
+    }
+
+    drawBundle.FaceRectangle.SetSize(size.GetX(), size.GetY());
+    drawBundle.FaceRectangle.SetLocation(
+        (float)drawBundle.TransformPosition.GetX(),
+        (float)drawBundle.TransformPosition.GetY());
 }

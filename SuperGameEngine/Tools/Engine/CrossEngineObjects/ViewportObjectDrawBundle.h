@@ -1,5 +1,6 @@
 #pragma once
 #include "FatedQuestLibraries.h"
+#include "Structural/Spatial/Area/RectangleInt.h"
 
 namespace SuperGameEngine
 {
@@ -34,5 +35,10 @@ namespace SuperGameTools
         /// The transform position.
         /// </summary>
         FatedQuestLibraries::FVector2F TransformPosition;
+
+        /// <summary>
+        /// A rectangle around the shape for collision within the viewport.
+        /// </summary>
+        SuperGameEngine::RectangleInt FaceRectangle;
     };
 }
