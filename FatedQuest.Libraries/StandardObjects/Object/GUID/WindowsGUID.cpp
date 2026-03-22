@@ -7,6 +7,17 @@ WindowsGUID::WindowsGUID()
     Generate();
 }
 
+WindowsGUID::WindowsGUID(const std::string& value)
+{
+    m_asNumber = -1;
+    FromString(value);
+    if (m_asNumber == -1)
+    {
+        const std::string message = "Could not create GUID from string. Value: " + value;
+        throw std::exception(message.c_str());
+    }
+}
+
 void WindowsGUID::Generate()
 {
     HRESULT result = CoCreateGuid(&m_guid);

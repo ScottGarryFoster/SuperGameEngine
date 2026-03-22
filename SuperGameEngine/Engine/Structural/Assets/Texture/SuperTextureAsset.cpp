@@ -55,6 +55,24 @@ SuperTextureAsset::SuperTextureAsset(
     {
         case SplitUVMethod::Predefined: SetupPredefinedUVs(); break;
     }
+
+    if (m_splitMethod == SplitUVMethod::Predefined || m_splitMethod == SplitUVMethod::UniformByPixel)
+    {
+        if (m_predefinedUVs.empty())
+        {
+            Log::Exception("No UV setup with method setup for UVs. Method: " + ESplitUVMethod::ToString(m_splitMethod),
+                "SuperGameEngine::SuperTextureAsset::SuperTextureAsset",
+                "Exception");
+        }
+        else
+        {
+            m_singleTileSize = FVector2I(m_predefinedUVs.at(0).second.GetWidth(), m_predefinedUVs.at(0).second.GetHeight());
+        }
+    }
+    else
+    {
+        m_singleTileSize = m_superTexture->Size();
+    }
 }
 
 void SuperTextureAsset::Draw() const
@@ -93,6 +111,11 @@ void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& scr
             m_superTexture->Draw();
         }
     }
+}
+
+FVector2I SuperTextureAsset::SizeOfSingleTile() const
+{
+    return m_singleTileSize;
 }
 
 void SuperTextureAsset::SetupPredefinedUVs()

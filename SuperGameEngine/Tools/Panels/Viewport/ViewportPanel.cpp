@@ -1,10 +1,12 @@
 #include "ViewportPanel.h"
 
+#include "ViewportEngineAndPanelCommunication.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
 #include "../../FatedQuestLibraries.h"
 #include "Engine/Basic/EngineControls.h"
 #include "Engine/Graphics/Texture/SDLRendererReader.h"
 #include "Engine/Graphics/Texture/SDLRendererState.h"
+#include "Engine/Graphics/Texture/SDLTextureChest.h"
 #include "Imgui/External/imgui.h"
 #include "Panels/ViewportTools/ViewportTools.h"
 #include "ToolsEngine/ViewElements/Window/ToolsWindowShownArguments.h"
@@ -14,6 +16,8 @@ using namespace FatedQuestLibraries;
 
 ViewportPanel::ViewportPanel()
 {
+    m_sizeOrPositionHasChanged = true;
+    m_viewportImage = RectangleInt(0, 0, 0, 0);
 }
 
 ViewportPanel::~ViewportPanel()
@@ -42,6 +46,19 @@ void ViewportPanel::Update()
         m_engineControls->SetNewViewportSize(newWidth, newHeight);
         m_sizeHasChanged = false;
     }
+
+    if (m_sizeOrPositionHasChanged && m_viewportEngineAndPanelCommunication)
+    {
+        // Ensure the position is adjusted for the frame.
+        m_viewportEngineAndPanelCommunication->UpdateViewportLocation(
+            m_viewportImage.GetLeft() - 26,
+            m_viewportImage.GetTop() + 44,
+            m_viewportImage.GetWidth(),
+            m_viewportImage.GetHeight()
+        );
+
+        m_sizeOrPositionHasChanged = false;
+    }
 }
 
 void ViewportPanel::Draw()
@@ -55,6 +72,8 @@ void ViewportPanel::Draw()
         SDL_Rect originalRect = m_viewport;
         int width = m_viewport.w;
         int height = m_viewport.h;
+        int originalX = m_viewport.x;
+        int originalY = m_viewport.y;
 
         m_viewport.x = static_cast<int>(windowTopLeftBelowTitleBar.x);
         m_viewport.y = static_cast<int>(windowTopLeftBelowTitleBar.y);
@@ -70,17 +89,26 @@ void ViewportPanel::Draw()
 
         int newWidth = m_viewport.w;
         int newHeight = m_viewport.h;
+        int newX = m_viewport.x;
+        int newY = m_viewport.y;
         if (width != newWidth || height != newHeight)
         {
             m_sizeHasChanged = true;
         }
 
+        if (width != newWidth || height != newHeight || originalX != newX || originalY != newY)
+        {
+            m_viewportImage.SetLocation(newX, newY);
+            m_viewportImage.SetSize(newWidth, newHeight);
+            m_sizeOrPositionHasChanged = true;
+        }
+
         if (m_windowPackage->GetSDLToolsViewportRenderTexture())
         {
-            if (m_windowPackage->GetSDLToolsViewportRenderTexture()->GetState() == PointerState::Active)
+            SDL_Texture* texture = m_windowPackage->GetSDLToolsViewportRenderTexture()->Get();
+            if (texture)
             {
                 ImVec2 imageSize = ImVec2(width, height);
-                SDL_Texture* texture = m_windowPackage->GetSDLToolsViewportRenderTexture()->Get();
                 ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<void*>(texture)), imageSize);
             }
         }
@@ -135,6 +163,12 @@ void ViewportPanel::GiveEngineControls(const std::shared_ptr<SuperGameEngine::En
 void ViewportPanel::GiveViewportTools(const std::shared_ptr<ViewportTools>& viewportTools)
 {
     m_viewportTools = viewportTools;
+}
+
+void ViewportPanel::GiveViewportEngineAndPanelCommunication(
+    const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication)
+{
+    m_viewportEngineAndPanelCommunication = engineAndPanelCommunication;
 }
 
 void ViewportPanel::UpdateTheSDLViewport() const

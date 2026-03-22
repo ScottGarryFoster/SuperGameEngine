@@ -2864,4 +2864,108 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
 
 #pragma endregion
 
+#pragma region Contains RectangleInt WithPoint
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenLeftIsEqual)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(0, 1);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenRightIsEqual)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(10, 1);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenTopIsEqual)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(1, 0);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenBottomIsEqual)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(1, 10);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsFalse_WhenOnlyLeftIsOutsideToTheLeft)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(-1, 5);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsFalse_WhenOnlyLeftIsOutsideToTheRight)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(11, 5);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsFalse_WhenOnlyTopIsAbove)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(5, -1);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsFalse_WhenOnlyTopIsBelow)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(5, 11);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenPointIsInMiddle)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(0, 0, 10, 10);
+        auto otherPoint = FPoint(5, 5);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenPointIsInMiddle2)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(1675, 48, 495, 948);
+        auto otherPoint = FPoint(513, 510);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
+#pragma endregion
+
 }

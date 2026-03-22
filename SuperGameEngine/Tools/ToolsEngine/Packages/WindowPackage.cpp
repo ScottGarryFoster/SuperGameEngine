@@ -1,23 +1,23 @@
-#include "WindowPackage.h"}
+#include "WindowPackage.h"
 
 using namespace SuperGameTools;
 
-void WindowPackage::SetSDLGameViewportRenderTexture(const std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>>& texture)
+void WindowPackage::SetSDLGameViewportRenderTexture(const std::shared_ptr<SDLTextureChest>& texture)
 {
     m_gameViewportTexture = texture;
 }
 
-std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> WindowPackage::GetSDLGameViewportRenderTexture() const
+std::shared_ptr<SDLTextureChest> WindowPackage::GetSDLGameViewportRenderTexture() const
 {
     return m_gameViewportTexture;
 }
 
-void WindowPackage::SetSDLToolsViewportRenderTexture(const std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>>& texture)
+void WindowPackage::SetSDLToolsViewportRenderTexture(const std::shared_ptr<SDLTextureChest>& texture)
 {
     m_toolsViewportTexture = texture;
 }
 
-std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> WindowPackage::GetSDLToolsViewportRenderTexture() const
+std::shared_ptr<SDLTextureChest> WindowPackage::GetSDLToolsViewportRenderTexture() const
 {
     return m_toolsViewportTexture;
 }

@@ -282,6 +282,31 @@ bool RectangleInt::Contains(const Circle& other) const
     return true;
 }
 
+bool RectangleInt::Contains(const FatedQuestLibraries::FPoint& other) const
+{
+    if (other.GetX() < GetLeft())
+    {
+        return false;
+    }
+
+    if (other.GetX() > GetRight())
+    {
+        return false;
+    }
+
+    if (other.GetY() < GetTop())
+    {
+        return false;
+    }
+
+    if (other.GetY() > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
+}
+
 bool RectangleInt::OverlapsOrIsTouching(const Rectangle& other) const
 {
     return IsTouching(other) || Overlaps(other);

@@ -8,12 +8,16 @@
 
 namespace SuperGameEngine
 {
+    class PrimitiveRectangle;
+    class PrimitiveShapeProvider;
     class TextureAsset;
     class EngineTextureManager;
 }
 
 namespace SuperGameTools
 {
+    class SelectionChangedEventArguments;
+    class ViewportEngineAndPanelCommunication;
     class Scene;
     class CrossEngineObjects;
 
@@ -21,7 +25,6 @@ namespace SuperGameTools
     {
     public:
         ViewportEngine();
-        virtual ~ViewportEngine();
 
         /// <summary>
         /// Gives the engine a renderer.
@@ -131,6 +134,12 @@ namespace SuperGameTools
         /// </param>
         void GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects);
 
+        /// <summary>
+        /// Give object which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        /// <param name="engineAndPanelCommunication">New communication Object. </param>
+        void GiveViewportEngineAndPanelCommunication(const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication);
+
     private:
 
         /// <summary>
@@ -154,11 +163,6 @@ namespace SuperGameTools
         std::shared_ptr<SuperGameEngine::EngineTextureManager> m_textureManager;
 
         /// <summary>
-        /// A test texture for the first submit.
-        /// </summary>
-        std::shared_ptr<SuperGameEngine::TextureAsset> testTexture;
-
-        /// <summary>
         /// Defines and communicates engine level changes.
         /// </summary>
         std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
@@ -177,6 +181,49 @@ namespace SuperGameTools
         /// The current scene as far as you are aware.
         /// </summary>
         std::shared_ptr<Scene> m_currentScene;
+
+        /// <summary>
+        /// Provides render-able debug primitive shapes.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::PrimitiveShapeProvider> m_primitiveShapeProvider;
+
+        /// <summary>
+        /// A rectangle for debug drawing.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::PrimitiveRectangle> m_debugRectangle;
+
+        /// <summary>
+        /// Objects which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        std::shared_ptr<ViewportEngineAndPanelCommunication> m_viewportEngineAndPanelCommunication;
+
+        /// <summary>
+        /// The position of the mouse rectangle used for debug rendering.
+        /// </summary>
+        SuperGameEngine::RectangleInt m_mouseCollision;
+
+        /// <summary>
+        /// True means the button we used for selection has changed this frame and should be processed.
+        /// </summary>
+        bool m_selectionButtonStatusIsDirty;
+
+        /// <summary>
+         /// True means on the last frame the button to select an object was pressed.
+         /// </summary>
+        bool m_previousSelectionKeyDownStatus;
+
+        /// <summary>
+        /// Draw the given object and use the mouse position to change the drawing to react to mouse over.
+        /// </summary>
+        /// <param name="drawBundle">Draw the given draw bundle.  </param>
+        /// <param name="mousePosition">Mouse position relative to the viewport. </param>
+        void DrawBundle(const ViewportObjectDrawBundle& drawBundle, const FatedQuestLibraries::FPoint& mousePosition);
+
+        /// <summary>
+        /// Draw the given object.
+        /// </summary>
+        /// <param name="drawBundle">Draw the given draw bundle. </param>
+        void DrawBundle(const ViewportObjectDrawBundle& drawBundle);
 
         // New Scene Event Handles
 
@@ -276,5 +323,54 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="gameObject">Handle on game object deleted. </param>
         void OnGameObjectDeleted(const std::shared_ptr<GameObject>& gameObject);
+
+        /// <summary>
+        /// Updates the rectangle drawn around the game object.
+        /// </summary>
+        /// <param name="drawBundle">Draw bundle to update.</param>
+        void UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBundle) const;
+
+        /// <summary>
+        /// Creates a new draw bundle correctly from a game object.
+        /// </summary>
+        /// <param name="gameObject">Game object to create from. </param>
+        /// <returns>New draw bundle. </returns>
+        ViewportObjectDrawBundle CreateDrawBundle(const std::shared_ptr<GameObject>& gameObject) const;
+
+        /// <summary>
+        /// Creates a new draw bundle from GUID.
+        /// </summary>
+        /// <param name="gameObjectGuid">GUID to create form. </param>
+        /// <returns>New Draw Bundle. </returns>
+        ViewportObjectDrawBundle CreateDrawBundle(const std::shared_ptr<Guid>& gameObjectGuid) const;
+
+        /// <summary>
+        /// Update all draw bundles with current interactions from the user.
+        /// </summary>
+        void ProcessDrawBundleInteractions();
+
+        /// <summary>
+        /// Handle the selection being changed and potentially the objects changing selection.
+        /// </summary>
+        /// <param name="arguments">Selection arguments. </param>
+        /// <remarks>This is all inspectables, which should include GameObjects but will also include a lot of other things.</remarks>
+        void OnSelectionChanged(const std::shared_ptr<SelectionChangedEventArguments>& arguments);
+
+        /// <summary>
+        /// Ensures the dirty flag for the selection button is set.
+        /// </summary>
+        void UpdateSelectionButtonDirtyFlag();
+
+        /// <summary>
+        /// True when selection button is down.
+        /// </summary>
+        /// <returns></returns>
+        bool IsSelectionButtonDown() const;
+
+        /// <summary>
+        /// Returns the mouse position as a collision rectangle.
+        /// </summary>
+        /// <returns>Returns the mouse position as a collision rectangle. </returns>
+        std::pair<bool, SuperGameEngine::RectangleInt> GetMousePosition() const;
     };
 }

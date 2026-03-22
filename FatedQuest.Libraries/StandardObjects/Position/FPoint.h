@@ -69,7 +69,13 @@ namespace FatedQuestLibraries
         /// Prints the Point value.
         /// </summary>
         /// <returns>A string version of the point. </returns>
-        const std::string Print() const;
+        std::string Print() const;
+
+        /// <summary>
+        /// Prints the Point value.
+        /// </summary>
+        /// <returns>A string version of the point. </returns>
+        std::string ToString() const;
 
     private:
 

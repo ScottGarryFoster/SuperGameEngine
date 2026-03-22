@@ -18,7 +18,9 @@
 #include "Engine/Content/SuperTextureWrapperFactory.h"
 #include "Engine/FileSystem/GamePackage/ToolsGamePackage.h"
 #include "Engine/Foundation/ProjectPropertiesProvider.h"
+#include "Engine/Graphics/Texture/SDLTextureChest.h"
 #include "Panels/Viewport/ViewportEngine.h"
+#include "Panels/Viewport/ViewportEngineAndPanelCommunication.h"
 #include "Settings/ToolsLayoutSettings.h"
 #include "Settings/ToolsSettingsPaths.h"
 
@@ -46,6 +48,7 @@ ToolsEngineEntry::ToolsEngineEntry()
     m_gamePackage = combinedGamePackage;
 
     m_crossEngineObjects = std::make_shared<ToolsCrossEngineObjects>();
+    m_viewportEngineAndPanelCommunication = std::make_shared<ViewportEngineAndPanelCommunication>();
 }
 
 int ToolsEngineEntry::RunApplication(const std::string& engineType)
@@ -54,10 +57,10 @@ int ToolsEngineEntry::RunApplication(const std::string& engineType)
     m_toolsEngine = std::make_shared<ToolsEngine>();
     m_toolsEngine->GiveEnginePlayControls(m_engineEntryCommunication);
 
-    m_sdlGameViewportTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
+    m_sdlGameViewportTexture = std::make_shared<SDLTextureChest>(nullptr);
     m_toolsEngine->GiveSDLGameEngineTexture(m_sdlGameViewportTexture);
 
-    m_sdlToolsViewportTexture = std::make_shared<ExtremelyWeakWrapper<SDL_Texture>>(nullptr);
+    m_sdlToolsViewportTexture = std::make_shared<SDLTextureChest>(nullptr);
     m_toolsEngine->GiveSDLViewportTexture(m_sdlToolsViewportTexture);
 
     m_toolsEngine->GiveCrossEngineObjects(m_crossEngineObjects);
@@ -201,6 +204,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         m_toolsEngine->GiveRenderer(m_Toolsrenderer);
         m_toolsEngine->GiveInput(m_inputManager);
         m_toolsEngine->GiveControls(engineControlsToolsViewport);
+        m_toolsEngine->GiveViewportEngineAndPanelCommunication(m_viewportEngineAndPanelCommunication);
         m_toolsEngine->WindowStart();
         m_toolsEngine->EngineStart();
     }
@@ -214,6 +218,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
     toolsViewport->GiveGamePackage(m_gamePackage);
     toolsViewport->GiveControls(engineControlsToolsViewport);
     toolsViewport->GiveCrossEngineObjects(m_crossEngineObjects);
+    toolsViewport->GiveViewportEngineAndPanelCommunication(m_viewportEngineAndPanelCommunication);
     toolsViewport->WindowStart();
     toolsViewport->EngineStart();
 
@@ -362,7 +367,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         {
             // We only want to refresh this if we have a new frame.
             // This is so we can move one frame at a time.
-            if (m_sdlGameViewportTexture->GetState() != PointerState::Active)
+            if (m_sdlGameViewportTexture->Get() == nullptr)
             {
                 // Make texture to render the SDL Viewport
                 SDL_Texture* sdlTexture = SDL_CreateTexture(
@@ -395,7 +400,7 @@ ApplicationOperationState ToolsEngineEntry::RunSDLWindow(const std::string& engi
         {
             // We only want to refresh this if we have a new frame and there is no texture.
             // This is so we can move one frame at a time.
-            if (m_sdlToolsViewportTexture->GetState() != PointerState::Active)
+            if (m_sdlToolsViewportTexture->Get() == nullptr)
             {
                 // Make texture to render the SDL Viewport
                 SDL_Texture* sdlTexture = SDL_CreateTexture(

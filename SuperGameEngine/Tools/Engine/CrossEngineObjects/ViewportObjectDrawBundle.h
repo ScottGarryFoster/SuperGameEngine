@@ -1,5 +1,7 @@
 #pragma once
+#include "DrawBundleSelectionState.h"
 #include "FatedQuestLibraries.h"
+#include "Structural/Spatial/Area/RectangleInt.h"
 
 namespace SuperGameEngine
 {
@@ -23,7 +25,11 @@ namespace SuperGameTools
         /// <summary>
         /// The GUID of the game object.
         /// </summary>
-        FatedQuestLibraries::Guid Guid;
+        /// <remarks>
+        /// This is stored as the string representation because the object is a struct
+        /// and GUID is implemented different dependent on platform.
+        /// </remarks>
+        std::string Guid;
 
         /// <summary>
         /// The texture to render.
@@ -34,5 +40,15 @@ namespace SuperGameTools
         /// The transform position.
         /// </summary>
         FatedQuestLibraries::FVector2F TransformPosition;
+
+        /// <summary>
+        /// A rectangle around the shape for collision within the viewport.
+        /// </summary>
+        SuperGameEngine::RectangleInt FaceRectangle;
+
+        /// <summary>
+        /// Describes the selection state of the given draw bundle so that it maybe rendered correctly.
+        /// </summary>
+        DrawBundleSelectionState SelectionState;
     };
 }

@@ -1,0 +1,29 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        Describes the colour names when drawing debug elements in a scene.
+    </EnumComment>
+    <EnumName Name="DebugColourName">
+        <Unknown HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Default>
+            Whatever is default will be used.
+        </Default>
+        <Green>
+            Use a standard green colour.
+        </Green>
+        <Blue>
+            Use a deep blue colour.
+        </Blue>
+        <Red>
+            Pure red colour.
+        </Red>
+        <Cyan>
+            Cyan colour.
+        </Cyan>
+    </EnumName>
+</SuperEnum>

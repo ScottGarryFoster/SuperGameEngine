@@ -32,6 +32,12 @@ namespace SuperGameEngine
         /// <param name="tile"> The texture tile to render. </param>
         /// <param name="screenLocation"> The location of the texture on screen. </param>
         virtual void Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const = 0;
+
+        /// <summary>
+        /// Gets the size of a single tile or the entire image if tiles are not used.
+        /// </summary>
+        /// <returns>Gets the size of a single tile or the entire image if tiles are not used. </returns>
+        virtual FatedQuestLibraries::FVector2I SizeOfSingleTile() const = 0;
     };
 }
 
