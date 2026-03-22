@@ -1093,7 +1093,12 @@ std::string SuperEnum::PrintFlagMethods(int indents)
 {
     std::string output = {};
 
+    
     // |
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Combines flags. For example: auto var = left | right; returns a bitflag containing both left and right. \n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator | (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
@@ -1102,6 +1107,10 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     --indents;
     output += PrintIndents(indents) + "}\n";
     output += "\n";
+
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Combines flags in assignment. For example: left |= right; Adds right flag to left variable. \n";
+    output += PrintIndents(indents) + "/// </summary>\n";
 
     output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator |= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
@@ -1113,6 +1122,12 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += "\n";
 
     // &
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Gets the intersection of flags. Mostly used as in this example: bool isSet = ((state & flag1) == flag1); \n";
+    output += PrintIndents(indents) + "/// Is set would be true if state has the flag. Also this can be combined with ~ to remove a flag (see below). \n";
+    output += PrintIndents(indents) + "/// HasFlag will also do this for you in nicer syntax. \n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator & (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
@@ -1122,16 +1137,32 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += PrintIndents(indents) + "}\n";
     output += "\n";
 
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Returns the intersection of the flags in an assignment. \n";
+    output += PrintIndents(indents) + "/// Mostly combined with ~ as in this example: state &= ~flagToRemove; \n";
+    output += PrintIndents(indents) + "/// This would remove flagToRemove from the given state. \n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+
     output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator &= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
-    output += PrintIndents(indents) + "lhs = lhs | rhs;\n";
+    output += PrintIndents(indents) + "lhs = lhs & rhs;\n";
     output += PrintIndents(indents) + "return lhs;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     output += "\n";
 
     // ^
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Performs an XOR operation on the left and right and returns the result. \n";
+    output += PrintIndents(indents) + "/// This is mostly which to compare two sets of flags and to figure out where they differ. \n";
+    output += PrintIndents(indents) + "/// left = flag1; right = flag1 | flag2; different = left ^ right; \n";
+    output += PrintIndents(indents) + "/// different in this example will be flag2.\n";
+    output += PrintIndents(indents) + "/// Keep in mind you would not know where the differences are you would need to do this: \n";
+    output += PrintIndents(indents) + "/// bool checkLeft = different & left; - nothing removed / added. \n";
+    output += PrintIndents(indents) + "/// bool checkRight = different & right; - flag2 added. \n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator ^ (" + m_enumName.Value + " lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
@@ -1140,6 +1171,11 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     --indents;
     output += PrintIndents(indents) + "}\n";
     output += "\n";
+
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Performs an XOR operation on the flag which results in a toggle assignment.\n";
+    output += PrintIndents(indents) + "/// Example: state ^= flag1; This would toggle whether flag1 is on within the enum.\n";
+    output += PrintIndents(indents) + "/// </summary>\n";
 
     output += PrintIndents(indents) + "inline " + m_enumName.Value + "& operator ^= (" + m_enumName.Value + "& lhs, " + m_enumName.Value + " rhs)\n";
     output += PrintIndents(indents) + "{\n";
@@ -1151,6 +1187,12 @@ std::string SuperEnum::PrintFlagMethods(int indents)
     output += "\n";
 
     // ~
+    output += PrintIndents(indents) + "/// <summary>\n";
+    output += PrintIndents(indents) + "/// Returns the opposite or 'unset' or 'invert' flag of the given. \n";
+    output += PrintIndents(indents) + "/// Mostly combined with &= as in this example: state &= ~flagToRemove; \n";
+    output += PrintIndents(indents) + "/// This would remove flagToRemove from the given state. \n";
+    output += PrintIndents(indents) + "/// </summary>\n";
+
     output += PrintIndents(indents) + "inline " + m_enumName.Value + " operator ~ (" + m_enumName.Value + " lhs)\n";
     output += PrintIndents(indents) + "{\n";
     ++indents;
