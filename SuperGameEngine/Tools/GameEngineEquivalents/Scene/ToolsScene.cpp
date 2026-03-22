@@ -5,16 +5,21 @@
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
 #include "../Component/Component.h"
+#include "ToolsEngine/FrameworkManager/FrameworkManager.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
+#include "ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
 ToolsScene::ToolsScene(
     const std::shared_ptr<SerializableParser>& parser,
-    const std::shared_ptr<SceneDocument>& document)
+    const std::shared_ptr<SceneDocument>& document,
+    const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_parser = parser;
     m_sceneDocument = document;
+    m_windowPackage = windowPackage;
     m_dirtyFlag = std::make_shared<bool>();
     *m_dirtyFlag = false;
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
@@ -169,6 +174,39 @@ void ToolsScene::Invoke(std::shared_ptr<FEventArguments> arguments)
             UpdateDirtyFlag(dirtyArgs->GetDirtyFlagState());
         }
     }
+}
+
+bool ToolsScene::SelectGameObject(const FatedQuestLibraries::Guid& guid)
+{
+    const std::string compare = guid.ToString();
+    bool didFind = false;
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (go->GetGuid()->ToString() == compare)
+        {
+            m_windowPackage->GetFrameworkManager()->GetSelectionManager()->SetSelection(go);
+            didFind = true;
+            break;
+        }
+    }
+
+    return didFind;
+}
+
+bool ToolsScene::SelectGameObject(const std::string& guid)
+{
+    bool didFind = false;
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (go->GetGuid()->ToString() == guid)
+        {
+            m_windowPackage->GetFrameworkManager()->GetSelectionManager()->SetSelection(go);
+            didFind = true;
+            break;
+        }
+    }
+
+    return didFind;
 }
 
 void ToolsScene::UpdateDirtyFlag(bool newValue) const

@@ -14,6 +14,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class ViewportEngineAndPanelCommunication;
     class CrossEngineObjects;
     class ToolsLayoutSettings;
     class EngineFlowPlayControl;
@@ -95,12 +96,12 @@ namespace SuperGameTools
         /// <summary>
         /// The last frame rendered by the game engine.
         /// </summary>
-        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlGameViewportTexture;
+        std::shared_ptr<SDLTextureChest> m_sdlGameViewportTexture;
 
         /// <summary>
         /// The last frame rendered by the tools viewport engine.
         /// </summary>
-        std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> m_sdlToolsViewportTexture;
+        std::shared_ptr<SDLTextureChest> m_sdlToolsViewportTexture;
 
         /// <summary>
         /// Complete control over how and when the game engine runs.
@@ -136,6 +137,11 @@ namespace SuperGameTools
         /// Creates, stores and manages all textures in the engine.
         /// </summary>
         std::shared_ptr<SuperGameEngine::TextureManager> m_engineTextureManager;
+
+        /// <summary>
+        /// Objects which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        std::shared_ptr<ViewportEngineAndPanelCommunication> m_viewportEngineAndPanelCommunication;
     };
 
     REGISTER_ENGINE_ENTRY("ToolsEngineEntry", ToolsEngineEntry);

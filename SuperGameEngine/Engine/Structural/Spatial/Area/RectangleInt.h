@@ -193,6 +193,13 @@ namespace SuperGameEngine
         [[nodiscard]] bool Contains(const Circle& other) const;
 
         /// <summary>
+        /// True when the rectangle contains the given point.
+        /// </summary>
+        /// <param name="other">Point to check for. </param>
+        /// <returns>True when the rectangle contains the given point. </returns>
+        [[nodiscard]] bool Contains(const FatedQuestLibraries::FPoint& other) const;
+
+        /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.
         /// </summary>
         /// <param name="other">Other to check against. </param>

@@ -11,6 +11,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class WindowPackage;
     class SceneDocument;
 
     /// <summary>
@@ -21,7 +22,8 @@ namespace SuperGameTools
     public:
         ToolsScene(
             const std::shared_ptr<SuperGameEngine::SerializableParser>& parser, 
-            const std::shared_ptr<SceneDocument>& document);
+            const std::shared_ptr<SceneDocument>& document,
+            const std::shared_ptr<WindowPackage>& windowPackage);
 
         /// <summary>
         /// Event called when this objects dirty flag has changed.
@@ -86,7 +88,26 @@ namespace SuperGameTools
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
 
+        /// <summary>
+        /// Select a game object in the scene by GUID.
+        /// </summary>
+        /// <param name="guid">Guid to select. </param>
+        /// <returns>True means there was a game object to select. </returns>
+        virtual bool SelectGameObject(const FatedQuestLibraries::Guid& guid) override;
+
+        /// <summary>
+        /// Select a game object in the scene by GUID, using the string representation of GUID.
+        /// </summary>
+        /// <param name="guid">Guid to select. </param>
+        /// <returns>True means there was a game object to select. </returns>
+        virtual bool SelectGameObject(const std::string& guid) override;
+
     private:
+        /// <summary>
+        /// Everything a Window Package might need to run.
+        /// </summary>
+        std::shared_ptr<WindowPackage> m_windowPackage;
+
         /// <summary>
         /// Event called when this objects dirty flag has changed.
         /// </summary>

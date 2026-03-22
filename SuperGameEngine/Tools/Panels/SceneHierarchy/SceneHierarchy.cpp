@@ -207,7 +207,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         }
     }
 
-    m_scene = std::make_shared<ToolsScene>(m_windowPackage->GetParser(), document);
+    m_scene = std::make_shared<ToolsScene>(m_windowPackage->GetParser(), document, m_windowPackage);
     if (!m_scene->Load())
     {
         Log::Error("No document loaded into the scene document.",

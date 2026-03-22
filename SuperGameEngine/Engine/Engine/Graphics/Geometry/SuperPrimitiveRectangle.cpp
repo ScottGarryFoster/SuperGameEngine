@@ -14,6 +14,7 @@ SuperPrimitiveRectangle::SuperPrimitiveRectangle(
     : m_rectangle(location.GetX(), location.GetY(), size.GetX(), size.GetY())
 {
     m_renderer = renderer;
+    m_debugColours = RenderDrawColourFromDebugName();
 }
 
 void SuperPrimitiveRectangle::Move(const FVector2F& newLocation)
@@ -45,12 +46,17 @@ void SuperPrimitiveRectangle::SetSize(const FVector2F& newSize)
 
 void SuperPrimitiveRectangle::DrawInPlace(int x, int y, int width, int height) const
 {
+    DrawInPlace(x, y, width, height, DebugColourName::Default);
+}
+
+void SuperPrimitiveRectangle::DrawInPlace(int x, int y, int width, int height, DebugColourName colour) const
+{
     if (m_renderer->RendererState() == SDLRendererState::Active)
     {
-        auto rect = SDL_Rect(x,y,width,height);
+        auto rect = SDL_Rect(x, y, width, height);
 
         SDL_Renderer* renderer = m_renderer->GetRenderer();
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 180);
+        m_debugColours.SetColour(m_renderer, colour);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderDrawRect(renderer, &rect);
     }

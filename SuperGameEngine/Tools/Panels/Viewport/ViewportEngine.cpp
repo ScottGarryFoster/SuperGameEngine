@@ -1,5 +1,9 @@
 #include "ViewportEngine.h"
 
+#include <ranges>
+
+#include "ViewportEngineAndPanelCommunication.h"
+#include "../../../Input/InputManagement/SDLInputManager.h"
 #include "Engine/Content/ContentManager.h"
 #include "Engine/CrossEngineObjects/CrossEngineObjects.h"
 #include "Engine/Content/SuperTextureManager.h"
@@ -20,6 +24,9 @@
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "Structural/Assets/Texture/TextureAsset.h"
 #include "Structural/Serializable/SerializableProperty.h"
+#include "ToolsEngine/FrameworkManager/FrameworkManager.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameTools;
@@ -28,6 +35,9 @@ using namespace SuperGameEngine;
 ViewportEngine::ViewportEngine()
 {
     m_currentScene = nullptr;
+    m_mouseCollision = RectangleInt();
+    m_previousSelectionKeyDownStatus = false;
+    m_selectionButtonStatusIsDirty = false;
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -57,25 +67,66 @@ ApplicationOperationState ViewportEngine::Event(SDL_Event event)
 
 ApplicationOperationState ViewportEngine::Update(Uint64 ticks)
 {
+    // This must always be called first to ensure dirty flags flip.
+    UpdateSelectionButtonDirtyFlag();
+
+    ProcessDrawBundleInteractions();
     return ApplicationOperationState::Running;
 }
 
 void ViewportEngine::Draw()
 {
+    // Mouse Rectangle
+    m_debugRectangle->DrawInPlace(
+        m_mouseCollision.GetLeft(),
+        m_mouseCollision.GetTop(),
+        m_mouseCollision.GetWidth(),
+        m_mouseCollision.GetHeight());
+
+
     for (const std::pair<const uint64_t, ViewportObjectDrawBundle>& drawBundle : m_drawBundle)
     {
-        if (!drawBundle.second.IsValidToRender)
+        const bool mouseOver = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::Hover);
+        const bool leftClick = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::SelectionKeyDown);
+        const bool selected = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::Selected);
+        if (selected)
         {
-            continue;
+            m_debugRectangle->DrawInPlace(
+                drawBundle.second.FaceRectangle.GetLeft(),
+                drawBundle.second.FaceRectangle.GetTop(),
+                drawBundle.second.FaceRectangle.GetWidth(),
+                drawBundle.second.FaceRectangle.GetHeight(),
+                DebugColourName::Red);
+        }
+        else if (!mouseOver)
+        {
+            m_debugRectangle->DrawInPlace(
+                drawBundle.second.FaceRectangle.GetLeft(),
+                drawBundle.second.FaceRectangle.GetTop(),
+                drawBundle.second.FaceRectangle.GetWidth(),
+                drawBundle.second.FaceRectangle.GetHeight(),
+                DebugColourName::Default);
+        }
+        else if (leftClick)
+        {
+            m_debugRectangle->DrawInPlace(
+                drawBundle.second.FaceRectangle.GetLeft(),
+                drawBundle.second.FaceRectangle.GetTop(),
+                drawBundle.second.FaceRectangle.GetWidth(),
+                drawBundle.second.FaceRectangle.GetHeight(),
+                DebugColourName::Blue);
+        }
+        if (mouseOver)
+        {
+            m_debugRectangle->DrawInPlace(
+                drawBundle.second.FaceRectangle.GetLeft(),
+                drawBundle.second.FaceRectangle.GetTop(),
+                drawBundle.second.FaceRectangle.GetWidth(),
+                drawBundle.second.FaceRectangle.GetHeight(),
+                DebugColourName::Cyan);
         }
 
-        drawBundle.second.TextureAsset->Draw(0, drawBundle.second.TransformPosition);
-
-        m_debugRectangle->DrawInPlace(
-            drawBundle.second.FaceRectangle.GetLeft(), 
-            drawBundle.second.FaceRectangle.GetTop(),
-            drawBundle.second.FaceRectangle.GetWidth(),
-            drawBundle.second.FaceRectangle.GetHeight());
+        DrawBundle(drawBundle.second);
     }
 }
 
@@ -112,6 +163,8 @@ void ViewportEngine::EngineStart()
 
     m_primitiveShapeProvider = std::make_shared<SuperPrimitiveShapeProvider>(m_renderer);
     m_debugRectangle = m_primitiveShapeProvider->CreateRectangle(FVector2F(), FVector2F(50, 50));
+
+    m_crossEngineObjects->GetWindowPackage()->GetFrameworkManager()->GetSelectionManager()->OnSelectionChanged(SelectionGroup::Inspectable)->Subscribe(shared_from_this());
 }
 
 void ViewportEngine::EngineEnd()
@@ -142,12 +195,53 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         OnGameObjectDeleted(gameObjectDeleted->GetGameObject());
     }
+    else if (auto selectionChanged = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
+    {
+        OnSelectionChanged(selectionChanged);
+    }
 }
 
 void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
 {
     m_crossEngineObjects = crossEngineObjects;
     m_crossEngineObjects->OnNewScene()->Subscribe(shared_from_this());
+}
+
+void ViewportEngine::GiveViewportEngineAndPanelCommunication(
+    const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication)
+{
+    m_viewportEngineAndPanelCommunication = engineAndPanelCommunication;
+}
+
+void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle, const FPoint& mousePosition)
+{
+    DrawBundle(drawBundle);
+
+    bool draw = true;
+    if (drawBundle.FaceRectangle.Contains(mousePosition))
+    {
+        draw = false;
+    }
+
+    if (draw)
+    {
+
+        m_debugRectangle->DrawInPlace(
+            drawBundle.FaceRectangle.GetLeft(),
+            drawBundle.FaceRectangle.GetTop(),
+            drawBundle.FaceRectangle.GetWidth(),
+            drawBundle.FaceRectangle.GetHeight());
+    }
+}
+
+void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle)
+{
+    if (!drawBundle.IsValidToRender)
+    {
+        return;
+    }
+
+    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition);
 }
 
 void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)
@@ -162,7 +256,7 @@ void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)
 
 void ViewportEngine::AddGameObjectToScene(const std::shared_ptr<GameObject>& gameObject)
 {
-    auto drawBundle = ViewportObjectDrawBundle();
+    auto drawBundle = CreateDrawBundle(gameObject);
     for (const std::shared_ptr<Component>& component : *gameObject->GetComponents())
     {
         bool foundType = false;
@@ -327,7 +421,7 @@ void ViewportEngine::OnComponentAdded(
 {
     if (!m_drawBundle.contains(gameObjectGuid->AsNumber()))
     {
-        m_drawBundle.insert_or_assign(gameObjectGuid->AsNumber(), ViewportObjectDrawBundle());
+        m_drawBundle.insert_or_assign(gameObjectGuid->AsNumber(), CreateDrawBundle(gameObjectGuid));
     }
 
     // Listen for changes.
@@ -418,4 +512,156 @@ void ViewportEngine::UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBund
     drawBundle.FaceRectangle.SetLocation(
         (float)drawBundle.TransformPosition.GetX(),
         (float)drawBundle.TransformPosition.GetY());
+}
+
+ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<GameObject>& gameObject) const
+{
+    return CreateDrawBundle(gameObject->GetGuid());
+}
+
+ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<Guid>& gameObjectGuid) const
+{
+    auto drawBundle = ViewportObjectDrawBundle();
+    drawBundle.Guid = gameObjectGuid->ToString();
+    drawBundle.SelectionState = DrawBundleSelectionState::NoInteraction;
+    return drawBundle;
+}
+
+void ViewportEngine::ProcessDrawBundleInteractions()
+{
+    bool leftClick = false;
+    if (m_selectionButtonStatusIsDirty)
+    {
+        leftClick = IsSelectionButtonDown();
+    }
+
+    std::pair<bool, SuperGameEngine::RectangleInt> mousePosition = GetMousePosition();
+    m_mouseCollision = mousePosition.second;
+    if (mousePosition.first)
+    {
+        leftClick = false;
+    }
+
+    auto updateStateAdd = [](ViewportObjectDrawBundle& drawBundle, DrawBundleSelectionState newState)
+        {
+            if (drawBundle.SelectionState == DrawBundleSelectionState::NoInteraction)
+            {
+                drawBundle.SelectionState = newState;
+            }
+            else
+            {
+                drawBundle.SelectionState |= newState;
+            }
+        };
+
+    auto updateStateRemove = [](ViewportObjectDrawBundle& drawBundle, DrawBundleSelectionState newState)
+        {
+            if (EDrawBundleSelectionState::HasFlag(drawBundle.SelectionState, newState))
+            {
+                drawBundle.SelectionState &= ~newState;
+            }
+        };
+
+    for (ViewportObjectDrawBundle& drawBundle : m_drawBundle | std::views::values)
+    {
+        const bool mouseOver = drawBundle.FaceRectangle.Contains(mousePosition.second);
+        if (mouseOver)
+        {
+            updateStateAdd(drawBundle, DrawBundleSelectionState::Hover);
+        }
+        else
+        {
+            updateStateRemove(drawBundle, DrawBundleSelectionState::Hover);
+        }
+
+        // This ensures we only ever run this code once a frame if we need to.
+        // The state updating is not a big load on the viewport but selection will be.
+        if (m_selectionButtonStatusIsDirty)
+        {
+            if (leftClick)
+            {
+                updateStateAdd(drawBundle, DrawBundleSelectionState::SelectionKeyDown);
+            }
+            else
+            {
+                updateStateRemove(drawBundle, DrawBundleSelectionState::SelectionKeyDown);
+            }
+
+            if (mouseOver && leftClick)
+            {
+                if (!EDrawBundleSelectionState::HasFlag(drawBundle.SelectionState, DrawBundleSelectionState::Selected))
+                {
+                    m_currentScene->SelectGameObject(drawBundle.Guid);
+                }
+            }
+        }
+    }
+
+}
+
+void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEventArguments>& arguments)
+{
+    const SelectionChangeType selectionType = arguments->GetSelectionChangeType();
+    if (selectionType == SelectionChangeType::Set)
+    {
+        for (ViewportObjectDrawBundle& drawBundle : m_drawBundle | std::views::values)
+        {
+            if (EDrawBundleSelectionState::HasFlag(drawBundle.SelectionState, DrawBundleSelectionState::Selected))
+            {
+                drawBundle.SelectionState &= ~DrawBundleSelectionState::Selected;
+            }
+        }
+    }
+
+    for (const std::shared_ptr<const Guid>& guid : arguments->GetAllSelectableGuids())
+    {
+        if (m_drawBundle.contains(guid->AsNumber()))
+        {
+            ViewportObjectDrawBundle& drawBundle = m_drawBundle.at(guid->AsNumber());
+            if (!EDrawBundleSelectionState::HasFlag(drawBundle.SelectionState, DrawBundleSelectionState::Selected))
+            {
+                if (selectionType == SelectionChangeType::Set || selectionType == SelectionChangeType::Add)
+                {
+                    drawBundle.SelectionState |= DrawBundleSelectionState::Selected;
+                }
+            }
+            else if(selectionType == SelectionChangeType::Remove)
+            {
+                // Have selected state and we are removing from the selection.
+                drawBundle.SelectionState &= ~DrawBundleSelectionState::Selected;
+            }
+
+        }
+    }
+}
+
+void ViewportEngine::UpdateSelectionButtonDirtyFlag()
+{
+    bool currentSelectionButton = IsSelectionButtonDown();
+    m_selectionButtonStatusIsDirty = currentSelectionButton != m_previousSelectionKeyDownStatus;
+
+    m_previousSelectionKeyDownStatus = currentSelectionButton;
+}
+
+bool ViewportEngine::IsSelectionButtonDown() const
+{
+    const SuperGameInput::MouseState mouseState = m_inputManager->GetMouseState();
+    return mouseState.ButtonState.at(SuperGameInput::MouseButton::Left) == SuperGameInput::KeyOrButtonState::Down &&
+        mouseState.ButtonState.at(SuperGameInput::MouseButton::Right) == SuperGameInput::KeyOrButtonState::Unpressed &&
+        mouseState.ButtonState.at(SuperGameInput::MouseButton::Middle) == SuperGameInput::KeyOrButtonState::Unpressed &&
+        mouseState.ButtonState.at(SuperGameInput::MouseButton::Back) == SuperGameInput::KeyOrButtonState::Unpressed &&
+        mouseState.ButtonState.at(SuperGameInput::MouseButton::Forward) == SuperGameInput::KeyOrButtonState::Unpressed;
+}
+
+std::pair<bool, SuperGameEngine::RectangleInt> ViewportEngine::GetMousePosition() const
+{
+    const FPoint mousePosition = m_inputManager->GetMousePosition();
+    RectangleInt viewport = m_viewportEngineAndPanelCommunication->GetViewportLocation();
+    const FPoint adjustedPosition = FPoint(mousePosition.GetX() - viewport.GetLeft() + 26, mousePosition.GetY() - viewport.GetTop() - 44);
+
+    return
+    {
+        mousePosition.GetX() == -1 || mousePosition.GetY() == -1,
+        RectangleInt(adjustedPosition.GetX(), adjustedPosition.GetY(), 1, 1)
+       };
 }

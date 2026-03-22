@@ -1,0 +1,23 @@
+<SuperEnum Type="BitFlag">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes the selection state of the given draw bundle so that it maybe rendered correctly.
+    </EnumComment>
+    <EnumName Name="DrawBundleSelectionState">
+        <NoInteraction>
+            No cursor is interacting and the object for this bundle is not selected.
+        </NoInteraction>
+        <Hover>
+            The bundle has either a mouse cursor or other method to demostrate it could be selected on a key press.
+        </Hover>
+        <SelectionKeyDown>
+            The selection key is down over the object.
+        </SelectionKeyDown>
+        <Selected>
+            The object for the bundle is currently selected.
+        </Selected>
+    </EnumName>
+</SuperEnum>

@@ -105,14 +105,14 @@ void ToolsEngine::GiveControls(const std::shared_ptr<EngineControls>& engineCont
     m_engineControls = engineControls;
 }
 
-void ToolsEngine::GiveSDLGameEngineTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+void ToolsEngine::GiveSDLGameEngineTexture(const std::shared_ptr<SDLTextureChest>& sdlRenderTexture)
 {
     m_sdlGameViewportRenderTexture = sdlRenderTexture;
 
     m_windowPackage->SetSDLGameViewportRenderTexture(m_sdlGameViewportRenderTexture);
 }
 
-void ToolsEngine::GiveSDLViewportTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+void ToolsEngine::GiveSDLViewportTexture(const std::shared_ptr<SDLTextureChest>& sdlRenderTexture)
 {
     m_sdlToolsViewportRenderTexture = sdlRenderTexture;
 
@@ -129,6 +129,12 @@ void ToolsEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObject
 {
     m_crossEngineObjects = crossEngineObjects;
     m_crossEngineObjects->SetWindowPackage(m_windowPackage);
+}
+
+void ToolsEngine::GiveViewportEngineAndPanelCommunication(
+    const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication)
+{
+    m_viewportEngineAndPanelCommunication = engineAndPanelCommunication;
 }
 
 ApplicationOperationState ToolsEngine::Event(SDL_Event event)
@@ -208,6 +214,7 @@ void ToolsEngine::Setup()
     projectProperties->FEventObserver::UpdateDistributedWeakPointer(projectProperties);
 
     auto viewportPanel = std::make_shared<ViewportPanel>();
+    viewportPanel->GiveViewportEngineAndPanelCommunication(m_viewportEngineAndPanelCommunication);
     viewportPanel->UpdateDistributedWeakPointer(viewportPanel);
     viewportPanel->GiveEngineControls(m_engineControls);
 

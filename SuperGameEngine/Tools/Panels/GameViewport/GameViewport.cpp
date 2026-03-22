@@ -3,6 +3,7 @@
 #include "../../../Engine/Engine/Graphics/Texture/SDLRendererReader.h"
 #include "../../ToolsEngine/Communication/EngineEntryCommunication.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
+#include "Engine/Graphics/Texture/SDLTextureChest.h"
 
 using namespace SuperGameEngine;
 using namespace SuperGameTools;
@@ -70,10 +71,10 @@ void GameViewport::Draw()
 
     if (m_windowPackage->GetSDLGameViewportRenderTexture())
     {
-        if (m_windowPackage->GetSDLGameViewportRenderTexture()->GetState() == PointerState::Active)
+        SDL_Texture* texture = m_windowPackage->GetSDLGameViewportRenderTexture()->Get();
+        if (texture)
         {
             ImVec2 imageSize = ImVec2((float)1280, (float)720);
-            SDL_Texture* texture = m_windowPackage->GetSDLGameViewportRenderTexture()->Get();
             ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<void*>(texture)), imageSize);
         }
     }

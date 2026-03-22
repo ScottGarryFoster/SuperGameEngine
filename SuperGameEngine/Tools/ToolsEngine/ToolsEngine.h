@@ -10,12 +10,14 @@
 
 namespace SuperGameTools
 {
+    class ViewportEngineAndPanelCommunication;
     class CrossEngineObjects;
     class PanelManager;
 }
 
 namespace SuperGameEngine
 {
+    class SDLTextureChest;
     class SuperContentManager;
     class SuperGameTime;
     class SuperSceneLoadPackage;
@@ -141,7 +143,7 @@ namespace SuperGameTools
         /// This texture is for the game viewport.
         /// </summary>
         /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
-        virtual void GiveSDLGameEngineTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
+        virtual void GiveSDLGameEngineTexture(const std::shared_ptr<SDLTextureChest>& sdlRenderTexture);
 
         /// <summary>
         /// Gives the engine the texture the SDL Render is rendering to.
@@ -149,7 +151,7 @@ namespace SuperGameTools
         /// This texture is for the tools viewport.
         /// </summary>
         /// <param name="sdlRenderTexture">The actual texture as a weak wrapper. </param>
-        virtual void GiveSDLViewportTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture);
+        virtual void GiveSDLViewportTexture(const std::shared_ptr<SDLTextureChest>& sdlRenderTexture);
 
         /// <summary>
         /// Gives the ability for the tools engine to control
@@ -167,6 +169,12 @@ namespace SuperGameTools
         /// Holds links to objects which can be passed between engines within the tools.
         /// </param>
         void GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects);
+
+        /// <summary>
+        /// Give object which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        /// <param name="engineAndPanelCommunication">New communication Object. </param>
+        void GiveViewportEngineAndPanelCommunication(const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication);
 
     private:
         /// <summary>
@@ -208,13 +216,13 @@ namespace SuperGameTools
         /// Gives the engine the texture the SDL Render is rendering to.
         /// This is used to display what the engine is doing.
         /// </summary>
-        std::shared_ptr< ExtremelyWeakWrapper<SDL_Texture>> m_sdlGameViewportRenderTexture;
+        std::shared_ptr<SDLTextureChest> m_sdlGameViewportRenderTexture;
 
         /// <summary>
         /// Gives the engine the texture the SDL Render is rendering to.
         /// This is used to display what the tools engine (viewport) is doing.
         /// </summary>
-        std::shared_ptr< ExtremelyWeakWrapper<SDL_Texture>> m_sdlToolsViewportRenderTexture;
+        std::shared_ptr<SDLTextureChest> m_sdlToolsViewportRenderTexture;
 
         /// <summary>
         /// Everything a window needs to run.
@@ -257,6 +265,11 @@ namespace SuperGameTools
         /// such as 'oncomponentadded' which are in the main engine but affect behaviour in other engines.
         /// </summary>
         std::shared_ptr<ToolsSharedSceneChangedEvents> m_sharedSceneChangedEvents;
+
+        /// <summary>
+        /// Objects which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        std::shared_ptr<ViewportEngineAndPanelCommunication> m_viewportEngineAndPanelCommunication;
 
         /// <summary>
         /// Sets up the engine.

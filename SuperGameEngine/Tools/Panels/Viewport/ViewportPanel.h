@@ -4,6 +4,8 @@
 #include "Engine/Basic/ExtremelyWeakWrapper.h"
 #include <SDL.h>
 
+#include "Structural/Spatial/Area/RectangleInt.h"
+
 namespace SuperGameEngine
 {
     class EngineControls;
@@ -11,6 +13,7 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class ViewportEngineAndPanelCommunication;
     class ViewportTools;
 
     /// <summary>
@@ -86,6 +89,12 @@ namespace SuperGameTools
         /// <param name="viewportTools">The tools which accompany the scene viewport. </param>
         void GiveViewportTools(const std::shared_ptr<ViewportTools>& viewportTools);
 
+        /// <summary>
+        /// Give object which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        /// <param name="engineAndPanelCommunication">New communication Object. </param>
+        void GiveViewportEngineAndPanelCommunication(const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication);
+
     private:
 
         /// <summary>
@@ -114,6 +123,11 @@ namespace SuperGameTools
         bool m_sizeHasChanged;
 
         /// <summary>
+        /// True when either the X Y Width Height has changed.
+        /// </summary>
+        bool m_sizeOrPositionHasChanged;
+
+        /// <summary>
         /// True means we should render the viewport tools at the top.
         /// </summary>
         bool m_renderViewportTools;
@@ -122,6 +136,16 @@ namespace SuperGameTools
         /// The tools which accompany the scene viewport.
         /// </summary>
         std::shared_ptr<ViewportTools> m_viewportTools;
+
+        /// <summary>
+        /// Objects which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        std::shared_ptr<ViewportEngineAndPanelCommunication> m_viewportEngineAndPanelCommunication;
+
+        /// <summary>
+        /// The location and size of the viewport image in the window.
+        /// </summary>
+        SuperGameEngine::RectangleInt m_viewportImage;
 
         /// <summary>
         /// Updates the viewport to match the window.

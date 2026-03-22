@@ -107,6 +107,11 @@ void LoggerOutput::Draw()
         ImGui::EndTable();
     }
 
+    if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+    {
+        ImGui::SetScrollHereY(1.0f);
+    }
+
     EndWindowRender(GetPanelName());
 }
 

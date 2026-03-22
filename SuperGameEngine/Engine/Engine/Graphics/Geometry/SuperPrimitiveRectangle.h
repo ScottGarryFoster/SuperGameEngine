@@ -1,5 +1,6 @@
 #pragma once
 #include "PrimitiveRectangle.h"
+#include "RenderDrawColourFromDebugName.h"
 #include "Structural/Spatial/Area/Rectangle.h"
 
 namespace SuperGameEngine
@@ -52,6 +53,16 @@ namespace SuperGameEngine
         /// <param name="height">Height of the rectangle. </param>
         virtual void DrawInPlace(int x, int y, int width, int height) const override;
 
+        /// <summary>
+        /// Draw rectangle in the position.
+        /// </summary>
+        /// <param name="x">X location. </param>
+        /// <param name="y">Y location. </param>
+        /// <param name="width">Width of the rectangle. </param>
+        /// <param name="height">Height of the rectangle. </param>
+        /// <param name="colour">Colour to use when drawing. </param>
+        virtual void DrawInPlace(int x, int y, int width, int height, DebugColourName colour) const override;
+
     private:
 
         /// <summary>
@@ -63,5 +74,10 @@ namespace SuperGameEngine
         /// Provides the ability to draw to the screen.
         /// </summary>
         std::shared_ptr<SDLRendererReader> m_renderer;
+
+        /// <summary>
+        /// Switches the render draw colour based on debug colour.
+        /// </summary>
+        RenderDrawColourFromDebugName m_debugColours;
     };
 }

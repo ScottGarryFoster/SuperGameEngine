@@ -71,9 +71,14 @@ FPoint& FPoint::operator+=(const FPoint& other)
     return *this;
 }
 
-const std::string FPoint::Print() const
+std::string FPoint::Print() const
 {
     std::stringstream ss;
     ss << "X: " << std::to_string(m_x) << " Y: " << std::to_string(m_y);
     return ss.str();
+}
+
+std::string FPoint::ToString() const
+{
+    return Print();
 }

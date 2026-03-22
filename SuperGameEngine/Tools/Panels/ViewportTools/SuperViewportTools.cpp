@@ -3,9 +3,7 @@
 #include "SuperViewportToolsButton.h"
 #include "ViewportButtonInfo.h"
 #include "Engine/Content/ContentManager.h"
-#include "Engine/Graphics/Texture/SuperTexture.h"
 #include "Panels/SceneHierarchy/GameObjectTreeViewItem.h"
-#include "Structural/Spatial/Area/RectangleInt.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameTools;
