@@ -529,17 +529,18 @@ ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<
 
 void ViewportEngine::ProcessDrawBundleInteractions()
 {
+    std::pair<bool, SuperGameEngine::RectangleInt> mousePosition = GetMousePosition();
+    bool mousePositionIsValid = mousePosition.first;
+    m_mouseCollision = mousePosition.second;
+    if (!mousePositionIsValid)
+    {
+        return;
+    }
+
     bool leftClick = false;
     if (m_selectionButtonStatusIsDirty)
     {
         leftClick = IsSelectionButtonDown();
-    }
-
-    std::pair<bool, SuperGameEngine::RectangleInt> mousePosition = GetMousePosition();
-    m_mouseCollision = mousePosition.second;
-    if (mousePosition.first)
-    {
-        leftClick = false;
     }
 
     auto updateStateAdd = [](ViewportObjectDrawBundle& drawBundle, DrawBundleSelectionState newState)
@@ -657,11 +658,14 @@ std::pair<bool, SuperGameEngine::RectangleInt> ViewportEngine::GetMousePosition(
 {
     const FPoint mousePosition = m_inputManager->GetMousePosition();
     RectangleInt viewport = m_viewportEngineAndPanelCommunication->GetViewportLocation();
-    const FPoint adjustedPosition = FPoint(mousePosition.GetX() - viewport.GetLeft() + 26, mousePosition.GetY() - viewport.GetTop() - 44);
+    bool mousePositionIsValid = viewport.Contains(mousePosition);
+
+    // Adjust the mouse position from window space to viewport space.
+    const FPoint adjustedPosition = FPoint(mousePosition.GetX() - viewport.GetLeft(), mousePosition.GetY() - viewport.GetTop());
 
     return
     {
-        mousePosition.GetX() == -1 || mousePosition.GetY() == -1,
+        mousePositionIsValid,
         RectangleInt(adjustedPosition.GetX(), adjustedPosition.GetY(), 1, 1)
        };
 }

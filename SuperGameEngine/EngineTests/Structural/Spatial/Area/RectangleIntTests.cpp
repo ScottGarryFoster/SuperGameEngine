@@ -2956,6 +2956,16 @@ namespace SuperGameEngineTests_Structural_Spatial_Area
         ASSERT_TRUE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
     }
 
+    TEST_F(RectangleIntTests, ContainsPoint_ReturnsTrue_WhenPointIsInMiddle2)
+    {
+        m_testRectangle = std::make_shared<RectangleInt>(1675, 48, 495, 948);
+        auto otherPoint = FPoint(513, 510);
+
+        bool actual = m_testRectangle->Contains(otherPoint);
+
+        ASSERT_FALSE(actual) << "Left:" << m_testRectangle->ToString() << " Right: " << otherPoint.ToString();
+    }
+
 #pragma endregion
 
 }

@@ -49,11 +49,12 @@ void ViewportPanel::Update()
 
     if (m_sizeOrPositionHasChanged && m_viewportEngineAndPanelCommunication)
     {
+        // Ensure the position is adjusted for the frame.
         m_viewportEngineAndPanelCommunication->UpdateViewportLocation(
-            m_viewportImage.GetLeft(),
-            m_viewportImage.GetTop(),
-            m_viewportImage.GetRight(),
-            m_viewportImage.GetBottom()
+            m_viewportImage.GetLeft() - 26,
+            m_viewportImage.GetTop() + 44,
+            m_viewportImage.GetWidth(),
+            m_viewportImage.GetHeight()
         );
 
         m_sizeOrPositionHasChanged = false;
