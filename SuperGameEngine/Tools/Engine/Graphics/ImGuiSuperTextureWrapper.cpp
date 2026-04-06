@@ -26,6 +26,14 @@ void ImGuiSuperTextureWrapper::Draw() const
     ImGui::Image(textureID, imageSize);
 }
 
+void ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error(
+        "Tint is not supported by ImGuiSuperTextures. Drawing without tint.",
+        "ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FColour&)");
+    Draw();
+}
+
 void ImGuiSuperTextureWrapper::Draw(const FPoint& location) const
 {
     ImVec2 position = ImGui::GetCursorPos();
@@ -47,6 +55,16 @@ void ImGuiSuperTextureWrapper::Draw(const FPoint& location) const
     ImGui::Image(textureID, imageSize);
 
     ImGui::SetCursorPos(ImVec2(position.x, position.y));
+}
+
+void ImGuiSuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error(
+        "Tint is not supported by ImGuiSuperTextures. Drawing without tint.",
+        "ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FColour&)");
+    Draw(location);
 }
 
 void ImGuiSuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) const
@@ -71,6 +89,17 @@ void ImGuiSuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) 
     ImGui::SetCursorPos(ImVec2(position.x, position.y));
 }
 
+void ImGuiSuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location,
+    const FatedQuestLibraries::FPoint& size, 
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error(
+        "Tint is not supported by ImGuiSuperTextures. Drawing without tint.",
+        "ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FPoint&const FatedQuestLibraries::FColour&)");
+    Draw(location, size);
+}
+
 void ImGuiSuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
 {
     ImVec2 position = ImGui::GetCursorPos();
@@ -92,6 +121,17 @@ void ImGuiSuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const 
     ImGui::Image(textureID, imageSize);
 
     ImGui::SetCursorPos(ImVec2(position.x, position.y));
+}
+
+void ImGuiSuperTextureWrapper::Draw(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error(
+        "Tint is not supported by ImGuiSuperTextures. Drawing without tint.", 
+        "ImGuiSuperTextureWrapper::Draw(const RectangleInt&,const RectangleInt&,const FatedQuestLibraries::FColour&)");
+    Draw(textureRectangle, screenRectangle);
 }
 
 bool ImGuiSuperTextureWrapper::RepresentSameImage(std::shared_ptr<SuperTexture> texture) const

@@ -83,6 +83,14 @@ void SuperTextureAsset::Draw() const
     }
 }
 
+void SuperTextureAsset::Draw(const FatedQuestLibraries::FColour& tintColour) const
+{
+    if (m_superTexture)
+    {
+        m_superTexture->Draw(tintColour);
+    }
+}
+
 void SuperTextureAsset::Draw(int tile) const
 {
     if (m_superTexture)
@@ -109,6 +117,23 @@ void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& scr
             break;
         default:
             m_superTexture->Draw();
+        }
+    }
+}
+
+void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    if (m_superTexture)
+    {
+        switch (m_splitMethod)
+        {
+        case SplitUVMethod::Predefined:
+            DrawPredefined(tile, screenLocation, tintColour);
+            break;
+        default:
+            // TODO: Implment Tint here
+            m_superTexture->Draw(FPoint(screenLocation.GetX(), screenLocation.GetY()), tintColour);
         }
     }
 }
@@ -179,28 +204,74 @@ void SuperTextureAsset::DrawPredefined(int tile) const
 
 void SuperTextureAsset::DrawPredefined(int tile, const FVector2F& screenLocation) const
 {
-    if (tile < 0)
+    KeyPairValueReturn<RectangleInt, RectangleInt> screenSizeAndLocation = GatherScreenSizeAndLocation(tile, screenLocation);
+    if (screenSizeAndLocation.HasAnError())
     {
         return;
+    }
+
+    DrawImplementation(screenSizeAndLocation.Key, screenSizeAndLocation.Value);
+}
+
+void SuperTextureAsset::DrawPredefined(
+    int tile, 
+    const FatedQuestLibraries::FVector2F& screenLocation,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    KeyPairValueReturn<RectangleInt, RectangleInt> screenSizeAndLocation = GatherScreenSizeAndLocation(tile, screenLocation);
+    if (screenSizeAndLocation.HasAnError())
+    {
+        return;
+    }
+
+    DrawImplementation(screenSizeAndLocation.Key, screenSizeAndLocation.Value, tintColour);
+}
+
+KeyPairValueReturn<RectangleInt, RectangleInt> SuperTextureAsset::GatherScreenSizeAndLocation(
+    int tile,
+    const FatedQuestLibraries::FVector2F& screenLocation) const
+{
+    if (tile < 0)
+    {
+        return {.WasError = true };
     }
 
     // Cast to Size_T to remove warning here.
     // We are never going to use so many segments as to reach the int limit.
     if (static_cast<size_t>(tile) >= m_predefinedUVs.size())
     {
-        return;
+        return { .WasError = true };
     }
 
     // If the bool is false, the rectangle is invalid
     if (!m_predefinedUVs[tile].first)
     {
-        return;
+        return { .WasError = true };
     }
 
-    m_superTexture->Draw(m_predefinedUVs[tile].second, 
-        RectangleInt(
-            static_cast<int>(screenLocation.GetX()), 
-            static_cast<int>(screenLocation.GetY()), 
+    return
+    {
+        .Key = m_predefinedUVs[tile].second,
+        .Value = RectangleInt(
+            static_cast<int>(screenLocation.GetX()),
+            static_cast<int>(screenLocation.GetY()),
             m_predefinedUVs[tile].second.GetWidth(),
-            m_predefinedUVs[tile].second.GetHeight()));
+            m_predefinedUVs[tile].second.GetHeight()),
+        .WasError = false,
+    };
+}
+
+void SuperTextureAsset::DrawImplementation(
+    const RectangleInt& textureRectangle,
+    const RectangleInt& screenRectangle) const
+{
+    m_superTexture->Draw(textureRectangle, screenRectangle);
+}
+
+void SuperTextureAsset::DrawImplementation(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const FColour& tintColour) const
+{
+    m_superTexture->Draw(textureRectangle, screenRectangle, tintColour);
 }

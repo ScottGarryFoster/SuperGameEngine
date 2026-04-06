@@ -241,7 +241,8 @@ void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle)
         return;
     }
 
-    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition);
+    FatedQuestLibraries::FColour colour = { 255, 0, 0, 255 };
+    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition, colour);
 }
 
 void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)

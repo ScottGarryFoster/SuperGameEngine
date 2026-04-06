@@ -21,8 +21,21 @@ namespace SuperGameEngine
         /// <summary>
         /// Draws to screen.
         /// </summary>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FColour& tintColour) const = 0;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         virtual void Draw(const FatedQuestLibraries::FPoint& location) const = 0;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FColour& tintColour) const = 0;
 
         /// <summary>
         /// Draws to screen.
@@ -32,11 +45,37 @@ namespace SuperGameEngine
         virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FPoint& size) const = 0;
 
         /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location,
+            const FatedQuestLibraries::FPoint& size,
+            const FatedQuestLibraries::FColour& tintColour) const = 0;
+
+        /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
         /// <param name="screenRectangle">Where on the screen to render. </param>
         virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const = 0;
+
+        /// <summary>
+        /// Draws to the screen with tint.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        /// <remarks>
+        /// Tint here will work fine for things like fonts or a white image you are colouring.
+        /// This will not work particularly well for full colour images.
+        /// </remarks>
+        virtual void Draw(
+            const RectangleInt& textureRectangle, 
+            const RectangleInt& screenRectangle, 
+            const FatedQuestLibraries::FColour& tintColour) const = 0;
 
         /// <summary>
         /// Determines if the two textures are the same image.

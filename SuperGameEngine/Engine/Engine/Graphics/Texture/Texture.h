@@ -49,8 +49,21 @@ namespace SuperGameEngine
         /// <summary>
         /// Draws to screen.
         /// </summary>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         void Draw(const FPoint& location) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Draws to screen.
@@ -60,11 +73,34 @@ namespace SuperGameEngine
         void Draw(const FPoint& location, const FPoint& size) const override;
 
         /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location, 
+            const FatedQuestLibraries::FPoint& size, 
+            const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
         /// <param name="screenRectangle">Where on the screen to render. </param>
         void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const override;
+
+        /// <summary>
+        /// Draws to the screen with tint.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        /// <remarks>
+        /// Tint here will work fine for things like fonts or a white image you are colouring.
+        /// This will not work particularly well for full colour images.
+        /// </remarks>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Get the Filepath of the loaded texture.
@@ -76,7 +112,7 @@ namespace SuperGameEngine
          /// Get the size of the Texture in Pixels.
          /// </summary>
          /// <returns>Returns the size of the Texture. </returns>
-        FPoint Size() const override;
+        [[nodiscard]] FPoint Size() const override;
 
         /// <summary>
         /// Remakes the texture if possible.
@@ -144,6 +180,36 @@ namespace SuperGameEngine
         /// <param name="texture">Texture to extract metadata. </param>
         void UpdateTextureMetaData(SDL_Texture* texture) const;
 
-        bool ValidateRendererAndTexture(const std::string& methodName) const;
+        /// <summary>
+        /// Validates the renderer and texture can be trusted and used.
+        /// </summary>
+        /// <param name="methodName">Method name used to better error reporting.</param>
+        /// <returns>The renderer or nullptr if the renderer has been destroyed or texture is invalid.</returns>
+        SDL_Renderer* ValidateRendererAndTexture(const std::string& methodName) const;
+
+        /// <summary>
+        /// Sets the colour for the renderer.
+        /// This should be called before you draw.
+        /// </summary>
+        /// <param name="tintColour">Tint colour. </param>
+        void SetColourForRenderer(const FatedQuestLibraries::FColour& tintColour) const;
+
+        /// <summary>
+        /// Unsets colour for the renderer back to default.
+        /// This should be called after draw and after you have set a tint.
+        /// </summary>
+        void UnsetColourForRenderer() const;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// This is the inner logic for this action without any validation of the renderer.
+        /// </summary>
+        /// <param name="renderer">
+        /// Renderer used to render the texture.
+        /// Used explicitly! No further validation will be performed.
+        /// </param>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        void DrawInnerLogic(SDL_Renderer* renderer, const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const;
     };
 }

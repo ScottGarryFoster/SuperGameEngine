@@ -21,9 +21,21 @@ void SuperTextureWrapper::Draw() const
     m_texture->Draw();
 }
 
+void SuperTextureWrapper::Draw(const FatedQuestLibraries::FColour& tintColour) const
+{
+    m_texture->Draw(tintColour);
+}
+
 void SuperTextureWrapper::Draw(const FPoint& location) const
 {
     m_texture->Draw(location);
+}
+
+void SuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    m_texture->Draw(location, tintColour);
 }
 
 void SuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) const
@@ -31,9 +43,25 @@ void SuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) const
     m_texture->Draw(location, size);
 }
 
+void SuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location, 
+    const FatedQuestLibraries::FPoint& size,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    m_texture->Draw(location, size, tintColour);
+}
+
 void SuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
 {
     m_texture->Draw(textureRectangle, screenRectangle);
+}
+
+void SuperTextureWrapper::Draw(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const FColour& tintColour) const
+{
+    m_texture->Draw(textureRectangle, screenRectangle, tintColour);
 }
 
 bool SuperTextureWrapper::RepresentSameImage(std::shared_ptr<SuperTexture> texture) const
