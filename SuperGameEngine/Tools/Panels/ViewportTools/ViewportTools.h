@@ -1,4 +1,5 @@
 #pragma once
+#include "FatedQuestLibraries.h"
 #include "ViewportToolsType.h"
 
 namespace SuperGameTools
@@ -26,5 +27,11 @@ namespace SuperGameTools
         /// Draw the viewport tools bar. 
         /// </summary>
         virtual void Draw() const = 0;
+
+        /// <summary>
+        /// Invoked when selected tool is changed.
+        /// </summary>
+        /// <returns>Invoked when selected tool is changed. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnSelectedToolChanged() const = 0;
     };
 }

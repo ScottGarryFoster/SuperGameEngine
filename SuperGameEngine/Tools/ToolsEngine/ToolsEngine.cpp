@@ -280,9 +280,7 @@ void ToolsEngine::Setup()
     m_updatables.push_back(projectProperties);
     m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
 
-    viewportPanel->Setup(m_windowPackage);
-    m_updatables.push_back(viewportPanel);
-    m_windowPackage->GetPanelManager()->RegisterPanel(viewportPanel);
+
 
     viewportToolsPanel->Setup(m_windowPackage);
     m_updatables.push_back(viewportToolsPanel);
@@ -291,6 +289,10 @@ void ToolsEngine::Setup()
     // This must occur after setup of these.
     viewportToolsPanel->OnWindowShownOrHidden()->Subscribe(viewportPanel);
     viewportPanel->GiveViewportTools(viewportToolsPanel->GetViewportTools());
+
+    viewportPanel->Setup(m_windowPackage);
+    m_updatables.push_back(viewportPanel);
+    m_windowPackage->GetPanelManager()->RegisterPanel(viewportPanel);
 
     // Run last after all panels have been run.
     menuBar->SetupPostPanels();

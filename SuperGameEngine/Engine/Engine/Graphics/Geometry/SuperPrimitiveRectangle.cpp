@@ -36,6 +36,7 @@ void SuperPrimitiveRectangle::Draw() const
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 180);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderDrawRect(renderer, &rect);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     }
 }
 
@@ -59,5 +60,6 @@ void SuperPrimitiveRectangle::DrawInPlace(int x, int y, int width, int height, D
         m_debugColours.SetColour(m_renderer, colour);
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         SDL_RenderDrawRect(renderer, &rect);
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     }
 }

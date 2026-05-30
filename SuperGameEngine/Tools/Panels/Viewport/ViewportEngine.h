@@ -6,6 +6,12 @@
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/GameObject/GameObject.h"
 
+namespace SuperGameTools
+{
+    class ViewportTools;
+    class ViewportGizmo;
+}
+
 namespace SuperGameEngine
 {
     class PrimitiveRectangle;
@@ -211,6 +217,33 @@ namespace SuperGameTools
          /// True means on the last frame the button to select an object was pressed.
          /// </summary>
         bool m_previousSelectionKeyDownStatus;
+
+        /// <summary>
+        /// Renders and handles interactions for the gizmo in the viewport.
+        /// This is the behaviours directly on game objects like move.
+        /// </summary>
+        std::shared_ptr<ViewportGizmo> m_gizmo;
+
+        /// <summary>
+        /// The tools which accompany the scene viewport.
+        /// </summary>
+        std::shared_ptr<ViewportTools> m_viewportTools;
+
+        /// <summary>
+        /// True when a game object is selected.
+        /// </summary>
+        bool m_haveSelectedAGameObject;
+
+        /// <summary>
+        /// True when a tool which the gizmo should display is shown.
+        /// </summary>
+        bool m_areSelectingAGizmoTool;
+
+        /// <summary>
+        /// True when the gizmo should draw.
+        /// </summary>
+        /// <returns>True when the gizmo should draw. </returns>
+        bool ShouldDrawGizmo() const;
 
         /// <summary>
         /// Draw the given object and use the mouse position to change the drawing to react to mouse over.

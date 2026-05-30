@@ -3,6 +3,7 @@
 #include <ranges>
 
 #include "ViewportEngineAndPanelCommunication.h"
+#include "ViewportGizmo.h"
 #include "../../../Input/InputManagement/SDLInputManager.h"
 #include "Engine/Content/ContentManager.h"
 #include "Engine/CrossEngineObjects/CrossEngineObjects.h"
@@ -22,6 +23,8 @@
 #include "Panels/SceneHierarchy/EventArguments/OnMenuAddComponentEventArguments.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteGameObjectEventArguments.h"
+#include "Panels/ViewportTools/ViewportTools.h"
+#include "Panels/ViewportTools/ViewportToolsButtonSelectedArguments.h"
 #include "Structural/Assets/Texture/TextureAsset.h"
 #include "Structural/Serializable/SerializableProperty.h"
 #include "ToolsEngine/FrameworkManager/FrameworkManager.h"
@@ -38,6 +41,8 @@ ViewportEngine::ViewportEngine()
     m_mouseCollision = RectangleInt();
     m_previousSelectionKeyDownStatus = false;
     m_selectionButtonStatusIsDirty = false;
+    m_areSelectingAGizmoTool = false;
+    m_haveSelectedAGameObject = false;
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -128,6 +133,11 @@ void ViewportEngine::Draw()
 
         DrawBundle(drawBundle.second);
     }
+
+    if (ShouldDrawGizmo())
+    {
+        m_gizmo->Draw();
+    }
 }
 
 void ViewportEngine::WindowStart()
@@ -165,6 +175,12 @@ void ViewportEngine::EngineStart()
     m_debugRectangle = m_primitiveShapeProvider->CreateRectangle(FVector2F(), FVector2F(50, 50));
 
     m_crossEngineObjects->GetWindowPackage()->GetFrameworkManager()->GetSelectionManager()->OnSelectionChanged(SelectionGroup::Inspectable)->Subscribe(shared_from_this());
+
+    m_gizmo = std::make_shared<ViewportGizmo>(m_crossEngineObjects->GetEngineTextureManager(), m_primitiveShapeProvider);
+    m_viewportTools = m_viewportEngineAndPanelCommunication->GetViewportTools();
+
+    m_viewportTools->OnSelectedToolChanged()->Subscribe(shared_from_this());
+    
 }
 
 void ViewportEngine::EngineEnd()
@@ -199,6 +215,10 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         OnSelectionChanged(selectionChanged);
     }
+    else if (auto args = std::dynamic_pointer_cast<ViewportToolsButtonSelectedArguments>(arguments))
+    {
+        m_areSelectingAGizmoTool = args->GetButtonSelected() == ViewportToolsType::Move;
+    }
 }
 
 void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
@@ -211,6 +231,11 @@ void ViewportEngine::GiveViewportEngineAndPanelCommunication(
     const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication)
 {
     m_viewportEngineAndPanelCommunication = engineAndPanelCommunication;
+}
+
+bool ViewportEngine::ShouldDrawGizmo() const
+{
+    return m_haveSelectedAGameObject && m_areSelectingAGizmoTool;
 }
 
 void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle, const FPoint& mousePosition)
@@ -280,10 +305,8 @@ void ViewportEngine::AddGameObjectToScene(const std::shared_ptr<GameObject>& gam
 
     ValidateDrawBundle(drawBundle);
 
-    // TODO: Remove this testing.
     if (drawBundle.IsValidToRender)
     {
-        Log::Info("TESTING: GUID added: " + gameObject->GetGuid()->ToString());
         m_drawBundle.insert_or_assign(gameObject->GetGuid()->AsNumber(), drawBundle);
     }
     else
@@ -513,6 +536,13 @@ void ViewportEngine::UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBund
     drawBundle.FaceRectangle.SetLocation(
         (float)drawBundle.TransformPosition.GetX(),
         (float)drawBundle.TransformPosition.GetY());
+
+    if (drawBundle.SelectionState == DrawBundleSelectionState::Selected)
+    {
+        m_gizmo->UpdateGizmoLocation(
+            static_cast<int>(drawBundle.FaceRectangle.GetWidth() + drawBundle.TransformPosition.GetX()),
+            static_cast<int>(drawBundle.FaceRectangle.GetHeight() + drawBundle.TransformPosition.GetY()));
+    }
 }
 
 ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<GameObject>& gameObject) const
@@ -542,6 +572,11 @@ void ViewportEngine::ProcessDrawBundleInteractions()
     if (m_selectionButtonStatusIsDirty)
     {
         leftClick = IsSelectionButtonDown();
+    }
+
+    if (m_viewportTools->GetSelectedTool() == ViewportToolsType::Move)
+    {
+        m_gizmo->UpdateMouseLocation(mousePosition.second.GetLeft(), mousePosition.second.GetTop());
     }
 
     auto updateStateAdd = [](ViewportObjectDrawBundle& drawBundle, DrawBundleSelectionState newState)
@@ -633,6 +668,20 @@ void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEv
                 drawBundle.SelectionState &= ~DrawBundleSelectionState::Selected;
             }
 
+        }
+    }
+
+    // Update the initial gizmo location upon selection.
+    m_haveSelectedAGameObject = false;
+    for (ViewportObjectDrawBundle& drawBundle : m_drawBundle | std::views::values)
+    {
+        if (EDrawBundleSelectionState::HasFlag(drawBundle.SelectionState, DrawBundleSelectionState::Selected))
+        {
+            m_gizmo->UpdateGizmoLocation(
+                drawBundle.FaceRectangle.GetWidth() + static_cast<int>(drawBundle.TransformPosition.GetX()),
+                drawBundle.FaceRectangle.GetHeight() + static_cast<int>(drawBundle.TransformPosition.GetY()));
+            m_haveSelectedAGameObject = true;
+            break;
         }
     }
 }

@@ -17,3 +17,13 @@ void ViewportEngineAndPanelCommunication::UpdateViewportLocation(int x, int y, i
     m_viewport.SetLocation(x, y);
     m_viewport.SetSize(width, height);
 }
+
+void ViewportEngineAndPanelCommunication::GiveViewportTools(const std::shared_ptr<ViewportTools>& viewportTools)
+{
+    m_viewportTools = viewportTools;
+}
+
+std::shared_ptr<ViewportTools> ViewportEngineAndPanelCommunication::GetViewportTools() const
+{
+    return m_viewportTools;
+}
