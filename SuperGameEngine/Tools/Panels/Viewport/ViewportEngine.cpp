@@ -2,6 +2,7 @@
 
 #include <ranges>
 
+#include "MoveViewportGizmo.h"
 #include "ViewportEngineAndPanelCommunication.h"
 #include "ViewportGizmo.h"
 #include "../../../Input/InputManagement/SDLInputManager.h"
@@ -176,7 +177,7 @@ void ViewportEngine::EngineStart()
 
     m_crossEngineObjects->GetWindowPackage()->GetFrameworkManager()->GetSelectionManager()->OnSelectionChanged(SelectionGroup::Inspectable)->Subscribe(shared_from_this());
 
-    m_gizmo = std::make_shared<ViewportGizmo>(m_crossEngineObjects->GetEngineTextureManager(), m_primitiveShapeProvider);
+    m_gizmo = std::make_shared<MoveViewportGizmo>(m_crossEngineObjects->GetEngineTextureManager(), m_primitiveShapeProvider);
     m_viewportTools = m_viewportEngineAndPanelCommunication->GetViewportTools();
 
     m_viewportTools->OnSelectedToolChanged()->Subscribe(shared_from_this());
