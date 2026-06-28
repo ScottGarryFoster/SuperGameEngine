@@ -132,8 +132,7 @@ void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& scr
             DrawPredefined(tile, screenLocation, tintColour);
             break;
         default:
-            // TODO: Implment Tint here
-            m_superTexture->Draw(FPoint(screenLocation.GetX(), screenLocation.GetY()), tintColour);
+            m_superTexture->Draw(FPoint(static_cast<int>(screenLocation.GetX()), static_cast<int>(screenLocation.GetY())), tintColour);
         }
     }
 }

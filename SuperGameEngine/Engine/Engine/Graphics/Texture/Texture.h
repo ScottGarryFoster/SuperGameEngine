@@ -62,6 +62,13 @@ namespace SuperGameEngine
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation details of a given texture. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
         /// <param name="tintColour">Tint colour. </param>
         virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FColour& tintColour) const override;
 
@@ -69,8 +76,24 @@ namespace SuperGameEngine
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
         void Draw(const FPoint& location, const FPoint& size) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FPoint& size) const override;
 
         /// <summary>
         /// Draws to screen.
@@ -84,11 +107,28 @@ namespace SuperGameEngine
             const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FPoint& size, const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
         /// <param name="screenRectangle">Where on the screen to render. </param>
         void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const override;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const TextureTransformationDetails& transformation) const override;
 
         /// <summary>
         /// Draws to the screen with tint.
@@ -101,6 +141,15 @@ namespace SuperGameEngine
         /// This will not work particularly well for full colour images.
         /// </remarks>
         virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Get the Filepath of the loaded texture.
@@ -199,6 +248,19 @@ namespace SuperGameEngine
         /// This should be called after draw and after you have set a tint.
         /// </summary>
         void UnsetColourForRenderer() const;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// This is the inner logic for this action without any validation of the renderer.
+        /// </summary>
+        /// <param name="renderer">
+        /// Renderer used to render the texture.
+        /// Used explicitly! No further validation will be performed.
+        /// </param>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+         /// <param name="transformation">Defines the rotation of a given texture. </param>
+        void DrawInnerLogic(SDL_Renderer* renderer, const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const TextureTransformationDetails& transformation) const;
 
         /// <summary>
         /// Draws to the screen.

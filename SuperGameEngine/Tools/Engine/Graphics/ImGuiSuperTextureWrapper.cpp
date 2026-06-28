@@ -58,12 +58,31 @@ void ImGuiSuperTextureWrapper::Draw(const FPoint& location) const
 }
 
 void ImGuiSuperTextureWrapper::Draw(
+    const FPoint& location,
+    const TextureTransformationDetails& transformation) const
+{
+    Log::Error("TextureTransformationDetails is not supported yet.",
+        "ImGuiSuperTextureWrapper::Draw(const FPoint&,const TextureTransformationDetails&) const");
+    Draw(location);
+}
+
+void ImGuiSuperTextureWrapper::Draw(
     const FatedQuestLibraries::FPoint& location,
     const FatedQuestLibraries::FColour& tintColour) const
 {
     Log::Error(
         "Tint is not supported by ImGuiSuperTextures. Drawing without tint.",
         "ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FColour&)");
+    Draw(location);
+}
+
+void ImGuiSuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location,
+    const TextureTransformationDetails& transformation, 
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error("TextureTransformationDetails is not supported yet.",
+        "ImGuiSuperTextureWrapper::Draw(const FPoint&,const TextureTransformationDetails&, const FatedQuestLibraries::FColour&) const");
     Draw(location);
 }
 
@@ -92,11 +111,33 @@ void ImGuiSuperTextureWrapper::Draw(const FPoint& location, const FPoint& size) 
 void ImGuiSuperTextureWrapper::Draw(
     const FatedQuestLibraries::FPoint& location,
     const FatedQuestLibraries::FPoint& size, 
+    const TextureTransformationDetails& transformation) const
+{
+    Log::Error("TextureTransformationDetails is not supported yet.",
+        "ImGuiSuperTextureWrapper::Draw(const FPoint&,const FatedQuestLibraries::FPoint&, const TextureTransformationDetails&) const");
+    Draw(location, size);
+}
+
+void ImGuiSuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location,
+    const FatedQuestLibraries::FPoint& size, 
     const FatedQuestLibraries::FColour& tintColour) const
 {
     Log::Error(
         "Tint is not supported by ImGuiSuperTextures. Drawing without tint.",
         "ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FPoint&const FatedQuestLibraries::FColour&)");
+    Draw(location, size);
+}
+
+void ImGuiSuperTextureWrapper::Draw(
+    const FatedQuestLibraries::FPoint& location,
+    const FatedQuestLibraries::FPoint& size, 
+    const TextureTransformationDetails& transformation,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error(
+        "Tint and TextureTransformationDetails is not supported by ImGuiSuperTextures. Drawing without tint.",
+        "ImGuiSuperTextureWrapper::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FPoint&, const TextureTransformationDetails&, const FatedQuestLibraries::FColour&)");
     Draw(location, size);
 }
 
@@ -123,6 +164,15 @@ void ImGuiSuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const 
     ImGui::SetCursorPos(ImVec2(position.x, position.y));
 }
 
+void ImGuiSuperTextureWrapper::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle,
+    const TextureTransformationDetails& transformation) const
+{
+    Log::Error(
+        "TextureTransformationDetails is not supported by ImGuiSuperTextures. Drawing without tint.",
+        "ImGuiSuperTextureWrapper::Draw(const RectangleInt&, const RectangleInt&,const TextureTransformationDetails&)");
+    Draw(textureRectangle, screenRectangle);
+}
+
 void ImGuiSuperTextureWrapper::Draw(
     const RectangleInt& textureRectangle, 
     const RectangleInt& screenRectangle,
@@ -131,6 +181,18 @@ void ImGuiSuperTextureWrapper::Draw(
     Log::Error(
         "Tint is not supported by ImGuiSuperTextures. Drawing without tint.", 
         "ImGuiSuperTextureWrapper::Draw(const RectangleInt&,const RectangleInt&,const FatedQuestLibraries::FColour&)");
+    Draw(textureRectangle, screenRectangle);
+}
+
+void ImGuiSuperTextureWrapper::Draw(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const TextureTransformationDetails& transformation, 
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    Log::Error(
+        "Tint and TextureTransformationDetails is not supported by ImGuiSuperTextures.",
+        "ImGuiSuperTextureWrapper::Draw(const RectangleInt&,const RectangleInt&,const TextureTransformationDetails&,const FatedQuestLibraries::FColour&)");
     Draw(textureRectangle, screenRectangle);
 }
 

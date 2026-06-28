@@ -24,6 +24,8 @@ namespace SuperGameEngineTests_Stubs
             m_lastColour->Green = 0;
             m_lastColour->Blue = 0;
             m_lastColour->Alpha = 0;
+
+            m_lastTransform = std::shared_ptr<SuperGameEngine::TextureTransformationDetails>();
         }
 
         /// <summary>
@@ -79,6 +81,26 @@ namespace SuperGameEngineTests_Stubs
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location, 
+            const SuperGameEngine::TextureTransformationDetails& transformation) const override
+        {
+            m_lastDrawnTexture->SetLocation(0, 0);
+            m_lastDrawnTexture->SetSize(m_size.GetX(), m_size.GetY());
+
+            m_lastDrawnScreen->SetLocation(location.GetX(), location.GetY());
+            m_lastDrawnScreen->SetSize(m_size.GetX(), m_size.GetY());
+
+            SaveTransformToLastDrawn(transformation);
+
+            ++*m_timesDrawn;
+        }
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
         /// <param name="tintColour">Tint colour. </param>
         virtual void Draw(
             const FatedQuestLibraries::FPoint& location, 
@@ -102,6 +124,33 @@ namespace SuperGameEngineTests_Stubs
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location, 
+            const SuperGameEngine::TextureTransformationDetails& transformation, 
+            const FatedQuestLibraries::FColour& tintColour) const override
+        {
+            m_lastDrawnTexture->SetLocation(0, 0);
+            m_lastDrawnTexture->SetSize(m_size.GetX(), m_size.GetY());
+
+            m_lastDrawnScreen->SetLocation(location.GetX(), location.GetY());
+            m_lastDrawnScreen->SetSize(m_size.GetX(), m_size.GetY());
+
+            m_lastColour->Red = tintColour.Red;
+            m_lastColour->Blue = tintColour.Blue;
+            m_lastColour->Green = tintColour.Green;
+            m_lastColour->Alpha = tintColour.Alpha;
+
+            SaveTransformToLastDrawn(transformation);
+
+            ++*m_timesDrawn;
+        }
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
         virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FPoint& size) const override
         {
@@ -110,6 +159,28 @@ namespace SuperGameEngineTests_Stubs
 
             m_lastDrawnScreen->SetLocation(location.GetX(), location.GetY());
             m_lastDrawnScreen->SetSize(size.GetX(), size.GetY());
+
+            ++*m_timesDrawn;
+        }
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="transformation">Defines the rotation of a given texture. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location, 
+            const FatedQuestLibraries::FPoint& size, 
+            const SuperGameEngine::TextureTransformationDetails& transformation) const override
+        {
+            m_lastDrawnTexture->SetLocation(0, 0);
+            m_lastDrawnTexture->SetSize(m_size.GetX(), m_size.GetY());
+
+            m_lastDrawnScreen->SetLocation(location.GetX(), location.GetY());
+            m_lastDrawnScreen->SetSize(size.GetX(), size.GetY());
+
+            SaveTransformToLastDrawn(transformation);
 
             ++*m_timesDrawn;
         }
@@ -140,6 +211,35 @@ namespace SuperGameEngineTests_Stubs
         }
 
         /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="transformation">Defines the rotation of a given texture. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location,
+            const FatedQuestLibraries::FPoint& size,
+            const SuperGameEngine::TextureTransformationDetails& transformation,
+            const FatedQuestLibraries::FColour& tintColour) const override
+        {
+            m_lastDrawnTexture->SetLocation(0, 0);
+            m_lastDrawnTexture->SetSize(m_size.GetX(), m_size.GetY());
+
+            m_lastDrawnScreen->SetLocation(location.GetX(), location.GetY());
+            m_lastDrawnScreen->SetSize(size.GetX(), size.GetY());
+
+            m_lastColour->Red = tintColour.Red;
+            m_lastColour->Blue = tintColour.Blue;
+            m_lastColour->Green = tintColour.Green;
+            m_lastColour->Alpha = tintColour.Alpha;
+
+            SaveTransformToLastDrawn(transformation);
+
+            ++*m_timesDrawn;
+        }
+
+        /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
@@ -151,6 +251,28 @@ namespace SuperGameEngineTests_Stubs
 
             m_lastDrawnScreen->SetLocation(screenRectangle.GetLeft(), screenRectangle.GetTop());
             m_lastDrawnScreen->SetSize(screenRectangle.GetWidth(), screenRectangle.GetHeight());
+
+            ++*m_timesDrawn;
+        }
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="transformation">Defines the rotation of a given texture. </param>
+        virtual void Draw(
+            const SuperGameEngine::RectangleInt& textureRectangle,
+            const SuperGameEngine::RectangleInt& screenRectangle,
+            const SuperGameEngine::TextureTransformationDetails& transformation) const override
+        {
+            m_lastDrawnTexture->SetLocation(textureRectangle.GetLeft(), textureRectangle.GetTop());
+            m_lastDrawnTexture->SetSize(textureRectangle.GetWidth(), textureRectangle.GetHeight());
+
+            m_lastDrawnScreen->SetLocation(screenRectangle.GetLeft(), screenRectangle.GetTop());
+            m_lastDrawnScreen->SetSize(screenRectangle.GetWidth(), screenRectangle.GetHeight());
+
+            SaveTransformToLastDrawn(transformation);
 
             ++*m_timesDrawn;
         }
@@ -180,6 +302,39 @@ namespace SuperGameEngineTests_Stubs
             m_lastColour->Blue = tintColour.Blue;
             m_lastColour->Green = tintColour.Green;
             m_lastColour->Alpha = tintColour.Alpha;
+
+            ++*m_timesDrawn;
+        }
+
+        /// <summary>
+        /// Draws to the screen with tint.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        /// <param name="transformation">Defines the rotation of a given texture. </param>
+        /// <remarks>
+        /// Tint here will work fine for things like fonts or a white image you are colouring.
+        /// This will not work particularly well for full colour images.
+        /// </remarks>
+        virtual void Draw(
+            const SuperGameEngine::RectangleInt& textureRectangle,
+            const SuperGameEngine::RectangleInt& screenRectangle,
+            const SuperGameEngine::TextureTransformationDetails& transformation,
+            const FatedQuestLibraries::FColour& tintColour) const override
+        {
+            m_lastDrawnTexture->SetLocation(textureRectangle.GetLeft(), textureRectangle.GetTop());
+            m_lastDrawnTexture->SetSize(textureRectangle.GetWidth(), textureRectangle.GetHeight());
+
+            m_lastDrawnScreen->SetLocation(screenRectangle.GetLeft(), screenRectangle.GetTop());
+            m_lastDrawnScreen->SetSize(screenRectangle.GetWidth(), screenRectangle.GetHeight());
+
+            m_lastColour->Red = tintColour.Red;
+            m_lastColour->Blue = tintColour.Blue;
+            m_lastColour->Green = tintColour.Green;
+            m_lastColour->Alpha = tintColour.Alpha;
+
+            SaveTransformToLastDrawn(transformation);
 
             ++*m_timesDrawn;
         }
@@ -251,6 +406,11 @@ namespace SuperGameEngineTests_Stubs
             return m_lastColour;
         }
 
+        SuperGameEngine::TextureTransformationDetails LastTransform()
+        {
+            return *m_lastTransform;
+        }
+
     private:
         /// <summary>
         /// The last position on the texture drawn.
@@ -281,5 +441,18 @@ namespace SuperGameEngineTests_Stubs
         /// The last colour drawn.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FColour> m_lastColour;
+
+        /// <summary>
+        /// Last transformation drawn.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::TextureTransformationDetails> m_lastTransform;
+
+        void SaveTransformToLastDrawn(const SuperGameEngine::TextureTransformationDetails& other) const
+        {
+            m_lastTransform->Orientation = other.Orientation;
+            m_lastTransform->Angle = other.Angle;
+            m_lastTransform->CenterX = other.CenterX;
+            m_lastTransform->CenterY = other.CenterY;
+        }
     };
 }

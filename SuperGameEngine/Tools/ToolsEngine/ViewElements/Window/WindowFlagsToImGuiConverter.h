@@ -9,6 +9,9 @@
 // +------------------------------+
 namespace SuperGameTools
 {
+    /// <summary>
+    /// Converter for <see cref="WindowFlags"/> to the ImGui version.
+    /// </summary>
     class WindowFlagsToImGuiConverter
     {
     public:

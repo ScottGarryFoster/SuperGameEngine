@@ -151,5 +151,7 @@ namespace SuperGameTools
         /// Colour when hover is occuring.
         /// </summary>
         FatedQuestLibraries::FColour m_hoverColour;
+
+        void UpdateInteractionStateOfGizmo();
     };  
 }

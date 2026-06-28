@@ -40,7 +40,8 @@ void MoveViewportGizmo::Draw() const
 {
     if (m_elementHovered == GizmoElementName::None)
     {
-        m_lowerLeftArrow.Texture->Draw(FPoint(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY()), m_inactiveColour);
+        auto transform = TextureTransformationDetails{ 45, 0, 0 };
+        m_lowerLeftArrow.Texture->Draw(FPoint(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY()), transform, m_inactiveColour);
     }
     else if (m_elementHovered == GizmoElementName::LowerLeftArrow)
     {
@@ -71,15 +72,7 @@ void MoveViewportGizmo::UpdateGizmoLocation(int x, int y)
     m_lowerLeftArrow.FirstCollisionRectangle.SetLocation(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY() + 7);
     m_lowerLeftArrow.SecondCollisionRectangle.SetLocation(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY());
 
-    auto mousePoint = FPoint(m_mouseX, m_mouseY);
-    if (m_lowerLeftArrow.FirstCollisionRectangle.PointIsWithin(mousePoint) || m_lowerLeftArrow.SecondCollisionRectangle.PointIsWithin(mousePoint))
-    {
-        m_elementHovered = GizmoElementName::LowerLeftArrow;
-    }
-    else
-    {
-        m_elementHovered = GizmoElementName::None;
-    }
+    UpdateInteractionStateOfGizmo();
 }
 
 void MoveViewportGizmo::UpdateMouseLocation(int x, int y)
@@ -87,6 +80,11 @@ void MoveViewportGizmo::UpdateMouseLocation(int x, int y)
     m_mouseX = x;
     m_mouseY = y;
 
+    UpdateInteractionStateOfGizmo();
+}
+
+void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
+{
     auto mousePoint = FPoint(m_mouseX, m_mouseY);
     if (m_lowerLeftArrow.FirstCollisionRectangle.PointIsWithin(mousePoint) || m_lowerLeftArrow.SecondCollisionRectangle.PointIsWithin(mousePoint))
     {

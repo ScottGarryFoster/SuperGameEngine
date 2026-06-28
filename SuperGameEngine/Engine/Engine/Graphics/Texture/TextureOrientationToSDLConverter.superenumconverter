@@ -1,0 +1,15 @@
+<SuperEnumConverter Type="Standard">
+    <Header>
+    #pragma once
+    #include &lt;SDL_image.h&gt;
+    #include "TextureOrientation.h"
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumDefinition Side="Left" Type="TextureOrientation" />
+    <EnumDefinition Side="Right" Type="SDL_RendererFlip" UseTypeAsPrefix="False" />
+    <Converter Name="TextureOrientationToSDLConverter">
+        <Default Left="None" Right="SDL_FLIP_NONE" />
+        <Value Left="Horizontally" Right="SDL_FLIP_HORIZONTAL" />
+        <Value Left="Vertically" Right="SDL_FLIP_VERTICAL" />
+    </Converter>
+</SuperEnumConverter>
