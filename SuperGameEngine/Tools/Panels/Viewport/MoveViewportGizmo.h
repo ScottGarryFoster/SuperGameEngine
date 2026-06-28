@@ -1,7 +1,9 @@
 #pragma once
+#include <array>
 #include <memory>
 
 #include "ViewportGizmo.h"
+#include "Engine/Graphics/Texture/TextureTransformationDetails.h"
 #include "Structural/Spatial/Area/RectangleInt.h"
 
 namespace SuperGameEngine
@@ -97,15 +99,42 @@ namespace SuperGameTools
             SuperGameEngine::RectangleInt SecondCollisionRectangle;
 
             /// <summary>
+            /// How to offset the location from the given asset we are attached to.
+            /// </summary>
+            FatedQuestLibraries::FPoint LocationOffset;
+
+            /// <summary>
+            /// How the first collision Rectangle should offset its location from the location.
+            /// </summary>
+            FatedQuestLibraries::FPoint FirstCollisionOffset;
+
+            /// <summary>
+            /// How the second collision Rectangle should offset its location from the location.
+            /// </summary>
+            FatedQuestLibraries::FPoint SecondCollisionOffset;
+
+            /// <summary>
+            /// Defines the rotation of a given texture.
+            /// This is used when giving the rotation to a texture directly.
+            /// </summary>
+            SuperGameEngine::TextureTransformationDetails TransformationDetails;
+
+            /// <summary>
             /// Used mainly for debugging on this struct and defines what this struct is describing.
             /// </summary>
             GizmoElementName ElementName;
         };
 
         /// <summary>
-        /// The lower left arrow asset used to move left and right.
+        /// The number of arrow elements.
         /// </summary>
-        GizmoElement m_lowerLeftArrow;
+        constexpr static size_t m_numberOfArrowElements = 2;
+
+        /// <summary>
+        /// The elements which are arrows or clickable elements to move the gizmo around.
+        /// Note this is on the stack intentionally.
+        /// </summary>
+        GizmoElement m_arrowElements[m_numberOfArrowElements];
 
         /// <summary>
         /// The arrow texture used as a handle.

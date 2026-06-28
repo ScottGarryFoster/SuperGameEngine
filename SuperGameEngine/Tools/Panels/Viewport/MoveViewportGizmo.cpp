@@ -26,39 +26,64 @@ MoveViewportGizmo::MoveViewportGizmo(
     m_inactiveColour = FColour{ .Red = 255,.Green = 0, .Blue = 0, .Alpha = 255 };
     m_hoverColour = FColour{ .Red = 0,.Green = 255, .Blue = 0, .Alpha = 255 };
 
-    m_lowerLeftArrow = GizmoElement
     {
-        .Texture = m_arrowAsset,
-        .UsingBothCollisionRectangles = true,
-        .ElementName = GizmoElementName::LowerLeftArrow,
-    };
-    m_lowerLeftArrow.FirstCollisionRectangle.SetSize(50, 10);
-    m_lowerLeftArrow.SecondCollisionRectangle.SetSize(15, 25);
+        GizmoElement& lowerLeft = m_arrowElements[0];
+        lowerLeft = GizmoElement
+        {
+            .Texture = m_arrowAsset,
+            .UsingBothCollisionRectangles = true,
+            .LocationOffset = FPoint(-50, -7),
+            .FirstCollisionOffset = FPoint(0, 7),
+            .ElementName = GizmoElementName::LowerLeftArrow,
+        };
+        lowerLeft.FirstCollisionRectangle.SetSize(50, 10);
+        lowerLeft.SecondCollisionRectangle.SetSize(15, 25);
+    }
+
+    {
+        GizmoElement& upperRight = m_arrowElements[1];
+        upperRight = GizmoElement
+        {
+            .Texture = m_arrowAsset,
+            .UsingBothCollisionRectangles = true,
+            .LocationOffset = FPoint(18, -50),
+            .FirstCollisionOffset = FPoint(-18, 0),
+            .SecondCollisionOffset = FPoint(-25, 0),
+            .TransformationDetails = {.Angle = 90},
+            .ElementName = GizmoElementName::UpperRightArrow,
+        };
+        upperRight.FirstCollisionRectangle.SetSize(10, 50);
+        upperRight.SecondCollisionRectangle.SetSize(25, 15);
+    }
 }
 
 void MoveViewportGizmo::Draw() const
 {
-    if (m_elementHovered == GizmoElementName::None)
+    for (size_t i = 0; i < m_numberOfArrowElements; ++i)
     {
-        auto transform = TextureTransformationDetails{ 45, 0, 0 };
-        m_lowerLeftArrow.Texture->Draw(FPoint(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY()), transform, m_inactiveColour);
-    }
-    else if (m_elementHovered == GizmoElementName::LowerLeftArrow)
-    {
-        m_lowerLeftArrow.Texture->Draw(FPoint(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY()), m_hoverColour);
-    }
+        GizmoElement current = m_arrowElements[i];
 
-    m_debugRectangle->DrawInPlace(
-        m_lowerLeftArrow.FirstCollisionRectangle.GetLeft(),
-        m_lowerLeftArrow.FirstCollisionRectangle.GetTop(),
-        m_lowerLeftArrow.FirstCollisionRectangle.GetWidth(),
-        m_lowerLeftArrow.FirstCollisionRectangle.GetHeight());
+        if (m_elementHovered == current.ElementName)
+        {
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_hoverColour);
+        }
+        else
+        {
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_inactiveColour);
+        }
 
-    m_debugRectangle->DrawInPlace(
-        m_lowerLeftArrow.SecondCollisionRectangle.GetLeft(),
-        m_lowerLeftArrow.SecondCollisionRectangle.GetTop(),
-        m_lowerLeftArrow.SecondCollisionRectangle.GetWidth(),
-        m_lowerLeftArrow.SecondCollisionRectangle.GetHeight());
+        m_debugRectangle->DrawInPlace(
+            current.FirstCollisionRectangle.GetLeft(),
+            current.FirstCollisionRectangle.GetTop(),
+            current.FirstCollisionRectangle.GetWidth(),
+            current.FirstCollisionRectangle.GetHeight());
+
+        m_debugRectangle->DrawInPlace(
+            current.SecondCollisionRectangle.GetLeft(),
+            current.SecondCollisionRectangle.GetTop(),
+            current.SecondCollisionRectangle.GetWidth(),
+            current.SecondCollisionRectangle.GetHeight());
+    }
 }
 
 void MoveViewportGizmo::UpdateGizmoLocation(int x, int y)
@@ -66,11 +91,20 @@ void MoveViewportGizmo::UpdateGizmoLocation(int x, int y)
     m_locationX = x;
     m_locationY = y;
 
-    // TODO: Continue with positioning from here
-    m_lowerLeftArrow.Location.SetXYValue(m_locationX - 50, m_locationY - 7);
+    for (size_t i = 0; i < m_numberOfArrowElements; ++i)
+    {
+        GizmoElement& current = m_arrowElements[i];
 
-    m_lowerLeftArrow.FirstCollisionRectangle.SetLocation(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY() + 7);
-    m_lowerLeftArrow.SecondCollisionRectangle.SetLocation(m_lowerLeftArrow.Location.GetX(), m_lowerLeftArrow.Location.GetY());
+        current.Location.SetXYValue(m_locationX + current.LocationOffset.GetX(), m_locationY + current.LocationOffset.GetY());
+
+        current.FirstCollisionRectangle.SetLocation(
+            current.Location.GetX() + current.FirstCollisionOffset.GetX(),
+            current.Location.GetY() + current.FirstCollisionOffset.GetY());
+        current.SecondCollisionRectangle.SetLocation(
+            current.Location.GetX() + current.SecondCollisionOffset.GetX(),
+            current.Location.GetY() + current.SecondCollisionOffset.GetY());
+
+    }
 
     UpdateInteractionStateOfGizmo();
 }
@@ -86,12 +120,14 @@ void MoveViewportGizmo::UpdateMouseLocation(int x, int y)
 void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
 {
     auto mousePoint = FPoint(m_mouseX, m_mouseY);
-    if (m_lowerLeftArrow.FirstCollisionRectangle.PointIsWithin(mousePoint) || m_lowerLeftArrow.SecondCollisionRectangle.PointIsWithin(mousePoint))
+    m_elementHovered = GizmoElementName::None;
+    for (size_t i = 0; i < m_numberOfArrowElements; ++i)
     {
-        m_elementHovered = GizmoElementName::LowerLeftArrow;
+        GizmoElement current = m_arrowElements[i];
+        if (current.FirstCollisionRectangle.PointIsWithin(mousePoint) || current.SecondCollisionRectangle.PointIsWithin(mousePoint))
+        {
+            m_elementHovered = current.ElementName;
+        }
     }
-    else
-    {
-        m_elementHovered = GizmoElementName::None;
-    }
+
 }
