@@ -343,6 +343,15 @@ namespace SuperGameEngine
         [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const Circle& other) const;
 
         /// <summary>
+        /// Returns the location required to overlap the shape.
+        /// Will go in the direction of previous location.
+        /// </summary>
+        /// <param name="other">Other to overlap with. </param>
+        /// <param name="previousLocation">Direction to move in.</param>
+        /// <returns>Location required. </returns>
+        [[nodiscard]] static FatedQuestLibraries::FPoint GetNewLocationToOverlap(const RectangleInt& other, const FatedQuestLibraries::FPoint& previousLocation);
+
+        /// <summary>
         /// Returns the closest point on the Shape to the given point.
         /// Will return the point given when point is in shape.
         /// </summary>

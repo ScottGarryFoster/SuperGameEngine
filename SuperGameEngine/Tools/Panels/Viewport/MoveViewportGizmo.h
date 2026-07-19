@@ -56,6 +56,12 @@ namespace SuperGameTools
         virtual void UpdateMouseSelectionInput(int x, int y, SuperGameInput::KeyOrButtonState state) override;
 
         /// <summary>
+        /// Called when mouse is outside the viewport.
+        /// Handle anything needed.
+        /// </summary>
+        virtual void UpdateOnMouseIsOutsideOfViewport() override;
+
+        /// <summary>
         /// Called when an interaction from the outside (from say a mouse interaction) now should be actioned
         /// by the owning engine to perform gizmo actions.
         /// For the move gizmo this will be a <see cref="MoveInteractionChangedEvent"/>

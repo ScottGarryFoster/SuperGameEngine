@@ -204,16 +204,30 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     }
     else if (auto componentChangedArgs = std::dynamic_pointer_cast<ComponentDataChangedEventArguments>(arguments))
     {
-        ChangeDrawBundleBasedOnComponentChange(componentChangedArgs->GetGameObjectGuid(), componentChangedArgs->GetComponentGuid());
+        // This will affect the transform of the draw bundle.
+        // In theory only bad things could happen if we start using multi-threading here.
+        if (!m_gizmoHasControl)
+        {
+            ChangeDrawBundleBasedOnComponentChange(componentChangedArgs->GetGameObjectGuid(), componentChangedArgs->GetComponentGuid());
+        }
     }
     else if (auto componentAdded = std::dynamic_pointer_cast<OnMenuAddComponentEventArguments>(arguments))
     {
-        OnComponentAdded(componentAdded->GetComponent()->GetObjectGuid(), componentAdded->GetComponent()->GetUniqueID());
+        // This will affect the transform of the draw bundle.
+        // In theory only bad things could happen if we start using multi-threading here.
+        if (!m_gizmoHasControl)
+        {
+            OnComponentAdded(componentAdded->GetComponent()->GetObjectGuid(), componentAdded->GetComponent()->GetUniqueID());
+        }
     }
     else if (auto componentDeleted = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
     {
-        OnComponentRemoved(componentDeleted->GetComponent());
-        Log::Info("Component Deleted");
+        // This will affect the transform of the draw bundle.
+        // In theory only bad things could happen if we start using multi-threading here.
+        if (!m_gizmoHasControl)
+        {
+            OnComponentRemoved(componentDeleted->GetComponent());
+        }
     }
     else if (auto gameObjectDeleted = std::dynamic_pointer_cast<OnMenuDeleteGameObjectEventArguments>(arguments))
     {
@@ -577,6 +591,7 @@ void ViewportEngine::ProcessDrawBundleInteractions()
     m_mouseCollision = mousePosition.second;
     if (!mousePositionIsValid)
     {
+        m_gizmo->UpdateOnMouseIsOutsideOfViewport();
         return;
     }
 
@@ -749,7 +764,7 @@ bool ViewportEngine::IsSelectionButtonDown() const
         mouseState.ButtonState.at(SuperGameInput::MouseButton::Forward) == SuperGameInput::KeyOrButtonState::Unpressed;
 }
 
-std::pair<bool, SuperGameEngine::RectangleInt> ViewportEngine::GetMousePosition() const
+std::pair<bool, RectangleInt> ViewportEngine::GetMousePosition() const
 {
     const FPoint mousePosition = m_inputManager->GetMousePosition();
     RectangleInt viewport = m_viewportEngineAndPanelCommunication->GetViewportLocation();

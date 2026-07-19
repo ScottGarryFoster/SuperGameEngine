@@ -71,6 +71,17 @@ FPoint& FPoint::operator+=(const FPoint& other)
     return *this;
 }
 
+FPoint FPoint::operator-(const FPoint& other) const
+{
+    return FPoint(GetX() - other.GetX(), GetY() - other.GetY());
+}
+
+FPoint& FPoint::operator-=(const FPoint& other)
+{
+    SetXYValue(GetX() - other.GetX(), GetY() - other.GetY());
+    return *this;
+}
+
 std::string FPoint::Print() const
 {
     std::stringstream ss;

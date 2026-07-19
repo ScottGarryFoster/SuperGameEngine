@@ -133,13 +133,20 @@ FatedQuestLibraries::FVector2F Vector2FSerializableProperty::GetValue() const
 void Vector2FSerializableProperty::SetValue(float x, float y)
 {
     m_value.SetXYValue(x, y);
-    UpdateDirtyFlag(true);
+    if (!*m_dirty)
+    {
+        UpdateDirtyFlag(true);
+    }
 }
 
 void Vector2FSerializableProperty::ChangeValueBy(float x, float y)
 {
     m_value.SetXYValue(m_value.GetX() + x, m_value.GetY() + y);
-    UpdateDirtyFlag(true);
+
+    if (!*m_dirty)
+    {
+        UpdateDirtyFlag(true);
+    }
 }
 
 void Vector2FSerializableProperty::UpdateDirtyFlag(bool newValue) const

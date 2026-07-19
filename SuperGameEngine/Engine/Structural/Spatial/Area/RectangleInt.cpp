@@ -625,6 +625,37 @@ FPoint RectangleInt::GetNewLocationToNotOverlap(const Circle& other) const
     return newLocation;
 }
 
+FPoint RectangleInt::GetNewLocationToOverlap(
+    const RectangleInt& other,
+    const FPoint& previousLocation)
+{
+    if (other.Contains(previousLocation))
+    {
+        return previousLocation;
+    }
+
+    FPoint returnPoint = { previousLocation.GetX(), previousLocation.GetY() };
+    if (previousLocation.GetX() < other.GetLeft())
+    {
+        returnPoint.SetX(other.GetLeft());
+    }
+    else if (previousLocation.GetX() > other.GetRight())
+    {
+        returnPoint.SetX(other.GetRight());
+    }
+
+    if (previousLocation.GetY() < other.GetTop())
+    {
+        returnPoint.SetY(other.GetTop());
+    }
+    else if (previousLocation.GetY() > other.GetBottom())
+    {
+        returnPoint.SetY(other.GetBottom());
+    }
+
+    return returnPoint;
+}
+
 FPoint RectangleInt::ClosestPointTo(const FPoint& other) const
 {
     int closestX = other.GetX();

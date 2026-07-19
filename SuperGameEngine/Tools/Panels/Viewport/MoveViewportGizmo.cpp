@@ -136,6 +136,12 @@ void MoveViewportGizmo::UpdateMouseSelectionInput(int x, int y, KeyOrButtonState
     }
 }
 
+void MoveViewportGizmo::UpdateOnMouseIsOutsideOfViewport()
+{
+    m_selectedGizmo = -1;
+    m_elementHovered = GizmoElementName::None;
+}
+
 std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> MoveViewportGizmo::OnInteractionChanged() const
 {
     return m_onInteractionChanged;
@@ -206,6 +212,10 @@ void MoveViewportGizmo::SetupInteractionWhenMouseIsDown(int x, int y)
         return;
     }
 
+    // 1|2|3|4|5
+    //  | |X| |O
+    // X- Original O- Current
+    // 5-3=2 Need to move 2 to get from X to O
     int differenceX = x - m_originalLocation.GetX();
     int differenceY = y - m_originalLocation.GetY();
     m_originalLocation.SetXYValue(x, y);
