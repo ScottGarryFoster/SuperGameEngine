@@ -1,0 +1,23 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes the action to take when reacting to a Gizmo event
+    </EnumComment>
+    <EnumName Name="ToolsGizmoAction">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <GizmoSelected>
+            The gizmo is selected.
+        </GizmoSelected>
+        <GizmoUnselected>
+            The gizmo is unselected.
+        </GizmoUnselected>
+        <MoveBy>
+            Move by the amount given.
+        </MoveBy>
+    </EnumName>
+</SuperEnum>

@@ -209,6 +209,19 @@ bool ToolsScene::SelectGameObject(const std::string& guid)
     return didFind;
 }
 
+std::shared_ptr<GameObject> ToolsScene::GetGameObjectByGuid(const std::string& guid) const
+{
+    for (const std::shared_ptr<GameObject>& go : m_gameObjects)
+    {
+        if (go->GetGuid()->ToString() == guid)
+        {
+            return go;
+        }
+    }
+
+    return {};
+}
+
 void ToolsScene::UpdateDirtyFlag(bool newValue) const
 {
     if (newValue != *m_dirtyFlag)

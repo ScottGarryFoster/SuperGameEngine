@@ -2,6 +2,7 @@
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
 #include "../Component/ToolsComponent.h"
+#include "GameEngineEquivalents/ComponentPropertyWrapper/ToolsTransformComponent.h"
 
 
 using namespace SuperGameTools;
@@ -45,14 +46,6 @@ std::shared_ptr<std::vector<std::shared_ptr<Component>>> ToolsGameObject::GetCom
     return m_components;
 }
 
-void ToolsGameObject::RemoveComponent(const std::shared_ptr<Component>& component)
-{
-    std::erase_if(*m_components, [component](const std::shared_ptr<Component>& current)
-    {
-        return current->GetUniqueID()->ToString() == component->GetUniqueID()->ToString();
-    });
-}
-
 void ToolsGameObject::Load(const std::shared_ptr<StoredDocumentNode>& node)
 {
     bool createdGuid = false;
@@ -87,6 +80,11 @@ void ToolsGameObject::Load(const std::shared_ptr<StoredDocumentNode>& node)
         componentObject->Load(compChild);
         componentObject->OnDirtyFlagChanged()->Subscribe(FEventObserver::shared_from_this());
         GetComponents()->emplace_back(componentObject);
+
+        if (componentObject->GetType() == "TransformComponent" && !m_transformComponent.HasTransformComponent())
+        {
+            m_transformComponent.Initialize(componentObject);
+        }
     }
 
     UpdateDirtyFlag(false);
@@ -126,7 +124,30 @@ std::shared_ptr<Component> ToolsGameObject::AddComponent(const std::string& type
     GetComponents()->emplace_back(component);
     UpdateDirtyFlag(true);
 
+    if (component->GetType() == "TransformComponent" && !m_transformComponent.HasTransformComponent())
+    {
+        m_transformComponent.Initialize(component);
+    }
+
     return component;
+}
+
+void ToolsGameObject::RemoveComponent(const std::shared_ptr<Component>& component)
+{
+    if (m_transformComponent.HasTransformComponent() && m_transformComponent == *component)
+    {
+        m_transformComponent.Uninitialize();
+    }
+
+    std::erase_if(*m_components, [component](const std::shared_ptr<Component>& current)
+    {
+        return current->GetUniqueID()->ToString() == component->GetUniqueID()->ToString();
+    });
+}
+
+ToolsTransformComponent ToolsGameObject::GetTransform() const
+{
+    return m_transformComponent;
 }
 
 void ToolsGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)

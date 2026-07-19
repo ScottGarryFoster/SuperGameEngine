@@ -2,6 +2,7 @@
 
 #include <ranges>
 
+#include "MoveInteractionChangedEvent.h"
 #include "MoveViewportGizmo.h"
 #include "ViewportEngineAndPanelCommunication.h"
 #include "ViewportGizmo.h"
@@ -44,6 +45,9 @@ ViewportEngine::ViewportEngine()
     m_selectionButtonStatusIsDirty = false;
     m_areSelectingAGizmoTool = false;
     m_haveSelectedAGameObject = false;
+
+    m_gizmoHasControl = false;
+    m_selectedDrawBundle = { false, 0 };
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -178,6 +182,7 @@ void ViewportEngine::EngineStart()
     m_crossEngineObjects->GetWindowPackage()->GetFrameworkManager()->GetSelectionManager()->OnSelectionChanged(SelectionGroup::Inspectable)->Subscribe(shared_from_this());
 
     m_gizmo = std::make_shared<MoveViewportGizmo>(m_crossEngineObjects->GetEngineTextureManager(), m_primitiveShapeProvider);
+    m_gizmo->OnInteractionChanged()->Subscribe(shared_from_this());
     m_viewportTools = m_viewportEngineAndPanelCommunication->GetViewportTools();
 
     m_viewportTools->OnSelectedToolChanged()->Subscribe(shared_from_this());
@@ -187,6 +192,8 @@ void ViewportEngine::EngineStart()
 void ViewportEngine::EngineEnd()
 {
     // If you stored the scene ensure you let it go here.
+    m_gizmo->OnInteractionChanged()->Unsubscribe(shared_from_this());
+    m_viewportTools->OnSelectedToolChanged()->Unsubscribe(shared_from_this());
 }
 
 void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
@@ -219,6 +226,10 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto args = std::dynamic_pointer_cast<ViewportToolsButtonSelectedArguments>(arguments))
     {
         m_areSelectingAGizmoTool = args->GetButtonSelected() == ViewportToolsType::Move;
+    }
+    else if (auto args = std::dynamic_pointer_cast<MoveInteractionChangedEvent>(arguments))
+    {
+        ReactToMoveGizmoEvents(args);
     }
 }
 
@@ -578,6 +589,16 @@ void ViewportEngine::ProcessDrawBundleInteractions()
     if (m_viewportTools->GetSelectedTool() == ViewportToolsType::Move)
     {
         m_gizmo->UpdateMouseLocation(mousePosition.second.GetLeft(), mousePosition.second.GetTop());
+        m_gizmo->UpdateMouseSelectionInput(
+            mousePosition.second.GetLeft(),
+            mousePosition.second.GetTop(),
+            m_inputManager->GetMouseState().ButtonState.at(SuperGameInput::MouseButton::Left));
+    }
+
+    // Cannot select a drawbundle if one is being moved.
+    if (m_gizmoHasControl)
+    {
+        return;
     }
 
     auto updateStateAdd = [](ViewportObjectDrawBundle& drawBundle, DrawBundleSelectionState newState)
@@ -637,6 +658,23 @@ void ViewportEngine::ProcessDrawBundleInteractions()
 
 }
 
+void ViewportEngine::SelectDrawBundle(uint64_t index)
+{
+    m_haveSelectedAGameObject = true;
+    m_selectedDrawBundle = { true, index };
+
+    
+    std::shared_ptr<GameObject>  gameObject = m_currentScene->GetGameObjectByGuid(m_drawBundle.at(index).Guid);
+    if (gameObject)
+    {
+        m_drawBundle.at(index).GameObject = gameObject;
+    }
+    else
+    {
+        m_drawBundle.at(index).GameObject = {};
+    }
+}
+
 void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEventArguments>& arguments)
 {
     const SelectionChangeType selectionType = arguments->GetSelectionChangeType();
@@ -674,16 +712,22 @@ void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEv
 
     // Update the initial gizmo location upon selection.
     m_haveSelectedAGameObject = false;
-    for (ViewportObjectDrawBundle& drawBundle : m_drawBundle | std::views::values)
+    for (std::pair<uint64_t, ViewportObjectDrawBundle> drawBundlePair : m_drawBundle)
     {
-        if (EDrawBundleSelectionState::HasFlag(drawBundle.SelectionState, DrawBundleSelectionState::Selected))
+        if (EDrawBundleSelectionState::HasFlag(drawBundlePair.second.SelectionState, DrawBundleSelectionState::Selected))
         {
             m_gizmo->UpdateGizmoLocation(
-                drawBundle.FaceRectangle.GetWidth() + static_cast<int>(drawBundle.TransformPosition.GetX()),
-                drawBundle.FaceRectangle.GetHeight() + static_cast<int>(drawBundle.TransformPosition.GetY()));
-            m_haveSelectedAGameObject = true;
+                drawBundlePair.second.FaceRectangle.GetWidth() + static_cast<int>(drawBundlePair.second.TransformPosition.GetX()),
+                drawBundlePair.second.FaceRectangle.GetHeight() + static_cast<int>(drawBundlePair.second.TransformPosition.GetY()));
+            SelectDrawBundle(drawBundlePair.first);
             break;
         }
+    }
+
+    if (!m_haveSelectedAGameObject)
+    {
+        m_selectedDrawBundle.first = false;
+        m_drawBundle.at(m_selectedDrawBundle.second).GameObject = {};
     }
 }
 
@@ -719,4 +763,46 @@ std::pair<bool, SuperGameEngine::RectangleInt> ViewportEngine::GetMousePosition(
         mousePositionIsValid,
         RectangleInt(adjustedPosition.GetX(), adjustedPosition.GetY(), 1, 1)
        };
+}
+
+void ViewportEngine::ReactToMoveGizmoEvents(const std::shared_ptr<MoveInteractionChangedEvent>& args)
+{
+    ToolsGizmoAction action = args->GetAction();
+    if (action == ToolsGizmoAction::GizmoSelected)
+    {
+        m_gizmoHasControl = true;
+    }
+    else if (action == ToolsGizmoAction::GizmoUnselected)
+    {
+        m_gizmoHasControl = false;
+    }
+    else if (action == ToolsGizmoAction::MoveBy)
+    {
+        if (!m_selectedDrawBundle.first)
+        {
+            Log::Error("MoveBy occured but nothing selected.",
+                "ViewportEngine::ReactToMoveGizmoEvents(const std::shared_ptr<MoveInteractionChangedEvent>&)");
+            return;
+        }
+
+        MoveDrawBundleBy(m_selectedDrawBundle.second, args->GetX(), args->GetY());
+    }
+}
+
+void ViewportEngine::MoveDrawBundleBy(uint64_t index, int x, int y)
+{
+    ViewportObjectDrawBundle& drawBundle = m_drawBundle.at(index);
+    if (!drawBundle.GameObject)
+    {
+        return;
+    }
+
+    FVector2F position = drawBundle.TransformPosition;
+    drawBundle.TransformPosition.SetXYValue(
+        position.GetX() + static_cast<float>(x),
+        position.GetY() + static_cast<float>(y));
+
+    drawBundle.FaceRectangle.MoveShape(FPoint(x, y));
+
+    drawBundle.GameObject->GetTransform().MovePositionBy(static_cast<float>(x), static_cast<float>(y));
 }

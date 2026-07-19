@@ -47,6 +47,22 @@ namespace SuperGameTools
         /// <param name="y">Y location of the mouse. </param>
         void UpdateMouseLocation(int x, int y) override;
 
+        /// <summary>
+        /// Called when whatever button is bound to select the gizmo has changed at this location.
+        /// </summary>
+        /// <param name="x">Location of the change. </param>
+        /// <param name="y">Location of the change. </param>
+        /// <param name="state">Change which occured. </param>
+        virtual void UpdateMouseSelectionInput(int x, int y, SuperGameInput::KeyOrButtonState state) override;
+
+        /// <summary>
+        /// Called when an interaction from the outside (from say a mouse interaction) now should be actioned
+        /// by the owning engine to perform gizmo actions.
+        /// For the move gizmo this will be a <see cref="MoveInteractionChangedEvent"/>
+        /// </summary>
+        /// <returns>Called when an interaction from the outside. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnInteractionChanged() const override;
+
     private:
 
         /// <summary>
@@ -137,6 +153,18 @@ namespace SuperGameTools
         GizmoElement m_arrowElements[m_numberOfArrowElements];
 
         /// <summary>
+        /// The index of the selected gizmo.
+        /// Set to -1 if none are selected.
+        /// </summary>
+        int m_selectedGizmo;
+
+        /// <summary>
+        /// Set to the mouse location when mouse is pressed on a gizmo.
+        /// Then used to calculate the distance when moving the gizmo.
+        /// </summary>
+        FPoint m_originalLocation;
+
+        /// <summary>
         /// The arrow texture used as a handle.
         /// </summary>
         std::shared_ptr<SuperGameEngine::SuperTexture> m_arrowAsset;
@@ -181,6 +209,36 @@ namespace SuperGameTools
         /// </summary>
         FatedQuestLibraries::FColour m_hoverColour;
 
+        /// <summary>
+        /// Called when an interaction from the outside (from say a mouse interaction) now should be actioned
+        /// by the owning engine to perform gizmo actions.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::FEvent> m_onInteractionChanged;
+
+        /// <summary>
+        /// On movement, this will update the look of the Gizmo.
+        /// </summary>
         void UpdateInteractionStateOfGizmo();
+
+        /// <summary>
+        /// React to a mouse button press (first frame of down)
+        /// </summary>
+        /// <param name="x">X mouse position. </param>
+        /// <param name="y">Y mouse position. </param>
+        void SetupInteractionWhenMouseHasJustBeenPressed(int x, int y);
+
+        /// <summary>
+        /// React to a mouse button release (first frame up)
+        /// </summary>
+        /// <param name="x">X mouse position. </param>
+        /// <param name="y">Y mouse position. </param>
+        void SetupInteractionWhenMouseHasJustBeenReleased(int x, int y);
+
+        /// <summary>
+        /// React to the mouse being down.
+        /// </summary>
+        /// <param name="x">X mouse position. </param>
+        /// <param name="y">Y mouse position. </param>
+        void SetupInteractionWhenMouseIsDown(int x, int y);
     };  
 }

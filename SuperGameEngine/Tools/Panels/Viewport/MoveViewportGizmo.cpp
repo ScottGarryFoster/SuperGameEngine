@@ -1,6 +1,7 @@
 #include "MoveViewportGizmo.h"
 
 #include "FatedQuestLibraries.h"
+#include "MoveInteractionChangedEvent.h"
 #include "Engine/Content/TextureManager.h"
 #include "Engine/Graphics/Geometry/PrimitiveRectangle.h"
 #include "Engine/Graphics/Geometry/PrimitiveShapeProvider.h"
@@ -9,6 +10,7 @@
 using namespace SuperGameTools;
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
+using namespace SuperGameInput;
 
 MoveViewportGizmo::MoveViewportGizmo(
     const std::shared_ptr<TextureManager>& textureManager,
@@ -19,6 +21,7 @@ MoveViewportGizmo::MoveViewportGizmo(
     m_locationY = 0;
     m_mouseX = 0;
     m_mouseY = 0;
+    m_onInteractionChanged = std::make_shared<FEvent>();
 
     m_debugRectangle = primitiveShapeProvider->CreateRectangle(FVector2F(), FVector2F(50, 50));
     m_elementHovered = GizmoElementName::None;
@@ -117,6 +120,27 @@ void MoveViewportGizmo::UpdateMouseLocation(int x, int y)
     UpdateInteractionStateOfGizmo();
 }
 
+void MoveViewportGizmo::UpdateMouseSelectionInput(int x, int y, KeyOrButtonState state)
+{
+    if (EKeyOrButtonState::HasFlag(state, KeyOrButtonState::Pressed))
+    {
+        SetupInteractionWhenMouseHasJustBeenPressed(x, y);
+    }
+    else if (EKeyOrButtonState::HasFlag(state, KeyOrButtonState::Up))
+    {
+        SetupInteractionWhenMouseHasJustBeenReleased(x, y);
+    }
+    else if (EKeyOrButtonState::HasFlag(state, KeyOrButtonState::Down))
+    {
+        SetupInteractionWhenMouseIsDown(x, y);
+    }
+}
+
+std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> MoveViewportGizmo::OnInteractionChanged() const
+{
+    return m_onInteractionChanged;
+}
+
 void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
 {
     auto mousePoint = FPoint(m_mouseX, m_mouseY);
@@ -130,4 +154,65 @@ void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
         }
     }
 
+}
+
+void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int x, int y)
+{
+    if (m_selectedGizmo > -1)
+    {
+        Log::Error("Mouse just pressed and something already selected",
+            "MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int,int)");
+    }
+
+    auto mousePoint = FPoint(x, y);
+    for (size_t i = 0; i < m_numberOfArrowElements; ++i)
+    {
+        GizmoElement current = m_arrowElements[i];
+        if (current.FirstCollisionRectangle.PointIsWithin(mousePoint) || current.SecondCollisionRectangle.PointIsWithin(mousePoint))
+        {
+            m_selectedGizmo = static_cast<int>(i);
+            m_originalLocation.SetXYValue(x, y);
+            m_elementHovered = GizmoElementName::None;
+            break;
+        }
+    }
+
+    if (m_selectedGizmo > -1)
+    {
+        m_onInteractionChanged->Invoke(std::make_shared<MoveInteractionChangedEvent>(ToolsGizmoAction::GizmoSelected));
+    }
+}
+
+void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenReleased(int x, int y)
+{
+    if (m_selectedGizmo <= -1)
+    {
+        return;
+    }
+
+    GizmoElement current = m_arrowElements[m_selectedGizmo];
+    m_selectedGizmo = -1;
+    m_onInteractionChanged->Invoke(std::make_shared<MoveInteractionChangedEvent>(
+        ToolsGizmoAction::GizmoUnselected, 
+        x - m_originalLocation.GetX(),
+        y - m_originalLocation.GetY()));
+    m_originalLocation.SetXYValue(x, y);
+}
+
+void MoveViewportGizmo::SetupInteractionWhenMouseIsDown(int x, int y)
+{
+    if (m_selectedGizmo <= -1)
+    {
+        return;
+    }
+
+    int differenceX = x - m_originalLocation.GetX();
+    int differenceY = y - m_originalLocation.GetY();
+    m_originalLocation.SetXYValue(x, y);
+
+    GizmoElement current = m_arrowElements[m_selectedGizmo];
+    m_onInteractionChanged->Invoke(std::make_shared<MoveInteractionChangedEvent>(
+        ToolsGizmoAction::MoveBy, differenceX, differenceY));
+
+    UpdateGizmoLocation(m_locationX + differenceX, m_locationY + differenceY);
 }
