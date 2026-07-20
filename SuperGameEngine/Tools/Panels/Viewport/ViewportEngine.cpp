@@ -261,7 +261,10 @@ void ViewportEngine::GiveViewportEngineAndPanelCommunication(
 
 bool ViewportEngine::ShouldDrawGizmo() const
 {
-    return m_haveSelectedAGameObject && m_areSelectingAGizmoTool;
+    return  m_areSelectingAGizmoTool &&
+            m_haveSelectedAGameObject &&
+            m_selectedDrawBundle.first &&
+            m_drawBundle.at(m_selectedDrawBundle.second).GameObject->GetTransform().HasTransformComponent();
 }
 
 void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle, const FPoint& mousePosition)
@@ -741,8 +744,11 @@ void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEv
 
     if (!m_haveSelectedAGameObject)
     {
-        m_selectedDrawBundle.first = false;
-        m_drawBundle.at(m_selectedDrawBundle.second).GameObject = {};
+        if (m_selectedDrawBundle.first)
+        {
+            m_drawBundle.at(m_selectedDrawBundle.second).GameObject = {};
+            m_selectedDrawBundle.first = false;
+        }
     }
 }
 
@@ -818,6 +824,5 @@ void ViewportEngine::MoveDrawBundleBy(uint64_t index, int x, int y)
         position.GetY() + static_cast<float>(y));
 
     drawBundle.FaceRectangle.MoveShape(FPoint(x, y));
-
     drawBundle.GameObject->GetTransform().MovePositionBy(static_cast<float>(x), static_cast<float>(y));
 }
