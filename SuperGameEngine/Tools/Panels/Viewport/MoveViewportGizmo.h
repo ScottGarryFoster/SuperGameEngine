@@ -142,6 +142,16 @@ namespace SuperGameTools
             SuperGameEngine::TextureTransformationDetails TransformationDetails;
 
             /// <summary>
+            /// True when this element is hovered.
+            /// </summary>
+            bool Hovered = false;
+
+            /// <summary>
+            /// True when this element is selected.
+            /// </summary>
+            bool Selected = false;
+
+            /// <summary>
             /// Used mainly for debugging on this struct and defines what this struct is describing.
             /// </summary>
             GizmoElementName ElementName;
@@ -150,7 +160,7 @@ namespace SuperGameTools
         /// <summary>
         /// The number of arrow elements.
         /// </summary>
-        constexpr static size_t m_numberOfArrowElements = 2;
+        constexpr static size_t m_numberOfArrowElements = 3;
 
         /// <summary>
         /// The elements which are arrows or clickable elements to move the gizmo around.
@@ -174,6 +184,11 @@ namespace SuperGameTools
         /// The arrow texture used as a handle.
         /// </summary>
         std::shared_ptr<SuperGameEngine::SuperTexture> m_arrowAsset;
+
+        /// <summary>
+        /// The move asset for the corner
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SuperTexture> m_moveAsset;
 
         /// <summary>
         /// X location of the gizmo.
@@ -201,11 +216,6 @@ namespace SuperGameTools
         std::shared_ptr<SuperGameEngine::PrimitiveRectangle> m_debugRectangle;
 
         /// <summary>
-        /// The element currently hovered.
-        /// </summary>
-        GizmoElementName m_elementHovered;
-
-        /// <summary>
         /// Colour when no interaction is taking place.
         /// </summary>
         FatedQuestLibraries::FColour m_inactiveColour;
@@ -214,6 +224,11 @@ namespace SuperGameTools
         /// Colour when hover is occuring.
         /// </summary>
         FatedQuestLibraries::FColour m_hoverColour;
+
+        /// <summary>
+        /// Colour when selected is occuring.
+        /// </summary>
+        FatedQuestLibraries::FColour m_selectedColour;
 
         /// <summary>
         /// Called when an interaction from the outside (from say a mouse interaction) now should be actioned
