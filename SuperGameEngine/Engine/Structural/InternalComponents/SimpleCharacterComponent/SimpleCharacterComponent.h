@@ -74,22 +74,22 @@ namespace SuperGameEngine
         /// <summary>
         /// The tile to set when moving north.
         /// </summary>
-        KeyPairValue<const char*, int> m_propertyDirectionSpriteNorth;
+        FatedQuestLibraries::KeyPairValue<const char*, int> m_propertyDirectionSpriteNorth;
 
         /// <summary>
         /// The tile to set when moving south.
         /// </summary>
-        KeyPairValue<const char*, int> m_propertyDirectionSpriteSouth;
+        FatedQuestLibraries::KeyPairValue<const char*, int> m_propertyDirectionSpriteSouth;
 
         /// <summary>
         /// The tile to set when moving east.
         /// </summary>
-        KeyPairValue<const char*, int> m_propertyDirectionSpriteEast;
+        FatedQuestLibraries::KeyPairValue<const char*, int> m_propertyDirectionSpriteEast;
 
         /// <summary>
         /// The tile to set when moving west.
         /// </summary>
-        KeyPairValue<const char*, int> m_propertyDirectionSpriteWest;
+        FatedQuestLibraries::KeyPairValue<const char*, int> m_propertyDirectionSpriteWest;
 
 #pragma endregion
 

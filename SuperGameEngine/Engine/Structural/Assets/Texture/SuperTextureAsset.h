@@ -42,6 +42,12 @@ namespace SuperGameEngine
         virtual void Draw() const override;
 
         /// <summary>
+        /// Draws to screen at the default position and size.
+        /// </summary>
+        /// <param name="tintColour">Colour to tint the texture. Alpha and also be applied with this. </param>
+        virtual void Draw(const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
         /// Draws the tile as defined by the asset meta file.
         /// </summary>
         /// <param name="tile">
@@ -55,6 +61,17 @@ namespace SuperGameEngine
         /// <param name="tile"> The texture tile to render. </param>
         /// <param name="screenLocation"> The location of the texture on screen. </param>
         virtual void Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const override;
+
+        /// <summary>
+        /// Draws the tile as defined by the asset meta file.
+        /// </summary>
+        /// <param name="tile"> The texture tile to render. </param>
+        /// <param name="screenLocation"> The location of the texture on screen. </param>
+        /// <param name="tintColour">Colour to tint the texture. Alpha and also be applied with this. </param>
+        virtual void Draw(
+            int tile,
+            const FatedQuestLibraries::FVector2F& screenLocation,
+            const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Gets the size of a single tile or the entire image if tiles are not used.
@@ -104,6 +121,34 @@ namespace SuperGameEngine
         void DrawPredefined(int tile) const;
 
         void DrawPredefined(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const;
+
+        void DrawPredefined(int tile, const FatedQuestLibraries::FVector2F& screenLocation, const FatedQuestLibraries::FColour& tintColour) const;
+
+        /// <summary>
+        /// Gather and figure out the correct screen rectangle and texture rectangle
+        /// when given the tile and location.
+        /// This can fail.
+        /// </summary>
+        /// <param name="tile">Tile to render. </param>
+        /// <param name="screenLocation">Where to place the texture on the screen.</param>
+        /// <returns>Key is Texture Rectangle, Value is Screen Rectangle, can be in Error check with, HasAnError(). </returns>
+        FatedQuestLibraries::KeyPairValueReturn<RectangleInt, RectangleInt>
+            GatherScreenSizeAndLocation(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const;
+
+        /// <summary>
+        /// Draws a texture to screen exactly as passed in.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        virtual void DrawImplementation(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const;
+
+        /// <summary>
+        /// Draws a texture to screen exactly as passed in.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="tintColour">Colour to tint the texture. Alpha and also be applied with this. </param>
+        virtual void DrawImplementation(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const FatedQuestLibraries::FColour& tintColour) const;
     };
 }
 

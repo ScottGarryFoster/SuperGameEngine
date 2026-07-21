@@ -265,7 +265,7 @@ bool SuperEnumConverter::ParseNamespace(std::shared_ptr<StoredDocumentNode> name
 bool SuperEnumConverter::ParseEnumComment(std::shared_ptr<StoredDocumentNode> enumNode)
 {
     std::string comment = StringHelpers::Trim(enumNode->Inner());
-    if (comment == "")
+    if (comment.empty())
     {
         return false;
     }
@@ -572,6 +572,17 @@ std::string SuperEnumConverter::PrintEnumConverterStandard(int indents)
 {
     std::string output = {};
 
+    // Comment
+    if (m_enumComment.Parsed)
+    {
+        output += PrintSingleComment(m_enumComment.Value, indents);
+    }
+    else
+    {
+        std::string generatedComment = "Converts between " + m_left.Type + " and " + m_right.Type;
+        output += PrintSingleComment(generatedComment, indents);
+    }
+
     // Class open
     output += PrintIndents(indents) + "class " + m_enumConverterName.Value + "\n";
     output += PrintIndents(indents) + "{\n";
@@ -646,6 +657,17 @@ std::string SuperEnumConverter::PrintEnumConverterStandard(int indents)
 std::string SuperEnumConverter::PrintEnumConverterBitflag(int indents)
 {
     std::string output = {};
+
+    // Comment
+    if (m_enumComment.Parsed)
+    {
+        output += PrintSingleComment(m_enumComment.Value, indents);
+    }
+    else
+    {
+        std::string generatedComment = "Converts between " + m_left.Type + " and " + m_right.Type;
+        output += PrintSingleComment(generatedComment, indents);
+    }
 
     // Class open
     output += PrintIndents(indents) + "class " + m_enumConverterName.Value + "\n";
@@ -821,4 +843,27 @@ std::string SuperEnumConverter::PrintEnumPrefixIfAny(bool left)
     }
 
     return {};
+}
+
+std::string SuperEnumConverter::PrintSingleComment(const std::string& rawComment, int indents)
+{
+    std::string output = {};
+    if (rawComment.empty())
+    {
+        return output;
+    }
+
+    output += PrintIndents(indents) + "/// <summary>\n";
+    std::vector<std::string> lines = StringHelpers::Split(rawComment, "\n");
+    for (const std::string& line : lines)
+    {
+        std::string lineTrimmed = StringHelpers::Trim(line);
+        if (lineTrimmed != "")
+        {
+            output += PrintIndents(indents) + "/// " + lineTrimmed + "\n";
+        }
+    }
+    output += PrintIndents(indents) + "/// </summary>\n";
+
+    return output;
 }

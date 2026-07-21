@@ -88,5 +88,12 @@ namespace SuperGameTools
         /// <param name="guid">Guid to select. </param>
         /// <returns>True means there was a game object to select. </returns>
         virtual bool SelectGameObject(const std::string& guid) = 0;
+
+        /// <summary>
+        /// Gets a <see cref="GameObject"/> referenced by the GUID.
+        /// </summary>
+        /// <param name="guid">Guid to search. </param>
+        /// <returns>The gameobject or empty. </returns>
+        [[nodiscard]] virtual std::shared_ptr<GameObject> GetGameObjectByGuid(const std::string& guid) const = 0;
     };
 }

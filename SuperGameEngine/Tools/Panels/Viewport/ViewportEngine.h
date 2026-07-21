@@ -1,10 +1,17 @@
 #pragma once
+#include "MoveInteractionChangedEvent.h"
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 #include "Engine/CrossEngineObjects/ViewportObjectDrawBundle.h"
 #include "EngineEntry/Engine.h"
 #include "../../FatedQuestLibraries.h"
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/GameObject/GameObject.h"
+
+namespace SuperGameTools
+{
+    class ViewportTools;
+    class ViewportGizmo;
+}
 
 namespace SuperGameEngine
 {
@@ -213,6 +220,49 @@ namespace SuperGameTools
         bool m_previousSelectionKeyDownStatus;
 
         /// <summary>
+        /// Renders and handles interactions for the gizmo in the viewport.
+        /// This is the behaviours directly on game objects like move.
+        /// </summary>
+        std::shared_ptr<ViewportGizmo> m_gizmo;
+
+        /// <summary>
+        /// The tools which accompany the scene viewport.
+        /// </summary>
+        std::shared_ptr<ViewportTools> m_viewportTools;
+
+        /// <summary>
+        /// True when a game object is selected.
+        /// </summary>
+        bool m_haveSelectedAGameObject;
+
+        /// <summary>
+        /// True when a tool which the gizmo should display is shown.
+        /// </summary>
+        bool m_areSelectingAGizmoTool;
+
+        /// <summary>
+        /// Holds the currently selected draw bundle.
+        /// True means there is a value.
+        /// The value is the location in the array.
+        /// </summary>
+        /// <remarks>This limits us to one game object selected. </remarks>
+        std::pair<bool, uint64_t> m_selectedDrawBundle;
+
+        /// <summary>
+        /// True means the gizmo has control instead of this engine.
+        /// </summary>
+        /// <remarks>
+        /// In future this will likely be replaced with an enum for states of control.
+        /// </remarks>
+        bool m_gizmoHasControl;
+
+        /// <summary>
+        /// True when the gizmo should draw.
+        /// </summary>
+        /// <returns>True when the gizmo should draw. </returns>
+        bool ShouldDrawGizmo() const;
+
+        /// <summary>
         /// Draw the given object and use the mouse position to change the drawing to react to mouse over.
         /// </summary>
         /// <param name="drawBundle">Draw the given draw bundle.  </param>
@@ -372,5 +422,27 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Returns the mouse position as a collision rectangle. </returns>
         std::pair<bool, SuperGameEngine::RectangleInt> GetMousePosition() const;
+
+        /// <summary>
+        /// On the Gizmo throwing back an interaction meaning it has been selected
+        /// this is the event to react to for movements.
+        /// </summary>
+        /// <param name="args">Event args to react to. </param>
+        void ReactToMoveGizmoEvents(const std::shared_ptr<MoveInteractionChangedEvent>& args);
+
+        /// <summary>
+        /// Moves the drawbundle by this amount positionally.
+        /// </summary>
+        /// <param name="index">Index of the draw bundle.</param>
+        /// <param name="x">X by. </param>
+        /// <param name="y">Y by. </param>
+        void MoveDrawBundleBy(uint64_t index, int x, int y);
+
+        /// <summary>
+        /// Occurs when the draw bundle is selected.
+        /// This is different from a game object selection as this is this viewports reaction point.
+        /// </summary>
+        /// <param name="index">The draw bundle index. </param>
+        void SelectDrawBundle(uint64_t index);
     };
 }

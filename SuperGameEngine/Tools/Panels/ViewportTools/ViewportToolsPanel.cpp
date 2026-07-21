@@ -15,7 +15,9 @@ ViewportToolsPanel::~ViewportToolsPanel()
 void ViewportToolsPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
-    m_viewportTools = std::make_shared<SuperViewportTools>(m_windowPackage);
+    auto superTools = std::make_shared<SuperViewportTools>(m_windowPackage);
+    superTools->Setup();
+    m_viewportTools = superTools;
 
     SetupWindow(m_windowPackage->GetColourPalette(), GetPanelUniqueName(),
         {

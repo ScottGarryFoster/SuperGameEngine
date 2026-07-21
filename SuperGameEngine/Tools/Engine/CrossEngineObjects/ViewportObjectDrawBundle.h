@@ -10,6 +10,8 @@ namespace SuperGameEngine
 
 namespace SuperGameTools
 {
+    class GameObject;
+
     /// <summary>
     /// Holds information to draw an element.
     /// </summary>
@@ -50,5 +52,11 @@ namespace SuperGameTools
         /// Describes the selection state of the given draw bundle so that it maybe rendered correctly.
         /// </summary>
         DrawBundleSelectionState SelectionState;
+
+        /// <summary>
+        /// If selected, the game object will be added to the draw bundle here.
+        /// This will be empty if no longer needed.
+        /// </summary>
+        std::shared_ptr<GameObject> GameObject;
     };
 }

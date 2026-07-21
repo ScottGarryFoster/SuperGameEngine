@@ -78,6 +78,20 @@ namespace SuperGameTools
         /// <returns>The value stored in this property. </returns>
         FatedQuestLibraries::FVector2F GetValue() const;
 
+        /// <summary>
+        /// Set the value stored in this property.
+        /// </summary>
+        /// <param name="x">New X value. </param>
+        /// <param name="y">New Y value. </param>
+        void SetValue(float x, float y);
+
+        /// <summary>
+        /// Change value by this amount.
+        /// </summary>
+        /// <param name="x">X value to change by. </param>
+        /// <param name="y">Y value to change by. </param>
+        void ChangeValueBy(float x, float y);
+
     private:
         /// <summary>
         /// Event called when this property is dirtied.

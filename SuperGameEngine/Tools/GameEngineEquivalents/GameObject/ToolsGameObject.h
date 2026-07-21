@@ -80,6 +80,13 @@ namespace SuperGameTools
         virtual std::shared_ptr<Component> AddComponent(const std::string& type) override;
 
         /// <summary>
+        /// Provided there is a transform on this game object this will return the transform on the game object.
+        /// If there are two transforms, this will return the first on it finds.
+        /// </summary>
+        /// <returns>The first transform found or empty. </returns>
+        virtual ToolsTransformComponent GetTransform() const override;
+
+        /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
         /// and not as long term storage. Directly after invocation it will be deleted.
@@ -116,6 +123,12 @@ namespace SuperGameTools
         /// The groups for this selectable.
         /// </summary>
         std::unordered_set<SelectionGroup> m_selectionGroups;
+
+        /// <summary>
+        /// The transform component on this gameobject
+        /// Cached for later use as this is a common component.
+        /// </summary>
+        ToolsTransformComponent m_transformComponent;
 
         /// <summary>
         /// Call to update the dirty flag.

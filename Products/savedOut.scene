@@ -5,7 +5,7 @@
             <Property "Name"="Tile" "Value"="1" />
         </Component>
         <Component "Type"="TransformComponent">
-            <Property "Name"="Position" "X"="300" "Y"="100" />
+            <Property "Name"="Position" "X"="588" "Y"="389" />
         </Component>
         <Component "Type"="SimpleCharacterComponent">
             <Property "Name"="TileNorth" "Value"="0" />

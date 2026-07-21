@@ -25,7 +25,9 @@ namespace ToolsTests_Panels_ViewportTools
         void SetUp() override
         {
             auto windowPackage = std::make_shared<WindowPackage>();
-            m_superViewportTools = std::make_shared<SuperViewportTools>(windowPackage);
+            auto super = std::make_shared<SuperViewportTools>(windowPackage);
+            super->Setup();
+            m_superViewportTools = super;
 
             m_logger = std::make_shared<ConsoleLog>();
             if (auto shared = Log::GetEvent().lock())

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/Selectable.h"
+#include "GameEngineEquivalents/ComponentPropertyWrapper/ToolsTransformComponent.h"
 
 namespace FatedQuestLibraries
 {
@@ -11,8 +12,6 @@ namespace FatedQuestLibraries
     class StoredDocumentNode;
     class Guid;
 }
-
-using namespace FatedQuestLibraries;
 
 namespace SuperGameTools
 {
@@ -30,7 +29,7 @@ namespace SuperGameTools
         /// Event called when this objects dirty flag has changed.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
-        virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const = 0;
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnDirtyFlagChanged() const = 0;
 
         /// <summary>
         /// Guid for the game object.
@@ -49,7 +48,7 @@ namespace SuperGameTools
         /// Set guid for the game object.
         /// </summary>
         /// <param name="guid">New guid. </param>
-        virtual void SetGuid(const std::shared_ptr<Guid>& guid) = 0;
+        virtual void SetGuid(const std::shared_ptr<FatedQuestLibraries::Guid>& guid) = 0;
 
         /// <summary>
         /// Get components.
@@ -67,13 +66,13 @@ namespace SuperGameTools
         /// Load the game object from stored data.
         /// </summary>
         /// <param name="node">Node for this game object. </param>
-        virtual void Load(const std::shared_ptr<StoredDocumentNode>& node) = 0;
+        virtual void Load(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) = 0;
 
         /// <summary>
         /// Save this game object.
         /// </summary>
         /// <returns>A node which contains the data, this is the game object node. </returns>
-        virtual std::shared_ptr<ModifiableNode> Save() const = 0;
+        virtual std::shared_ptr<FatedQuestLibraries::ModifiableNode> Save() const = 0;
 
         /// <summary>
         /// Add a component to the end of the Game Object.
@@ -81,5 +80,12 @@ namespace SuperGameTools
         /// <param name="type">Type of the component. </param>
         /// <returns>The added component. </returns>
         virtual std::shared_ptr<Component> AddComponent(const std::string& type) = 0;
+
+        /// <summary>
+        /// Provided there is a transform on this game object this will return the transform on the game object.
+        /// If there are two transforms, this will return the first on it finds.
+        /// </summary>
+        /// <returns>The first transform found or empty. </returns>
+        virtual ToolsTransformComponent GetTransform() const = 0;
     };
 }

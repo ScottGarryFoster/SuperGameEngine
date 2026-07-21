@@ -35,6 +35,16 @@ void ViewportPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
     m_viewport = { 50, 50, 500, 250 };
     m_renderer = windowPackage->GetRenderer();
+
+    if (!m_viewportEngineAndPanelCommunication || !m_viewportTools)
+    {
+        Log::Error("No engine communication or viewport tools on setup."
+                   "This means the viewport engine and tools will not be able to communicate.");
+    }
+    else
+    {
+        m_viewportEngineAndPanelCommunication->GiveViewportTools(m_viewportTools);
+    }
 }
 
 void ViewportPanel::Update()
@@ -49,13 +59,27 @@ void ViewportPanel::Update()
 
     if (m_sizeOrPositionHasChanged && m_viewportEngineAndPanelCommunication)
     {
-        // Ensure the position is adjusted for the frame.
-        m_viewportEngineAndPanelCommunication->UpdateViewportLocation(
-            m_viewportImage.GetLeft() - 26,
-            m_viewportImage.GetTop() + 44,
-            m_viewportImage.GetWidth(),
-            m_viewportImage.GetHeight()
-        );
+        if (m_renderViewportTools)
+        {
+            // Ensure the position is adjusted for the frame when viewport tools are rendered.
+            m_viewportEngineAndPanelCommunication->UpdateViewportLocation(
+                m_viewportImage.GetLeft() - 26,
+                m_viewportImage.GetTop() + 44,
+                m_viewportImage.GetWidth(),
+                m_viewportImage.GetHeight()
+            );
+        }
+        else
+        {
+            // Ensure the position is adjusted when viewport tools are not rendered.
+            m_viewportEngineAndPanelCommunication->UpdateViewportLocation(
+                m_viewportImage.GetLeft() + 9,
+                m_viewportImage.GetTop() + 9,
+                m_viewportImage.GetWidth(),
+                m_viewportImage.GetHeight()
+            );
+        }
+
 
         m_sizeOrPositionHasChanged = false;
     }
