@@ -142,6 +142,21 @@ namespace SuperGameTools
             SuperGameEngine::TextureTransformationDetails TransformationDetails;
 
             /// <summary>
+            /// The colour for the gizmo when inactive.
+            /// </summary>
+            FatedQuestLibraries::FColour InactiveColour;
+
+            /// <summary>
+            /// The colour for the gizmo when hovered.
+            /// </summary>
+            FatedQuestLibraries::FColour HoverColour;
+
+            /// <summary>
+            /// The colour for the gizmo when selected.
+            /// </summary>
+            FatedQuestLibraries::FColour SelectedColour;
+
+            /// <summary>
             /// True when this element is hovered.
             /// </summary>
             bool Hovered = false;

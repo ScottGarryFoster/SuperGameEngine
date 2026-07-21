@@ -38,6 +38,9 @@ MoveViewportGizmo::MoveViewportGizmo(
             .UsingBothCollisionRectangles = true,
             .LocationOffset = FPoint(-50, -7),
             .FirstCollisionOffset = FPoint(0, 7),
+            .InactiveColour = {.Red= 229, .Green= 106, .Blue= 106, .Alpha= 255},
+            .HoverColour = {.Red= 255, .Green= 188, .Blue= 188, .Alpha= 255},
+            .SelectedColour = {.Red= 171, .Green= 79, .Blue= 79, .Alpha= 255},
             .ElementName = GizmoElementName::LowerLeftArrow,
         };
         lowerLeft.FirstCollisionRectangle.SetSize(50, 10);
@@ -54,6 +57,9 @@ MoveViewportGizmo::MoveViewportGizmo(
             .FirstCollisionOffset = FPoint(-18, 0),
             .SecondCollisionOffset = FPoint(-25, 0),
             .TransformationDetails = {.Angle = 90},
+            .InactiveColour = {.Red= 106, .Green= 229, .Blue= 106, .Alpha= 255},
+            .HoverColour = {.Red= 188, .Green= 255, .Blue= 188, .Alpha= 255},
+            .SelectedColour = {.Red= 79, .Green= 171, .Blue= 79, .Alpha= 255},
             .ElementName = GizmoElementName::UpperRightArrow,
         };
         upperRight.FirstCollisionRectangle.SetSize(10, 50);
@@ -68,6 +74,9 @@ MoveViewportGizmo::MoveViewportGizmo(
             .UsingBothCollisionRectangles = false,
             .LocationOffset = FPoint(0, 0),
             .FirstCollisionOffset = FPoint(2, 2),
+            .InactiveColour = {.Red = 106, .Green = 106, .Blue = 229, .Alpha = 255},
+            .HoverColour = {.Red = 188, .Green = 188, .Blue = 255, .Alpha = 255},
+            .SelectedColour = {.Red = 79, .Green = 79, .Blue = 171, .Alpha = 255},
             .ElementName = GizmoElementName::MoveAnywhereSquare,
         };
         lowerRight.FirstCollisionRectangle.SetSize(21, 21);
@@ -82,15 +91,15 @@ void MoveViewportGizmo::Draw() const
 
         if (current.Hovered)
         {
-            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_hoverColour);
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.HoverColour);
         }
         else if (current.Selected)
         {
-            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_selectedColour);
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.SelectedColour);
         }
         else
         {
-            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_inactiveColour);
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.InactiveColour);
         }
 
         m_debugRectangle->DrawInPlace(
@@ -182,7 +191,6 @@ void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
     {
         current.Hovered = current.FirstCollisionRectangle.PointIsWithin(mousePoint) || current.SecondCollisionRectangle.PointIsWithin(mousePoint);
     }
-
 }
 
 void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int x, int y)
