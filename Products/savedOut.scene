@@ -2,7 +2,7 @@
     <GameObject "Guid"="{418A83D4-19A4-42B8-A8C0-470A2DF829BB}">
         <Component "Type"="SpriteComponent">
             <Property "Name"="TextureAsset" "Value"="Engine\testimages\Small-8-Direction-Characters_by_AxulArt.png" />
-            <Property "Name"="Tile" "Value"="1" />
+            <Property "Name"="Tile" "Value"="2" />
         </Component>
         <Component "Type"="TransformComponent">
             <Property "Name"="Position" "X"="588" "Y"="389" />

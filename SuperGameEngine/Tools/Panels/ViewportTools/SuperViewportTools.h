@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 #include "ViewportButtonInfo.h"
+#include "ViewportDebugOption.h"
 #include "ViewportTools.h"
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 
@@ -47,7 +48,7 @@ namespace SuperGameTools
         /// <summary>
         /// Draw the viewport tools bar. 
         /// </summary>
-        virtual void Draw() const override;
+        virtual void Draw() override;
 
         /// <summary>
         /// Inform the observer an event has taken place.
@@ -62,6 +63,13 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Invoked when selected tool is changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnSelectedToolChanged() const override;
+
+        /// <summary>
+        /// Invoked when debug options changed.
+        /// Uses ViewportDebugOptionsChanged Event Arguments.
+        /// </summary>
+        /// <returns>Invoked when debug options changed. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnDebugOptionsChanged() const override;
 
     private:
 
@@ -89,5 +97,15 @@ namespace SuperGameTools
         /// Invoked when selected tool is changed.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onSelectedToolChanged;
+
+        /// <summary>
+        /// Invoked when debug options changed.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::FEvent> m_onDebugOptionsChanged;
+
+        /// <summary>
+        /// The option selected to view different debug information in the viewport.
+        /// </summary>
+        ViewportDebugOption m_debugOption;
     };
 }

@@ -7,7 +7,7 @@ namespace SuperGameTools
     /// Renders and handles interactions for the gizmo in the viewport.
     /// This is the behaviours directly on game objects like move.
     /// </summary>
-    class ViewportGizmo
+    class ViewportGizmo : public FatedQuestLibraries::FEventObserver
     {
     public:
         /// <summary>

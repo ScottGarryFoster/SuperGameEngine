@@ -6,6 +6,7 @@
 #include "../../FatedQuestLibraries.h"
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/GameObject/GameObject.h"
+#include "Panels/ViewportTools/ViewportDebugOption.h"
 
 namespace SuperGameTools
 {
@@ -255,6 +256,11 @@ namespace SuperGameTools
         /// In future this will likely be replaced with an enum for states of control.
         /// </remarks>
         bool m_gizmoHasControl;
+
+        /// <summary>
+        /// The option selected to view debug helpers in the viewport.
+        /// </summary>
+        ViewportDebugOption m_debugOption;
 
         /// <summary>
         /// True when the gizmo should draw.

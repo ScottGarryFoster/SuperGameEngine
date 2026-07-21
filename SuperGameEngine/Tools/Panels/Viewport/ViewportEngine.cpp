@@ -25,6 +25,7 @@
 #include "Panels/SceneHierarchy/EventArguments/OnMenuAddComponentEventArguments.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteGameObjectEventArguments.h"
+#include "Panels/ViewportTools/ViewportDebugOptionsChangedArguments.h"
 #include "Panels/ViewportTools/ViewportTools.h"
 #include "Panels/ViewportTools/ViewportToolsButtonSelectedArguments.h"
 #include "Structural/Assets/Texture/TextureAsset.h"
@@ -48,6 +49,7 @@ ViewportEngine::ViewportEngine()
 
     m_gizmoHasControl = false;
     m_selectedDrawBundle = { false, 0 };
+    m_debugOption = ViewportDebugOption::None;
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -87,53 +89,58 @@ ApplicationOperationState ViewportEngine::Update(Uint64 ticks)
 void ViewportEngine::Draw()
 {
     // Mouse Rectangle
-    m_debugRectangle->DrawInPlace(
-        m_mouseCollision.GetLeft(),
-        m_mouseCollision.GetTop(),
-        m_mouseCollision.GetWidth(),
-        m_mouseCollision.GetHeight());
-
+    if (EViewportDebugOption::HasFlag(m_debugOption, ViewportDebugOption::Cursor))
+    {
+        m_debugRectangle->DrawInPlace(
+            m_mouseCollision.GetLeft(),
+            m_mouseCollision.GetTop(),
+            m_mouseCollision.GetWidth(),
+            m_mouseCollision.GetHeight());
+    }
 
     for (const std::pair<const uint64_t, ViewportObjectDrawBundle>& drawBundle : m_drawBundle)
     {
-        const bool mouseOver = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::Hover);
-        const bool leftClick = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::SelectionKeyDown);
-        const bool selected = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::Selected);
-        if (selected)
+        if (EViewportDebugOption::HasFlag(m_debugOption, ViewportDebugOption::GameObject))
         {
-            m_debugRectangle->DrawInPlace(
-                drawBundle.second.FaceRectangle.GetLeft(),
-                drawBundle.second.FaceRectangle.GetTop(),
-                drawBundle.second.FaceRectangle.GetWidth(),
-                drawBundle.second.FaceRectangle.GetHeight(),
-                DebugColourName::Red);
-        }
-        else if (!mouseOver)
-        {
-            m_debugRectangle->DrawInPlace(
-                drawBundle.second.FaceRectangle.GetLeft(),
-                drawBundle.second.FaceRectangle.GetTop(),
-                drawBundle.second.FaceRectangle.GetWidth(),
-                drawBundle.second.FaceRectangle.GetHeight(),
-                DebugColourName::Default);
-        }
-        else if (leftClick)
-        {
-            m_debugRectangle->DrawInPlace(
-                drawBundle.second.FaceRectangle.GetLeft(),
-                drawBundle.second.FaceRectangle.GetTop(),
-                drawBundle.second.FaceRectangle.GetWidth(),
-                drawBundle.second.FaceRectangle.GetHeight(),
-                DebugColourName::Blue);
-        }
-        if (mouseOver)
-        {
-            m_debugRectangle->DrawInPlace(
-                drawBundle.second.FaceRectangle.GetLeft(),
-                drawBundle.second.FaceRectangle.GetTop(),
-                drawBundle.second.FaceRectangle.GetWidth(),
-                drawBundle.second.FaceRectangle.GetHeight(),
-                DebugColourName::Cyan);
+            const bool mouseOver = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::Hover);
+            const bool leftClick = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::SelectionKeyDown);
+            const bool selected = EDrawBundleSelectionState::HasFlag(drawBundle.second.SelectionState, DrawBundleSelectionState::Selected);
+            if (selected)
+            {
+                m_debugRectangle->DrawInPlace(
+                    drawBundle.second.FaceRectangle.GetLeft(),
+                    drawBundle.second.FaceRectangle.GetTop(),
+                    drawBundle.second.FaceRectangle.GetWidth(),
+                    drawBundle.second.FaceRectangle.GetHeight(),
+                    DebugColourName::Red);
+            }
+            else if (!mouseOver)
+            {
+                m_debugRectangle->DrawInPlace(
+                    drawBundle.second.FaceRectangle.GetLeft(),
+                    drawBundle.second.FaceRectangle.GetTop(),
+                    drawBundle.second.FaceRectangle.GetWidth(),
+                    drawBundle.second.FaceRectangle.GetHeight(),
+                    DebugColourName::Default);
+            }
+            else if (leftClick)
+            {
+                m_debugRectangle->DrawInPlace(
+                    drawBundle.second.FaceRectangle.GetLeft(),
+                    drawBundle.second.FaceRectangle.GetTop(),
+                    drawBundle.second.FaceRectangle.GetWidth(),
+                    drawBundle.second.FaceRectangle.GetHeight(),
+                    DebugColourName::Blue);
+            }
+            if (mouseOver)
+            {
+                m_debugRectangle->DrawInPlace(
+                    drawBundle.second.FaceRectangle.GetLeft(),
+                    drawBundle.second.FaceRectangle.GetTop(),
+                    drawBundle.second.FaceRectangle.GetWidth(),
+                    drawBundle.second.FaceRectangle.GetHeight(),
+                    DebugColourName::Cyan);
+            }
         }
 
         DrawBundle(drawBundle.second);
@@ -186,6 +193,8 @@ void ViewportEngine::EngineStart()
     m_viewportTools = m_viewportEngineAndPanelCommunication->GetViewportTools();
 
     m_viewportTools->OnSelectedToolChanged()->Subscribe(shared_from_this());
+    m_viewportTools->OnDebugOptionsChanged()->Subscribe(shared_from_this());
+    m_viewportTools->OnDebugOptionsChanged()->Subscribe(m_gizmo);
     
 }
 
@@ -194,6 +203,9 @@ void ViewportEngine::EngineEnd()
     // If you stored the scene ensure you let it go here.
     m_gizmo->OnInteractionChanged()->Unsubscribe(shared_from_this());
     m_viewportTools->OnSelectedToolChanged()->Unsubscribe(shared_from_this());
+
+    m_viewportTools->OnDebugOptionsChanged()->Unsubscribe(shared_from_this());
+    m_viewportTools->OnDebugOptionsChanged()->Unsubscribe(m_gizmo);
 }
 
 void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
@@ -245,6 +257,10 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         ReactToMoveGizmoEvents(args);
     }
+    else if (auto args = std::dynamic_pointer_cast<ViewportDebugOptionsChanged>(arguments))
+    {
+        m_debugOption = args->GetDebugOption();
+    }
 }
 
 void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
@@ -277,9 +293,8 @@ void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle, cons
         draw = false;
     }
 
-    if (draw)
+    if (draw && EViewportDebugOption::HasFlag(m_debugOption, ViewportDebugOption::GameObject))
     {
-
         m_debugRectangle->DrawInPlace(
             drawBundle.FaceRectangle.GetLeft(),
             drawBundle.FaceRectangle.GetTop(),
@@ -295,8 +310,8 @@ void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle)
         return;
     }
 
-    FatedQuestLibraries::FColour colour = { 255, 0, 0, 255 };
-    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition, colour);
+    // TODO: Pass Tile Down
+    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition);
 }
 
 void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)

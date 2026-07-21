@@ -6,6 +6,7 @@
 #include "Engine/Graphics/Geometry/PrimitiveRectangle.h"
 #include "Engine/Graphics/Geometry/PrimitiveShapeProvider.h"
 #include "Engine/Graphics/Texture/SuperTexture.h"
+#include "Panels/ViewportTools/ViewportDebugOptionsChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace SuperGameEngine;
@@ -23,6 +24,7 @@ MoveViewportGizmo::MoveViewportGizmo(
     m_mouseX = 0;
     m_mouseY = 0;
     m_onInteractionChanged = std::make_shared<FEvent>();
+    m_debugOption = ViewportDebugOption::None;
 
     m_debugRectangle = primitiveShapeProvider->CreateRectangle(FVector2F(), FVector2F(50, 50));
 
@@ -38,6 +40,9 @@ MoveViewportGizmo::MoveViewportGizmo(
             .UsingBothCollisionRectangles = true,
             .LocationOffset = FPoint(-50, -7),
             .FirstCollisionOffset = FPoint(0, 7),
+            .InactiveColour = {.Red= 229, .Green= 106, .Blue= 106, .Alpha= 255},
+            .HoverColour = {.Red= 255, .Green= 188, .Blue= 188, .Alpha= 255},
+            .SelectedColour = {.Red= 171, .Green= 79, .Blue= 79, .Alpha= 255},
             .ElementName = GizmoElementName::LowerLeftArrow,
         };
         lowerLeft.FirstCollisionRectangle.SetSize(50, 10);
@@ -54,6 +59,9 @@ MoveViewportGizmo::MoveViewportGizmo(
             .FirstCollisionOffset = FPoint(-18, 0),
             .SecondCollisionOffset = FPoint(-25, 0),
             .TransformationDetails = {.Angle = 90},
+            .InactiveColour = {.Red= 106, .Green= 229, .Blue= 106, .Alpha= 255},
+            .HoverColour = {.Red= 188, .Green= 255, .Blue= 188, .Alpha= 255},
+            .SelectedColour = {.Red= 79, .Green= 171, .Blue= 79, .Alpha= 255},
             .ElementName = GizmoElementName::UpperRightArrow,
         };
         upperRight.FirstCollisionRectangle.SetSize(10, 50);
@@ -68,6 +76,9 @@ MoveViewportGizmo::MoveViewportGizmo(
             .UsingBothCollisionRectangles = false,
             .LocationOffset = FPoint(0, 0),
             .FirstCollisionOffset = FPoint(2, 2),
+            .InactiveColour = {.Red = 106, .Green = 106, .Blue = 229, .Alpha = 255},
+            .HoverColour = {.Red = 188, .Green = 188, .Blue = 255, .Alpha = 255},
+            .SelectedColour = {.Red = 79, .Green = 79, .Blue = 171, .Alpha = 255},
             .ElementName = GizmoElementName::MoveAnywhereSquare,
         };
         lowerRight.FirstCollisionRectangle.SetSize(21, 21);
@@ -82,28 +93,31 @@ void MoveViewportGizmo::Draw() const
 
         if (current.Hovered)
         {
-            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_hoverColour);
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.HoverColour);
         }
         else if (current.Selected)
         {
-            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_selectedColour);
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.SelectedColour);
         }
         else
         {
-            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, m_inactiveColour);
+            current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.InactiveColour);
         }
 
-        m_debugRectangle->DrawInPlace(
-            current.FirstCollisionRectangle.GetLeft(),
-            current.FirstCollisionRectangle.GetTop(),
-            current.FirstCollisionRectangle.GetWidth(),
-            current.FirstCollisionRectangle.GetHeight());
+        if (EViewportDebugOption::HasFlag(m_debugOption, ViewportDebugOption::Gizmo))
+        {
+            m_debugRectangle->DrawInPlace(
+                current.FirstCollisionRectangle.GetLeft(),
+                current.FirstCollisionRectangle.GetTop(),
+                current.FirstCollisionRectangle.GetWidth(),
+                current.FirstCollisionRectangle.GetHeight());
 
-        m_debugRectangle->DrawInPlace(
-            current.SecondCollisionRectangle.GetLeft(),
-            current.SecondCollisionRectangle.GetTop(),
-            current.SecondCollisionRectangle.GetWidth(),
-            current.SecondCollisionRectangle.GetHeight());
+            m_debugRectangle->DrawInPlace(
+                current.SecondCollisionRectangle.GetLeft(),
+                current.SecondCollisionRectangle.GetTop(),
+                current.SecondCollisionRectangle.GetWidth(),
+                current.SecondCollisionRectangle.GetHeight());
+        }
     }
 }
 
@@ -170,6 +184,14 @@ std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> MoveViewportGizmo::OnI
     return m_onInteractionChanged;
 }
 
+void MoveViewportGizmo::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+{
+    if (auto args = std::dynamic_pointer_cast<ViewportDebugOptionsChanged>(arguments))
+    {
+        m_debugOption = args->GetDebugOption();
+    }
+}
+
 void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
 {
     if (m_selectedGizmo > -1)
@@ -182,7 +204,6 @@ void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
     {
         current.Hovered = current.FirstCollisionRectangle.PointIsWithin(mousePoint) || current.SecondCollisionRectangle.PointIsWithin(mousePoint);
     }
-
 }
 
 void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int x, int y)
