@@ -6,6 +6,7 @@
 #include "Engine/Graphics/Geometry/PrimitiveRectangle.h"
 #include "Engine/Graphics/Geometry/PrimitiveShapeProvider.h"
 #include "Engine/Graphics/Texture/SuperTexture.h"
+#include "Panels/ViewportTools/ViewportDebugOptionsChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace SuperGameEngine;
@@ -23,6 +24,7 @@ MoveViewportGizmo::MoveViewportGizmo(
     m_mouseX = 0;
     m_mouseY = 0;
     m_onInteractionChanged = std::make_shared<FEvent>();
+    m_debugOption = ViewportDebugOption::None;
 
     m_debugRectangle = primitiveShapeProvider->CreateRectangle(FVector2F(), FVector2F(50, 50));
 
@@ -102,17 +104,20 @@ void MoveViewportGizmo::Draw() const
             current.Texture->Draw(FPoint(current.Location.GetX(), current.Location.GetY()), current.TransformationDetails, current.InactiveColour);
         }
 
-        m_debugRectangle->DrawInPlace(
-            current.FirstCollisionRectangle.GetLeft(),
-            current.FirstCollisionRectangle.GetTop(),
-            current.FirstCollisionRectangle.GetWidth(),
-            current.FirstCollisionRectangle.GetHeight());
+        if (EViewportDebugOption::HasFlag(m_debugOption, ViewportDebugOption::Gizmo))
+        {
+            m_debugRectangle->DrawInPlace(
+                current.FirstCollisionRectangle.GetLeft(),
+                current.FirstCollisionRectangle.GetTop(),
+                current.FirstCollisionRectangle.GetWidth(),
+                current.FirstCollisionRectangle.GetHeight());
 
-        m_debugRectangle->DrawInPlace(
-            current.SecondCollisionRectangle.GetLeft(),
-            current.SecondCollisionRectangle.GetTop(),
-            current.SecondCollisionRectangle.GetWidth(),
-            current.SecondCollisionRectangle.GetHeight());
+            m_debugRectangle->DrawInPlace(
+                current.SecondCollisionRectangle.GetLeft(),
+                current.SecondCollisionRectangle.GetTop(),
+                current.SecondCollisionRectangle.GetWidth(),
+                current.SecondCollisionRectangle.GetHeight());
+        }
     }
 }
 
@@ -177,6 +182,14 @@ void MoveViewportGizmo::UpdateOnMouseIsOutsideOfViewport()
 std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> MoveViewportGizmo::OnInteractionChanged() const
 {
     return m_onInteractionChanged;
+}
+
+void MoveViewportGizmo::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+{
+    if (auto args = std::dynamic_pointer_cast<ViewportDebugOptionsChanged>(arguments))
+    {
+        m_debugOption = args->GetDebugOption();
+    }
 }
 
 void MoveViewportGizmo::UpdateInteractionStateOfGizmo()

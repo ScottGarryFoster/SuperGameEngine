@@ -26,12 +26,19 @@ namespace SuperGameTools
         /// <summary>
         /// Draw the viewport tools bar. 
         /// </summary>
-        virtual void Draw() const = 0;
+        virtual void Draw() = 0;
 
         /// <summary>
         /// Invoked when selected tool is changed.
         /// </summary>
         /// <returns>Invoked when selected tool is changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnSelectedToolChanged() const = 0;
+
+        /// <summary>
+        /// Invoked when debug options changed.
+        /// Uses ViewportDebugOptionsChanged Event Arguments.
+        /// </summary>
+        /// <returns>Invoked when debug options changed. </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnDebugOptionsChanged() const = 0;
     };
 }

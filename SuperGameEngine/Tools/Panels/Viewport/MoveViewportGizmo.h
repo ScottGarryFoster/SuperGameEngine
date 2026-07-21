@@ -4,6 +4,7 @@
 
 #include "ViewportGizmo.h"
 #include "Engine/Graphics/Texture/TextureTransformationDetails.h"
+#include "Panels/ViewportTools/ViewportDebugOption.h"
 #include "Structural/Spatial/Area/RectangleInt.h"
 
 namespace SuperGameEngine
@@ -68,6 +69,14 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Called when an interaction from the outside. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnInteractionChanged() const override;
+
+        /// <summary>
+        /// Inform the observer an event has taken place.
+        /// Do not store this pointer it is intended as a point for dynamic casting
+        /// and not as long term storage. Directly after invocation it will be deleted.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
 
     private:
 
@@ -250,6 +259,11 @@ namespace SuperGameTools
         /// by the owning engine to perform gizmo actions.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onInteractionChanged;
+
+        /// <summary>
+        /// The option selected to view debug helpers in the viewport.
+        /// </summary>
+        ViewportDebugOption m_debugOption;
 
         /// <summary>
         /// On movement, this will update the look of the Gizmo.

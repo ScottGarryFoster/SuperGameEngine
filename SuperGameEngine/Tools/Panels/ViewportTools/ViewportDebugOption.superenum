@@ -1,0 +1,21 @@
+<SuperEnum Type="BitFlag">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Defines options selected to view debug information in the viewport.
+    </EnumComment>
+    <EnumName Name="ViewportDebugOption">
+        <None />
+        <Gizmo>
+            Display hitboxes around the Gizmos
+        </Gizmo>
+        <GameObject>
+            Display hitboxes around the GameObject
+        </GameObject>
+        <Cursor>
+            Display where the cursor counts its location as.
+        </Cursor>
+    </EnumName>
+</SuperEnum>

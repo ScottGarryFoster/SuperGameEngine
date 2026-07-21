@@ -2,6 +2,7 @@
 
 #include "SuperViewportToolsButton.h"
 #include "ViewportButtonInfo.h"
+#include "ViewportDebugOptionsChangedArguments.h"
 #include "ViewportToolsButtonSelectedArguments.h"
 #include "Engine/Content/ContentManager.h"
 #include "Panels/SceneHierarchy/GameObjectTreeViewItem.h"
@@ -16,11 +17,13 @@ SuperViewportTools::SuperViewportTools(const std::shared_ptr<WindowPackage>& win
     m_selectedTool = ViewportToolsType::Select;
     m_viewportButtonInfo = {};
     m_onSelectedToolChanged = std::make_shared<FEvent>();
+    m_onDebugOptionsChanged = std::make_shared<FEvent>();
+    m_debugOption = ViewportDebugOption::None;
 }
 
 void SuperViewportTools::Setup()
 {
-    if (m_toolsButtons.size() > 0)
+    if (!m_toolsButtons.empty())
     {
         Log::Error("Setup called more than once.",
             "SuperViewportTools::Setup");
@@ -65,7 +68,7 @@ void SuperViewportTools::SelectTool(ViewportToolsType newValue)
     m_toolsButtons.at(newValue)->Select();
 }
 
-void SuperViewportTools::Draw() const
+void SuperViewportTools::Draw()
 {
     for (const ViewportToolsType& toolsType : EViewportToolsType::ToVector())
     {
@@ -77,6 +80,57 @@ void SuperViewportTools::Draw() const
     ImVec2 groupMin = ImGui::GetCursorPos();
     ImGui::SetCursorPosY(groupMin.y + 35);
     ImGui::SetCursorPosX(8);
+
+    ImGui::SameLine();
+    ImGui::BeginChild(
+        "PanelWithMenu",
+        ImVec2(0, 20),
+        ImGuiChildFlags_None,
+        ImGuiWindowFlags_MenuBar
+    );
+
+    bool debugOptionsChanged = false;
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Options"))
+        {
+            if (ImGui::BeginMenu("Debug Overlays"))
+            {
+                for (const ViewportDebugOption& option : EViewportDebugOption::ToVector())
+                {
+                    if (option == ViewportDebugOption::None)
+                    {
+                        continue;
+                    }
+
+                    if (ImGui::Selectable(EViewportDebugOption::ToString(option).c_str(), 
+                        EViewportDebugOption::HasFlag(m_debugOption, option), 
+                        ImGuiSelectableFlags_NoAutoClosePopups))
+                    {
+                        m_debugOption ^= option;
+                        debugOptionsChanged = true;
+                    }
+                }
+
+                if (ImGui::Selectable("Reset", false, ImGuiSelectableFlags_NoAutoClosePopups))
+                {
+                    m_debugOption = ViewportDebugOption::None;
+                    debugOptionsChanged = true;
+                }
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
+    ImGui::EndChild();
+
+    if (debugOptionsChanged)
+    {
+        m_onDebugOptionsChanged->Invoke(std::make_shared<ViewportDebugOptionsChanged>(m_debugOption));
+    }
 }
 
 void SuperViewportTools::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
@@ -91,4 +145,9 @@ void SuperViewportTools::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArgum
 std::shared_ptr<FatedQuestLibraries::FEvent> SuperViewportTools::OnSelectedToolChanged() const
 {
     return m_onSelectedToolChanged;
+}
+
+std::shared_ptr<FatedQuestLibraries::FEvent> SuperViewportTools::OnDebugOptionsChanged() const
+{
+    return m_onDebugOptionsChanged;
 }
