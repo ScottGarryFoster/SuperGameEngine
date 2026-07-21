@@ -127,6 +127,9 @@ void SuperViewportTools::Draw()
     }
     ImGui::EndChild();
 
+    // Ensure the height is still drawn the same.
+    ImGui::SetCursorPosY(groupMin.y + 35);
+
     if (debugOptionsChanged)
     {
         m_onDebugOptionsChanged->Invoke(std::make_shared<ViewportDebugOptionsChanged>(m_debugOption));
