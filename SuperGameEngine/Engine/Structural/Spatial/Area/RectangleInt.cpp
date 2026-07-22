@@ -50,6 +50,11 @@ bool RectangleInt::operator==(const RectangleInt& other) const
         GetTop() == other.GetTop();
 }
 
+RectangleInt RectangleInt::operator+(const FatedQuestLibraries::FVector2F& position) const
+{
+    return RectangleInt(position.GetX() + GetLeft(), position.GetY() + GetTop(), GetWidth(), GetHeight());
+}
+
 int RectangleInt::GetLeft() const
 {
     return m_location.GetX();

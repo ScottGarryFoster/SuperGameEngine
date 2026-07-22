@@ -53,6 +53,13 @@ namespace SuperGameEngine
         bool operator==(const RectangleInt& other) const;
 
         /// <summary>
+        /// Returns a new RectangleInt moved by the given position amount.
+        /// </summary>
+        /// <param name="position">Position amount to move by. </param>
+        /// <returns>A rectangle int copy moved by position. </returns>
+        RectangleInt operator+(const FatedQuestLibraries::FVector2F& position) const;
+
+        /// <summary>
         /// The left X of the Rectangle.
         /// </summary>
         /// <returns>The Left X coordinate of the Rectangle. </returns>
