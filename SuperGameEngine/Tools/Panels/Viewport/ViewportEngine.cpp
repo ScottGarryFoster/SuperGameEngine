@@ -604,12 +604,13 @@ ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<
 
 void ViewportEngine::ProcessDrawBundleInteractions()
 {
+    bool mouseClickWasHandled = false;
     std::pair<bool, SuperGameEngine::RectangleInt> mousePosition = GetMousePosition();
     bool mousePositionIsValid = mousePosition.first;
     m_mouseCollision = mousePosition.second;
     if (!mousePositionIsValid)
     {
-        m_gizmo->UpdateOnMouseIsOutsideOfViewport();
+        mouseClickWasHandled |= m_gizmo->UpdateOnMouseIsOutsideOfViewport();
         return;
     }
 
@@ -622,7 +623,7 @@ void ViewportEngine::ProcessDrawBundleInteractions()
     if (m_viewportTools->GetSelectedTool() == ViewportToolsType::Move)
     {
         m_gizmo->UpdateMouseLocation(mousePosition.second.GetLeft(), mousePosition.second.GetTop());
-        m_gizmo->UpdateMouseSelectionInput(
+        mouseClickWasHandled |= m_gizmo->UpdateMouseSelectionInput(
             mousePosition.second.GetLeft(),
             mousePosition.second.GetTop(),
             m_inputManager->GetMouseState().ButtonState.at(SuperGameInput::MouseButton::Left));
@@ -685,10 +686,22 @@ void ViewportEngine::ProcessDrawBundleInteractions()
                 {
                     m_currentScene->SelectGameObject(drawBundle.Guid);
                 }
+
+                if (m_viewportEngineAndPanelCommunication->GetViewportTools()->GetSelectedTool() == ViewportToolsType::Select)
+                {
+                    m_viewportEngineAndPanelCommunication->GetViewportTools()->SelectTool(ViewportToolsType::Move);
+                }
+
+                // This was still handled even if the object was already selected.
+                mouseClickWasHandled |= true;
             }
         }
     }
 
+    if (leftClick && !mouseClickWasHandled && m_areSelectingAGizmoTool)
+    {
+        m_viewportEngineAndPanelCommunication->GetViewportTools()->SelectTool(ViewportToolsType::Select);
+    }
 }
 
 void ViewportEngine::SelectDrawBundle(uint64_t index)

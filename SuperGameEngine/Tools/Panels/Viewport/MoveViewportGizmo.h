@@ -54,13 +54,15 @@ namespace SuperGameTools
         /// <param name="x">Location of the change. </param>
         /// <param name="y">Location of the change. </param>
         /// <param name="state">Change which occured. </param>
-        virtual void UpdateMouseSelectionInput(int x, int y, SuperGameInput::KeyOrButtonState state) override;
+        /// <returns>True means that this did something (was handled). </returns>
+        virtual bool UpdateMouseSelectionInput(int x, int y, SuperGameInput::KeyOrButtonState state) override;
 
         /// <summary>
         /// Called when mouse is outside the viewport.
         /// Handle anything needed.
         /// </summary>
-        virtual void UpdateOnMouseIsOutsideOfViewport() override;
+        /// <returns>True means that this did something (was handled). </returns>
+        virtual bool UpdateOnMouseIsOutsideOfViewport() override;
 
         /// <summary>
         /// Called when an interaction from the outside (from say a mouse interaction) now should be actioned
@@ -275,20 +277,23 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="x">X mouse position. </param>
         /// <param name="y">Y mouse position. </param>
-        void SetupInteractionWhenMouseHasJustBeenPressed(int x, int y);
+        /// <returns>True means that this did something (was handled). </returns>
+        bool SetupInteractionWhenMouseHasJustBeenPressed(int x, int y);
 
         /// <summary>
         /// React to a mouse button release (first frame up)
         /// </summary>
         /// <param name="x">X mouse position. </param>
         /// <param name="y">Y mouse position. </param>
-        void SetupInteractionWhenMouseHasJustBeenReleased(int x, int y);
+        /// <returns>True means that this did something (was handled). </returns>
+        bool SetupInteractionWhenMouseHasJustBeenReleased(int x, int y);
 
         /// <summary>
         /// React to the mouse being down.
         /// </summary>
         /// <param name="x">X mouse position. </param>
         /// <param name="y">Y mouse position. </param>
-        void SetupInteractionWhenMouseIsDown(int x, int y);
+        /// <returns>True means that this did something (was handled). </returns>
+        bool SetupInteractionWhenMouseIsDown(int x, int y);
     };  
 }
