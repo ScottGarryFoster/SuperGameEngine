@@ -50,6 +50,7 @@ ViewportEngine::ViewportEngine()
     m_gizmoHasControl = false;
     m_selectedDrawBundle = { false, 0 };
     m_debugOption = ViewportDebugOption::None;
+    m_topLeftPoint.SetXYValue(250, 342);
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -108,7 +109,7 @@ void ViewportEngine::Draw()
             if (selected)
             {
                 m_debugRectangle->DrawInPlace(
-                    drawBundle.second.FaceRectangle.GetLeft(),
+                   drawBundle.second.FaceRectangle.GetLeft(),
                     drawBundle.second.FaceRectangle.GetTop(),
                     drawBundle.second.FaceRectangle.GetWidth(),
                     drawBundle.second.FaceRectangle.GetHeight(),
@@ -311,7 +312,7 @@ void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle)
     }
 
     // TODO: Pass Tile Down
-    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition);
+    drawBundle.TextureAsset->Draw(0, m_topLeftPoint + drawBundle.TransformPosition);
 }
 
 void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)
@@ -578,14 +579,14 @@ void ViewportEngine::UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBund
 
     drawBundle.FaceRectangle.SetSize(size.GetX(), size.GetY());
     drawBundle.FaceRectangle.SetLocation(
-        (float)drawBundle.TransformPosition.GetX(),
-        (float)drawBundle.TransformPosition.GetY());
+        static_cast<int>(m_topLeftPoint.GetX() + drawBundle.TransformPosition.GetX()),
+        static_cast<int>(m_topLeftPoint.GetY() + drawBundle.TransformPosition.GetY()));
 
     if (drawBundle.SelectionState == DrawBundleSelectionState::Selected)
     {
         m_gizmo->UpdateGizmoLocation(
-            static_cast<int>(drawBundle.FaceRectangle.GetWidth() + drawBundle.TransformPosition.GetX()),
-            static_cast<int>(drawBundle.FaceRectangle.GetHeight() + drawBundle.TransformPosition.GetY()));
+            static_cast<int>(m_topLeftPoint.GetX() + drawBundle.FaceRectangle.GetWidth() + drawBundle.TransformPosition.GetX()),
+            static_cast<int>(m_topLeftPoint.GetY() + drawBundle.FaceRectangle.GetHeight() + drawBundle.TransformPosition.GetY()));
     }
 }
 
@@ -763,8 +764,8 @@ void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEv
         if (EDrawBundleSelectionState::HasFlag(drawBundlePair.second.SelectionState, DrawBundleSelectionState::Selected))
         {
             m_gizmo->UpdateGizmoLocation(
-                drawBundlePair.second.FaceRectangle.GetWidth() + static_cast<int>(drawBundlePair.second.TransformPosition.GetX()),
-                drawBundlePair.second.FaceRectangle.GetHeight() + static_cast<int>(drawBundlePair.second.TransformPosition.GetY()));
+                m_topLeftPoint.GetX() + drawBundlePair.second.FaceRectangle.GetWidth() + static_cast<int>(drawBundlePair.second.TransformPosition.GetX()),
+                m_topLeftPoint.GetY() + drawBundlePair.second.FaceRectangle.GetHeight() + static_cast<int>(drawBundlePair.second.TransformPosition.GetY()));
             SelectDrawBundle(drawBundlePair.first);
             break;
         }

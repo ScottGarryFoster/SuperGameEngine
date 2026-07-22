@@ -263,6 +263,11 @@ namespace SuperGameTools
         ViewportDebugOption m_debugOption;
 
         /// <summary>
+        /// The top left point of the viewport.
+        /// </summary>
+        FatedQuestLibraries::FVector2F m_topLeftPoint;
+
+        /// <summary>
         /// True when the gizmo should draw.
         /// </summary>
         /// <returns>True when the gizmo should draw. </returns>
