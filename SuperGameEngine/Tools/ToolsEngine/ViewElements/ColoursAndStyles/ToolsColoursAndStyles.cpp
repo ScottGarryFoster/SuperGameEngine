@@ -94,8 +94,8 @@ void ToolsColoursAndStyles::SetGlobalColoursAndStyles() const
 {
     ImGuiStyle& style = ImGui::GetStyle();
     style.Colors[ImGuiCol_Tab] = m_colorMap.at(m_currentPalette).at(0).at(ColourIdentity::Background);
-    style.Colors[ImGuiCol_TabSelected] = m_colorMap.at(m_currentPalette).at(1).at(ColourIdentity::Background);
-    style.Colors[ImGuiCol_TabSelectedOverline] = m_colorMap.at(m_currentPalette).at(1).at(ColourIdentity::Background);
+    style.Colors[ImGuiCol_TabSelected] = m_colorMap.at(m_currentPalette).at(2).at(ColourIdentity::Background);
+    style.Colors[ImGuiCol_TabSelectedOverline] = m_colorMap.at(m_currentPalette).at(2).at(ColourIdentity::Background);
     style.Colors[ImGuiCol_TabDimmed] = m_colorMap.at(m_currentPalette).at(0).at(ColourIdentity::Background);
     style.Colors[ImGuiCol_TabDimmedSelected] = m_colorMap.at(m_currentPalette).at(1).at(ColourIdentity::Background);
     style.Colors[ImGuiCol_TabDimmedSelectedOverline] = m_colorMap.at(m_currentPalette).at(1).at(ColourIdentity::Background);
@@ -146,7 +146,7 @@ void ToolsColoursAndStyles::PopMenuColoursAndStyles() const
     ImGui::PopStyleColor(1);
 }
 
-void ToolsColoursAndStyles::SetWindowTabColoursAndStyles(const bool isOpen, const bool isHovered) const
+void ToolsColoursAndStyles::SetWindowTabColoursAndStyles(const bool isOpen, const bool isHovered, bool isSelected) const
 {
     if (isOpen)
     {

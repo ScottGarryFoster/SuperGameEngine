@@ -57,7 +57,10 @@ namespace SuperGameTools
         /// <summary>
         /// Call as a new dockable window is made.
         /// </summary>
-        virtual void SetWindowTabColoursAndStyles(const bool isOpen, const bool isHovered) const override;
+        /// <param name="isOpen">True means window is open. </param>
+        /// <param name="isHovered">True means window is hovered. </param>
+        /// <param name="isSelected">True means window is selected. </param>
+        virtual void SetWindowTabColoursAndStyles(const bool isOpen, const bool isHovered, bool isSelected) const override;
 
         /// <summary>
         /// Called after <see cref="SetWindowTabColoursAndStyles()"/>.

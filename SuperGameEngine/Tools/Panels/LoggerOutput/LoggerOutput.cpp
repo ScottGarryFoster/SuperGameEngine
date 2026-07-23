@@ -51,6 +51,7 @@ void LoggerOutput::Update()
 void LoggerOutput::Draw()
 {
     RenderWindow(GetPanelName());
+    HandlePanelSelection(m_panelSelectionManager, PanelSelectionName::LoggerOutput);
 
     ImGuiWindow* window = ImGui::FindWindowByName(GetPanelName());
     if (window->Size.x < 50 || window->Size.y < 50)

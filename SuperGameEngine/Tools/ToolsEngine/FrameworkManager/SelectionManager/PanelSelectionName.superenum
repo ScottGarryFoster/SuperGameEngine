@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Defines the name for each panel registered to the panel selection manager.
+    </EnumComment>
+    <EnumName Name="PanelSelectionName">
+        <None />
+        <AssetBrowser />
+        <GameViewport />
+        <InspectorWindow />
+        <LoggerOutput />
+        <SceneHierarchy />
+        <ToolsViewport />
+        <ProjectProperties />
+        <ViewportToolsUndocked />
+    </EnumName>
+</SuperEnum>

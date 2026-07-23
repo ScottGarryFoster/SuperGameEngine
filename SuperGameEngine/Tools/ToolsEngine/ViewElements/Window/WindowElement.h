@@ -2,6 +2,13 @@
 #include <memory>
 #include <string>
 
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionName.h"
+
+namespace SuperGameTools
+{
+    class PanelSelectionManager;
+}
+
 namespace FatedQuestLibraries
 {
     class FEventSubscriptions;
@@ -33,6 +40,16 @@ namespace SuperGameTools
         /// <param name="name">Name of the window.</param>
         /// <returns>True means is open. </returns>
         virtual bool RenderWindow(const char* name) = 0;
+
+        /// <summary>
+        /// Handle selection of this panel.
+        /// </summary>
+        /// <param name="panelSelectionManager">Selection manager to inform of new selection. </param>
+        /// <param name="panelSelectionName">The name of this panel if it is selected. </param>
+        virtual void HandlePanelSelection(
+            const std::shared_ptr<PanelSelectionManager>& panelSelectionManager,
+            PanelSelectionName panelSelectionName
+        ) const = 0 ;
 
         /// <summary>
         /// Call after all window code is complete.
@@ -76,6 +93,20 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="newValue">True means document unsaved. </param>
         virtual void UpdateUnsavedState(bool newValue) = 0;
+
+        /// <summary>
+        /// Returns true if this panel is selected.
+        /// </summary>
+        /// <returns>Returns true if this panel is selected. </returns>
+        virtual bool AreSelected() const = 0;
+
+    protected:
+
+        /// <summary>
+        /// Deselects this panel.
+        /// Used to ensure closed panels are not selected.
+        /// </summary>
+        virtual void Deselect() = 0;
     };
 }
 

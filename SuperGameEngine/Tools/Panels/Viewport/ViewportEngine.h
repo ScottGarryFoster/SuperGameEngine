@@ -7,6 +7,7 @@
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/GameObject/GameObject.h"
 #include "Panels/ViewportTools/ViewportDebugOption.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionName.h"
 
 namespace SuperGameTools
 {
@@ -290,6 +291,12 @@ namespace SuperGameTools
         ViewportPanning m_viewportPanning;
 
         /// <summary>
+        /// The current selected panel.
+        /// Cached to avoid memory walking.
+        /// </summary>
+        PanelSelectionName m_panelSelectionName;
+
+        /// <summary>
         /// True when the gizmo should draw.
         /// </summary>
         /// <returns>True when the gizmo should draw. </returns>
@@ -491,5 +498,11 @@ namespace SuperGameTools
         /// Updates Gizmo with the selected objects location.
         /// </summary>
         void UpdateGizmoLocation() const;
+
+        /// <summary>
+        /// Processes Key Presses within the interface.
+        /// </summary>
+        /// <param name="delta">Ticks in time delta. </param>
+        void ProcessKeyPresses(float delta);
     };
 }

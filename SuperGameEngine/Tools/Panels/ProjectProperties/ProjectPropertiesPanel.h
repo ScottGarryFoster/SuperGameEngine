@@ -6,6 +6,7 @@
 
 namespace FatedQuestLibraries
 {
+    class DocumentToXml;
     class ExplicitDocumentModifiableUniversalObjectData;
 }
 

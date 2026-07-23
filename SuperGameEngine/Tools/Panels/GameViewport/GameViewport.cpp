@@ -24,6 +24,7 @@ void GameViewport::Update()
 void GameViewport::Draw()
 {
     RenderWindow(GetPanelName());
+    HandlePanelSelection(m_panelSelectionManager, PanelSelectionName::GameViewport);
 
     if (m_windowPackage->GetEngineEntryCommunication())
     {

@@ -39,6 +39,16 @@ namespace SuperGameTools
         bool RenderWindow(const char* name) override;
 
         /// <summary>
+        /// Handle selection of this panel.
+        /// </summary>
+        /// <param name="panelSelectionManager">Selection manager to inform of new selection. </param>
+        /// <param name="panelSelectionName">The name of this panel if it is selected. </param>
+        virtual void HandlePanelSelection(
+            const std::shared_ptr<PanelSelectionManager>& panelSelectionManager,
+            PanelSelectionName panelSelectionName
+            ) const override;
+
+        /// <summary>
         /// Call after all window code is complete.
         /// </summary>
         /// <param name="name">Name of the window.</param>
@@ -79,6 +89,22 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="newValue">True means document unsaved. </param>
         virtual void UpdateUnsavedState(bool newValue) override;
+
+        /// <summary>
+        /// Returns true if this panel is selected.
+        /// </summary>
+        /// <returns>Returns true if this panel is selected. </returns>
+        virtual bool AreSelected() const override
+        {
+            // This should be overriden by the type that knows what panel we are.
+            return false;
+        }
+
+        /// <summary>
+        /// Deselects this panel.
+        /// Used to ensure closed panels are not selected.
+        /// </summary>
+        virtual void Deselect() override {}
 
     private:
         /// <summary>

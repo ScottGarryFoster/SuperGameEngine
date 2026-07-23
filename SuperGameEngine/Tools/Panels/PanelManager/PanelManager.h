@@ -4,6 +4,7 @@
 
 namespace SuperGameTools
 {
+    class PanelSelectionManager;
     class WindowPackage;
     class ToolsPanel;
 
@@ -36,5 +37,11 @@ namespace SuperGameTools
         /// <param name="key">The key of the panel. Defined within the Tools panel itself. </param>
         /// <returns>The panel or empty if could not find. </returns>
         virtual std::shared_ptr<ToolsPanel> TryFindPanel(const std::string& key) const = 0;
+
+        /// <summary>
+        /// Manages which panel is selected.
+        /// </summary>
+        /// <returns>Manages which panel is selected. </returns>
+        virtual std::shared_ptr<PanelSelectionManager> GetPanelSelection() const = 0;
     };
 }
