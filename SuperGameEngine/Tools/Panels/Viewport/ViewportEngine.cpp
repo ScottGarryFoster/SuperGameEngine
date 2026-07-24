@@ -280,6 +280,10 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
     {
         m_panelSelectionName = args->GetSelectionName();
+        if (m_panelSelectionName != PanelSelectionName::ToolsViewport)
+        {
+            m_viewportPanning.HaveStartedPanning = false;
+        }
     }
 }
 
