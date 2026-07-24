@@ -31,6 +31,8 @@ namespace SuperGameTools
         ProjectProperties,
 
         ViewportToolsUndocked,
+
+        ViewportToolsSettings,
     };
 
     /// <summary>
@@ -40,7 +42,7 @@ namespace SuperGameTools
     {
     public:
         static PanelSelectionName Min() { return PanelSelectionName::None; }
-        static PanelSelectionName Max() { return PanelSelectionName::ViewportToolsUndocked; }
+        static PanelSelectionName Max() { return PanelSelectionName::ViewportToolsSettings; }
 
         static PanelSelectionName* ToArray()
         {
@@ -55,6 +57,7 @@ namespace SuperGameTools
                 PanelSelectionName::ToolsViewport,
                 PanelSelectionName::ProjectProperties,
                 PanelSelectionName::ViewportToolsUndocked,
+                PanelSelectionName::ViewportToolsSettings,
             };
             
             return returnArray;
@@ -73,6 +76,7 @@ namespace SuperGameTools
                 PanelSelectionName::ToolsViewport,
                 PanelSelectionName::ProjectProperties,
                 PanelSelectionName::ViewportToolsUndocked,
+                PanelSelectionName::ViewportToolsSettings,
             };
             
             return returnVector;
@@ -91,6 +95,7 @@ namespace SuperGameTools
                 "ToolsViewport",
                 "ProjectProperties",
                 "ViewportToolsUndocked",
+                "ViewportToolsSettings",
             };
             
             return returnVector;
@@ -109,6 +114,7 @@ namespace SuperGameTools
                 case PanelSelectionName::ToolsViewport: return "ToolsViewport";
                 case PanelSelectionName::ProjectProperties: return "ProjectProperties";
                 case PanelSelectionName::ViewportToolsUndocked: return "ViewportToolsUndocked";
+                case PanelSelectionName::ViewportToolsSettings: return "ViewportToolsSettings";
             }
             
             return "None";
@@ -127,6 +133,7 @@ namespace SuperGameTools
                 if (value == "ToolsViewport") return PanelSelectionName::ToolsViewport;
                 if (value == "ProjectProperties") return PanelSelectionName::ProjectProperties;
                 if (value == "ViewportToolsUndocked") return PanelSelectionName::ViewportToolsUndocked;
+                if (value == "ViewportToolsSettings") return PanelSelectionName::ViewportToolsSettings;
             }
             else
             {
@@ -140,6 +147,7 @@ namespace SuperGameTools
                 if (valueLower == "toolsviewport") return PanelSelectionName::ToolsViewport;
                 if (valueLower == "projectproperties") return PanelSelectionName::ProjectProperties;
                 if (valueLower == "viewporttoolsundocked") return PanelSelectionName::ViewportToolsUndocked;
+                if (valueLower == "viewporttoolssettings") return PanelSelectionName::ViewportToolsSettings;
             }
             
             return PanelSelectionName::None;

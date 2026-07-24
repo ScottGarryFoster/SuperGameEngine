@@ -53,6 +53,7 @@ void ViewportPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
 void ViewportPanel::Update()
 {
+    m_viewportTools->Update();
     if (m_sizeHasChanged)
     {
         int newWidth = m_viewport.w;

@@ -16,5 +16,6 @@
         <ToolsViewport />
         <ProjectProperties />
         <ViewportToolsUndocked />
+        <ViewportToolsSettings />
     </EnumName>
 </SuperEnum>

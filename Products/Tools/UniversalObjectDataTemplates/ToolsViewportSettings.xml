@@ -1,0 +1,19 @@
+<MetaData>
+    <Template UniversalObjectDataFileType="ToolsViewportSettings">
+        <MatchingCriteria UniversalObjectDataTemplateMatchingStyle="FileName">
+            <Filename value="ViewportMainSettings.uod" />
+        </MatchingCriteria>
+        <BaseFileTemplate UniversalObjectDataTemplateCreationMethod="Simple">
+            <UniversalObjectData>
+                <Strings>
+                    <String "Key"="StartScene" "Value"="Napman/savedOut.scene" />
+                    <String "Key"="WindowTitle" "Value"="Napman" />
+                </Strings>
+            </UniversalObjectData>
+        </BaseFileTemplate>
+    </Template>
+    <Layout>
+        <Data Type="String" Map="StartScene" MapType="Single" />
+        <Data Type="String" Map="WindowTitle" MapType="Single" />
+    </Layout>
+</MetaData>

@@ -5,7 +5,9 @@
 #include "ViewportDebugOptionsChangedArguments.h"
 #include "ViewportToolsButtonSelectedArguments.h"
 #include "Engine/Content/ContentManager.h"
+#include "Panels/PanelManager/PanelManager.h"
 #include "Panels/SceneHierarchy/GameObjectTreeViewItem.h"
+#include "Panels/ViewportToolsSettings/ViewportToolsSettingsPanel.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameTools;
@@ -19,6 +21,8 @@ SuperViewportTools::SuperViewportTools(const std::shared_ptr<WindowPackage>& win
     m_onSelectedToolChanged = std::make_shared<FEvent>();
     m_onDebugOptionsChanged = std::make_shared<FEvent>();
     m_debugOption = ViewportDebugOption::None;
+
+    m_settingsPanel = std::make_shared<ViewportToolsSettingsPanel>();
 }
 
 void SuperViewportTools::Setup()
@@ -55,6 +59,9 @@ void SuperViewportTools::Setup()
 
     // Select the select tool by default
     m_toolsButtons.at(ViewportToolsType::Select)->Select();
+
+    m_settingsPanel->Setup(m_windowPackage);
+    m_windowPackage->GetPanelManager()->RegisterPanel(m_settingsPanel);
 }
 
 ViewportToolsType SuperViewportTools::GetSelectedTool() const
@@ -66,6 +73,11 @@ void SuperViewportTools::SelectTool(ViewportToolsType newValue)
 {
     m_selectedTool = newValue;
     m_toolsButtons.at(newValue)->Select();
+}
+
+void SuperViewportTools::Update()
+{
+    m_settingsPanel->Update();
 }
 
 void SuperViewportTools::Draw()
@@ -120,6 +132,19 @@ void SuperViewportTools::Draw()
                 ImGui::EndMenu();
             }
 
+            bool openState = m_settingsPanel->OpenState();
+            if (ImGui::MenuItem("Advanced Settings", nullptr,openState, true))
+            {
+                if (openState)
+                {
+                    m_settingsPanel->HideWindow();
+                }
+                else
+                {
+                    m_settingsPanel->ShowWindow();
+                }
+            }
+
             ImGui::EndMenu();
         }
 
@@ -134,6 +159,8 @@ void SuperViewportTools::Draw()
     {
         m_onDebugOptionsChanged->Invoke(std::make_shared<ViewportDebugOptionsChanged>(m_debugOption));
     }
+
+    m_settingsPanel->Draw();
 }
 
 void SuperViewportTools::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)

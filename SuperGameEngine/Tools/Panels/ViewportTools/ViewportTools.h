@@ -24,6 +24,11 @@ namespace SuperGameTools
         virtual void SelectTool(ViewportToolsType newValue) = 0;
 
         /// <summary>
+        /// Called every frame.
+        /// </summary>
+        virtual void Update() = 0;
+
+        /// <summary>
         /// Draw the viewport tools bar. 
         /// </summary>
         virtual void Draw() = 0;
