@@ -20,6 +20,13 @@ namespace SuperGameTools
         virtual void UpdateNewSelection(PanelSelectionName newSelection) override;
 
         /// <summary>
+        /// Inform the selection manager that if this panel is selected,
+        /// ensure it is now deselected.
+        /// </summary>
+        /// <param name="deselection">Panel to deselect</param>
+        virtual void DeselectIfSelected(PanelSelectionName deselection) override;
+
+        /// <summary>
         /// Gets the current panel selection.
         /// </summary>
         /// <returns>The current panel selection. </returns>

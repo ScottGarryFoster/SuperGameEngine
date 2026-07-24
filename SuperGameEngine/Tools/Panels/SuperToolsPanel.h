@@ -32,6 +32,12 @@ namespace SuperGameTools
         /// <returns>Returns true if this panel is selected. </returns>
         virtual bool AreSelected() const override;
 
+        /// <summary>
+        /// Hides the panel.
+        /// </summary>
+        /// <remarks>Hiding is not hard , but you might not want a window to hide to allow windows to interject. </remark>
+        bool HideWindow() override;
+
     protected:
 
         /// <summary>

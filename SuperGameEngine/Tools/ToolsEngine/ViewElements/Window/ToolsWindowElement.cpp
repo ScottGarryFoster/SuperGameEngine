@@ -72,10 +72,7 @@ void ToolsWindowElement::HandlePanelSelection(
     const std::shared_ptr<PanelSelectionManager>& panelSelectionManager,
     PanelSelectionName panelSelectionName) const
 {
-    if (ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows) &&
-        (ImGui::IsMouseClicked(ImGuiMouseButton_Left) || 
-            ImGui::IsMouseClicked(ImGuiMouseButton_Right) ||
-            ImGui::IsMouseClicked(ImGuiMouseButton_Middle)))
+    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows))
     {
         panelSelectionManager->UpdateNewSelection(panelSelectionName);
     }

@@ -17,6 +17,14 @@ void ToolsPanelSelectionManager::UpdateNewSelection(PanelSelectionName newSelect
     m_onSelectionChanged->Invoke(std::make_shared<PanelSelectionChangedArguments>(newSelection));
 }
 
+void ToolsPanelSelectionManager::DeselectIfSelected(PanelSelectionName deselection)
+{
+    if (m_panelSelectionName!= PanelSelectionName::None && m_panelSelectionName == deselection)
+    {
+        UpdateNewSelection(PanelSelectionName::None);
+    }
+}
+
 PanelSelectionName ToolsPanelSelectionManager::CurrentSelection() const
 {
     return m_panelSelectionName;
