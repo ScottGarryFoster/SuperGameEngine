@@ -1,3 +1,4 @@
+@ -0,0 +1,92 @@
 #include "LayoutEditorUserButtonInput.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
@@ -10,10 +11,6 @@ using namespace FatedQuestLibraries;
 LayoutEditorUserButtonInput::LayoutEditorUserButtonInput(const std::string& map)
 {
     m_map = map;
-}
-
-LayoutEditorUserButtonInput::~LayoutEditorUserButtonInput()
-{
 }
 
 void LayoutEditorUserButtonInput::Update(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
@@ -52,24 +49,25 @@ void LayoutEditorUserButtonInput::DrawValue(
     std::string id = universalObjectData->GetGuid()->ToString() + "_Value_" + m_map;
     ImGui::PushID(id.c_str());
 
-    // Button and doing stuff here
+    // Sort out the initial value
     std::string value = universalObjectData->GetString(m_map);
     const std::vector<std::string>& items = SuperGameInput::EKeyCode::ToVectorValues();
 
+    // Get the context within the list
     int selectedIndex = 0;
     if (auto it = std::find(items.begin(), items.end(), value); it != items.end())
     {
         selectedIndex = static_cast<int>(it - items.begin());
     }
 
+    // Render the list
     bool isSelectedChanged = false;
     std::string idCombo = universalObjectData->GetGuid()->ToString() + "_ValueCombo_" + m_map;
     if (ImGui::BeginCombo(idCombo.c_str(), SuperGameInput::EKeyCode::ToVectorValues().at(selectedIndex).c_str()))
     {
         for (int i = 0; i < SuperGameInput::EKeyCode::ToVectorValues().size(); ++i)
         {
-            bool isSelected = (selectedIndex == i);
-
+            bool isSelected = selectedIndex == i;
             if (ImGui::Selectable(SuperGameInput::EKeyCode::ToVectorValues().at(i).c_str(), isSelected))
             {
                 selectedIndex = i;
