@@ -152,31 +152,41 @@ void MoveViewportGizmo::UpdateMouseLocation(int x, int y)
     UpdateInteractionStateOfGizmo();
 }
 
-void MoveViewportGizmo::UpdateMouseSelectionInput(int x, int y, KeyOrButtonState state)
+bool MoveViewportGizmo::UpdateMouseSelectionInput(int x, int y, KeyOrButtonState state)
 {
+    bool handled = false;
     if (EKeyOrButtonState::HasFlag(state, KeyOrButtonState::Pressed))
     {
-        SetupInteractionWhenMouseHasJustBeenPressed(x, y);
+        handled |= SetupInteractionWhenMouseHasJustBeenPressed(x, y);
     }
     else if (EKeyOrButtonState::HasFlag(state, KeyOrButtonState::Up))
     {
-        SetupInteractionWhenMouseHasJustBeenReleased(x, y);
+        handled |= SetupInteractionWhenMouseHasJustBeenReleased(x, y);
     }
     else if (EKeyOrButtonState::HasFlag(state, KeyOrButtonState::Down))
     {
-        SetupInteractionWhenMouseIsDown(x, y);
+        handled |= SetupInteractionWhenMouseIsDown(x, y);
     }
+
+    return handled;
 }
 
-void MoveViewportGizmo::UpdateOnMouseIsOutsideOfViewport()
+bool MoveViewportGizmo::UpdateOnMouseIsOutsideOfViewport()
 {
-    m_selectedGizmo = -1;
-
-    for (GizmoElement& current : m_arrowElements)
+    if (m_selectedGizmo > -1)
     {
-        current.Hovered = false;
-        current.Selected = false;
+        m_selectedGizmo = -1;
+
+        for (GizmoElement& current : m_arrowElements)
+        {
+            current.Hovered = false;
+            current.Selected = false;
+        }
+
+        return true;
     }
+
+    return false;
 }
 
 std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> MoveViewportGizmo::OnInteractionChanged() const
@@ -206,7 +216,7 @@ void MoveViewportGizmo::UpdateInteractionStateOfGizmo()
     }
 }
 
-void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int x, int y)
+bool MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int x, int y)
 {
     if (m_selectedGizmo > -1)
     {
@@ -232,13 +242,15 @@ void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenPressed(int x, int y
     {
         m_onInteractionChanged->Invoke(std::make_shared<MoveInteractionChangedEvent>(ToolsGizmoAction::GizmoSelected));
     }
+
+    return m_selectedGizmo > -1;
 }
 
-void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenReleased(int x, int y)
+bool MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenReleased(int x, int y)
 {
     if (m_selectedGizmo <= -1)
     {
-        return;
+        return false;
     }
 
     GizmoElement& current = m_arrowElements[m_selectedGizmo];
@@ -248,13 +260,15 @@ void MoveViewportGizmo::SetupInteractionWhenMouseHasJustBeenReleased(int x, int 
     m_onInteractionChanged->Invoke(std::make_shared<MoveInteractionChangedEvent>(
         ToolsGizmoAction::GizmoUnselected));
     m_originalLocation.SetXYValue(x, y);
+
+    return true;
 }
 
-void MoveViewportGizmo::SetupInteractionWhenMouseIsDown(int x, int y)
+bool MoveViewportGizmo::SetupInteractionWhenMouseIsDown(int x, int y)
 {
     if (m_selectedGizmo <= -1)
     {
-        return;
+        return false;
     }
 
     // 1|2|3|4|5
@@ -276,4 +290,6 @@ void MoveViewportGizmo::SetupInteractionWhenMouseIsDown(int x, int y)
         ToolsGizmoAction::MoveBy, differenceX, differenceY));
 
     UpdateGizmoLocation(m_locationX + differenceX, m_locationY + differenceY);
+
+    return true;
 }

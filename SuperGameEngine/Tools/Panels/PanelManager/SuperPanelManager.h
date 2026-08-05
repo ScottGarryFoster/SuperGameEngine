@@ -6,6 +6,7 @@
 
 namespace SuperGameTools
 {
+    class PanelSelectionManager;
     class MenuItemView;
 }
 
@@ -17,6 +18,8 @@ namespace SuperGameTools
     class SuperPanelManager : public virtual PanelManager
     {
     public:
+
+        SuperPanelManager();
 
         /// <summary>
         /// Called once on setup.
@@ -48,6 +51,12 @@ namespace SuperGameTools
         /// <returns>The panel or empty if could not find. </returns>
         virtual std::shared_ptr<ToolsPanel> TryFindPanel(const std::string& key) const override;
 
+        /// <summary>
+        /// Manages which panel is selected.
+        /// </summary>
+        /// <returns>Manages which panel is selected. </returns>
+        virtual std::shared_ptr<PanelSelectionManager> GetPanelSelection() const override;
+
     private:
 
         /// <summary>
@@ -68,6 +77,11 @@ namespace SuperGameTools
         /// All registered panels.
         /// </summary>
         std::unordered_map<std::string, PanelMenuPacket> m_panels;
+
+        /// <summary>
+        /// Manages which panel is selected.
+        /// </summary>
+        std::shared_ptr<PanelSelectionManager> m_panelSelectionManager;
 
         /// <summary>
         /// Setup panel for the open state.

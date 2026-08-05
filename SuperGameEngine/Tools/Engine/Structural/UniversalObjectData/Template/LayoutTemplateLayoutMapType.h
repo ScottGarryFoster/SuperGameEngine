@@ -72,6 +72,17 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Single",
+                "Array",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(LayoutTemplateLayoutMapType value)
         {
             switch (value)

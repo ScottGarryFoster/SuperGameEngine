@@ -9,6 +9,7 @@
 #include "Engine/Graphics/Texture/SDLTextureChest.h"
 #include "Imgui/External/imgui.h"
 #include "Panels/ViewportTools/ViewportTools.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 #include "ToolsEngine/ViewElements/Window/ToolsWindowShownArguments.h"
 
 using namespace SuperGameTools;
@@ -18,6 +19,9 @@ ViewportPanel::ViewportPanel()
 {
     m_sizeOrPositionHasChanged = true;
     m_viewportImage = RectangleInt(0, 0, 0, 0);
+
+    m_thisPanelsName = PanelSelectionName::ToolsViewport;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 ViewportPanel::~ViewportPanel()
@@ -49,6 +53,7 @@ void ViewportPanel::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 
 void ViewportPanel::Update()
 {
+    m_viewportTools->Update();
     if (m_sizeHasChanged)
     {
         int newWidth = m_viewport.w;
@@ -89,6 +94,8 @@ void ViewportPanel::Draw()
 {
     if (RenderWindow(GetPanelName()))
     {
+        HandlePanelSelection(m_panelSelectionManager, m_thisPanelsName);
+
         ImVec2 windowPos = ImGui::GetWindowPos();
         ImVec2 windowTopLeftBelowTitleBar = ImVec2(windowPos.x, windowPos.y + ImGui::GetFrameHeight());
         ImVec2 windowSize = ImGui::GetContentRegionAvail();
@@ -156,6 +163,10 @@ void ViewportPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments>
         }
 
         m_renderViewportTools = !shownArgs->GetNewShownValue();
+    }
+    else if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
     }
 }
 

@@ -80,6 +80,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Added",
+                "Removed",
+                "Updated",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(FileUpdateAction value)
         {
             switch (value)

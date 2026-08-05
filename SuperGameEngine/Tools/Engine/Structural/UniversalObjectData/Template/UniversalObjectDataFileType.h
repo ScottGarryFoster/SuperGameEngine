@@ -28,6 +28,11 @@ namespace SuperGameTools
         /// A properties file edited via a custom editor window and not displayed within the asset browser or at least not edited within the asset inspector.
         /// </summary>
         Properties,
+
+        /// <summary>
+        /// Settings within the tools viewport (for editing scenes).
+        /// </summary>
+        ToolsViewportSettings,
     };
 
     /// <summary>
@@ -37,7 +42,7 @@ namespace SuperGameTools
     {
     public:
         static UniversalObjectDataFileType Min() { return UniversalObjectDataFileType::GameAsset; }
-        static UniversalObjectDataFileType Max() { return UniversalObjectDataFileType::Properties; }
+        static UniversalObjectDataFileType Max() { return UniversalObjectDataFileType::ToolsViewportSettings; }
 
         static UniversalObjectDataFileType* ToArray()
         {
@@ -45,6 +50,7 @@ namespace SuperGameTools
             {
                 UniversalObjectDataFileType::GameAsset,
                 UniversalObjectDataFileType::Properties,
+                UniversalObjectDataFileType::ToolsViewportSettings,
             };
             
             return returnArray;
@@ -56,6 +62,7 @@ namespace SuperGameTools
             {
                 UniversalObjectDataFileType::GameAsset,
                 UniversalObjectDataFileType::Properties,
+                UniversalObjectDataFileType::ToolsViewportSettings,
             };
             
             return returnVector;
@@ -67,9 +74,22 @@ namespace SuperGameTools
             {
                 "GameAsset",
                 "Properties",
+                "ToolsViewportSettings",
             };
             
             return returnVector;
+        }
+
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "GameAsset",
+                "Properties",
+                "ToolsViewportSettings",
+            };
+            
+            return returnArray;
         }
 
         static std::string ToString(UniversalObjectDataFileType value)
@@ -79,6 +99,7 @@ namespace SuperGameTools
                 case UniversalObjectDataFileType::Unknown: return "Unknown";
                 case UniversalObjectDataFileType::GameAsset: return "GameAsset";
                 case UniversalObjectDataFileType::Properties: return "Properties";
+                case UniversalObjectDataFileType::ToolsViewportSettings: return "ToolsViewportSettings";
             }
             
             return "Unknown";
@@ -91,6 +112,7 @@ namespace SuperGameTools
                 if (value == "Unknown") return UniversalObjectDataFileType::Unknown;
                 if (value == "GameAsset") return UniversalObjectDataFileType::GameAsset;
                 if (value == "Properties") return UniversalObjectDataFileType::Properties;
+                if (value == "ToolsViewportSettings") return UniversalObjectDataFileType::ToolsViewportSettings;
             }
             else
             {
@@ -98,6 +120,7 @@ namespace SuperGameTools
                 if (valueLower == "unknown") return UniversalObjectDataFileType::Unknown;
                 if (valueLower == "gameasset") return UniversalObjectDataFileType::GameAsset;
                 if (valueLower == "properties") return UniversalObjectDataFileType::Properties;
+                if (valueLower == "toolsviewportsettings") return UniversalObjectDataFileType::ToolsViewportSettings;
             }
             
             return UniversalObjectDataFileType::Unknown;

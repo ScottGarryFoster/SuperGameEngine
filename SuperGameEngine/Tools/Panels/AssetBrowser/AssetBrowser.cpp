@@ -11,12 +11,15 @@
 #include "FileManagement/AssetFile.h"
 #include "FileManagement/AssetFolder.h"
 #include "ToolsEngine/FrameworkManager/FrameworkManager.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 #include "ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
 
 using namespace SuperGameTools;
 
 AssetBrowser::AssetBrowser()
 {
+    m_thisPanelsName = PanelSelectionName::AssetBrowser;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 AssetBrowser::~AssetBrowser()
@@ -64,6 +67,7 @@ void AssetBrowser::Update()
 void AssetBrowser::Draw()
 {
     RenderWindow(GetPanelName());
+    HandlePanelSelection(m_panelSelectionManager, m_thisPanelsName);
 
     ImGuiWindow* window = ImGui::FindWindowByName(GetPanelName());
     if (window->Size.x < 50 || window->Size.y < 50)
@@ -83,6 +87,10 @@ void AssetBrowser::TearDown()
 
 void AssetBrowser::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
 {
+    if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
+    }
 }
 
 const char* AssetBrowser::GetPanelName() const

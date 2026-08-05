@@ -80,6 +80,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "EitherOr",
+                "Exclusive",
+                "Additive",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(DocumentEventOpenLevel value)
         {
             switch (value)

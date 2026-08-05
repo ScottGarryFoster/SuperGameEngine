@@ -22,15 +22,19 @@
 #include "GameEngineEquivalents/SerializableProperties/TextureAssetSerializableProperty.h"
 #include "GameEngineEquivalents/SerializableProperties/ToolsSerializableProperty.h"
 #include "GameEngineEquivalents/SerializableProperties/Vector2FSerializableProperty.h"
+#include "Panels/PanelManager/PanelManager.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuAddComponentEventArguments.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "Panels/SceneHierarchy/EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "Panels/ViewportTools/ViewportDebugOptionsChangedArguments.h"
 #include "Panels/ViewportTools/ViewportTools.h"
 #include "Panels/ViewportTools/ViewportToolsButtonSelectedArguments.h"
+#include "Panels/ViewportToolsSettings/ViewportToolsSettings.h"
 #include "Structural/Assets/Texture/TextureAsset.h"
 #include "Structural/Serializable/SerializableProperty.h"
 #include "ToolsEngine/FrameworkManager/FrameworkManager.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionManager.h"
 #include "ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
 #include "ToolsEngine/FrameworkManager/SelectionManager/SelectionManager.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
@@ -50,6 +54,9 @@ ViewportEngine::ViewportEngine()
     m_gizmoHasControl = false;
     m_selectedDrawBundle = { false, 0 };
     m_debugOption = ViewportDebugOption::None;
+    m_topLeftPoint.SetXYValue(250, 342);
+
+    m_panelSelectionName = PanelSelectionName::None;
 }
 
 void ViewportEngine::GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer)
@@ -79,10 +86,17 @@ ApplicationOperationState ViewportEngine::Event(SDL_Event event)
 
 ApplicationOperationState ViewportEngine::Update(Uint64 ticks)
 {
+    float ticksPerSecond = ticks / 1000.0f;
     // This must always be called first to ensure dirty flags flip.
     UpdateSelectionButtonDirtyFlag();
 
+    if (m_panelSelectionName != PanelSelectionName::ToolsViewport)
+    {
+        return ApplicationOperationState::Running;
+    }
+
     ProcessDrawBundleInteractions();
+    ProcessKeyPresses(ticksPerSecond);
     return ApplicationOperationState::Running;
 }
 
@@ -108,8 +122,8 @@ void ViewportEngine::Draw()
             if (selected)
             {
                 m_debugRectangle->DrawInPlace(
-                    drawBundle.second.FaceRectangle.GetLeft(),
-                    drawBundle.second.FaceRectangle.GetTop(),
+                   m_topLeftPoint.GetX() + drawBundle.second.FaceRectangle.GetLeft(),
+                    m_topLeftPoint.GetY() + drawBundle.second.FaceRectangle.GetTop(),
                     drawBundle.second.FaceRectangle.GetWidth(),
                     drawBundle.second.FaceRectangle.GetHeight(),
                     DebugColourName::Red);
@@ -117,8 +131,8 @@ void ViewportEngine::Draw()
             else if (!mouseOver)
             {
                 m_debugRectangle->DrawInPlace(
-                    drawBundle.second.FaceRectangle.GetLeft(),
-                    drawBundle.second.FaceRectangle.GetTop(),
+                    m_topLeftPoint.GetX() + drawBundle.second.FaceRectangle.GetLeft(),
+                    m_topLeftPoint.GetY() + drawBundle.second.FaceRectangle.GetTop(),
                     drawBundle.second.FaceRectangle.GetWidth(),
                     drawBundle.second.FaceRectangle.GetHeight(),
                     DebugColourName::Default);
@@ -126,8 +140,8 @@ void ViewportEngine::Draw()
             else if (leftClick)
             {
                 m_debugRectangle->DrawInPlace(
-                    drawBundle.second.FaceRectangle.GetLeft(),
-                    drawBundle.second.FaceRectangle.GetTop(),
+                    m_topLeftPoint.GetX() + drawBundle.second.FaceRectangle.GetLeft(),
+                    m_topLeftPoint.GetY() + drawBundle.second.FaceRectangle.GetTop(),
                     drawBundle.second.FaceRectangle.GetWidth(),
                     drawBundle.second.FaceRectangle.GetHeight(),
                     DebugColourName::Blue);
@@ -135,8 +149,8 @@ void ViewportEngine::Draw()
             if (mouseOver)
             {
                 m_debugRectangle->DrawInPlace(
-                    drawBundle.second.FaceRectangle.GetLeft(),
-                    drawBundle.second.FaceRectangle.GetTop(),
+                    m_topLeftPoint.GetX() + drawBundle.second.FaceRectangle.GetLeft(),
+                    m_topLeftPoint.GetY() + drawBundle.second.FaceRectangle.GetTop(),
                     drawBundle.second.FaceRectangle.GetWidth(),
                     drawBundle.second.FaceRectangle.GetHeight(),
                     DebugColourName::Cyan);
@@ -195,7 +209,8 @@ void ViewportEngine::EngineStart()
     m_viewportTools->OnSelectedToolChanged()->Subscribe(shared_from_this());
     m_viewportTools->OnDebugOptionsChanged()->Subscribe(shared_from_this());
     m_viewportTools->OnDebugOptionsChanged()->Subscribe(m_gizmo);
-    
+
+    m_crossEngineObjects->GetWindowPackage()->GetPanelManager()->GetPanelSelection()->OnSelectionChanged()->Subscribe(shared_from_this());
 }
 
 void ViewportEngine::EngineEnd()
@@ -206,6 +221,8 @@ void ViewportEngine::EngineEnd()
 
     m_viewportTools->OnDebugOptionsChanged()->Unsubscribe(shared_from_this());
     m_viewportTools->OnDebugOptionsChanged()->Unsubscribe(m_gizmo);
+
+    m_crossEngineObjects->GetWindowPackage()->GetPanelManager()->GetPanelSelection()->OnSelectionChanged()->Unsubscribe(shared_from_this());
 }
 
 void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
@@ -261,6 +278,14 @@ void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
     {
         m_debugOption = args->GetDebugOption();
     }
+    else if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_panelSelectionName = args->GetSelectionName();
+        if (m_panelSelectionName != PanelSelectionName::ToolsViewport)
+        {
+            m_viewportPanning.HaveStartedPanning = false;
+        }
+    }
 }
 
 void ViewportEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
@@ -311,7 +336,7 @@ void ViewportEngine::DrawBundle(const ViewportObjectDrawBundle& drawBundle)
     }
 
     // TODO: Pass Tile Down
-    drawBundle.TextureAsset->Draw(0, drawBundle.TransformPosition);
+    drawBundle.TextureAsset->Draw(0, m_topLeftPoint + drawBundle.TransformPosition);
 }
 
 void ViewportEngine::SetupNewScene(const std::shared_ptr<Scene>& newScene)
@@ -568,6 +593,62 @@ void ViewportEngine::OnGameObjectDeleted(const std::shared_ptr<GameObject>& game
     m_drawBundle.erase(gameObject->GetGuid()->AsNumber());
 }
 
+void ViewportEngine::UpdateGizmoLocation() const
+{
+    if (m_selectedDrawBundle.first)
+    {
+        ViewportObjectDrawBundle drawBundle = m_drawBundle.at(m_selectedDrawBundle.second);
+        m_gizmo->UpdateGizmoLocation(
+            static_cast<int>(m_topLeftPoint.GetX() + drawBundle.FaceRectangle.GetWidth() + drawBundle.TransformPosition.GetX()),
+            static_cast<int>(m_topLeftPoint.GetY() + drawBundle.FaceRectangle.GetHeight() + drawBundle.TransformPosition.GetY()));
+    }
+}
+
+void ViewportEngine::ProcessKeyPresses(float delta)
+{
+    const std::shared_ptr<ViewportToolsSettings>& settings = m_viewportTools->GetViewportToolsSettings();
+    if (m_selectedDrawBundle.first &&
+        !m_viewportPanning.HaveStartedPanning &&
+        m_inputManager->GetKeyUp(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::ObjectFocusOn)))
+    {
+        RectangleInt viewport = m_viewportEngineAndPanelCommunication->GetViewportLocation();
+        ViewportObjectDrawBundle drawBundle = m_drawBundle.at(m_selectedDrawBundle.second);
+
+        m_topLeftPoint.SetXYValue(
+            (static_cast<float>(viewport.GetWidth()) / 2.0f) - drawBundle.TransformPosition.GetX(),
+            (static_cast<float>(viewport.GetHeight()) / 2.0f) - drawBundle.TransformPosition.GetY());
+
+        UpdateGizmoLocation();
+        return;
+    }
+
+    if (!m_viewportPanning.HaveStartedPanning)
+    {
+        float speed = 300;
+        auto movement = FVector2F();
+        if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveUp)))
+        {
+            movement.SetY(-speed * delta);
+        }
+        else if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveDown)))
+        {
+            movement.SetY(speed * delta);
+        }
+
+        if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveLeft)))
+        {
+            movement.SetX(-speed * delta);
+        }
+        else if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveRight)))
+        {
+            movement.SetX(speed * delta);
+        }
+
+        m_topLeftPoint += movement;
+        UpdateGizmoLocation();
+    }
+}
+
 void ViewportEngine::UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBundle) const
 {
     auto size = FVector2I(32, 32);
@@ -578,15 +659,10 @@ void ViewportEngine::UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBund
 
     drawBundle.FaceRectangle.SetSize(size.GetX(), size.GetY());
     drawBundle.FaceRectangle.SetLocation(
-        (float)drawBundle.TransformPosition.GetX(),
-        (float)drawBundle.TransformPosition.GetY());
+        static_cast<int>(drawBundle.TransformPosition.GetX()),
+        static_cast<int>(drawBundle.TransformPosition.GetY()));
 
-    if (drawBundle.SelectionState == DrawBundleSelectionState::Selected)
-    {
-        m_gizmo->UpdateGizmoLocation(
-            static_cast<int>(drawBundle.FaceRectangle.GetWidth() + drawBundle.TransformPosition.GetX()),
-            static_cast<int>(drawBundle.FaceRectangle.GetHeight() + drawBundle.TransformPosition.GetY()));
-    }
+    UpdateGizmoLocation();
 }
 
 ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<GameObject>& gameObject) const
@@ -604,12 +680,13 @@ ViewportObjectDrawBundle ViewportEngine::CreateDrawBundle(const std::shared_ptr<
 
 void ViewportEngine::ProcessDrawBundleInteractions()
 {
+    bool mouseClickWasHandled = false;
     std::pair<bool, SuperGameEngine::RectangleInt> mousePosition = GetMousePosition();
     bool mousePositionIsValid = mousePosition.first;
     m_mouseCollision = mousePosition.second;
     if (!mousePositionIsValid)
     {
-        m_gizmo->UpdateOnMouseIsOutsideOfViewport();
+        mouseClickWasHandled |= m_gizmo->UpdateOnMouseIsOutsideOfViewport();
         return;
     }
 
@@ -622,7 +699,7 @@ void ViewportEngine::ProcessDrawBundleInteractions()
     if (m_viewportTools->GetSelectedTool() == ViewportToolsType::Move)
     {
         m_gizmo->UpdateMouseLocation(mousePosition.second.GetLeft(), mousePosition.second.GetTop());
-        m_gizmo->UpdateMouseSelectionInput(
+        mouseClickWasHandled |= m_gizmo->UpdateMouseSelectionInput(
             mousePosition.second.GetLeft(),
             mousePosition.second.GetTop(),
             m_inputManager->GetMouseState().ButtonState.at(SuperGameInput::MouseButton::Left));
@@ -654,9 +731,10 @@ void ViewportEngine::ProcessDrawBundleInteractions()
             }
         };
 
+    ViewportToolsType toolSelected = m_viewportEngineAndPanelCommunication->GetViewportTools()->GetSelectedTool();
     for (ViewportObjectDrawBundle& drawBundle : m_drawBundle | std::views::values)
     {
-        const bool mouseOver = drawBundle.FaceRectangle.Contains(mousePosition.second);
+        const bool mouseOver = (drawBundle.FaceRectangle + m_topLeftPoint).Contains(mousePosition.second);
         if (mouseOver)
         {
             updateStateAdd(drawBundle, DrawBundleSelectionState::Hover);
@@ -685,10 +763,27 @@ void ViewportEngine::ProcessDrawBundleInteractions()
                 {
                     m_currentScene->SelectGameObject(drawBundle.Guid);
                 }
+
+                if (toolSelected == ViewportToolsType::Select)
+                {
+                    m_viewportEngineAndPanelCommunication->GetViewportTools()->SelectTool(ViewportToolsType::Move);
+                }
+
+                // This was still handled even if the object was already selected.
+                mouseClickWasHandled |= true;
             }
         }
     }
 
+    if (leftClick && !mouseClickWasHandled && m_areSelectingAGizmoTool)
+    {
+        m_viewportEngineAndPanelCommunication->GetViewportTools()->SelectTool(ViewportToolsType::Select);
+    }
+
+    if (!mouseClickWasHandled && toolSelected ==  ViewportToolsType::Select)
+    {
+        HandleViewportPanning(mousePosition);
+    }
 }
 
 void ViewportEngine::SelectDrawBundle(uint64_t index)
@@ -706,6 +801,33 @@ void ViewportEngine::SelectDrawBundle(uint64_t index)
     {
         m_drawBundle.at(index).GameObject = {};
     }
+}
+
+void ViewportEngine::HandleViewportPanning(const std::pair<bool, SuperGameEngine::RectangleInt>& mousePosition)
+{
+    if (!IsSelectionButtonDown())
+    {
+        m_viewportPanning.HaveStartedPanning = false;
+        return;
+    }
+
+    if (!m_viewportPanning.HaveStartedPanning)
+    {
+        if (mousePosition.first)
+        {
+            m_viewportPanning.LastKnownPoint = FVector2F(mousePosition.second.GetLeft(), mousePosition.second.GetTop());
+            m_viewportPanning.HaveStartedPanning = true;
+
+        }
+
+        return;
+    }
+
+    auto current = FVector2F(mousePosition.second.GetLeft(), mousePosition.second.GetTop());
+    m_topLeftPoint += current - m_viewportPanning.LastKnownPoint;
+    m_viewportPanning.LastKnownPoint = current;
+
+    UpdateGizmoLocation();
 }
 
 void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEventArguments>& arguments)
@@ -749,10 +871,8 @@ void ViewportEngine::OnSelectionChanged(const std::shared_ptr<SelectionChangedEv
     {
         if (EDrawBundleSelectionState::HasFlag(drawBundlePair.second.SelectionState, DrawBundleSelectionState::Selected))
         {
-            m_gizmo->UpdateGizmoLocation(
-                drawBundlePair.second.FaceRectangle.GetWidth() + static_cast<int>(drawBundlePair.second.TransformPosition.GetX()),
-                drawBundlePair.second.FaceRectangle.GetHeight() + static_cast<int>(drawBundlePair.second.TransformPosition.GetY()));
             SelectDrawBundle(drawBundlePair.first);
+            UpdateGizmoLocation();
             break;
         }
     }

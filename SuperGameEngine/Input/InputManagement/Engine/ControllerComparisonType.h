@@ -71,6 +71,18 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Greater",
+                "Less",
+                "Equals",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ControllerComparisonType value)
         {
             switch (value)

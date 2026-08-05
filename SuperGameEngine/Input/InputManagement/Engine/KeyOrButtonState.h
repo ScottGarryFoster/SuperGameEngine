@@ -166,6 +166,19 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Unpressed",
+                "Pressed",
+                "Down",
+                "Up",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(KeyOrButtonState value)
         {
             if(value == KeyOrButtonState::Unpressed)

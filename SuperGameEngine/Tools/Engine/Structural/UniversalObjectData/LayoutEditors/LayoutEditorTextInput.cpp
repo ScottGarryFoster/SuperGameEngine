@@ -8,7 +8,6 @@ using namespace FatedQuestLibraries;
 
 LayoutEditorTextInput::LayoutEditorTextInput(const std::string& map)
 {
-    Log::Info("Create LayoutEditorTextInput");
     m_map = map;
 }
 

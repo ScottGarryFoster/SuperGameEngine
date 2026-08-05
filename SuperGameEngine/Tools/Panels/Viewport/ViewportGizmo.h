@@ -35,13 +35,15 @@ namespace SuperGameTools
         /// <param name="x">Location of the change. </param>
         /// <param name="y">Location of the change. </param>
         /// <param name="state">Change which occured. </param>
-        virtual void UpdateMouseSelectionInput(int x, int y, SuperGameInput::KeyOrButtonState state) = 0;
+        /// <returns>True means that this did something (was handled). </returns>
+        virtual bool UpdateMouseSelectionInput(int x, int y, SuperGameInput::KeyOrButtonState state) = 0;
 
         /// <summary>
         /// Called when mouse is outside the viewport.
         /// Handle anything needed.
         /// </summary>
-        virtual void UpdateOnMouseIsOutsideOfViewport() = 0;
+        /// <returns>True means that this did something (was handled). </returns>
+        virtual bool UpdateOnMouseIsOutsideOfViewport() = 0;
 
         /// <summary>
         /// Called when an interaction from the outside (from say a mouse interaction) now should be actioned

@@ -4,6 +4,8 @@
 
 namespace SuperGameTools
 {
+    class ViewportToolsSettings;
+
     /// <summary>
     /// The tools which accompany the scene viewport.
     /// </summary>
@@ -24,6 +26,11 @@ namespace SuperGameTools
         virtual void SelectTool(ViewportToolsType newValue) = 0;
 
         /// <summary>
+        /// Called every frame.
+        /// </summary>
+        virtual void Update() = 0;
+
+        /// <summary>
         /// Draw the viewport tools bar. 
         /// </summary>
         virtual void Draw() = 0;
@@ -40,5 +47,11 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Invoked when debug options changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnDebugOptionsChanged() const = 0;
+
+        /// <summary>
+        /// Get the actual settings from the panel.
+        /// </summary>
+        /// <returns>The actual settings from the panel.</returns>
+        virtual std::shared_ptr<ViewportToolsSettings> GetViewportToolsSettings() const = 0;
     };
 }

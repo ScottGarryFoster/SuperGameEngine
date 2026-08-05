@@ -29,6 +29,7 @@
 #include "EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 
 using namespace SuperGameTools;
 
@@ -39,6 +40,9 @@ SceneHierarchy::SceneHierarchy()
     m_onNewScene = std::make_shared<FEvent>();
     m_onGameObjectAdded = std::make_shared<FEvent>();
     m_onGameObjectDeleted = std::make_shared<FEvent>();
+
+    m_thisPanelsName = PanelSelectionName::SceneHierarchy;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -91,6 +95,7 @@ void SceneHierarchy::Draw()
 {
     if (RenderWindow(GetPanelName()))
     {
+        HandlePanelSelection(m_panelSelectionManager, m_thisPanelsName);
         if (m_tree)
         {
             m_tree->Draw();
@@ -147,6 +152,10 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto onMenuDeleteComponent = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
     {
         DeleteComponent(onMenuDeleteComponent->GetComponent());
+    }
+    else if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
     }
 }
 

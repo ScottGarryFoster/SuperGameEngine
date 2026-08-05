@@ -7,6 +7,7 @@
 #include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
 #include "GameEngineEquivalents/GameObject/GameObject.h"
 #include "Panels/ViewportTools/ViewportDebugOption.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionName.h"
 
 namespace SuperGameTools
 {
@@ -263,6 +264,39 @@ namespace SuperGameTools
         ViewportDebugOption m_debugOption;
 
         /// <summary>
+        /// The top left point of the viewport.
+        /// </summary>
+        FatedQuestLibraries::FVector2F m_topLeftPoint;
+
+        /// <summary>
+        /// Variables around the viewport panning.
+        /// Should be moved to their own class at some point.
+        /// </summary>
+        struct ViewportPanning
+        {
+            /// <summary>
+            /// True when panning has started.
+            /// </summary>
+            bool HaveStartedPanning = false;
+
+            /// <summary>
+            /// The last point moved from.
+            /// </summary>
+            FatedQuestLibraries::FVector2F LastKnownPoint;
+        };
+
+        /// <summary>
+        /// Holds viewport panning information.
+        /// </summary>
+        ViewportPanning m_viewportPanning;
+
+        /// <summary>
+        /// The current selected panel.
+        /// Cached to avoid memory walking.
+        /// </summary>
+        PanelSelectionName m_panelSelectionName;
+
+        /// <summary>
         /// True when the gizmo should draw.
         /// </summary>
         /// <returns>True when the gizmo should draw. </returns>
@@ -450,5 +484,25 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="index">The draw bundle index. </param>
         void SelectDrawBundle(uint64_t index);
+
+        /// <summary>
+        /// Handles viewport Panning at the end of other mouse operations.
+        /// </summary>
+        /// <param name="mousePosition">
+        /// True means mouse is within viewport.
+        /// Position top left is the pointer position.
+        /// </param>
+        void HandleViewportPanning(const std::pair<bool, SuperGameEngine::RectangleInt>& mousePosition);
+
+        /// <summary>
+        /// Updates Gizmo with the selected objects location.
+        /// </summary>
+        void UpdateGizmoLocation() const;
+
+        /// <summary>
+        /// Processes Key Presses within the interface.
+        /// </summary>
+        /// <param name="delta">Ticks in time delta. </param>
+        void ProcessKeyPresses(float delta);
     };
 }

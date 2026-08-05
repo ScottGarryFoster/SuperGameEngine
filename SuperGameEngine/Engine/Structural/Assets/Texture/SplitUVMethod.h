@@ -76,6 +76,17 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Predefined",
+                "UniformByPixel",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SplitUVMethod value)
         {
             switch (value)

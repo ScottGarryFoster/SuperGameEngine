@@ -81,6 +81,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "NoIcon",
+                "Arrow",
+                "Bullet",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(TreeViewItemCollapsibleIcon value)
         {
             switch (value)

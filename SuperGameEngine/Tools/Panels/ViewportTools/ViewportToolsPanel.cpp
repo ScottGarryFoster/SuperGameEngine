@@ -1,11 +1,14 @@
 #include "ViewportToolsPanel.h"
 #include "SuperViewportTools.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
 
 using namespace SuperGameTools;
 
 ViewportToolsPanel::ViewportToolsPanel()
 {
+    m_thisPanelsName = PanelSelectionName::ViewportToolsUndocked;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 ViewportToolsPanel::~ViewportToolsPanel()
@@ -34,6 +37,7 @@ void ViewportToolsPanel::Draw()
 {
     if (RenderWindow(GetPanelName()))
     {
+        HandlePanelSelection(m_panelSelectionManager, m_thisPanelsName);
         m_viewportTools->Draw();
     }
     EndWindowRender(GetPanelName());
@@ -45,6 +49,10 @@ void ViewportToolsPanel::TearDown()
 
 void ViewportToolsPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
 {
+    if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
+    }
 }
 
 const char* ViewportToolsPanel::GetPanelName() const

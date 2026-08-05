@@ -17,6 +17,7 @@
 #include "../../ToolsEngine/ViewElements/TreeView/TreeViewItem.h"
 #include "../../../Engine/Structural/GameObject/ComponentFactory.h"
 #include "../SceneHierarchy/EventArguments/OnMenuDeleteComponentEventArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 #include "ToolsEngine/ViewElements/Menu/MenuItemView.h"
 #include "ToolsEngine/ViewElements/Menu/MenuView.h"
 
@@ -27,6 +28,9 @@ InspectorWindow::InspectorWindow()
     m_isSetup = false;
     m_inspectGameObject = std::make_shared<InspectGameObject>();
     m_inspectAssetObject = std::make_shared<InspectAssetObject>();
+
+    m_thisPanelsName = PanelSelectionName::InspectorWindow;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 void InspectorWindow::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -94,6 +98,7 @@ void InspectorWindow::Draw()
 
     if (RenderWindow(GetPanelName()))
     {
+        HandlePanelSelection(m_panelSelectionManager, m_thisPanelsName);
         m_inspectGameObject->Draw();
         m_inspectAssetObject->Draw();
 
@@ -133,7 +138,10 @@ void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
         return;
     }
 
-
+    if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
+    }
 }
 
 const char* InspectorWindow::GetPanelName() const

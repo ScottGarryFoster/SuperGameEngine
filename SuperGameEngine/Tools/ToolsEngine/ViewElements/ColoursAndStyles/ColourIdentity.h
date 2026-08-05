@@ -104,6 +104,21 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Background",
+                "Primary",
+                "Highlight",
+                "Secondary",
+                "Error",
+                "Warning",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ColourIdentity value)
         {
             switch (value)

@@ -5,6 +5,7 @@
 #include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorTextInputArray.h"
 #include "../../UniversalObjectData/LayoutEditors/LayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
+#include "LayoutEditorUserButtonInput.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
 #include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorFilteredDropdownArray.h"
 #include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorVector4IArray.h"
@@ -24,7 +25,7 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
     UniversalStorableType type = ExtractType(node);
     if (type == UniversalStorableType::Unknown)
     {
-        Log::Error("Unknown parameter type value in template.",
+        Log::Error("Unknown parameter type value in template: " + EUniversalStorableType::ToString(type),
             "ToolsAssetLayoutEditorFactory::Create(const std::shared_ptr<const StoredDocumentNode>&)");
         return {};
     }
@@ -32,7 +33,7 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
     LayoutTemplateLayoutMapType maptype = ExtractMapType(node);
     if (maptype == LayoutTemplateLayoutMapType::Unknown)
     {
-        Log::Error("Unknown map type value in template.",
+        Log::Error("Unknown map type value in template: " + ELayoutTemplateLayoutMapType::ToString(maptype),
             "ToolsAssetLayoutEditorFactory::Create(const std::shared_ptr<const StoredDocumentNode>&)");
         return {};
     }
@@ -74,7 +75,13 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
                 return std::make_shared<LayoutEditorVector4IArray>(map);
             }
             break;
-
+        case UniversalStorableType::UserButton:
+            switch (maptype)
+            {
+            case LayoutTemplateLayoutMapType::Single:
+                return std::make_shared<LayoutEditorUserButtonInput>(map);
+            }
+            break;
             
     }
 

@@ -80,6 +80,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Add",
+                "Remove",
+                "Set",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SelectionChangeType value)
         {
             switch (value)

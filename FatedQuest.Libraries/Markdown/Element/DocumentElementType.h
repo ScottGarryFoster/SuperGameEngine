@@ -106,6 +106,23 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Paragraph",
+                "Heading1",
+                "Heading2",
+                "Heading3",
+                "Heading4",
+                "Heading5",
+                "Heading6",
+                "Table",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(DocumentElementType value)
         {
             switch (value)

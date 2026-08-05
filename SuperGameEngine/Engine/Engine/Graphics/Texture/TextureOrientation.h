@@ -74,6 +74,18 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "None",
+                "Horizontally",
+                "Vertically",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(TextureOrientation value)
         {
             switch (value)

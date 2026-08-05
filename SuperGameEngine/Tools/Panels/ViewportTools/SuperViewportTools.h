@@ -7,6 +7,12 @@
 #include "ViewportTools.h"
 #include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
 
+namespace SuperGameTools
+{
+    class ViewportToolsSettings;
+    class ViewportToolsSettingsPanel;
+}
+
 namespace FatedQuestLibraries
 {
     class FEvent;
@@ -46,6 +52,11 @@ namespace SuperGameTools
         virtual void SelectTool(ViewportToolsType newValue) override;
 
         /// <summary>
+        /// Called every frame.
+        /// </summary>
+        virtual void Update() override;
+
+        /// <summary>
         /// Draw the viewport tools bar. 
         /// </summary>
         virtual void Draw() override;
@@ -70,6 +81,12 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Invoked when debug options changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnDebugOptionsChanged() const override;
+
+        /// <summary>
+        /// Get the actual settings from the panel.
+        /// </summary>
+        /// <returns>The actual settings from the panel.</returns>
+        virtual std::shared_ptr<ViewportToolsSettings> GetViewportToolsSettings() const override;
 
     private:
 
@@ -107,5 +124,10 @@ namespace SuperGameTools
         /// The option selected to view different debug information in the viewport.
         /// </summary>
         ViewportDebugOption m_debugOption;
+
+        /// <summary>
+        /// The settings panel for the viewport tools.
+        /// </summary>
+        std::shared_ptr<ViewportToolsSettingsPanel> m_settingsPanel;
     };
 }

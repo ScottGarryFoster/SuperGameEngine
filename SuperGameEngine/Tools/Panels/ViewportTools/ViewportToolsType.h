@@ -72,6 +72,17 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Select",
+                "Move",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ViewportToolsType value)
         {
             switch (value)

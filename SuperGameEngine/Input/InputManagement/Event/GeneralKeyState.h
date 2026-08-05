@@ -66,6 +66,17 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "SDL__RELEASED",
+                "SDL__PRESSED",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(GeneralKeyState value)
         {
             switch (value)

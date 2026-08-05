@@ -136,6 +136,31 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "FaceButtonDown",
+                "FaceButtonLeft",
+                "FaceButtonRight",
+                "FaceButtonUp",
+                "DPadDown",
+                "DPadLeft",
+                "DPadRight",
+                "DPadUp",
+                "LeftShoulder",
+                "RightShoulder",
+                "LeftTrigger",
+                "RightTrigger",
+                "Start",
+                "Select",
+                "LeftStickClick",
+                "RightStickClick",
+            };
+            
+            return returnArray;
+        }
+
         static std::vector<UniversalControllerButton> GroupDPad()
         {
             static std::vector<UniversalControllerButton> returnVector =
