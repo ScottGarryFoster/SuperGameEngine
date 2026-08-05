@@ -1,0 +1,19 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        The name of the shortcuts in the viewport Tools defined in the settings.
+    </EnumComment>
+    <EnumName Name="ViewportToolsSettingsShortcutName">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <ObjectFocusOn />
+        <MoveUp />
+        <MoveLeft />
+        <MoveRight />
+        <MoveDown />
+    </EnumName>
+</SuperEnum>

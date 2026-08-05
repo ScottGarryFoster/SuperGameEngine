@@ -6,14 +6,20 @@
         <BaseFileTemplate UniversalObjectDataTemplateCreationMethod="Simple">
             <UniversalObjectData>
                 <Strings>
-                    <String "Key"="StartScene" "Value"="Napman/savedOut.scene" />
-                    <String "Key"="WindowTitle" "Value"="Napman" />
+                    <String "Key"="ObjectFocusOn" "Value"="Z" />
+                    <String "Key"="MoveUp" "Value"="W" />
+                    <String "Key"="MoveLeft" "Value"="A" />
+                    <String "Key"="MoveRight" "Value"="D" />
+                    <String "Key"="MoveDown" "Value"="S" />
                 </Strings>
             </UniversalObjectData>
         </BaseFileTemplate>
     </Template>
     <Layout>
-        <Data Type="String" Map="StartScene" MapType="Single" />
-        <Data Type="String" Map="WindowTitle" MapType="Single" />
+        <Data Type="UserButton" Map="ObjectFocusOn" MapType="Single" />
+        <Data Type="UserButton" Map="MoveUp" MapType="Single" />
+        <Data Type="UserButton" Map="MoveLeft" MapType="Single" />
+        <Data Type="UserButton" Map="MoveRight" MapType="Single" />
+        <Data Type="UserButton" Map="MoveDown" MapType="Single" />
     </Layout>
 </MetaData>

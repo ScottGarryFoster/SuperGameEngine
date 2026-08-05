@@ -65,6 +65,16 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Inspectable",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SelectionGroup value)
         {
             switch (value)

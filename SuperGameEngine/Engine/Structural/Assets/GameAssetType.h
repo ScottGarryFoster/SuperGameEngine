@@ -64,6 +64,16 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Texture",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(GameAssetType value)
         {
             switch (value)

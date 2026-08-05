@@ -76,6 +76,19 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "CloseAfterOperation",
+                "LeaveOpen",
+                "CreateIfDoesNotExistAndLeaveOpen",
+                "CreateIfDoesNotExistCloseAfter",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ZipCreateOpenOption value)
         {
             switch (value)

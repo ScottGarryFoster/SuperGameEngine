@@ -64,6 +64,16 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "NewScene",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SceneUpdateAction value)
         {
             switch (value)

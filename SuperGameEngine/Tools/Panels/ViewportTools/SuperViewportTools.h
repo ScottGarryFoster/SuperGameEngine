@@ -9,6 +9,7 @@
 
 namespace SuperGameTools
 {
+    class ViewportToolsSettings;
     class ViewportToolsSettingsPanel;
 }
 
@@ -81,10 +82,11 @@ namespace SuperGameTools
         /// <returns>Invoked when debug options changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEvent> OnDebugOptionsChanged() const override;
 
-        // So this would need to give the Universal Data Object
-        // and then we would be just storing the key binds as like strings which the viewport knows or converts probably with some
-        // struct defined way to keep it tidy.
-        //std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnToolsViewportSettingsChanged() const;
+        /// <summary>
+        /// Get the actual settings from the panel.
+        /// </summary>
+        /// <returns>The actual settings from the panel.</returns>
+        virtual std::shared_ptr<ViewportToolsSettings> GetViewportToolsSettings() const override;
 
     private:
 

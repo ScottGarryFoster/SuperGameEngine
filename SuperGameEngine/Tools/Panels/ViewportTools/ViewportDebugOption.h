@@ -156,6 +156,19 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "None",
+                "Gizmo",
+                "GameObject",
+                "Cursor",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ViewportDebugOption value)
         {
             if(value == ViewportDebugOption::None)

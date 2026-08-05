@@ -80,6 +80,18 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "GizmoSelected",
+                "GizmoUnselected",
+                "MoveBy",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ToolsGizmoAction value)
         {
             switch (value)

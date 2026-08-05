@@ -72,6 +72,17 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Unarchived",
+                "Archived",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(PackageFileOrigin value)
         {
             switch (value)

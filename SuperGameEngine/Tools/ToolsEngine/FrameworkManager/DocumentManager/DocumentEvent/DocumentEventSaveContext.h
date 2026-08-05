@@ -72,6 +72,17 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "GivenDocument",
+                "Everything",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(DocumentEventSaveContext value)
         {
             switch (value)

@@ -655,6 +655,7 @@ std::string SuperEnum::PrintEnumHelper(int indents)
     output += PrintToArray(indents);
     output += PrintToVector(indents);
     output += PrintToVectorValues(indents);
+    output += PrintToArrayValues(indents);
     output += PrintGroups(indents);
 
     // Standard ToString does not make sense for bitflags as many items could be set.
@@ -783,6 +784,41 @@ std::string SuperEnum::PrintToVectorValues(int indents)
     output += PrintIndents(indents) + "};\n";
     output += PrintIndents(indents) + "\n";
     output += PrintIndents(indents) + "return returnVector;\n";
+    --indents;
+    output += PrintIndents(indents) + "}\n";
+    return output;
+}
+
+std::string SuperEnum::PrintToArrayValues(int indents)
+{
+    if (!m_enumName.Parsed)
+    {
+        return std::string();
+    }
+
+    std::string output = "";
+
+    output += "\n";
+    output += PrintIndents(indents) + "static std::string* ToArrayValues()\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    output += PrintIndents(indents) + "static std::string returnArray[] =\n";
+    output += PrintIndents(indents) + "{\n";
+    ++indents;
+    for (const std::shared_ptr<EnumValueString>& enumValue : m_enumValues)
+    {
+        if (enumValue->HideFromLists)
+        {
+            continue;
+        }
+
+        output += PrintIndents(indents) + "\"" + enumValue->Value + "\"" + ",\n";
+
+    }
+    --indents;
+    output += PrintIndents(indents) + "};\n";
+    output += PrintIndents(indents) + "\n";
+    output += PrintIndents(indents) + "return returnArray;\n";
     --indents;
     output += PrintIndents(indents) + "}\n";
     return output;

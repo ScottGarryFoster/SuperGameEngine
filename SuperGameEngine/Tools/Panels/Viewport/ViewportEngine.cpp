@@ -29,6 +29,7 @@
 #include "Panels/ViewportTools/ViewportDebugOptionsChangedArguments.h"
 #include "Panels/ViewportTools/ViewportTools.h"
 #include "Panels/ViewportTools/ViewportToolsButtonSelectedArguments.h"
+#include "Panels/ViewportToolsSettings/ViewportToolsSettings.h"
 #include "Structural/Assets/Texture/TextureAsset.h"
 #include "Structural/Serializable/SerializableProperty.h"
 #include "ToolsEngine/FrameworkManager/FrameworkManager.h"
@@ -605,14 +606,14 @@ void ViewportEngine::UpdateGizmoLocation() const
 
 void ViewportEngine::ProcessKeyPresses(float delta)
 {
+    const std::shared_ptr<ViewportToolsSettings>& settings = m_viewportTools->GetViewportToolsSettings();
     if (m_selectedDrawBundle.first &&
         !m_viewportPanning.HaveStartedPanning &&
-        m_inputManager->GetKeyUp(SuperGameInput::KeyCode::Z))
+        m_inputManager->GetKeyUp(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::ObjectFocusOn)))
     {
         RectangleInt viewport = m_viewportEngineAndPanelCommunication->GetViewportLocation();
         ViewportObjectDrawBundle drawBundle = m_drawBundle.at(m_selectedDrawBundle.second);
 
-        Log::Info(m_topLeftPoint.Print());
         m_topLeftPoint.SetXYValue(
             (static_cast<float>(viewport.GetWidth()) / 2.0f) - drawBundle.TransformPosition.GetX(),
             (static_cast<float>(viewport.GetHeight()) / 2.0f) - drawBundle.TransformPosition.GetY());
@@ -625,20 +626,20 @@ void ViewportEngine::ProcessKeyPresses(float delta)
     {
         float speed = 300;
         auto movement = FVector2F();
-        if (m_inputManager->GetKeyDown(SuperGameInput::KeyCode::W))
+        if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveUp)))
         {
             movement.SetY(-speed * delta);
         }
-        else if (m_inputManager->GetKeyDown(SuperGameInput::KeyCode::S))
+        else if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveDown)))
         {
             movement.SetY(speed * delta);
         }
 
-        if (m_inputManager->GetKeyDown(SuperGameInput::KeyCode::A))
+        if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveLeft)))
         {
             movement.SetX(-speed * delta);
         }
-        else if (m_inputManager->GetKeyDown(SuperGameInput::KeyCode::D))
+        else if (m_inputManager->GetKeyDown(settings->GetKeyShortcut(ViewportToolsSettingsShortcutName::MoveRight)))
         {
             movement.SetX(speed * delta);
         }

@@ -181,3 +181,8 @@ std::shared_ptr<FatedQuestLibraries::FEvent> SuperViewportTools::OnDebugOptionsC
 {
     return m_onDebugOptionsChanged;
 }
+
+std::shared_ptr<ViewportToolsSettings> SuperViewportTools::GetViewportToolsSettings() const
+{
+    return m_settingsPanel->GetViewportToolsSettings();
+}

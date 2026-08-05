@@ -89,6 +89,19 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Text",
+                "Vector2F",
+                "Int",
+                "TextureAsset",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SerializableDataType value)
         {
             switch (value)

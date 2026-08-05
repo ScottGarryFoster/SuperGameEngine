@@ -73,6 +73,17 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Extension",
+                "FileName",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(UniversalObjectDataTemplateMatchingStyle value)
         {
             switch (value)

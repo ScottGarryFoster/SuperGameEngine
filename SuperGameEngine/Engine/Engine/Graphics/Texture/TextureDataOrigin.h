@@ -74,6 +74,17 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "FromFile",
+                "FromData",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(TextureDataOrigin value)
         {
             switch (value)

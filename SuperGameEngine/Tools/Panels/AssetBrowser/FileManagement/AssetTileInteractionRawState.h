@@ -160,6 +160,19 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "NoInteraction",
+                "Hover",
+                "LeftClickDown",
+                "LeftClickReleased",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(AssetTileInteractionRawState value)
         {
             if(value == AssetTileInteractionRawState::NoInteraction)

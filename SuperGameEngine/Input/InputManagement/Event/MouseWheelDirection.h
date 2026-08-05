@@ -72,6 +72,17 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "SDL_MOUSEWHEEL_NORMAL",
+                "SDL_MOUSEWHEEL_FLIPPED",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(MouseWheelDirection value)
         {
             switch (value)

@@ -64,6 +64,16 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Simple",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(UniversalObjectDataTemplateCreationMethod value)
         {
             switch (value)

@@ -162,6 +162,22 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Plain",
+                "Bold",
+                "Italic",
+                "Strike",
+                "Highlight",
+                "InlineCode",
+                "Underline",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(MarkdownTextStyle value)
         {
             if(value == MarkdownTextStyle::Plain)

@@ -308,6 +308,39 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "None",
+                "NoTitleBar",
+                "NoResize",
+                "NoMove",
+                "NoScrollbar",
+                "NoScrollWithMouse",
+                "NoCollapse",
+                "AlwaysAutoResize",
+                "NoBackground",
+                "NoSavedSettings",
+                "NoMouseInputs",
+                "MenuBar",
+                "HorizontalScrollbar",
+                "NoFocusOnAppearing",
+                "NoBringToFrontOnFocus",
+                "AlwaysVerticalScrollbar",
+                "AlwaysHorizontalScrollbar",
+                "NoNavInputs",
+                "NoNavFocus",
+                "UnsavedDocument",
+                "NoDocking",
+                "NoNav",
+                "NoDecoration",
+                "NoInputs",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(WindowFlags value)
         {
             if(value == WindowFlags::None)

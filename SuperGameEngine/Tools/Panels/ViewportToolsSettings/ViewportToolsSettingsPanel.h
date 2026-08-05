@@ -10,6 +10,7 @@ namespace FatedQuestLibraries
 
 namespace SuperGameTools
 {
+    class ViewportToolsSettings;
     class SingleLayoutMetaData;
 
     /// <summary>
@@ -77,6 +78,11 @@ namespace SuperGameTools
         /// </summary>
         virtual bool HideWindow() override;
 
+        /// <summary>
+        /// Get the actual settings from the panel.
+        /// </summary>
+        /// <returns>The actual settings from the panel.</returns>
+        std::shared_ptr<ViewportToolsSettings> GetViewportToolsSettings() const;
 
     private:
 
@@ -121,6 +127,11 @@ namespace SuperGameTools
         /// Converts a Stored Document to XML.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::DocumentToXml> m_documentToXml;
+
+        /// <summary>
+        /// The settings for the Viewport Tools
+        /// </summary>
+        std::shared_ptr<ViewportToolsSettings> m_viewportToolsSettings;
 
         /// <summary>
         /// Looks for the file layout and returns the value.

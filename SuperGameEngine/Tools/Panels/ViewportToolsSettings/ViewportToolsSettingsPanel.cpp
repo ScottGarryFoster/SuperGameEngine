@@ -1,5 +1,6 @@
 #include "ViewportToolsSettingsPanel.h"
 
+#include "ViewportToolsSettings.h"
 #include "../../ImGuiIncludes.h"
 #include "../../../../FatedQuest.Libraries/StoredDocument/Converters/SimpleDocumentToXml.h"
 #include "../../../../FatedQuest.Libraries/XmlDocument/AllReferences.h"
@@ -20,6 +21,7 @@ ViewportToolsSettingsPanel::ViewportToolsSettingsPanel()
 {
     m_universalObjectData = std::make_shared<ExplicitDocumentModifiableUniversalObjectData>();
     m_documentToXml = std::make_shared<FatedQuestLibraries::SimpleDocumentToXml>();
+    m_viewportToolsSettings = std::make_shared<ViewportToolsSettings>(m_universalObjectData);
 
     m_thisPanelsName = PanelSelectionName::ViewportToolsSettings;
     m_currentSelectedPanel = PanelSelectionName::None;
@@ -114,6 +116,11 @@ bool ViewportToolsSettingsPanel::HideWindow()
     return SuperToolsPanel::HideWindow();
 }
 
+std::shared_ptr<ViewportToolsSettings> ViewportToolsSettingsPanel::GetViewportToolsSettings() const
+{
+    return m_viewportToolsSettings;
+}
+
 std::shared_ptr<const SingleLayoutMetaData> ViewportToolsSettingsPanel::FindSettingsFileAndTemplateLayout() const
 {
     std::vector<std::shared_ptr<const SingleLayoutMetaData>> fileLayouts =
@@ -176,6 +183,7 @@ void ViewportToolsSettingsPanel::LoadSettingsFile()
     }
 
     m_universalObjectData->ImportAsDocument(xml);
+    m_viewportToolsSettings->SettingsHaveUpdated();
 }
 
 void ViewportToolsSettingsPanel::SaveSettings()
@@ -206,6 +214,7 @@ void ViewportToolsSettingsPanel::SaveSettings()
     m_universalObjectData->MarkSaved();
     m_previousDirtyStateOfDocument = false;
     UpdateUnsavedState(m_previousDirtyStateOfDocument);
+    m_viewportToolsSettings->SettingsHaveUpdated();
 }
 
 bool ViewportToolsSettingsPanel::ActionButtons()

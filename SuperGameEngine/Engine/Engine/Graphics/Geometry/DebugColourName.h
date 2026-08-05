@@ -96,6 +96,20 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Default",
+                "Green",
+                "Blue",
+                "Red",
+                "Cyan",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(DebugColourName value)
         {
             switch (value)

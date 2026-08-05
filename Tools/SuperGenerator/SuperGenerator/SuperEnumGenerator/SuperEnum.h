@@ -158,6 +158,7 @@ namespace SuperEnumGenerator
         std::string PrintToArray(int indents);
         std::string PrintToVector(int indents);
         std::string PrintToVectorValues(int indents);
+        std::string PrintToArrayValues(int indents);
         std::string PrintToString(int indents);
         std::string PrintToStringBitFlag(int indents);
         std::string PrintFromString(int indents);

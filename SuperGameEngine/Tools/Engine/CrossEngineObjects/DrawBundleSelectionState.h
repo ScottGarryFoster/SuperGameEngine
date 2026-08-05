@@ -159,6 +159,19 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "NoInteraction",
+                "Hover",
+                "SelectionKeyDown",
+                "Selected",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(DrawBundleSelectionState value)
         {
             if(value == DrawBundleSelectionState::NoInteraction)

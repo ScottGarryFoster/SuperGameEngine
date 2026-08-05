@@ -101,6 +101,25 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "None",
+                "AssetBrowser",
+                "GameViewport",
+                "InspectorWindow",
+                "LoggerOutput",
+                "SceneHierarchy",
+                "ToolsViewport",
+                "ProjectProperties",
+                "ViewportToolsUndocked",
+                "ViewportToolsSettings",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(PanelSelectionName value)
         {
             switch (value)
