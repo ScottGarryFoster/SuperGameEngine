@@ -33,6 +33,12 @@ int main(int argc, char* args[])
     // Is not required but is nice to get this in early.
     FatedQuestLibraries::Log::Initialise();
 
+    auto fileLogger = std::make_shared<FatedQuestLibraries::FileLogger>();
+    if (auto event = FatedQuestLibraries::Log::GetEvent().lock())
+    {
+        event->Subscribe(fileLogger);
+    }
+
 #ifdef _DEBUG
 
     #ifdef _WINDOWS
