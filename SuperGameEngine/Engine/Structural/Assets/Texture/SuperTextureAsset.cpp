@@ -116,7 +116,7 @@ void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& scr
             DrawPredefined(tile, screenLocation);
             break;
         default:
-            m_superTexture->Draw();
+            m_superTexture->Draw(FPoint(screenLocation.GetX(), screenLocation.GetY()));
         }
     }
 }
