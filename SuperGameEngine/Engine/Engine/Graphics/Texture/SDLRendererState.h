@@ -74,6 +74,17 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Active",
+                "Destroyed",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SDLRendererState value)
         {
             switch (value)

@@ -2,7 +2,7 @@
 
 #include "../../../Engine/Content/ContentManager.h"
 #include "../../Packages/ComponentLoadPackage.h"
-#include "../../../Engine/Structural/Assets/Texture/SuperTextureAsset.h"
+#include "../../../../Engine/Structural/Assets/Texture/SuperTextureAsset.h"
 #include "../TransformComponent/TransformComponent.h"
 #include "Structural/GameObject/GameObject.h"
 #include "Structural/Serializable/PropertyByType/TextSerializableProperty.h"

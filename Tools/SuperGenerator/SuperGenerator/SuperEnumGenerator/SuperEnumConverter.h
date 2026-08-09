@@ -165,6 +165,8 @@ namespace SuperEnumGenerator
         /// <param name="left">True means print lefts prefix. </param>
         /// <returns>The prefix if any. </returns>
         std::string PrintEnumPrefixIfAny(bool left = true);
+
+        std::string PrintSingleComment(const std::string& rawComment, int indents);
     };
 }
 

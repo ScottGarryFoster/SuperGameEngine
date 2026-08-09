@@ -6,6 +6,7 @@
 
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "ToolsEngine/SharedEventArguments/ToolsPropertyChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -15,6 +16,7 @@ TextureAssetSerializableProperty::TextureAssetSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_onPropertyChanged = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
 
@@ -51,6 +53,11 @@ std::shared_ptr<FEventSubscriptions> TextureAssetSerializableProperty::OnDirtyFl
     return m_onDirtyFlagChanged;
 }
 
+std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> TextureAssetSerializableProperty::OnPropertyChanged() const
+{
+    return m_onPropertyChanged;
+}
+
 std::shared_ptr<SuperGameEngine::SerializableProperty> TextureAssetSerializableProperty::GetEngineProperty() const
 {
     return m_property;
@@ -74,11 +81,6 @@ void TextureAssetSerializableProperty::Draw()
     ImGui::Text(m_property->GetName().c_str());
     ImGui::SameLine();
 
-    if (*m_dirty)
-    {
-        ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
-    }
-    else
     {
         std::string before = m_value;
         ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
@@ -118,6 +120,11 @@ std::shared_ptr<SuperGameEngine::TextureAssetSerializableProperty> TextureAssetS
     return m_serializableProperty;
 }
 
+std::string TextureAssetSerializableProperty::GetTextureValue() const
+{
+    return m_value;
+}
+
 bool TextureAssetSerializableProperty::SetValueFromString(const std::string& newValue)
 {
     size_t written = std::snprintf(m_value, sizeof(m_value), "%s", newValue.c_str());
@@ -146,6 +153,8 @@ void TextureAssetSerializableProperty::UpdateDirtyFlag(bool newValue) const
         *m_dirty = newValue;
         m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
     }
+
+    m_onPropertyChanged->Invoke(std::make_shared<ToolsPropertyChangedArguments>(shared_from_this()));
 }
 
 void TextureAssetSerializableProperty::EnableDropTarget(float xTop, float yTop, float xBottom, float yBottom)

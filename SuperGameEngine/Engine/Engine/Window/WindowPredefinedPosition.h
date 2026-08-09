@@ -64,6 +64,16 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Centered",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(WindowPredefinedPosition value)
         {
             switch (value)

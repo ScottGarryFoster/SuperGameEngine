@@ -1,6 +1,7 @@
 #include "SuperPanelManager.h"
 #include "Panels/ToolsPanel.h"
 #include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/ToolsPanelSelectionManager.h"
 #include "ToolsEngine/Packages/WindowPackage.h"
 #include "ToolsEngine/ViewElements/Menu/MenuItemView.h"
 #include "ToolsEngine/ViewElements/Menu/MenuItemViewEventArguments.h"
@@ -10,9 +11,15 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
+SuperPanelManager::SuperPanelManager()
+{
+    m_panelSelectionManager = std::make_shared<ToolsPanelSelectionManager>();
+}
+
 void SuperPanelManager::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
 {
     m_windowPackage = windowPackage;
+    m_panelSelectionManager->UpdateNewSelection(PanelSelectionName::None);
 }
 
 bool SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>& panel)
@@ -24,6 +31,8 @@ bool SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>& panel)
             "SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>&)");
         return false;
     }
+
+    panel->GivePanelSelectionManager(m_panelSelectionManager);
 
     auto menuItem = std::make_shared<MenuItemView>(uniqueName, uniqueName);
     m_windowPackage->GetTopMenu()->AddInnerMenuItem("Windows", menuItem);
@@ -80,6 +89,11 @@ std::shared_ptr<ToolsPanel> SuperPanelManager::TryFindPanel(const std::string& k
     }
 
     return {};
+}
+
+std::shared_ptr<PanelSelectionManager> SuperPanelManager::GetPanelSelection() const
+{
+    return m_panelSelectionManager;
 }
 
 void SuperPanelManager::SetupPanelForPanelOpen(const std::shared_ptr<ToolsPanel>& panel) const

@@ -4,6 +4,11 @@
 
 namespace SuperGameTools
 {
+    class PanelSelectionManager;
+}
+
+namespace SuperGameTools
+{
     class ColoursAndStyles;
     
     /// <summary>
@@ -36,5 +41,12 @@ namespace SuperGameTools
         /// Reset the panel for whatever that means, location, content etc.
         /// </summary>
         virtual void ResetPanel() = 0;
+
+        /// <summary>
+        /// Give the manager which manages the selection of panels amongst other panels.
+        /// This will be used to communicate when this panel is selected to other panels.
+        /// </summary>
+        /// <param name="panelSelectionManager">The current selection manager. </param>
+        virtual void GivePanelSelectionManager(const std::shared_ptr<PanelSelectionManager>& panelSelectionManager) = 0;
     };
 }

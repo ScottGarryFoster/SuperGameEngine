@@ -3,6 +3,8 @@
 #include <string>
 #include <SDL_image.h>
 
+#include "TextureOrientationToSDLConverter.h"
+
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
 
@@ -149,7 +151,8 @@ bool Texture::LoadImageFromData(std::vector<unsigned char>& data, const std::str
 
 void Texture::Draw() const
 {
-    if (!ValidateRendererAndTexture("Texture::Draw()"))
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw()");
+    if (renderer == nullptr)
     {
         return;
     }
@@ -161,7 +164,22 @@ void Texture::Draw() const
     m_screenRect->h = m_textureSize->GetY();
 
     double rotation = 0;
-    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, NULL, m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, m_texture, NULL, m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+}
+
+void Texture::Draw(const FatedQuestLibraries::FColour& tintColour) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const FatedQuestLibraries::FColour&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    auto screenAndTexture = RectangleInt(0, 0, m_textureSize->GetX(), m_textureSize->GetY());
+
+    SetColourForRenderer(tintColour);
+    DrawInnerLogic(renderer, screenAndTexture, screenAndTexture);
+    UnsetColourForRenderer();
 }
 
 void Texture::Draw(const FPoint& location) const
@@ -169,9 +187,50 @@ void Texture::Draw(const FPoint& location) const
     Draw(location, *m_textureSize);
 }
 
+void Texture::Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation) const
+{
+    Draw(location, transformation, *m_textureSize);
+}
+
+void Texture::Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FColour& tintColour) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FColour&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    auto textureRect = RectangleInt(0, 0, m_textureSize->GetX(), m_textureSize->GetY());
+    auto screenRect = RectangleInt(location.GetX(), location.GetY(), m_textureSize->GetX(), m_textureSize->GetY());
+
+    SetColourForRenderer(tintColour);
+    DrawInnerLogic(renderer, textureRect, screenRect);
+    UnsetColourForRenderer();
+}
+
+void Texture::Draw(
+    const FatedQuestLibraries::FPoint& location, 
+    const TextureTransformationDetails& transformation,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const FatedQuestLibraries::FPoint&,const TextureRotation,const FatedQuestLibraries::FColour&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    auto textureRect = RectangleInt(0, 0, m_textureSize->GetX(), m_textureSize->GetY());
+    auto screenRect = RectangleInt(location.GetX(), location.GetY(), m_textureSize->GetX(), m_textureSize->GetY());
+
+    SetColourForRenderer(tintColour);
+    DrawInnerLogic(renderer, textureRect, screenRect, transformation);
+    UnsetColourForRenderer();
+}
+
 void Texture::Draw(const FPoint& location, const FPoint& size) const
 {
-    if (!ValidateRendererAndTexture("Texture::Draw(const FPoint&, const FPoint&)"))
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const FPoint&, const FPoint&)");
+    if (renderer == nullptr)
     {
         return;
     }
@@ -183,30 +242,116 @@ void Texture::Draw(const FPoint& location, const FPoint& size) const
     m_screenRect->h = size.GetY();
 
     double rotation = 0;
-    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, NULL, m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, m_texture, NULL, m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
 }
 
-void Texture::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
+void Texture::Draw(
+    const FatedQuestLibraries::FPoint& location, 
+    const TextureTransformationDetails& transformation,
+    const FatedQuestLibraries::FPoint& size) const
 {
-    if (!ValidateRendererAndTexture("Texture::Draw(const RectangleInt&, const RectangleInt&)"))
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const FPoint&, const FPoint&)");
+    if (renderer == nullptr)
     {
         return;
     }
 
     // Screen Texture
-    m_screenRect->x = screenRectangle.GetLeft();
-    m_screenRect->y = screenRectangle.GetTop();
-    m_screenRect->w = screenRectangle.GetWidth();
-    m_screenRect->h = screenRectangle.GetHeight();
+    m_screenRect->x = location.GetX();
+    m_screenRect->y = location.GetY();
+    m_screenRect->w = size.GetX();
+    m_screenRect->h = size.GetY();
 
-    // Texture Area
-    m_textureRect->x = textureRectangle.GetLeft();
-    m_textureRect->y = textureRectangle.GetTop();
-    m_textureRect->w = textureRectangle.GetWidth();
-    m_textureRect->h = textureRectangle.GetHeight();
+    // Rotation
+    auto center = SDL_Point(transformation.CenterX, transformation.CenterY);
+    SDL_RendererFlip flip = TextureOrientationToSDLConverter::Convert(transformation.Orientation);
 
-    double rotation = 0;
-    SDL_RenderCopyEx(m_sdlRenderer->GetRenderer(), m_texture, m_textureRect.get(), m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, m_texture, NULL, m_screenRect.get(), transformation.Angle, &center, flip);
+}
+
+void Texture::Draw(
+    const FatedQuestLibraries::FPoint& location, 
+    const FatedQuestLibraries::FPoint& size,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const FatedQuestLibraries::FPoint&,const FatedQuestLibraries::FColour&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    auto textureRect = RectangleInt(0, 0, m_textureSize->GetX(), m_textureSize->GetY());
+    auto screenRect = RectangleInt(location.GetX(), location.GetY(), size.GetX(), size.GetY());
+
+    SetColourForRenderer(tintColour);
+    DrawInnerLogic(renderer, textureRect, screenRect);
+    UnsetColourForRenderer();
+}
+
+void Texture::Draw(
+    const FatedQuestLibraries::FPoint& location, 
+    const TextureTransformationDetails& transformation,
+    const FatedQuestLibraries::FPoint& size, 
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+}
+
+void Texture::Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const RectangleInt&, const RectangleInt&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    DrawInnerLogic(renderer, textureRectangle, screenRectangle);
+}
+
+void Texture::Draw(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const TextureTransformationDetails& transformation) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const RectangleInt&, const RectangleInt&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    DrawInnerLogic(renderer, textureRectangle, screenRectangle, transformation);
+}
+
+void Texture::Draw(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const FColour& tintColour) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const RectangleInt&, const RectangleInt&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    SetColourForRenderer(tintColour);
+    DrawInnerLogic(renderer, textureRectangle, screenRectangle);
+    UnsetColourForRenderer();
+}
+
+void Texture::Draw(
+    const RectangleInt& textureRectangle, 
+    const RectangleInt& screenRectangle,
+    const TextureTransformationDetails& transformation, 
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    SDL_Renderer* renderer = ValidateRendererAndTexture("Texture::Draw(const RectangleInt&, const RectangleInt&)");
+    if (renderer == nullptr)
+    {
+        return;
+    }
+
+    SetColourForRenderer(tintColour);
+    DrawInnerLogic(renderer, textureRectangle, screenRectangle, transformation);
+    UnsetColourForRenderer();
 }
 
 std::string Texture::GetLoadedFilePath() const
@@ -236,22 +381,24 @@ void Texture::UpdateTextureMetaData(SDL_Texture* texture) const
     m_textureSize->SetXYValue(textureWidth, textureHeight);
 }
 
-bool Texture::ValidateRendererAndTexture(const std::string& methodName) const
+SDL_Renderer* Texture::ValidateRendererAndTexture(const std::string& methodName) const
 {
-    if (m_sdlRenderer->RendererState() != SDLRendererState::Active)
+    SDL_Renderer* renderer = m_sdlRenderer->GetRenderer();
+    if (renderer == nullptr)
     {
         if (m_filePath.empty())
         {
             Log::Error("Attempting to draw texture but there is no renderer. "
+                "Also the texture does not exist within our storage: "
                 "Filepath (potentially old): " + m_filePath,
                 methodName);
         }
         else
         {
-            Log::Error("Attempting to draw texture but there is no renderer.", "Texture::Draw");
+            Log::Error("Attempting to draw texture but there is no renderer.", methodName);
         }
 
-        return false;
+        return nullptr;
     }
 
     if (!m_texture)
@@ -264,11 +411,71 @@ bool Texture::ValidateRendererAndTexture(const std::string& methodName) const
         }
         else
         {
-            Log::Error("Requested to draw Texture but it does not exist.", "Texture::Draw");
+            Log::Error("Requested to draw Texture but it does not exist.", methodName);
         }
 
-        return false;
+        return nullptr;
     }
 
-    return true;
+    return renderer;
+}
+
+void Texture::DrawInnerLogic(
+    SDL_Renderer* renderer, 
+    const RectangleInt& textureRectangle,
+    const RectangleInt& screenRectangle, 
+    const TextureTransformationDetails& transformation) const
+{
+    // Screen Texture
+    m_screenRect->x = screenRectangle.GetLeft();
+    m_screenRect->y = screenRectangle.GetTop();
+    m_screenRect->w = screenRectangle.GetWidth();
+    m_screenRect->h = screenRectangle.GetHeight();
+
+    // Texture Area
+    m_textureRect->x = textureRectangle.GetLeft();
+    m_textureRect->y = textureRectangle.GetTop();
+    m_textureRect->w = textureRectangle.GetWidth();
+    m_textureRect->h = textureRectangle.GetHeight();
+
+    // Rotation
+    auto center = SDL_Point(transformation.CenterX, transformation.CenterY);
+    SDL_RendererFlip flip = TextureOrientationToSDLConverter::Convert(transformation.Orientation);
+
+    SDL_RenderCopyEx(renderer, m_texture, m_textureRect.get(), m_screenRect.get(), transformation.Angle, &center, flip);
+}
+
+void Texture::DrawInnerLogic(
+    SDL_Renderer* renderer, 
+    const RectangleInt& textureRectangle,
+    const RectangleInt& screenRectangle) const
+{
+    // Screen Texture
+    m_screenRect->x = screenRectangle.GetLeft();
+    m_screenRect->y = screenRectangle.GetTop();
+    m_screenRect->w = screenRectangle.GetWidth();
+    m_screenRect->h = screenRectangle.GetHeight();
+
+    // Texture Area
+    m_textureRect->x = textureRectangle.GetLeft();
+    m_textureRect->y = textureRectangle.GetTop();
+    m_textureRect->w = textureRectangle.GetWidth();
+    m_textureRect->h = textureRectangle.GetHeight();
+
+    double rotation = 0;
+    SDL_RenderCopyEx(renderer, m_texture, m_textureRect.get(), m_screenRect.get(), rotation, NULL, SDL_FLIP_NONE);
+}
+
+void Texture::SetColourForRenderer(const FatedQuestLibraries::FColour& tintColour) const
+{
+    SDL_SetTextureColorMod(m_texture, tintColour.Red, tintColour.Green, tintColour.Blue);
+    SDL_SetTextureAlphaMod(m_texture, tintColour.Alpha);
+    SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
+}
+
+void Texture::UnsetColourForRenderer() const
+{
+    SDL_SetTextureColorMod(m_texture, 255, 255, 255);
+    SDL_SetTextureAlphaMod(m_texture, 255);
+    SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_NONE);
 }

@@ -14,4 +14,13 @@
             <Property "Name"="TileWest" "Value"="2" />
         </Component>
     </GameObject>
+    <GameObject "Guid"="{FD2E3532-070A-478E-BE03-457FD9B69E19}">
+        <Component "Type"="TransformComponent">
+            <Property "Name"="Position" "X"="500" "Y"="500" />
+        </Component>
+        <Component "Type"="SpriteComponent">
+            <Property "Name"="TextureAsset" "Value"="engine\testimages\Small-8-Direction-Characters_by_AxulArt.png" />
+            <Property "Name"="Tile" "Value"="3" />
+        </Component>
+    </GameObject>
 </Scene>

@@ -72,6 +72,17 @@ namespace ProductsPackager
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Untouched",
+                "Binary",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(PackageFileType value)
         {
             switch (value)

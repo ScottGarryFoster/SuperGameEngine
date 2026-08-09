@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../../../../FatedQuest.Libraries/StandardObjects/AllReferences.h"
 
 namespace FatedQuestLibraries
 {
@@ -73,5 +74,26 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="gameObject">New game object. </param>
         virtual void AddGameObject(const std::shared_ptr<GameObject>& gameObject) = 0;
+
+        /// <summary>
+        /// Select a game object in the scene by GUID.
+        /// </summary>
+        /// <param name="guid">Guid to select. </param>
+        /// <returns>True means there was a game object to select. </returns>
+        virtual bool SelectGameObject(const FatedQuestLibraries::Guid& guid) = 0;
+
+        /// <summary>
+        /// Select a game object in the scene by GUID, using the string representation of GUID.
+        /// </summary>
+        /// <param name="guid">Guid to select. </param>
+        /// <returns>True means there was a game object to select. </returns>
+        virtual bool SelectGameObject(const std::string& guid) = 0;
+
+        /// <summary>
+        /// Gets a <see cref="GameObject"/> referenced by the GUID.
+        /// </summary>
+        /// <param name="guid">Guid to search. </param>
+        /// <returns>The gameobject or empty. </returns>
+        [[nodiscard]] virtual std::shared_ptr<GameObject> GetGameObjectByGuid(const std::string& guid) const = 0;
     };
 }

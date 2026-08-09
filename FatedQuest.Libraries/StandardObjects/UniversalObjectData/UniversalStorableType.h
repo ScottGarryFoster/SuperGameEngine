@@ -24,6 +24,8 @@ namespace FatedQuestLibraries
         Int,
 
         Vector4I,
+
+        UserButton,
     };
 
     /// <summary>
@@ -33,7 +35,7 @@ namespace FatedQuestLibraries
     {
     public:
         static UniversalStorableType Min() { return UniversalStorableType::String; }
-        static UniversalStorableType Max() { return UniversalStorableType::Vector4I; }
+        static UniversalStorableType Max() { return UniversalStorableType::UserButton; }
 
         static UniversalStorableType* ToArray()
         {
@@ -42,6 +44,7 @@ namespace FatedQuestLibraries
                 UniversalStorableType::String,
                 UniversalStorableType::Int,
                 UniversalStorableType::Vector4I,
+                UniversalStorableType::UserButton,
             };
             
             return returnArray;
@@ -54,6 +57,7 @@ namespace FatedQuestLibraries
                 UniversalStorableType::String,
                 UniversalStorableType::Int,
                 UniversalStorableType::Vector4I,
+                UniversalStorableType::UserButton,
             };
             
             return returnVector;
@@ -66,9 +70,23 @@ namespace FatedQuestLibraries
                 "String",
                 "Int",
                 "Vector4I",
+                "UserButton",
             };
             
             return returnVector;
+        }
+
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "String",
+                "Int",
+                "Vector4I",
+                "UserButton",
+            };
+            
+            return returnArray;
         }
 
         static std::string ToString(UniversalStorableType value)
@@ -79,6 +97,7 @@ namespace FatedQuestLibraries
                 case UniversalStorableType::String: return "String";
                 case UniversalStorableType::Int: return "Int";
                 case UniversalStorableType::Vector4I: return "Vector4I";
+                case UniversalStorableType::UserButton: return "UserButton";
             }
             
             return "Unknown";
@@ -92,6 +111,7 @@ namespace FatedQuestLibraries
                 if (value == "String") return UniversalStorableType::String;
                 if (value == "Int") return UniversalStorableType::Int;
                 if (value == "Vector4I") return UniversalStorableType::Vector4I;
+                if (value == "UserButton") return UniversalStorableType::UserButton;
             }
             else
             {
@@ -100,6 +120,7 @@ namespace FatedQuestLibraries
                 if (valueLower == "string") return UniversalStorableType::String;
                 if (valueLower == "int") return UniversalStorableType::Int;
                 if (valueLower == "vector4i") return UniversalStorableType::Vector4I;
+                if (valueLower == "userbutton") return UniversalStorableType::UserButton;
             }
             
             return UniversalStorableType::Unknown;

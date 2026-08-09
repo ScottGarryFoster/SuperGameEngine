@@ -41,7 +41,8 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="isOpen">True means window is open. </param>
         /// <param name="isHovered">True means window is hovered. </param>
-        virtual void SetWindowTabColoursAndStyles(const bool isOpen, const bool isHovered) const = 0;
+        /// <param name="isSelected">True means window is selected. </param>
+        virtual void SetWindowTabColoursAndStyles(const bool isOpen, const bool isHovered, bool isSelected) const = 0;
 
         /// <summary>
         /// Called after <see cref="SetWindowTabColoursAndStyles()"/>.

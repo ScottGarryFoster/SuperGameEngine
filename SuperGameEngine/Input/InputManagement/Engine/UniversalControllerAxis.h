@@ -86,6 +86,21 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "LeftStickX",
+                "LeftStickY",
+                "RightStickX",
+                "RightStickY",
+                "LeftTrigger",
+                "RightTrigger",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(UniversalControllerAxis value)
         {
             switch (value)

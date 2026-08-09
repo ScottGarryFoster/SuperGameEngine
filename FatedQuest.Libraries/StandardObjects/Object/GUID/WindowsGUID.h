@@ -12,7 +12,16 @@ namespace FatedQuestLibraries
     class WindowsGUID : public Guid
     {
     public:
+        /// <summary>
+        /// Will automatically generate a new GUID.
+        /// </summary>
         WindowsGUID();
+
+        /// <summary>
+        /// Will create from string input.
+        /// </summary>
+        /// <param name="value">New value. </param>
+        WindowsGUID(const std::string& value);
 
         /// <summary>
         /// Generates a random GUID.

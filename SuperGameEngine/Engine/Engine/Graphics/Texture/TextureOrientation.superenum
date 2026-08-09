@@ -1,0 +1,19 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameEngine" />
+    <EnumComment>
+        Defines how to flip a given texture.
+    </EnumComment>
+    <EnumName Name="TextureOrientation">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <None>
+            Do not flip.
+        </None>
+        <Horizontally />
+        <Vertically />
+    </EnumName>
+</SuperEnum>

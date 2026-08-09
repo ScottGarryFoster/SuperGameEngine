@@ -23,6 +23,8 @@
 #include "../Structural/Loaders/SuperSceneLoader.h"
 #include "../Structural/Serializable/SuperSerializableParser.h"
 #include "../Input/InputManagement/SDLInputManager.h"
+#include "Engine/Content/SuperTextureAssetFactory.h"
+#include "Engine/Content/SuperTextureWrapperFactory.h"
 
 using namespace SuperGameEngine;
 using namespace FatedQuestLibraries;
@@ -81,6 +83,11 @@ void DebugEngine::GiveGamePackage(const std::shared_ptr<GamePackage>& gamePackag
 void DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>& projectProperties)
 {
     Log::Info("Project properties not used.", "DebugEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
+}
+
+void DebugEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
+{
+    m_engineControls = engineControls;
 }
 
 ApplicationOperationState DebugEngine::Event(SDL_Event event)
@@ -185,6 +192,14 @@ void DebugEngine::WindowTeardown()
 {
 }
 
+void DebugEngine::EngineStart()
+{
+}
+
+void DebugEngine::EngineEnd()
+{
+}
+
 void DebugEngine::Setup()
 {
     m_haveLoaded = true;
@@ -233,7 +248,14 @@ void DebugEngine::CreateGrandScenePackage()
     // Loads configurations.
     m_inputManager->Setup(m_combinedGamePackage);
 
-    m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage);
+    // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    auto factories = ContentFactories
+    {
+        .TextureFactory = std::make_shared<SuperTextureFactory>(),
+        .TextureAssetFactory = std::make_shared<SuperTextureAssetFactory>(),
+        .TextureWrapperFactory = std::make_shared<SuperTextureWrapperFactory>()
+    };
+    m_textureManager = std::make_shared<SuperTextureManager>(m_renderer, m_combinedGamePackage, factories);
     m_textureManager->UpdateDistributedWeakPointer(m_textureManager);
     m_contentManager->GiveSuperTextureManager(m_textureManager);
 

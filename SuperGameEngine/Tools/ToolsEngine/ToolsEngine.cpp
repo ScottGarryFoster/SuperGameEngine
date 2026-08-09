@@ -25,9 +25,16 @@
 #include "ViewElements/ColoursAndStyles/ToolsColoursAndStyles.h"
 
 // This should be included early in the engine for the inspector.
+#include "Engine/Content/ToolsTextureAssetFactory.h"
+#include "Engine/Content/ToolsTextureFactory.h"
+#include "Engine/Content/ToolsTextureWrapperFactory.h"
+#include "Engine/CrossEngineObjects/CrossEngineObjects.h"
 #include "Engine/Structural/UniversalObjectData/ToolsUniversalObjectDataTemplateProvider.h"
 #include "Panels/PanelManager/SuperPanelManager.h"
 #include "Panels/ProjectProperties/ProjectPropertiesPanel.h"
+#include "Panels/Viewport/ViewportPanel.h"
+#include "Panels/ViewportTools/ViewportTools.h"
+#include "Panels/ViewportTools/ViewportToolsPanel.h"
 #include "UserInputManagement/EnumFilterFactoryFeeder.h"
 
 using namespace SuperGameTools;
@@ -61,7 +68,14 @@ void ToolsEngine::GiveRenderer(std::shared_ptr<SDLRendererReader> renderer)
         m_windowPackage->SetColourPalette(std::make_shared<ToolsColoursAndStyles>(paths));
         m_superContentManager->GiveGamePackage(m_gamePackage);
 
-        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, m_gamePackage);
+        auto factories = ContentFactories
+        {
+            .TextureFactory = std::make_shared<ToolsTextureFactory>(),
+            .TextureAssetFactory = std::make_shared<ToolsTextureAssetFactory>(),
+            .TextureWrapperFactory = std::make_shared<ToolsTextureWrapperFactory>()
+        };
+        auto textureManager = std::make_shared<ImGuiTextureManager>(renderer, m_gamePackage, factories);
+        textureManager->UpdateDistributedWeakPointer(textureManager);
         m_superContentManager->GiveSuperTextureManager(textureManager);
 
         m_windowPackage->SetContentManager(m_superContentManager);
@@ -86,17 +100,41 @@ void ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>
         "ToolsEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>)");
 }
 
-void ToolsEngine::GiveSDLTexture(std::shared_ptr<ExtremelyWeakWrapper<SDL_Texture>> sdlRenderTexture)
+void ToolsEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
 {
-    m_sdlRenderTexture = sdlRenderTexture;
+    m_engineControls = engineControls;
+}
 
-    m_windowPackage->SetSDLRenderTexture(m_sdlRenderTexture);
+void ToolsEngine::GiveSDLGameEngineTexture(const std::shared_ptr<SDLTextureChest>& sdlRenderTexture)
+{
+    m_sdlGameViewportRenderTexture = sdlRenderTexture;
+
+    m_windowPackage->SetSDLGameViewportRenderTexture(m_sdlGameViewportRenderTexture);
+}
+
+void ToolsEngine::GiveSDLViewportTexture(const std::shared_ptr<SDLTextureChest>& sdlRenderTexture)
+{
+    m_sdlToolsViewportRenderTexture = sdlRenderTexture;
+
+    m_windowPackage->SetSDLToolsViewportRenderTexture(m_sdlToolsViewportRenderTexture);
 }
 
 void ToolsEngine::GiveEnginePlayControls(const std::shared_ptr<EngineEntryCommunication>& engineEntryCommunication)
 {
     m_engineEntryCommunication = engineEntryCommunication;
     m_windowPackage->SetEngineEntryCommunication(m_engineEntryCommunication);
+}
+
+void ToolsEngine::GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects)
+{
+    m_crossEngineObjects = crossEngineObjects;
+    m_crossEngineObjects->SetWindowPackage(m_windowPackage);
+}
+
+void ToolsEngine::GiveViewportEngineAndPanelCommunication(
+    const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication)
+{
+    m_viewportEngineAndPanelCommunication = engineAndPanelCommunication;
 }
 
 ApplicationOperationState ToolsEngine::Event(SDL_Event event)
@@ -106,12 +144,6 @@ ApplicationOperationState ToolsEngine::Event(SDL_Event event)
 
 ApplicationOperationState ToolsEngine::Update(Uint64 ticks)
 {
-    if (!m_haveSetup)
-    {
-        Setup();
-        m_haveSetup = true;
-    }
-
     for (const std::shared_ptr<UpdateableObject>& obj : m_updatables)
     {
         obj->Update();
@@ -143,6 +175,21 @@ void ToolsEngine::WindowTeardown()
 {
 }
 
+void ToolsEngine::EngineStart()
+{
+    if (!m_haveSetup)
+    {
+        Setup();
+        m_haveSetup = true;
+    }
+}
+
+void ToolsEngine::EngineEnd()
+{
+    m_haveSetup = false;
+    m_crossEngineObjects->Reset();
+}
+
 void ToolsEngine::Setup()
 {
     auto menuBar = std::make_shared<MainMenuBar>();
@@ -154,6 +201,9 @@ void ToolsEngine::Setup()
     std::shared_ptr<InspectorWindow> inspectorWindow = std::make_shared<InspectorWindow>();
     inspectorWindow->FEventObserver::UpdateDistributedWeakPointer(inspectorWindow);
 
+    m_sharedSceneChangedEvents = std::make_shared<ToolsSharedSceneChangedEvents>(sceneHierarchy, inspectorWindow);
+    m_crossEngineObjects->SetSharedSceneChangedEvents(m_sharedSceneChangedEvents);
+
     std::shared_ptr<LoggerOutput> loggerWindow = std::make_shared<LoggerOutput>();
     loggerWindow->FEventObserver::UpdateDistributedWeakPointer(loggerWindow);
 
@@ -162,6 +212,14 @@ void ToolsEngine::Setup()
 
     auto projectProperties = std::make_shared<ProjectPropertiesPanel>();
     projectProperties->FEventObserver::UpdateDistributedWeakPointer(projectProperties);
+
+    auto viewportPanel = std::make_shared<ViewportPanel>();
+    viewportPanel->GiveViewportEngineAndPanelCommunication(m_viewportEngineAndPanelCommunication);
+    viewportPanel->UpdateDistributedWeakPointer(viewportPanel);
+    viewportPanel->GiveEngineControls(m_engineControls);
+
+    auto viewportToolsPanel = std::make_shared<ViewportToolsPanel>();
+    viewportToolsPanel->UpdateDistributedWeakPointer(viewportToolsPanel);
 
     m_windowPackage->GetColourPalette()->SetGlobalColoursAndStyles();
 
@@ -221,6 +279,20 @@ void ToolsEngine::Setup()
     projectProperties->Setup(m_windowPackage);
     m_updatables.push_back(projectProperties);
     m_windowPackage->GetPanelManager()->RegisterPanel(projectProperties);
+
+
+
+    viewportToolsPanel->Setup(m_windowPackage);
+    m_updatables.push_back(viewportToolsPanel);
+    m_windowPackage->GetPanelManager()->RegisterPanel(viewportToolsPanel);
+
+    // This must occur after setup of these.
+    viewportToolsPanel->OnWindowShownOrHidden()->Subscribe(viewportPanel);
+    viewportPanel->GiveViewportTools(viewportToolsPanel->GetViewportTools());
+
+    viewportPanel->Setup(m_windowPackage);
+    m_updatables.push_back(viewportPanel);
+    m_windowPackage->GetPanelManager()->RegisterPanel(viewportPanel);
 
     // Run last after all panels have been run.
     menuBar->SetupPostPanels();

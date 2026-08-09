@@ -5,6 +5,8 @@
 #include "TextureDataOrigin.h"
 #include "../../../FatedQuestReferences.h"
 #include "../../../Structural/Spatial/Area/RectangleInt.h"
+#include "Engine/Content/SuperTextureFactory.h"
+#include "PureTexture.h"
 
 using namespace FatedQuestLibraries;
 
@@ -13,7 +15,7 @@ namespace SuperGameEngine
     /// <summary>
     /// Contains texture data and the raw ability to render a texture.
     /// </summary>
-    class Texture
+    class Texture : public virtual PureTexture
     {
     public:
         Texture(const std::shared_ptr<SDLRendererReader>& renderer);
@@ -25,7 +27,7 @@ namespace SuperGameEngine
         /// <param name="filePath">File path to the texture. </param>
         /// <param name="errors">If there are errors this is the reason why the texture could not be created. </param>
         /// <returns>True means created, false means not. </returns>
-        virtual bool LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors);
+        virtual bool LoadImageFromFile(const std::string& filePath, std::vector<std::string>& errors) override;
 
         /// <summary>
         /// Loads a texture from raw data.
@@ -37,44 +39,129 @@ namespace SuperGameEngine
         /// </param>
         /// <param name="errors">Errors if not created. </param>
         /// <returns>True means created. </returns>
-        virtual bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors);
+        virtual bool LoadImageFromData(std::vector<unsigned char>& data, const std::string& filepath, std::vector<std::string>& errors) override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
-        void Draw() const;
+        void Draw() const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
-        void Draw(const FPoint& location) const;
+        void Draw(const FPoint& location) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation details of a given texture. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Draws to screen.
         /// </summary>
         /// <param name="location">Location on screen to draw. </param>
         /// <param name="size">Size on the screen to draw. </param>
-        void Draw(const FPoint& location, const FPoint& size) const;
+        void Draw(const FPoint& location, const FPoint& size) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FPoint& size) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(
+            const FatedQuestLibraries::FPoint& location, 
+            const FatedQuestLibraries::FPoint& size, 
+            const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
+        /// Draws to screen.
+        /// </summary>
+        /// <param name="location">Location on screen to draw. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="size">Size on the screen to draw. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const FatedQuestLibraries::FPoint& location, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FPoint& size, const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Draws to the screen.
         /// </summary>
         /// <param name="textureRectangle">Where on the texture to render. </param>
         /// <param name="screenRectangle">Where on the screen to render. </param>
-        void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const;
+        void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const override;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const TextureTransformationDetails& transformation) const override;
+
+        /// <summary>
+        /// Draws to the screen with tint.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        /// <remarks>
+        /// Tint here will work fine for things like fonts or a white image you are colouring.
+        /// This will not work particularly well for full colour images.
+        /// </remarks>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const FatedQuestLibraries::FColour& tintColour) const override;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// </summary>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        /// <param name="transformation">Defines the transformation of a given texture. </param>
+        /// <param name="tintColour">Tint colour. </param>
+        virtual void Draw(const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const TextureTransformationDetails& transformation, const FatedQuestLibraries::FColour& tintColour) const override;
 
         /// <summary>
         /// Get the Filepath of the loaded texture.
         /// </summary>
         /// <returns>The filepath of the texture loaded. </returns>
-        [[nodiscard]] std::string GetLoadedFilePath() const;
+        [[nodiscard]] std::string GetLoadedFilePath() const override;
 
         /// <summary>
          /// Get the size of the Texture in Pixels.
          /// </summary>
          /// <returns>Returns the size of the Texture. </returns>
-        FPoint Size() const;
+        [[nodiscard]] FPoint Size() const override;
 
         /// <summary>
         /// Remakes the texture if possible.
@@ -82,7 +169,7 @@ namespace SuperGameEngine
         /// or if the filepath now have new data within it.
         /// Will remake in the same way it was last successfully attempted.
         /// </summary>
-        bool Remake(std::vector<std::string>& errors);
+        bool Remake(std::vector<std::string>& errors) override;
 
     protected:
 
@@ -142,6 +229,49 @@ namespace SuperGameEngine
         /// <param name="texture">Texture to extract metadata. </param>
         void UpdateTextureMetaData(SDL_Texture* texture) const;
 
-        bool ValidateRendererAndTexture(const std::string& methodName) const;
+        /// <summary>
+        /// Validates the renderer and texture can be trusted and used.
+        /// </summary>
+        /// <param name="methodName">Method name used to better error reporting.</param>
+        /// <returns>The renderer or nullptr if the renderer has been destroyed or texture is invalid.</returns>
+        SDL_Renderer* ValidateRendererAndTexture(const std::string& methodName) const;
+
+        /// <summary>
+        /// Sets the colour for the renderer.
+        /// This should be called before you draw.
+        /// </summary>
+        /// <param name="tintColour">Tint colour. </param>
+        void SetColourForRenderer(const FatedQuestLibraries::FColour& tintColour) const;
+
+        /// <summary>
+        /// Unsets colour for the renderer back to default.
+        /// This should be called after draw and after you have set a tint.
+        /// </summary>
+        void UnsetColourForRenderer() const;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// This is the inner logic for this action without any validation of the renderer.
+        /// </summary>
+        /// <param name="renderer">
+        /// Renderer used to render the texture.
+        /// Used explicitly! No further validation will be performed.
+        /// </param>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+         /// <param name="transformation">Defines the rotation of a given texture. </param>
+        void DrawInnerLogic(SDL_Renderer* renderer, const RectangleInt& textureRectangle, const RectangleInt& screenRectangle, const TextureTransformationDetails& transformation) const;
+
+        /// <summary>
+        /// Draws to the screen.
+        /// This is the inner logic for this action without any validation of the renderer.
+        /// </summary>
+        /// <param name="renderer">
+        /// Renderer used to render the texture.
+        /// Used explicitly! No further validation will be performed.
+        /// </param>
+        /// <param name="textureRectangle">Where on the texture to render. </param>
+        /// <param name="screenRectangle">Where on the screen to render. </param>
+        void DrawInnerLogic(SDL_Renderer* renderer, const RectangleInt& textureRectangle, const RectangleInt& screenRectangle) const;
     };
 }

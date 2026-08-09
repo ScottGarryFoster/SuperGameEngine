@@ -101,6 +101,24 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "LEFTUP",
+                "UP",
+                "RIGHTUP",
+                "LEFT",
+                "CENTERED",
+                "RIGHT",
+                "LEFTDOWN",
+                "DOWN",
+                "RIGHTDOWN",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(HatPosition value)
         {
             switch (value)

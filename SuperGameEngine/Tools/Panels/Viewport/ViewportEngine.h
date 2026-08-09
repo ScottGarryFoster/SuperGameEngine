@@ -1,0 +1,508 @@
+#pragma once
+#include "MoveInteractionChangedEvent.h"
+#include "../../../../FatedQuest.Libraries/Observer/FEventObserver.h"
+#include "Engine/CrossEngineObjects/ViewportObjectDrawBundle.h"
+#include "EngineEntry/Engine.h"
+#include "../../FatedQuestLibraries.h"
+#include "GameEngineEquivalents/Component/ComponentDataChangedEventArguments.h"
+#include "GameEngineEquivalents/GameObject/GameObject.h"
+#include "Panels/ViewportTools/ViewportDebugOption.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionName.h"
+
+namespace SuperGameTools
+{
+    class ViewportTools;
+    class ViewportGizmo;
+}
+
+namespace SuperGameEngine
+{
+    class PrimitiveRectangle;
+    class PrimitiveShapeProvider;
+    class TextureAsset;
+    class EngineTextureManager;
+}
+
+namespace SuperGameTools
+{
+    class SelectionChangedEventArguments;
+    class ViewportEngineAndPanelCommunication;
+    class Scene;
+    class CrossEngineObjects;
+
+    class ViewportEngine : public virtual SuperGameEngine::Engine, public FatedQuestLibraries::FEventObserver
+    {
+    public:
+        ViewportEngine();
+
+        /// <summary>
+        /// Gives the engine a renderer.
+        /// This can be called multiple times whilst the application is open
+        /// as a user may decide to change certain settings which require
+        /// re-creating the window.
+        /// In this situation you should ensure everything using the renderer
+        /// is recreated on this new renderer.
+        /// </summary>
+        /// <param name="renderer">The current window Renderer. </param>
+        virtual void GiveRenderer(std::shared_ptr<SuperGameEngine::SDLRendererReader> renderer) override;
+
+        /// <summary>
+        /// Gives the input manager.
+        /// </summary>
+        /// <param name="inputManager">User input. </param>
+        virtual void GiveInput(const std::shared_ptr<SuperGameInput::SDLInputManager>& inputManager) override;
+
+        /// <summary>
+        /// The data for the game.
+        /// This is loaded in the engine entry as it contains information about the window state.
+        /// </summary>
+        /// <param name="gamePackage">The data for the game. </param>
+        virtual void GiveGamePackage(const std::shared_ptr<FatedQuestLibraries::GamePackage>& gamePackage) override;
+
+        /// <summary>
+        /// Give project properties which contains the information for how to treat the product.
+        /// </summary>
+        /// <param name="projectProperties">The foundational properties for setting up the project for the product. </param>
+        virtual void GiveProjectProperties(const std::shared_ptr<SuperGameEngine::ProjectProperties>& projectProperties) override {}
+
+        /// <summary>
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </summary>
+        /// <param name="engineControls">
+        /// Allows you as the engine to communicate higher needs such as how to construct the viewport.
+        /// </param>
+        virtual void GiveControls(const std::shared_ptr<SuperGameEngine::EngineControls>& engineControls) override;
+
+        /// <summary>
+        /// Handle the current event.
+        /// </summary>
+        /// <param name="event">Current event. </param>
+        /// <returns>
+        /// ApplicationOperationState::Running will keep the window running.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
+        /// </returns>
+        virtual SuperGameEngine::ApplicationOperationState Event(SDL_Event event) override;
+
+        /// <summary>
+        /// Update the application each frame.
+        /// You must handle other things like Fixed Update.
+        /// </summary>
+        /// <param name="ticks">Ticks between this frame and the last. </param>
+        /// <returns>
+        /// ApplicationOperationState::Running will keep the window running.
+        /// ApplicationOperationState::Restart will restart the window at the next opportunity.
+        /// ApplicationOperationState::Close will close the game window at the next opportunity.
+        /// </returns>
+        virtual SuperGameEngine::ApplicationOperationState Update(Uint64 ticks) override;
+
+        /// <summary>
+        /// Draw to the screen.
+        /// </summary>
+        virtual void Draw() override;
+
+        /// <summary>
+        /// Called as the window starts.
+        /// </summary>
+        virtual void WindowStart() override;
+
+        /// <summary>
+        /// Called when the window is torndown.
+        /// </summary>
+        virtual void WindowTeardown() override;
+
+        /// <summary>
+        /// Called as the engine is created (ensure you have given the engine anything it requires).
+        /// This will remake all the items in the engine.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineStart() override;
+
+        /// <summary>
+        /// Called as the engine is destroyed (ensure you have given the engine anything it requires).
+        /// This will ensure that any setup is re-run on engine start.
+        /// Do not call unless you would like the engine objects themselves torn down and therefore
+        /// the state of the engine itself.
+        /// </summary>
+        virtual void EngineEnd() override;
+
+        /// <summary>
+        /// Inform the observer an event has taken place.
+        /// Do not store this pointer it is intended as a point for dynamic casting
+        /// and not as long term storage. Directly after invocation it will be deleted.
+        /// </summary>
+        /// <param name="arguments">Arguments describing the event. </param>
+        virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
+
+        /// <summary>
+        /// Give this engine a reference to the objects shared by the main engine.
+        /// </summary>
+        /// <param name="crossEngineObjects">
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </param>
+        void GiveCrossEngineObjects(const std::shared_ptr<CrossEngineObjects>& crossEngineObjects);
+
+        /// <summary>
+        /// Give object which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        /// <param name="engineAndPanelCommunication">New communication Object. </param>
+        void GiveViewportEngineAndPanelCommunication(const std::shared_ptr<ViewportEngineAndPanelCommunication>& engineAndPanelCommunication);
+
+    private:
+
+        /// <summary>
+        /// The SDL Renderer we should output to.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::SDLRendererReader> m_renderer;
+
+        /// <summary>
+        /// Handles and updates user input.
+        /// </summary>
+        std::shared_ptr<SuperGameInput::SDLInputManager> m_inputManager;
+
+        /// <summary>
+        /// All data for the game.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::GamePackage> m_gamePackage;
+
+        /// <summary>
+        /// Creates, stores and manages all textures in the engine.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::EngineTextureManager> m_textureManager;
+
+        /// <summary>
+        /// Defines and communicates engine level changes.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::EngineControls> m_engineControls;
+
+        /// <summary>
+        /// Holds links to objects which can be passed between engines within the tools.
+        /// </summary>
+        std::shared_ptr<CrossEngineObjects> m_crossEngineObjects;
+
+        /// <summary>
+        /// Contains information to draw textures on the screen.
+        /// </summary>
+        std::unordered_map<uint64_t, ViewportObjectDrawBundle> m_drawBundle;
+
+        /// <summary>
+        /// The current scene as far as you are aware.
+        /// </summary>
+        std::shared_ptr<Scene> m_currentScene;
+
+        /// <summary>
+        /// Provides render-able debug primitive shapes.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::PrimitiveShapeProvider> m_primitiveShapeProvider;
+
+        /// <summary>
+        /// A rectangle for debug drawing.
+        /// </summary>
+        std::shared_ptr<SuperGameEngine::PrimitiveRectangle> m_debugRectangle;
+
+        /// <summary>
+        /// Objects which allow the viewport engine and the panel which renders it to communicate information.
+        /// </summary>
+        std::shared_ptr<ViewportEngineAndPanelCommunication> m_viewportEngineAndPanelCommunication;
+
+        /// <summary>
+        /// The position of the mouse rectangle used for debug rendering.
+        /// </summary>
+        SuperGameEngine::RectangleInt m_mouseCollision;
+
+        /// <summary>
+        /// True means the button we used for selection has changed this frame and should be processed.
+        /// </summary>
+        bool m_selectionButtonStatusIsDirty;
+
+        /// <summary>
+         /// True means on the last frame the button to select an object was pressed.
+         /// </summary>
+        bool m_previousSelectionKeyDownStatus;
+
+        /// <summary>
+        /// Renders and handles interactions for the gizmo in the viewport.
+        /// This is the behaviours directly on game objects like move.
+        /// </summary>
+        std::shared_ptr<ViewportGizmo> m_gizmo;
+
+        /// <summary>
+        /// The tools which accompany the scene viewport.
+        /// </summary>
+        std::shared_ptr<ViewportTools> m_viewportTools;
+
+        /// <summary>
+        /// True when a game object is selected.
+        /// </summary>
+        bool m_haveSelectedAGameObject;
+
+        /// <summary>
+        /// True when a tool which the gizmo should display is shown.
+        /// </summary>
+        bool m_areSelectingAGizmoTool;
+
+        /// <summary>
+        /// Holds the currently selected draw bundle.
+        /// True means there is a value.
+        /// The value is the location in the array.
+        /// </summary>
+        /// <remarks>This limits us to one game object selected. </remarks>
+        std::pair<bool, uint64_t> m_selectedDrawBundle;
+
+        /// <summary>
+        /// True means the gizmo has control instead of this engine.
+        /// </summary>
+        /// <remarks>
+        /// In future this will likely be replaced with an enum for states of control.
+        /// </remarks>
+        bool m_gizmoHasControl;
+
+        /// <summary>
+        /// The option selected to view debug helpers in the viewport.
+        /// </summary>
+        ViewportDebugOption m_debugOption;
+
+        /// <summary>
+        /// The top left point of the viewport.
+        /// </summary>
+        FatedQuestLibraries::FVector2F m_topLeftPoint;
+
+        /// <summary>
+        /// Variables around the viewport panning.
+        /// Should be moved to their own class at some point.
+        /// </summary>
+        struct ViewportPanning
+        {
+            /// <summary>
+            /// True when panning has started.
+            /// </summary>
+            bool HaveStartedPanning = false;
+
+            /// <summary>
+            /// The last point moved from.
+            /// </summary>
+            FatedQuestLibraries::FVector2F LastKnownPoint;
+        };
+
+        /// <summary>
+        /// Holds viewport panning information.
+        /// </summary>
+        ViewportPanning m_viewportPanning;
+
+        /// <summary>
+        /// The current selected panel.
+        /// Cached to avoid memory walking.
+        /// </summary>
+        PanelSelectionName m_panelSelectionName;
+
+        /// <summary>
+        /// True when the gizmo should draw.
+        /// </summary>
+        /// <returns>True when the gizmo should draw. </returns>
+        bool ShouldDrawGizmo() const;
+
+        /// <summary>
+        /// Draw the given object and use the mouse position to change the drawing to react to mouse over.
+        /// </summary>
+        /// <param name="drawBundle">Draw the given draw bundle.  </param>
+        /// <param name="mousePosition">Mouse position relative to the viewport. </param>
+        void DrawBundle(const ViewportObjectDrawBundle& drawBundle, const FatedQuestLibraries::FPoint& mousePosition);
+
+        /// <summary>
+        /// Draw the given object.
+        /// </summary>
+        /// <param name="drawBundle">Draw the given draw bundle. </param>
+        void DrawBundle(const ViewportObjectDrawBundle& drawBundle);
+
+        // New Scene Event Handles
+
+        /// <summary>
+        /// Sets up a new scene and all the bundles for this.
+        /// </summary>
+        /// <param name="newScene">The current scene as far as you are aware. </param>
+        void SetupNewScene(const std::shared_ptr<Scene>& newScene);
+
+        /// <summary>
+        /// Adds the given game object to the scene.
+        /// </summary>
+        /// <param name="gameObject">GameObject to add.</param>
+        void AddGameObjectToScene(const std::shared_ptr<GameObject>& gameObject);
+
+        /// <summary>
+        /// Extract and add the given Sprite Properties into the draw bundle.
+        /// </summary>
+        /// <param name="drawBundle">DrawBundle to add the information into. </param>
+        /// <param name="component">Component to find the sprite information in. </param>
+        void ExractSpriteDrawBundleProperties(
+            ViewportObjectDrawBundle& drawBundle,
+            const std::shared_ptr<Component>& component) const;
+
+        /// <summary>
+        /// Extract and add the given Transform Properties into the draw bundle.
+        /// </summary>
+        /// <param name="drawBundle">DrawBundle to add the information into .</param>
+        /// <param name="component">Component to find the sprite information in. </param>
+        void ExtractTransformDrawBundleProperties(
+            ViewportObjectDrawBundle& drawBundle,
+            const std::shared_ptr<Component>& component) const;
+
+        // Component Change Event Handles
+
+        /// <summary>
+        /// Updates any draw bundles based on direct changes to components.
+        /// </summary>
+        /// <param name="gameObjectGuid">The Guid of the GameObject. </param>
+        /// <param name="componentGuid">The Guid of the Component to change or to read the change of. </param>
+        void ChangeDrawBundleBasedOnComponentChange(
+            const std::shared_ptr<Guid>& gameObjectGuid, const std::shared_ptr<Guid>& componentGuid);
+
+        /// <summary>
+        /// Update a sprite based on the component changing.
+        /// </summary>
+        /// <param name="gameObjectGuid">GUID of the game object. </param>
+        /// <param name="component">Component to look for changes. </param>
+        void UpdateSpriteBasedOnComponentChange(
+            uint64_t gameObjectGuid, 
+            const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// Update a transform based on the component changing.
+        /// </summary>
+        /// <param name="gameObjectGuid">GUID of the game object. </param>
+        /// <param name="component">Component to look for changes. </param>
+        void UpdateTransformBasedOnComponentChange(
+            uint64_t gameObjectGuid,
+            const std::shared_ptr<Component>& component);
+
+        // On Component Added.
+
+        /// <summary>
+        /// Handles event on component added.
+        /// </summary>
+        /// <param name="gameObjectGuid">The Guid of the GameObject. </param>
+        /// <param name="componentGuid">The Guid of the Component to change or to read the change of. </param>
+        void OnComponentAdded(
+            const std::shared_ptr<Guid>& gameObjectGuid,
+            const std::shared_ptr<Guid>& componentGuid);
+
+        /// <summary>
+        /// Handles event on component removed.
+        /// </summary>
+        /// <param name="component">The component removed. </param>
+        void OnComponentRemoved(const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// This component has been removed. Remove any content this component had
+        /// from the draw bundle.
+        /// </summary>
+        /// <param name="drawBundle">Draw bundle to remove information from. </param>
+        /// <param name="component">Component to look in. </param>
+        void RemoveComponentFromDrawBundleIfExists(
+            ViewportObjectDrawBundle& drawBundle, 
+            const std::shared_ptr<Component>& component);
+
+        /// <summary>
+        /// Inspects draw bundle to see if it is currently valid to render.
+        /// </summary>
+        /// <param name="drawBundle">Inspects draw bundle to see if it is currently valid to render. </param>
+        void ValidateDrawBundle(ViewportObjectDrawBundle& drawBundle) const;
+
+        /// <summary>
+        /// Handle on game object deleted.
+        /// </summary>
+        /// <param name="gameObject">Handle on game object deleted. </param>
+        void OnGameObjectDeleted(const std::shared_ptr<GameObject>& gameObject);
+
+        /// <summary>
+        /// Updates the rectangle drawn around the game object.
+        /// </summary>
+        /// <param name="drawBundle">Draw bundle to update.</param>
+        void UpdateCollisionRectangle(ViewportObjectDrawBundle& drawBundle) const;
+
+        /// <summary>
+        /// Creates a new draw bundle correctly from a game object.
+        /// </summary>
+        /// <param name="gameObject">Game object to create from. </param>
+        /// <returns>New draw bundle. </returns>
+        ViewportObjectDrawBundle CreateDrawBundle(const std::shared_ptr<GameObject>& gameObject) const;
+
+        /// <summary>
+        /// Creates a new draw bundle from GUID.
+        /// </summary>
+        /// <param name="gameObjectGuid">GUID to create form. </param>
+        /// <returns>New Draw Bundle. </returns>
+        ViewportObjectDrawBundle CreateDrawBundle(const std::shared_ptr<Guid>& gameObjectGuid) const;
+
+        /// <summary>
+        /// Update all draw bundles with current interactions from the user.
+        /// </summary>
+        void ProcessDrawBundleInteractions();
+
+        /// <summary>
+        /// Handle the selection being changed and potentially the objects changing selection.
+        /// </summary>
+        /// <param name="arguments">Selection arguments. </param>
+        /// <remarks>This is all inspectables, which should include GameObjects but will also include a lot of other things.</remarks>
+        void OnSelectionChanged(const std::shared_ptr<SelectionChangedEventArguments>& arguments);
+
+        /// <summary>
+        /// Ensures the dirty flag for the selection button is set.
+        /// </summary>
+        void UpdateSelectionButtonDirtyFlag();
+
+        /// <summary>
+        /// True when selection button is down.
+        /// </summary>
+        /// <returns></returns>
+        bool IsSelectionButtonDown() const;
+
+        /// <summary>
+        /// Returns the mouse position as a collision rectangle.
+        /// </summary>
+        /// <returns>Returns the mouse position as a collision rectangle. </returns>
+        std::pair<bool, SuperGameEngine::RectangleInt> GetMousePosition() const;
+
+        /// <summary>
+        /// On the Gizmo throwing back an interaction meaning it has been selected
+        /// this is the event to react to for movements.
+        /// </summary>
+        /// <param name="args">Event args to react to. </param>
+        void ReactToMoveGizmoEvents(const std::shared_ptr<MoveInteractionChangedEvent>& args);
+
+        /// <summary>
+        /// Moves the drawbundle by this amount positionally.
+        /// </summary>
+        /// <param name="index">Index of the draw bundle.</param>
+        /// <param name="x">X by. </param>
+        /// <param name="y">Y by. </param>
+        void MoveDrawBundleBy(uint64_t index, int x, int y);
+
+        /// <summary>
+        /// Occurs when the draw bundle is selected.
+        /// This is different from a game object selection as this is this viewports reaction point.
+        /// </summary>
+        /// <param name="index">The draw bundle index. </param>
+        void SelectDrawBundle(uint64_t index);
+
+        /// <summary>
+        /// Handles viewport Panning at the end of other mouse operations.
+        /// </summary>
+        /// <param name="mousePosition">
+        /// True means mouse is within viewport.
+        /// Position top left is the pointer position.
+        /// </param>
+        void HandleViewportPanning(const std::pair<bool, SuperGameEngine::RectangleInt>& mousePosition);
+
+        /// <summary>
+        /// Updates Gizmo with the selected objects location.
+        /// </summary>
+        void UpdateGizmoLocation() const;
+
+        /// <summary>
+        /// Processes Key Presses within the interface.
+        /// </summary>
+        /// <param name="delta">Ticks in time delta. </param>
+        void ProcessKeyPresses(float delta);
+    };
+}

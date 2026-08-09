@@ -72,6 +72,17 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Dark",
+                "Light",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ColourPalette value)
         {
             switch (value)

@@ -10,9 +10,11 @@
 #include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
 #include "../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ExplicitDocumentModifiableUniversalObjectData.h"
 #include "../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
+#include "../../../../FatedQuest.Libraries/StoredDocument/Converters/SimpleDocumentToXml.h"
 #include "../../../../FatedQuest.Libraries/XmlDocument/RapidXMLDocument.h"
 #include "Engine/Foundation/ProjectPropertiesProvider.h"
 #include "Engine/Structural/UniversalObjectData/Template/SingleLayout.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -22,6 +24,9 @@ ProjectPropertiesPanel::ProjectPropertiesPanel()
     m_projectPropertiesProvider = std::make_shared<ProjectPropertiesProvider>();
     m_universalObjectData = std::make_shared<ExplicitDocumentModifiableUniversalObjectData>();
     m_documentToXml = std::make_shared<SimpleDocumentToXml>();
+
+    m_thisPanelsName = PanelSelectionName::ProjectProperties;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 ProjectPropertiesPanel::~ProjectPropertiesPanel()
@@ -98,6 +103,7 @@ void ProjectPropertiesPanel::Draw()
     bool closeWindow = false;
     if (RenderWindow(GetPanelName()))
     {
+        HandlePanelSelection(m_panelSelectionManager, PanelSelectionName::ProjectProperties);
         m_projectPropertyLayout->GetLayout()->Draw(m_universalObjectData);
 
         closeWindow = ActionButtons();
@@ -116,6 +122,10 @@ void ProjectPropertiesPanel::TearDown()
 
 void ProjectPropertiesPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
 {
+    if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
+    }
 }
 
 const char* ProjectPropertiesPanel::GetPanelName() const

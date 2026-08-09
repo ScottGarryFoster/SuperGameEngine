@@ -91,6 +91,19 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Xbox360Controller",
+                "XboxSeriesController",
+                "NintendoSwitchProController",
+                "NintendoN64Controller",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(Controller value)
         {
             switch (value)

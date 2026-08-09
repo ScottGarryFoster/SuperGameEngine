@@ -83,6 +83,18 @@ namespace SuperGameEngine
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Running",
+                "Close",
+                "Restart",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(ApplicationOperationState value)
         {
             switch (value)

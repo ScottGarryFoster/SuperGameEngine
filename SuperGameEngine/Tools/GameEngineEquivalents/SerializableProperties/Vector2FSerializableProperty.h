@@ -24,7 +24,7 @@ namespace SuperGameTools
     /// <summary>
     /// Represents text input.
     /// </summary>
-    class Vector2FSerializableProperty : public ToolsSerializableProperty
+    class Vector2FSerializableProperty : public ToolsSerializableProperty, public std::enable_shared_from_this<Vector2FSerializableProperty>
     {
     public:
         Vector2FSerializableProperty(
@@ -36,6 +36,12 @@ namespace SuperGameTools
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
         virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnDirtyFlagChanged() const override;
+
+        /// <summary>
+        /// Event called when this property is changed (everytime).
+        /// </summary>
+        /// <returns>Event called when this property is changed (everytime). </returns>
+        virtual std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> OnPropertyChanged() const override;
 
         /// <summary>
         /// Gets the engine side property.
@@ -66,11 +72,36 @@ namespace SuperGameTools
         /// <returns>The property this tools property represents. </returns>
         std::shared_ptr<SuperGameEngine::Vector2FSerializableProperty> GetActualEngineProperty() const;
 
+        /// <summary>
+        /// Get the value stored in this property.
+        /// </summary>
+        /// <returns>The value stored in this property. </returns>
+        FatedQuestLibraries::FVector2F GetValue() const;
+
+        /// <summary>
+        /// Set the value stored in this property.
+        /// </summary>
+        /// <param name="x">New X value. </param>
+        /// <param name="y">New Y value. </param>
+        void SetValue(float x, float y);
+
+        /// <summary>
+        /// Change value by this amount.
+        /// </summary>
+        /// <param name="x">X value to change by. </param>
+        /// <param name="y">Y value to change by. </param>
+        void ChangeValueBy(float x, float y);
+
     private:
         /// <summary>
-        /// Event called when this component is dirtied.
+        /// Event called when this property is dirtied.
         /// </summary>
         std::shared_ptr<FatedQuestLibraries::FEvent> m_onDirtyFlagChanged;
+
+        /// <summary>
+        /// Event called when this property changes.
+        /// </summary>
+        std::shared_ptr<FatedQuestLibraries::FEvent> m_onPropertyChanged;
 
         /// <summary>
         /// True means are dirty.

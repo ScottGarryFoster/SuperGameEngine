@@ -24,9 +24,12 @@
 #include "../../ToolsEngine/FrameworkManager/SelectionManager/SelectionChangedEventArguments.h"
 #include "SceneTreeViewItem.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "Engine/CrossEngineObjects/CrossEngineObjects.h"
+#include "Engine/CrossEngineObjects/OnSceneUpdatedEventArguments.h"
 #include "EventArguments/OnMenuDeleteComponentEventArguments.h"
 #include "EventArguments/OnMenuDeleteGameObjectEventArguments.h"
 #include "EventArguments/OnMenuNewGameObjectEventArguments.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionChangedArguments.h"
 
 using namespace SuperGameTools;
 
@@ -34,6 +37,12 @@ SceneHierarchy::SceneHierarchy()
 {
     m_testPopup = false;
     m_testPopupText = {};
+    m_onNewScene = std::make_shared<FEvent>();
+    m_onGameObjectAdded = std::make_shared<FEvent>();
+    m_onGameObjectDeleted = std::make_shared<FEvent>();
+
+    m_thisPanelsName = PanelSelectionName::SceneHierarchy;
+    m_currentSelectedPanel = PanelSelectionName::None;
 }
 
 void SceneHierarchy::Setup(const std::shared_ptr<WindowPackage>& windowPackage)
@@ -86,6 +95,7 @@ void SceneHierarchy::Draw()
 {
     if (RenderWindow(GetPanelName()))
     {
+        HandlePanelSelection(m_panelSelectionManager, m_thisPanelsName);
         if (m_tree)
         {
             m_tree->Draw();
@@ -102,9 +112,11 @@ void SceneHierarchy::Draw()
         ImGui::OpenPopup("Selectable Popup");
     }
 
-    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+    if (ImGui::BeginPopupModal("Selectable Popup", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
         ImGui::Text(m_testPopupText.c_str());
-        if (ImGui::Button("Close")) {
+        if (ImGui::Button("Close"))
+        {
             ImGui::CloseCurrentPopup();
             m_testPopup = false;
         }
@@ -130,14 +142,20 @@ void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
     else if (auto onMenuNewGameObject = std::dynamic_pointer_cast<OnMenuNewGameObjectEventArguments>(arguments))
     {
         CreateNewGameObject();
+        m_onGameObjectAdded->Invoke(arguments);
     }
     else if (auto onMenuDeleteGameObject = std::dynamic_pointer_cast<OnMenuDeleteGameObjectEventArguments>(arguments))
     {
         DeleteGameObject(onMenuDeleteGameObject->GetUniqueId(), onMenuDeleteGameObject->GetGameObject());
+        m_onGameObjectDeleted->Invoke(arguments);
     }
     else if (auto onMenuDeleteComponent = std::dynamic_pointer_cast<OnMenuDeleteComponentEventArguments>(arguments))
     {
         DeleteComponent(onMenuDeleteComponent->GetComponent());
+    }
+    else if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
+    {
+        m_currentSelectedPanel = args->GetSelectionName();
     }
 }
 
@@ -154,6 +172,21 @@ const char* SceneHierarchy::GetPanelUniqueName() const
 bool SceneHierarchy::OnLoadOpenState() const
 {
     return true;
+}
+
+std::shared_ptr<FEventSubscriptions> SceneHierarchy::OnNewScene() const
+{
+    return m_onNewScene;
+}
+
+std::shared_ptr<FEventSubscriptions> SceneHierarchy::OnGameObjectAdded() const
+{
+    return m_onGameObjectAdded;
+}
+
+std::shared_ptr<FEventSubscriptions> SceneHierarchy::OnGameObjectDeleted() const
+{
+    return m_onGameObjectDeleted;
 }
 
 bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
@@ -183,13 +216,15 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         }
     }
 
-    m_scene = std::make_shared<ToolsScene>(m_windowPackage->GetParser(), document);
+    m_scene = std::make_shared<ToolsScene>(m_windowPackage->GetParser(), document, m_windowPackage);
     if (!m_scene->Load())
     {
         Log::Error("No document loaded into the scene document.",
             "bool SceneHierarchy::LoadScene(std::shared_ptr<SceneDocument>)");
         return false;
     }
+
+    m_onNewScene->Invoke(std::make_shared<OnSceneUpdatedEventArguments>(SceneUpdateAction::NewScene, m_scene));
 
     // It is important to store the shared pointer as a TreeViewItem so Shared from works.
     m_treeViewItem = std::make_shared<SceneTreeViewItem>(m_windowPackage->GetContentManager());
@@ -229,6 +264,7 @@ bool SceneHierarchy::LoadScene(const std::shared_ptr<SceneDocument>& document)
         children.emplace_back(childItem);
         childrenAsGameObjectTVI.emplace_back(childItem);
     }
+
     m_treeViewItem->GetChildren()->SetValue(children);
     m_sceneTreeViewItem->GetChildrenAsGameObjects()->SetValue(childrenAsGameObjectTVI);
 

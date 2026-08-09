@@ -66,10 +66,30 @@ namespace FatedQuestLibraries
         FPoint& operator+=(const FPoint& other);
 
         /// <summary>
+        /// Take two points from one another.
+        /// </summary>
+        /// <param name="other">Other vector to subtract. </param>
+        /// <returns>Result of subtraction. </returns>
+        FPoint operator-(const FPoint& other) const;
+
+        /// <summary>
+        /// Take two points from one another.
+        /// </summary>
+        /// <param name="other">Other vector to subtract. </param>
+        /// <returns>Result of subtraction. </returns>
+        FPoint& operator-=(const FPoint& other);
+
+        /// <summary>
         /// Prints the Point value.
         /// </summary>
         /// <returns>A string version of the point. </returns>
-        const std::string Print() const;
+        std::string Print() const;
+
+        /// <summary>
+        /// Prints the Point value.
+        /// </summary>
+        /// <returns>A string version of the point. </returns>
+        std::string ToString() const;
 
     private:
 

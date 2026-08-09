@@ -13,6 +13,8 @@
 #include "Structural/Scene/SuperGrandScene.h"
 #include "Structural/Serializable/SuperSerializableParser.h"
 #include "../Structural/InternalComponents/InternalComponents.h"
+#include "Content/SuperTextureAssetFactory.h"
+#include "Content/SuperTextureWrapperFactory.h"
 #include "Foundation/ProjectProperties.h"
 
 using namespace SuperGameEngine;
@@ -69,6 +71,11 @@ void MainEngine::GiveProjectProperties(const std::shared_ptr<ProjectProperties>&
     m_projectProperties = projectProperties;
 }
 
+void MainEngine::GiveControls(const std::shared_ptr<EngineControls>& engineControls)
+{
+    m_engineControls = engineControls;
+}
+
 ApplicationOperationState MainEngine::Event(SDL_Event event)
 {
     return ApplicationOperationState::Running;
@@ -76,11 +83,6 @@ ApplicationOperationState MainEngine::Event(SDL_Event event)
 
 ApplicationOperationState MainEngine::Update(Uint64 ticks)
 {
-    if (!m_haveLoaded)
-    {
-        Setup();
-    }
-
     m_gameTime->SetTicksSinceLastFrame(ticks);
     m_grandScene->Update(m_gameTime);
 
@@ -106,6 +108,20 @@ void MainEngine::WindowStart()
 
 void MainEngine::WindowTeardown()
 {
+}
+
+void MainEngine::EngineStart()
+{
+    if (!m_haveLoaded)
+    {
+        Setup();
+        m_haveLoaded = true;
+    }
+}
+
+void MainEngine::EngineEnd()
+{
+    m_haveLoaded = false;
 }
 
 void MainEngine::Setup()
@@ -152,8 +168,15 @@ std::shared_ptr<GrandScenePackage> MainEngine::CreateGrandScenePackage()
     // Loads configurations.
     m_inputManager->Setup(m_gamePackage);
 
+    // TODO: FINAL [#246]: Remove need for factories in Final version as these are only needed for Tools/Development.
+    auto factories = ContentFactories
+    {
+        .TextureFactory = std::make_shared<SuperTextureFactory>(),
+        .TextureAssetFactory = std::make_shared<SuperTextureAssetFactory>(),
+        .TextureWrapperFactory = std::make_shared<SuperTextureWrapperFactory>()
+    };
     std::shared_ptr<SuperTextureManager> textureManager = 
-        std::make_shared<SuperTextureManager>(m_renderer, m_gamePackage);
+        std::make_shared<SuperTextureManager>(m_renderer, m_gamePackage, factories);
     m_textureManager = textureManager;
     textureManager->UpdateDistributedWeakPointer(m_textureManager);
     contentManager->GiveSuperTextureManager(textureManager);

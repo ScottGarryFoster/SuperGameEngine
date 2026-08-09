@@ -72,6 +72,17 @@ namespace SuperGameInput
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "SDL_KEYDOWN",
+                "SDL_KEYUP",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(KeyboardEventType value)
         {
             switch (value)

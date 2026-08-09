@@ -6,6 +6,7 @@
 
 #include "../../FatedQuestLibraries.h"
 #include "../../ToolsEngine/SharedEventArguments/DirtiedDataEventArguments.h"
+#include "ToolsEngine/SharedEventArguments/ToolsPropertyChangedArguments.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -15,6 +16,7 @@ TextSerializableProperty::TextSerializableProperty(
     const std::shared_ptr<SuperGameEngine::SerializableProperty>& property)
 {
     m_onDirtyFlagChanged = std::make_shared<FEvent>();
+    m_onPropertyChanged = std::make_shared<FEvent>();
     m_dirty = std::make_shared<bool>();
     *m_dirty = false;
 
@@ -51,6 +53,11 @@ std::shared_ptr<FEventSubscriptions> TextSerializableProperty::OnDirtyFlagChange
     return m_onDirtyFlagChanged;
 }
 
+std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> TextSerializableProperty::OnPropertyChanged() const
+{
+    return m_onPropertyChanged;
+}
+
 std::shared_ptr<SuperGameEngine::SerializableProperty> TextSerializableProperty::GetEngineProperty() const
 {
     return m_property;
@@ -72,11 +79,6 @@ void TextSerializableProperty::Draw()
     ImGui::Text(m_property->GetName().c_str());
     ImGui::SameLine();
 
-    if (*m_dirty)
-    {
-        ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
-    }
-    else
     {
         std::string before = m_value;
         ImGui::InputText("##name", m_value, IM_ARRAYSIZE(m_value));
@@ -142,4 +144,6 @@ void TextSerializableProperty::UpdateDirtyFlag(bool newValue) const
         *m_dirty = newValue;
         m_onDirtyFlagChanged->Invoke(std::make_shared<DirtiedDataEventArguments>(newValue));
     }
+
+    m_onPropertyChanged->Invoke(std::make_shared<ToolsPropertyChangedArguments>(shared_from_this()));
 }

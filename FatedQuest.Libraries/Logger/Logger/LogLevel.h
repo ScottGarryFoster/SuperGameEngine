@@ -88,6 +88,19 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Info",
+                "Warning",
+                "Error",
+                "Exception",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(LogLevel value)
         {
             switch (value)

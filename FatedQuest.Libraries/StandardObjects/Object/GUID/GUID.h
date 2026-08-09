@@ -35,5 +35,18 @@ namespace FatedQuestLibraries
         /// </summary>
         /// <returns>The number representation of the GUID. </returns>
         virtual uint64_t AsNumber() const;
+
+
     };
 }
+
+// Allows Guid to be used as a key in maps.
+template <>
+struct std::hash<FatedQuestLibraries::Guid>
+{
+    std::size_t operator()(const FatedQuestLibraries::Guid& guid) const noexcept
+    {
+        // use AsNumber for the hash seed
+        return static_cast<std::size_t>(guid.AsNumber());
+    }
+};

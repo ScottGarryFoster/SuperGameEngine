@@ -29,42 +29,76 @@ namespace FatedQuestLibraries
         Underline = 1 << 5,
     };
 
+    /// <summary>
+    /// Combines flags. For example: auto var = left | right; returns a bitflag containing both left and right. 
+    /// </summary>
     inline MarkdownTextStyle operator | (MarkdownTextStyle lhs, MarkdownTextStyle rhs)
     {
         using T = std::underlying_type_t <MarkdownTextStyle>;
         return static_cast<MarkdownTextStyle>(static_cast<T>(lhs) | static_cast<T>(rhs));
     }
 
+    /// <summary>
+    /// Combines flags in assignment. For example: left |= right; Adds right flag to left variable. 
+    /// </summary>
     inline MarkdownTextStyle& operator |= (MarkdownTextStyle& lhs, MarkdownTextStyle rhs)
     {
         lhs = lhs | rhs;
         return lhs;
     }
 
+    /// <summary>
+    /// Gets the intersection of flags. Mostly used as in this example: bool isSet = ((state & flag1) == flag1); 
+    /// Is set would be true if state has the flag. Also this can be combined with ~ to remove a flag (see below). 
+    /// HasFlag will also do this for you in nicer syntax. 
+    /// </summary>
     inline MarkdownTextStyle operator & (MarkdownTextStyle lhs, MarkdownTextStyle rhs)
     {
         using T = std::underlying_type_t <MarkdownTextStyle>;
         return static_cast<MarkdownTextStyle>(static_cast<T>(lhs) & static_cast<T>(rhs));
     }
 
+    /// <summary>
+    /// Returns the intersection of the flags in an assignment. 
+    /// Mostly combined with ~ as in this example: state &= ~flagToRemove; 
+    /// This would remove flagToRemove from the given state. 
+    /// </summary>
     inline MarkdownTextStyle& operator &= (MarkdownTextStyle& lhs, MarkdownTextStyle rhs)
     {
-        lhs = lhs | rhs;
+        lhs = lhs & rhs;
         return lhs;
     }
 
+    /// <summary>
+    /// Performs an XOR operation on the left and right and returns the result. 
+    /// This is mostly which to compare two sets of flags and to figure out where they differ. 
+    /// left = flag1; right = flag1 | flag2; different = left ^ right; 
+    /// different in this example will be flag2.
+    /// Keep in mind you would not know where the differences are you would need to do this: 
+    /// bool checkLeft = different & left; - nothing removed / added. 
+    /// bool checkRight = different & right; - flag2 added. 
+    /// </summary>
     inline MarkdownTextStyle operator ^ (MarkdownTextStyle lhs, MarkdownTextStyle rhs)
     {
         using T = std::underlying_type_t <MarkdownTextStyle>;
         return static_cast<MarkdownTextStyle>(static_cast<T>(lhs) ^ static_cast<T>(rhs));
     }
 
+    /// <summary>
+    /// Performs an XOR operation on the flag which results in a toggle assignment.
+    /// Example: state ^= flag1; This would toggle whether flag1 is on within the enum.
+    /// </summary>
     inline MarkdownTextStyle& operator ^= (MarkdownTextStyle& lhs, MarkdownTextStyle rhs)
     {
         lhs = lhs ^ rhs;
         return lhs;
     }
 
+    /// <summary>
+    /// Returns the opposite or 'unset' or 'invert' flag of the given. 
+    /// Mostly combined with &= as in this example: state &= ~flagToRemove; 
+    /// This would remove flagToRemove from the given state. 
+    /// </summary>
     inline MarkdownTextStyle operator ~ (MarkdownTextStyle lhs)
     {
         using T = std::underlying_type_t <MarkdownTextStyle>;
@@ -126,6 +160,22 @@ namespace FatedQuestLibraries
             };
             
             return returnVector;
+        }
+
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Plain",
+                "Bold",
+                "Italic",
+                "Strike",
+                "Highlight",
+                "InlineCode",
+                "Underline",
+            };
+            
+            return returnArray;
         }
 
         static std::string ToString(MarkdownTextStyle value)

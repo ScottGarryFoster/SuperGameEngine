@@ -88,6 +88,19 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "CanOpenClose",
+                "OpenCloseFromArrowOnly",
+                "OpenCloseFromDoubleClickOnly",
+                "AlwaysShown",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(TreeViewItemCollapsibleBehaviour value)
         {
             switch (value)

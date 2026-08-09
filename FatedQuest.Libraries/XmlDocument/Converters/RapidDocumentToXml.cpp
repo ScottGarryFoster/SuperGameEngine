@@ -25,7 +25,7 @@ std::string RapidDocumentToXml::ConvertToXml(
 void RapidDocumentToXml::AddNodeToDocument(const std::shared_ptr<XML_Document>& document,
     const std::shared_ptr<XML_Node>& parentNode, const std::shared_ptr<StoredDocumentNode>& currentStoredNode) const
 {
-    auto currentNode = document->allocate_node(node_element, currentStoredNode->Name().c_str());
+    auto currentNode = document->allocate_node(node_type::node_element, currentStoredNode->Name().c_str());
     if (!currentStoredNode->Inner().empty())
     {
         currentNode->value(currentStoredNode->Inner().c_str());

@@ -551,4 +551,130 @@ namespace SuperGameEngineTests_Structural_Assets
     }
 
 #pragma endregion
+
+#pragma region Tint tests
+
+    TEST_F(SuperTextureAssetTests, Draw_TintsTheImage_WhenGivenATintWithAPredefinedTile)
+    {
+        // Arrange
+        FColour givenColour = { .Red = 12, .Green = 34, .Blue = 45, .Alpha = 67 };
+        auto givenScreenLocation = FVector2F(566, 788);
+        auto givenTextureArea = RectangleInt(1, 2, 3, 4);
+
+        std::string givenPath = "myPath.png";
+        FatedQuestLibraries::FPoint givenSize = FPoint(10, 20);
+        auto givenTexture = std::make_shared<SuperTextureStub>(givenPath, givenSize);
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn()) << "Times drawn must begin at zero to mean something to the test.";
+
+        // Ensure the texture is acquirable.
+        auto givenTextureManager = std::make_shared<TextureManagerStub>();
+        givenTextureManager->GiveTexture(givenTexture, givenPath);
+
+        std::shared_ptr<ModifiableDocument> givenDocument = GetValidDocument();
+        auto root = std::make_shared<ModifiableNode>();
+        auto strings = std::make_shared<ModifiableNode>();
+        strings->SetName("Strings");
+
+        auto vector4is = std::make_shared<ModifiableNode>();
+        vector4is->SetName("Vector4Is");
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(strings);
+        children.emplace_back(vector4is);
+        root->SetAllChildrenNodes(children);
+        givenDocument->SetRootElement(root);
+
+        AddString(strings, "TextureUVMethod", "Predefined");
+        AddVector4I(vector4is,
+            "TextureUV0", 
+            givenTextureArea.GetLeft(), 
+            givenTextureArea.GetTop(), 
+            givenTextureArea.GetWidth(), 
+            givenTextureArea.GetHeight());
+
+        auto testClass = std::make_shared<SuperTextureAsset>(givenDocument, givenPath, givenTextureManager);
+
+        // Act
+        testClass->Draw(0, givenScreenLocation, givenColour);
+
+        // Assert
+        ASSERT_EQ(1, givenTexture->GetTheNumberOfTimesDrawn());
+        ASSERT_EQ(givenColour.Red, givenTexture->LastColour()->Red) << "Red tint did not equal for last drawn tint";
+        ASSERT_EQ(givenColour.Green, givenTexture->LastColour()->Green) << "Green tint did not equal for last drawn tint";
+        ASSERT_EQ(givenColour.Blue, givenTexture->LastColour()->Blue) << "Blue tint did not equal for last drawn tint";
+        ASSERT_EQ(givenColour.Alpha, givenTexture->LastColour()->Alpha) << "Alpha tint did not equal for last drawn tint";
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+        ASSERT_EQ(givenTextureArea.GetLeft(), lastTextureLocation->GetLeft()) << "Left location was incorrect";
+        ASSERT_EQ(givenTextureArea.GetTop(), lastTextureLocation->GetTop()) << "Top location was incorrect";
+        ASSERT_EQ(givenTextureArea.GetWidth(), lastTextureLocation->GetWidth()) << "Width was incorrect";
+        ASSERT_EQ(givenTextureArea.GetHeight(), lastTextureLocation->GetHeight()) << "Height was incorrect";
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastScreenLocation = givenTexture->LastDrawnScrrenLocation();
+        ASSERT_EQ(givenScreenLocation.GetX(), lastScreenLocation->GetLeft()) << "Left screen location was incorrect";
+        ASSERT_EQ(givenScreenLocation.GetY(), lastScreenLocation->GetTop()) << "Top screen location was incorrect";
+        ASSERT_EQ(givenTextureArea.GetWidth(), lastTextureLocation->GetWidth()) << "Width screen was incorrect";
+        ASSERT_EQ(givenTextureArea.GetHeight(), lastTextureLocation->GetHeight()) << "Height screen was incorrect";
+    }
+
+    TEST_F(SuperTextureAssetTests, Draw_TintsTheImage_WhenGivenATintWithoutAPredefinedTile)
+    {
+        // Arrange
+        FColour givenColour = { .Red = 12, .Green = 34, .Blue = 45, .Alpha = 67 };
+        auto givenScreenLocation = FVector2F(566, 788);
+
+        std::string givenPath = "myPath.png";
+        FatedQuestLibraries::FPoint givenSize = FPoint(10, 20);
+        auto givenTexture = std::make_shared<SuperTextureStub>(givenPath, givenSize);
+        ASSERT_EQ(0, givenTexture->GetTheNumberOfTimesDrawn()) << "Times drawn must begin at zero to mean something to the test.";
+
+        // Ensure the texture is acquirable.
+        auto givenTextureManager = std::make_shared<TextureManagerStub>();
+        givenTextureManager->GiveTexture(givenTexture, givenPath);
+
+        std::shared_ptr<ModifiableDocument> givenDocument = GetValidDocument();
+        auto root = std::make_shared<ModifiableNode>();
+        auto strings = std::make_shared<ModifiableNode>();
+        strings->SetName("Strings");
+
+        auto vector4is = std::make_shared<ModifiableNode>();
+        vector4is->SetName("Vector4Is");
+
+        std::vector<std::shared_ptr<ModifiableNode>> children;
+        children.emplace_back(strings);
+        children.emplace_back(vector4is);
+        root->SetAllChildrenNodes(children);
+        givenDocument->SetRootElement(root);
+
+        AddString(strings, "TextureUVMethod", "Unknown");
+
+        auto testClass = std::make_shared<SuperTextureAsset>(givenDocument, givenPath, givenTextureManager);
+
+        // Act
+        testClass->Draw(0, givenScreenLocation, givenColour);
+
+        // Assert
+        ASSERT_EQ(1, givenTexture->GetTheNumberOfTimesDrawn());
+
+        ASSERT_EQ(givenColour.Red, givenTexture->LastColour()->Red) << "Red tint did not equal for last drawn tint";
+        ASSERT_EQ(givenColour.Green, givenTexture->LastColour()->Green) << "Green tint did not equal for last drawn tint";
+        ASSERT_EQ(givenColour.Blue, givenTexture->LastColour()->Blue) << "Blue tint did not equal for last drawn tint";
+        ASSERT_EQ(givenColour.Alpha, givenTexture->LastColour()->Alpha) << "Alpha tint did not equal for last drawn tint";
+
+        // Note the 0s below would normally be set via SDL looking for the textures default size.
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastTextureLocation = givenTexture->LastDrawnTextureLocation();
+        ASSERT_EQ(0, lastTextureLocation->GetLeft()) << "Left location was incorrect";
+        ASSERT_EQ(0, lastTextureLocation->GetTop()) << "Top location was incorrect";
+        ASSERT_EQ(givenSize.GetX(), lastTextureLocation->GetWidth()) << "Width was incorrect";
+        ASSERT_EQ(givenSize.GetY(), lastTextureLocation->GetHeight()) << "Height was incorrect";
+
+        std::shared_ptr<SuperGameEngine::RectangleInt> lastScreenLocation = givenTexture->LastDrawnScrrenLocation();
+        ASSERT_EQ(givenScreenLocation.GetX(), lastScreenLocation->GetLeft()) << "Left screen location was incorrect";
+        ASSERT_EQ(givenScreenLocation.GetY(), lastScreenLocation->GetTop()) << "Top screen location was incorrect";
+        ASSERT_EQ(givenSize.GetX(), lastTextureLocation->GetWidth()) << "Width screen was incorrect";
+        ASSERT_EQ(givenSize.GetY(), lastTextureLocation->GetHeight()) << "Height screen was incorrect";
+    }
+
+#pragma endregion
 }

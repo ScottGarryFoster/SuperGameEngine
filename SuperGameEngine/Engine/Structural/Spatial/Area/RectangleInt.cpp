@@ -50,6 +50,11 @@ bool RectangleInt::operator==(const RectangleInt& other) const
         GetTop() == other.GetTop();
 }
 
+RectangleInt RectangleInt::operator+(const FatedQuestLibraries::FVector2F& position) const
+{
+    return RectangleInt(position.GetX() + GetLeft(), position.GetY() + GetTop(), GetWidth(), GetHeight());
+}
+
 int RectangleInt::GetLeft() const
 {
     return m_location.GetX();
@@ -275,6 +280,31 @@ bool RectangleInt::Contains(const Circle& other) const
 
     int bottom = y + r;
     if (bottom > GetBottom())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool RectangleInt::Contains(const FatedQuestLibraries::FPoint& other) const
+{
+    if (other.GetX() < GetLeft())
+    {
+        return false;
+    }
+
+    if (other.GetX() > GetRight())
+    {
+        return false;
+    }
+
+    if (other.GetY() < GetTop())
+    {
+        return false;
+    }
+
+    if (other.GetY() > GetBottom())
     {
         return false;
     }
@@ -598,6 +628,37 @@ FPoint RectangleInt::GetNewLocationToNotOverlap(const Circle& other) const
     }
 
     return newLocation;
+}
+
+FPoint RectangleInt::GetNewLocationToOverlap(
+    const RectangleInt& other,
+    const FPoint& previousLocation)
+{
+    if (other.Contains(previousLocation))
+    {
+        return previousLocation;
+    }
+
+    FPoint returnPoint = { previousLocation.GetX(), previousLocation.GetY() };
+    if (previousLocation.GetX() < other.GetLeft())
+    {
+        returnPoint.SetX(other.GetLeft());
+    }
+    else if (previousLocation.GetX() > other.GetRight())
+    {
+        returnPoint.SetX(other.GetRight());
+    }
+
+    if (previousLocation.GetY() < other.GetTop())
+    {
+        returnPoint.SetY(other.GetTop());
+    }
+    else if (previousLocation.GetY() > other.GetBottom())
+    {
+        returnPoint.SetY(other.GetBottom());
+    }
+
+    return returnPoint;
 }
 
 FPoint RectangleInt::ClosestPointTo(const FPoint& other) const

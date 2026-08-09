@@ -41,10 +41,22 @@ namespace SuperGameTools
         virtual std::shared_ptr<Guid> GetUniqueID() const = 0;
 
         /// <summary>
+        /// Guid for the game object.
+        /// </summary>
+        /// <returns>Guid for the game object. </returns>
+        virtual std::shared_ptr<Guid> GetObjectGuid() const = 0;
+
+        /// <summary>
         /// Event called when this objects dirty flag has changed.
         /// </summary>
         /// <returns>Event called when this objects dirty flag has changed. </returns>
         virtual std::shared_ptr<FEventSubscriptions> OnDirtyFlagChanged() const = 0;
+
+        /// <summary>
+        /// Event called when something has changed on this property. Will happen everytime.
+        /// </summary>
+        /// <returns>Event called when something has changed on this property. Will happen everytime. </returns>
+        virtual std::shared_ptr<FEventSubscriptions> OnPropertyChanged() const = 0;
 
         /// <summary>
         /// The type of the component.

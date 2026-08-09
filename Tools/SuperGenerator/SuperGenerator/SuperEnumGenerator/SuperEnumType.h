@@ -72,6 +72,17 @@ namespace SuperEnumGenerator
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "Standard",
+                "BitFlag",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(SuperEnumType value)
         {
             switch (value)

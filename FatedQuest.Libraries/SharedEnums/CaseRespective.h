@@ -72,6 +72,17 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "RetainExistingCase",
+                "AlterCaseAsNeeded",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(CaseRespective value)
         {
             switch (value)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DataCoupling/KeyPairValue.h"
+#include "DataCoupling/KeyPairValueReturn.h"
 
 #include "Position/FPoint.h"
 #include "Position/FVector2D.h"
@@ -28,3 +29,7 @@
 #include "UniversalObjectData/UniversalObjectData.h"
 #include "UniversalObjectData/DocumentUniversalObjectData.h"
 #include "UniversalObjectData/ExplicitUniversalObjectData.h"
+#include "UniversalObjectData/ExplicitDocumentModifiableUniversalObjectData.h"
+
+#include "Visual/FColourHelpers.h"
+#include "Visual/FColour.h"

@@ -4,8 +4,9 @@
 #include "WindowFlagsToImGuiConverter.h"
 #include "../ColoursAndStyles/ColoursAndStyles.h"
 #include "../../../ImGuiIncludes.h"
-#include "../../../../FatedQuest.Libraries/Observer/AllReferences.h"
-#include "../../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/Observer/AllReferences.h"
+#include "../../../../../FatedQuest.Libraries/Logger/AllReferences.h"
+#include "ToolsEngine/FrameworkManager/SelectionManager/PanelSelectionManager.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -45,7 +46,7 @@ bool ToolsWindowElement::RenderWindow(const char* name)
         m_layoutResetEvent = !m_layoutResetEvent;
     }
 
-    m_coloursAndStyles->SetWindowTabColoursAndStyles(m_currentOpenClosedState, m_tabIsHovered);
+    m_coloursAndStyles->SetWindowTabColoursAndStyles(m_currentOpenClosedState, m_tabIsHovered, AreSelected());
 
     m_currentOpenClosedState = ImGui::Begin(name, &m_windowIsShown, WindowFlagsToImGuiConverter::Convert(m_windowFlags));
     if (!m_windowIsShown)
@@ -65,6 +66,16 @@ bool ToolsWindowElement::RenderWindow(const char* name)
 
     m_tabIsHovered = ImGui::IsItemHovered();
     return m_currentOpenClosedState;
+}
+
+void ToolsWindowElement::HandlePanelSelection(
+    const std::shared_ptr<PanelSelectionManager>& panelSelectionManager,
+    PanelSelectionName panelSelectionName) const
+{
+    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows))
+    {
+        panelSelectionManager->UpdateNewSelection(panelSelectionName);
+    }
 }
 
 void ToolsWindowElement::EndWindowRender(const char* name)

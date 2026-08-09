@@ -16,5 +16,8 @@
         <Properties>
             A properties file edited via a custom editor window and not displayed within the asset browser or at least not edited within the asset inspector.
         </Properties>
+        <ToolsViewportSettings>
+            Settings within the tools viewport (for editing scenes).
+        </ToolsViewportSettings>
     </EnumName>
 </SuperEnum>

@@ -13,5 +13,6 @@
         <String />
         <Int />
         <Vector4I />
+        <UserButton />
     </EnumName>
 </SuperEnum>

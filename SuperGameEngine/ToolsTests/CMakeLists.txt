@@ -99,6 +99,7 @@ add_subdirectory(../../FatedQuest.Libraries/SharedEnums SharedEnums)
 add_subdirectory(../../FatedQuest.Libraries/StandardObjects StandardObjects)
 add_subdirectory(../../FatedQuest.Libraries/StandardOperations StandardOperations)
 add_subdirectory(../../FatedQuest.Libraries/StoredDocument StoredDocument)
+add_subdirectory(../../FatedQuest.Libraries/XmlDocument XmlDocument)
 add_subdirectory(../Engine Engine)
 add_subdirectory(../Tools Tools)
 
@@ -111,6 +112,7 @@ target_link_libraries(ToolsTests PRIVATE
     StandardObjects
     StandardOperations
     StoredDocument
+    XmlDocument
     Engine
     Tools
     $<$<NOT:$<CONFIG:Release>>:GTest::gtest>

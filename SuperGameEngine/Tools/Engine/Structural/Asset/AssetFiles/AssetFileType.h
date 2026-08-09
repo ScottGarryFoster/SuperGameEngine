@@ -64,6 +64,16 @@ namespace SuperGameTools
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "ImageAsset",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(AssetFileType value)
         {
             switch (value)

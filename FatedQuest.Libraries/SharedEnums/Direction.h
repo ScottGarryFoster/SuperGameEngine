@@ -96,6 +96,23 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "North",
+                "East",
+                "South",
+                "West",
+                "NorthEast",
+                "SouthEast",
+                "SouthWest",
+                "NorthWest",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(Direction value)
         {
             switch (value)

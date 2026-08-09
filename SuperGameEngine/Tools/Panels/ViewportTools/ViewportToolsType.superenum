@@ -1,0 +1,20 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        Describes the different viewport tools.
+    </EnumComment>
+    <EnumName Name="ViewportToolsType">
+        <Unknown HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Select>
+            Select, used to select items in the scene.
+        </Select>
+        <Move>
+            Move, used to move items in the scene.
+        </Move>
+    </EnumName>
+</SuperEnum>

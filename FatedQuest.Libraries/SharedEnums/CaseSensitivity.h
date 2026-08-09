@@ -72,6 +72,17 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "CaseSensitive",
+                "IgnoreCase",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(CaseSensitivity value)
         {
             switch (value)

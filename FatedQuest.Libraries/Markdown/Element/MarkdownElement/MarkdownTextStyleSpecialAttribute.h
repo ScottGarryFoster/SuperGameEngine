@@ -75,6 +75,18 @@ namespace FatedQuestLibraries
             return returnVector;
         }
 
+        static std::string* ToArrayValues()
+        {
+            static std::string returnArray[] =
+            {
+                "None",
+                "Link",
+                "Image",
+            };
+            
+            return returnArray;
+        }
+
         static std::string ToString(MarkdownTextStyleSpecialAttribute value)
         {
             switch (value)

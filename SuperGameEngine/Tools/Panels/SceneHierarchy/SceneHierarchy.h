@@ -8,6 +8,7 @@
 
 namespace SuperGameTools
 {
+    class CrossEngineObjects;
     class Component;
     class GameObject;
 }
@@ -97,6 +98,27 @@ namespace SuperGameTools
         /// <returns>True means open, provided window settings or layouts do not say otherwise. </returns>
         virtual bool OnLoadOpenState() const override;
 
+        /// <summary>
+        /// Event is called when a new scene is loaded or reloaded.
+        /// Uses OnSceneUpdatedEventArguments.
+        /// </summary>
+        /// <returns>Event is called when a new scene is loaded or reloaded. </returns>
+        std::shared_ptr<FEventSubscriptions> OnNewScene() const;
+
+        /// <summary>
+        /// Called when a new GameObject is added to the scene.
+        /// Uses OnMenuNewGameObjectEventArguments.
+        /// </summary>
+        /// <returns>Called when a new GameObject is added to the scene. </returns>
+        std::shared_ptr<FEventSubscriptions> OnGameObjectAdded() const;
+
+        /// <summary>
+        /// Called when a new GameObject is removed from the scene.
+        /// Uses OnMenuDeleteGameObjectEventArguments.
+        /// </summary>
+        /// <returns>Called when a new GameObject is removed from the scene. </returns>
+        std::shared_ptr<FEventSubscriptions> OnGameObjectDeleted() const;
+
     private:
         /// <summary>
         /// Everything a Window Package might need to run.
@@ -140,6 +162,23 @@ namespace SuperGameTools
         /// The top level game object tree view items in the current scene.
         /// </summary>
         std::vector<std::shared_ptr<GameObjectTreeViewItem>> m_gameObjectTreeViewItems;
+
+        /// <summary>
+        /// Event is called when a new scene is loaded or reloaded.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onNewScene;
+
+        /// <summary>
+        /// Called when a new GameObject is added to the scene.
+        /// Uses OnMenuNewGameObjectEventArguments.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onGameObjectAdded;
+
+        /// <summary>
+        /// Called when a new GameObject is removed from the scene.
+        /// Uses OnMenuDeleteGameObjectEventArguments.
+        /// </summary>
+        std::shared_ptr<FEvent> m_onGameObjectDeleted;
 
         /// <summary>
         /// Loads a scene from file.

@@ -53,6 +53,13 @@ namespace SuperGameEngine
         bool operator==(const RectangleInt& other) const;
 
         /// <summary>
+        /// Returns a new RectangleInt moved by the given position amount.
+        /// </summary>
+        /// <param name="position">Position amount to move by. </param>
+        /// <returns>A rectangle int copy moved by position. </returns>
+        RectangleInt operator+(const FatedQuestLibraries::FVector2F& position) const;
+
+        /// <summary>
         /// The left X of the Rectangle.
         /// </summary>
         /// <returns>The Left X coordinate of the Rectangle. </returns>
@@ -191,6 +198,13 @@ namespace SuperGameEngine
         /// <param name="other">Compare. </param>
         /// <returns>True means other is completely within this. </returns>
         [[nodiscard]] bool Contains(const Circle& other) const;
+
+        /// <summary>
+        /// True when the rectangle contains the given point.
+        /// </summary>
+        /// <param name="other">Point to check for. </param>
+        /// <returns>True when the rectangle contains the given point. </returns>
+        [[nodiscard]] bool Contains(const FatedQuestLibraries::FPoint& other) const;
 
         /// <summary>
         /// Checks to see if the other rectangle overlaps with this rectangle.
@@ -334,6 +348,15 @@ namespace SuperGameEngine
         /// <param name="other">Other to move out of range of. </param>
         /// <returns>Location required. </returns>
         [[nodiscard]] FatedQuestLibraries::FPoint GetNewLocationToNotOverlap(const Circle& other) const;
+
+        /// <summary>
+        /// Returns the location required to overlap the shape.
+        /// Will go in the direction of previous location.
+        /// </summary>
+        /// <param name="other">Other to overlap with. </param>
+        /// <param name="previousLocation">Direction to move in.</param>
+        /// <returns>Location required. </returns>
+        [[nodiscard]] static FatedQuestLibraries::FPoint GetNewLocationToOverlap(const RectangleInt& other, const FatedQuestLibraries::FPoint& previousLocation);
 
         /// <summary>
         /// Returns the closest point on the Shape to the given point.

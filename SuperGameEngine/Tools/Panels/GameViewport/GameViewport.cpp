@@ -3,6 +3,7 @@
 #include "../../../Engine/Engine/Graphics/Texture/SDLRendererReader.h"
 #include "../../ToolsEngine/Communication/EngineEntryCommunication.h"
 #include "../../ToolsEngine/Packages/WindowPackage.h"
+#include "Engine/Graphics/Texture/SDLTextureChest.h"
 
 using namespace SuperGameEngine;
 using namespace SuperGameTools;
@@ -23,6 +24,7 @@ void GameViewport::Update()
 void GameViewport::Draw()
 {
     RenderWindow(GetPanelName());
+    HandlePanelSelection(m_panelSelectionManager, PanelSelectionName::GameViewport);
 
     if (m_windowPackage->GetEngineEntryCommunication())
     {
@@ -68,12 +70,12 @@ void GameViewport::Draw()
     m_viewport.w = static_cast<int>(windowSize.x);
     m_viewport.h = static_cast<int>(windowSize.y);
 
-    if (m_windowPackage->GetSDLRenderTexture())
+    if (m_windowPackage->GetSDLGameViewportRenderTexture())
     {
-        if (m_windowPackage->GetSDLRenderTexture()->GetState() == PointerState::Active)
+        SDL_Texture* texture = m_windowPackage->GetSDLGameViewportRenderTexture()->Get();
+        if (texture)
         {
             ImVec2 imageSize = ImVec2((float)1280, (float)720);
-            SDL_Texture* texture = m_windowPackage->GetSDLRenderTexture()->Get();
             ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<void*>(texture)), imageSize);
         }
     }
