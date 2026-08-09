@@ -75,7 +75,7 @@ std::weak_ptr<FEventSubscriptions> ToolsAssetFileProvider::OnFileSystemUpdated()
     return m_onFileSystemUpdated;
 }
 
-void ToolsAssetFileProvider::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ToolsAssetFileProvider::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (std::shared_ptr<FileUpdateEventArguments> fileUpdateEventArguments = 
         std::dynamic_pointer_cast<FileUpdateEventArguments>(arguments))

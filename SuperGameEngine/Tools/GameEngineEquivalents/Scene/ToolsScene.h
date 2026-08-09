@@ -86,7 +86,7 @@ namespace SuperGameTools
         /// and not as long term storage. Directly after invocation it will be deleted.
         /// </summary>
         /// <param name="arguments">Arguments describing the event. </param>
-        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+        virtual void Invoke(const std::shared_ptr<FEventArguments>& arguments) override;
 
         /// <summary>
         /// Select a game object in the scene by GUID.

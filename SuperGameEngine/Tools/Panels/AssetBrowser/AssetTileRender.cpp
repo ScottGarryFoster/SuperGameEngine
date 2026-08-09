@@ -101,7 +101,7 @@ void AssetTileRender::Draw()
     }
 }
 
-void AssetTileRender::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void AssetTileRender::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto packageFileUpdate = std::dynamic_pointer_cast<PackageFilesHaveUpdatedEventArguments>(arguments))
     {

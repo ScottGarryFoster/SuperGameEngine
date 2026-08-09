@@ -6,7 +6,7 @@
 
 using namespace FatedQuestLibraries;
 
-void ConsoleLog::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ConsoleLog::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto logArguments = std::static_pointer_cast<LogEventArguments>(arguments))
     {

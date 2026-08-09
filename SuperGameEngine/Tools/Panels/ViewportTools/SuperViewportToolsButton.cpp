@@ -93,7 +93,7 @@ std::shared_ptr<FEventSubscriptions> SuperViewportToolsButton::OnSelected() cons
     return m_onSelected;
 }
 
-void SuperViewportToolsButton::Invoke(std::shared_ptr<FEventArguments> arguments)
+void SuperViewportToolsButton::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto buttonsArguments = std::dynamic_pointer_cast<ViewportToolsButtonSelectedArguments>(arguments))
     {

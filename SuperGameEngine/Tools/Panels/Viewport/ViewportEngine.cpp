@@ -225,7 +225,7 @@ void ViewportEngine::EngineEnd()
     m_crossEngineObjects->GetWindowPackage()->GetPanelManager()->GetPanelSelection()->OnSelectionChanged()->Unsubscribe(shared_from_this());
 }
 
-void ViewportEngine::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ViewportEngine::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto onSceneArgs = std::dynamic_pointer_cast<OnSceneUpdatedEventArguments>(arguments))
     {

@@ -73,7 +73,7 @@ std::shared_ptr<FEventSubscriptions> ToolsDocumentManager::OnDocumentAction() co
     return m_onDocumentAction;
 }
 
-void ToolsDocumentManager::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ToolsDocumentManager::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto menuItemSelected = std::dynamic_pointer_cast<MenuItemViewEventArguments>(arguments))
     {

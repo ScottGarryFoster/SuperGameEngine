@@ -13,6 +13,7 @@
 #include "../Engine/EngineEntry/EngineEntry.h"
 #include "../../FatedQuest.Libraries/Logger/Logger/Log.h"
 #include "../Engine/Engine/MainEngine.h"
+#include "ToFile/FileLogger.h"
 
 // Any external projects should define their components here:
 #ifdef _TOOLS

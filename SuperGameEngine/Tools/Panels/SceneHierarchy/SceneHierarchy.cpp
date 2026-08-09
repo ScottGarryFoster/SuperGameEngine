@@ -125,7 +125,7 @@ void SceneHierarchy::Draw()
 
 }
 
-void SceneHierarchy::Invoke(std::shared_ptr<FEventArguments> arguments)
+void SceneHierarchy::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto treeViewItemArgs = std::dynamic_pointer_cast<TreeViewItemOnSelectedEventArguments>(arguments))
     {

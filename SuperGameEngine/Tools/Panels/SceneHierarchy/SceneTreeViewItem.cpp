@@ -33,7 +33,7 @@ std::shared_ptr<ValueProperty<std::vector<std::shared_ptr<GameObjectTreeViewItem
     return m_gameObjectChildren;
 }
 
-void SceneTreeViewItem::Invoke(std::shared_ptr<FEventArguments> arguments)
+void SceneTreeViewItem::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     // TODO: [#125] Add scene names.
     if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))

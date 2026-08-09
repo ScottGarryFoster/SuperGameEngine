@@ -7,12 +7,12 @@ FEvent::FEvent()
     m_observers = std::vector<std::weak_ptr<FEventObserver>>();
 }
 
-void FEvent::Subscribe(std::weak_ptr<FEventObserver> observer)
+void FEvent::Subscribe(const std::weak_ptr<FEventObserver>& observer)
 {
     m_observers.push_back(observer);
 }
 
-void FEvent::Unsubscribe(std::weak_ptr<FEventObserver> observer)
+void FEvent::Unsubscribe(const std::weak_ptr<FEventObserver>& observer)
 {
     // Copied from bool RemoveValue(std::vector<std::weak_ptr<T>>& vector, const std::weak_ptr <T>& valueToRemove)
     // To keep references separate.
@@ -42,7 +42,7 @@ void FEvent::Unsubscribe(std::weak_ptr<FEventObserver> observer)
     }
 }
 
-void FEvent::Invoke(std::shared_ptr<FEventArguments> arguments)
+void FEvent::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     for (const std::weak_ptr<FEventObserver>& observer : m_observers)
     {

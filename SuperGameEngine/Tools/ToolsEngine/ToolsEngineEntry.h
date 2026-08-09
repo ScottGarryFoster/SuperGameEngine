@@ -45,7 +45,7 @@ namespace SuperGameTools
         /// Call back for listening to events.
         /// </summary>
         /// <param name="arguments">Arguments describing the event. </param>
-        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+        virtual void Invoke(const std::shared_ptr<FEventArguments>& arguments) override;
 
     private:
 

@@ -434,4 +434,6 @@ FodyWeavers.xsd
 built/
 
 # Sym Links used for easier regeneration
-**/*.lnk
+*.lnk
+
+ReleasePackages

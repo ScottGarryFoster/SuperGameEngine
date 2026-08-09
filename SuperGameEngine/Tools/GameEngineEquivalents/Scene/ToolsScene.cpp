@@ -162,7 +162,7 @@ void ToolsScene::RemoveComponentFromGameObject(
     }
 }
 
-void ToolsScene::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ToolsScene::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))
     {

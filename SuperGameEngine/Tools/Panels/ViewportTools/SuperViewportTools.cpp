@@ -163,7 +163,7 @@ void SuperViewportTools::Draw()
     m_settingsPanel->Draw();
 }
 
-void SuperViewportTools::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void SuperViewportTools::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto args = std::dynamic_pointer_cast<ViewportToolsButtonSelectedArguments>(arguments))
     {

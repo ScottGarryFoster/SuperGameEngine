@@ -153,7 +153,7 @@ void ViewportPanel::TearDown()
 {
 }
 
-void ViewportPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void ViewportPanel::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto shownArgs = std::dynamic_pointer_cast<ToolsWindowShownArguments>(arguments))
     {

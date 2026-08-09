@@ -56,7 +56,7 @@ void MainMenuBar::SetupPostPanels() const
     menuItemView->OnSelected()->Subscribe(GetWeakDistributed());
 }
 
-void MainMenuBar::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void MainMenuBar::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto menuArg = std::dynamic_pointer_cast<MenuItemViewEventArguments>(arguments))
     {

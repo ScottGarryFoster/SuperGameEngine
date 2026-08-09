@@ -120,7 +120,7 @@ void LoggerOutput::TearDown()
 {
 }
 
-void LoggerOutput::Invoke(std::shared_ptr<FEventArguments> arguments)
+void LoggerOutput::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     std::shared_ptr<LogEventArguments> logArguments = std::static_pointer_cast<LogEventArguments>(arguments);
     if (logArguments)

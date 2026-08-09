@@ -51,7 +51,7 @@ namespace SuperGameTools
         /// Called when we need to update.
         /// Expect: PackageFilesHaveUpdatedEventArguments for new asset folder.
         /// </summary>
-        virtual void Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments) override;
+        virtual void Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments) override;
 
     private:
         /// <summary>

@@ -131,7 +131,7 @@ std::shared_ptr<FEventSubscriptions> InspectorWindow::OnMenuAddComponent() const
     return m_inspectGameObject->OnMenuAddComponent();
 }
 
-void InspectorWindow::Invoke(std::shared_ptr<FEventArguments> arguments)
+void InspectorWindow::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (!m_isSetup)
     {

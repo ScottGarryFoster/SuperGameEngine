@@ -150,7 +150,7 @@ ToolsTransformComponent ToolsGameObject::GetTransform() const
     return m_transformComponent;
 }
 
-void ToolsGameObject::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ToolsGameObject::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))
     {

@@ -3,7 +3,7 @@
 
 using namespace SuperGameEngine;
 
-void DebugLogger::Invoke(std::shared_ptr<FEventArguments> arguments)
+void DebugLogger::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
 #ifdef _DEBUG
 #ifndef _TOOLS

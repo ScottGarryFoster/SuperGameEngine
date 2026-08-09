@@ -120,7 +120,7 @@ void ProjectPropertiesPanel::TearDown()
 {
 }
 
-void ProjectPropertiesPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void ProjectPropertiesPanel::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
     {

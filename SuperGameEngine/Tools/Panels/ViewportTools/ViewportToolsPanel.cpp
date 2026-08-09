@@ -47,7 +47,7 @@ void ViewportToolsPanel::TearDown()
 {
 }
 
-void ViewportToolsPanel::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void ViewportToolsPanel::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
     {

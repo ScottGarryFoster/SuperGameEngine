@@ -46,7 +46,7 @@ bool SuperPanelManager::RegisterPanel(const std::shared_ptr<ToolsPanel>& panel)
     return true;
 }
 
-void SuperPanelManager::Invoke(std::shared_ptr<FEventArguments> arguments)
+void SuperPanelManager::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto menuArguments = std::dynamic_pointer_cast<MenuItemViewEventArguments>(arguments))
     {

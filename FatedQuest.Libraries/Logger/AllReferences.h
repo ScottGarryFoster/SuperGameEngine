@@ -4,3 +4,4 @@
 #include "Logger/LogLevel.h"
 #include "Logger/LogEventArguments.h"
 #include "Console/ConsoleLog.h"
+#include "ToFile/FileLogger.h"

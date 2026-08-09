@@ -94,7 +94,7 @@ void InspectAssetObject::TearDown()
     m_windowPackage->GetFrameworkManager()->GetSelectionManager()->OnSelectionChanged()->Unsubscribe(observer);
 }
 
-void InspectAssetObject::Invoke(std::shared_ptr<FEventArguments> arguments)
+void InspectAssetObject::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto selectableArguments = std::dynamic_pointer_cast<SelectionChangedEventArguments>(arguments))
     {

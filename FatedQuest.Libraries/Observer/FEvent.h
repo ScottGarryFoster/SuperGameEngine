@@ -23,19 +23,19 @@ namespace FatedQuestLibraries
         /// Subscribes to the event.
         /// </summary>
         /// <param name="observer">Observer to subscribe. </param>
-        virtual void Subscribe(std::weak_ptr<FEventObserver> observer) override;
+        virtual void Subscribe(const std::weak_ptr<FEventObserver>& observer) override;
 
         /// <summary>
         /// Unsubscribes from the event.
         /// </summary>
         /// <param name="observer">Observer to unsubscribe. </param>
-        virtual void Unsubscribe(std::weak_ptr<FEventObserver> observer) override;
+        virtual void Unsubscribe(const std::weak_ptr<FEventObserver>& observer) override;
 
         /// <summary>
         /// Invoke the event on all observers.
         /// </summary>
         /// <param name="arguments">Arguments to send to all observers. </param>
-        virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+        virtual void Invoke(const std::shared_ptr<FEventArguments>& arguments) override;
     private:
 
         /// <summary>

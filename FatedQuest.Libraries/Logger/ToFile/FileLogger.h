@@ -1,16 +1,18 @@
 #pragma once
-#include "../FatedQuestReferences.h"
+#include "../Observer/AllReferences.h"
+#include "Logger/Log.h"
 
-using namespace FatedQuestLibraries;
-
-namespace SuperGameEngine
+namespace FatedQuestLibraries
 {
     /// <summary>
-    /// Logs to the console.
+    /// Logs to file.
     /// </summary>
-    class DebugLogger : public FEventObserver
+    class FileLogger : public FEventObserver
     {
     public:
+
+        FileLogger();
+
         /// <summary>
         /// Inform the observer an event has taken place.
         /// Do not store this pointer it is intended as a point for dynamic casting
@@ -18,5 +20,14 @@ namespace SuperGameEngine
         /// </summary>
         /// <param name="arguments">Arguments describing the event. </param>
         virtual void Invoke(const std::shared_ptr<FEventArguments>& arguments) override;
+
+    private:
+
+        /// <summary>
+        /// The current file path logged to.
+        /// </summary>
+        std::string m_currentFilePath;
+
+        std::string CreateActualLogMessage(const std::shared_ptr<FEventArguments>& arguments) const;
     };
 }

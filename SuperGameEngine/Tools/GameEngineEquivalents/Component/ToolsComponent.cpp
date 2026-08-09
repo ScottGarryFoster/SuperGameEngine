@@ -161,7 +161,7 @@ std::shared_ptr<ModifiableNode> ToolsComponent::Save() const
     return node;
 }
 
-void ToolsComponent::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ToolsComponent::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto dirtyArgs = std::dynamic_pointer_cast<DirtiedDataEventArguments>(arguments))
     {

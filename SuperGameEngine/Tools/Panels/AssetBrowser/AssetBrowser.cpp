@@ -85,7 +85,7 @@ void AssetBrowser::TearDown()
 {
 }
 
-void AssetBrowser::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void AssetBrowser::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto args = std::dynamic_pointer_cast<PanelSelectionChangedArguments>(arguments))
     {

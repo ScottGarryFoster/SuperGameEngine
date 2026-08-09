@@ -194,7 +194,7 @@ std::shared_ptr<FatedQuestLibraries::FEventSubscriptions> MoveViewportGizmo::OnI
     return m_onInteractionChanged;
 }
 
-void MoveViewportGizmo::Invoke(std::shared_ptr<FatedQuestLibraries::FEventArguments> arguments)
+void MoveViewportGizmo::Invoke(const std::shared_ptr<FatedQuestLibraries::FEventArguments>& arguments)
 {
     if (auto args = std::dynamic_pointer_cast<ViewportDebugOptionsChanged>(arguments))
     {

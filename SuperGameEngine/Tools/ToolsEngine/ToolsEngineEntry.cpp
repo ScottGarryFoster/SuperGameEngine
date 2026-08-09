@@ -89,7 +89,7 @@ int ToolsEngineEntry::RunApplication(const std::string& engineType)
     return 0;
 }
 
-void ToolsEngineEntry::Invoke(std::shared_ptr<FEventArguments> arguments)
+void ToolsEngineEntry::Invoke(const std::shared_ptr<FEventArguments>& arguments)
 {
     if (auto viewportArgs = std::dynamic_pointer_cast<ViewportSizeChangedEventArguments>(arguments))
     {
