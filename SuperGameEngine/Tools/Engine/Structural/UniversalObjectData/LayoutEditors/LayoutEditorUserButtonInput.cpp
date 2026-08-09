@@ -1,4 +1,3 @@
-@ -0,0 +1,92 @@
 #include "LayoutEditorUserButtonInput.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
