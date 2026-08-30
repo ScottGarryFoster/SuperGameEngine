@@ -1,30 +1,29 @@
-#include "LayoutEditorVector4IArray.h"
-#include "FatedQuestLibraries.h"
-#include "../../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
+#include "LayoutEditorVector2IArray.h"
 #include "../../../../../ImGuiIncludes.h"
+#include "../../../../../../../FatedQuest.Libraries/StandardObjects//AllReferences.h"
+#include "../../../../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
 #include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutRequirements.h"
+
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-LayoutEditorVector4IArray::LayoutEditorVector4IArray(
-    const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements)
+LayoutEditorVector2IArray::LayoutEditorVector2IArray(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements)
 {
     m_map = map;
     m_layoutRequirements = layoutRequirements;
 }
 
-LayoutEditorVector4IArray::~LayoutEditorVector4IArray()
+LayoutEditorVector2IArray::~LayoutEditorVector2IArray()
 {
-
 }
 
-void LayoutEditorVector4IArray::Update(
+void LayoutEditorVector2IArray::Update(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void LayoutEditorVector4IArray::Draw(
+void LayoutEditorVector2IArray::Draw(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawLabel(universalObjectData);
@@ -32,7 +31,7 @@ void LayoutEditorVector4IArray::Draw(
     DrawValue(universalObjectData);
 }
 
-void LayoutEditorVector4IArray::DrawLabel(
+void LayoutEditorVector2IArray::DrawLabel(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
@@ -47,19 +46,19 @@ void LayoutEditorVector4IArray::DrawLabel(
     ImGui::EndGroup();
 }
 
-void LayoutEditorVector4IArray::DrawValue(
+void LayoutEditorVector2IArray::DrawValue(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawValueInTable(universalObjectData, m_map);
 }
 
-void LayoutEditorVector4IArray::OnSave(
+void LayoutEditorVector2IArray::OnSave(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     // No clean up needed
 }
 
-bool LayoutEditorVector4IArray::ShouldShow(
+bool LayoutEditorVector2IArray::ShouldShow(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
 {
     if (!m_layoutRequirements)
@@ -70,7 +69,7 @@ bool LayoutEditorVector4IArray::ShouldShow(
     return m_layoutRequirements->ShouldShow(universalObjectData);
 }
 
-void LayoutEditorVector4IArray::DrawSingleValue(
+void LayoutEditorVector2IArray::DrawSingleValue(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
     const std::string& map) const
 {
@@ -82,16 +81,14 @@ void LayoutEditorVector4IArray::DrawSingleValue(
 
 
 
-    if (ImGui::BeginTable("##four_cols", 4, ImGuiTableFlags_SizingFixedFit))
+    if (ImGui::BeginTable("##two_cols", 2, ImGuiTableFlags_SizingFixedFit))
     {
         bool newValue = false;
-        int x = 0, y = 0, z = 0, w = 0;
-        if (std::shared_ptr<FVector4I> value = universalObjectData->GetVector4I(map))
+        int x = 0, y = 0;
+        if (std::shared_ptr<FVector2I> value = universalObjectData->GetVector2I(map))
         {
             x = value->GetX();
             y = value->GetY();
-            z = value->GetZ();
-            w = value->GetW();
         }
 
         ImGui::TableNextColumn();
@@ -124,41 +121,11 @@ void LayoutEditorVector4IArray::DrawSingleValue(
         }
 
         ImGui::PopID();
-        ImGui::TableNextColumn();
-        ImGui::PushID("##zCol");
-
-        std::string zString = std::to_string(z);
-        if (TextInput("z", zString))
-        {
-            int attemptedParse = -1;
-            if (IntHelpers::TryParse(zString, attemptedParse))
-            {
-                z = attemptedParse;
-                newValue = true;
-            }
-        }
-
-        ImGui::PopID();
-        ImGui::TableNextColumn();
-        ImGui::PushID("##wCol");
-
-        std::string wString = std::to_string(w);
-        if (TextInput("w", wString))
-        {
-            int attemptedParse = -1;
-            if (IntHelpers::TryParse(wString, attemptedParse))
-            {
-                w = attemptedParse;
-                newValue = true;
-            }
-        }
-
-        ImGui::PopID();
         ImGui::EndTable();
 
         if (newValue)
         {
-            universalObjectData->SetVector4I(map, x, y, z, w);
+            universalObjectData->SetVector2I(map, x, y);
         }
     }
 
@@ -167,29 +134,29 @@ void LayoutEditorVector4IArray::DrawSingleValue(
     ImGui::EndGroup();
 }
 
-void LayoutEditorVector4IArray::AddEntry(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
+void LayoutEditorVector2IArray::AddEntry(
+    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
     const std::string& map) const
 {
-    universalObjectData->SetVector4I(GetFullEntryName(map, arrayIndex), {});
+    universalObjectData->SetVector2I(GetFullEntryName(map, arrayIndex), {});
 }
 
-void LayoutEditorVector4IArray::RemoveEntry(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
+void LayoutEditorVector2IArray::RemoveEntry(
+    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData, size_t arrayIndex,
     const std::string& map) const
 {
-    universalObjectData->UnsetVector4I(GetFullEntryName(map, arrayIndex));
+    universalObjectData->UnsetVector2I(GetFullEntryName(map, arrayIndex));
 
     size_t i = arrayIndex + 1;
     while (true)
     {
         std::string entryName = GetFullEntryName(map, i);
-        if (universalObjectData->IsVector4ILoaded(entryName))
+        if (universalObjectData->IsVector2ILoaded(entryName))
         {
-            universalObjectData->SetVector4I(
+            universalObjectData->SetVector2I(
                 GetFullEntryName(map, i - 1),
-                *universalObjectData->GetVector4I(entryName));
-            universalObjectData->UnsetVector4I(entryName);
+                *universalObjectData->GetVector2I(entryName));
+            universalObjectData->UnsetVector2I(entryName);
         }
         else
         {
@@ -200,14 +167,14 @@ void LayoutEditorVector4IArray::RemoveEntry(
     }
 }
 
-bool LayoutEditorVector4IArray::DoesObjectContain(
+bool LayoutEditorVector2IArray::DoesObjectContain(
     const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData,
     size_t arrayIndex) const
 {
-    return universalObjectData->IsVector4ILoaded(GetFullEntryName(m_map, arrayIndex));
+    return universalObjectData->IsVector2ILoaded(GetFullEntryName(m_map, arrayIndex));
 }
 
-bool LayoutEditorVector4IArray::TextInput(const std::string& label, std::string& value) const
+bool LayoutEditorVector2IArray::TextInput(const std::string& label, std::string& value) const
 {
     const std::string before = value;
     char* charValue = new char[m_defaultTextCapacity];

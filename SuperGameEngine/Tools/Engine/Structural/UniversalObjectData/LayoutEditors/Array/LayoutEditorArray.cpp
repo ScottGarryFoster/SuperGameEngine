@@ -12,8 +12,8 @@ void LayoutEditorArray::DrawValueInTable(
 {
     ImGui::BeginGroup();
 
-    std::string id = universalObjectData->GetGuid()->ToString() + "_Value_" + map;
-    ImGui::PushID(id.c_str());
+    const std::string& universialName = universalObjectData->GetGuid()->ToString();
+    ImGui::PushID((universialName + "_Value_" + map).c_str());
 
     size_t deleteIndex = 0;
     bool userWouldLikeToDeleteEntry = false;
@@ -61,10 +61,12 @@ void LayoutEditorArray::DrawValueInTable(
         ImGui::EndTable();
     }
 
+    ImGui::PushID((universialName + "_Add_" + map).c_str());
     if (ImGui::Button("Add"))
     {
         AddEntry(universalObjectData, i, map);
     }
+    ImGui::PopID();
 
     if (userWouldLikeToDeleteEntry)
     {

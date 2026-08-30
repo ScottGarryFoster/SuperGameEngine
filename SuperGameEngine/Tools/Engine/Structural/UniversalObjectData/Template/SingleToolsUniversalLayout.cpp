@@ -4,6 +4,7 @@
 #include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutEditor.h"
 #include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutEditorFactory.h"
 #include "../../../../ImGuiIncludes.h"
+#include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutRequirements.h"
 #include "Imgui/External/imgui_internal.h"
 
 using namespace SuperGameTools;
@@ -78,6 +79,11 @@ void SingleToolsUniversalLayout::Draw(
 
         for (const std::shared_ptr<const LayoutEditor>& layout : m_assetLayoutEditor)
         {
+            if (!layout->ShouldShow(universalObjectData))
+            {
+                continue;
+            }
+
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
 

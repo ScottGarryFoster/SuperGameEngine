@@ -8,6 +8,8 @@
 
 namespace SuperGameTools
 {
+    class LayoutRequirements;
+
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
     /// This represents a vector input as an array of vectors.
@@ -20,7 +22,7 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
         /// <param name="values">Values to filter to. </param>
-        LayoutEditorVector4IArray(const std::string& map);
+        LayoutEditorVector4IArray(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements);
         virtual ~LayoutEditorVector4IArray();
 
         /// <summary>
@@ -56,6 +58,13 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
         virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
+
+        /// <summary>
+        /// Is true when this layout is required and therefore should be shown.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <returns>Is true when this layout is required and therefore should be shown. </returns>
+        virtual bool ShouldShow(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
 
         /// <summary>
         /// Draw just the actual meat of the asset layout, the text box, the vector, the dropdown.
@@ -109,6 +118,11 @@ namespace SuperGameTools
         /// The parameter within the Asset to modify.
         /// </summary>
         std::string m_map;
+
+        /// <summary>
+        /// Resolves requirements for layout editors.
+        /// </summary>
+        std::shared_ptr<LayoutRequirements> m_layoutRequirements;
 
         /// <summary>
         /// Draw a text box.

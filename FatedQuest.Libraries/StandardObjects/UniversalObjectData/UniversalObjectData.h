@@ -5,6 +5,7 @@
 
 namespace FatedQuestLibraries
 {
+    class FVector2I;
     class FVector4I;
 
     /// <summary>
@@ -73,5 +74,25 @@ namespace FatedQuestLibraries
         /// <param name="key">Key to search for. </param>
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsVector4ILoaded(const std::string& key) const = 0;
+
+        /// <summary>
+        /// List vector2Is in the object.
+        /// </summary>
+        /// <returns>All the keys for any Vector4Is. </returns>
+        virtual std::vector<std::string> ListVector2Is() const = 0;
+
+        /// <summary>
+        /// Get a loaded Vector2I value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>The value found or empty if not found. </returns>
+        virtual std::shared_ptr<FVector2I> GetVector2I(const std::string& key) const = 0;
+
+        /// <summary>
+        /// True when a key is loaded. 
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True when a key is loaded. </returns>
+        virtual bool IsVector2ILoaded(const std::string& key) const = 0;
     };
 }

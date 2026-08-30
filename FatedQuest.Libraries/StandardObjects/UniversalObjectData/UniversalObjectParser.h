@@ -5,6 +5,7 @@
 
 namespace FatedQuestLibraries
 {
+    class FVector2I;
     class ModifiableNode;
     class FVector4I;
     class StoredDocumentNode;
@@ -86,6 +87,43 @@ namespace FatedQuestLibraries
         /// </returns>
         std::pair<std::string, int> ParseStoredDocumentSingleInt(
             const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& intNode) const;
+
+
+        /// <summary>
+        /// Creates an Vector2Is node from the given values.
+        /// </summary>
+        /// <param name="strings">The <c>Vector4Is</c> values. </param>
+        /// <returns>The <c>Vector4Is</c> parsed into a node. </returns>
+        std::shared_ptr<FatedQuestLibraries::ModifiableNode> CreateVector2IsNode(
+            const std::unordered_map<std::string, std::shared_ptr<FVector2I>>& vector2Is) const;
+
+        /// <summary>
+        /// Creates a Vector2I node from the given values.
+        /// </summary>
+        /// <param name="key">The Vector4I key. </param>
+        /// <param name="value">The Vector4I value. </param>
+        /// <returns>The <c>Vector4I</c> parsed into a node. </returns>
+        std::shared_ptr<FatedQuestLibraries::ModifiableNode> CreateVector2INode(
+            const std::string& key, const std::shared_ptr<FVector2I>& value) const;
+
+        /// <summary>
+        /// Parse the <c>Vector2Is</c> node.
+        /// </summary>
+        /// <param name="node">The <c>Ints</c> node to parse. </param>
+        /// <returns>The parsed result. </returns>
+        std::unordered_map<std::string, std::shared_ptr<FVector2I>> ParseStoredDocumentVector2I(
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) const;
+
+        /// <summary>
+        /// Parse the <c>Vector2Is</c> node.
+        /// </summary>
+        /// <param name="node">The <c>Ints</c> node to parse. </param>
+        /// <returns>
+        /// The parsed result.
+        /// Key is required therefore an empty key means failed to parse.
+        /// </returns>
+        std::pair<std::string, std::shared_ptr<FVector2I>> ParseStoredDocumentSingleVector2I(
+            const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) const;
 
         /// <summary>
         /// Creates an Vector4Is node from the given values.

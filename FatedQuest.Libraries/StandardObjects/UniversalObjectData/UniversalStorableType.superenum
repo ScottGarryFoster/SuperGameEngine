@@ -12,6 +12,7 @@
         </Unknown>
         <String />
         <Int />
+        <Vector2I />
         <Vector4I />
         <UserButton />
     </EnumName>

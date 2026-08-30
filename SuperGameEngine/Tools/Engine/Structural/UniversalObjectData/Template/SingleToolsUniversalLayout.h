@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "SingleLayout.h"
+#include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutRequirements.h"
 
 namespace FatedQuestLibraries
 {
@@ -20,7 +21,6 @@ namespace SuperGameTools
     class SingleToolsUniversalLayout : public SingleLayout
     {
     public:
-
         SingleToolsUniversalLayout(
             const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& documentNode,
             const std::shared_ptr<LayoutEditorFactory>& layoutFactory);

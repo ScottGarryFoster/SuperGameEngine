@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "LayoutRequirements.h"
 #include "../../UniversalObjectData/LayoutEditors/LayoutEditorFactory.h"
 
 namespace FatedQuestLibraries
@@ -61,6 +62,14 @@ namespace SuperGameTools
         /// If not enum is found or the tag is not found this is empty.
         /// </returns>
         std::vector<std::string> ExtractEnumFilter(
+            const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const;
+
+        /// <summary>
+        /// Extract the requirements node from a given layout node.
+        /// </summary>
+        /// <param name="node">Node to extract from. </param>
+        /// <returns>Extract the requirements node from a given layout node. </returns>
+        std::shared_ptr<LayoutRequirements> ExtractRequirementsFromDataNode(
             const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const;
     };
 }

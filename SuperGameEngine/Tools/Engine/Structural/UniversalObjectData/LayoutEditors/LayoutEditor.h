@@ -49,5 +49,12 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="universalObjectData">A pointer to the asset. </param>
         virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
+
+        /// <summary>
+        /// Is true when this layout is required and therefore should be shown.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <returns>Is true when this layout is required and therefore should be shown. </returns>
+        virtual bool ShouldShow(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const = 0;
     };
 }

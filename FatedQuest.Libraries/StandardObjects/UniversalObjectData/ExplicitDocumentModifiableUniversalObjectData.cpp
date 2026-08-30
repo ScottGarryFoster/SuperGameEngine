@@ -10,6 +10,7 @@
 #include "Text/StringHelpers.h"
 #include "../Logger/AllReferences.h"
 #include "Object/GUID/GUIDHelpers.h"
+#include "Position/FVector2I.h"
 
 using namespace FatedQuestLibraries;
 
@@ -40,6 +41,11 @@ std::shared_ptr<ModifiableDocument> ExplicitDocumentModifiableUniversalObjectDat
             children.emplace_back(node);
         }
 
+        if (auto node = m_parser->CreateVector2IsNode(m_vector2IValues))
+        {
+            children.emplace_back(node);
+        }
+
         if (auto node = m_parser->CreateVector4IsNode(m_vector4IValues))
         {
             children.emplace_back(node);
@@ -57,6 +63,7 @@ bool ExplicitDocumentModifiableUniversalObjectData::ImportAsDocument(const std::
     m_stringValues = {};
     m_intValues = {};
     m_vector4IValues = {};
+    m_vector2IValues = {};
 
     std::shared_ptr<StoredDocumentNode> root = document->GetRoot();
     if (!root)
@@ -77,6 +84,10 @@ bool ExplicitDocumentModifiableUniversalObjectData::ImportAsDocument(const std::
         else if (nodeName == "ints")
         {
             m_intValues = m_parser->ParseStoredDocumentInts(child);
+        }
+        else if (nodeName == "vector2is")
+        {
+            m_vector2IValues = m_parser->ParseStoredDocumentVector2I(child);
         }
         else if (nodeName == "vector4is")
         {
@@ -237,4 +248,54 @@ std::shared_ptr<FVector4I> ExplicitDocumentModifiableUniversalObjectData::GetVec
 bool ExplicitDocumentModifiableUniversalObjectData::IsVector4ILoaded(const std::string& key) const
 {
     return m_vector4IValues.contains(key);
+}
+
+void ExplicitDocumentModifiableUniversalObjectData::SetVector2I(const std::string& key, const FVector2I& value)
+{
+    m_isDirty = true;
+
+    m_vector2IValues.insert_or_assign(key, std::make_shared<FVector2I>(value));
+}
+
+void ExplicitDocumentModifiableUniversalObjectData::SetVector2I(const std::string& key, int x, int y)
+{
+    m_isDirty = true;
+
+    m_vector2IValues.insert_or_assign(key, std::make_shared<FVector2I>(x, y));
+}
+
+bool ExplicitDocumentModifiableUniversalObjectData::UnsetVector2I(const std::string& key)
+{
+    if (m_vector2IValues.contains(key))
+    {
+        m_vector2IValues.erase(key);
+        return true;
+    }
+
+    return false;
+}
+
+std::vector<std::string> ExplicitDocumentModifiableUniversalObjectData::ListVector2Is() const
+{
+    std::vector<std::string> keys;
+    keys.reserve(m_vector2IValues.size());
+    std::ranges::transform(m_vector2IValues,
+        std::back_inserter(keys),
+        [](const auto& pair) { return pair.first; });
+    return keys;
+}
+
+std::shared_ptr<FVector2I> ExplicitDocumentModifiableUniversalObjectData::GetVector2I(const std::string& key) const
+{
+    if (m_vector2IValues.contains(key))
+    {
+        return m_vector2IValues.at(key);
+    }
+
+    return {};
+}
+
+bool ExplicitDocumentModifiableUniversalObjectData::IsVector2ILoaded(const std::string& key) const
+{
+    return m_vector2IValues.contains(key);
 }

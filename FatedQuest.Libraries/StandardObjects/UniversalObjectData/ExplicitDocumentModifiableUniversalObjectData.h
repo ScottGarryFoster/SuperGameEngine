@@ -162,6 +162,48 @@ namespace FatedQuestLibraries
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsVector4ILoaded(const std::string& key) const override;
 
+        /// <summary>
+        /// Sets the vector2I to the given value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <param name="value">Value to set. </param>
+        virtual void SetVector2I(const std::string& key, const FVector2I& value) override;
+
+        /// <summary>
+        /// Sets the vector4I to the given value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <param name="x">X value to set. </param>
+        /// <param name="y">Y value to set. </param>
+        virtual void SetVector2I(const std::string& key, int x, int y) override;
+
+        /// <summary>
+        /// Removes key from the object.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True means Key was unset, false means key never existed. </returns>
+        virtual bool UnsetVector2I(const std::string& key) override;
+
+        /// <summary>
+        /// List vector2Is in the object.
+        /// </summary>
+        /// <returns>All the keys for any Vector4Is. </returns>
+        virtual std::vector<std::string> ListVector2Is() const override;
+
+        /// <summary>
+        /// Get a loaded Vector2I value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>The value found or empty if not found. </returns>
+        virtual std::shared_ptr<FVector2I> GetVector2I(const std::string& key) const override;
+
+        /// <summary>
+        /// True when a key is loaded. 
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True when a key is loaded. </returns>
+        virtual bool IsVector2ILoaded(const std::string& key) const override;
+
     private:
         /// <summary>
         /// Unique ID for the Universal Object.
@@ -187,6 +229,11 @@ namespace FatedQuestLibraries
         /// Loaded int values from file.
         /// </summary>
         std::unordered_map<std::string, int> m_intValues;
+
+        /// <summary>
+        /// Loaded FVector2I values from file.
+        /// </summary>
+        std::unordered_map<std::string, std::shared_ptr<FVector2I>> m_vector2IValues;
 
         /// <summary>
         /// Loaded FVector4I values from file.

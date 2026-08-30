@@ -23,6 +23,8 @@ namespace FatedQuestLibraries
 
         Int,
 
+        Vector2I,
+
         Vector4I,
 
         UserButton,
@@ -43,6 +45,7 @@ namespace FatedQuestLibraries
             {
                 UniversalStorableType::String,
                 UniversalStorableType::Int,
+                UniversalStorableType::Vector2I,
                 UniversalStorableType::Vector4I,
                 UniversalStorableType::UserButton,
             };
@@ -56,6 +59,7 @@ namespace FatedQuestLibraries
             {
                 UniversalStorableType::String,
                 UniversalStorableType::Int,
+                UniversalStorableType::Vector2I,
                 UniversalStorableType::Vector4I,
                 UniversalStorableType::UserButton,
             };
@@ -69,6 +73,7 @@ namespace FatedQuestLibraries
             {
                 "String",
                 "Int",
+                "Vector2I",
                 "Vector4I",
                 "UserButton",
             };
@@ -82,6 +87,7 @@ namespace FatedQuestLibraries
             {
                 "String",
                 "Int",
+                "Vector2I",
                 "Vector4I",
                 "UserButton",
             };
@@ -96,6 +102,7 @@ namespace FatedQuestLibraries
                 case UniversalStorableType::Unknown: return "Unknown";
                 case UniversalStorableType::String: return "String";
                 case UniversalStorableType::Int: return "Int";
+                case UniversalStorableType::Vector2I: return "Vector2I";
                 case UniversalStorableType::Vector4I: return "Vector4I";
                 case UniversalStorableType::UserButton: return "UserButton";
             }
@@ -110,6 +117,7 @@ namespace FatedQuestLibraries
                 if (value == "Unknown") return UniversalStorableType::Unknown;
                 if (value == "String") return UniversalStorableType::String;
                 if (value == "Int") return UniversalStorableType::Int;
+                if (value == "Vector2I") return UniversalStorableType::Vector2I;
                 if (value == "Vector4I") return UniversalStorableType::Vector4I;
                 if (value == "UserButton") return UniversalStorableType::UserButton;
             }
@@ -119,6 +127,7 @@ namespace FatedQuestLibraries
                 if (valueLower == "unknown") return UniversalStorableType::Unknown;
                 if (valueLower == "string") return UniversalStorableType::String;
                 if (valueLower == "int") return UniversalStorableType::Int;
+                if (valueLower == "vector2i") return UniversalStorableType::Vector2I;
                 if (valueLower == "vector4i") return UniversalStorableType::Vector4I;
                 if (valueLower == "userbutton") return UniversalStorableType::UserButton;
             }

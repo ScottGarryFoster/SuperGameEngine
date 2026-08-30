@@ -8,7 +8,8 @@ using namespace FatedQuestLibraries;
 
 LayoutEditorFilteredDropdown::LayoutEditorFilteredDropdown(
     const std::string& map,
-    const std::vector<std::string>& values)
+    const std::vector<std::string>& values,
+    const std::shared_ptr<LayoutRequirements>& layoutRequirements)
 {
     m_map = map;
     m_values = values;
@@ -25,6 +26,8 @@ LayoutEditorFilteredDropdown::LayoutEditorFilteredDropdown(
         m_valuesValueByIndex.insert_or_assign(value, i);
         ++i;
     }
+
+    m_layoutRequirements = layoutRequirements;
 }
 
 LayoutEditorFilteredDropdown::~LayoutEditorFilteredDropdown()
@@ -107,4 +110,14 @@ void LayoutEditorFilteredDropdown::DrawValue(
 
     ImGui::PopID();
     ImGui::EndGroup();
+}
+
+bool LayoutEditorFilteredDropdown::ShouldShow(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
+    if (!m_layoutRequirements)
+    {
+        return true;
+    }
+
+    return m_layoutRequirements->ShouldShow(universalObjectData);
 }

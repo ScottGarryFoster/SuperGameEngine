@@ -125,6 +125,17 @@ namespace SuperGameEngine
         void DrawPredefined(int tile, const FatedQuestLibraries::FVector2F& screenLocation, const FatedQuestLibraries::FColour& tintColour) const;
 
         /// <summary>
+        /// Setups up the Uniform by Pixel UVs upon a texture.
+        /// </summary>
+        void SetupUniformByPixelUVs();
+
+        void DrawUniformByPixel(int tile) const;
+
+        void DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const;
+
+        void DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation, const FatedQuestLibraries::FColour& tintColour) const;
+
+        /// <summary>
         /// Gather and figure out the correct screen rectangle and texture rectangle
         /// when given the tile and location.
         /// This can fail.

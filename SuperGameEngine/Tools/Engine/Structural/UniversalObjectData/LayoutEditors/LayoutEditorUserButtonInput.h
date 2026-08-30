@@ -5,6 +5,8 @@
 
 namespace SuperGameTools
 {
+    class LayoutRequirements;
+
     /// <summary>
     /// Control for Key inputs.
     /// </summary>
@@ -15,7 +17,8 @@ namespace SuperGameTools
         /// Constructor.
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
-        LayoutEditorUserButtonInput(const std::string& map);
+        LayoutEditorUserButtonInput(const std::string& map,
+            const std::shared_ptr<LayoutRequirements>& layoutRequirements);
         virtual ~LayoutEditorUserButtonInput() = default;
 
         /// <summary>
@@ -52,11 +55,23 @@ namespace SuperGameTools
         /// <param name="universalObjectData">A pointer to the asset. </param>
         virtual void OnSave(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override {}//No op
 
+        /// <summary>
+        /// Is true when this layout is required and therefore should be shown.
+        /// </summary>
+        /// <param name="universalObjectData">A pointer to the asset. </param>
+        /// <returns>Is true when this layout is required and therefore should be shown. </returns>
+        virtual bool ShouldShow(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const override;
+
     private:
 
         /// <summary>
         /// The parameter within the Asset to modify.
         /// </summary>
         std::string m_map;
+
+        /// <summary>
+        /// Resolves requirements for layout editors.
+        /// </summary>
+        std::shared_ptr<LayoutRequirements> m_layoutRequirements;
     };
 }

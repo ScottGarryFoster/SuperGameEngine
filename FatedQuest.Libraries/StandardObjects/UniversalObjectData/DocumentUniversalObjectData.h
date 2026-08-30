@@ -85,6 +85,26 @@ namespace FatedQuestLibraries
         /// <returns>True when a key is loaded. </returns>
         virtual bool IsVector4ILoaded(const std::string& key) const override;
 
+        /// <summary>
+        /// List vector2Is in the object.
+        /// </summary>
+        /// <returns>All the keys for any Vector4Is. </returns>
+        virtual std::vector<std::string> ListVector2Is() const override;
+
+        /// <summary>
+        /// Get a loaded Vector2I value.
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>The value found or empty if not found. </returns>
+        virtual std::shared_ptr<FVector2I> GetVector2I(const std::string& key) const override;
+
+        /// <summary>
+        /// True when a key is loaded. 
+        /// </summary>
+        /// <param name="key">Key to search for. </param>
+        /// <returns>True when a key is loaded. </returns>
+        virtual bool IsVector2ILoaded(const std::string& key) const override;
+
     private:
 
         /// <summary>
@@ -101,6 +121,11 @@ namespace FatedQuestLibraries
         /// Loaded int values from file.
         /// </summary>
         std::unordered_map<std::string, int> m_intValues;
+
+        /// <summary>
+        /// Loaded FVector2I values from file.
+        /// </summary>
+        std::unordered_map<std::string, std::shared_ptr<FVector2I>> m_vector2IValues;
 
         /// <summary>
         /// Loaded FVector4I values from file.

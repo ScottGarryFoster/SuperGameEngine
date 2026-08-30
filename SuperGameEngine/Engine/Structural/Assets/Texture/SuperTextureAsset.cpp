@@ -226,6 +226,24 @@ void SuperTextureAsset::DrawPredefined(
     DrawImplementation(screenSizeAndLocation.Key, screenSizeAndLocation.Value, tintColour);
 }
 
+void SuperTextureAsset::SetupUniformByPixelUVs()
+{
+    // TODO: Continue in the next commit to now use SetupUniformByPixel from here.
+}
+
+void SuperTextureAsset::DrawUniformByPixel(int tile) const
+{
+}
+
+void SuperTextureAsset::DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const
+{
+}
+
+void SuperTextureAsset::DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+}
+
 KeyPairValueReturn<RectangleInt, RectangleInt> SuperTextureAsset::GatherScreenSizeAndLocation(
     int tile,
     const FatedQuestLibraries::FVector2F& screenLocation) const
