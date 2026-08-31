@@ -110,7 +110,17 @@ namespace SuperGameEngine
         /// <summary>
         /// Gets the size of a single tile or the entire image if tiles are not used.
         /// </summary>
-        FatedQuestLibraries::FVector2I m_singleTileSize;
+        FatedQuestLibraries::PVector2I m_singleTileSize;
+
+        /// <summary>
+        /// Number of tiles per row if using Uniform by pixel.
+        /// </summary>
+        int m_uniformByPixelTilesPerRow;
+
+        /// <summary>
+        /// Max tiles to draw if using uniform by pixel.
+        /// </summary>
+        int m_uniformByPixelMaxTiles;
 
         /// <summary>
         /// Sets up the Predefined UVs upon a texture.
