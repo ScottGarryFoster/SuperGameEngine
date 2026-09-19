@@ -15,11 +15,10 @@ python ../../FatedQuest.Libraries/CMake/PostBuildScripts.py build/
 
 Rem Copy Runtime Zlib
 python ../../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\ProductsPackager\Debug false
-python ../..//FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\ProductsPackager\Debug false
+python ../../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\debug\bin build\ProductsPackager\Debug false
 
 python ../../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\ProductsPackager\Release false
-python ../../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\ProductsPackager\Release false
 
-python ../../FatedQuest.Libraries/CMake/CreateShortcut.py build\ProductsPackager-WithTests.sln ProductsPackager.sln
+python ../../FatedQuest.Libraries/CMake/RepathSolutionFile.py build\ProductsPackager-WithTests.sln ProductsPackager.sln --prefix build
 python ../../FatedQuest.Libraries/CMake/CreateShortcut.py Generate-With-Tests.bat Regenerate
-pause
+endlocal

@@ -24,80 +24,79 @@ function(NugetInclude LIBRARY TARGET)
 endfunction()
 
 function(VCPKGIncludeZLib TARGET)
-    message("VCPKGIncludeZLib: CMAKE_TOOLCHAIN_FILE set to ${CMAKE_TOOLCHAIN_FILE}")
-    message("VCPKGIncludeZLib: CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
-    find_package(ZLIB REQUIRED)
+    message("NugetPackage.VCPKGIncludeZLib: Linking to ${TARGET}")
 
-    set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/Build/vcpkg/installed/x64-windows/share/unofficial-minizip)
+    list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/Build/vcpkg/installed/x64-windows")
     message("VCPKGIncludeZLib: Set for MiniZip to CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
     
     find_package(ZLIB REQUIRED)
-    find_package(unofficial-minizip REQUIRED)
+    find_package(minizip CONFIG REQUIRED)
 
-    target_link_libraries(${TARGET} PRIVATE unofficial::minizip::minizip ZLIB::ZLIB)
+    target_link_libraries(${TARGET} PRIVATE MINIZIP::minizip ZLIB::ZLIB)
 
-    set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/Build/vcpkg/installed/x64-windows/)
-    message("VCPKGIncludeZLib: Reset back to CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
 endfunction()
 
 function(NugetIncludeZlib TARGET)
+    message("NugetPackage.NugetIncludeZlib: Linking to ${TARGET}")
 
-    FetchContent_Declare(
-        Zlib
-        URL "https://www.nuget.org/api/v2/package/zlib_static/1.2.11.12"
-        DOWNLOAD_NO_EXTRACT TRUE
-    )
-    FetchContent_MakeAvailable(Zlib)
+    # FetchContent_Declare(
+        # Zlib
+        # URL "https://www.nuget.org/api/v2/package/zlib_static/1.2.11.12"
+        # DOWNLOAD_NO_EXTRACT TRUE
+    # )
+    # FetchContent_MakeAvailable(Zlib)
 
-    # Manually set RapidXML paths from NuGet
-    set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
+    # # Manually set RapidXML paths from NuGet
+    # set(NUGET_PACKAGES_DIR "${CMAKE_BINARY_DIR}/packages")
 
-    # Zlib
-    set(NUGET_ZLIB_DIR "${NUGET_PACKAGES_DIR}/zlib_static.1.2.11.12/build/native")
-    if (NOT EXISTS "${NUGET_ZLIB_DIR}")
-        execute_process(
-            COMMAND nuget install zlib_static -Version 1.2.11.12 -OutputDirectory ${NUGET_PACKAGES_DIR}
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        )
-    endif()
+    # # Zlib
+    # set(NUGET_ZLIB_DIR "${NUGET_PACKAGES_DIR}/zlib_static.1.2.11.12/build/native")
+    # if (NOT EXISTS "${NUGET_ZLIB_DIR}")
+        # execute_process(
+            # COMMAND nuget install zlib_static -Version 1.2.11.12 -OutputDirectory ${NUGET_PACKAGES_DIR}
+            # WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        # )
+    # endif()
 
-    set(ZLIB_INCLUDE_DIR "${NUGET_ZLIB_DIR}/include")
+    # set(ZLIB_INCLUDE_DIR "${NUGET_ZLIB_DIR}/include")
 
-    # Include and link dependencies
-    message(STATUS "Linking ${TARGET} to ${ZLIB_INCLUDE_DIR}")
-    target_include_directories(${TARGET} PRIVATE ${ZLIB_INCLUDE_DIR})
-    target_link_libraries(${TARGET} PRIVATE Zlib)
+    # # Include and link dependencies
+    # message(STATUS "Linking ${TARGET} to ${ZLIB_INCLUDE_DIR}")
+    # target_include_directories(${TARGET} PRIVATE ${ZLIB_INCLUDE_DIR})
+    # target_link_libraries(${TARGET} PRIVATE Zlib)
 
-    NugetIncludeZlibRuntime()
+    # NugetIncludeZlibRuntime()
 
 endfunction()
 
 function(NugetIncludeZlibRuntime)
+    message("NugetPackage.NugetIncludeZlibRuntime: Linking to ${TARGET}")
 
-    FetchContent_Declare(
-        ZlibRedistNuGet
-        URL "https://www.nuget.org/api/v2/package/zlib_native.redist/1.2.11"
-        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-    )
-    FetchContent_MakeAvailable(ZlibRedistNuGet)
+    # FetchContent_Declare(
+        # rmt_zlib_pkg
+        # URL "https://www.nuget.org/api/v2/package/rmt_zlib/1.2.8.7"
+        # DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    # )
+    # FetchContent_MakeAvailable(rmt_zlib_pkg)
 
-    set(ZLibRedist_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/zlibredistnuget-src")
-    message("Zlib Runtime ${ZLibRedist_SOURCE_DIR}")
+    # set(ZLibRedist_SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/rmt_zlib-src")
+    # message("Zlib Runtime ${ZLibRedist_SOURCE_DIR}")
 
-    # Find the extracted SDL2 files
-    set(ZLIB_BASE_DIR "${ZLibRedist_SOURCE_DIR}")
-    set(ZLIB_DLL_DIR "${ZLIB_BASE_DIR}/build/native/bin/x64")
+    # # Find the extracted SDL2 files
+    # set(ZLIB_BASE_DIR "${ZLibRedist_SOURCE_DIR}")
+    # set(ZLIB_DLL_DIR "${rmt_zlib_pkg_SOURCE_DIR}/build/native/include")
 
-    # Make sure the path is valid
-    if (EXISTS "${ZLIB_DLL_DIR}")
-        message(STATUS "Zlib Redistributes found at ${ZLIB_DLL_DIR}")
-    else()
-        message(FATAL_ERROR "Zlib Redistributes not found! Expected at: ${ZLIB_DLL_DIR}")
-    endif()
+    # # Make sure the path is valid
+    # if (EXISTS "${ZLIB_DLL_DIR}")
+        # message(STATUS "Zlib Redistributes found at ${ZLIB_DLL_DIR}")
+    # else()
+        # message(FATAL_ERROR "Zlib Redistributes not found! Expected at: ${ZLIB_DLL_DIR}")
+    # endif()
 
 endfunction()
 
 function(NugetIncludeRapid TARGET)
+    message("NugetPackage.NugetIncludeRapid: Linking to ${TARGET}")
 
     FetchContent_Declare(
         RapidXML
@@ -124,6 +123,7 @@ function(NugetIncludeRapid TARGET)
 endfunction()
 
 function(NugetIncludeGTest TARGET)
+    message("NugetPackage.NugetIncludeGTest: Linking to ${TARGET}")
 
     FetchContent_Declare(
         googletest
@@ -150,6 +150,7 @@ function(NugetIncludeGTest TARGET)
 endfunction()
 
 function(NugetIncludeSdl2 TARGET)
+    message("NugetPackage.NugetIncludeSdl2: Linking to ${TARGET}")
 
     FetchContent_Declare(
     SDL2NuGet
@@ -188,6 +189,7 @@ function(NugetIncludeSdl2 TARGET)
 endfunction()
 
 function(NugetIncludeSdl2Runtime)
+    message("NugetPackage.NugetIncludeSdl2Runtime: Linking to ${TARGET}")
 
     FetchContent_Declare(
         SDL2RedistNuGet
@@ -213,6 +215,7 @@ function(NugetIncludeSdl2Runtime)
 endfunction()
 
 function(NugetIncludeSdl2Image TARGET)
+    message("NugetPackage.NugetIncludeSdl2Image: Linking to ${TARGET}")
 
     FetchContent_Declare(
         SDL2ImageNuGet
@@ -243,6 +246,7 @@ function(NugetIncludeSdl2Image TARGET)
 endfunction()
 
 function(NugetIncludeSdl2ImageRuntime)
+    message("NugetPackage.NugetIncludeSdl2ImageRuntime: Linking to ${TARGET}")
 
     FetchContent_Declare(
         SDL2ImageRedistNuGet
@@ -268,7 +272,8 @@ function(NugetIncludeSdl2ImageRuntime)
 endfunction()
 
 function(NugetIncludeSdl2Mixer TARGET)
-
+    message("NugetPackage.NugetIncludeSdl2Mixer: Linking to ${TARGET}")
+    
     # SDL2_mixer
     FetchContent_Declare(
         SDL2MixerNuGet
@@ -298,6 +303,7 @@ function(NugetIncludeSdl2Mixer TARGET)
 endfunction()
 
 function(NugetIncludeSdl2MixerRuntime)
+    message("NugetPackage.NugetIncludeSdl2MixerRuntime: Linking to ${TARGET}")
 
     FetchContent_Declare(
         SDL2MixerRedistNuGet

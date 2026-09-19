@@ -18,6 +18,6 @@ public:
     /// This requires us to use dynamic casting. Okay for now but long term
     /// we should consider a larger solution.
     /// </remarks>
-    virtual void Invoke(std::shared_ptr<FEventArguments> arguments) override;
+    virtual void Invoke(const std::shared_ptr<FEventArguments>& arguments) override;
 };
 

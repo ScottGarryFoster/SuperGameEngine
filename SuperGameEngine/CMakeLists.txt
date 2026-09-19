@@ -8,6 +8,13 @@ message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
 set(CMAKE_BUILD_TYPE Debug)
 
+# Define solution-wide configurations
+if(ENABLE_TOOLS)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Configurations" FORCE)
+else()
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Available build types" FORCE)
+endif()
+
 # Name the project such that each solution could have its own name
 if(ENABLE_TOOLS)
     if(ENABLE_TESTS)
@@ -35,12 +42,9 @@ endif()
 message("CMAKE_TOOLCHAIN_FILE set to ${CMAKE_TOOLCHAIN_FILE}")
 message("CMAKE_PREFIX_PATH set to ${CMAKE_PREFIX_PATH}")
 
-# Define solution-wide configurations
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Tools_Debug" CACHE STRING "Configurations" FORCE)
-
 # Add subdirectories
 add_subdirectory(SuperGameEngine)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SuperGameEngine)
+set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT SuperGameEngine)
 add_subdirectory(Engine)
 add_subdirectory(Input)
 if(ENABLE_TOOLS)
