@@ -259,7 +259,7 @@ void SuperTextureAsset::SetupUniformByPixelUVs()
 
 void SuperTextureAsset::DrawUniformByPixel(int tile) const
 {
-    if (tile < 0 || m_uniformByPixelMaxTiles >= tile)
+    if (tile < 0 || tile >= m_uniformByPixelMaxTiles)
     {
         return;
     }
