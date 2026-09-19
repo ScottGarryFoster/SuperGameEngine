@@ -31,15 +31,11 @@ python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\_deps\sdl2mixerred
 
 Rem Copy Runtime Zlib
 python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Debug false
-python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Debug false
-
-python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Tools_Debug false
-python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Tools_Debug false
+python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\debug\bin build\SuperGameEngine\Debug false
 
 python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Release false
-python ../FatedQuest.Libraries/CMake/CopyFilesScript.py build\vcpkg\installed\x64-windows\bin build\SuperGameEngine\Release false
 
-python ../FatedQuest.Libraries/CMake/CreateShortcut.py build\SuperGameEngine-WithTests.sln SuperGameEngine.sln
+python ../FatedQuest.Libraries/CMake/RepathSolutionFile.py build\SuperGameEngine-WithTests.sln SuperGameEngine.sln --prefix build
 python ../FatedQuest.Libraries/CMake/CreateShortcut.py Generate-With-Tests.bat Regenerate
 
 popd
