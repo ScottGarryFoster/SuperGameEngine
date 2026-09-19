@@ -16,6 +16,7 @@ DocumentUniversalObjectData::DocumentUniversalObjectData(const std::shared_ptr<S
     m_stringValues = {};
     m_intValues = {};
     m_vector4IValues = {};
+    m_vector2IValues = {};
 
     std::shared_ptr<StoredDocumentNode> root = metaDataDocument->GetRoot();
     if (!root)
@@ -35,6 +36,10 @@ DocumentUniversalObjectData::DocumentUniversalObjectData(const std::shared_ptr<S
         else if (nodeName == "ints")
         {
             m_intValues = m_parser->ParseStoredDocumentInts(child);
+        }
+        else if (nodeName == "vector2is")
+        {
+            m_vector2IValues = m_parser->ParseStoredDocumentVector2I(child);
         }
         else if (nodeName == "vector4is")
         {
@@ -116,4 +121,29 @@ std::shared_ptr<FVector4I> DocumentUniversalObjectData::GetVector4I(const std::s
 bool DocumentUniversalObjectData::IsVector4ILoaded(const std::string& key) const
 {
     return m_vector4IValues.contains(key);
+}
+
+std::vector<std::string> DocumentUniversalObjectData::ListVector2Is() const
+{
+    std::vector<std::string> keys;
+    keys.reserve(m_vector2IValues.size());
+    std::ranges::transform(m_vector2IValues,
+        std::back_inserter(keys),
+        [](const auto& pair) { return pair.first; });
+    return keys;
+}
+
+std::shared_ptr<FVector2I> DocumentUniversalObjectData::GetVector2I(const std::string& key) const
+{
+    if (IsVector2ILoaded(key))
+    {
+        return m_vector2IValues.at(key);
+    }
+
+    return {};
+}
+
+bool DocumentUniversalObjectData::IsVector2ILoaded(const std::string& key) const
+{
+    return m_vector2IValues.contains(key);
 }

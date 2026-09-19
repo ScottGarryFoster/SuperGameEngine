@@ -5,6 +5,7 @@
 #include "StoredDocumentNode.h"
 #include "../../Logger/Logger/Log.h"
 #include "Number/IntHelpers.h"
+#include "Position/FVector2I.h"
 #include "Position/FVector4I.h"
 #include "Text/StringHelpers.h"
 
@@ -248,6 +249,160 @@ std::pair<std::string, int>
     }
 
     return { newKey, newValue };
+}
+
+std::shared_ptr<FatedQuestLibraries::ModifiableNode> UniversalObjectParser::CreateVector2IsNode(
+    const std::unordered_map<std::string, std::shared_ptr<FVector2I>>& vector2Is) const
+{
+    std::vector<std::shared_ptr<ModifiableNode>> currentNodes;
+    for (const auto& current : vector2Is)
+    {
+        auto currentNode = CreateVector2INode(current.first, current.second);
+        if (currentNode)
+        {
+            currentNodes.emplace_back(currentNode);
+        }
+    }
+
+    if (!currentNodes.empty())
+    {
+        auto node = std::make_shared<ModifiableNode>();
+        node->SetName("Vector2Is");
+        node->SetAllChildrenNodes(currentNodes);
+        return node;
+    }
+
+    return {};
+}
+
+std::shared_ptr<FatedQuestLibraries::ModifiableNode> UniversalObjectParser::CreateVector2INode(const std::string& key,
+    const std::shared_ptr<FVector2I>& value) const
+{
+    if (key.empty() || !value)
+    {
+        return {};
+    }
+
+    auto node = std::make_shared<ModifiableNode>();
+    node->SetName("Vector2I");
+
+    std::vector<std::shared_ptr<StoredDocumentAttribute>> attributes;
+    auto keyAttribute = std::make_shared<ModifiableAttribute>();
+    keyAttribute->SetName("Key");
+    keyAttribute->SetValue(key);
+    attributes.emplace_back(keyAttribute);
+
+    auto xAttribute = std::make_shared<ModifiableAttribute>();
+    xAttribute->SetName("X");
+    xAttribute->SetValue(std::to_string(value->GetX()));
+    attributes.emplace_back(xAttribute);
+
+    auto yAttribute = std::make_shared<ModifiableAttribute>();
+    yAttribute->SetName("Y");
+    yAttribute->SetValue(std::to_string(value->GetY()));
+    attributes.emplace_back(yAttribute);
+
+    node->SetAttributes(attributes);
+    return node;
+}
+
+std::unordered_map<std::string, std::shared_ptr<FVector2I>> UniversalObjectParser::ParseStoredDocumentVector2I(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) const
+{
+    std::unordered_map<std::string, std::shared_ptr<FVector2I>> extractedValues;
+    for (std::shared_ptr<StoredDocumentNode> child = node->GetFirstChild(); child; child = child->GetAdjacentNode())
+    {
+        std::string nodeName = StringHelpers::ToLower(child->Name());
+        if (nodeName == "vector2i")
+        {
+            std::pair<std::string, std::shared_ptr<FVector2I>> parsed = ParseStoredDocumentSingleVector2I(child);
+            if (!parsed.first.empty())
+            {
+                extractedValues.insert_or_assign(parsed.first, parsed.second);
+            }
+            else
+            {
+                Log::Error("When parsing a universal object file, found a vector2i with an empty key.",
+                    "UniversalObjectParser::ParseStoredDocumentStrings(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>)");
+            }
+        }
+        else
+        {
+            Log::Error("When parsing a game asset file, found a string not called \"Vector2i\", potential file corruption.",
+                "UniversalObjectParser::ParseStoredDocumentVector4I(const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>)");
+        }
+    }
+
+    return extractedValues;
+}
+
+std::pair<std::string, std::shared_ptr<FVector2I>> UniversalObjectParser::ParseStoredDocumentSingleVector2I(
+    const std::shared_ptr<FatedQuestLibraries::StoredDocumentNode>& node) const
+{
+    std::string newKey = {};
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("key", CaseSensitivity::IgnoreCase))
+    {
+        std::string key = StringHelpers::Trim(attribute->Value());
+        if (!key.empty())
+        {
+            newKey = key;
+        }
+    }
+
+    if (newKey.empty())
+    {
+        // Early out, no key no parse.
+        return { {}, {} };
+    }
+
+    int xValue = -1;
+    bool foundValueX = false;
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("x", CaseSensitivity::IgnoreCase))
+    {
+        std::string value = StringHelpers::Trim(attribute->Value());
+        if (!value.empty())
+        {
+            int outValue = -1;
+            if (IntHelpers::TryParse(value, outValue))
+            {
+                xValue = outValue;
+                foundValueX = true;
+            }
+        }
+    }
+
+    if (!foundValueX)
+    {
+        // Early out, no key no parse.
+        return { {}, {} };
+    }
+
+    int yValue = -1;
+    bool foundValueY = false;
+    if (std::shared_ptr<StoredDocumentAttribute> attribute =
+        node->Attribute("y", CaseSensitivity::IgnoreCase))
+    {
+        std::string value = StringHelpers::Trim(attribute->Value());
+        if (!value.empty())
+        {
+            int outValue = -1;
+            if (IntHelpers::TryParse(value, outValue))
+            {
+                yValue = outValue;
+                foundValueY = true;
+            }
+        }
+    }
+
+    if (!foundValueY)
+    {
+        // Early out, no key no parse.
+        return { {}, {} };
+    }
+
+    return { newKey, std::make_shared<FVector2I>(xValue, yValue) };
 }
 
 std::shared_ptr<FatedQuestLibraries::ModifiableNode> UniversalObjectParser::CreateVector4IsNode(

@@ -1,38 +1,36 @@
-#include "LayoutEditorVector4I.h"
+#include "LayoutEditorVector2I.h"
 
 #include "LayoutRequirements.h"
-#include "../../../../FatedQuestLibraries.h"
-#include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "../../../../ImGuiIncludes.h"
+#include "../../../../../../FatedQuest.Libraries/StandardObjects//AllReferences.h"
+#include "../../../../../../FatedQuest.Libraries/StandardOperations/AllReferences.h"
+
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-LayoutEditorVector4I::LayoutEditorVector4I(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements)
+LayoutEditorVector2I::LayoutEditorVector2I(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements)
 {
     m_map = map;
     m_layoutRequirements = layoutRequirements;
 }
 
-LayoutEditorVector4I::~LayoutEditorVector4I()
+LayoutEditorVector2I::~LayoutEditorVector2I()
 {
 }
 
-void LayoutEditorVector4I::Update(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+void LayoutEditorVector2I::Update(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
 }
 
-void LayoutEditorVector4I::Draw(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+void LayoutEditorVector2I::Draw(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     DrawLabel(universalObjectData);
     ImGui::SameLine();
     DrawValue(universalObjectData);
 }
 
-void LayoutEditorVector4I::DrawLabel(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+void LayoutEditorVector2I::DrawLabel(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
 
@@ -46,8 +44,7 @@ void LayoutEditorVector4I::DrawLabel(
     ImGui::EndGroup();
 }
 
-void LayoutEditorVector4I::DrawValue(
-    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+void LayoutEditorVector2I::DrawValue(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     ImGui::BeginGroup();
 
@@ -57,16 +54,14 @@ void LayoutEditorVector4I::DrawValue(
 
 
 
-    if (ImGui::BeginTable("##four_cols", 4, ImGuiTableFlags_SizingFixedFit))
+    if (ImGui::BeginTable("##two_cols", 2, ImGuiTableFlags_SizingFixedFit))
     {
         bool newValue = false;
         int x = 0, y = 0, z = 0, w = 0;
-        if (std::shared_ptr<FVector4I> value = universalObjectData->GetVector4I(m_map))
+        if (std::shared_ptr<FVector2I> value = universalObjectData->GetVector2I(m_map))
         {
             x = value->GetX();
             y = value->GetY();
-            z = value->GetZ();
-            w = value->GetW();
         }
 
         ImGui::TableNextColumn();
@@ -99,41 +94,11 @@ void LayoutEditorVector4I::DrawValue(
         }
 
         ImGui::PopID();
-        ImGui::TableNextColumn();
-        ImGui::PushID("##zCol");
-
-        std::string zString = std::to_string(z);
-        if (TextInput("z", zString))
-        {
-            int attemptedParse = -1;
-            if (IntHelpers::TryParse(zString, attemptedParse))
-            {
-                z = attemptedParse;
-                newValue = true;
-            }
-        }
-
-        ImGui::PopID();
-        ImGui::TableNextColumn();
-        ImGui::PushID("##wCol");
-
-        std::string wString = std::to_string(w);
-        if (TextInput("w", wString))
-        {
-            int attemptedParse = -1;
-            if (IntHelpers::TryParse(wString, attemptedParse))
-            {
-                w = attemptedParse;
-                newValue = true;
-            }
-        }
-
-        ImGui::PopID();
         ImGui::EndTable();
 
         if (newValue)
         {
-            universalObjectData->SetVector4I(m_map, x, y, z, w);
+            universalObjectData->SetVector2I(m_map, x, y);
         }
     }
 
@@ -142,7 +107,7 @@ void LayoutEditorVector4I::DrawValue(
     ImGui::EndGroup();
 }
 
-bool LayoutEditorVector4I::ShouldShow(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+bool LayoutEditorVector2I::ShouldShow(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
 {
     if (!m_layoutRequirements)
     {
@@ -152,9 +117,8 @@ bool LayoutEditorVector4I::ShouldShow(const std::shared_ptr<ModifiableUniversalO
     return m_layoutRequirements->ShouldShow(universalObjectData);
 }
 
-bool LayoutEditorVector4I::TextInput(const std::string& label, std::string& value) const
+bool LayoutEditorVector2I::TextInput(const std::string& label, std::string& value) const
 {
-
     const std::string before = value;
     char* charValue = new char[m_defaultTextCapacity];
     size_t written = std::snprintf(charValue, m_defaultTextCapacity, "%s", value.c_str());

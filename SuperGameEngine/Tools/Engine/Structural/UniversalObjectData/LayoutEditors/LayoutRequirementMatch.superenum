@@ -1,0 +1,17 @@
+<SuperEnum Type="Standard">
+    <Header>
+    #pragma once
+    </Header>
+    <Namespace Name="SuperGameTools" />
+    <EnumComment>
+        How to match the requirements for a layout.
+    </EnumComment>
+    <EnumName Name="LayoutRequirementMatch">
+        <Unknown Value="0" HideFromLists="true">
+            Only used for unsuccessful parsing.
+        </Unknown>
+        <Match>
+            Only if the value of the map, matches the value given.
+        </Match>
+    </EnumName>
+</SuperEnum>

@@ -6,10 +6,12 @@
 #include "../../UniversalObjectData/LayoutEditors/LayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
 #include "LayoutEditorUserButtonInput.h"
+#include "LayoutEditorVector2I.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
 #include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorFilteredDropdownArray.h"
 #include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorVector4IArray.h"
 #include "../../UniversalObjectData/Template/LayoutTemplateLayoutMapType.h"
+#include "Array/LayoutEditorVector2IArray.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -38,6 +40,7 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
         return {};
     }
 
+    std::shared_ptr<LayoutRequirements> createdRequirements = ExtractRequirementsFromDataNode(node);
     std::string map = ExtractMap(node);
     std::vector<std::string> enumFilters = ExtractEnumFilter(node);
 
@@ -49,37 +52,46 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
                 case LayoutTemplateLayoutMapType::Single:
                     if (enumFilters.empty())
                     {
-                        return std::make_shared<LayoutEditorTextInput>(map);
+                        return std::make_shared<LayoutEditorTextInput>(map, createdRequirements);
                     }
                     else
                     {
-                        return std::make_shared<LayoutEditorFilteredDropdown>(map, enumFilters);
+                        return std::make_shared<LayoutEditorFilteredDropdown>(map, enumFilters, createdRequirements);
                     }
                 case LayoutTemplateLayoutMapType::Array:
                     if (enumFilters.empty())
                     {
-                        return std::make_shared<LayoutEditorTextInputArray>(map);
+                        return std::make_shared<LayoutEditorTextInputArray>(map, createdRequirements);
                     }
                     else
                     {
-                        return std::make_shared<LayoutEditorFilteredDropdownArray>(map, enumFilters);
+                        return std::make_shared<LayoutEditorFilteredDropdownArray>(map, enumFilters, createdRequirements);
                     }
+            }
+            break;
+        case UniversalStorableType::Vector2I:
+            switch (maptype)
+            {
+            case LayoutTemplateLayoutMapType::Single:
+                return std::make_shared<LayoutEditorVector2I>(map, createdRequirements);
+            case LayoutTemplateLayoutMapType::Array:
+                return std::make_shared<LayoutEditorVector2IArray>(map, createdRequirements);
             }
             break;
         case UniversalStorableType::Vector4I:
             switch (maptype)
             {
             case LayoutTemplateLayoutMapType::Single:
-                return std::make_shared<LayoutEditorVector4I>(map);
+                return std::make_shared<LayoutEditorVector4I>(map, createdRequirements);
             case LayoutTemplateLayoutMapType::Array:
-                return std::make_shared<LayoutEditorVector4IArray>(map);
+                return std::make_shared<LayoutEditorVector4IArray>(map, createdRequirements);
             }
             break;
         case UniversalStorableType::UserButton:
             switch (maptype)
             {
             case LayoutTemplateLayoutMapType::Single:
-                return std::make_shared<LayoutEditorUserButtonInput>(map);
+                return std::make_shared<LayoutEditorUserButtonInput>(map, createdRequirements);
             }
             break;
             
@@ -153,4 +165,18 @@ std::vector<std::string> ToolsAssetLayoutEditorFactory::ExtractEnumFilter(
     }
 
     return EnumFilterFactory::GetValues(enumFilter);
+}
+
+std::shared_ptr<LayoutRequirements> ToolsAssetLayoutEditorFactory::ExtractRequirementsFromDataNode(
+    const std::shared_ptr<const FatedQuestLibraries::StoredDocumentNode>& node) const
+{
+    for (std::shared_ptr<StoredDocumentNode> current = node->GetFirstChild(); current; current = current->GetAdjacentNode())
+    {
+        if (StringHelpers::Equals("require", current->Name(), CaseSensitivity::IgnoreCase))
+        {
+            return std::make_shared<LayoutRequirements>(current);
+        }
+    }
+
+    return {};
 }

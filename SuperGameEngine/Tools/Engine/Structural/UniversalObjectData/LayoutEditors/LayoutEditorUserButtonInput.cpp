@@ -1,5 +1,6 @@
 #include "LayoutEditorUserButtonInput.h"
 #include "FatedQuestLibraries.h"
+#include "LayoutRequirements.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "../../../../ImGuiIncludes.h"
 #include "../../../../../Input/InputManagement/Engine/KeyCode.h"
@@ -7,9 +8,11 @@
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-LayoutEditorUserButtonInput::LayoutEditorUserButtonInput(const std::string& map)
+LayoutEditorUserButtonInput::LayoutEditorUserButtonInput(const std::string& map,
+    const std::shared_ptr<LayoutRequirements>& layoutRequirements)
 {
     m_map = map;
+    m_layoutRequirements = layoutRequirements;
 }
 
 void LayoutEditorUserButtonInput::Update(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
@@ -89,4 +92,15 @@ void LayoutEditorUserButtonInput::DrawValue(
 
     ImGui::PopID();
     ImGui::EndGroup();
+}
+
+bool LayoutEditorUserButtonInput::ShouldShow(
+    const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
+    if (!m_layoutRequirements)
+    {
+        return true;
+    }
+
+    return m_layoutRequirements->ShouldShow(universalObjectData);
 }

@@ -110,7 +110,17 @@ namespace SuperGameEngine
         /// <summary>
         /// Gets the size of a single tile or the entire image if tiles are not used.
         /// </summary>
-        FatedQuestLibraries::FVector2I m_singleTileSize;
+        FatedQuestLibraries::PVector2I m_singleTileSize;
+
+        /// <summary>
+        /// Number of tiles per row if using Uniform by pixel.
+        /// </summary>
+        int m_uniformByPixelTilesPerRow;
+
+        /// <summary>
+        /// Max tiles to draw if using uniform by pixel.
+        /// </summary>
+        int m_uniformByPixelMaxTiles;
 
         /// <summary>
         /// Sets up the Predefined UVs upon a texture.
@@ -123,6 +133,17 @@ namespace SuperGameEngine
         void DrawPredefined(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const;
 
         void DrawPredefined(int tile, const FatedQuestLibraries::FVector2F& screenLocation, const FatedQuestLibraries::FColour& tintColour) const;
+
+        /// <summary>
+        /// Setups up the Uniform by Pixel UVs upon a texture.
+        /// </summary>
+        void SetupUniformByPixelUVs();
+
+        void DrawUniformByPixel(int tile) const;
+
+        void DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const;
+
+        void DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation, const FatedQuestLibraries::FColour& tintColour) const;
 
         /// <summary>
         /// Gather and figure out the correct screen rectangle and texture rectangle

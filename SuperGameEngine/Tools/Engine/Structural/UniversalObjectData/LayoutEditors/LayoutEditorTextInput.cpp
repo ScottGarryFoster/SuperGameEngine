@@ -1,14 +1,17 @@
 #include "LayoutEditorTextInput.h"
 #include "FatedQuestLibraries.h"
+#include "LayoutRequirements.h"
 #include "../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
 #include "../../../../ImGuiIncludes.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-LayoutEditorTextInput::LayoutEditorTextInput(const std::string& map)
+LayoutEditorTextInput::LayoutEditorTextInput(const std::string& map,
+    const std::shared_ptr<LayoutRequirements>& layoutRequirements)
 {
     m_map = map;
+    m_layoutRequirements = layoutRequirements;
 }
 
 LayoutEditorTextInput::~LayoutEditorTextInput()
@@ -76,4 +79,14 @@ void LayoutEditorTextInput::DrawValue(
 
     ImGui::PopID();
     ImGui::EndGroup();
+}
+
+bool LayoutEditorTextInput::ShouldShow(const std::shared_ptr<ModifiableUniversalObjectData>& universalObjectData) const
+{
+    if (!m_layoutRequirements)
+    {
+        return true;
+    }
+
+    return m_layoutRequirements->ShouldShow(universalObjectData);
 }

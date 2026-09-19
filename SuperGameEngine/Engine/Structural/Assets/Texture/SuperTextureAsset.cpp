@@ -15,6 +15,9 @@ SuperTextureAsset::SuperTextureAsset(
 {
 
     m_splitMethod = SplitUVMethod::Unknown;
+    m_uniformByPixelTilesPerRow = 0;
+    m_uniformByPixelMaxTiles = 0;
+    m_singleTileSize = { .X = 0,.Y = 0 };
 
     m_path = File::Sanitize(path);
     if (m_path.empty())
@@ -54,24 +57,13 @@ SuperTextureAsset::SuperTextureAsset(
     switch (m_splitMethod)
     {
         case SplitUVMethod::Predefined: SetupPredefinedUVs(); break;
+        case SplitUVMethod::UniformByPixel: SetupUniformByPixelUVs(); break;
     }
 
-    if (m_splitMethod == SplitUVMethod::Predefined || m_splitMethod == SplitUVMethod::UniformByPixel)
+    // If the setup is broken just default to the size of the texture.
+    if (m_splitMethod == SplitUVMethod::Unknown)
     {
-        if (m_predefinedUVs.empty())
-        {
-            Log::Exception("No UV setup with method setup for UVs. Method: " + ESplitUVMethod::ToString(m_splitMethod),
-                "SuperGameEngine::SuperTextureAsset::SuperTextureAsset",
-                "Exception");
-        }
-        else
-        {
-            m_singleTileSize = FVector2I(m_predefinedUVs.at(0).second.GetWidth(), m_predefinedUVs.at(0).second.GetHeight());
-        }
-    }
-    else
-    {
-        m_singleTileSize = m_superTexture->Size();
+        m_singleTileSize = { .X = m_superTexture->Size().GetX(), .Y = m_superTexture->Size().GetY() };
     }
 }
 
@@ -97,40 +89,36 @@ void SuperTextureAsset::Draw(int tile) const
     {
         switch (m_splitMethod)
         {
-        case SplitUVMethod::Predefined:
-            DrawPredefined(tile);
-            break;
+        case SplitUVMethod::Predefined: DrawPredefined(tile); break;
+        case SplitUVMethod::UniformByPixel: DrawUniformByPixel(tile); break;
         default:
             m_superTexture->Draw();
         }
     }
 }
 
-void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const
+void SuperTextureAsset::Draw(int tile, const FVector2F& screenLocation) const
 {
     if (m_superTexture)
     {
         switch (m_splitMethod)
         {
-        case SplitUVMethod::Predefined:
-            DrawPredefined(tile, screenLocation);
-            break;
+        case SplitUVMethod::Predefined:DrawPredefined(tile, screenLocation); break;
+        case SplitUVMethod::UniformByPixel: DrawUniformByPixel(tile, screenLocation); break;
         default:
             m_superTexture->Draw(FPoint(screenLocation.GetX(), screenLocation.GetY()));
         }
     }
 }
 
-void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& screenLocation,
-    const FatedQuestLibraries::FColour& tintColour) const
+void SuperTextureAsset::Draw(int tile, const FVector2F& screenLocation, const FColour& tintColour) const
 {
     if (m_superTexture)
     {
         switch (m_splitMethod)
         {
-        case SplitUVMethod::Predefined:
-            DrawPredefined(tile, screenLocation, tintColour);
-            break;
+        case SplitUVMethod::Predefined: DrawPredefined(tile, screenLocation, tintColour); break;
+        case SplitUVMethod::UniformByPixel: DrawUniformByPixel(tile, screenLocation, tintColour); break;
         default:
             m_superTexture->Draw(FPoint(static_cast<int>(screenLocation.GetX()), static_cast<int>(screenLocation.GetY())), tintColour);
         }
@@ -139,7 +127,7 @@ void SuperTextureAsset::Draw(int tile, const FatedQuestLibraries::FVector2F& scr
 
 FVector2I SuperTextureAsset::SizeOfSingleTile() const
 {
-    return m_singleTileSize;
+    return {m_singleTileSize.X, m_singleTileSize.Y};
 }
 
 void SuperTextureAsset::SetupPredefinedUVs()
@@ -147,8 +135,7 @@ void SuperTextureAsset::SetupPredefinedUVs()
     int vectors = 0;
     while (true)
     {
-        std::string uvKey = "TextureUV" + std::to_string(vectors);
-        if (IsVector4ILoaded(uvKey))
+        if (IsVector4ILoaded("TextureUV" + std::to_string(vectors)))
         {
             ++vectors;
         }
@@ -162,8 +149,7 @@ void SuperTextureAsset::SetupPredefinedUVs()
     m_predefinedUVs.resize(vectors);
     for (int i = 0 ; i < vectors; ++i)
     {
-        std::string uvKey = "TextureUV" + std::to_string(i);
-        std::shared_ptr<FVector4I> vectorUV = GetVector4I(uvKey);
+        std::shared_ptr<FVector4I> vectorUV = GetVector4I("TextureUV" + std::to_string(i));
 
         auto textureUV = RectangleInt(vectorUV);
         bool newUVIsValid = m_uvBounds.Contains(textureUV);
@@ -175,6 +161,16 @@ void SuperTextureAsset::SetupPredefinedUVs()
         }
 
         m_predefinedUVs[i] = { newUVIsValid, vectorUV };
+    }
+
+    if (m_predefinedUVs.empty())
+    {
+        Log::Exception("No UV setup with method setup for UVs. Method: " + ESplitUVMethod::ToString(m_splitMethod),
+            "void SuperTextureAsset::SetupPredefinedUVs()",
+            "Exception");
+
+        m_splitMethod = SplitUVMethod::Unknown;
+        return;
     }
 }
 
@@ -224,6 +220,108 @@ void SuperTextureAsset::DrawPredefined(
     }
 
     DrawImplementation(screenSizeAndLocation.Key, screenSizeAndLocation.Value, tintColour);
+}
+
+void SuperTextureAsset::SetupUniformByPixelUVs()
+{
+    if (IsVector2ILoaded("UniformTextureUV"))
+    {
+        m_singleTileSize = {
+            .X = GetVector2I("UniformTextureUV")->GetX(),
+            .Y = GetVector2I("UniformTextureUV")->GetY()
+        };
+    }
+
+    if (m_singleTileSize.X <= 0 || m_singleTileSize.Y <= 0)
+    {
+        Log::Error("UniformByPixel is not setup correctly for " + m_path,
+            "SuperTextureAsset::SetupUniformByPixelUVs()");
+        m_splitMethod = SplitUVMethod::Unknown;
+        return;
+    }
+
+    int textureWidth = m_superTexture->Size().GetX();
+    int textureHeight = m_superTexture->Size().GetY();
+
+    if (m_singleTileSize.X > textureWidth || m_singleTileSize.Y > textureHeight)
+    {
+        Log::Error("UniformByPixel is not setup correctly, the width or height "
+                   "is bigger than the texture for " + m_path,
+            "SuperTextureAsset::SetupUniformByPixelUVs()");
+        m_splitMethod = SplitUVMethod::Unknown;
+        return;
+    }
+
+    m_uniformByPixelTilesPerRow = textureWidth / m_singleTileSize.X;
+    int tilesInHeight = textureHeight / m_singleTileSize.Y;
+    m_uniformByPixelMaxTiles = m_uniformByPixelTilesPerRow * tilesInHeight;
+}
+
+void SuperTextureAsset::DrawUniformByPixel(int tile) const
+{
+    if (tile < 0 || m_uniformByPixelMaxTiles >= tile)
+    {
+        return;
+    }
+
+    int rowBefore = tile / m_uniformByPixelTilesPerRow;
+    int xTile = tile - (rowBefore * m_uniformByPixelTilesPerRow);
+    int yTile = rowBefore;
+
+    m_superTexture->Draw(RectangleInt(
+        xTile * m_singleTileSize.X, 
+        yTile * m_singleTileSize.Y, 
+        m_singleTileSize.X, 
+        m_singleTileSize.Y), RectangleInt());
+}
+
+void SuperTextureAsset::DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation) const
+{
+    if (tile < 0 || m_uniformByPixelMaxTiles >= tile)
+    {
+        return;
+    }
+
+    int rowBefore = tile / m_uniformByPixelTilesPerRow;
+    int xTile = tile - (rowBefore * m_uniformByPixelTilesPerRow);
+    int yTile = rowBefore;
+
+    m_superTexture->Draw(RectangleInt(
+        xTile * m_singleTileSize.X,
+        yTile * m_singleTileSize.Y,
+        m_singleTileSize.X,
+        m_singleTileSize.Y), 
+        RectangleInt(
+            static_cast<int>(screenLocation.GetX()),
+            static_cast<int>(screenLocation.GetY()),
+            m_singleTileSize.X,
+            m_singleTileSize.Y));
+}
+
+void SuperTextureAsset::DrawUniformByPixel(int tile, const FatedQuestLibraries::FVector2F& screenLocation,
+    const FatedQuestLibraries::FColour& tintColour) const
+{
+    if (tile < 0 || m_uniformByPixelMaxTiles >= tile)
+    {
+        return;
+    }
+
+    int rowBefore = tile / m_uniformByPixelTilesPerRow;
+    int xTile = tile - (rowBefore * m_uniformByPixelTilesPerRow);
+    int yTile = rowBefore;
+
+    m_superTexture->Draw(
+        RectangleInt(
+        xTile * m_singleTileSize.X,
+        yTile * m_singleTileSize.Y,
+        m_singleTileSize.X,
+        m_singleTileSize.Y),
+        RectangleInt(
+            static_cast<int>(screenLocation.GetX()),
+            static_cast<int>(screenLocation.GetY()),
+            m_singleTileSize.X,
+            m_singleTileSize.Y),
+        tintColour);
 }
 
 KeyPairValueReturn<RectangleInt, RectangleInt> SuperTextureAsset::GatherScreenSizeAndLocation(

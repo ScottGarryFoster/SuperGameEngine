@@ -2,13 +2,18 @@
 #include "../../../../../ImGuiIncludes.h"
 #include "FatedQuestLibraries.h"
 #include "../../../../../../../FatedQuest.Libraries/StandardObjects/UniversalObjectData/ModifiableUniversalObjectData.h"
+#include "Engine/Structural/UniversalObjectData/LayoutEditors/LayoutRequirements.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
 
-LayoutEditorFilteredDropdownArray::LayoutEditorFilteredDropdownArray(const std::string& map,
-    const std::vector<std::string>& values)
+LayoutEditorFilteredDropdownArray::LayoutEditorFilteredDropdownArray(
+    const std::string& map,
+    const std::vector<std::string>& values,
+    const std::shared_ptr<LayoutRequirements>& layoutRequirements)
 {
+    m_layoutRequirements = layoutRequirements;
+
     m_map = map;
     m_values = values;
     if (values.empty())
@@ -95,6 +100,17 @@ void LayoutEditorFilteredDropdownArray::OnSave(
 
         ++i;
     }
+}
+
+bool LayoutEditorFilteredDropdownArray::ShouldShow(
+    const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const
+{
+    if (!m_layoutRequirements)
+    {
+        return true;
+    }
+
+    return m_layoutRequirements->ShouldShow(universalObjectData);
 }
 
 void LayoutEditorFilteredDropdownArray::DrawSingleValue(

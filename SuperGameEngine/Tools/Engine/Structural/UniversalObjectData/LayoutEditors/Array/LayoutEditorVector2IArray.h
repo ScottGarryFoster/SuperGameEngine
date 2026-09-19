@@ -2,7 +2,6 @@
 #include "../LayoutEditor.h"
 #include <memory>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 #include "LayoutEditorArray.h"
@@ -13,8 +12,9 @@ namespace SuperGameTools
 
     /// <summary>
     /// Encapsulates a single control within an Asset, described with an asset layout and file.
+    /// This represents a vector input as an array of vectors.
     /// </summary>
-    class LayoutEditorFilteredDropdownArray : public virtual LayoutEditor, LayoutEditorArray
+    class LayoutEditorVector2IArray : public virtual LayoutEditor, LayoutEditorArray
     {
     public:
         /// <summary>
@@ -22,11 +22,8 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
         /// <param name="values">Values to filter to. </param>
-        LayoutEditorFilteredDropdownArray(
-            const std::string& map, 
-            const std::vector<std::string>& values,
-            const std::shared_ptr<LayoutRequirements>& layoutRequirements);
-        virtual ~LayoutEditorFilteredDropdownArray();
+        LayoutEditorVector2IArray(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements);
+        virtual ~LayoutEditorVector2IArray();
 
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
@@ -113,23 +110,9 @@ namespace SuperGameTools
 
     private:
         /// <summary>
-        /// Values to filter to.
+        /// The size of the text field by default (number of characters;
         /// </summary>
-        std::vector<std::string> m_values;
-
-        /// <summary>
-        /// Values as const char for the ImGui Call.
-        /// </summary>
-        std::vector<const char*> m_valuesChars;
-
-        /// <summary>
-        /// This is the values stored as a map used to quickly
-        /// get the index from the value.
-        /// </summary>
-        /// <remarks>
-        /// We are trading a little extra memory for quicker search time here.
-        /// </remarks>
-        std::unordered_map<std::string, int> m_valuesValueByIndex;
+        const uint16_t m_defaultTextCapacity = 2048;
 
         /// <summary>
         /// The parameter within the Asset to modify.
@@ -140,5 +123,13 @@ namespace SuperGameTools
         /// Resolves requirements for layout editors.
         /// </summary>
         std::shared_ptr<LayoutRequirements> m_layoutRequirements;
+
+        /// <summary>
+        /// Draw a text box.
+        /// </summary>
+        /// <param name="label">Label text. </param>
+        /// <param name="value">Value in the box. </param>
+        /// <returns>True means changed. </returns>
+        bool TextInput(const std::string& label, std::string& value) const;
     };
 }
