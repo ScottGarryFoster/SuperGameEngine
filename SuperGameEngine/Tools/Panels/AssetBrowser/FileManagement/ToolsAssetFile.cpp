@@ -24,12 +24,19 @@ ToolsAssetFile::ToolsAssetFile(
 
     if (std::shared_ptr<GamePackage> gamePackage = package.lock())
     {
+        // There is an important check here.
+        // All outside assets (.ast) require a path to the original asset to function, so we double-check that file exists.
+        // All inside assets (.sast) do not require a path because our tools made them - so we do not check the file exists.
         std::string originalFilePath = File::RemoveLastExtension(packagePath);
-        if (!gamePackage->File()->Exists(originalFilePath))
+        std::string extention = File::GetExtension(packagePath);
+        if (!StringHelpers::Equals(extention, ".sast", CaseSensitivity::IgnoreCase))
         {
-            throw std::exception("ToolsAssetFile::ToolsAssetFile: Original file asset refers to not found.");
+            if (!gamePackage->File()->Exists(originalFilePath))
+            {
+                throw std::exception("ToolsAssetFile::ToolsAssetFile: Original file asset refers to not found.");
+            }
         }
-
+        
         if (gamePackage->File()->Exists(packagePath))
         {
             std::string contents = gamePackage->File()->ReadFileContents(packagePath);

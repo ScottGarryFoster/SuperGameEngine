@@ -23,6 +23,11 @@ namespace SuperGameTools
         /// An Asset File which represents a texture directly commonly a PNG file.
         /// </summary>
         ImageAsset,
+
+        /// <summary>
+        /// A collection of textures split into tiles used by Tilemaps to represent levels.
+        /// </summary>
+        TilesetAsset,
     };
 
     /// <summary>
@@ -32,13 +37,14 @@ namespace SuperGameTools
     {
     public:
         static AssetFileType Min() { return AssetFileType::ImageAsset; }
-        static AssetFileType Max() { return AssetFileType::ImageAsset; }
+        static AssetFileType Max() { return AssetFileType::TilesetAsset; }
 
         static AssetFileType* ToArray()
         {
             static AssetFileType returnArray[] =
             {
                 AssetFileType::ImageAsset,
+                AssetFileType::TilesetAsset,
             };
             
             return returnArray;
@@ -49,6 +55,7 @@ namespace SuperGameTools
             static std::vector<AssetFileType> returnVector =
             {
                 AssetFileType::ImageAsset,
+                AssetFileType::TilesetAsset,
             };
             
             return returnVector;
@@ -59,6 +66,7 @@ namespace SuperGameTools
             static std::vector<std::string> returnVector =
             {
                 "ImageAsset",
+                "TilesetAsset",
             };
             
             return returnVector;
@@ -69,6 +77,7 @@ namespace SuperGameTools
             static std::string returnArray[] =
             {
                 "ImageAsset",
+                "TilesetAsset",
             };
             
             return returnArray;
@@ -80,6 +89,7 @@ namespace SuperGameTools
             {
                 case AssetFileType::Unknown: return "Unknown";
                 case AssetFileType::ImageAsset: return "ImageAsset";
+                case AssetFileType::TilesetAsset: return "TilesetAsset";
             }
             
             return "Unknown";
@@ -91,12 +101,14 @@ namespace SuperGameTools
             {
                 if (value == "Unknown") return AssetFileType::Unknown;
                 if (value == "ImageAsset") return AssetFileType::ImageAsset;
+                if (value == "TilesetAsset") return AssetFileType::TilesetAsset;
             }
             else
             {
                 std::string valueLower = ToLower(value); 
                 if (valueLower == "unknown") return AssetFileType::Unknown;
                 if (valueLower == "imageasset") return AssetFileType::ImageAsset;
+                if (valueLower == "tilesetasset") return AssetFileType::TilesetAsset;
             }
             
             return AssetFileType::Unknown;

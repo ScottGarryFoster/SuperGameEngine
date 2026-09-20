@@ -5,6 +5,7 @@
 #include "../../../Engine/Structural/Asset/ToolsAssetTemplateProvider.h"
 #include "../../../Engine/Structural/Asset/Template/AssetTemplate.h"
 #include "Engine/Structural/Asset/AssetFiles/ToolsImageAsset.h"
+#include "Engine/Structural/Asset/AssetFiles/ToolsTilesetAssetBrowserAsset.h"
 
 using namespace SuperGameTools;
 using namespace FatedQuestLibraries;
@@ -63,8 +64,9 @@ void ToolsAssetFolder::PopulateChildren(const std::weak_ptr<AssetFolder>& parent
         std::vector<std::string> fileList = gamePackage->Directory()->GetFiles(m_packagePath);
         for (const std::string& fileName : fileList)
         {
+            // Only add asset files (.ast) or super assets (.sast)
             std::string extension = File::GetExtension(fileName);
-            if (StringHelpers::ToLower(extension) != ".ast")
+            if (StringHelpers::ToLower(extension) != ".ast" && StringHelpers::ToLower(extension) != ".sast")
             {
                 continue;
             }
@@ -120,6 +122,8 @@ std::shared_ptr<AssetFile> ToolsAssetFolder::CreateAssetFile(
     {
     case AssetFileType::ImageAsset:
         return std::make_shared<ToolsImageAsset>(m_gamePackage, m_textureManager, packagePath, shared_from_this(), metaData);
+    case AssetFileType::TilesetAsset:
+        return std::make_shared<ToolsTilesetAssetBrowserAsset>(m_gamePackage, m_textureManager, packagePath, shared_from_this(), metaData);
     }
 
     Log::Error("There is no implementation to create the given AssetFileType. "

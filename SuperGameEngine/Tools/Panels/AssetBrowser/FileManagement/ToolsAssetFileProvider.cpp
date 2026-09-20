@@ -144,7 +144,7 @@ void ToolsAssetFileProvider::TryAddAssetFile(
     const std::string& packagePath)
 {
     std::string extension = StringHelpers::ToLower(File::GetExtension(packagePath));
-    if (extension != ".ast")
+    if (extension != ".ast" && extension != ".sast")
     {
         std::string assetFilepath = packagePath + ".ast";
         if (!gamePackage->File()->Exists(assetFilepath))

@@ -175,7 +175,8 @@ void ToolsUniversalTemplate::CreateDataForMatchingCriteriaFileName(
 bool ToolsUniversalTemplate::ShouldUseTemplateExtension(const std::string& filepath) const
 {
     std::string extension = File::GetExtension(filepath);
-    if (StringHelpers::Equals(extension, ".ast", CaseSensitivity::IgnoreCase))
+    if (StringHelpers::Equals(extension, ".ast", CaseSensitivity::IgnoreCase) ||
+        StringHelpers::Equals(extension, ".sast", CaseSensitivity::IgnoreCase))
     {
         std::string filePathWithOneLessExtension = File::RemoveLastExtension(filepath);
         extension = File::GetExtension(filePathWithOneLessExtension);
@@ -193,7 +194,8 @@ bool ToolsUniversalTemplate::ShouldUseTemplateExtension(const std::string& filep
 bool ToolsUniversalTemplate::ShouldUseTemplateFileName(const std::string& filepath) const
 {
     std::string matchTo = File::GetFilename(filepath);
-    if (StringHelpers::Equals(File::GetExtension(filepath), ".ast", CaseSensitivity::IgnoreCase))
+    if (StringHelpers::Equals(File::GetExtension(filepath), ".ast", CaseSensitivity::IgnoreCase) ||
+        StringHelpers::Equals(File::GetExtension(filepath), ".sast", CaseSensitivity::IgnoreCase))
     {
         std::string filePathWithOneLessExtension = File::RemoveLastExtension(filepath);
         matchTo = File::GetFilename(filePathWithOneLessExtension);

@@ -13,5 +13,8 @@
         <ImageAsset>
             An Asset File which represents a texture directly commonly a PNG file.
         </ImageAsset>
+        <TilesetAsset>
+            A collection of textures split into tiles used by Tilemaps to represent levels.
+        </TilesetAsset>
     </EnumName>
 </SuperEnum>

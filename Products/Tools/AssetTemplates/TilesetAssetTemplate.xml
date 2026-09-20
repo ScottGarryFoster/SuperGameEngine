@@ -1,0 +1,17 @@
+<AssetMetaData>
+    <Template AssetFileType="TilesetAsset">
+        <MatchingCriteria UniversalObjectDataTemplateMatchingStyle="Extension">
+            <Extension value=".tlst" />
+        </MatchingCriteria>
+        <BaseFileTemplate UniversalObjectDataTemplateCreationMethod="Simple">
+            <Asset>
+                <Strings>
+                    <String Key="GameAssetName" Value="{FilepathDisplayName}" />
+                </Strings>
+            </Asset>
+        </BaseFileTemplate>
+    </Template>
+    <AssetLayout>
+        <Data Type="String" Map="TestString" MapType="Single" />
+    </AssetLayout>
+</AssetMetaData>
