@@ -21,6 +21,14 @@ SuperViewportToolsButton::SuperViewportToolsButton(
     m_isSelected = false;
 
     const std::string& texture = buttonInfo.Textures.at(buttonType);
+    
+    if (!windowPackage->GetContentManager())
+    {
+        Log::Exception("Window Package did not contain a content manager, cannot create texture.",
+            "SuperViewportToolsButton", "NullArgumentException");
+        return;
+    }
+    
     m_texture = windowPackage->GetContentManager()->Texture()->GetTexture(texture);
 
     m_textureWidthHeight = m_texture->Size().GetX();

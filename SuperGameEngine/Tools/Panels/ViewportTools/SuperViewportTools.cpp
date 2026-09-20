@@ -33,13 +33,13 @@ void SuperViewportTools::Setup()
             "SuperViewportTools::Setup");
         return;
     }
-
+    
     // Create all buttons.
     for (const ViewportToolsType& toolsType : EViewportToolsType::ToVector())
     {
         m_toolsButtons.insert_or_assign(toolsType, std::make_shared<SuperViewportToolsButton>(m_windowPackage, toolsType, m_viewportButtonInfo));
     }
-
+    
     // Ensure each of them know when others are selected.
     for (const ViewportToolsType& toolsType : EViewportToolsType::ToVector())
     {
@@ -61,6 +61,14 @@ void SuperViewportTools::Setup()
     m_toolsButtons.at(ViewportToolsType::Select)->Select();
 
     m_settingsPanel->Setup(m_windowPackage);
+    
+    if (!m_windowPackage->GetPanelManager())
+    {
+        Log::Exception("Cannot register tools with panel.",
+            "void SuperViewportTools::Setup()",
+            "NullArgumentException");
+        return;
+    }
     m_windowPackage->GetPanelManager()->RegisterPanel(m_settingsPanel);
 }
 

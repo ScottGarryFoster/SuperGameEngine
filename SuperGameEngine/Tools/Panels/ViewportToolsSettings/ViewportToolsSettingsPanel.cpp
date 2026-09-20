@@ -123,6 +123,15 @@ std::shared_ptr<ViewportToolsSettings> ViewportToolsSettingsPanel::GetViewportTo
 
 std::shared_ptr<const SingleLayoutMetaData> ViewportToolsSettingsPanel::FindSettingsFileAndTemplateLayout() const
 {
+    if (!m_windowPackage->GetUniversalObjectDataTemplateProvider())
+    {
+        Log::Exception("No template provider given.", 
+            "std::shared_ptr<const SingleLayoutMetaData> ViewportToolsSettingsPanel::"
+            "FindSettingsFileAndTemplateLayout() const",
+            "NullArgumentException");
+        return {};
+    }
+    
     std::vector<std::shared_ptr<const SingleLayoutMetaData>> fileLayouts =
         m_windowPackage->GetUniversalObjectDataTemplateProvider()->GetObjectDataTemplates();
 

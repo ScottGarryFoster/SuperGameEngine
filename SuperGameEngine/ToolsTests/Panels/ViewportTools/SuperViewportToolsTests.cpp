@@ -2,6 +2,7 @@
 #include "../../../Tools/Panels/ViewportTools/SuperViewportTools.h"
 #include <gtest/gtest.h>
 #include <memory>
+#include <gmock/gmock-spec-builders.h>
 
 #include "ToolsEngine/Packages/WindowPackage.h"
 
@@ -10,6 +11,7 @@ using namespace FatedQuestLibraries;
 
 namespace ToolsTests_Panels_ViewportTools
 {
+    
     class SuperViewportToolsTests : public ::testing::Test
     {
     public:
@@ -24,16 +26,16 @@ namespace ToolsTests_Panels_ViewportTools
 
         void SetUp() override
         {
-            auto windowPackage = std::make_shared<WindowPackage>();
-            auto super = std::make_shared<SuperViewportTools>(windowPackage);
-            super->Setup();
-            m_superViewportTools = super;
-
             m_logger = std::make_shared<ConsoleLog>();
             if (auto shared = Log::GetEvent().lock())
             {
                 shared->Subscribe(m_logger);
             }
+            
+            auto windowPackage = std::make_shared<WindowPackage>();
+            auto super = std::make_shared<SuperViewportTools>(windowPackage);
+            super->Setup();
+            m_superViewportTools = super;
         }
 
         void TearDown() override
