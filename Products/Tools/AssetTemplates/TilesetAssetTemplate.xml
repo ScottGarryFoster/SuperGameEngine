@@ -12,6 +12,6 @@
         </BaseFileTemplate>
     </Template>
     <AssetLayout>
-        <Data Type="String" Map="TestString" MapType="Single" />
+        <Data Type="AssetLink" Map="TestString" MapType="Single" />
     </AssetLayout>
 </AssetMetaData>

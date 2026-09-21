@@ -1,17 +1,15 @@
-#pragma once
-#include "LayoutEditor.h"
-#include <memory>
+﻿#pragma once
 #include <string>
+#include "LayoutEditor.h"
 
 namespace SuperGameTools
 {
     class LayoutRequirements;
-
     /// <summary>
-    /// Encapsulates a single control within an Asset, described with an asset layout and file.
-    /// This represents a vector input.
+    /// Escapulates a single control for entering data into a universal data file.
+    /// This allows a link to another asset to be added.
     /// </summary>
-    class LayoutEditorVector2I : public virtual LayoutEditor
+    class LayoutEditorAssetLink : public virtual LayoutEditor
     {
     public:
         /// <summary>
@@ -19,9 +17,9 @@ namespace SuperGameTools
         /// </summary>
         /// <param name="map">Parameter to modify within the asset. </param>
         /// <param name="values">Values to filter to. </param>
-        LayoutEditorVector2I(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements);
-        virtual ~LayoutEditorVector2I();
-
+        LayoutEditorAssetLink(const std::string& map, const std::shared_ptr<LayoutRequirements>& layoutRequirements);
+        virtual ~LayoutEditorAssetLink();
+        
         /// <summary>
         /// Update loop call for the given asset to prepare anything for the layout.
         /// </summary>
@@ -68,13 +66,13 @@ namespace SuperGameTools
         /// <returns>Is true when this layout is required and therefore should be shown. </returns>
         virtual bool ShouldShow(const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) 
             const override;
-
+        
     private:
         /// <summary>
-        /// The size of the text field by default (number of characters;
+        /// The size of the text field by default (number of characters)
         /// </summary>
-        const uint16_t m_defaultTextCapacity = 2048;
-
+        const size_t m_defaultTextCapacity = 2048;
+        
         /// <summary>
         /// The parameter within the Asset to modify.
         /// </summary>
@@ -84,13 +82,15 @@ namespace SuperGameTools
         /// Resolves requirements for layout editors.
         /// </summary>
         std::shared_ptr<LayoutRequirements> m_layoutRequirements;
-
+        
         /// <summary>
-        /// Draw a text box.
+        /// Add the drag and drop functionality.
         /// </summary>
-        /// <param name="label">Label text. Note: No visible label is drawn, this is the ID label. </param>
-        /// <param name="value">Value in the box. </param>
-        /// <returns>True means changed. </returns>
-        bool TextInput(const std::string& label, std::string& value) const;
+        /// <param name="xTop">X at the beginning of the element. </param>
+        /// <param name="yTop">Y at the beginning of the element. </param>
+        /// <param name="xBottom">X at the end of the element. </param>
+        /// <param name="yBottom">Y at the end of the element. </param>
+        void EnableDropTarget(float xTop, float yTop, float xBottom, float yBottom, 
+            const std::shared_ptr<FatedQuestLibraries::ModifiableUniversalObjectData>& universalObjectData) const;
     };
 }

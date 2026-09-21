@@ -28,6 +28,8 @@ namespace FatedQuestLibraries
         Vector4I,
 
         UserButton,
+
+        AssetLink,
     };
 
     /// <summary>
@@ -37,7 +39,7 @@ namespace FatedQuestLibraries
     {
     public:
         static UniversalStorableType Min() { return UniversalStorableType::String; }
-        static UniversalStorableType Max() { return UniversalStorableType::UserButton; }
+        static UniversalStorableType Max() { return UniversalStorableType::AssetLink; }
 
         static UniversalStorableType* ToArray()
         {
@@ -48,6 +50,7 @@ namespace FatedQuestLibraries
                 UniversalStorableType::Vector2I,
                 UniversalStorableType::Vector4I,
                 UniversalStorableType::UserButton,
+                UniversalStorableType::AssetLink,
             };
             
             return returnArray;
@@ -62,6 +65,7 @@ namespace FatedQuestLibraries
                 UniversalStorableType::Vector2I,
                 UniversalStorableType::Vector4I,
                 UniversalStorableType::UserButton,
+                UniversalStorableType::AssetLink,
             };
             
             return returnVector;
@@ -76,6 +80,7 @@ namespace FatedQuestLibraries
                 "Vector2I",
                 "Vector4I",
                 "UserButton",
+                "AssetLink",
             };
             
             return returnVector;
@@ -90,6 +95,7 @@ namespace FatedQuestLibraries
                 "Vector2I",
                 "Vector4I",
                 "UserButton",
+                "AssetLink",
             };
             
             return returnArray;
@@ -105,6 +111,7 @@ namespace FatedQuestLibraries
                 case UniversalStorableType::Vector2I: return "Vector2I";
                 case UniversalStorableType::Vector4I: return "Vector4I";
                 case UniversalStorableType::UserButton: return "UserButton";
+                case UniversalStorableType::AssetLink: return "AssetLink";
             }
             
             return "Unknown";
@@ -120,6 +127,7 @@ namespace FatedQuestLibraries
                 if (value == "Vector2I") return UniversalStorableType::Vector2I;
                 if (value == "Vector4I") return UniversalStorableType::Vector4I;
                 if (value == "UserButton") return UniversalStorableType::UserButton;
+                if (value == "AssetLink") return UniversalStorableType::AssetLink;
             }
             else
             {
@@ -130,6 +138,7 @@ namespace FatedQuestLibraries
                 if (valueLower == "vector2i") return UniversalStorableType::Vector2I;
                 if (valueLower == "vector4i") return UniversalStorableType::Vector4I;
                 if (valueLower == "userbutton") return UniversalStorableType::UserButton;
+                if (valueLower == "assetlink") return UniversalStorableType::AssetLink;
             }
             
             return UniversalStorableType::Unknown;

@@ -15,5 +15,6 @@
         <Vector2I />
         <Vector4I />
         <UserButton />
+        <AssetLink />
     </EnumName>
 </SuperEnum>

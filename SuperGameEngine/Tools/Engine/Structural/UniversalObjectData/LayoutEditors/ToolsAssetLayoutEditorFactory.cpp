@@ -5,6 +5,7 @@
 #include "../../UniversalObjectData/LayoutEditors/Array/LayoutEditorTextInputArray.h"
 #include "../../UniversalObjectData/LayoutEditors/LayoutEditorVector4I.h"
 #include "FatedQuestLibraries.h"
+#include "LayoutEditorAssetLink.h"
 #include "LayoutEditorUserButtonInput.h"
 #include "LayoutEditorVector2I.h"
 #include "../../../../../../FatedQuest.Libraries/SharedEnums/Objects/EnumFilterFactory.h"
@@ -94,7 +95,13 @@ std::shared_ptr<LayoutEditor> ToolsAssetLayoutEditorFactory::Create(
                 return std::make_shared<LayoutEditorUserButtonInput>(map, createdRequirements);
             }
             break;
-            
+        case UniversalStorableType::AssetLink:
+            switch (maptype)
+            {
+                case LayoutTemplateLayoutMapType::Single:
+                    return std::make_shared<LayoutEditorAssetLink>(map, createdRequirements);
+            }
+            break;
     }
 
     Log::Error("Could not create layout for the following combination: " +

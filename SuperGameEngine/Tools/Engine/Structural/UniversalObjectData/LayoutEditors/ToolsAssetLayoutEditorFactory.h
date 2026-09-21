@@ -4,16 +4,10 @@
 
 #include "LayoutRequirements.h"
 #include "../../UniversalObjectData/LayoutEditors/LayoutEditorFactory.h"
-
-namespace FatedQuestLibraries
-{
-    enum class UniversalStorableType : uint8_t;
-}
+#include "Engine/Structural/UniversalObjectData/Template/LayoutTemplateLayoutMapType.h"
 
 namespace SuperGameTools
 {
-    enum class LayoutTemplateLayoutMapType : uint8_t;
-
     /// <summary>
     /// Creates AssetLayoutEditor objects.
     /// </summary>
